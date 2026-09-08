@@ -147,7 +147,7 @@ function customAlternar(){
     'Homem-Aranha':     { unidade:'Queens · Nova York',       desde:'2016',     pubs:'62', shorts:'18', reacoes:'12,4 mil', comentarios:'980', unidades:'1 unidade',
                           streak:'23', recorde:'31', semana:[1,1,1,1,1,1,0], hoje:5 },
     'Senhor Bigode':    { unidade:'Telhado da Vila Madalena', desde:'2021',     pubs:'9',  shorts:'7', reacoes:'900',     comentarios:'77',  unidades:'9 unidades',
-                          streak:'9',  recorde:'9',  semana:[1,1,1,1,1,1,0], hoje:5 },
+                          streak:'973', recorde:'973', semana:[1,1,1,1,1,1,0], hoje:5 },
     'Rodrigo Caetano':  { unidade:'Uberaba · MG',             desde:'2019',     pubs:'48', shorts:'9', reacoes:'1,2 mil', comentarios:'120', unidades:'3 unidades',
                           streak:'12', recorde:'40', semana:[1,1,1,1,1,1,0], hoje:5 }
   };
@@ -162,7 +162,7 @@ function customAlternar(){
     document.querySelectorAll('.pc-extra [data-pc-meta]').forEach(function(el){
       el.innerHTML = faltam > 0
         ? 'Recorde: <span data-pc="recorde">' + d.recorde + '</span> dias · faltam <span data-pc="faltam">' + faltam + '</span>'
-        : 'Novo recorde! <span data-pc="recorde">' + d.streak + '</span> dias seguidos 🔥';
+        : 'Novo recorde! <span data-pc="recorde">' + d.streak + '</span> dias ativos 🔥';
     });
     /* a semana: S T Q Q S S D, cheia nos dias ativos, anel no dia de hoje */
     const letras = ['S','T','Q','Q','S','S','D'];
@@ -175,14 +175,25 @@ function customAlternar(){
   }
   /* a mesma altura do painel de modulos, a esquerda: o cartao cresce ate la e
      a linha de atalhos vai para o pe */
+  /* O cartao acompanha a altura do painel de modulos, mas so com a grade
+     fechada. Abrir "Ver +N modulos" faz o painel triplicar de altura, e segui-lo
+     deixava o cartao esticado, com um vazio enorme entre os blocos: a altura
+     entao fica a ultima medida com a grade fechada. */
+  let pcAlturaFixa = 0;
+  function pcGradeAberta(){
+    const b = document.getElementById('appsToggle');
+    return !!(b && b.classList.contains('open'));
+  }
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
     if (!customLigado() || window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
-    card.style.minHeight = Math.round(painel.getBoundingClientRect().height) + 'px';
+    if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
+    if (pcAlturaFixa) card.style.minHeight = pcAlturaFixa + 'px';
   }
   window.addEventListener('resize', pcSincronizaAltura);
-  /* o painel de modulos muda de altura ao abrir/fechar a grade: acompanha */
+  /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
+     a grade fechada, a medida nova vale */
   const _painel = document.getElementById('appsPanel');
   if (_painel && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_painel);
   const mostrar = function(sim){

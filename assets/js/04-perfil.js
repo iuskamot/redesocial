@@ -52,30 +52,13 @@ function openPersonProfile(name, av){
     '<div class="pp-linkmain"><b>'+l[0]+'</b><span>'+(l[3]||'—')+'</span><span class="pp-linkq">'+(l[2]||'Colaborador')+'</span></div></div>').join('');
   $('#personProfile').hidden=false; document.body.style.overflow='hidden'; $('.pp-scroll').scrollTop=0;
 }
-let ppAvURL=null;
-function ppAvRender(){
-  const st=$('#ppAvStage'); if(!st) return;
-  st.innerHTML = ppAvURL ? '<img src="'+ppAvURL+'" alt="Foto do perfil">'
-    : '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span>';
-}
+/* A foto e a capa passam pelo modal de recorte (13-extras.js): aqui ficam so
+   os ganchos que abrem esse modal e o que fecha. O tratador antigo do campo de
+   arquivo saiu — ele escutava o mesmo campo e transformava a capa escolhida em
+   foto de perfil. */
 $('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('foto'); });
 $('#ppAvClose') && $('#ppAvClose').addEventListener('click', ()=>$('#ppAvModal').classList.remove('open'));
 $('#ppAvModal') && $('#ppAvModal').addEventListener('click', e=>{ if(e.target===$('#ppAvModal')) $('#ppAvModal').classList.remove('open'); });
-$('#ppAvPick') && $('#ppAvPick').addEventListener('click', ()=>$('#ppAvFile').click());
-$('#ppAvFile') && $('#ppAvFile').addEventListener('change', e=>{
-  const f=e.target.files[0]; if(!f) return;
-  ppAvURL=URL.createObjectURL(f);
-  ppAvRender();
-  const av=$('#ppAvatar');
-  if(av){ av.style.backgroundImage='url('+ppAvURL+')'; av.style.backgroundSize='cover'; av.style.backgroundPosition='center'; av.textContent=''; av.insertAdjacentHTML('beforeend','<span class="pp-online"></span>'); }
-  fgToast('Foto do perfil atualizada');
-});
-$('#ppAvRemove') && $('#ppAvRemove').addEventListener('click', ()=>{
-  ppAvURL=null; ppAvRender();
-  const av=$('#ppAvatar'); if(av) av.style.backgroundImage='';
-  const f=$('#ppAvFile'); if(f) f.value='';
-  fgToast('Foto do perfil removida');
-});
 $('#ppMore') && $('#ppMore').addEventListener('click', e=>{ e.stopPropagation(); const m=$('#ppMoreMenu'); m.hidden=!m.hidden; });
 document.addEventListener('click', e=>{ const m=$('#ppMoreMenu'); if(m && !e.target.closest('.pp-morewrap')) m.hidden=true; });
 (function(){

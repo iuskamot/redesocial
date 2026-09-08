@@ -302,3 +302,15 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
 
 body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}
+
+/* capa removida: a faixa fica na cor cheia da marca */
+body.demo-custom .profile-banner,
+body.demo-custom .pp-cover,
+body.demo-custom .nvf-pcover{background-color:var(--marca)}
+
+/* A capa e recortada em 3:1; as faixas seguem essa proporcao para mostrar
+   exatamente o que foi enquadrado, em qualquer largura de tela. */
+body.demo-custom .profile-banner,
+body.demo-custom .nvf-pcover{aspect-ratio:3 / 1;height:auto}
+/* no perfil a faixa e larga demais para caber em 3:1 sem virar um paredao */
+body.demo-custom .pp-cover{aspect-ratio:auto}

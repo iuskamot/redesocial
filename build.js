@@ -222,7 +222,9 @@ function shortsDosCenarios(){
       if (!marca){
         for (const x of marcas){ if (x.pos < ini) marca = x.nome; else break; }
       }
-      achados.push({ id:obj.id, titulo:obj.t, thumb:obj.thumb || 'hq720', marca:marca || 'SULTS' });
+      /* a previa pede imagem horizontal e grande; o oardefault e vertical */
+      const capa = (!obj.thumb || obj.thumb === 'oardefault' || obj.thumb === 'hq720') ? 'hq720' : obj.thumb;
+      achados.push({ id:obj.id, titulo:obj.t, thumb:capa, marca:marca || 'SULTS' });
       reId.lastIndex = fim;
     }
   });
@@ -253,8 +255,8 @@ function paginaShort(s){
 <meta property="og:title" content="${titulo}">
 <meta property="og:description" content="${desc}">
 <meta property="og:image" content="${capa}">
-<meta property="og:image:width" content="1280">
-<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="${s.thumb === 'hq720' ? 1280 : 480}">
+<meta property="og:image:height" content="${s.thumb === 'hq720' ? 720 : 360}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${titulo}">
 <meta name="twitter:description" content="${desc}">

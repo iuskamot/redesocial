@@ -363,7 +363,9 @@ input,textarea,select{font-size:14px}
 .pp-avedit:focus-visible{outline:none;box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(0,172,172,.24)}
 .ppav-stage{min-height:320px;display:flex;align-items:center;justify-content:center;background:#F4F5F6;border-radius:8px;
   box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;padding:16px}
-.ppav-stage img{max-width:100%;max-height:420px;display:block;border-radius:4px}
+/* a imagem do recorte tem tamanho proprio, calculado no script: o limite
+   antigo (max-width e max-height) achatava as compridas */
+.ppav-stage img:not(.ppav-img){max-width:100%;max-height:420px;display:block;border-radius:4px}
 .ppav-empty{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--muted)}
 .ppav-empty i{font-size:22px;color:#C7C7CC}
 .pp-morewrap{position:relative}
@@ -447,6 +449,9 @@ input,textarea,select{font-size:14px}
 .pp-top-title{font-size:17px;line-height:24px;font-weight:700;letter-spacing:0}
 .pp-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 60px}
 .pp-hero-card{background:#fff;border-bottom:1px solid var(--line)}
+/* faixa larga e baixa: a proporcao do recorte (3:1) nao cabe aqui sem
+   deixar a capa altissima no desktop, entao o corte de cima e de baixo e o
+   preco. O cartao da home e o bloco dos modulos seguem fieis ao recorte. */
 .pp-cover{height:190px;position:relative;overflow:hidden;background:linear-gradient(120deg,#02394e 0%,#00acac 100%)}
 .pp-cover-pat{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.14) 1.5px, transparent 0);background-size:26px 26px}
 .pp-hero-in{max-width:1180px;margin:0 auto;padding:0 32px 20px;display:block;position:relative}
@@ -678,7 +683,7 @@ input,textarea,select{font-size:14px}
 
 
 /* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
-.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:20px 12px 0;text-align:center}
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0;text-align:center}
 .pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
   text-transform:uppercase;color:#98a2ad;white-space:nowrap}
 /* a versao branca vira cinza por inteiro: simbolo e nominativo no mesmo tom */
@@ -689,7 +694,11 @@ input,textarea,select{font-size:14px}
 /* ---- Recorte da foto e da capa ----
    O palco e escuro para a janela clara aparecer. A imagem fica inteira por
    baixo; a janela e um buraco, desenhado com uma sombra enorme por fora. */
-.ppav-stage{position:relative;overflow:hidden;background:#1c1c1e;touch-action:none;user-select:none}
+/* vazio, o palco fica claro como o resto do modal; o escuro so entra quando
+   ha imagem, para a janela de recorte aparecer */
+.ppav-stage{position:relative;overflow:hidden;background:#F4F5F6;touch-action:none;user-select:none;
+  transition:background 160ms cubic-bezier(.4,0,.2,1)}
+.ppav-stage.tem-imagem{background:#1c1c1e}
 .ppav-img{position:absolute;left:50%;top:50%;transform-origin:center;max-width:none;max-height:none;
   will-change:transform;pointer-events:none;-webkit-user-drag:none}
 .ppav-janela{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
@@ -5434,6 +5443,18 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
 
 body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}
+
+/* capa removida: a faixa fica na cor cheia da marca */
+body.demo-custom .profile-banner,
+body.demo-custom .pp-cover,
+body.demo-custom .nvf-pcover{background-color:var(--marca)}
+
+/* A capa e recortada em 3:1; as faixas seguem essa proporcao para mostrar
+   exatamente o que foi enquadrado, em qualquer largura de tela. */
+body.demo-custom .profile-banner,
+body.demo-custom .nvf-pcover{aspect-ratio:3 / 1;height:auto}
+/* no perfil a faixa e larga demais para caber em 3:1 sem virar um paredao */
+body.demo-custom .pp-cover{aspect-ratio:auto}
 </style>
 </head>
 <body>
@@ -6125,7 +6146,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           <div class="pc-streak">
             <span class="pc-flame"><i class="fa-solid fa-fire"></i></span>
             <div class="pc-streak-tx">
-              <b><span data-pc="streak">0</span> dias seguidos na rede</b>
+              <b><span data-pc="streak">0</span> dias ativos seguidos</b>
               <span data-pc-meta>Recorde: <span data-pc="recorde">0</span> dias · faltam <span data-pc="faltam">0</span></span>
             </div>
             <div class="pc-week" data-pc-week></div>
@@ -8826,30 +8847,13 @@ function openPersonProfile(name, av){
     '<div class="pp-linkmain"><b>'+l[0]+'</b><span>'+(l[3]||'—')+'</span><span class="pp-linkq">'+(l[2]||'Colaborador')+'</span></div></div>').join('');
   $('#personProfile').hidden=false; document.body.style.overflow='hidden'; $('.pp-scroll').scrollTop=0;
 }
-let ppAvURL=null;
-function ppAvRender(){
-  const st=$('#ppAvStage'); if(!st) return;
-  st.innerHTML = ppAvURL ? '<img src="'+ppAvURL+'" alt="Foto do perfil">'
-    : '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span>';
-}
+/* A foto e a capa passam pelo modal de recorte (13-extras.js): aqui ficam so
+   os ganchos que abrem esse modal e o que fecha. O tratador antigo do campo de
+   arquivo saiu — ele escutava o mesmo campo e transformava a capa escolhida em
+   foto de perfil. */
 $('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('foto'); });
 $('#ppAvClose') && $('#ppAvClose').addEventListener('click', ()=>$('#ppAvModal').classList.remove('open'));
 $('#ppAvModal') && $('#ppAvModal').addEventListener('click', e=>{ if(e.target===$('#ppAvModal')) $('#ppAvModal').classList.remove('open'); });
-$('#ppAvPick') && $('#ppAvPick').addEventListener('click', ()=>$('#ppAvFile').click());
-$('#ppAvFile') && $('#ppAvFile').addEventListener('change', e=>{
-  const f=e.target.files[0]; if(!f) return;
-  ppAvURL=URL.createObjectURL(f);
-  ppAvRender();
-  const av=$('#ppAvatar');
-  if(av){ av.style.backgroundImage='url('+ppAvURL+')'; av.style.backgroundSize='cover'; av.style.backgroundPosition='center'; av.textContent=''; av.insertAdjacentHTML('beforeend','<span class="pp-online"></span>'); }
-  fgToast('Foto do perfil atualizada');
-});
-$('#ppAvRemove') && $('#ppAvRemove').addEventListener('click', ()=>{
-  ppAvURL=null; ppAvRender();
-  const av=$('#ppAvatar'); if(av) av.style.backgroundImage='';
-  const f=$('#ppAvFile'); if(f) f.value='';
-  fgToast('Foto do perfil removida');
-});
 $('#ppMore') && $('#ppMore').addEventListener('click', e=>{ e.stopPropagation(); const m=$('#ppMoreMenu'); m.hidden=!m.hidden; });
 document.addEventListener('click', e=>{ const m=$('#ppMoreMenu'); if(m && !e.target.closest('.pp-morewrap')) m.hidden=true; });
 (function(){
@@ -14365,13 +14369,19 @@ function rvShareCopiar(){
     const el = new Image();
     el.className = 'ppav-img';
     el.onload = function(){
-      janela = medeJanela();
-      /* comeca cobrindo a janela por inteiro */
-      base = Math.max(janela.w / el.naturalWidth, janela.h / el.naturalHeight);
-      el.style.width = (el.naturalWidth * base) + 'px';
-      el.style.height = (el.naturalHeight * base) + 'px';
-      escala = 1; x = 0; y = 0; zoom.value = 100;
-      aplica();
+      /* a janela so tem tamanho depois de o modal estar na tela; enquanto nao
+         tiver, tenta de novo no quadro seguinte */
+      let tentativas = 0;
+      (function encaixa(){
+        janela = medeJanela();
+        if ((!janela.w || !janela.h) && tentativas++ < 30) return requestAnimationFrame(encaixa);
+        /* comeca cobrindo a janela por inteiro, sem deformar */
+        base = Math.max(janela.w / el.naturalWidth, janela.h / el.naturalHeight);
+        el.style.width = (el.naturalWidth * base) + 'px';
+        el.style.height = (el.naturalHeight * base) + 'px';
+        escala = 1; x = 0; y = 0; zoom.value = 100;
+        aplica();
+      })();
     };
     el.src = url;
     img = el;
@@ -14418,13 +14428,31 @@ function rvShareCopiar(){
     return c.toDataURL('image/jpeg', 0.92);
   }
 
+  /* o que ja esta no ar: a capa vem da variavel do corpo (ou do cliente da
+     vez) e a foto, do fundo do proprio avatar */
+  function imagemAtual(){
+    if (tipo === 'capa'){
+      const v = getComputedStyle(document.body).getPropertyValue('--capa-src').trim();
+      if (v && v !== 'none'){ const m = v.match(/url\(["']?(.*?)["']?\)/); if (m) return m[1]; }
+      const c = (typeof customCliente === 'function') ? customCliente() : null;
+      return c ? c.capa : '';
+    }
+    const av = document.getElementById('ppAvatar') || document.querySelector('.profile-card .avatar.lg');
+    if (!av) return '';
+    const m = getComputedStyle(av).backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+    return m ? m[1] : '';
+  }
   window.ppAvAbrir = function(qual){
     tipo = TIPOS[qual] ? qual : 'foto';
     titulo.textContent = TIPOS[tipo].titulo;
     vazio();
     modal.classList.add('open');
-    /* ja abre pedindo o arquivo: e o primeiro passo em qualquer um dos dois */
-    setTimeout(function(){ arq.click(); }, 120);
+    /* ja mostra a imagem que esta no ar, pronta para reenquadrar; o modal
+       precisa estar aberto antes, senao a janela mede zero */
+    const atual = imagemAtual();
+    if (atual) monta(atual);
+    /* o navegador so abre o seletor de arquivo em resposta a um clique da
+       pessoa; abrir sozinho aqui era ignorado. O modal ja mostra o botao. */
   };
   bPick.addEventListener('click', function(){ arq.click(); });
   arq.addEventListener('change', function(){
@@ -14432,14 +14460,31 @@ function rvShareCopiar(){
     monta(URL.createObjectURL(f));
     arq.value = '';
   });
+  /* sem foto, sobra a inicial do nome sobre a cor da marca — o mesmo que a
+     rede faz com quem nunca subiu retrato */
+  function iniciaisDoNome(){
+    const el = document.querySelector('.profile-name');
+    const nome = (el ? el.textContent : 'SULTS').trim();
+    /* nome e sobrenome: "Rodrigo Caetano" vira RC */
+    /* nome e sobrenome: "Rodrigo Caetano" vira RC, "Homem-Aranha" vira HA */
+    return nome.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(function(p){ return p[0]; }).join('').toUpperCase();
+  }
   bRem.addEventListener('click', function(){
     if (tipo === 'foto'){
+      const ini = iniciaisDoNome();
+      const marca = getComputedStyle(document.body).getPropertyValue('--marca').trim() || 'var(--teal)';
+      document.querySelectorAll('#ppAvatar, .profile-card .avatar.lg, #topUserChip .avatar, .pp-topav, .nvf-pav, #nmodTopAv').forEach(function(el){
+        el.style.background = marca;
+        el.style.color = '#fff';
+        el.textContent = ini;
+      });
       const av = document.getElementById('ppAvatar');
-      if (av){ av.style.backgroundImage = ''; }
-      document.querySelectorAll('.profile-card .avatar.lg, #ppAvatar').forEach(function(el){ el.style.backgroundImage = ''; });
+      if (av) av.insertAdjacentHTML('beforeend', '<span class="pp-online"></span>');
       if (typeof fgToast === 'function') fgToast('Foto do perfil removida');
     } else {
-      document.body.style.removeProperty('--capa-src');
+      /* sem imagem, a faixa fica na cor da marca: o "none" vence o padrao da folha */
+      document.body.style.setProperty('--capa-src', 'none');
+      document.body.style.removeProperty('--capa-pos');
       if (typeof fgToast === 'function') fgToast('Capa removida');
     }
     vazio();
@@ -14767,7 +14812,7 @@ function podeAprovar(){ return !document.body.classList.contains('demo-crunch') 
 const CRUNCH_TEXTOS = [
   ['.profile-name', 'Pikachu'], ['.profile-role', crunchPapel],
   ['.nvf-pname', 'Pikachu'],    ['.nvf-prole', crunchPapel],
-  ['#topUserChip .uname', 'Pikachu']
+  ['#topUserChip .uname', 'Pikachu'], ['#ppTopUser .uname', 'Pikachu'], ['#ppName', 'Pikachu'], ['#ppRole', crunchPapel]
 ];
 function crunchTextos(ligar){
   CRUNCH_TEXTOS.forEach(function(par){
@@ -15103,7 +15148,7 @@ function customAlternar(){
     'Homem-Aranha':     { unidade:'Queens · Nova York',       desde:'2016',     pubs:'62', shorts:'18', reacoes:'12,4 mil', comentarios:'980', unidades:'1 unidade',
                           streak:'23', recorde:'31', semana:[1,1,1,1,1,1,0], hoje:5 },
     'Senhor Bigode':    { unidade:'Telhado da Vila Madalena', desde:'2021',     pubs:'9',  shorts:'7', reacoes:'900',     comentarios:'77',  unidades:'9 unidades',
-                          streak:'9',  recorde:'9',  semana:[1,1,1,1,1,1,0], hoje:5 },
+                          streak:'973', recorde:'973', semana:[1,1,1,1,1,1,0], hoje:5 },
     'Rodrigo Caetano':  { unidade:'Uberaba · MG',             desde:'2019',     pubs:'48', shorts:'9', reacoes:'1,2 mil', comentarios:'120', unidades:'3 unidades',
                           streak:'12', recorde:'40', semana:[1,1,1,1,1,1,0], hoje:5 }
   };
@@ -15118,7 +15163,7 @@ function customAlternar(){
     document.querySelectorAll('.pc-extra [data-pc-meta]').forEach(function(el){
       el.innerHTML = faltam > 0
         ? 'Recorde: <span data-pc="recorde">' + d.recorde + '</span> dias · faltam <span data-pc="faltam">' + faltam + '</span>'
-        : 'Novo recorde! <span data-pc="recorde">' + d.streak + '</span> dias seguidos 🔥';
+        : 'Novo recorde! <span data-pc="recorde">' + d.streak + '</span> dias ativos 🔥';
     });
     /* a semana: S T Q Q S S D, cheia nos dias ativos, anel no dia de hoje */
     const letras = ['S','T','Q','Q','S','S','D'];
@@ -15131,14 +15176,25 @@ function customAlternar(){
   }
   /* a mesma altura do painel de modulos, a esquerda: o cartao cresce ate la e
      a linha de atalhos vai para o pe */
+  /* O cartao acompanha a altura do painel de modulos, mas so com a grade
+     fechada. Abrir "Ver +N modulos" faz o painel triplicar de altura, e segui-lo
+     deixava o cartao esticado, com um vazio enorme entre os blocos: a altura
+     entao fica a ultima medida com a grade fechada. */
+  let pcAlturaFixa = 0;
+  function pcGradeAberta(){
+    const b = document.getElementById('appsToggle');
+    return !!(b && b.classList.contains('open'));
+  }
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
     if (!customLigado() || window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
-    card.style.minHeight = Math.round(painel.getBoundingClientRect().height) + 'px';
+    if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
+    if (pcAlturaFixa) card.style.minHeight = pcAlturaFixa + 'px';
   }
   window.addEventListener('resize', pcSincronizaAltura);
-  /* o painel de modulos muda de altura ao abrir/fechar a grade: acompanha */
+  /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
+     a grade fechada, a medida nova vale */
   const _painel = document.getElementById('appsPanel');
   if (_painel && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_painel);
   const mostrar = function(sim){
@@ -15958,7 +16014,7 @@ MARCAS.marvel = {
     { id:'OrjLlpXT1nk', t:'Professor X e Magneto: amigos ou rivais?', views:'63 mil', likes:'4,9 mil', c:270, time:'Há 5 d', cat:'personagens', thumb:'oardefault' },
     { id:'deaUcoq8huQ', t:'Hulks também precisam de abraço 💚', views:'60 mil', likes:'5,6 mil', c:310, time:'Há 6 d', cat:'personagens', thumb:'hq720' },
     { id:'lvvl5a6JhHQ', t:'No fim das contas, Clint Barton é um homem de família.', views:'58 mil', likes:'4,1 mil', c:180, time:'Há 7 d', cat:'personagens', thumb:'oardefault' },
-    { id:'sWBGR228bkY', t:'MARVEL Tōkon: Fighting Souls, trailer de premiação', views:'102 mil', likes:'7,4 mil', c:360, time:'Há 8 d', cat:'games', thumb:'hq720' },
+    { id:'sWBGR228bkY', t:'MARVEL Tōkon: Fighting Souls, trailer de premiação', views:'102 mil', likes:'7,4 mil', c:360, time:'Há 8 d', cat:'games', thumb:'hqdefault' },
     { id:'s5uU7VERudo', t:'Marvel’s Wolverine: trailer de recursos do jogo', views:'73 mil', likes:'6,8 mil', c:420, time:'Há 9 d', cat:'games', thumb:'hq720' }
   ],
   pessoas:{

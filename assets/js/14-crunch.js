@@ -299,7 +299,7 @@ function podeAprovar(){ return !document.body.classList.contains('demo-crunch') 
 const CRUNCH_TEXTOS = [
   ['.profile-name', 'Pikachu'], ['.profile-role', crunchPapel],
   ['.nvf-pname', 'Pikachu'],    ['.nvf-prole', crunchPapel],
-  ['#topUserChip .uname', 'Pikachu']
+  ['#topUserChip .uname', 'Pikachu'], ['#ppTopUser .uname', 'Pikachu'], ['#ppName', 'Pikachu'], ['#ppRole', crunchPapel]
 ];
 function crunchTextos(ligar){
   CRUNCH_TEXTOS.forEach(function(par){

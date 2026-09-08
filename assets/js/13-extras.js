@@ -780,13 +780,19 @@ function rvShareCopiar(){
     const el = new Image();
     el.className = 'ppav-img';
     el.onload = function(){
-      janela = medeJanela();
-      /* comeca cobrindo a janela por inteiro */
-      base = Math.max(janela.w / el.naturalWidth, janela.h / el.naturalHeight);
-      el.style.width = (el.naturalWidth * base) + 'px';
-      el.style.height = (el.naturalHeight * base) + 'px';
-      escala = 1; x = 0; y = 0; zoom.value = 100;
-      aplica();
+      /* a janela so tem tamanho depois de o modal estar na tela; enquanto nao
+         tiver, tenta de novo no quadro seguinte */
+      let tentativas = 0;
+      (function encaixa(){
+        janela = medeJanela();
+        if ((!janela.w || !janela.h) && tentativas++ < 30) return requestAnimationFrame(encaixa);
+        /* comeca cobrindo a janela por inteiro, sem deformar */
+        base = Math.max(janela.w / el.naturalWidth, janela.h / el.naturalHeight);
+        el.style.width = (el.naturalWidth * base) + 'px';
+        el.style.height = (el.naturalHeight * base) + 'px';
+        escala = 1; x = 0; y = 0; zoom.value = 100;
+        aplica();
+      })();
     };
     el.src = url;
     img = el;
@@ -833,13 +839,31 @@ function rvShareCopiar(){
     return c.toDataURL('image/jpeg', 0.92);
   }
 
+  /* o que ja esta no ar: a capa vem da variavel do corpo (ou do cliente da
+     vez) e a foto, do fundo do proprio avatar */
+  function imagemAtual(){
+    if (tipo === 'capa'){
+      const v = getComputedStyle(document.body).getPropertyValue('--capa-src').trim();
+      if (v && v !== 'none'){ const m = v.match(/url\(["']?(.*?)["']?\)/); if (m) return m[1]; }
+      const c = (typeof customCliente === 'function') ? customCliente() : null;
+      return c ? c.capa : '';
+    }
+    const av = document.getElementById('ppAvatar') || document.querySelector('.profile-card .avatar.lg');
+    if (!av) return '';
+    const m = getComputedStyle(av).backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+    return m ? m[1] : '';
+  }
   window.ppAvAbrir = function(qual){
     tipo = TIPOS[qual] ? qual : 'foto';
     titulo.textContent = TIPOS[tipo].titulo;
     vazio();
     modal.classList.add('open');
-    /* ja abre pedindo o arquivo: e o primeiro passo em qualquer um dos dois */
-    setTimeout(function(){ arq.click(); }, 120);
+    /* ja mostra a imagem que esta no ar, pronta para reenquadrar; o modal
+       precisa estar aberto antes, senao a janela mede zero */
+    const atual = imagemAtual();
+    if (atual) monta(atual);
+    /* o navegador so abre o seletor de arquivo em resposta a um clique da
+       pessoa; abrir sozinho aqui era ignorado. O modal ja mostra o botao. */
   };
   bPick.addEventListener('click', function(){ arq.click(); });
   arq.addEventListener('change', function(){
@@ -847,14 +871,31 @@ function rvShareCopiar(){
     monta(URL.createObjectURL(f));
     arq.value = '';
   });
+  /* sem foto, sobra a inicial do nome sobre a cor da marca — o mesmo que a
+     rede faz com quem nunca subiu retrato */
+  function iniciaisDoNome(){
+    const el = document.querySelector('.profile-name');
+    const nome = (el ? el.textContent : 'SULTS').trim();
+    /* nome e sobrenome: "Rodrigo Caetano" vira RC */
+    /* nome e sobrenome: "Rodrigo Caetano" vira RC, "Homem-Aranha" vira HA */
+    return nome.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(function(p){ return p[0]; }).join('').toUpperCase();
+  }
   bRem.addEventListener('click', function(){
     if (tipo === 'foto'){
+      const ini = iniciaisDoNome();
+      const marca = getComputedStyle(document.body).getPropertyValue('--marca').trim() || 'var(--teal)';
+      document.querySelectorAll('#ppAvatar, .profile-card .avatar.lg, #topUserChip .avatar, .pp-topav, .nvf-pav, #nmodTopAv').forEach(function(el){
+        el.style.background = marca;
+        el.style.color = '#fff';
+        el.textContent = ini;
+      });
       const av = document.getElementById('ppAvatar');
-      if (av){ av.style.backgroundImage = ''; }
-      document.querySelectorAll('.profile-card .avatar.lg, #ppAvatar').forEach(function(el){ el.style.backgroundImage = ''; });
+      if (av) av.insertAdjacentHTML('beforeend', '<span class="pp-online"></span>');
       if (typeof fgToast === 'function') fgToast('Foto do perfil removida');
     } else {
-      document.body.style.removeProperty('--capa-src');
+      /* sem imagem, a faixa fica na cor da marca: o "none" vence o padrao da folha */
+      document.body.style.setProperty('--capa-src', 'none');
+      document.body.style.removeProperty('--capa-pos');
       if (typeof fgToast === 'function') fgToast('Capa removida');
     }
     vazio();

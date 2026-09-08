@@ -162,7 +162,9 @@
 .pp-avedit:focus-visible{outline:none;box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(0,172,172,.24)}
 .ppav-stage{min-height:320px;display:flex;align-items:center;justify-content:center;background:#F4F5F6;border-radius:8px;
   box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;padding:16px}
-.ppav-stage img{max-width:100%;max-height:420px;display:block;border-radius:4px}
+/* a imagem do recorte tem tamanho proprio, calculado no script: o limite
+   antigo (max-width e max-height) achatava as compridas */
+.ppav-stage img:not(.ppav-img){max-width:100%;max-height:420px;display:block;border-radius:4px}
 .ppav-empty{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--muted)}
 .ppav-empty i{font-size:22px;color:#C7C7CC}
 .pp-morewrap{position:relative}
@@ -246,6 +248,9 @@
 .pp-top-title{font-size:17px;line-height:24px;font-weight:700;letter-spacing:0}
 .pp-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 60px}
 .pp-hero-card{background:#fff;border-bottom:1px solid var(--line)}
+/* faixa larga e baixa: a proporcao do recorte (3:1) nao cabe aqui sem
+   deixar a capa altissima no desktop, entao o corte de cima e de baixo e o
+   preco. O cartao da home e o bloco dos modulos seguem fieis ao recorte. */
 .pp-cover{height:190px;position:relative;overflow:hidden;background:linear-gradient(120deg,#02394e 0%,#00acac 100%)}
 .pp-cover-pat{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.14) 1.5px, transparent 0);background-size:26px 26px}
 .pp-hero-in{max-width:1180px;margin:0 auto;padding:0 32px 20px;display:block;position:relative}
@@ -477,7 +482,7 @@
 
 
 /* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
-.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:20px 12px 0;text-align:center}
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0;text-align:center}
 .pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
   text-transform:uppercase;color:#98a2ad;white-space:nowrap}
 /* a versao branca vira cinza por inteiro: simbolo e nominativo no mesmo tom */
@@ -488,7 +493,11 @@
 /* ---- Recorte da foto e da capa ----
    O palco e escuro para a janela clara aparecer. A imagem fica inteira por
    baixo; a janela e um buraco, desenhado com uma sombra enorme por fora. */
-.ppav-stage{position:relative;overflow:hidden;background:#1c1c1e;touch-action:none;user-select:none}
+/* vazio, o palco fica claro como o resto do modal; o escuro so entra quando
+   ha imagem, para a janela de recorte aparecer */
+.ppav-stage{position:relative;overflow:hidden;background:#F4F5F6;touch-action:none;user-select:none;
+  transition:background 160ms cubic-bezier(.4,0,.2,1)}
+.ppav-stage.tem-imagem{background:#1c1c1e}
 .ppav-img{position:absolute;left:50%;top:50%;transform-origin:center;max-width:none;max-height:none;
   will-change:transform;pointer-events:none;-webkit-user-drag:none}
 .ppav-janela{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;

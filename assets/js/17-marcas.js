@@ -729,7 +729,7 @@ MARCAS.marvel = {
     { id:'OrjLlpXT1nk', t:'Professor X e Magneto: amigos ou rivais?', views:'63 mil', likes:'4,9 mil', c:270, time:'Há 5 d', cat:'personagens', thumb:'oardefault' },
     { id:'deaUcoq8huQ', t:'Hulks também precisam de abraço 💚', views:'60 mil', likes:'5,6 mil', c:310, time:'Há 6 d', cat:'personagens', thumb:'hq720' },
     { id:'lvvl5a6JhHQ', t:'No fim das contas, Clint Barton é um homem de família.', views:'58 mil', likes:'4,1 mil', c:180, time:'Há 7 d', cat:'personagens', thumb:'oardefault' },
-    { id:'sWBGR228bkY', t:'MARVEL Tōkon: Fighting Souls, trailer de premiação', views:'102 mil', likes:'7,4 mil', c:360, time:'Há 8 d', cat:'games', thumb:'hq720' },
+    { id:'sWBGR228bkY', t:'MARVEL Tōkon: Fighting Souls, trailer de premiação', views:'102 mil', likes:'7,4 mil', c:360, time:'Há 8 d', cat:'games', thumb:'hqdefault' },
     { id:'s5uU7VERudo', t:'Marvel’s Wolverine: trailer de recursos do jogo', views:'73 mil', likes:'6,8 mil', c:420, time:'Há 9 d', cat:'games', thumb:'hq720' }
   ],
   pessoas:{
