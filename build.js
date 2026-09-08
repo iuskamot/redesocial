@@ -249,7 +249,7 @@ function paginaShort(s){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${titulo} · SULTS</title>
 <link rel="canonical" href="${SITE}/s/${s.id}.html">
-<meta property="og:type" content="video.other">
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="SULTS">
 <meta property="og:url" content="${SITE}/s/${s.id}.html">
 <meta property="og:title" content="${titulo}">

@@ -3111,7 +3111,8 @@ input,textarea,select{font-size:14px}
   .rvsh-back{align-items:flex-end}
   /* no celular ela volta a ocupar a largura toda, colada na borda de baixo */
   .rvsh{width:100%;max-width:none;border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
-  .rvsh-apps{justify-content:flex-start}
+  /* centralizados tambem no celular; quando nao couberem, a fileira rola */
+  .rvsh-apps{justify-content:center}
 }
 
 /* No celular nao ha ponteiro: a barra de volume nunca apareceria e ainda
