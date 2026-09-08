@@ -728,6 +728,12 @@ function rvEscutaEmbed(f){
   const bate = setInterval(function(){
     if(++n > 24 || !f.getAttribute('src')){ clearInterval(bate); return; }
     if(f.contentWindow){ try { f.contentWindow.postMessage(JSON.stringify({ event:'listening' }), '*'); } catch(e){} }
+    /* enquanto o short em tela nao anda, pede de novo para tocar: no celular
+       o primeiro pedido costuma cair antes de o player estar de pe */
+    const s = f.closest('.rv-reel');
+    if (s && s.classList.contains('playing') && !s.classList.contains('embed-ok') && !s.classList.contains('paused')){
+      rvComandaEmbed(f, 'playVideo');
+    }
   }, 250);
 }
 (function(){
@@ -740,13 +746,16 @@ function rvEscutaEmbed(f){
     if (!d) return;
     const st = (d.event === 'onStateChange') ? d.info
              : (d.event === 'infoDelivery' && d.info) ? d.info.playerState : undefined;
-    const tempo = (d.event === 'infoDelivery' && d.info) ? d.info.currentTime : 0;
-    const andando = st === 1 || st === 3 || tempo > 0.15;
-    if (!andando) return;
+    if (st === undefined) return;
     const slides = document.querySelectorAll('.rv-reel');
     for (const s of slides){
       const f = s.querySelector('iframe[data-src]');
-      if (f && f.contentWindow === e.source){ s.classList.add('embed-ok'); break; }
+      if (f && f.contentWindow === e.source){
+        /* 1 = tocando. Qualquer outro estado devolve a capa: pausado, o
+           YouTube desenha o proprio play e as setas dentro do quadro. */
+        s.classList.toggle('embed-ok', st === 1);
+        break;
+      }
     }
   });
 })();

@@ -1392,21 +1392,22 @@
 /* Controles do short, no alto a esquerda, na mesma linha do fechar: primeiro
    pausar/tocar, depois o volume. As setas de anterior e proximo seguem na
    lateral, no desktop; o que sumiu do meio foi o play do proprio YouTube. */
-.rv-ctl{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:8px}
-.rv-play{width:36px;height:36px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
-  background:rgba(28,28,30,.55);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+.rv-ctl{position:absolute;top:18px;left:24px;z-index:8;display:flex;align-items:center;gap:10px}
+/* pausar e volume do mesmo tamanho do fechar, do outro lado da linha */
+.rv-play{width:48px;height:48px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.rv-play:hover{background:rgba(28,28,30,.78)}
+.rv-play:hover{background:rgba(255,255,255,.26)}
 /* pausado, o YouTube desenha o proprio play e as setas de playlist dentro do
    quadro; este veu cobre tudo isso e deixa so o nosso icone no meio */
 .rv-reel.paused .rv-card::after{content:"";position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.42)}
 .rv-audio{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:0;
   border-radius:32px;transition:background 120ms cubic-bezier(.4,0,.2,1),padding 120ms cubic-bezier(.4,0,.2,1)}
-.rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:12px;gap:8px}
-.rv-mute{width:36px;height:36px;border:0;border-radius:50%;flex-shrink:0;
-  background:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+.rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:14px;gap:10px}
+.rv-mute{width:48px;height:48px;border:0;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.rv-mute:hover{background:rgba(255,255,255,.08)}
+.rv-mute:hover{background:rgba(255,255,255,.26)}
 .rv-vol{width:0;opacity:0;pointer-events:none;height:4px;-webkit-appearance:none;appearance:none;
   background:rgba(255,255,255,.32);border-radius:32px;outline:none;cursor:pointer;
   transition:width 120ms cubic-bezier(.4,0,.2,1),opacity 120ms cubic-bezier(.4,0,.2,1)}
@@ -1477,4 +1478,13 @@
   /* no celular ela volta a ocupar a largura toda, colada na borda de baixo */
   .rvsh{width:100%;max-width:none;border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
   .rvsh-apps{justify-content:flex-start}
+}
+
+/* No celular nao ha ponteiro: a barra de volume nunca apareceria e ainda
+   roubava o toque. Fica so o alto-falante, que liga e desliga o som — o mesmo
+   gesto do TikTok. Os controles acompanham a margem do fechar. */
+@media (max-width:640px){
+  .rv-ctl{top:14px;left:14px;gap:8px}
+  .rv-vol{display:none}
+  .rv-audio:hover,.rv-audio:focus-within{background:none;padding-right:0;gap:0}
 }

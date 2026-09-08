@@ -178,6 +178,101 @@ ${lista(JS)}
 `;
 }
 
+
+/* =================== paginas de compartilhamento ===================
+   O WhatsApp, o LinkedIn e afins nao olham o video: eles buscam a pagina do
+   link e leem as etiquetas Open Graph dela. Como o prototipo e estatico e
+   todo short cai no mesmo index.html, a previa sairia igual para todos.
+
+   Entao cada short ganha aqui a propria pagina em s/<id>.html: so as
+   etiquetas (capa, titulo, descricao) e um encaminhamento para o player. Quem
+   clica cai no short; quem so le o link ve a capa e o titulo certos.
+   =================================================================== */
+const SITE = 'https://iuskamot.github.io/redesocial';
+
+/* os shorts vivem espalhados pelos cenarios; aqui so interessa o que tem
+   video do YouTube, que e onde a capa existe em endereco publico */
+function shortsDosCenarios(){
+  const fontes = [
+    { arq:'assets/js/14-crunch.js', marca:'Crunchyroll' },
+    { arq:'assets/js/17-marcas.js', marca:null }
+  ];
+  const achados = [];
+  fontes.forEach(function(f){
+    let txt; try { txt = ler(f.arq); } catch(e){ return; }
+    /* nas marcas, o nome vem do proprio bloco; no cenario da Crunchyroll e fixo */
+    const marcas = [];
+    const reNome = /MARCAS\.(\w+) = \{\s*\n\s*nome:\s*(?:'([^']*)'|"([^"]*)")/g;
+    let m;
+    while ((m = reNome.exec(txt))) marcas.push({ pos:m.index, nome:m[2] || m[3] });
+    const reId = /\{ id:'([\w-]{11})'/g;
+    let e;
+    while ((e = reId.exec(txt))){
+      /* o objeto vai do { ate a chave que fecha; sao literais simples */
+      const ini = e.index;
+      let nivel = 0, fim = ini;
+      for (let i = ini; i < txt.length; i++){
+        if (txt[i] === '{') nivel++;
+        else if (txt[i] === '}'){ nivel--; if (!nivel){ fim = i + 1; break; } }
+      }
+      let obj;
+      try { obj = (new Function('return ' + txt.slice(ini, fim)))(); } catch(err){ continue; }
+      if (!obj || !obj.id || !obj.t) continue;
+      let marca = f.marca;
+      if (!marca){
+        for (const x of marcas){ if (x.pos < ini) marca = x.nome; else break; }
+      }
+      achados.push({ id:obj.id, titulo:obj.t, thumb:obj.thumb || 'hq720', marca:marca || 'SULTS' });
+      reId.lastIndex = fim;
+    }
+  });
+  /* um short pode aparecer em mais de um cenario: fica a primeira ocorrencia */
+  const vistos = new Set();
+  return achados.filter(function(s){ if (vistos.has(s.id)) return false; vistos.add(s.id); return true; });
+}
+
+function escapaAtributo(s){
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function paginaShort(s){
+  const titulo = escapaAtributo(s.titulo);
+  const desc = escapaAtributo(s.marca + ' · Shorts na rede SULTS');
+  const capa = 'https://i.ytimg.com/vi/' + s.id + '/' + s.thumb + '.jpg';
+  const destino = '../?short=' + s.id;
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${titulo} · SULTS</title>
+<link rel="canonical" href="${SITE}/s/${s.id}.html">
+<meta property="og:type" content="video.other">
+<meta property="og:site_name" content="SULTS">
+<meta property="og:url" content="${SITE}/s/${s.id}.html">
+<meta property="og:title" content="${titulo}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${capa}">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${titulo}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${capa}">
+<!-- quem clica no link vai direto para o short dentro da rede -->
+<meta http-equiv="refresh" content="0; url=${destino}">
+<style>body{margin:0;display:grid;place-items:center;min-height:100vh;background:#0a0a0a;color:#fff;
+  font:14px/1.5 system-ui,Segoe UI,Roboto,sans-serif;text-align:center;padding:24px}
+a{color:#00acac}</style>
+</head>
+<body>
+<p>Abrindo o short na rede…<br><a href="${destino}">Continuar</a></p>
+<script>location.replace('${destino}');<\/script>
+</body>
+</html>
+`;
+}
+
 /* =================== executa =================== */
 const kb = t => (t.length / 1024).toFixed(1).padStart(7) + ' KB';
 
@@ -190,5 +285,13 @@ PAGINAS.forEach(([arq, titulo, abrir]) => {
   fs.writeFileSync(path.join(RAIZ, arq), txt, 'utf8');
   console.log(arq.padEnd(20) + kb(txt) + '   ' + (abrir || 'abre na home'));
 });
+
+const shorts = shortsDosCenarios();
+const dirS = path.join(RAIZ, 's');
+fs.mkdirSync(dirS, { recursive: true });
+/* limpa as paginas antigas: short que saiu do cenario nao fica para tras */
+fs.readdirSync(dirS).filter(f => f.endsWith('.html')).forEach(f => fs.unlinkSync(path.join(dirS, f)));
+shorts.forEach(s => fs.writeFileSync(path.join(dirS, s.id + '.html'), paginaShort(s), 'utf8'));
+console.log('s/*.html'.padEnd(20) + String(shorts.length).padStart(7) + '      paginas de compartilhamento');
 
 console.log('\nfontes: ' + CSS.length + ' folhas · ' + TELAS.length + ' telas · ' + JS.length + ' scripts');

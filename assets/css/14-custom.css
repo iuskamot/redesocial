@@ -278,14 +278,16 @@ body.demo-custom .com-item:hover h4{color:var(--marca)}
 
 /* ---- Marvel ---- */
 .av-marca-marvel{color:transparent;text-shadow:none;background:#000 url("../../uploads/marvel/logo.svg") center/86% auto no-repeat border-box}
-/* os personagens nas cores de cada um (nao ha retratos no projeto) */
-.av-mv-tony{background:linear-gradient(135deg,#ffb300,#b71c1c)}
-.av-mv-steve{background:linear-gradient(135deg,#42a5f5,#0d47a1)}
-.av-mv-natasha{background:linear-gradient(135deg,#8d6e63,#3e2723)}
-.av-mv-bruce{background:linear-gradient(135deg,#81c784,#1b5e20)}
-.av-mv-wanda{background:linear-gradient(135deg,#ef5350,#7b1fa2)}
-.av-mv-thor{background:linear-gradient(135deg,#90caf9,#37474f)}
-.av-mv-loki{background:linear-gradient(135deg,#66bb6a,#f9a825)}
+/* os personagens com o retrato de cada um; a arte e vertical, entao a
+   posicao sobe um pouco para o rosto ficar no meio do circulo */
+[class*="av-mv-"]{color:transparent;text-shadow:none;background-color:#1c1c1e;background-repeat:no-repeat;background-size:cover;background-position:center 22%}
+.av-mv-tony{background-image:url("../../uploads/marvel/p-tony.jpg")}
+.av-mv-steve{background-image:url("../../uploads/marvel/p-steve.jpg")}
+.av-mv-natasha{background-image:url("../../uploads/marvel/p-natasha.jpg")}
+.av-mv-bruce{background-image:url("../../uploads/marvel/p-bruce.jpg")}
+.av-mv-wanda{background-image:url("../../uploads/marvel/p-wanda.jpg")}
+.av-mv-thor{background-image:url("../../uploads/marvel/p-thor.jpg")}
+.av-mv-loki{background-image:url("../../uploads/marvel/p-loki.jpg")}
 /* a foto do Homem-Aranha no lugar da do Rodrigo */
 body.demo-custom[data-cliente="marvel"] .av-rc{background:#111 url("../../uploads/marvel/perfil.jpg") center/cover no-repeat border-box}
 /* a logo ja vem com o retangulo vermelho: fica nas cores originais */

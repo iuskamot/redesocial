@@ -477,8 +477,34 @@
 
 
 /* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
-.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 12px 4px;text-align:center}
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:20px 12px 0;text-align:center}
 .pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
   text-transform:uppercase;color:#98a2ad;white-space:nowrap}
-.pp-sults-por img{height:15px;width:auto;display:block;opacity:.55;filter:grayscale(1)}
+/* a versao branca vira cinza por inteiro: simbolo e nominativo no mesmo tom */
+.pp-sults-por img{height:15px;width:auto;display:block;filter:brightness(0) invert(1) brightness(.68)}
 .pp-sults-dir{font-size:10px;line-height:14px;color:#aab3bd}
+
+
+/* ---- Recorte da foto e da capa ----
+   O palco e escuro para a janela clara aparecer. A imagem fica inteira por
+   baixo; a janela e um buraco, desenhado com uma sombra enorme por fora. */
+.ppav-stage{position:relative;overflow:hidden;background:#1c1c1e;touch-action:none;user-select:none}
+.ppav-img{position:absolute;left:50%;top:50%;transform-origin:center;max-width:none;max-height:none;
+  will-change:transform;pointer-events:none;-webkit-user-drag:none}
+.ppav-janela{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.9)}
+.ppav-janela.foto{width:260px;height:260px;border-radius:50%}
+.ppav-janela.capa{width:min(560px,86%);aspect-ratio:1200 / 400;border-radius:8px}
+.ppav-stage.tem-imagem{cursor:grab}
+.ppav-stage.tem-imagem:active{cursor:grabbing}
+.ppav-zoom{display:flex;align-items:center;gap:12px;margin-top:14px;color:var(--muted)}
+.ppav-zoom i{font-size:13px}
+.ppav-zoom input{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--line);border-radius:32px;outline:none;cursor:pointer}
+.ppav-zoom input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--teal);cursor:pointer}
+.ppav-zoom input::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--teal);cursor:pointer}
+.ppav-acoes{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+#ppAvTitulo{font-size:17px;line-height:24px;font-weight:700;color:var(--ink)}
+@media(max-width:640px){
+  .ppav-janela.foto{width:200px;height:200px}
+  .ppav-acoes .pp-btn{flex:1;justify-content:center}
+}

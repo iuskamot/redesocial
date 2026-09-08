@@ -11,7 +11,8 @@
 <meta property="og:site_name" content="SULTS">
 <meta property="og:title" content="SULTS Social">
 <meta property="og:description" content="A rede social da sua rede: comunicados, publicações e shorts, tudo em um lugar só.">
-<meta property="og:image" content="https://sults-social.pages.dev/uploads/reels/abf-expo-dia4.jpg">
+<meta property="og:url" content="https://iuskamot.github.io/redesocial/">
+<meta property="og:image" content="https://iuskamot.github.io/redesocial/uploads/reels/abf-expo-dia4.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia4.jpg" data-resource-id="abfExpoDia4" />
 <meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia3.jpg" data-resource-id="abfExpoDia3" />
@@ -677,11 +678,37 @@ input,textarea,select{font-size:14px}
 
 
 /* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
-.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 12px 4px;text-align:center}
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:20px 12px 0;text-align:center}
 .pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
   text-transform:uppercase;color:#98a2ad;white-space:nowrap}
-.pp-sults-por img{height:15px;width:auto;display:block;opacity:.55;filter:grayscale(1)}
+/* a versao branca vira cinza por inteiro: simbolo e nominativo no mesmo tom */
+.pp-sults-por img{height:15px;width:auto;display:block;filter:brightness(0) invert(1) brightness(.68)}
 .pp-sults-dir{font-size:10px;line-height:14px;color:#aab3bd}
+
+
+/* ---- Recorte da foto e da capa ----
+   O palco e escuro para a janela clara aparecer. A imagem fica inteira por
+   baixo; a janela e um buraco, desenhado com uma sombra enorme por fora. */
+.ppav-stage{position:relative;overflow:hidden;background:#1c1c1e;touch-action:none;user-select:none}
+.ppav-img{position:absolute;left:50%;top:50%;transform-origin:center;max-width:none;max-height:none;
+  will-change:transform;pointer-events:none;-webkit-user-drag:none}
+.ppav-janela{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.9)}
+.ppav-janela.foto{width:260px;height:260px;border-radius:50%}
+.ppav-janela.capa{width:min(560px,86%);aspect-ratio:1200 / 400;border-radius:8px}
+.ppav-stage.tem-imagem{cursor:grab}
+.ppav-stage.tem-imagem:active{cursor:grabbing}
+.ppav-zoom{display:flex;align-items:center;gap:12px;margin-top:14px;color:var(--muted)}
+.ppav-zoom i{font-size:13px}
+.ppav-zoom input{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--line);border-radius:32px;outline:none;cursor:pointer}
+.ppav-zoom input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--teal);cursor:pointer}
+.ppav-zoom input::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--teal);cursor:pointer}
+.ppav-acoes{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+#ppAvTitulo{font-size:17px;line-height:24px;font-weight:700;color:var(--ink)}
+@media(max-width:640px){
+  .ppav-janela.foto{width:200px;height:200px}
+  .ppav-acoes .pp-btn{flex:1;justify-content:center}
+}
 
 /* grade de modulos e titulos de secao */
 /* ============ Módulos (estilo iCloud) ============ */
@@ -2990,21 +3017,22 @@ input,textarea,select{font-size:14px}
 /* Controles do short, no alto a esquerda, na mesma linha do fechar: primeiro
    pausar/tocar, depois o volume. As setas de anterior e proximo seguem na
    lateral, no desktop; o que sumiu do meio foi o play do proprio YouTube. */
-.rv-ctl{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:8px}
-.rv-play{width:36px;height:36px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
-  background:rgba(28,28,30,.55);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+.rv-ctl{position:absolute;top:18px;left:24px;z-index:8;display:flex;align-items:center;gap:10px}
+/* pausar e volume do mesmo tamanho do fechar, do outro lado da linha */
+.rv-play{width:48px;height:48px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.rv-play:hover{background:rgba(28,28,30,.78)}
+.rv-play:hover{background:rgba(255,255,255,.26)}
 /* pausado, o YouTube desenha o proprio play e as setas de playlist dentro do
    quadro; este veu cobre tudo isso e deixa so o nosso icone no meio */
 .rv-reel.paused .rv-card::after{content:"";position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.42)}
 .rv-audio{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:0;
   border-radius:32px;transition:background 120ms cubic-bezier(.4,0,.2,1),padding 120ms cubic-bezier(.4,0,.2,1)}
-.rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:12px;gap:8px}
-.rv-mute{width:36px;height:36px;border:0;border-radius:50%;flex-shrink:0;
-  background:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+.rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:14px;gap:10px}
+.rv-mute{width:48px;height:48px;border:0;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.rv-mute:hover{background:rgba(255,255,255,.08)}
+.rv-mute:hover{background:rgba(255,255,255,.26)}
 .rv-vol{width:0;opacity:0;pointer-events:none;height:4px;-webkit-appearance:none;appearance:none;
   background:rgba(255,255,255,.32);border-radius:32px;outline:none;cursor:pointer;
   transition:width 120ms cubic-bezier(.4,0,.2,1),opacity 120ms cubic-bezier(.4,0,.2,1)}
@@ -3075,6 +3103,15 @@ input,textarea,select{font-size:14px}
   /* no celular ela volta a ocupar a largura toda, colada na borda de baixo */
   .rvsh{width:100%;max-width:none;border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
   .rvsh-apps{justify-content:flex-start}
+}
+
+/* No celular nao ha ponteiro: a barra de volume nunca apareceria e ainda
+   roubava o toque. Fica so o alto-falante, que liga e desliga o som — o mesmo
+   gesto do TikTok. Os controles acompanham a margem do fechar. */
+@media (max-width:640px){
+  .rv-ctl{top:14px;left:14px;gap:8px}
+  .rv-vol{display:none}
+  .rv-audio:hover,.rv-audio:focus-within{background:none;padding-right:0;gap:0}
 }
 
 /* feed da home, destaque e coluna direita */
@@ -5373,14 +5410,16 @@ body.demo-custom .com-item:hover h4{color:var(--marca)}
 
 /* ---- Marvel ---- */
 .av-marca-marvel{color:transparent;text-shadow:none;background:#000 url("uploads/marvel/logo.svg") center/86% auto no-repeat border-box}
-/* os personagens nas cores de cada um (nao ha retratos no projeto) */
-.av-mv-tony{background:linear-gradient(135deg,#ffb300,#b71c1c)}
-.av-mv-steve{background:linear-gradient(135deg,#42a5f5,#0d47a1)}
-.av-mv-natasha{background:linear-gradient(135deg,#8d6e63,#3e2723)}
-.av-mv-bruce{background:linear-gradient(135deg,#81c784,#1b5e20)}
-.av-mv-wanda{background:linear-gradient(135deg,#ef5350,#7b1fa2)}
-.av-mv-thor{background:linear-gradient(135deg,#90caf9,#37474f)}
-.av-mv-loki{background:linear-gradient(135deg,#66bb6a,#f9a825)}
+/* os personagens com o retrato de cada um; a arte e vertical, entao a
+   posicao sobe um pouco para o rosto ficar no meio do circulo */
+[class*="av-mv-"]{color:transparent;text-shadow:none;background-color:#1c1c1e;background-repeat:no-repeat;background-size:cover;background-position:center 22%}
+.av-mv-tony{background-image:url("uploads/marvel/p-tony.jpg")}
+.av-mv-steve{background-image:url("uploads/marvel/p-steve.jpg")}
+.av-mv-natasha{background-image:url("uploads/marvel/p-natasha.jpg")}
+.av-mv-bruce{background-image:url("uploads/marvel/p-bruce.jpg")}
+.av-mv-wanda{background-image:url("uploads/marvel/p-wanda.jpg")}
+.av-mv-thor{background-image:url("uploads/marvel/p-thor.jpg")}
+.av-mv-loki{background-image:url("uploads/marvel/p-loki.jpg")}
 /* a foto do Homem-Aranha no lugar da do Rodrigo */
 body.demo-custom[data-cliente="marvel"] .av-rc{background:#111 url("uploads/marvel/perfil.jpg") center/cover no-repeat border-box}
 /* a logo ja vem com o retangulo vermelho: fica nas cores originais */
@@ -5601,23 +5640,38 @@ body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}
           </div>
           <!-- a mesma marca do rodape do menu, aqui em cinza, fora do cartao -->
           <div class="pp-sults">
-            <span class="pp-sults-por">Desenvolvido por <img src="uploads/pacote_logotipos_sults/png/sults-logo-horizontal-s-verde-escrito-azul.png" alt="SULTS"></span>
+            <span class="pp-sults-por">Desenvolvido por <img src="uploads/pacote_logotipos_sults/png/sults-logo-horizontal-branco.png" alt="SULTS"></span>
             <span class="pp-sults-dir">© 2018 Todos os direitos reservados</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- Recorte da foto e da capa: o mesmo modal serve aos dois, mudando so a
+       proporcao da janela (circulo para a foto, faixa para a capa). A imagem
+       arrasta por baixo da janela e a barra aproxima. -->
   <div class="fg-backdrop" id="ppAvModal">
     <div class="fg-modal" style="width:min(720px,94vw)">
       <div class="fg-head" style="gap:10px">
-        <button type="button" class="cat-add" id="ppAvPick"><i class="fa-solid fa-upload"></i> Selecionar</button>
-        <button type="button" class="pp-btn" id="ppAvRemove"><i class="fa-solid fa-trash-can"></i> Remover</button>
+        <h2 id="ppAvTitulo">Foto do perfil</h2>
         <span style="flex:1"></span>
         <button class="fg-close" id="ppAvClose"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="fg-body">
-        <div class="ppav-stage" id="ppAvStage"><span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span></div>
+        <div class="ppav-stage" id="ppAvStage">
+          <span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma imagem selecionada</span>
+        </div>
+        <div class="ppav-zoom" id="ppAvZoomWrap" hidden>
+          <i class="fa-solid fa-magnifying-glass-minus"></i>
+          <input type="range" id="ppAvZoom" min="100" max="300" step="1" value="100" aria-label="Aproximar">
+          <i class="fa-solid fa-magnifying-glass-plus"></i>
+        </div>
+        <div class="ppav-acoes">
+          <button type="button" class="pp-btn" id="ppAvPick"><i class="fa-solid fa-upload"></i> Escolher arquivo</button>
+          <button type="button" class="pp-btn" id="ppAvRemove"><i class="fa-solid fa-trash-can"></i> Remover</button>
+          <span style="flex:1"></span>
+          <button type="button" class="pp-btn primary" id="ppAvSalvar"><i class="fa-solid fa-check"></i> Selecionar</button>
+        </div>
       </div>
       <input type="file" id="ppAvFile" accept="image/*" hidden>
     </div>
@@ -6071,7 +6125,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           <div class="pc-streak">
             <span class="pc-flame"><i class="fa-solid fa-fire"></i></span>
             <div class="pc-streak-tx">
-              <b><span data-pc="streak">0</span> dias seguidos</b>
+              <b><span data-pc="streak">0</span> dias seguidos na rede</b>
               <span data-pc-meta>Recorde: <span data-pc="recorde">0</span> dias · faltam <span data-pc="faltam">0</span></span>
             </div>
             <div class="pc-week" data-pc-week></div>
@@ -8245,6 +8299,12 @@ function rvEscutaEmbed(f){
   const bate = setInterval(function(){
     if(++n > 24 || !f.getAttribute('src')){ clearInterval(bate); return; }
     if(f.contentWindow){ try { f.contentWindow.postMessage(JSON.stringify({ event:'listening' }), '*'); } catch(e){} }
+    /* enquanto o short em tela nao anda, pede de novo para tocar: no celular
+       o primeiro pedido costuma cair antes de o player estar de pe */
+    const s = f.closest('.rv-reel');
+    if (s && s.classList.contains('playing') && !s.classList.contains('embed-ok') && !s.classList.contains('paused')){
+      rvComandaEmbed(f, 'playVideo');
+    }
   }, 250);
 }
 (function(){
@@ -8257,13 +8317,16 @@ function rvEscutaEmbed(f){
     if (!d) return;
     const st = (d.event === 'onStateChange') ? d.info
              : (d.event === 'infoDelivery' && d.info) ? d.info.playerState : undefined;
-    const tempo = (d.event === 'infoDelivery' && d.info) ? d.info.currentTime : 0;
-    const andando = st === 1 || st === 3 || tempo > 0.15;
-    if (!andando) return;
+    if (st === undefined) return;
     const slides = document.querySelectorAll('.rv-reel');
     for (const s of slides){
       const f = s.querySelector('iframe[data-src]');
-      if (f && f.contentWindow === e.source){ s.classList.add('embed-ok'); break; }
+      if (f && f.contentWindow === e.source){
+        /* 1 = tocando. Qualquer outro estado devolve a capa: pausado, o
+           YouTube desenha o proprio play e as setas dentro do quadro. */
+        s.classList.toggle('embed-ok', st === 1);
+        break;
+      }
     }
   });
 })();
@@ -8769,7 +8832,7 @@ function ppAvRender(){
   st.innerHTML = ppAvURL ? '<img src="'+ppAvURL+'" alt="Foto do perfil">'
     : '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span>';
 }
-$('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); ppAvRender(); $('#ppAvModal').classList.add('open'); });
+$('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('foto'); });
 $('#ppAvClose') && $('#ppAvClose').addEventListener('click', ()=>$('#ppAvModal').classList.remove('open'));
 $('#ppAvModal') && $('#ppAvModal').addEventListener('click', e=>{ if(e.target===$('#ppAvModal')) $('#ppAvModal').classList.remove('open'); });
 $('#ppAvPick') && $('#ppAvPick').addEventListener('click', ()=>$('#ppAvFile').click());
@@ -9094,7 +9157,14 @@ reelsPlayer.addEventListener('click', e => {
 reelsPlayer.addEventListener('click', e => {
   if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,.rv-ctl,[data-rvvol],input,button,a')){
     e.preventDefault(); e.stopPropagation();
-    rvTogglePause(rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel'));
+    const alvo = rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel');
+    const emb = alvo && alvo.querySelector('iframe[data-src]');
+    if (emb && !alvo.classList.contains('embed-ok') && !alvo.classList.contains('paused')){
+      /* o video nunca chegou a andar: o toque e a autorizacao que faltava */
+      if (typeof rvComandaEmbed === 'function'){ rvComandaEmbed(emb, 'unMute'); rvComandaEmbed(emb, 'mute'); rvComandaEmbed(emb, 'playVideo'); }
+      return;
+    }
+    rvTogglePause(alvo);
     return;
   }
   /* aprovar/reprovar: o slide diz qual short e, pela posicao na lista */
@@ -14166,10 +14236,14 @@ function rvShareDados(reel){
   const post = r ? POSTS[r.p] : null;
   const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
   /* O link e sempre o do proprio site, nunca o do YouTube: quem recebe entra
-     na rede, nao sai dela. A previa bonita no WhatsApp vem das etiquetas Open
-     Graph do cabecalho, que o aplicativo busca ao abrir o endereco. */
-  const id = (post && post.embed) ? post.embed : (r ? r.p : 0);
-  const link = location.origin + location.pathname + '?short=' + id;
+     na rede, nao sai dela. Cada short do YouTube tem a propria pagina em
+     s/<id>.html, gerada no build, com a capa e o titulo nas etiquetas Open
+     Graph — e dali que sai a previa bonita no WhatsApp. Os shorts do proprio
+     projeto seguem pelo endereco da home. */
+  const base = location.origin + location.pathname.replace(/[^/]*$/, '');
+  const link = (post && post.embed)
+    ? base + 's/' + post.embed + '.html'
+    : base + '?short=' + (r ? r.p : 0);
   return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
 }
 function rvShareAbrir(reel){
@@ -14206,6 +14280,189 @@ function rvShareCopiar(){
     rvShareFechar();
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !fundo.hidden) rvShareFechar(); });
+})();
+
+/* ---- Abrir o short que veio pelo link ----
+   A pagina de compartilhamento encaminha para ?short=<id>. Aqui a rede
+   descobre de qual cliente aquele short e, liga o cenario certo e abre o
+   player nele. Sem isso o link cairia na home e o short ficaria perdido. */
+(function(){
+  const alvo = new URLSearchParams(location.search).get('short');
+  if (!alvo) return;
+  function abre(){
+    /* short do proprio projeto: o parametro e a posicao na lista */
+    if (/^\d+$/.test(alvo)){
+      if (typeof openPlayer === 'function' && typeof orderedShorts === 'function') openPlayer(orderedShorts(), +alvo);
+      return;
+    }
+    /* short do YouTube: procura o cliente dono dele */
+    let cliente = null;
+    if (typeof MARCAS !== 'undefined'){
+      for (const k of Object.keys(MARCAS)){
+        if (MARCAS[k].shorts.some(s => s.id === alvo)){ cliente = k; break; }
+      }
+    }
+    const noCrunch = (typeof CRUNCH_SHORTS !== 'undefined') && CRUNCH_SHORTS.some(s => s.id === alvo);
+    if (cliente && typeof customLigar === 'function') customLigar(cliente);
+    else if (noCrunch && typeof customLigar === 'function') customLigar('crunch');
+    setTimeout(function(){
+      if (typeof orderedShorts !== 'function' || typeof openPlayer !== 'function') return;
+      const lista = orderedShorts();
+      const i = lista.findIndex(r => { const p = POSTS[r.p]; return p && p.embed === alvo; });
+      if (i >= 0) openPlayer(lista, i);
+    }, 400);
+  }
+  /* espera a home terminar de montar */
+  if (document.readyState === 'complete') setTimeout(abre, 300);
+  else window.addEventListener('load', () => setTimeout(abre, 300));
+})();
+
+/* ---- Recorte da foto do perfil e da capa ----
+   O mesmo modal atende aos dois: muda a proporcao da janela e para onde o
+   recorte vai. A imagem e desenhada num quadro pelo canvas, na escala e na
+   posicao que a pessoa escolheu, e o resultado vira a nova foto ou capa. */
+(function(){
+  const modal = document.getElementById('ppAvModal');
+  if (!modal) return;
+  const palco  = document.getElementById('ppAvStage');
+  const arq    = document.getElementById('ppAvFile');
+  const zoomBx = document.getElementById('ppAvZoomWrap');
+  const zoom   = document.getElementById('ppAvZoom');
+  const titulo = document.getElementById('ppAvTitulo');
+  const bSalvar= document.getElementById('ppAvSalvar');
+  const bPick  = document.getElementById('ppAvPick');
+  const bRem   = document.getElementById('ppAvRemove');
+
+  /* a janela de cada tipo: proporcao na tela e tamanho do arquivo final */
+  const TIPOS = {
+    foto: { classe:'foto', titulo:'Foto do perfil', prop:1,    saida:[512, 512] },
+    capa: { classe:'capa', titulo:'Foto de capa',   prop:3,    saida:[1200, 400] }
+  };
+  let tipo = 'foto', img = null, escala = 1, base = 1, x = 0, y = 0, janela = null;
+
+  function medeJanela(){
+    const j = palco.querySelector('.ppav-janela');
+    if (!j) return { w:260, h:260 };
+    const r = j.getBoundingClientRect();
+    return { w:r.width, h:r.height };
+  }
+  function aplica(){
+    if (!img) return;
+    img.style.transform = 'translate(-50%, -50%) translate(' + x + 'px, ' + y + 'px) scale(' + escala + ')';
+  }
+  function limites(){
+    /* a imagem nunca deixa aparecer o fundo dentro da janela */
+    if (!img || !janela) return;
+    const lw = img.naturalWidth * base * escala, lh = img.naturalHeight * base * escala;
+    const mx = Math.max(0, (lw - janela.w) / 2), my = Math.max(0, (lh - janela.h) / 2);
+    x = Math.min(mx, Math.max(-mx, x));
+    y = Math.min(my, Math.max(-my, y));
+  }
+  function monta(url){
+    palco.innerHTML = '';
+    const j = document.createElement('div');
+    j.className = 'ppav-janela ' + TIPOS[tipo].classe;
+    const el = new Image();
+    el.className = 'ppav-img';
+    el.onload = function(){
+      janela = medeJanela();
+      /* comeca cobrindo a janela por inteiro */
+      base = Math.max(janela.w / el.naturalWidth, janela.h / el.naturalHeight);
+      el.style.width = (el.naturalWidth * base) + 'px';
+      el.style.height = (el.naturalHeight * base) + 'px';
+      escala = 1; x = 0; y = 0; zoom.value = 100;
+      aplica();
+    };
+    el.src = url;
+    img = el;
+    palco.appendChild(el);
+    palco.appendChild(j);
+    palco.classList.add('tem-imagem');
+    zoomBx.hidden = false;
+  }
+  function vazio(){
+    palco.innerHTML = '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma imagem selecionada</span>';
+    palco.classList.remove('tem-imagem');
+    zoomBx.hidden = true;
+    img = null;
+  }
+  /* arrastar */
+  let arrastando = false, px = 0, py = 0;
+  palco.addEventListener('pointerdown', function(e){
+    if (!img) return;
+    arrastando = true; px = e.clientX; py = e.clientY;
+    palco.setPointerCapture(e.pointerId);
+  });
+  palco.addEventListener('pointermove', function(e){
+    if (!arrastando || !img) return;
+    x += e.clientX - px; y += e.clientY - py; px = e.clientX; py = e.clientY;
+    limites(); aplica();
+  });
+  palco.addEventListener('pointerup', function(e){ arrastando = false; try { palco.releasePointerCapture(e.pointerId); } catch(err){} });
+  zoom.addEventListener('input', function(){
+    escala = (+zoom.value) / 100;
+    limites(); aplica();
+  });
+
+  /* recorta no tamanho de saida e devolve o endereco da imagem pronta */
+  function recorta(){
+    if (!img) return null;
+    const [lw, lh] = TIPOS[tipo].saida;
+    const c = document.createElement('canvas');
+    c.width = lw; c.height = lh;
+    const ctx = c.getContext('2d');
+    const fator = lw / janela.w;                    /* da tela para o arquivo */
+    const dw = img.naturalWidth * base * escala * fator;
+    const dh = img.naturalHeight * base * escala * fator;
+    ctx.drawImage(img, (lw - dw) / 2 + x * fator, (lh - dh) / 2 + y * fator, dw, dh);
+    return c.toDataURL('image/jpeg', 0.92);
+  }
+
+  window.ppAvAbrir = function(qual){
+    tipo = TIPOS[qual] ? qual : 'foto';
+    titulo.textContent = TIPOS[tipo].titulo;
+    vazio();
+    modal.classList.add('open');
+    /* ja abre pedindo o arquivo: e o primeiro passo em qualquer um dos dois */
+    setTimeout(function(){ arq.click(); }, 120);
+  };
+  bPick.addEventListener('click', function(){ arq.click(); });
+  arq.addEventListener('change', function(){
+    const f = arq.files && arq.files[0]; if (!f) return;
+    monta(URL.createObjectURL(f));
+    arq.value = '';
+  });
+  bRem.addEventListener('click', function(){
+    if (tipo === 'foto'){
+      const av = document.getElementById('ppAvatar');
+      if (av){ av.style.backgroundImage = ''; }
+      document.querySelectorAll('.profile-card .avatar.lg, #ppAvatar').forEach(function(el){ el.style.backgroundImage = ''; });
+      if (typeof fgToast === 'function') fgToast('Foto do perfil removida');
+    } else {
+      document.body.style.removeProperty('--capa-src');
+      if (typeof fgToast === 'function') fgToast('Capa removida');
+    }
+    vazio();
+    modal.classList.remove('open');
+  });
+  bSalvar.addEventListener('click', function(){
+    const url = recorta();
+    if (!url){ modal.classList.remove('open'); return; }
+    if (tipo === 'foto'){
+      document.querySelectorAll('#ppAvatar, .profile-card .avatar.lg, #topUserChip .avatar, .pp-topav, .nvf-pav, #nmodTopAv').forEach(function(el){
+        el.style.background = 'url(' + url + ') center/cover no-repeat';
+        el.textContent = '';
+      });
+      const av = document.getElementById('ppAvatar');
+      if (av && !av.querySelector('.pp-online')) av.insertAdjacentHTML('beforeend', '<span class="pp-online"></span>');
+      if (typeof fgToast === 'function') fgToast('Foto do perfil atualizada');
+    } else {
+      document.body.style.setProperty('--capa-src', 'url(' + url + ')');
+      document.body.style.removeProperty('--capa-pos');
+      if (typeof fgToast === 'function') fgToast('Capa atualizada');
+    }
+    modal.classList.remove('open');
+  });
 })();
 
 /* ===================== assets/js/14-crunch.js ===================== */
@@ -14953,10 +15210,11 @@ function customAlternar(){
   const bt = document.getElementById('capaTrocar'), arq = document.getElementById('capaFile');
   /* o mesmo botao vive em dois lugares: no cartao da home e na capa do perfil */
   const btPerfil = document.getElementById('ppCapaTrocar');
-  if (btPerfil && arq) btPerfil.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); arq.click(); });
+  /* os dois botoes abrem o mesmo modal de recorte, na proporcao da capa */
+  if (btPerfil) btPerfil.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('capa'); });
   if (bt && arq){
     /* o cartao inteiro abre o perfil ao clicar: o botao nao pode deixar subir */
-    bt.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); arq.click(); });
+    bt.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('capa'); else arq.click(); });
     arq.addEventListener('click', function(e){ e.stopPropagation(); });
     arq.addEventListener('change', function(){
       const f = arq.files && arq.files[0]; if (!f) return;

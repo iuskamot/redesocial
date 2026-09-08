@@ -58,7 +58,7 @@ function ppAvRender(){
   st.innerHTML = ppAvURL ? '<img src="'+ppAvURL+'" alt="Foto do perfil">'
     : '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span>';
 }
-$('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); ppAvRender(); $('#ppAvModal').classList.add('open'); });
+$('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('foto'); });
 $('#ppAvClose') && $('#ppAvClose').addEventListener('click', ()=>$('#ppAvModal').classList.remove('open'));
 $('#ppAvModal') && $('#ppAvModal').addEventListener('click', e=>{ if(e.target===$('#ppAvModal')) $('#ppAvModal').classList.remove('open'); });
 $('#ppAvPick') && $('#ppAvPick').addEventListener('click', ()=>$('#ppAvFile').click());
@@ -383,7 +383,14 @@ reelsPlayer.addEventListener('click', e => {
 reelsPlayer.addEventListener('click', e => {
   if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,.rv-ctl,[data-rvvol],input,button,a')){
     e.preventDefault(); e.stopPropagation();
-    rvTogglePause(rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel'));
+    const alvo = rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel');
+    const emb = alvo && alvo.querySelector('iframe[data-src]');
+    if (emb && !alvo.classList.contains('embed-ok') && !alvo.classList.contains('paused')){
+      /* o video nunca chegou a andar: o toque e a autorizacao que faltava */
+      if (typeof rvComandaEmbed === 'function'){ rvComandaEmbed(emb, 'unMute'); rvComandaEmbed(emb, 'mute'); rvComandaEmbed(emb, 'playVideo'); }
+      return;
+    }
+    rvTogglePause(alvo);
     return;
   }
   /* aprovar/reprovar: o slide diz qual short e, pela posicao na lista */

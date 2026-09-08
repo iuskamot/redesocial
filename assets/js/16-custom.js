@@ -254,10 +254,11 @@ function customAlternar(){
   const bt = document.getElementById('capaTrocar'), arq = document.getElementById('capaFile');
   /* o mesmo botao vive em dois lugares: no cartao da home e na capa do perfil */
   const btPerfil = document.getElementById('ppCapaTrocar');
-  if (btPerfil && arq) btPerfil.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); arq.click(); });
+  /* os dois botoes abrem o mesmo modal de recorte, na proporcao da capa */
+  if (btPerfil) btPerfil.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('capa'); });
   if (bt && arq){
     /* o cartao inteiro abre o perfil ao clicar: o botao nao pode deixar subir */
-    bt.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); arq.click(); });
+    bt.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('capa'); else arq.click(); });
     arq.addEventListener('click', function(e){ e.stopPropagation(); });
     arq.addEventListener('change', function(){
       const f = arq.files && arq.files[0]; if (!f) return;
