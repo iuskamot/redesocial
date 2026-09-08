@@ -59,6 +59,11 @@ button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
   display:flex;align-items:center;justify-content:center;
   color:#fff;font-weight:700;font-size:15px;letter-spacing:.3px;
   background:linear-gradient(135deg,#00acac,#026e8f);
+  /* a foto e medida e cortada pela caixa da borda, nao pela de dentro: com
+     uma borda translucida (os avatares dos headers, o .lg) o padrao
+     padding-box encolhia o "cover" para o miolo e o anel da borda mostrava a
+     imagem repetida — a sobra que aparecia ao redor da foto */
+  background-origin:border-box;background-clip:border-box;
 }
 .avatar svg{width:55%;height:55%}
 .avatar.lg{width:78px;height:78px;font-size:25px;border:4px solid #fff}
@@ -74,14 +79,14 @@ button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
 .av-cm{background:linear-gradient(135deg,#9ccc65,#558b2f)}
 .av-js{background:linear-gradient(135deg,#90a4ae,#37474f)}
 .av-rc,.av-lf,.av-wm,.av-gc,.av-ms,.av-bo,.av-as,.av-pl,.av-cm,.av-js{color:transparent;text-shadow:none}
-.av-rc{background:url("../../uploads/people/rodrigo.png") center/cover}
-.av-lf{background:url("../../uploads/people/ana-elis.png") center/cover}
-.av-wm{background:url("../../uploads/people/guilherme-reis.png") center/cover}
-.av-gc{background:url("../../uploads/people/ellen.png") center/cover}
-.av-ms{background:url("../../uploads/people/matheus.jpg") center/cover}
-.av-bo{background:url("../../uploads/people/eduardo.png") center/cover}
-.av-as{background:url("../../uploads/people/paola.png") center/cover}
-.av-pl{background:url("../../uploads/people/guilherme.png") center/cover}
-.av-cm{background:url("../../uploads/people/gisele.png") center/cover}
-.av-js{background:url("../../uploads/people/eduardo.png") center/cover}
+.av-rc{background:url("../../uploads/people/rodrigo.png") center/cover border-box}
+.av-lf{background:url("../../uploads/people/ana-elis.png") center/cover border-box}
+.av-wm{background:url("../../uploads/people/guilherme-reis.png") center/cover border-box}
+.av-gc{background:url("../../uploads/people/ellen.png") center/cover border-box}
+.av-ms{background:url("../../uploads/people/matheus.jpg") center/cover border-box}
+.av-bo{background:url("../../uploads/people/eduardo.png") center/cover border-box}
+.av-as{background:url("../../uploads/people/paola.png") center/cover border-box}
+.av-pl{background:url("../../uploads/people/guilherme.png") center/cover border-box}
+.av-cm{background:url("../../uploads/people/gisele.png") center/cover border-box}
+.av-js{background:url("../../uploads/people/eduardo.png") center/cover border-box}
 

@@ -536,6 +536,13 @@ document.addEventListener('click', function(e){
     if (typeof abre !== 'function') return;
     abre();
     newsShow(tela || 'shorts');
+    /* cada tela do modulo rola por conta propria e lembraria onde parou;
+       trocar de aba na barra sempre comeca do topo */
+    requestAnimationFrame(function(){
+      const s = (tela === 'feed') ? document.querySelector('#nvFeedScreen .nvf-body')
+                                  : document.getElementById('nvShortsBScreen');
+      if (s) s.scrollTop = 0;
+    });
   };
   window.abrirShorts = function () { window.abrirModuloSocial('shorts'); };
 })();

@@ -88,6 +88,19 @@
   </div>
 </div>
 
+<!-- Filtros no celular: as colunas laterais nao existem, entao os cartoes de
+     filtro sao movidos para esta folha enquanto ela esta aberta e devolvidos
+     ao fechar — os listeners presos aos elementos continuam valendo -->
+<div class="com-sheet-back" id="filtroSheetBack" hidden>
+  <div class="com-sheet" id="filtroSheet" role="dialog" aria-modal="true" aria-label="Filtros">
+    <div class="com-sheet-head">
+      <h3>Filtros</h3>
+      <button class="fg-close" id="filtroSheetClose" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="com-sheet-body" id="filtroSheetBody"></div>
+  </div>
+</div>
+
 <div class="com-sheet-back" id="comSheetBack" hidden>
   <div class="com-sheet" id="comSheet" role="dialog" aria-modal="true" aria-label="Comunicados">
     <div class="com-sheet-head">

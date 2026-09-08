@@ -81,6 +81,11 @@ button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
   display:flex;align-items:center;justify-content:center;
   color:#fff;font-weight:700;font-size:15px;letter-spacing:.3px;
   background:linear-gradient(135deg,#00acac,#026e8f);
+  /* a foto e medida e cortada pela caixa da borda, nao pela de dentro: com
+     uma borda translucida (os avatares dos headers, o .lg) o padrao
+     padding-box encolhia o "cover" para o miolo e o anel da borda mostrava a
+     imagem repetida — a sobra que aparecia ao redor da foto */
+  background-origin:border-box;background-clip:border-box;
 }
 .avatar svg{width:55%;height:55%}
 .avatar.lg{width:78px;height:78px;font-size:25px;border:4px solid #fff}
@@ -96,16 +101,16 @@ button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
 .av-cm{background:linear-gradient(135deg,#9ccc65,#558b2f)}
 .av-js{background:linear-gradient(135deg,#90a4ae,#37474f)}
 .av-rc,.av-lf,.av-wm,.av-gc,.av-ms,.av-bo,.av-as,.av-pl,.av-cm,.av-js{color:transparent;text-shadow:none}
-.av-rc{background:url("uploads/people/rodrigo.png") center/cover}
-.av-lf{background:url("uploads/people/ana-elis.png") center/cover}
-.av-wm{background:url("uploads/people/guilherme-reis.png") center/cover}
-.av-gc{background:url("uploads/people/ellen.png") center/cover}
-.av-ms{background:url("uploads/people/matheus.jpg") center/cover}
-.av-bo{background:url("uploads/people/eduardo.png") center/cover}
-.av-as{background:url("uploads/people/paola.png") center/cover}
-.av-pl{background:url("uploads/people/guilherme.png") center/cover}
-.av-cm{background:url("uploads/people/gisele.png") center/cover}
-.av-js{background:url("uploads/people/eduardo.png") center/cover}
+.av-rc{background:url("uploads/people/rodrigo.png") center/cover border-box}
+.av-lf{background:url("uploads/people/ana-elis.png") center/cover border-box}
+.av-wm{background:url("uploads/people/guilherme-reis.png") center/cover border-box}
+.av-gc{background:url("uploads/people/ellen.png") center/cover border-box}
+.av-ms{background:url("uploads/people/matheus.jpg") center/cover border-box}
+.av-bo{background:url("uploads/people/eduardo.png") center/cover border-box}
+.av-as{background:url("uploads/people/paola.png") center/cover border-box}
+.av-pl{background:url("uploads/people/guilherme.png") center/cover border-box}
+.av-cm{background:url("uploads/people/gisele.png") center/cover border-box}
+.av-js{background:url("uploads/people/eduardo.png") center/cover border-box}
 
 
 /* menu lateral */
@@ -1933,7 +1938,11 @@ input,textarea,select{font-size:14px}
 .sb-likes{position:absolute;left:10px;bottom:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 .sb-likes i{font-size:13px}
 .sb-cat{position:absolute;top:var(--selo-topo);left:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;height:var(--selo-alt);padding:0 10px;border-radius:32px;background:rgba(12,31,56,.72);color:#fff;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.3px}
-.sb-cat i{font-size:11px}
+.sb-cat i{font-size:11px;flex:none}
+/* teto: 10px da borda esquerda, a bolinha (10px + 10px de folga) na direita */
+.sb-cat{max-width:calc(100% - 44px)}
+.sb-cat-tx{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-pend-short{display:none}
 .sb-newdot{position:absolute;right:10px;top:10px;z-index:3;border-radius:50%;background:#0BA84A;
   width:var(--ponto);height:var(--ponto);
   box-shadow:0 0 0 2px #fff}
@@ -3087,7 +3096,8 @@ input,textarea,select{font-size:14px}
 }
 
 /* ============ Em destaque (posts estilo shorts) ============ */
-.stories-wrap{position:relative;display:flow-root;--reel-h:198px}
+/* --reel-h so serve para centrar as setas: e a altura que 9:16 da a largura do card */
+.stories-wrap{position:relative;display:flow-root;--reel-h:213px}
 .shorts{
   display:flex;gap:12px;overflow-x:auto;cursor:grab;-webkit-user-drag:none;
   /* o overflow-x obriga o eixo vertical a recortar junto. Os 12px de cima
@@ -3100,7 +3110,7 @@ input,textarea,select{font-size:14px}
 }
 .shorts::-webkit-scrollbar{display:none}
 .reel{
-  position:relative;z-index:0;flex-shrink:0;width:120px;height:var(--reel-h);border-radius:14px;
+  position:relative;z-index:0;flex-shrink:0;width:120px;height:auto;aspect-ratio:9/16;border-radius:14px;
   overflow:hidden;text-align:left;color:#fff;background:#dfe4ea;
   box-shadow:0 8px 18px -8px rgba(16,32,48,.35);
   transition:transform .18s ease,box-shadow .18s ease;
@@ -3826,25 +3836,27 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   /* o painel encosta no cabecalho: so o pe fica arredondado */
   .apps-panel{padding:14px 14px 22px;border-radius:0 0 22px 22px}
   /* Powerups: no desktop ele ja e um dos modulos da grade; aqui vira um
-     atalho de uma linha, com o mesmo icone e o mesmo tamanho dos tiles */
+     atalho de uma linha, com o mesmo icone dos tiles, um pouco menor */
   /* mais especifico que o .pw-card{display:none} da base, que vem depois
      neste arquivo e venceria por ordem */
   .col-main > .pw-card{
     display:flex;align-items:center;gap:12px;text-decoration:none;
-    background:#fff;border:1px solid var(--line);border-radius:16px;
-    padding:12px;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:10px;
     /* o mesmo respiro dos outros blocos da home no celular */
     margin-top:16px;
   }
   .pw-card:active{background:#f7fafb}
-  /* o icone e o mesmo .tile-ic dos modulos: nao precisa de tamanho proprio */
-  .pw-card .tile-ic{flex:none}
+  /* o mesmo .tile-ic dos modulos, em 48px: a mascara e 100% x 100%, entao o
+     formato acompanha, e o simbolo desce na mesma proporcao */
+  .pw-card .tile-ic{flex:none;width:48px;height:48px}
+  .pw-card .smi{width:22px;height:22px;background-size:22px}
   .pw-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-  .pw-tx b{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
+  .pw-tx b{font-size:14px;line-height:18px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
   .pw-tx > span{font-size:12px;line-height:16px;color:var(--muted);
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   /* a seta ganha um fundo proprio: sozinha ela nao lia como algo clicavel */
-  .pw-go{flex:none;width:32px;height:32px;border-radius:50%;background:#f2f5f7;color:#5b6672;
+  .pw-go{flex:none;width:28px;height:28px;border-radius:50%;background:#f2f5f7;color:#5b6672;
     display:flex;align-items:center;justify-content:center;font-size:12px}
   /* os posts tambem vao de ponta a ponta, sem cantos */
   .col-main > .feed .post{border-radius:0}
@@ -3858,7 +3870,8 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   .tile-ic i{font-size:29px}
   .smi{width:29px;height:29px;background-size:29px}
   .tl{font-size:11px}
-  .reel{width:106px;height:176px}
+  /* no celular home e modulo usam o mesmo card: 106px de largura, 9:16 (188px) */
+  .reel{width:106px}
   .post-img{margin:12px -16px 0}
 
   /* ---- shell mobile: o rail sai e a navegação vira a barra de baixo ---- */
@@ -4110,6 +4123,8 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
    dividido entre as duas pontas */
 /* Powerups: so aparece no celular (o desktop tem o tile na grade) */
 .pw-card{display:none}
+/* Filtros: no desktop as colunas laterais ja mostram tudo */
+.mfiltro{display:none}
 .nvf-busca{display:flex;align-items:stretch;height:42px}
 .nvf-busca input{flex:1;min-width:0;border:0;background:#fff;box-shadow:inset 0 0 0 1px var(--linha-campo);
   border-radius:8px 0 0 8px;padding:0 12px;font:inherit;font-size:14px;line-height:20px;color:#1C1C1E;outline:none;
@@ -4291,8 +4306,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
    corte ficava em 8px, o que le como fileira completa, nao como carrossel.
    Em 126x208 a proporcao do card e a mesma (1:1,65) e o sexto aparece
    cortado em 82px — o mesmo pedaco que sobra na home. */
-.nvf-stories .stories-wrap{--reel-h:208px}
-.nvf-stories .reel{width:126px}
+/* a fileira do modulo usa o mesmo card da home: nada de medida propria aqui */
 .nvf-stories .st-arrow[hidden]{display:none}
 .nvf-reels{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .crc-stage{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#3b444d;padding:20px}
@@ -4786,8 +4800,24 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
      fecha e volta para a home. Fica abaixo do player (130), que é tela cheia. */
   .mnav{z-index:128}
   .news-view.reelsmode{left:0}
+  /* ---- Publicacoes e Shorts no celular: o mesmo ritmo da home ----
+     16px entre os blocos e nas laterais, compositor e posts de ponta a ponta
+     (compositor arredondado so em cima, posts sem cantos), e a fita de shorts
+     sangrando pela direita como na home. */
+  .news-view .nvf-body{padding:16px 0 calc(74px + env(safe-area-inset-bottom,0px))}
+  .nvf-layout .nvf-wrap{gap:0}
+  .nvf-wrap > .nvf-stories{margin:0 16px 16px}
+  .nvf-wrap .section-title-row{margin:0 0 4px}
+  .nvf-stories .shorts{gap:8px;margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:0}
+  .nvf-wrap > .nvf-composer{margin:0 0 8px;border-radius:22px 22px 0 0;border-left:0;border-right:0}
+  .nvf-wrap:has(> #nvfChipsBar:not([hidden])) > .nvf-composer{margin-bottom:16px}
+  .nvf-wrap > #nvfChipsBar{margin:0 16px 16px}
+  #nvFeed .post{border-radius:0;border-left:0;border-right:0}
+
+  /* a tela de shorts: o padding de 40px sai da tela e a lateral de 16px fica no corpo */
+  .news-view #nvShortsBScreen{padding:16px 0 0}
   .news-view .sb-body{
-    flex-direction:column;gap:0;padding:12px 12px calc(74px + env(safe-area-inset-bottom,0px));
+    flex-direction:column;gap:0;padding:0 16px calc(74px + env(safe-area-inset-bottom,0px));
     /* o padrão é align-items:flex-start, que faz o filho encolher até o
        conteúdo — a grade ficava mais larga que a tela e era cortada */
     align-items:stretch;
@@ -4795,12 +4825,50 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   .news-view .sb-main{width:100%;min-width:0}
   .news-view .sb-side{display:none}
   /* auto-fill com 190px de mínimo só cabia uma coluna em 390px */
-  .news-view .sb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}
+  .news-view .sb-pillrow{margin:0 0 16px}
+  /* ---- Filtros no celular ----
+     Um botao no topo de cada tela abre a folha com os mesmos cartoes da
+     coluna lateral. O numero e a quantidade de filtros ativos. */
+  .mfiltro{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px}
+  .nvf-wrap > .mfiltro{margin:0 16px 16px}
+  .mfiltro-titulo{font-size:20px;line-height:26px;font-weight:700;color:var(--ink);margin:0;letter-spacing:-.2px}
+  /* em Publicacoes, no celular, a fileira de shorts nao aparece: a tela e so
+     das publicacoes, e os shorts tem a sua propria aba na barra */
+  .news-view .nvf-wrap > .nvf-stories{display:none}
+  .mfiltro-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:999px;
+    background:#fff;box-shadow:inset 0 0 0 1px var(--linha-campo);font:inherit;font-size:13px;font-weight:700;
+    color:var(--ink);cursor:pointer}
+  .mfiltro-btn i{font-size:13px;color:var(--teal)}
+  .mfiltro-btn:active{background:#f3f5f8}
+  /* com filtro ativo o botao vira "Filtrando (N)" e ganha um "x" ao lado que
+     limpa tudo; as fichas de "Resultados para" nao aparecem no celular */
+  .mfiltro-acoes{display:flex;align-items:center;gap:8px}
+  .mfiltro-btn.on{background:var(--teal);color:#fff;box-shadow:none}
+  .mfiltro-btn.on i{color:#fff}
+  .mfiltro-x{width:36px;height:36px;border:0;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--linha-campo);
+    color:var(--ink);font-size:14px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+  .mfiltro-x[hidden]{display:none}
+  .news-view #sbChipsBar,.news-view #nvfChipsBar{display:none !important}
+  .nvf-wrap:has(> #nvfChipsBar:not([hidden])) > .nvf-composer{margin-bottom:8px}
+  /* dentro da folha os cartoes empilham com o mesmo respiro da lateral */
+  #filtroSheetBody{display:flex;flex-direction:column;gap:12px;padding-top:4px}
+  #filtroSheetBody .nvf-side-card{margin:0}
+  .news-view .sb-pend-full{display:none}
+  .news-view .sb-pend-short{display:inline}
+  .news-view .sb-cat{font-size:11px;padding:0 8px;gap:5px}
+  .news-view .sb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
   .news-view .sb-title{font-size:12px}
 
   /* cabeçalho do módulo no celular: símbolo à esquerda; à direita o ícone de
-     Módulos (volta para a home) e a foto, como na home */
-  .nmod-top{padding:0 14px;gap:10px}
+     Módulos (volta para a home) e a foto, como na home. As medidas copiam a
+     barra da home — padding 0 16px, símbolo com os 26px de altura do logotipo,
+     foto de 34px — e os seletores levam .env-social porque as regras do
+     desktop (padding-inline e foto de 40px) tem essa especificidade e
+     venceriam as genericas. */
+  .news-view.env-social .nmod-top{padding:0 16px;gap:10px}
+  .news-view.env-social .nmod-top-logo{width:26px;height:26px}
+  .news-view.env-social .nmod-topav{width:34px;height:34px}
+  .nmod-top{padding:0 16px;gap:10px}
   .nmod-top .nmod-grp,.nmod-top .nmod-envname,.nmod-top .nmod-envdiv,
   .nmod-top #nmodSearchWrap,.nmod-top #nmodEnvSwitch{display:none !important}
   .nmod-top #nmtApps{
@@ -4827,11 +4895,11 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 /* ============ Cenário: funcionário da Crunchyroll (só consome) ============ */
 /* Liga e desliga pelo ícone da Google Play no rodapé do menu. A pessoa vê,
    curte e comenta, mas não cria publicação nem short — e não tem Gerenciar. */
-.av-crunch{background:#fff url("uploads/crunch/icone.png") center/72% no-repeat;
+.av-crunch{background:#fff url("uploads/crunch/icone.png") center/72% no-repeat border-box;
   color:transparent;text-shadow:none;box-shadow:inset 0 0 0 1px var(--line)}
 /* a arte oficial tem fundo transparente: o cinza claro fica por baixo */
 /* zoom leve para o rosto encher o circulo; some so a ponta das orelhas e os pes */
-body.demo-crunch .av-rc{background:#e9eaed url("uploads/crunch/p-pikachu.webp") center 32%/135% auto no-repeat}
+body.demo-crunch .av-rc{background:#e9eaed url("uploads/crunch/p-pikachu.webp") center 32%/135% auto no-repeat border-box}
 body.demo-crunch .profile-banner,
 body.demo-crunch .nvf-pcover{background:#23252B}
 /* com dois seletores para ganhar do .profile-banner .profile-logo{display:block} da base */
@@ -5009,6 +5077,19 @@ body.demo-basico .mnav .fab{display:none}
         <span class="novo-tx"><b>Artigo</b><span>Texto longo, com capa</span></span>
       </button>
     </div>
+  </div>
+</div>
+
+<!-- Filtros no celular: as colunas laterais nao existem, entao os cartoes de
+     filtro sao movidos para esta folha enquanto ela esta aberta e devolvidos
+     ao fechar — os listeners presos aos elementos continuam valendo -->
+<div class="com-sheet-back" id="filtroSheetBack" hidden>
+  <div class="com-sheet" id="filtroSheet" role="dialog" aria-modal="true" aria-label="Filtros">
+    <div class="com-sheet-head">
+      <h3>Filtros</h3>
+      <button class="fg-close" id="filtroSheetClose" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="com-sheet-body" id="filtroSheetBody"></div>
   </div>
 </div>
 
@@ -5949,6 +6030,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
       </aside>
       <div class="nvf-wrap">
+      <div class="mfiltro"><h2 class="mfiltro-titulo">Publicações</h2><div class="mfiltro-acoes"><button type="button" class="mfiltro-btn" data-mfiltro="feed"><i class="fa-solid fa-sliders"></i> <span class="mfiltro-lbl">Filtros</span></button><button type="button" class="mfiltro-x" data-mfiltrox="feed" hidden aria-label="Limpar filtros" title="Limpar filtros"><i class="fa-solid fa-xmark"></i></button></div></div>
       <section class="stories-section nvf-stories">
         <div class="section-title-row">
           <h2 class="section-title" style="font-size:20px;margin:0">Shorts</h2>
@@ -6031,6 +6113,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
       </aside>
       <div class="sb-main">
+        <div class="mfiltro"><h2 class="mfiltro-titulo">Shorts</h2><div class="mfiltro-acoes"><button type="button" class="mfiltro-btn" data-mfiltro="shorts"><i class="fa-solid fa-sliders"></i> <span class="mfiltro-lbl">Filtros</span></button><button type="button" class="mfiltro-x" data-mfiltrox="shorts" hidden aria-label="Limpar filtros" title="Limpar filtros"><i class="fa-solid fa-xmark"></i></button></div></div>
         <div class="sb-pillrow">
           <button class="sb-pillarrow left" id="sbPillLeft" hidden><i class="fa-solid fa-chevron-left"></i></button>
           <div class="sb-pills" id="sbPills"></div>
@@ -7866,12 +7949,79 @@ $$('.hm-side__nav, .hm-side__foot').forEach(caixa => {
     if (typeof qpOpen !== 'function') return;
     if (tipo === 'pub') qpOpen(); else qpOpen(tipo);
   });
+  /* Filtros: os cartoes de filtro da coluna lateral sao MOVIDOS para a folha
+     (nao clonados), para os listeners presos a eles — Autor, Periodo, o
+     Localizar — continuarem funcionando; ao fechar voltam ao lugar. */
+  let filtroOrigem = [];   /* [{el, pai, depois}] para devolver na ordem */
+  let filtroTela = null;
+  const filtroCartoes = tela => {
+    const sel = tela === 'shorts'
+      ? '#nvShortsBScreen .sb-side .nvf-side-card'
+      : '#nvFeedScreen .nvf-profile .nvf-side-card, #nvFeedScreen .nvf-side .nvf-side-card';
+    return [...document.querySelectorAll(sel)].filter(c => !c.hidden);
+  };
+  const filtrosAtivos = tela => {
+    try {
+      if (tela === 'shorts' && typeof sbFiltrosAtivos === 'function') return sbFiltrosAtivos().length;
+      if (tela === 'feed' && typeof nvfFiltrosAtivos === 'function') return nvfFiltrosAtivos().length;
+    } catch (e) {}
+    return 0;
+  };
+  window.filtrosBadge = function(){
+    document.querySelectorAll('.mfiltro-btn').forEach(b => {
+      const tela = b.dataset.mfiltro, n = filtrosAtivos(tela);
+      const lbl = b.querySelector('.mfiltro-lbl');
+      if (lbl) lbl.textContent = n ? 'Filtrando (' + n + ')' : 'Filtros';
+      b.classList.toggle('on', n > 0);
+      const x = b.parentNode.querySelector('[data-mfiltrox="' + tela + '"]');
+      if (x) x.hidden = n === 0;
+    });
+  };
+  /* o "x" limpa todos os filtros da tela, com as mesmas funcoes das fichas */
+  document.addEventListener('click', e => {
+    const x = e.target.closest('[data-mfiltrox]'); if (!x) return;
+    if (x.dataset.mfiltrox === 'shorts' && typeof sbClearAll === 'function') sbClearAll();
+    if (x.dataset.mfiltrox === 'feed' && typeof nvfLimparTudo === 'function') nvfLimparTudo();
+    setTimeout(filtrosBadge, 0);
+  });
+  window.filtrosAbrir = function(tela){
+    const fundo = $('#filtroSheetBack'), corpo = $('#filtroSheetBody'); if (!fundo || !corpo) return;
+    filtroTela = tela;
+    filtroOrigem = filtroCartoes(tela).map(el => ({ el, pai: el.parentNode, depois: el.nextSibling }));
+    filtroOrigem.forEach(o => corpo.appendChild(o.el));
+    /* a barra de baixo e fixa e passa por cima da folha: o fim reserva a altura dela */
+    const barra = $('#mnav'), fab = $('#mnav .fab');
+    const rb = barra ? barra.getBoundingClientRect() : null;
+    const alturaBarra = rb ? Math.round(rb.height) : 64;
+    const saliencia = (rb && fab) ? Math.max(0, Math.round(rb.top - fab.getBoundingClientRect().top)) : 0;
+    corpo.style.paddingBottom = (alturaBarra + saliencia + 24) + 'px';
+    fundo.hidden = false; document.body.style.overflow = 'hidden';
+    filtrosBadge();
+  };
+  window.filtrosFechar = function(){
+    const fundo = $('#filtroSheetBack'); if (!fundo || fundo.hidden) return;
+    /* de volta, na ordem inversa, cada um antes do irmao que tinha */
+    filtroOrigem.slice().reverse().forEach(o => { if (o.pai) o.pai.insertBefore(o.el, o.depois && o.depois.parentNode === o.pai ? o.depois : null); });
+    filtroOrigem = []; filtroTela = null;
+    fundo.hidden = true; document.body.style.overflow = '';
+    filtrosBadge();
+  };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.mfiltro-btn'); if (!b) return;
+    filtrosAbrir(b.dataset.mfiltro);
+  });
+  $('#filtroSheetClose') && $('#filtroSheetClose').addEventListener('click', filtrosFechar);
+  $('#filtroSheetBack') && $('#filtroSheetBack').addEventListener('click', e => { if (e.target.id === 'filtroSheetBack') filtrosFechar(); });
+  /* qualquer toque num filtro dentro da folha atualiza o numero do botao */
+  $('#filtroSheetBody') && $('#filtroSheetBody').addEventListener('click', () => setTimeout(filtrosBadge, 0));
+  $('#filtroSheetBody') && $('#filtroSheetBody').addEventListener('change', () => setTimeout(filtrosBadge, 0));
   $('#comSheetClose') && $('#comSheetClose').addEventListener('click', comSheetFechar);
   $('#comSheetBack') && $('#comSheetBack').addEventListener('click', e => { if (e.target.id === 'comSheetBack') comSheetFechar(); });
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!$('#comSheetBack').hidden) comSheetFechar();
     if (!$('#novoSheetBack').hidden) novoSheetFechar();
+    if ($('#filtroSheetBack') && !$('#filtroSheetBack').hidden) filtrosFechar();
   });
   const irPara = sel => {
     const el = sel && $(sel);
@@ -7900,9 +8050,11 @@ $$('.hm-side__nav, .hm-side__foot').forEach(caixa => {
     /* numa barra de abas, tocar em Shorts abre o Shorts — nao rola ate um
        pedaco da home. Vem antes de fecharModulos(), que desfaria a abertura. */
     if (t === 'shorts' || t === 'feed') {
+      if (typeof filtrosFechar === 'function') filtrosFechar();
       mnav.querySelectorAll('button').forEach(x => x.classList.remove('on'));
       b.classList.add('on');
       if (typeof abrirModuloSocial === 'function') abrirModuloSocial(t);
+      if (typeof filtrosBadge === 'function') setTimeout(filtrosBadge, 50);
       return;
     }
     mnav.querySelectorAll('button').forEach(x => x.classList.remove('on'));
@@ -10403,14 +10555,14 @@ function renderShortsB(){
     const post=POSTS[r.p]||{}, cat=(typeof catById==='function')?catById(r.cat):null;
     return '<article class="sb-card'+(r.pendAppr?' is-pend':'')+'" data-sb="'+REELS_DATA.indexOf(r)+'">'+
       '<div class="sb-media">'+
-        (r.pendAppr?'<div class="sb-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>'+
+        (r.pendAppr?'<div class="sb-pend"><i class="fa-solid fa-clock"></i> <span class="sb-pend-full">Aguardando aprovação</span><span class="sb-pend-short">Aguardando</span></div>'+
           '<div class="sb-modbar">'+
             '<button class="cmod-ok" data-sbapr="1"><i class="fa-solid fa-check"></i> Aprovar</button>'+
             '<button class="cmod-no" data-sbrej="1"><i class="fa-solid fa-xmark"></i> Reprovar</button>'+
           '</div>':'')+
         ((post.img||post.poster)?'<img src="'+(post.img||post.poster)+'" alt="" loading="eager" decoding="async">'
           :(post.video?'<video src="'+post.video+'" muted loop playsinline preload="metadata"></video>':''))+
-        (cat?'<span class="sb-cat"><i class="fa-solid '+cat.icon+'"></i> '+cat.name+'</span>':'')+
+        (cat?'<span class="sb-cat"><i class="fa-solid '+cat.icon+'"></i><span class="sb-cat-tx">'+cat.name+'</span></span>':'')+
         (isSeen(r.p)?'':'<span class="sb-newdot"></span>')+
         '<span class="sb-likes"><i class="fa-solid fa-heart"></i> '+likeDisplay(r)+'</span>'+
         '<h3 class="sb-title">'+(post.title||post.alt||'Short')+'</h3>'+
@@ -11652,14 +11804,18 @@ document.addEventListener('click', function(e){
   if(e.target.closest('[data-nvfvertodas]')) nvfLimparTudo();
   if(e.target.closest('[data-sbvertodos]')){ nvfLimparPesquisa(); sbClearAll(); }
 });
-$('.nvf-layout') && $('.nvf-layout').addEventListener('click', function(e){
+function nvfFiltroClick(e){
   var fi=e.target.closest('.nvf-fitem'); if(fi && fi.dataset.cat===undefined && fi.dataset.fq!==undefined){ nvFeedType=fi.dataset.fq; renderNewsFeed(); return; }
   var rc=e.target.closest('.nvf-reach'); if(rc){ nvFeedReach=rc.dataset.reach||''; renderNewsFeed(); return; }
   var mi=e.target.closest('.nvf-mine'); if(mi){ nvFeedMine=mi.dataset.mine||''; renderNewsFeed(); return; }
   var so=e.target.closest('.nvf-sort'); if(so){ nvFeedSort=so.dataset.sort; renderNewsFeed(); return; }
   var cc=e.target.closest('[data-cat]'); if(cc){ nvFeedCat=cc.dataset.cat; renderNewsFeed(); return; }
   var ai=e.target.closest('.nvf-aitem'); if(ai){ nvFeedAuthor = (nvFeedAuthor===ai.dataset.author?'':ai.dataset.author); renderNewsFeed(); return; }
-});
+}
+/* o mesmo handler na coluna lateral e na folha de filtros do celular, para
+   onde os cartoes sao movidos */
+$('.nvf-layout') && $('.nvf-layout').addEventListener('click', nvfFiltroClick);
+$('#filtroSheetBody') && $('#filtroSheetBody').addEventListener('click', nvfFiltroClick);
 $('#nvfAuthorBtn') && $('#nvfAuthorBtn').addEventListener('click', function(){ nvfAuthorQuery=''; var s=$('#nvfAuthorSearch'); if(s) s.value=''; renderNvfFilters(); $('#authorPickModal').classList.add('open'); });
 $('#authorPickClose') && $('#authorPickClose').addEventListener('click', ()=>$('#authorPickModal').classList.remove('open'));
 $('#authorPickModal') && $('#authorPickModal').addEventListener('click', function(e){ if(e.target===$('#authorPickModal')) $('#authorPickModal').classList.remove('open'); });
@@ -13316,6 +13472,13 @@ document.addEventListener('click', function(e){
     if (typeof abre !== 'function') return;
     abre();
     newsShow(tela || 'shorts');
+    /* cada tela do modulo rola por conta propria e lembraria onde parou;
+       trocar de aba na barra sempre comeca do topo */
+    requestAnimationFrame(function(){
+      const s = (tela === 'feed') ? document.querySelector('#nvFeedScreen .nvf-body')
+                                  : document.getElementById('nvShortsBScreen');
+      if (s) s.scrollTop = 0;
+    });
   };
   window.abrirShorts = function () { window.abrirModuloSocial('shorts'); };
 })();

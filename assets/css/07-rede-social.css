@@ -363,7 +363,11 @@
 .sb-likes{position:absolute;left:10px;bottom:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 .sb-likes i{font-size:13px}
 .sb-cat{position:absolute;top:var(--selo-topo);left:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;height:var(--selo-alt);padding:0 10px;border-radius:32px;background:rgba(12,31,56,.72);color:#fff;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.3px}
-.sb-cat i{font-size:11px}
+.sb-cat i{font-size:11px;flex:none}
+/* teto: 10px da borda esquerda, a bolinha (10px + 10px de folga) na direita */
+.sb-cat{max-width:calc(100% - 44px)}
+.sb-cat-tx{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-pend-short{display:none}
 .sb-newdot{position:absolute;right:10px;top:10px;z-index:3;border-radius:50%;background:#0BA84A;
   width:var(--ponto);height:var(--ponto);
   box-shadow:0 0 0 2px #fff}

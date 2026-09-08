@@ -366,14 +366,14 @@ function renderShortsB(){
     const post=POSTS[r.p]||{}, cat=(typeof catById==='function')?catById(r.cat):null;
     return '<article class="sb-card'+(r.pendAppr?' is-pend':'')+'" data-sb="'+REELS_DATA.indexOf(r)+'">'+
       '<div class="sb-media">'+
-        (r.pendAppr?'<div class="sb-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>'+
+        (r.pendAppr?'<div class="sb-pend"><i class="fa-solid fa-clock"></i> <span class="sb-pend-full">Aguardando aprovação</span><span class="sb-pend-short">Aguardando</span></div>'+
           '<div class="sb-modbar">'+
             '<button class="cmod-ok" data-sbapr="1"><i class="fa-solid fa-check"></i> Aprovar</button>'+
             '<button class="cmod-no" data-sbrej="1"><i class="fa-solid fa-xmark"></i> Reprovar</button>'+
           '</div>':'')+
         ((post.img||post.poster)?'<img src="'+(post.img||post.poster)+'" alt="" loading="eager" decoding="async">'
           :(post.video?'<video src="'+post.video+'" muted loop playsinline preload="metadata"></video>':''))+
-        (cat?'<span class="sb-cat"><i class="fa-solid '+cat.icon+'"></i> '+cat.name+'</span>':'')+
+        (cat?'<span class="sb-cat"><i class="fa-solid '+cat.icon+'"></i><span class="sb-cat-tx">'+cat.name+'</span></span>':'')+
         (isSeen(r.p)?'':'<span class="sb-newdot"></span>')+
         '<span class="sb-likes"><i class="fa-solid fa-heart"></i> '+likeDisplay(r)+'</span>'+
         '<h3 class="sb-title">'+(post.title||post.alt||'Short')+'</h3>'+
@@ -1615,14 +1615,18 @@ document.addEventListener('click', function(e){
   if(e.target.closest('[data-nvfvertodas]')) nvfLimparTudo();
   if(e.target.closest('[data-sbvertodos]')){ nvfLimparPesquisa(); sbClearAll(); }
 });
-$('.nvf-layout') && $('.nvf-layout').addEventListener('click', function(e){
+function nvfFiltroClick(e){
   var fi=e.target.closest('.nvf-fitem'); if(fi && fi.dataset.cat===undefined && fi.dataset.fq!==undefined){ nvFeedType=fi.dataset.fq; renderNewsFeed(); return; }
   var rc=e.target.closest('.nvf-reach'); if(rc){ nvFeedReach=rc.dataset.reach||''; renderNewsFeed(); return; }
   var mi=e.target.closest('.nvf-mine'); if(mi){ nvFeedMine=mi.dataset.mine||''; renderNewsFeed(); return; }
   var so=e.target.closest('.nvf-sort'); if(so){ nvFeedSort=so.dataset.sort; renderNewsFeed(); return; }
   var cc=e.target.closest('[data-cat]'); if(cc){ nvFeedCat=cc.dataset.cat; renderNewsFeed(); return; }
   var ai=e.target.closest('.nvf-aitem'); if(ai){ nvFeedAuthor = (nvFeedAuthor===ai.dataset.author?'':ai.dataset.author); renderNewsFeed(); return; }
-});
+}
+/* o mesmo handler na coluna lateral e na folha de filtros do celular, para
+   onde os cartoes sao movidos */
+$('.nvf-layout') && $('.nvf-layout').addEventListener('click', nvfFiltroClick);
+$('#filtroSheetBody') && $('#filtroSheetBody').addEventListener('click', nvfFiltroClick);
 $('#nvfAuthorBtn') && $('#nvfAuthorBtn').addEventListener('click', function(){ nvfAuthorQuery=''; var s=$('#nvfAuthorSearch'); if(s) s.value=''; renderNvfFilters(); $('#authorPickModal').classList.add('open'); });
 $('#authorPickClose') && $('#authorPickClose').addEventListener('click', ()=>$('#authorPickModal').classList.remove('open'));
 $('#authorPickModal') && $('#authorPickModal').addEventListener('click', function(e){ if(e.target===$('#authorPickModal')) $('#authorPickModal').classList.remove('open'); });
