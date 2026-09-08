@@ -279,7 +279,8 @@ function reelSlideHTML(r, idx, total){
   const timer = '<div class="rv-timer'+(post.video?' isvid':'')+'"><span></span></div>';
   return '<div class="rv-reel' + (pend ? ' is-pend' : '') + '"><div class="rv-card">' +
     (pend ? '<div class="rv-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>' + rvModboxHTML(r) : '') +
-    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+    (post.embed ? '<img class="rv-capa" src="' + (post.img || '') + '" alt="" aria-hidden="true">' +
+      '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
     timer + ((post.video || post.embed) ?
@@ -719,6 +720,36 @@ function rvComandaEmbed(f, comando, args){
 /* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
    lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
 const RV_VIZINHOS = 1;
+/* O player so avisa o que esta fazendo depois que a pagina pede para escutar.
+   E por esse aviso que a capa sai: quando o video comeca a andar de verdade. */
+function rvEscutaEmbed(f){
+  if(!f) return;
+  let n = 0;
+  const bate = setInterval(function(){
+    if(++n > 24 || !f.getAttribute('src')){ clearInterval(bate); return; }
+    if(f.contentWindow){ try { f.contentWindow.postMessage(JSON.stringify({ event:'listening' }), '*'); } catch(e){} }
+  }, 250);
+}
+(function(){
+  /* O player avisa por 'onStateChange' (info numerico) e por 'infoDelivery'
+     (info com playerState e currentTime). Basta um dos dois dizer que o video
+     esta andando para a capa sair. */
+  window.addEventListener('message', function(e){
+    if (String(e.origin).indexOf('youtube') < 0) return;
+    let d; try { d = JSON.parse(e.data); } catch(err){ return; }
+    if (!d) return;
+    const st = (d.event === 'onStateChange') ? d.info
+             : (d.event === 'infoDelivery' && d.info) ? d.info.playerState : undefined;
+    const tempo = (d.event === 'infoDelivery' && d.info) ? d.info.currentTime : 0;
+    const andando = st === 1 || st === 3 || tempo > 0.15;
+    if (!andando) return;
+    const slides = document.querySelectorAll('.rv-reel');
+    for (const s of slides){
+      const f = s.querySelector('iframe[data-src]');
+      if (f && f.contentWindow === e.source){ s.classList.add('embed-ok'); break; }
+    }
+  });
+})();
 function rvArmTimer(){
   clearTimeout(window.__rvT);
   const w=rvFeed.clientHeight||1;
@@ -733,9 +764,9 @@ function rvArmTimer(){
     const f = s.querySelector('iframe[data-src]');
     if(f){
       if(perto){
-        if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src'));
+        if(!f.getAttribute('src')){ f.setAttribute('src', f.getAttribute('data-src')); rvEscutaEmbed(f); }
         else if(k===i){ rvComandaEmbed(f, 'seekTo', [0, true]); rvComandaEmbed(f, 'playVideo'); }
-      } else if(f.getAttribute('src')) f.removeAttribute('src');
+      } else if(f.getAttribute('src')){ f.removeAttribute('src'); s.classList.remove('embed-ok'); }
     }
     const v = s.querySelector('video');
     if(v && perto && k!==i){ rvCarregaVideo(v, false); try{ v.pause(); }catch(e){} }

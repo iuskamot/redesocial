@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SULTS | Home</title>
+<!-- Previa do link em WhatsApp, LinkedIn e afins: sem estas etiquetas o
+     aplicativo mostra so o endereco cru. A imagem precisa de endereco
+     absoluto; o do prototipo publicado. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SULTS">
+<meta property="og:title" content="SULTS Social">
+<meta property="og:description" content="A rede social da sua rede: comunicados, publicações e shorts, tudo em um lugar só.">
+<meta property="og:image" content="https://sults-social.pages.dev/uploads/reels/abf-expo-dia4.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia4.jpg" data-resource-id="abfExpoDia4" />
 <meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia3.jpg" data-resource-id="abfExpoDia3" />
 <meta name="ext-resource-dependency" content="uploads/reels/abf-summit-dia2.jpg" data-resource-id="abfSummitDia2" />
@@ -3035,7 +3044,7 @@ input,textarea,select{font-size:14px}
    celular ela sobe de baixo, que e o gesto de la. */
 .rvsh-back{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;cursor:default}
 .rvsh-back[hidden]{display:none}
-.rvsh{width:min(560px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
+.rvsh{width:auto;max-width:min(560px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
   box-shadow:0 24px 60px -20px rgba(0,0,0,.7);animation:rvshSobe .22s cubic-bezier(.4,0,.2,1)}
 @keyframes rvshSobe{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
 .rvsh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 6px}
@@ -3043,7 +3052,7 @@ input,textarea,select{font-size:14px}
 .rvsh-x{width:34px;height:34px;border:0;border-radius:50%;background:none;color:#d7dbe0;font-size:16px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:background .15s}
 .rvsh-x:hover{background:rgba(255,255,255,.12)}
-.rvsh-apps{display:flex;gap:14px;overflow-x:auto;padding:10px 18px 14px;scrollbar-width:none}
+.rvsh-apps{display:flex;gap:14px;justify-content:center;overflow-x:auto;padding:10px 18px 14px;scrollbar-width:none}
 .rvsh-apps::-webkit-scrollbar{display:none}
 .rvsh-app{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:64px}
 .rvsh-ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;
@@ -3051,7 +3060,9 @@ input,textarea,select{font-size:14px}
 .rvsh-app:hover .rvsh-ic{transform:scale(1.06)}
 .rvsh-nome{font-size:12px;line-height:16px;color:#e7ebef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
 .rvsh-link{display:flex;align-items:center;gap:10px;margin:0 18px;padding:8px 8px 8px 14px;border-radius:32px;background:rgba(255,255,255,.1)}
-.rvsh-url{flex:1;min-width:0;font-size:13px;line-height:18px;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* o endereco nao manda na largura da caixa: ele ocupa o que sobra e, se
+   nao couber, termina em reticencias */
+.rvsh-url{flex:1 1 0;width:0;min-width:0;font-size:13px;line-height:18px;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rvsh-copy{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;border:0;border-radius:32px;flex:none;
   background:var(--teal);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
 .rvsh-copy:hover{background:var(--teal-dark)}
@@ -3059,7 +3070,8 @@ input,textarea,select{font-size:14px}
 /* no celular a folha volta a subir de baixo, colada na borda */
 @media (max-width:640px){
   .rvsh-back{align-items:flex-end}
-  .rvsh{border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
+  /* no celular ela volta a ocupar a largura toda, colada na borda de baixo */
+  .rvsh{width:100%;max-width:none;border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
 }
 
 /* feed da home, destaque e coluna direita */
@@ -5004,6 +5016,10 @@ body.demo-crunch:not(.crunch-admin) #nvManageBtn{display:none !important}
 body.demo-crunch .col-main > .feed > .post[data-sults]{display:none}
 /* short vindo do YouTube: o embed ocupa o card inteiro */
 .rv-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
+/* capa do short: cobre o embed enquanto ele carrega e sai quando o video anda */
+.rv-capa{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;display:block;
+  transition:opacity .25s ease}
+.rv-reel.embed-ok .rv-capa{opacity:0;pointer-events:none}
 
 /* comunicados: só a lista corrida, sem o bloco em destaque */
 body.demo-crunch #homeComPanel .com-featured{display:none}
@@ -5375,12 +5391,6 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
    faixa do topo e a barra de baixo para fora do cartao: fica so o video. */
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
 
-/* o copiar da folha de compartilhar na cor da marca */
-/* preto puro (Marvel) some no botao: quem for escuro demais usa o acento
-   ja calculado, a propria marca com piso de luminosidade */
-body.demo-custom .rvsh-copy{background:var(--marca);color:#fff}
-body.demo-custom[data-cliente="marvel"] .rvsh-copy{background:var(--marca-viva)}
-body.demo-custom[data-cliente="marvel"] .rvsh-copy:hover{background:#000}
 body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}
 </style>
 </head>
@@ -7783,7 +7793,8 @@ function reelSlideHTML(r, idx, total){
   const timer = '<div class="rv-timer'+(post.video?' isvid':'')+'"><span></span></div>';
   return '<div class="rv-reel' + (pend ? ' is-pend' : '') + '"><div class="rv-card">' +
     (pend ? '<div class="rv-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>' + rvModboxHTML(r) : '') +
-    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+    (post.embed ? '<img class="rv-capa" src="' + (post.img || '') + '" alt="" aria-hidden="true">' +
+      '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
     timer + ((post.video || post.embed) ?
@@ -8223,6 +8234,36 @@ function rvComandaEmbed(f, comando, args){
 /* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
    lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
 const RV_VIZINHOS = 1;
+/* O player so avisa o que esta fazendo depois que a pagina pede para escutar.
+   E por esse aviso que a capa sai: quando o video comeca a andar de verdade. */
+function rvEscutaEmbed(f){
+  if(!f) return;
+  let n = 0;
+  const bate = setInterval(function(){
+    if(++n > 24 || !f.getAttribute('src')){ clearInterval(bate); return; }
+    if(f.contentWindow){ try { f.contentWindow.postMessage(JSON.stringify({ event:'listening' }), '*'); } catch(e){} }
+  }, 250);
+}
+(function(){
+  /* O player avisa por 'onStateChange' (info numerico) e por 'infoDelivery'
+     (info com playerState e currentTime). Basta um dos dois dizer que o video
+     esta andando para a capa sair. */
+  window.addEventListener('message', function(e){
+    if (String(e.origin).indexOf('youtube') < 0) return;
+    let d; try { d = JSON.parse(e.data); } catch(err){ return; }
+    if (!d) return;
+    const st = (d.event === 'onStateChange') ? d.info
+             : (d.event === 'infoDelivery' && d.info) ? d.info.playerState : undefined;
+    const tempo = (d.event === 'infoDelivery' && d.info) ? d.info.currentTime : 0;
+    const andando = st === 1 || st === 3 || tempo > 0.15;
+    if (!andando) return;
+    const slides = document.querySelectorAll('.rv-reel');
+    for (const s of slides){
+      const f = s.querySelector('iframe[data-src]');
+      if (f && f.contentWindow === e.source){ s.classList.add('embed-ok'); break; }
+    }
+  });
+})();
 function rvArmTimer(){
   clearTimeout(window.__rvT);
   const w=rvFeed.clientHeight||1;
@@ -8237,9 +8278,9 @@ function rvArmTimer(){
     const f = s.querySelector('iframe[data-src]');
     if(f){
       if(perto){
-        if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src'));
+        if(!f.getAttribute('src')){ f.setAttribute('src', f.getAttribute('data-src')); rvEscutaEmbed(f); }
         else if(k===i){ rvComandaEmbed(f, 'seekTo', [0, true]); rvComandaEmbed(f, 'playVideo'); }
-      } else if(f.getAttribute('src')) f.removeAttribute('src');
+      } else if(f.getAttribute('src')){ f.removeAttribute('src'); s.classList.remove('embed-ok'); }
     }
     const v = s.querySelector('video');
     if(v && perto && k!==i){ rvCarregaVideo(v, false); try{ v.pause(); }catch(e){} }
@@ -14108,28 +14149,26 @@ document.addEventListener('click', function(e){
    separadas, que e o que rende a previa bonita na conversa. */
 const RV_APPS = [
   { id:'whatsapp', nome:'WhatsApp', ic:'fa-brands fa-whatsapp',  cor:'#25D366',
-    url:(l,t)=>'https://api.whatsapp.com/send?text=' + encodeURIComponent(t + '\n\n' + l) },
+    url:(l,t)=>'https://api.whatsapp.com/send?text=' + encodeURIComponent(l) },
   { id:'instagram',nome:'Instagram',ic:'fa-brands fa-instagram', cor:'#E1306C',
     url:()=>'https://www.instagram.com/', copiar:true },
   { id:'facebook', nome:'Facebook', ic:'fa-brands fa-facebook-f',cor:'#1877F2',
     url:(l)=>'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(l) },
-  { id:'x',        nome:'X',        ic:'fa-brands fa-x-twitter', cor:'#000000',
-    url:(l,t)=>'https://twitter.com/intent/tweet?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(t) },
-  { id:'telegram', nome:'Telegram', ic:'fa-brands fa-telegram',  cor:'#2AABEE',
-    url:(l,t)=>'https://t.me/share/url?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(t) },
   { id:'linkedin', nome:'LinkedIn', ic:'fa-brands fa-linkedin-in', cor:'#0A66C2',
-    url:(l)=>'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(l) },
-  { id:'email',    nome:'E-mail',   ic:'fa-solid fa-envelope',   cor:'#5b6672',
-    url:(l,t)=>'mailto:?subject=' + encodeURIComponent(t) + '&body=' + encodeURIComponent(t + '\n\n' + l) }
+    url:(l)=>'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(l) }
 ];
 let rvShareAtual = null;
 function rvShareDados(reel){
   const r = (reel && playerList) ? playerList[[...rvFeed.querySelectorAll('.rv-reel')].indexOf(reel)] : null;
   const post = r ? POSTS[r.p] : null;
   const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
-  /* o prototipo nao publica na internet: o link aponta para a propria tela */
-  const base = location.origin + location.pathname;
-  const link = base + '?short=' + (post && post.embed ? post.embed : (r ? r.p : 0));
+  /* Para a previa sair bonita no WhatsApp (capa, titulo e canal, como um link
+     do G1) o endereco precisa ser publico e trazer as etiquetas Open Graph.
+     Short do YouTube ja tem tudo isso: vai o proprio endereco dele. O short
+     do projeto aponta para esta pagina, que carrega as etiquetas no cabecalho. */
+  const link = (post && post.embed)
+    ? 'https://www.youtube.com/shorts/' + post.embed
+    : location.origin + location.pathname + '?short=' + (r ? r.p : 0);
   return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
 }
 function rvShareAbrir(reel){

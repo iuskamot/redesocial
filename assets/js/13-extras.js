@@ -637,28 +637,26 @@ document.addEventListener('click', function(e){
    separadas, que e o que rende a previa bonita na conversa. */
 const RV_APPS = [
   { id:'whatsapp', nome:'WhatsApp', ic:'fa-brands fa-whatsapp',  cor:'#25D366',
-    url:(l,t)=>'https://api.whatsapp.com/send?text=' + encodeURIComponent(t + '\n\n' + l) },
+    url:(l,t)=>'https://api.whatsapp.com/send?text=' + encodeURIComponent(l) },
   { id:'instagram',nome:'Instagram',ic:'fa-brands fa-instagram', cor:'#E1306C',
     url:()=>'https://www.instagram.com/', copiar:true },
   { id:'facebook', nome:'Facebook', ic:'fa-brands fa-facebook-f',cor:'#1877F2',
     url:(l)=>'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(l) },
-  { id:'x',        nome:'X',        ic:'fa-brands fa-x-twitter', cor:'#000000',
-    url:(l,t)=>'https://twitter.com/intent/tweet?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(t) },
-  { id:'telegram', nome:'Telegram', ic:'fa-brands fa-telegram',  cor:'#2AABEE',
-    url:(l,t)=>'https://t.me/share/url?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(t) },
   { id:'linkedin', nome:'LinkedIn', ic:'fa-brands fa-linkedin-in', cor:'#0A66C2',
-    url:(l)=>'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(l) },
-  { id:'email',    nome:'E-mail',   ic:'fa-solid fa-envelope',   cor:'#5b6672',
-    url:(l,t)=>'mailto:?subject=' + encodeURIComponent(t) + '&body=' + encodeURIComponent(t + '\n\n' + l) }
+    url:(l)=>'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(l) }
 ];
 let rvShareAtual = null;
 function rvShareDados(reel){
   const r = (reel && playerList) ? playerList[[...rvFeed.querySelectorAll('.rv-reel')].indexOf(reel)] : null;
   const post = r ? POSTS[r.p] : null;
   const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
-  /* o prototipo nao publica na internet: o link aponta para a propria tela */
-  const base = location.origin + location.pathname;
-  const link = base + '?short=' + (post && post.embed ? post.embed : (r ? r.p : 0));
+  /* Para a previa sair bonita no WhatsApp (capa, titulo e canal, como um link
+     do G1) o endereco precisa ser publico e trazer as etiquetas Open Graph.
+     Short do YouTube ja tem tudo isso: vai o proprio endereco dele. O short
+     do projeto aponta para esta pagina, que carrega as etiquetas no cabecalho. */
+  const link = (post && post.embed)
+    ? 'https://www.youtube.com/shorts/' + post.embed
+    : location.origin + location.pathname + '?short=' + (r ? r.p : 0);
   return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
 }
 function rvShareAbrir(reel){
