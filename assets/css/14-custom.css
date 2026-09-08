@@ -306,8 +306,6 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
    faixa do topo e a barra de baixo para fora do cartao: fica so o video. */
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
 
-body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}
-
 /* capa removida: a faixa fica na cor cheia da marca */
 body.demo-custom .profile-banner,
 body.demo-custom .pp-cover,
