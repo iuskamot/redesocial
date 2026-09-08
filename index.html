@@ -5296,7 +5296,10 @@ body.demo-custom .pc-streak{display:grid;grid-template-columns:auto 1fr;grid-tem
 body.demo-custom .pc-flame{grid-area:chama;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   background:var(--marca);color:#fff;font-size:18px;box-shadow:0 6px 14px -8px var(--marca)}
 body.demo-custom .pc-streak-tx{grid-area:texto;display:flex;flex-direction:column;gap:1px;min-width:0}
-body.demo-custom .pc-streak-tx b{font-size:15px;line-height:20px;font-weight:700;color:var(--ink)}
+/* numero e rotulo no mesmo corpo e na mesma cor da marca: dois tamanhos ali
+   davam informacao demais para uma linha so */
+body.demo-custom .pc-streak-tx b{display:flex;align-items:baseline;gap:5px;font-size:15px;line-height:20px;font-weight:700;color:var(--marca-meio)}
+body.demo-custom .pc-num{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit}
 body.demo-custom .pc-streak-tx > span{font-size:12px;line-height:16px;color:var(--muted)}
 body.demo-custom .pc-week{grid-area:semana;display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 body.demo-custom .pc-day{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;line-height:12px;font-weight:700;color:var(--muted)}
@@ -6149,7 +6152,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           <div class="pc-streak">
             <span class="pc-flame"><i class="fa-solid fa-fire"></i></span>
             <div class="pc-streak-tx">
-              <b><span data-pc="streak">0</span> dias ativos seguidos</b>
+              <b><span class="pc-num" data-pc="streak">0</span> dias seguidos ativo</b>
               <span data-pc-meta>Recorde: <span data-pc="recorde">0</span> dias · faltam <span data-pc="faltam">0</span></span>
             </div>
             <div class="pc-week" data-pc-week></div>
