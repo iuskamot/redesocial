@@ -657,7 +657,7 @@ function rvShareDados(reel){
      projeto seguem pelo endereco da home. */
   const base = location.origin + location.pathname.replace(/[^/]*$/, '');
   const link = (post && post.embed)
-    ? base + 's/' + post.embed + '.html'
+    ? base + 's/' + post.embed
     : base + '?short=' + (r ? r.p : 0);
   return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
 }

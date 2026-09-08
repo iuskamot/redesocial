@@ -266,10 +266,10 @@ function paginaShort(s){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${titulo} · SULTS</title>
-<link rel="canonical" href="${SITE}/s/${s.id}.html">
+<link rel="canonical" href="${SITE}/s/${s.id}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SULTS">
-<meta property="og:url" content="${SITE}/s/${s.id}.html">
+<meta property="og:url" content="${SITE}/s/${s.id}">
 <meta property="og:title" content="${titulo}">
 <meta property="og:description" content="${desc}">
 <meta property="og:image" content="${capa}">
