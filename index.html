@@ -953,7 +953,7 @@ input,textarea,select{font-size:14px}
 .fo-search{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 15px}
 .fo-search input{border:0;outline:none;background:none;font:inherit;font-size:13px;color:var(--ink);width:170px}
 .fo-search i{color:var(--muted);font-size:13px}
-.fo-btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;font-size:14px;font-weight:700;padding:10px 16px;border-radius:999px;border:0;cursor:pointer;transition:background .15s}
+.fo-btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;font-size:13px;font-weight:700;padding:10px 16px;border-radius:999px;border:0;cursor:pointer;transition:background .15s}
 .fo-btn:hover{background:#029191}
 .fo-btn.ghost{background:#fff;color:#5b6672;border:1.5px solid var(--line)}
 .fo-btn.ghost:hover{background:#f2f5f7}
@@ -1085,8 +1085,8 @@ input,textarea,select{font-size:14px}
 .fg-backdrop{position:fixed;inset:0;z-index:200;background:rgba(16,28,40,.55);display:none;align-items:center;justify-content:center;padding:20px}
 .fg-backdrop.open{display:flex}
 .fg-modal{width:560px;max-width:100%;max-height:92vh;overflow-y:auto;background:#fff;border-radius:14px;box-shadow:0 30px 70px -20px rgba(16,32,48,.5)}
-.fg-head{display:flex;align-items:center;gap:14px;padding:20px 20px 0px 20px;border-bottom:1px solid var(--line)}
-.fg-head h2{font-size:20px;font-weight:700;color:var(--ink)}
+.fg-head{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.fg-head h2{font-size:17px;font-weight:700;color:var(--ink)}
 .fg-steps{display:flex;gap:8px;margin-left:auto}
 .fg-step{font-size:11px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
 .fg-step .n{width:20px;height:20px;border-radius:50%;background:#eef1f4;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
@@ -1097,8 +1097,8 @@ input,textarea,select{font-size:14px}
 .fg-pane{display:none}
 .fg-pane.on{display:block}
 .fg-field{margin-bottom:16px}
-.fg-label{font-size:12px;font-weight:400;color:#5F666C;margin-bottom:6px;display:block}
-.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);outline:none}
+.fg-label{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block}
+.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;color:var(--ink);outline:none}
 .fg-input:focus,.fg-textarea:focus{border-color:var(--teal)}
 .fg-textarea{resize:vertical;min-height:64px}
 .fg-swatches,.fg-icons{display:flex;flex-wrap:wrap;gap:9px}
@@ -1156,10 +1156,6 @@ input,textarea,select{font-size:14px}
 .perm-picktbl tbody tr{cursor:pointer}
 .perm-picktbl tbody tr:hover{background:#F7F9FA}
 #unitPickModal .perm-mhead h3,#unitPickModal .perm-mhead .cat-add{white-space:nowrap}
-#permTeamSec .perm-mhead .cat-add,#permTeamSec .perm-mhead .rx-search{border-radius:8px;height:36px;padding-top:0;padding-bottom:0}
-#permTeamSec .perm-members{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;display:flex !important;flex-direction:column;gap:12px;overflow:visible !important}
-#permTeamSec{margin-top:0}
-#nvPermScreen .perm-body:has(#permTeamSec:not([style*="display: none"])){padding-top:10px}
 .perm-tut{display:flex;gap:32px;align-items:center;margin:10px 10px 0;padding:4px 28px;background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED}
 .perm-tut[hidden]{display:none}
 .perm-tutart{flex-shrink:0;width:280px}
@@ -1176,8 +1172,6 @@ input,textarea,select{font-size:14px}
 .perm-tutbtn .pt-carat{font-size:10px;opacity:.9;margin-left:2px}
 .perm-tutbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
 .perm-tutbtn:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
-#permTeamSec .perm-mhead{background:#fff;border:0 !important;border-bottom:0 !important;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;height:60px;min-height:60px;box-sizing:border-box;padding:0 18px;margin:0}
-#permTeamSec .perm-picktbl{background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;padding:0 4px}
 #nvCatList td.rl-acts,#catList td.rl-acts{width:200px}
 #nvCatsScreen .cat-head{min-width:0}
 #nvCatsScreen .cat-head .rx-search{min-width:0;flex-shrink:1}
@@ -1240,10 +1234,10 @@ input,textarea,select{font-size:14px}
 .rx-viewtg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
-.rlist{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.rlist table{width:100%;border-collapse:collapse;font-size:14px}
+.rlist{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}
-.rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#5F666C;vertical-align:middle}
+.rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
 #nvList table{font-size:13px}
 #nvList th{padding:13px 18px;font-size:11px;color:#98a2ac;font-weight:700}
 #nvList td{padding:14px 18px;vertical-align:middle}
@@ -1311,7 +1305,7 @@ input,textarea,select{font-size:14px}
 .cat-view{position:fixed;top:0;right:0;bottom:0;left:100px;z-index:125;background:#e9eaed;display:none;flex-direction:column}
 .cat-view.open{display:flex}
 .cat-head{display:flex;align-items:center;gap:14px;box-sizing:border-box;padding:8px 28px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0}
-.cat-add{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;border:0;border-radius:999px;padding:12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
+.cat-add{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;border:0;border-radius:999px;padding:10px 17px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
 .cat-add:hover{background:var(--teal-dark)}
 /* Toolbars: raio padrão (8px) e altura 36px nos controles */
 .cat-head .cat-add,.cat-head .rx-search,
@@ -1369,7 +1363,7 @@ input,textarea,select{font-size:14px}
 .cat-list th:not(:last-child),.cat-list td:not(:last-child){border-right:1px solid var(--line)}
 .cat-list tbody tr:nth-child(odd){background:#eef2f6}
 .cat-list tbody tr:hover{background:#e7f1fb}
-.cat-name{display:flex;align-items:center;gap:12px;font-weight:400;color:#5F666C;font-size:14px}
+.cat-name{display:flex;align-items:center;gap:13px;font-weight:700;color:var(--ink);font-size:13px}
 .cat-bar{width:5px;height:22px;border-radius:3px;flex-shrink:0}
 .cat-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0}
 .cat-icons{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
@@ -1715,9 +1709,10 @@ input,textarea,select{font-size:14px}
 .nv-cfgside-hd i{font-size:15px;width:18px;text-align:center}
 .nv-cfgitem{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:11px 14px 11px 30px;border-radius:10px;font:inherit;font-size:15px;font-weight:600;color:rgba(255,255,255,.82);cursor:pointer;text-align:left}
 .nv-cfgitem i{width:18px;text-align:center;color:rgba(255,255,255,.6);font-size:14px}
+.nv-cfgitem svg{width:18px;height:18px;color:rgba(255,255,255,.6);flex-shrink:0}
 .nv-cfgitem:hover{background:rgba(255,255,255,.08);color:#fff}
 .nv-cfgitem.active{background:var(--teal);color:#fff}
-.nv-cfgitem.active i{color:#fff}
+.nv-cfgitem.active i,.nv-cfgitem.active svg{color:#fff}
 .news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:250px}
 .np-head{display:flex;align-items:center;gap:13px;margin-bottom:2px}
 .np-head .avatar{width:52px;height:52px;font-size:0;flex-shrink:0}
@@ -2718,7 +2713,7 @@ input,textarea,select{font-size:14px}
 .rx-title i{font-size:20px;color:var(--teal)}
 .rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
-  border:1.5px solid #e6ea tories.ef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
+  border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
 .rx-search:hover{background:#eef2f5}
 .rx-search:focus-within{background:#fff;border-color:var(--teal);box-shadow:0 0 0 4px rgba(0,172,172,.13)}
 .rx-search i{transition:color .15s}
@@ -2936,24 +2931,27 @@ input,textarea,select{font-size:14px}
 #crModal{--cr-util:578px}
 #crStep1,#crStepUp{min-height:var(--cr-util);box-sizing:border-box}
 
-/* Categorias (Gerenciar > Configuracoes): tres blocos empilhados (titulo,
-   filtros e tabela), 8px de gap entre eles, 12px de respiro ate a borda da
-   tela, e a tabela esticando ate o fim (sem sobra de espaco vazio abaixo). */
-#nvCatsScreen{margin:12px;gap:8px}
-.news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:262px}
-#nvCatsScreen .cat-toprow,
-#nvCatsScreen .cat-head{margin:0;padding:12px 12px;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:none;flex-shrink:0}
-#nvCatsScreen .cat-toprow{height:54px;display:flex;align-items:center}
-#nvCatsScreen .cat-head{height:62px}
-#nvCatsScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
-#nvCatsScreen .rlist{flex:1;min-height:0}
-#nvCatsScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
-#nvCatsScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
-#nvCatsScreen .rlist tbody tr:nth-child(even){background:#fff}
-#nvCatsScreen .cat-th-in{display:inline-flex;align-items:center;gap:6px}
-#nvCatsScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
-#nvCatsScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
-#nvCatsScreen .cat-sortbtn:hover{color:#2F8EE5}
+/* Categorias e Administradores (Gerenciar > Configuracoes): tres blocos
+   empilhados (titulo, filtros e tabela), 8px de gap entre eles, 12px de
+   respiro ate a borda da tela, e a tabela esticando ate o fim (sem sobra de
+   espaco vazio abaixo). As duas telas compartilham as mesmas classes para
+   ficarem identicas visualmente. */
+#nvCatsScreen,#nvTeamScreen{margin:12px;gap:8px}
+.news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
+.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
+#nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
+#nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:12px 16px;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:none;flex-shrink:0}
+#nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
+#nvCatsScreen .cat-head,#nvTeamScreen .cat-head{height:62px}
+#nvCatsScreen .cat-body,#nvTeamScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
+#nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0}
+#nvCatsScreen .rlist th,#nvTeamScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
+#nvCatsScreen .rlist tbody tr:nth-child(odd),#nvTeamScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
+#nvCatsScreen .rlist tbody tr:nth-child(even),#nvTeamScreen .rlist tbody tr:nth-child(even){background:#fff}
+#nvCatsScreen .cat-th-in,#nvTeamScreen .cat-th-in{display:inline-flex;align-items:center;gap:6px}
+#nvCatsScreen .cat-sortbtn,#nvTeamScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#nvCatsScreen .cat-sortbtn svg,#nvTeamScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
+#nvCatsScreen .cat-sortbtn:hover,#nvTeamScreen .cat-sortbtn:hover{color:#2F8EE5}
 /* tabela nativa (table/tr/td): largura por porcentagem, nao grid do Bootstrap.
    table-layout:fixed faz o navegador respeitar as porcentagens de verdade —
    sem isso, o layout automatico deixa o conteudo (o bloco de botoes de 224px)
@@ -2961,32 +2959,48 @@ input,textarea,select{font-size:14px}
    coluna Acoes.
    !important pra vencer a regra generica .rlist th:first-child{width:84px !important}
    de 06-shorts.css, que e' de outra tela e nao deveria valer aqui. */
-#nvCatsScreen .rlist table{width:100%;table-layout:fixed}
+#nvCatsScreen .rlist table,#nvTeamScreen .rlist table{width:100%;table-layout:fixed}
 #nvCatsScreen .rlist th:nth-child(1),#nvCatsScreen .rlist td:nth-child(1){width:50% !important;min-width:0 !important;max-width:none !important}
 #nvCatsScreen .rlist th:nth-child(2),#nvCatsScreen .rlist td:nth-child(2),
 #nvCatsScreen .rlist th:nth-child(3),#nvCatsScreen .rlist td:nth-child(3),
 #nvCatsScreen .rlist th:nth-child(4),#nvCatsScreen .rlist td:nth-child(4){width:16.66% !important;min-width:0 !important;max-width:none !important}
-#nvCatsScreen .rx-title svg{color:var(--teal)}
-/* Acoes: cabecalho centralizado; os dois botoes dividem igualmente (flex:1)
+/* Administradores: coluna 1 (ID) fica com os 84px genericos de .rlist
+   th:first-child; as demais dividem o resto (Administrador flexivel, as
+   outras com largura fixa). */
+#nvTeamScreen .rlist th:nth-child(3),#nvTeamScreen .rlist td:nth-child(3){width:15%}
+#nvTeamScreen .rlist th:nth-child(4),#nvTeamScreen .rlist td:nth-child(4){width:20%}
+#nvTeamScreen .rlist th:nth-child(5),#nvTeamScreen .rlist td:nth-child(5){width:140px}
+/* Tipografia das celulas de dados (tbody), thead continua como esta:
+   texto simples (Publicacoes/Shorts, Celular/E-mail) em 14px/400/#5F666C;
+   nome (categoria/administrador) na mesma cor, cargo/unidade em 12px/#999. */
+#nvCatsScreen .rlist tbody td,#nvTeamScreen .rlist tbody td{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td.perm-id{font-weight:700}
+#nvCatsScreen .rlist tbody td .cat-name{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person span{font-size:12px;color:#999}
+#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
+/* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
    toda a largura disponivel da celula, sem bloco de largura fixa.
    Editar: outline azul, preenche de azul (texto/icone branco) no hover.
-   Inativar: neutro (#5f666c/#CCCCCC), preenche de preto (texto/icone branco) no hover. */
-#nvCatsScreen .rlist th:nth-child(4){text-align:center}
-#nvCatsScreen .cat-actwrap{display:flex;gap:8px;width:100%}
+   Inativar/Remover: neutro (#5f666c/#CCCCCC), preenche de preto (texto/icone branco) no hover. */
+#nvCatsScreen .rlist th:nth-child(4),#nvTeamScreen .rlist th:nth-child(5){text-align:center}
+#nvCatsScreen .cat-actwrap,#nvTeamScreen .cat-actwrap{display:flex;gap:8px;width:100%}
 #nvCatsScreen .cat-actwrap .cat-editbtn,
-#nvCatsScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-actwrap .cat-arch,#nvTeamScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
 #nvCatsScreen .cat-actwrap .cat-editbtn{background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
 #nvCatsScreen .cat-actwrap .cat-editbtn:hover{background:#2F8EE5;color:#fff}
 #nvCatsScreen .cat-actwrap .cat-arch{background:#fff;color:#5f666c;border:1px solid #CCCCCC}
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
-#nvCatsScreen .cat-head #nvCatAdd{background:#57C279;padding:12px;border-radius:6px}
-#nvCatsScreen .cat-head #nvCatAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
-#nvCatsScreen .cat-head #nvCatAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
-#nvCatsScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
+#nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#e0392c;border:1px solid #e0392c}
+#nvTeamScreen .cat-actwrap .cat-arch:hover{background:#e0392c;color:#fff;border-color:#e0392c}
+#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
   border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-#nvCatsScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
-#nvCatsScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn:hover,#nvTeamScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
+#nvCatsScreen .cat-helpbtn svg,#nvTeamScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
 /* Modal "Como usar categorias?": hero com ilustracao (bg image-categories) + texto + acoes,
    layout replicado do Figma (node 1515:288) */
@@ -3014,10 +3028,11 @@ input,textarea,select{font-size:14px}
 /* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
 .nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
 .nv-catsearch .rx-search{flex:0 0 auto}
-#nvCatsScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
 .nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
   display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
 .nv-catsearch-btn:hover{background:var(--teal-dark)}
+
 
 /* Editar/Nova categoria (nvCatModal): cores e dimensoes do Figma (node 1521:760) */
 #nvCatModal .fg-head{border-bottom:0}
@@ -5847,7 +5862,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <aside class="nv-cfgside" id="nvCatSide">
     <div class="apr-grp-hd"><i class="fa-solid fa-user-shield"></i> Permissões</div>
     <button class="nv-cfgitem apr-sub" id="cfgNavWho"><i class="fa-solid fa-users"></i> Quem pode postar</button>
-    <button class="nv-cfgitem apr-sub" id="cfgNavTeam"><i class="fa-solid fa-user-shield"></i> Administradores</button>
+    <button class="nv-cfgitem apr-sub" id="cfgNavTeam"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg> Equipe administrativa</button>
     <button class="nv-cfgitem apr-sub" id="cfgNavApr"><i class="fa-solid fa-circle-check"></i> Aprovação</button>
     <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-pen-to-square"></i> Postagem</div>
     <button class="nv-cfgitem apr-sub active" id="nvcfgCats2"><i class="fa-solid fa-tags"></i> Categorias</button>
@@ -6387,16 +6402,6 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
       </div>
       </div>
-      <div id="permTeamSec" style="display:none">
-        <div class="perm-members" style="margin-top:0">
-          <div class="perm-mhead">
-            <button class="cat-add" id="teamAdd"><i class="fa-solid fa-user-plus"></i> Novo administrador</button>
-            <span style="flex:1"></span>
-            <div class="rx-search" style="max-width:280px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
-          </div>
-          <div id="teamList" class="perm-picktbl"></div>
-        </div>
-      </div>
       <div id="permStoriesSec">
         <div class="nv-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
         <div id="permStoriesSlot"></div>
@@ -6553,6 +6558,38 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       </div>
     </div>
     <div class="cat-body"><div class="rlist" id="nvCatList"></div></div>
+  </div>
+  <div class="nv-screen" id="nvTeamScreen">
+    <div class="cat-toprow">
+      <div class="rx-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg><h2>Equipe administrativa</h2></div>
+      <span style="flex:1"></span>
+      <button type="button" class="cat-helpbtn" id="permTeamHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar administradores?</button>
+    </div>
+    <div class="cat-head">
+      <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
+      <span style="flex:1"></span>
+      <div class="nv-catsearch">
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </div>
+    <div class="cat-body"><div class="rlist" id="teamList"></div></div>
+  </div>
+  <div class="fg-backdrop" id="permTeamHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img src="uploads/tutorial/image-admins.svg" alt="">
+        <button type="button" class="cat-help-close" id="permTeamHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2>Como usar administradores?</h2>
+        <p>Administradores têm acesso total ao módulo: publicam sem passar por aprovação, aprovam e reprovam o que vem das unidades, inativam publicações, veem em detalhe quem curtiu e comentou cada post e gerenciam as configurações do módulo. Apenas as pessoas desta lista recebem os itens pendentes.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="permTeamHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="permTeamHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="fg-backdrop" id="nvCatModal">
     <div class="fg-modal" style="width:460px">
@@ -10503,20 +10540,46 @@ let TEAM = [1,56,978];
 let teamQuery='', teamAddQuery='';
 function teamPhone(id){ const d=String(9000+(id*37)%9999).padStart(4,'0'); return '(34) 9'+String(8000+(id*13)%1999).slice(0,4)+'-'+d; }
 function teamMail(name){ const p=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(' '); return p[0]+'.'+p[p.length-1]+'@sults.com.br'; }
+let teamSortCol=null, teamSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
+function teamTh(label,col,style){
+  const dir=(teamSortCol===col)?teamSortDir:0;
+  const icon=dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
+  return '<th'+(style?' style="'+style+'"':'')+'><span class="cat-th-in"><span>'+label+'</span>'+
+    '<button type="button" class="cat-sortbtn" data-sortcol="'+col+'" aria-label="Ordenar por '+label+'">'+icon+'</button></span></th>';
+}
 function teamRender(){
   const el=document.getElementById('teamList'); if(!el) return;
-  const cnt=document.getElementById('teamCount'); if(cnt) cnt.textContent = TEAM.length ? TEAM.length+' pessoa(s)' : '';
-  const list=TEAM.map(id=>PEOPLE.find(p=>p.id===id)).filter(Boolean)
+  let list=TEAM.map(id=>PEOPLE.find(p=>p.id===id)).filter(Boolean)
     .filter(p=>!teamQuery || p.name.toLowerCase().includes(teamQuery.toLowerCase()) || (p.role||'').toLowerCase().includes(teamQuery.toLowerCase()));
-  if(!list.length){ el.innerHTML='<div class="perm-empty">Nenhum administrador ainda. Use "Novo administrador".</div>'; return; }
+  if(!list.length){ el.innerHTML='<div class="cat-empty">Nenhum administrador ainda. Use "Novo administrador".</div>'; return; }
+  if(teamSortDir){
+    const dir=teamSortDir===1?1:-1;
+    if(teamSortCol==='id') list=list.slice().sort((a,b)=>dir*(a.id-b.id));
+    else if(teamSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
+    else if(teamSortCol==='phone') list=list.slice().sort((a,b)=>dir*teamPhone(a.id).localeCompare(teamPhone(b.id)));
+    else if(teamSortCol==='mail') list=list.slice().sort((a,b)=>dir*teamMail(a.name).localeCompare(teamMail(b.name)));
+  }
   const rows=list.map(p=>'<tr>'+
     '<td class="perm-id">#'+p.id+'</td>'+
     '<td><div class="perm-person"><span class="avatar '+p.av+'"></span><div><b>'+p.name+'</b><span>'+p.role+'</span></div></div></td>'+
     '<td style="white-space:nowrap">'+teamPhone(p.id)+'</td>'+
     '<td style="white-space:nowrap">'+teamMail(p.name)+'</td>'+
-    '<td style="text-align:right"><button class="perm-remove" data-teamrm="'+p.id+'"><i class="fa-solid fa-xmark"></i> Remover</button></td></tr>').join('');
-  el.innerHTML='<table><thead><tr><th style="width:84px">ID</th><th>Administrador</th><th style="width:170px">Celular</th><th style="width:250px">E-mail</th><th style="width:140px;text-align:right">Ações</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    '<td class="rl-acts"><div class="cat-actwrap"><button class="cat-arch" data-teamrm="'+p.id+'"><i class="fa-solid fa-xmark"></i> Remover</button></div></td></tr>').join('');
+  el.innerHTML='<table><thead><tr>'+
+    teamTh('ID','id','width:84px')+
+    teamTh('Administrador ('+list.length+')','name')+
+    teamTh('Celular','phone')+
+    teamTh('E-mail','mail')+
+    '<th class="rl-acts" style="text-align:center">Ações</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }
+$('#teamList') && $('#teamList').addEventListener('click', e=>{
+  const btn=e.target.closest('.cat-sortbtn'); if(!btn) return;
+  const col=btn.dataset.sortcol;
+  if(teamSortCol!==col){ teamSortCol=col; teamSortDir=1; }
+  else if(teamSortDir===1){ teamSortDir=2; }
+  else { teamSortCol=null; teamSortDir=0; }
+  teamRender();
+});
 function teamAddRender(){
   const el=document.getElementById('teamAddList'); if(!el) return;
   const list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
@@ -10535,16 +10598,18 @@ document.addEventListener('input', e=>{
   if(e.target.id==='teamSearch'){ teamQuery=e.target.value; teamRender(); }
   if(e.target.id==='teamAddSearch'){ teamAddQuery=e.target.value; teamAddRender(); }
 });
-function permTeamSecShow(on){ const s=document.getElementById('permTeamSec'); if(s) s.style.display = on ? '' : 'none'; if(on) teamRender(); }
+document.getElementById('permTeamHelp') && document.getElementById('permTeamHelp').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.add('open'));
+document.getElementById('permTeamHelpClose') && document.getElementById('permTeamHelpClose').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
+document.getElementById('permTeamHelpDoubt') && document.getElementById('permTeamHelpDoubt').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
+document.getElementById('permTeamHelpOk') && document.getElementById('permTeamHelpOk').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
+document.getElementById('permTeamHelpModal') && document.getElementById('permTeamHelpModal').addEventListener('click', e=>{ if(e.target===document.getElementById('permTeamHelpModal')) document.getElementById('permTeamHelpModal').classList.remove('open'); });
 function cfgSetActive(id){ ['cfgNavWho','cfgNavApr','cfgNavTeam','nvcfgCats2'].forEach(x=>{ const b=document.getElementById(x); if(b) b.classList.toggle('active', x===id); }); }
-const PERM_TUT_ART = { who:'uploads/tutorial/post.svg', apr:'uploads/tutorial/approve.svg', team:'uploads/tutorial/admin.svg' };
+const PERM_TUT_ART = { who:'uploads/tutorial/post.svg', apr:'uploads/tutorial/approve.svg' };
 const PERM_TUT = {
   who: ['PERMISSÃO DE PUBLICAÇÃO', 'Defina quem pode publicar na rede social',
     'Escolha se a matriz e as unidades podem publicar e, em cada caso, se todos os colaboradores ou apenas pessoas selecionadas. Quem não tiver permissão continua vendo o conteúdo, mas não cria publicações.'],
   apr: ['FLUXO DE APROVAÇÃO', 'Controle o que vai ao ar antes de publicar',
-    'Ative a aprovação para publicações e comentários. Com o fluxo ativo, cada conteúdo criado fica pendente até um administrador aprovar, e o autor é avisado do resultado.'],
-  team: ['ADMINISTRADORES DA REDE', 'Defina quem administra a rede social',
-    'Administradores têm acesso total ao módulo: publicam sem passar por aprovação, aprovam e reprovam o que vem das unidades, inativam publicações, veem em detalhe quem curtiu e comentou cada post e gerenciam as configurações do módulo. Apenas as pessoas desta lista recebem os itens pendentes.']
+    'Ative a aprovação para publicações e comentários. Com o fluxo ativo, cada conteúdo criado fica pendente até um administrador aprovar, e o autor é avisado do resultado.']
 };
 function permTutFill(which){
   const t = PERM_TUT[which] || PERM_TUT.who;
@@ -10571,17 +10636,17 @@ document.addEventListener('click', function(e){
 function permHead(which){
   const ic=document.getElementById('permHeadIc'), t=document.getElementById('permHeadTtl');
   if(!ic||!t) return;
+  const scr=document.getElementById('nvPermScreen'); if(scr) scr.dataset.permview = which||'who';
   permTutBtn(true, which||'who');
-  if(which==='team'){ ic.className='fa-solid fa-user-shield'; t.textContent='Administradores'; return; }
   const apr = which==='apr';
   ic.className = apr ? 'fa-solid fa-circle-check' : 'fa-solid fa-user-shield';
   t.textContent = apr ? 'Aprovações' : 'Quem pode postar';
 }
 function permStoriesSecShow(on){ const s=document.getElementById('permStoriesSec'); if(s) s.style.display = on ? '' : 'none'; if(on && typeof stPermFeet==='function') stPermFeet(); }
 function cfgGo(which){
-  permHead(which); permStoriesSecShow(which==='who'||!which); permTeamSecShow(which==='team');
+  if(which==='team'){ newsShow('team'); cfgSetActive('cfgNavTeam'); newsView.classList.add('catmode'); newsView.classList.add('cfg'); newsView.classList.remove('apr'); newsView.classList.remove('aprhome'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); return; }
+  permHead(which); permStoriesSecShow(which==='who'||!which);
   if(which==='cats'){ newsShow('cats'); cfgSetActive('nvcfgCats2'); }
-  else if(which==='team'){ newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(s1)s1.style.display='none'; if(ac)ac.style.display='none'; cfgSetActive('cfgNavTeam'); }
   else { newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(which==='apr'){ if(s1)s1.style.display='none'; permStoriesSecShow(false); if(ac)ac.style.display='grid'; cfgSetActive('cfgNavApr'); } else { if(s1)s1.style.display='grid'; permStoriesSecShow(true); if(ac)ac.style.display='none'; cfgSetActive('cfgNavWho'); } }
   newsView.classList.add('catmode'); newsView.classList.add('cfg'); newsView.classList.remove('apr'); newsView.classList.remove('aprhome'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active');
 }
@@ -11019,7 +11084,7 @@ $('#interFRole') && $('#interFRole').addEventListener('change', function(e){ int
 $('#interFApply') && $('#interFApply').addEventListener('click', function(){ interPage=1; renderInteractions(); fgToast('Filtros aplicados'); });
 $('#interFClear') && $('#interFClear').addEventListener('click', function(){ interQuery=''; interPerson=''; interStore=''; interPeriod=''; interOnlyNewOn=false; interReact=''; interPost=''; interRole=''; interPage=1; ['interFReact','interFPost','interFRole'].forEach(function(id){var el=document.getElementById(id); if(el)el.value='';}); var s=$('#interSearch'); if(s)s.value=''; ['interFPerson','interFStore','interFPeriod'].forEach(function(id){ var el=document.getElementById(id); if(el)el.value=''; }); renderInteractions(); });
 /* relocate appr screens */
-(function(){ const nv=document.getElementById('newsView'); ['nvInterScreen','nvArticleScreen','nvCatsScreen','nvPermScreen','nvParamsScreen','nvAprHomeScreen','nvModScreen','nvPubApprScreen','nvReelApprScreen'].forEach(id=>{ const el=document.getElementById(id); if(nv&&el&&!nv.contains(el)) nv.appendChild(el); }); })();
+(function(){ const nv=document.getElementById('newsView'); ['nvInterScreen','nvArticleScreen','nvCatsScreen','nvTeamScreen','nvPermScreen','nvParamsScreen','nvAprHomeScreen','nvModScreen','nvPubApprScreen','nvReelApprScreen'].forEach(id=>{ const el=document.getElementById(id); if(nv&&el&&!nv.contains(el)) nv.appendChild(el); }); })();
 function newsShow(screen){
   if(typeof nvArtAdvClose==='function') nvArtAdvClose();
   $$('.nv-screen').forEach(s => s.classList.remove('active'));
@@ -11059,6 +11124,7 @@ function newsShow(screen){
   else if (screen==='perm'){ $('#nvPermScreen').classList.add('active'); nmodSetActive('nmodPerm'); renderNewsPerm(); }
   else if (screen==='inter'){ $('#nvInterScreen').classList.add('active'); nmodSetActive('nmodInter'); renderInteractions(); }
   else if (screen==='cats'){ $('#nvCatsScreen').classList.add('active'); nmodSetActive('nmodCats'); renderNewsCats(); }
+  else if (screen==='team'){ $('#nvTeamScreen').classList.add('active'); nmodSetActive('nmodPerm'); newsView.classList.add('catmode'); if($('#nmtPerm'))$('#nmtPerm').classList.remove('active'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); cfgSetActive('cfgNavTeam'); teamRender(); }
   else if (screen==='params'){ $('#nvParamsScreen').classList.add('active'); nmodSetActive('nmodParams'); }
   else if (screen==='aprhome'){ $('#nvAprHomeScreen').classList.add('active'); nmodSetActive('nmodApr'); renderAprHome(); }
   else if (screen==='mod'){ $('#nvModScreen').classList.add('active'); nmodSetActive('nmodMod'); renderModQueue(); if(typeof aprSideSync==='function') aprSideSync('com'); }

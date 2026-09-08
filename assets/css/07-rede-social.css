@@ -145,9 +145,10 @@
 .nv-cfgside-hd i{font-size:15px;width:18px;text-align:center}
 .nv-cfgitem{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:11px 14px 11px 30px;border-radius:10px;font:inherit;font-size:15px;font-weight:600;color:rgba(255,255,255,.82);cursor:pointer;text-align:left}
 .nv-cfgitem i{width:18px;text-align:center;color:rgba(255,255,255,.6);font-size:14px}
+.nv-cfgitem svg{width:18px;height:18px;color:rgba(255,255,255,.6);flex-shrink:0}
 .nv-cfgitem:hover{background:rgba(255,255,255,.08);color:#fff}
 .nv-cfgitem.active{background:var(--teal);color:#fff}
-.nv-cfgitem.active i{color:#fff}
+.nv-cfgitem.active i,.nv-cfgitem.active svg{color:#fff}
 .news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:250px}
 .np-head{display:flex;align-items:center;gap:13px;margin-bottom:2px}
 .np-head .avatar{width:52px;height:52px;font-size:0;flex-shrink:0}
@@ -1146,7 +1147,7 @@
 .rx-header{display:flex;align-items:center;gap:20px;padding:14px 26px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0;box-shadow:0 1px 3px rgba(16,32,48,.04)}
 .rx-title{display:flex;align-items:center;gap:10px}
 .rx-title i{font-size:20px;color:var(--teal)}
-.rx-title h2{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+.rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
   border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
 .rx-search:hover{background:#eef2f5}
@@ -1366,24 +1367,27 @@
 #crModal{--cr-util:578px}
 #crStep1,#crStepUp{min-height:var(--cr-util);box-sizing:border-box}
 
-/* Categorias (Gerenciar > Configuracoes): tres blocos empilhados (titulo,
-   filtros e tabela), 8px de gap entre eles, 12px de respiro ate a borda da
-   tela, e a tabela esticando ate o fim (sem sobra de espaco vazio abaixo). */
-#nvCatsScreen{margin:12px;gap:8px}
-.news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:262px}
-#nvCatsScreen .cat-toprow,
-#nvCatsScreen .cat-head{margin:0;padding:12px 16px;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:none;flex-shrink:0}
-#nvCatsScreen .cat-toprow{height:54px;display:flex;align-items:center}
-#nvCatsScreen .cat-head{height:62px}
-#nvCatsScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
-#nvCatsScreen .rlist{flex:1;min-height:0}
-#nvCatsScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
-#nvCatsScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
-#nvCatsScreen .rlist tbody tr:nth-child(even){background:#fff}
-#nvCatsScreen .cat-th-in{display:inline-flex;align-items:center;gap:6px}
-#nvCatsScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
-#nvCatsScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
-#nvCatsScreen .cat-sortbtn:hover{color:#2F8EE5}
+/* Categorias e Administradores (Gerenciar > Configuracoes): tres blocos
+   empilhados (titulo, filtros e tabela), 8px de gap entre eles, 12px de
+   respiro ate a borda da tela, e a tabela esticando ate o fim (sem sobra de
+   espaco vazio abaixo). As duas telas compartilham as mesmas classes para
+   ficarem identicas visualmente. */
+#nvCatsScreen,#nvTeamScreen{margin:12px;gap:8px}
+.news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
+.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
+#nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
+#nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:12px 16px;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:none;flex-shrink:0}
+#nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
+#nvCatsScreen .cat-head,#nvTeamScreen .cat-head{height:62px}
+#nvCatsScreen .cat-body,#nvTeamScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
+#nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0}
+#nvCatsScreen .rlist th,#nvTeamScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
+#nvCatsScreen .rlist tbody tr:nth-child(odd),#nvTeamScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
+#nvCatsScreen .rlist tbody tr:nth-child(even),#nvTeamScreen .rlist tbody tr:nth-child(even){background:#fff}
+#nvCatsScreen .cat-th-in,#nvTeamScreen .cat-th-in{display:inline-flex;align-items:center;gap:6px}
+#nvCatsScreen .cat-sortbtn,#nvTeamScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#nvCatsScreen .cat-sortbtn svg,#nvTeamScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
+#nvCatsScreen .cat-sortbtn:hover,#nvTeamScreen .cat-sortbtn:hover{color:#2F8EE5}
 /* tabela nativa (table/tr/td): largura por porcentagem, nao grid do Bootstrap.
    table-layout:fixed faz o navegador respeitar as porcentagens de verdade —
    sem isso, o layout automatico deixa o conteudo (o bloco de botoes de 224px)
@@ -1391,32 +1395,48 @@
    coluna Acoes.
    !important pra vencer a regra generica .rlist th:first-child{width:84px !important}
    de 06-shorts.css, que e' de outra tela e nao deveria valer aqui. */
-#nvCatsScreen .rlist table{width:100%;table-layout:fixed}
+#nvCatsScreen .rlist table,#nvTeamScreen .rlist table{width:100%;table-layout:fixed}
 #nvCatsScreen .rlist th:nth-child(1),#nvCatsScreen .rlist td:nth-child(1){width:50% !important;min-width:0 !important;max-width:none !important}
 #nvCatsScreen .rlist th:nth-child(2),#nvCatsScreen .rlist td:nth-child(2),
 #nvCatsScreen .rlist th:nth-child(3),#nvCatsScreen .rlist td:nth-child(3),
 #nvCatsScreen .rlist th:nth-child(4),#nvCatsScreen .rlist td:nth-child(4){width:16.66% !important;min-width:0 !important;max-width:none !important}
-#nvCatsScreen .rx-title svg{color:var(--teal)}
-/* Acoes: cabecalho centralizado; os dois botoes dividem igualmente (flex:1)
+/* Administradores: coluna 1 (ID) fica com os 84px genericos de .rlist
+   th:first-child; as demais dividem o resto (Administrador flexivel, as
+   outras com largura fixa). */
+#nvTeamScreen .rlist th:nth-child(3),#nvTeamScreen .rlist td:nth-child(3){width:15%}
+#nvTeamScreen .rlist th:nth-child(4),#nvTeamScreen .rlist td:nth-child(4){width:20%}
+#nvTeamScreen .rlist th:nth-child(5),#nvTeamScreen .rlist td:nth-child(5){width:140px}
+/* Tipografia das celulas de dados (tbody), thead continua como esta:
+   texto simples (Publicacoes/Shorts, Celular/E-mail) em 14px/400/#5F666C;
+   nome (categoria/administrador) na mesma cor, cargo/unidade em 12px/#999. */
+#nvCatsScreen .rlist tbody td,#nvTeamScreen .rlist tbody td{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td.perm-id{font-weight:700}
+#nvCatsScreen .rlist tbody td .cat-name{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person span{font-size:12px;color:#999}
+#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
+/* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
    toda a largura disponivel da celula, sem bloco de largura fixa.
    Editar: outline azul, preenche de azul (texto/icone branco) no hover.
-   Inativar: neutro (#5f666c/#CCCCCC), preenche de preto (texto/icone branco) no hover. */
-#nvCatsScreen .rlist th:nth-child(4){text-align:center}
-#nvCatsScreen .cat-actwrap{display:flex;gap:8px;width:100%}
+   Inativar/Remover: neutro (#5f666c/#CCCCCC), preenche de preto (texto/icone branco) no hover. */
+#nvCatsScreen .rlist th:nth-child(4),#nvTeamScreen .rlist th:nth-child(5){text-align:center}
+#nvCatsScreen .cat-actwrap,#nvTeamScreen .cat-actwrap{display:flex;gap:8px;width:100%}
 #nvCatsScreen .cat-actwrap .cat-editbtn,
-#nvCatsScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-actwrap .cat-arch,#nvTeamScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
 #nvCatsScreen .cat-actwrap .cat-editbtn{background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
 #nvCatsScreen .cat-actwrap .cat-editbtn:hover{background:#2F8EE5;color:#fff}
 #nvCatsScreen .cat-actwrap .cat-arch{background:#fff;color:#5f666c;border:1px solid #CCCCCC}
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
-#nvCatsScreen .cat-head #nvCatAdd{background:#57C279;padding:12px;border-radius:6px}
-#nvCatsScreen .cat-head #nvCatAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
-#nvCatsScreen .cat-head #nvCatAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
-#nvCatsScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
+#nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#e0392c;border:1px solid #e0392c}
+#nvTeamScreen .cat-actwrap .cat-arch:hover{background:#e0392c;color:#fff;border-color:#e0392c}
+#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
   border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-#nvCatsScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
-#nvCatsScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn:hover,#nvTeamScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
+#nvCatsScreen .cat-helpbtn svg,#nvTeamScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
 /* Modal "Como usar categorias?": hero com ilustracao (bg image-categories) + texto + acoes,
    layout replicado do Figma (node 1515:288) */
@@ -1444,10 +1464,11 @@
 /* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
 .nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
 .nv-catsearch .rx-search{flex:0 0 auto}
-#nvCatsScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
 .nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
   display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
 .nv-catsearch-btn:hover{background:var(--teal-dark)}
+
 
 /* Editar/Nova categoria (nvCatModal): cores e dimensoes do Figma (node 1521:760) */
 #nvCatModal .fg-head{border-bottom:0}

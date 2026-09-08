@@ -26,10 +26,6 @@
 .perm-picktbl tbody tr{cursor:pointer}
 .perm-picktbl tbody tr:hover{background:#F7F9FA}
 #unitPickModal .perm-mhead h3,#unitPickModal .perm-mhead .cat-add{white-space:nowrap}
-#permTeamSec .perm-mhead .cat-add,#permTeamSec .perm-mhead .rx-search{border-radius:8px;height:36px;padding-top:0;padding-bottom:0}
-#permTeamSec .perm-members{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;display:flex !important;flex-direction:column;gap:12px;overflow:visible !important}
-#permTeamSec{margin-top:0}
-#nvPermScreen .perm-body:has(#permTeamSec:not([style*="display: none"])){padding-top:10px}
 .perm-tut{display:flex;gap:32px;align-items:center;margin:10px 10px 0;padding:4px 28px;background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED}
 .perm-tut[hidden]{display:none}
 .perm-tutart{flex-shrink:0;width:280px}
@@ -46,8 +42,6 @@
 .perm-tutbtn .pt-carat{font-size:10px;opacity:.9;margin-left:2px}
 .perm-tutbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
 .perm-tutbtn:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
-#permTeamSec .perm-mhead{background:#fff;border:0 !important;border-bottom:0 !important;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;height:60px;min-height:60px;box-sizing:border-box;padding:0 18px;margin:0}
-#permTeamSec .perm-picktbl{background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;padding:0 4px}
 #nvCatList td.rl-acts,#catList td.rl-acts{width:200px}
 #nvCatsScreen .cat-head{min-width:0}
 #nvCatsScreen .cat-head .rx-search{min-width:0;flex-shrink:1}

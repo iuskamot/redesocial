@@ -47,7 +47,7 @@
   <aside class="nv-cfgside" id="nvCatSide">
     <div class="apr-grp-hd"><i class="fa-solid fa-user-shield"></i> Permissões</div>
     <button class="nv-cfgitem apr-sub" id="cfgNavWho"><i class="fa-solid fa-users"></i> Quem pode postar</button>
-    <button class="nv-cfgitem apr-sub" id="cfgNavTeam"><i class="fa-solid fa-user-shield"></i> Administradores</button>
+    <button class="nv-cfgitem apr-sub" id="cfgNavTeam"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg> Equipe administrativa</button>
     <button class="nv-cfgitem apr-sub" id="cfgNavApr"><i class="fa-solid fa-circle-check"></i> Aprovação</button>
     <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-pen-to-square"></i> Postagem</div>
     <button class="nv-cfgitem apr-sub active" id="nvcfgCats2"><i class="fa-solid fa-tags"></i> Categorias</button>
@@ -587,16 +587,6 @@
         </div>
       </div>
       </div>
-      <div id="permTeamSec" style="display:none">
-        <div class="perm-members" style="margin-top:0">
-          <div class="perm-mhead">
-            <button class="cat-add" id="teamAdd"><i class="fa-solid fa-user-plus"></i> Novo administrador</button>
-            <span style="flex:1"></span>
-            <div class="rx-search" style="max-width:280px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
-          </div>
-          <div id="teamList" class="perm-picktbl"></div>
-        </div>
-      </div>
       <div id="permStoriesSec">
         <div class="nv-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
         <div id="permStoriesSlot"></div>
@@ -753,6 +743,38 @@
       </div>
     </div>
     <div class="cat-body"><div class="rlist" id="nvCatList"></div></div>
+  </div>
+  <div class="nv-screen" id="nvTeamScreen">
+    <div class="cat-toprow">
+      <div class="rx-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg><h2>Equipe administrativa</h2></div>
+      <span style="flex:1"></span>
+      <button type="button" class="cat-helpbtn" id="permTeamHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar administradores?</button>
+    </div>
+    <div class="cat-head">
+      <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
+      <span style="flex:1"></span>
+      <div class="nv-catsearch">
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </div>
+    <div class="cat-body"><div class="rlist" id="teamList"></div></div>
+  </div>
+  <div class="fg-backdrop" id="permTeamHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img src="uploads/tutorial/image-admins.svg" alt="">
+        <button type="button" class="cat-help-close" id="permTeamHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2>Como usar administradores?</h2>
+        <p>Administradores têm acesso total ao módulo: publicam sem passar por aprovação, aprovam e reprovam o que vem das unidades, inativam publicações, veem em detalhe quem curtiu e comentou cada post e gerenciam as configurações do módulo. Apenas as pessoas desta lista recebem os itens pendentes.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="permTeamHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="permTeamHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="fg-backdrop" id="nvCatModal">
     <div class="fg-modal" style="width:460px">
