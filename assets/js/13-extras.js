@@ -650,13 +650,11 @@ function rvShareDados(reel){
   const r = (reel && playerList) ? playerList[[...rvFeed.querySelectorAll('.rv-reel')].indexOf(reel)] : null;
   const post = r ? POSTS[r.p] : null;
   const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
-  /* Para a previa sair bonita no WhatsApp (capa, titulo e canal, como um link
-     do G1) o endereco precisa ser publico e trazer as etiquetas Open Graph.
-     Short do YouTube ja tem tudo isso: vai o proprio endereco dele. O short
-     do projeto aponta para esta pagina, que carrega as etiquetas no cabecalho. */
-  const link = (post && post.embed)
-    ? 'https://www.youtube.com/shorts/' + post.embed
-    : location.origin + location.pathname + '?short=' + (r ? r.p : 0);
+  /* O link e sempre o do proprio site, nunca o do YouTube: quem recebe entra
+     na rede, nao sai dela. A previa bonita no WhatsApp vem das etiquetas Open
+     Graph do cabecalho, que o aplicativo busca ao abrir o endereco. */
+  const id = (post && post.embed) ? post.embed : (r ? r.p : 0);
+  const link = location.origin + location.pathname + '?short=' + id;
   return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
 }
 function rvShareAbrir(reel){

@@ -3044,7 +3044,9 @@ input,textarea,select{font-size:14px}
    celular ela sobe de baixo, que e o gesto de la. */
 .rvsh-back{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;cursor:default}
 .rvsh-back[hidden]{display:none}
-.rvsh{width:auto;max-width:min(560px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
+/* no desktop uma largura folgada e fixa: os aplicativos ficam centralizados e
+   a linha do endereco ocupa a largura toda */
+.rvsh{width:min(460px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
   box-shadow:0 24px 60px -20px rgba(0,0,0,.7);animation:rvshSobe .22s cubic-bezier(.4,0,.2,1)}
 @keyframes rvshSobe{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
 .rvsh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 6px}
@@ -3052,14 +3054,14 @@ input,textarea,select{font-size:14px}
 .rvsh-x{width:34px;height:34px;border:0;border-radius:50%;background:none;color:#d7dbe0;font-size:16px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:background .15s}
 .rvsh-x:hover{background:rgba(255,255,255,.12)}
-.rvsh-apps{display:flex;gap:14px;justify-content:center;overflow-x:auto;padding:10px 18px 14px;scrollbar-width:none}
+.rvsh-apps{display:flex;gap:20px;justify-content:center;overflow-x:auto;padding:12px 20px 16px;scrollbar-width:none}
 .rvsh-apps::-webkit-scrollbar{display:none}
 .rvsh-app{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:64px}
 .rvsh-ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;
   transition:transform .12s}
 .rvsh-app:hover .rvsh-ic{transform:scale(1.06)}
 .rvsh-nome{font-size:12px;line-height:16px;color:#e7ebef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
-.rvsh-link{display:flex;align-items:center;gap:10px;margin:0 18px;padding:8px 8px 8px 14px;border-radius:32px;background:rgba(255,255,255,.1)}
+.rvsh-link{display:flex;align-items:center;gap:10px;margin:0 20px;padding:8px 8px 8px 16px;border-radius:32px;background:rgba(255,255,255,.1)}
 /* o endereco nao manda na largura da caixa: ele ocupa o que sobra e, se
    nao couber, termina em reticencias */
 .rvsh-url{flex:1 1 0;width:0;min-width:0;font-size:13px;line-height:18px;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -3072,6 +3074,7 @@ input,textarea,select{font-size:14px}
   .rvsh-back{align-items:flex-end}
   /* no celular ela volta a ocupar a largura toda, colada na borda de baixo */
   .rvsh{width:100%;max-width:none;border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
+  .rvsh-apps{justify-content:flex-start}
 }
 
 /* feed da home, destaque e coluna direita */
@@ -14162,13 +14165,11 @@ function rvShareDados(reel){
   const r = (reel && playerList) ? playerList[[...rvFeed.querySelectorAll('.rv-reel')].indexOf(reel)] : null;
   const post = r ? POSTS[r.p] : null;
   const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
-  /* Para a previa sair bonita no WhatsApp (capa, titulo e canal, como um link
-     do G1) o endereco precisa ser publico e trazer as etiquetas Open Graph.
-     Short do YouTube ja tem tudo isso: vai o proprio endereco dele. O short
-     do projeto aponta para esta pagina, que carrega as etiquetas no cabecalho. */
-  const link = (post && post.embed)
-    ? 'https://www.youtube.com/shorts/' + post.embed
-    : location.origin + location.pathname + '?short=' + (r ? r.p : 0);
+  /* O link e sempre o do proprio site, nunca o do YouTube: quem recebe entra
+     na rede, nao sai dela. A previa bonita no WhatsApp vem das etiquetas Open
+     Graph do cabecalho, que o aplicativo busca ao abrir o endereco. */
+  const id = (post && post.embed) ? post.embed : (r ? r.p : 0);
+  const link = location.origin + location.pathname + '?short=' + id;
   return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
 }
 function rvShareAbrir(reel){
