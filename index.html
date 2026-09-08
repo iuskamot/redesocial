@@ -5329,8 +5329,10 @@ body.demo-custom .com-more{color:var(--marca-meio)}
 body.demo-custom .see-all:hover,
 body.demo-custom .com-more:hover,
 body.demo-custom .pc-link:hover{color:var(--marca)}
+/* Botao de pilula (o "Ver +N modulos"): texto na marca escurecida, fundo na
+   marca diluida. No hover so o fundo muda; o texto fica onde esta. */
 body.demo-custom .apps-expand button{color:var(--marca-meio);background:color-mix(in srgb, var(--marca) 12%, transparent)}
-body.demo-custom .apps-expand button:hover{color:var(--marca);background:color-mix(in srgb, var(--marca) 22%, transparent)}
+body.demo-custom .apps-expand button:hover{color:var(--marca-meio);background:color-mix(in srgb, var(--marca) 22%, transparent)}
 
 /* a bolinha da lupa em "Buscar modulo" segue o "Ver +N": fundo da marca a 12%
    e icone na marca 50% mais escura; o foco do campo tambem vai para a marca */

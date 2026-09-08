@@ -233,6 +233,19 @@ function shortsDosCenarios(){
   return achados.filter(function(s){ if (vistos.has(s.id)) return false; vistos.add(s.id); return true; });
 }
 
+/* largura e altura de um JPEG, lidas do proprio arquivo: a previa usa esses
+   numeros para montar o cartao, e errar neles estraga o enquadramento */
+function medeJpeg(caminho){
+  const b = fs.readFileSync(caminho);
+  let p = 2;
+  while (p < b.length){
+    if (b[p] !== 0xFF){ p++; continue; }
+    const m = b[p + 1];
+    if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return [b.readUInt16BE(p + 7), b.readUInt16BE(p + 5)];
+    p += 2 + b.readUInt16BE(p + 2);
+  }
+  return [1280, 720];
+}
 function escapaAtributo(s){
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -240,7 +253,12 @@ function escapaAtributo(s){
 function paginaShort(s){
   const titulo = escapaAtributo(s.titulo);
   const desc = escapaAtributo(s.marca + ' · Shorts na rede SULTS');
-  const capa = 'https://i.ytimg.com/vi/' + s.id + '/' + s.thumb + '.jpg';
+  /* a capa e servida pelo proprio site: hospedeiro de fora as vezes e
+     recusado por quem monta a previa, e assim ela nao depende do YouTube */
+  const local = 'uploads/shorts/' + s.id + '.jpg';
+  const temLocal = fs.existsSync(path.join(RAIZ, local));
+  const capa = temLocal ? (SITE + '/' + local) : ('https://i.ytimg.com/vi/' + s.id + '/' + s.thumb + '.jpg');
+  const medida = temLocal ? medeJpeg(path.join(RAIZ, local)) : (s.thumb === 'hq720' ? [1280, 720] : [480, 360]);
   const destino = '../?short=' + s.id;
   return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -255,8 +273,10 @@ function paginaShort(s){
 <meta property="og:title" content="${titulo}">
 <meta property="og:description" content="${desc}">
 <meta property="og:image" content="${capa}">
-<meta property="og:image:width" content="${s.thumb === 'hq720' ? 1280 : 480}">
-<meta property="og:image:height" content="${s.thumb === 'hq720' ? 720 : 360}">
+<meta property="og:image:secure_url" content="${capa}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="${medida[0]}">
+<meta property="og:image:height" content="${medida[1]}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${titulo}">
 <meta name="twitter:description" content="${desc}">
