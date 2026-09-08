@@ -21,8 +21,8 @@
     <div class="nmod-top-tabs nmod-grp" id="nmodGrpManage">
       <button class="nmod-tab" id="nmtPub"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
       <button class="nmod-tab" id="nmtMgShorts"><i class="fa-solid fa-clapperboard"></i> Shorts</button>
-      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><i class="fa-solid fa-circle-check"></i><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
-      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-heart"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
+      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
+      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
       <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
       <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
@@ -539,7 +539,7 @@
         <div class="nv-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
       <div id="permStep1">
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#a06be0,#5e35b1)"><i class="fa-solid fa-building"></i></div>
+        <div class="perm2-ic" style="background:#5e35b1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>office-building</title><path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/></svg></div>
         <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar comunicados e notícias oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
         <input type="checkbox" id="permCentralOn" hidden>
         <div class="perm2-foot" id="permCentralFoot"></div>
@@ -561,7 +561,7 @@
         </div>
       </div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-store"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>store</title><path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"/></svg></div>
         <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
         <input type="checkbox" id="permUnitOn" hidden>
         <div class="perm2-foot" id="permUnitFoot"></div>
@@ -588,16 +588,16 @@
       </div>
       <input type="checkbox" id="pmCatReq" checked hidden>
       <div id="permApprGrid" style="display:none"><div class="nv-secttl apr-secttl"><i class="fa-solid fa-newspaper"></i> Publicações</div><div class="perm-card apr-rulecard" id="permApprCard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <input type="checkbox" id="pmApprove" checked hidden>
-        <h3>Aprovar comentários</h3><p class="perm2-desc">Os comentários das publicações ficam pendentes e só aparecem no feed após um moderador aprovar na fila de Aprovações.</p>
+        <h3>Aprovar comentários</h3><p class="perm2-desc">Comentários de terceiros ficam pendentes antes de irem ao ar. Um moderador revisa o conteúdo e libera o comentário na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprComSub">
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da matriz</b><span>Comentários feitos por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da unidade</b><span>Comentários feitos por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div>
       <div class="perm-card apr-rulecard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><i class="fa-solid fa-rectangle-list"></i></div>
         <input type="checkbox" id="pmPostApprove" checked hidden>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprPubSub">
@@ -608,7 +608,7 @@
       <div class="nv-secttl apr-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
       <div class="perm-card apr-rulecard">
         <input type="checkbox" id="pmShortApprove" checked hidden>
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#f27794,#d63a5f)"><i class="fa-solid fa-clapperboard"></i></div>
+        <div class="perm2-ic" style="background:#d63a5f"><i class="fa-solid fa-clapperboard"></i></div>
         <h3>Aprovar shorts</h3><p class="perm2-desc">Shorts publicados por terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprShortSub">
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da matriz</b><span>Shorts publicados por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
@@ -636,12 +636,12 @@
     <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-circle-check"></i><h2>Aprovações</h2></div></div>
     <div class="perm-body"><div id="aprHome">
       <button class="perm-card apr-card" id="aprCardCom">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <h3>Aprovar comentários</h3><p class="perm2-desc">Modere os comentários enviados nas publicações. Aprove para exibir ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardComN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
       <button class="perm-card apr-card" id="aprCardPub">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><i class="fa-solid fa-newspaper"></i></div>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Revise as publicações de terceiros antes de irem ao ar. Aprove para publicar ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardPubN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
@@ -749,7 +749,7 @@
       <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
       <span style="flex:1"></span>
       <div class="nv-catsearch">
-        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador..." autocomplete="off"></div>
         <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </div>
@@ -796,7 +796,7 @@
         <div style="margin-top:18px"><label class="fg-label">Ícone</label><div class="cat-icons" id="nvCatIcons"></div></div>
         <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">
           <button class="fo-btn ghost" id="nvCatCancel">Cancelar</button>
-          <button class="fo-btn" id="nvCatSave"><svg viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg> Salvar</button>
+          <button class="fo-btn" id="nvCatSave"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
         </div>
       </div>
     </div>
@@ -864,12 +864,23 @@
   </div>
 </div>
 <div class="fg-backdrop" id="teamAddModal">
-  <div class="fg-modal" style="width:480px">
+  <div class="fg-modal" style="width:600px">
     <div class="fg-head"><h2>Novo administrador</h2><span style="flex:1"></span><button class="fg-close" id="teamAddClose"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="fg-body">
-      <p style="font-size:12px;line-height:16px;color:#8E8E93;margin:0 0 12px">Aplicação: apenas administradores da rede podem aprovar conteúdo.</p>
-      <div class="rx-search" style="margin-bottom:12px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamAddSearch" placeholder="Buscar pessoa" autocomplete="off"></div>
-      <div class="perm-pick" id="teamAddList"></div>
+      <div class="nv-catsearch" style="margin-bottom:14px">
+        <div class="rx-search"><input type="text" id="teamAddSearch" placeholder="Pesquisar pessoa..." autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+      <div class="tadd-panel">
+        <div class="tadd-head"><span></span><span class="cat-th-in tadd-th-person"><span>Pessoa <span id="teamAddHeadCount"></span></span><button type="button" class="cat-sortbtn" id="teamAddSortBtn" data-sortcol="name" aria-label="Ordenar por pessoa"></button></span><span class="cat-th-in tadd-th-unit"><span>Unidade</span><button type="button" class="cat-sortbtn" id="teamAddSortBtnUnit" data-sortcol="unit" aria-label="Ordenar por unidade"></button></span></div>
+        <div class="tadd-body" id="teamAddList"></div>
+      </div>
+    </div>
+    <div class="fg-foot">
+      <span class="tadd-count" id="teamAddCount">Nenhum administrador selecionado</span>
+      <span class="sp"></span>
+      <button class="fo-btn ghost" id="teamAddCancel">Cancelar</button>
+      <button class="fo-btn" id="teamAddConfirm"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
     </div>
   </div>
 </div>

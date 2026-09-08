@@ -1098,9 +1098,10 @@ input,textarea,select{font-size:14px}
 .fg-pane.on{display:block}
 .fg-field{margin-bottom:16px}
 .fg-label{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block}
-.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;color:var(--ink);outline:none}
-.fg-input:focus,.fg-textarea:focus{border-color:var(--teal)}
-.fg-textarea{resize:vertical;min-height:64px}
+.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:6px;font:inherit;font-size:13px;color:var(--ink);outline:none}
+.fg-input{height:36px;padding:0 12px}
+.fg-textarea{padding:10px 12px;resize:vertical;min-height:64px}
+.fg-input:focus,.fg-textarea:focus{border-color:var(--linha-campo-forte)}
 .fg-swatches,.fg-icons{display:flex;flex-wrap:wrap;gap:9px}
 .fg-sw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
 .fg-sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--ink)}
@@ -1303,7 +1304,8 @@ input,textarea,select{font-size:14px}
 #nvModScreen .cat-head,
 #nvPubApprScreen .cat-head,
 #nvReelApprScreen .cat-head,
-#nvInterScreen .cat-head{margin:10px 10px 0;padding:8px 12px;border-bottom:0;border-radius:8px;box-shadow:inset 0 0 0 1px #D9D9D9;flex-shrink:0}
+#nvInterScreen .cat-head{margin:12px 12px 0;padding:8px 12px;border-bottom:0;border-radius:8px;box-shadow:inset 0 0 0 1px #D9D9D9;flex-shrink:0}
+#nvPermScreen .cat-head{height:54px}
 /* toolbar rola junto: a própria tela é o container de scroll */
 #nvPermScreen,#nvAprHomeScreen,#nvModScreen,#nvPubApprScreen,#nvReelApprScreen{display:none;flex-direction:column;min-height:0;overflow-y:auto}
 #nvPermScreen.active,#nvAprHomeScreen.active,#nvModScreen.active,#nvPubApprScreen.active,#nvReelApprScreen.active{display:flex}
@@ -1352,8 +1354,8 @@ input,textarea,select{font-size:14px}
 .cat-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0}
 .cat-icons{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
 .cat-icpick{width:100%;aspect-ratio:1;max-width:40px;border-radius:10px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;color:#5b6672;cursor:pointer;transition:.12s}
-.cat-icpick:hover{border-color:var(--teal);color:var(--teal)}
-.cat-icpick.sel{border-color:var(--teal);background:rgba(0,172,172,.1);color:var(--teal)}
+.cat-icpick:hover{transform:scale(1.08)}
+.cat-icpick.sel{color:var(--teal);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
 .cat-editbtn{display:inline-flex;align-items:center;gap:6px;height:32px;background:#fff;color:#5b6672;border:1px solid var(--line);border-radius:8px;padding:0 12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s}
 .cat-editbtn:hover{border-color:var(--teal);color:var(--teal);background:#fff}
 .cat-arch{display:inline-flex;align-items:center;gap:6px;width:auto;height:32px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#5b6672;cursor:pointer;margin-left:8px;font:inherit;font-size:12px;font-weight:700;white-space:nowrap}
@@ -1384,8 +1386,8 @@ input,textarea,select{font-size:14px}
 #permApprGrid .apr-secttl{grid-column:1/-1;margin:0}
 #permApprGrid .apr-secttl+.apr-rulecard{margin-top:0}
 .apr-rulecard{width:500px;height:auto;min-height:0;position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:32px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box}
-.apr-rulecard .perm2-ic{width:56px;height:56px;border-radius:8px;font-size:23px;margin-bottom:18px;opacity:1;overflow:visible}
-.apr-rulecard.perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.apr-rulecard .perm2-ic{width:56px;height:56px;border-radius:8px;font-size:23px;margin-bottom:12px;opacity:1;overflow:visible}
+.apr-rulecard.perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:0}
 .apr-rulecard>.perm-tog{position:absolute;top:26px;right:28px}
 .apr-rulecard>.perm-tog .nv-tk{width:58px;height:32px}
 .apr-rulecard>.perm-tog .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
@@ -1396,11 +1398,11 @@ input,textarea,select{font-size:14px}
 .apr-sublbl b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
 .apr-sublbl span{display:block;font-size:14px;color:#999999;margin-top:2px;line-height:1.4}
 .apr-subtg{flex-shrink:0;font-size:13px;font-weight:700;color:var(--ink)}
-.apr-subtg .tgtxt{font-weight:700}
+.apr-subtg .tgtxt{font-weight:700;color:var(--ink)}
 .apr-subtg input:not(:checked)~.tgtxt{color:#999999}
-.apr-subtg .nv-tk{width:58px;height:32px}
-.apr-subtg .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
-.apr-subtg input:checked+.nv-tk::after{transform:translateX(26px)}
+.apr-subtg.nv-toggle .nv-tk{width:58px;height:32px}
+.apr-subtg.nv-toggle .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
+.apr-subtg.nv-toggle input:checked+.nv-tk::after{transform:translateX(26px)}
 .apr-card{cursor:pointer;font:inherit}
 .apr-card-foot{margin-top:auto;padding-top:18px;border-top:1px solid #e6e9ec;width:100%;display:flex;align-items:center;justify-content:space-between}
 .apr-card-badge{font-size:13px;font-weight:700;color:#c0392f;background:#fdeceb;border:1px solid #f6d0cc;border-radius:999px;padding:5px 13px}
@@ -1410,8 +1412,9 @@ input,textarea,select{font-size:14px}
 #permPubSec{margin-top:8px}
 #permStep1{display:grid;grid-template-columns:repeat(2,500px);gap:16px;max-width:none;margin:16px 0 0;align-items:stretch;justify-content:start}
 #permStep1 .perm-card{width:500px;height:auto;min-height:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:32px;position:relative;transition:border-color .18s;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box;overflow:hidden}
-#permStep1 .perm-card .perm2-ic{width:56px;height:56px;margin:0 0 18px;overflow:visible;opacity:1;font-size:23px;border-radius:8px}
-.perm-tog{display:inline-flex;align-items:center;gap:11px;cursor:pointer;font-size:15px;font-weight:400;color:var(--ink)}
+#permStep1 .perm-card .perm2-ic{width:56px;height:56px;margin:0 0 12px;overflow:visible;opacity:1;font-size:23px;border-radius:8px}
+.perm-tog{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;font-weight:400;color:var(--ink)}
+.perm-tog.nv-toggle{gap:8px}
 .perm-toglbl{font-size:14px;color:var(--ink);margin-bottom:10px}
 .perm-radiogrp{display:flex;flex-direction:column;gap:12px}
 .perm-radio{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;transition:.15s}
@@ -1423,19 +1426,18 @@ input,textarea,select{font-size:14px}
 .perm-radio .pr-body{min-width:0;flex:1}
 .perm-radio .pr-body>b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
 .perm-radio .pr-body>span{display:block;font-size:14px;color:#999999;margin-top:2px}
-.perm-pickwrap{display:flex;align-items:center;gap:10px;margin-top:10px}
+.perm-pickwrap{display:flex;align-items:center;gap:10px;margin-top:16px}
 .perm-who-count{font-size:12px;color:#999999}
 .perm-pickbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 12px;border:1.5px solid #2F8EE5;border-radius:6px;background:#fff;color:#2F8EE5;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:.15s}
 .perm-pickbtn:hover{background:#2F8EE5;color:#fff}
 .perm-pickbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 #permStep1 .perm-card h3{margin-top:0}
 #permStep1 .perm2-desc{max-width:none;min-height:38px}
-#permStep1 .perm-card.on{border-color:#e9edf1}
+#permStep1 .perm-card.on{border-color:#D9D9D9}
 #permStoriesGrid .perm-card{transition:border-color .18s;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box;overflow:hidden}
-#permStep1 .perm-card:not(.on) .perm2-ic,#permStoriesGrid .perm-card:not(.on) .perm2-ic{filter:grayscale(.55);opacity:.7}
-.perm2-ic{width:64px;height:64px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;margin-bottom:18px}
-#permStep1 .perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.perm2-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-top:10px;max-width:none}
+.perm2-ic{width:64px;height:64px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;margin-bottom:12px}
+#permStep1 .perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:0}
+.perm2-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-top:12px;max-width:none}
 #permWhoBody .perm-opts{display:none}
 #permWhoBody{padding:22px 24px}
 #permWhoBody .perm-members{display:flex!important;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden;height:100%}
@@ -1443,12 +1445,13 @@ input,textarea,select{font-size:14px}
 #permWhoBody #npermList,#permWhoBody #permUnitRoles{flex:1;overflow-y:auto;padding:6px}
 #permWhoBody .perm-empty{padding:48px 20px;text-align:center;color:var(--muted)}
 .perm-who{margin-top:0}
-.perm-who-lbl{font-size:12px;color:#8E8E93;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px}
+.perm-who-lbl{font-size:12px;color:#999999;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:16px}
 #permStep1 .perm2-foot>.perm-tog,#permStoriesGrid .perm2-foot>.perm-tog{position:absolute;top:26px;right:28px;font-size:14px;font-weight:700;color:var(--ink)}
 #permStep1 .perm2-foot>.perm-tog .nv-tk,#permStoriesGrid .perm2-foot>.perm-tog .nv-tk{width:58px;height:32px}
 #permStep1 .perm2-foot>.perm-tog .nv-tk::after,#permStoriesGrid .perm2-foot>.perm-tog .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
 #permStep1 .perm2-foot>.perm-tog input:checked+.nv-tk::after,#permStoriesGrid .perm2-foot>.perm-tog input:checked+.nv-tk::after{transform:translateX(26px)}
-.perm2-foot{margin-top:22px;padding-top:22px;border-top:1px solid #e6e9ec;width:100%;text-align:left;display:flex;flex-direction:column;flex:1}
+#permStep1 .perm2-foot>.perm-tog input:not(:checked)~.tgtxt,#permStoriesGrid .perm2-foot>.perm-tog input:not(:checked)~.tgtxt{color:#999999}
+.perm2-foot{margin-top:16px;padding-top:16px;border-top:1px solid #e6e9ec;width:100%;text-align:left;display:flex;flex-direction:column;flex:1}
 .perm2-who{text-align:left}
 .perm2-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;margin-bottom:12px}
 .perm2-badge.on{color:#128a3e;background:rgba(37,211,102,.15)}
@@ -1582,6 +1585,7 @@ input,textarea,select{font-size:14px}
   white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
+.nmod-tab svg{width:20px;height:20px}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .nmod-tab.active{background:#00ACAC;color:#fff}
@@ -2965,7 +2969,7 @@ input,textarea,select{font-size:14px}
 #nvTeamScreen .rlist tbody td.perm-id{font-weight:700}
 #nvCatsScreen .rlist tbody td .cat-name{font-size:14px;font-weight:400;color:#5F666C}
 #nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
-#nvTeamScreen .rlist tbody td .perm-person span{font-size:12px;color:#999}
+#nvTeamScreen .rlist tbody td .perm-person span{font-size:11px;color:#999}
 #nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
 /* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
    toda a largura disponivel da celula, sem bloco de largura fixa.
@@ -2981,9 +2985,9 @@ input,textarea,select{font-size:14px}
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
 #nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
 #nvTeamScreen .cat-actwrap .cat-arch:hover{background:#F7685B;color:#fff;border-color:#F7685B}
-#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;color:#fff;padding:12px;border-radius:6px;font-size:14px}
 #nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
-#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
 #nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn,#nvPermScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
   border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
@@ -3016,7 +3020,7 @@ input,textarea,select{font-size:14px}
 /* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
 .nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
 .nv-catsearch .rx-search{flex:0 0 auto}
-#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0;padding:12px}
 .nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
   display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
 .nv-catsearch-btn:hover{background:var(--teal-dark)}
@@ -3030,11 +3034,53 @@ input,textarea,select{font-size:14px}
 #nvCatModal .cat-sw{border-radius:6px}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
-#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{width:120px;border-radius:6px;justify-content:center;font-size:14px}
+#nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
+#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
-#nvCatModal #nvCatSave{background:#0088FF}
-#nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
-#nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor}
+#nvCatModal #nvCatSave{background:#57C279}
+#nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
+#teamAddModal .fg-head{border-bottom:0}
+#teamAddModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#teamAddModal .tadd-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+#teamAddModal .tadd-head{display:flex;align-items:center;gap:12px;padding:0 12px;height:46px;box-sizing:border-box;font-size:14px;font-weight:700;color:#0c334a;background:#fff;border-bottom:1px solid var(--line)}
+#teamAddModal .tadd-head span:first-child{width:18px;flex-shrink:0}
+#teamAddModal .tadd-th-person{flex:1;min-width:0;border-left:1px solid var(--line);padding-left:12px;align-self:stretch;display:inline-flex;align-items:center}
+#teamAddModal .tadd-th-unit{width:190px;flex-shrink:0;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-body{max-height:320px;overflow-y:auto}
+#teamAddModal .tadd-row{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;transition:background .12s}
+#teamAddModal .tadd-row:nth-child(odd){background:#F0F3F5}
+#teamAddModal .tadd-row:nth-child(even){background:#fff}
+#teamAddModal .tadd-row:hover{background:#e6eaec}
+#teamAddModal .tadd-row.on{background:#dcecf3}
+#teamAddModal .tadd-chk{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex-shrink:0;margin:0;border-radius:4px;border:1.5px solid #c7ccd1;background:#fff;position:relative;pointer-events:none}
+#teamAddModal .tadd-chk:checked{background:var(--teal);border-color:var(--teal)}
+#teamAddModal .tadd-chk:checked::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+#teamAddModal .tadd-person{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-row .avatar{width:40px;height:40px;font-size:0;flex-shrink:0}
+#teamAddModal .tadd-info{flex:1;min-width:0}
+#teamAddModal .tadd-info b{font-size:14px;font-weight:400;color:#5F666C;display:block}
+#teamAddModal .tadd-info span{font-size:11px;color:#999}
+#teamAddModal .tadd-unit{width:190px;flex-shrink:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-unit-badge{width:32px;height:32px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+#teamAddModal .tadd-unit-info{min-width:0}
+#teamAddModal .tadd-unit-info b{font-size:14px;font-weight:400;color:#5F666C;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
+#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:120px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
+#teamAddModal #teamAddCancel{border:0}
+#teamAddModal #teamAddConfirm{background:#57C279}
+#teamAddModal #teamAddConfirm:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#teamAddModal #teamAddConfirm svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#teamAddModal .cat-th-in{display:inline-flex;align-items:center;gap:6px}
+#teamAddModal .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#teamAddModal .cat-sortbtn:hover{color:#2F8EE5}
+#teamAddModal .cat-sortbtn svg{width:24px;height:24px;display:block}
+#teamAddModal .nv-catsearch{display:flex;align-items:center;width:100%}
+#teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}
 
 /* feed da home, destaque e coluna direita */
 /* ============ Central "Para hoje" v2 ============ */
@@ -5825,8 +5871,8 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="nmod-top-tabs nmod-grp" id="nmodGrpManage">
       <button class="nmod-tab" id="nmtPub"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
       <button class="nmod-tab" id="nmtMgShorts"><i class="fa-solid fa-clapperboard"></i> Shorts</button>
-      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><i class="fa-solid fa-circle-check"></i><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
-      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-heart"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
+      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
+      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
       <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
       <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
@@ -6343,7 +6389,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         <div class="nv-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
       <div id="permStep1">
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#a06be0,#5e35b1)"><i class="fa-solid fa-building"></i></div>
+        <div class="perm2-ic" style="background:#5e35b1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>office-building</title><path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/></svg></div>
         <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar comunicados e notícias oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
         <input type="checkbox" id="permCentralOn" hidden>
         <div class="perm2-foot" id="permCentralFoot"></div>
@@ -6365,7 +6411,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
       </div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-store"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>store</title><path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"/></svg></div>
         <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
         <input type="checkbox" id="permUnitOn" hidden>
         <div class="perm2-foot" id="permUnitFoot"></div>
@@ -6392,16 +6438,16 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       </div>
       <input type="checkbox" id="pmCatReq" checked hidden>
       <div id="permApprGrid" style="display:none"><div class="nv-secttl apr-secttl"><i class="fa-solid fa-newspaper"></i> Publicações</div><div class="perm-card apr-rulecard" id="permApprCard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <input type="checkbox" id="pmApprove" checked hidden>
-        <h3>Aprovar comentários</h3><p class="perm2-desc">Os comentários das publicações ficam pendentes e só aparecem no feed após um moderador aprovar na fila de Aprovações.</p>
+        <h3>Aprovar comentários</h3><p class="perm2-desc">Comentários de terceiros ficam pendentes antes de irem ao ar. Um moderador revisa o conteúdo e libera o comentário na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprComSub">
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da matriz</b><span>Comentários feitos por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da unidade</b><span>Comentários feitos por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div>
       <div class="perm-card apr-rulecard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><i class="fa-solid fa-rectangle-list"></i></div>
         <input type="checkbox" id="pmPostApprove" checked hidden>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprPubSub">
@@ -6412,7 +6458,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       <div class="nv-secttl apr-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
       <div class="perm-card apr-rulecard">
         <input type="checkbox" id="pmShortApprove" checked hidden>
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#f27794,#d63a5f)"><i class="fa-solid fa-clapperboard"></i></div>
+        <div class="perm2-ic" style="background:#d63a5f"><i class="fa-solid fa-clapperboard"></i></div>
         <h3>Aprovar shorts</h3><p class="perm2-desc">Shorts publicados por terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprShortSub">
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da matriz</b><span>Shorts publicados por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
@@ -6440,12 +6486,12 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-circle-check"></i><h2>Aprovações</h2></div></div>
     <div class="perm-body"><div id="aprHome">
       <button class="perm-card apr-card" id="aprCardCom">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <h3>Aprovar comentários</h3><p class="perm2-desc">Modere os comentários enviados nas publicações. Aprove para exibir ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardComN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
       <button class="perm-card apr-card" id="aprCardPub">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><i class="fa-solid fa-newspaper"></i></div>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Revise as publicações de terceiros antes de irem ao ar. Aprove para publicar ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardPubN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
@@ -6553,7 +6599,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
       <span style="flex:1"></span>
       <div class="nv-catsearch">
-        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador..." autocomplete="off"></div>
         <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </div>
@@ -6600,7 +6646,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         <div style="margin-top:18px"><label class="fg-label">Ícone</label><div class="cat-icons" id="nvCatIcons"></div></div>
         <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">
           <button class="fo-btn ghost" id="nvCatCancel">Cancelar</button>
-          <button class="fo-btn" id="nvCatSave"><svg viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg> Salvar</button>
+          <button class="fo-btn" id="nvCatSave"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
         </div>
       </div>
     </div>
@@ -6668,12 +6714,23 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
 </div>
 <div class="fg-backdrop" id="teamAddModal">
-  <div class="fg-modal" style="width:480px">
+  <div class="fg-modal" style="width:600px">
     <div class="fg-head"><h2>Novo administrador</h2><span style="flex:1"></span><button class="fg-close" id="teamAddClose"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="fg-body">
-      <p style="font-size:12px;line-height:16px;color:#8E8E93;margin:0 0 12px">Aplicação: apenas administradores da rede podem aprovar conteúdo.</p>
-      <div class="rx-search" style="margin-bottom:12px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamAddSearch" placeholder="Buscar pessoa" autocomplete="off"></div>
-      <div class="perm-pick" id="teamAddList"></div>
+      <div class="nv-catsearch" style="margin-bottom:14px">
+        <div class="rx-search"><input type="text" id="teamAddSearch" placeholder="Pesquisar pessoa..." autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+      <div class="tadd-panel">
+        <div class="tadd-head"><span></span><span class="cat-th-in tadd-th-person"><span>Pessoa <span id="teamAddHeadCount"></span></span><button type="button" class="cat-sortbtn" id="teamAddSortBtn" data-sortcol="name" aria-label="Ordenar por pessoa"></button></span><span class="cat-th-in tadd-th-unit"><span>Unidade</span><button type="button" class="cat-sortbtn" id="teamAddSortBtnUnit" data-sortcol="unit" aria-label="Ordenar por unidade"></button></span></div>
+        <div class="tadd-body" id="teamAddList"></div>
+      </div>
+    </div>
+    <div class="fg-foot">
+      <span class="tadd-count" id="teamAddCount">Nenhum administrador selecionado</span>
+      <span class="sp"></span>
+      <button class="fo-btn ghost" id="teamAddCancel">Cancelar</button>
+      <button class="fo-btn" id="teamAddConfirm"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
     </div>
   </div>
 </div>
@@ -6795,12 +6852,12 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <div class="perm-body">
     <div id="permStoriesGrid">
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#a06be0,#5e35b1)"><i class="fa-solid fa-building"></i></div>
+        <div class="perm2-ic" style="background:#5e35b1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>office-building</title><path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/></svg></div>
         <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar comunicados e notícias oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
         <div class="perm2-foot" id="stPermCentralFoot"></div>
       </div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-store"></i></div>
+        <div class="perm2-ic" style="background:#1e4fb0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>store</title><path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"/></svg></div>
         <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
         <div class="perm2-foot" id="stPermUnitFoot"></div>
       </div>
@@ -8072,16 +8129,16 @@ $('#catList').addEventListener('click', e => {
 
 /* ---------- Permissões (quem pode publicar) ---------- */
 const PEOPLE = [
-  { id:1027, name:'Arthur Henrique Nunes', av:'av-wm', role:'Comercial' },
-  { id:978,  name:'Eduardo Almeida', av:'av-bo', role:'Marketing · Pit Stop Barra' },
-  { id:992,  name:'Iumy Sakamoto', av:'av-js', role:'Produto' },
-  { id:1007, name:'Mariana Áurea Martins', av:'av-cm', role:'Customer Success' },
-  { id:1036, name:'Paulo Henrique Soares Costa', av:'av-pl', role:'Design' },
-  { id:1,    name:'Rodrigo Caetano Silva', av:'av-rc', role:'CEO' },
-  { id:12,   name:'Ana Souza', av:'av-as', role:'Marketing · Pit Stop Barra' },
-  { id:34,   name:'Livia Fernandes', av:'av-lf', role:'Customer Success' },
-  { id:56,   name:'Matheus Scussel', av:'av-ms', role:'COO' },
-  { id:78,   name:'Ellen Rocha', av:'av-gc', role:'Conteúdo' }
+  { id:1027, name:'Arthur Henrique Nunes', av:'av-wm', role:'Comercial', unidade:'Matriz' },
+  { id:978,  name:'Eduardo Almeida', av:'av-bo', role:'Marketing · Pit Stop Barra', unidade:'Pit Stop Barra' },
+  { id:992,  name:'Iumy Sakamoto', av:'av-js', role:'Produto', unidade:'Matriz' },
+  { id:1007, name:'Mariana Áurea Martins', av:'av-cm', role:'Customer Success', unidade:'Matriz' },
+  { id:1036, name:'Paulo Henrique Soares Costa', av:'av-pl', role:'Design', unidade:'Matriz' },
+  { id:1,    name:'Rodrigo Caetano Silva', av:'av-rc', role:'CEO', unidade:'Matriz' },
+  { id:12,   name:'Ana Souza', av:'av-as', role:'Marketing · Pit Stop Barra', unidade:'Pit Stop Barra' },
+  { id:34,   name:'Livia Fernandes', av:'av-lf', role:'Customer Success', unidade:'Matriz' },
+  { id:56,   name:'Matheus Scussel', av:'av-ms', role:'COO', unidade:'Matriz' },
+  { id:78,   name:'Ellen Rocha', av:'av-gc', role:'Conteúdo', unidade:'Matriz' }
 ];
 
 
@@ -8256,10 +8313,10 @@ function stPermFeet(){
       cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="central"><span class="nv-tk"></span> Ativo</label>'+
         '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
         '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
-        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe nominalmente quem publica.</span>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
         (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-stwhich="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
         '</span></div></div></div>';
-    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> Inativo</label>';
+    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
   if(uF){
     const uCard=uF.closest('.perm-card'); if(uCard) uCard.classList.toggle('on', STORY_PERM.unitOn);
@@ -8269,10 +8326,10 @@ function stPermFeet(){
       uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="unit"><span class="nv-tk"></span> Ativo</label>'+
         '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
         '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
-        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe nominalmente quais unidades publicam.</span>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
         (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="story">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
         '</span></div></div></div>';
-    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> Inativo</label>';
+    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
 }
 document.addEventListener('change', e=>{
@@ -10537,7 +10594,7 @@ $('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm');
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
-let teamQuery='', teamAddQuery='';
+let teamQuery='', teamAddQuery='', teamAddSel=new Set();
 function teamPhone(id){ const d=String(9000+(id*37)%9999).padStart(4,'0'); return '(34) 9'+String(8000+(id*13)%1999).slice(0,4)+'-'+d; }
 function teamMail(name){ const p=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(' '); return p[0]+'.'+p[p.length-1]+'@sults.com.br'; }
 let teamSortCol=null, teamSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
@@ -10580,17 +10637,61 @@ $('#teamList') && $('#teamList').addEventListener('click', e=>{
   else { teamSortCol=null; teamSortDir=0; }
   teamRender();
 });
+let teamAddSortCol=null, teamAddSortDir=0; // dir: 0 neutro, 1 asc, 2 desc
+const TEAM_UNIT_INFO = {
+  'Matriz': { company:'Sua Marca Franquias LTDA', color:'#2e7ed4', ini:'MT' },
+  'Pit Stop Barra': { company:'Pit Stop Barra Comércio LTDA', color:'#2aa17e', ini:'PS' }
+};
+function teamAddCountText(){
+  const n=teamAddSel.size;
+  return n===0 ? 'Nenhum selecionado' : 'Selecionados: '+n;
+}
+function teamAddSortIcon(col){
+  const dir=(teamAddSortCol===col)?teamAddSortDir:0;
+  return dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
+}
 function teamAddRender(){
   const el=document.getElementById('teamAddList'); if(!el) return;
-  const list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
+  let list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
     .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()));
-  el.innerHTML = list.length ? list.map(p=>'<div class="perm-pickrow" data-teamadd="'+p.id+'"><span class="avatar '+p.av+'"></span><div><b>'+p.name+'</b><span>'+p.role+'</span></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
+  if(teamAddSortDir && teamAddSortCol){
+    const dir=teamAddSortDir===1?1:-1;
+    if(teamAddSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
+    else if(teamAddSortCol==='unit') list=list.slice().sort((a,b)=>dir*(a.unidade||'').localeCompare(b.unidade||''));
+  }
+  el.innerHTML = list.length ? list.map(p=>{
+    const u=TEAM_UNIT_INFO[p.unidade]||{company:'',color:'#8e8e93',ini:(p.unidade||'?').slice(0,2).toUpperCase()};
+    return '<div class="tadd-row'+(teamAddSel.has(p.id)?' on':'')+'" data-teamadd="'+p.id+'"><input type="checkbox" class="tadd-chk"'+(teamAddSel.has(p.id)?' checked':'')+'><span class="tadd-person"><span class="avatar '+p.av+'"></span><span class="tadd-info"><b>'+p.name+'</b><span>#'+p.id+' - '+p.role+'</span></span></span><span class="tadd-unit"><span class="tadd-unit-badge" style="background:'+u.color+'">'+u.ini+'</span><span class="tadd-unit-info"><b>'+(p.unidade||'')+'</b><span>'+u.company+'</span></span></span></div>';
+  }).join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
+  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.textContent=teamAddCountText();
+  const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
+  const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
+  const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
 }
 document.addEventListener('click', e=>{
-  if(e.target.closest('#teamAdd')){ teamAddQuery=''; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
-  if(e.target.closest('#teamAddClose') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAddClose') || e.target.closest('#teamAddCancel') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  const taSortBtn=e.target.closest('#teamAddModal .cat-sortbtn');
+  if(taSortBtn){
+    const col=taSortBtn.dataset.sortcol;
+    if(teamAddSortCol!==col){ teamAddSortCol=col; teamAddSortDir=1; }
+    else if(teamAddSortDir===1){ teamAddSortDir=2; }
+    else { teamAddSortCol=null; teamAddSortDir=0; }
+    teamAddRender();
+    return;
+  }
+  if(e.target.closest('#teamAddConfirm')){
+    if(!teamAddSel.size) return;
+    const n=teamAddSel.size;
+    teamAddSel.forEach(id=>{ if(!TEAM.includes(id)) TEAM.push(id); });
+    teamAddSel=new Set();
+    teamRender();
+    document.getElementById('teamAddModal').classList.remove('open');
+    fgToast(n>1?'Administradores adicionados':'Administrador adicionado');
+    return;
+  }
   const add=e.target.closest('[data-teamadd]');
-  if(add){ TEAM.push(+add.dataset.teamadd); teamAddRender(); teamRender(); fgToast('Administrador adicionado'); return; }
+  if(add){ const id=+add.dataset.teamadd; if(teamAddSel.has(id)) teamAddSel.delete(id); else teamAddSel.add(id); teamAddRender(); return; }
   const rm=e.target.closest('[data-teamrm]');
   if(rm){ TEAM=TEAM.filter(x=>x!==+rm.dataset.teamrm); teamRender(); fgToast('Administrador removido'); return; }
 });
@@ -12343,7 +12444,7 @@ function renderNewsPerm(){
   var _u=$('#permUnitOn'); if(_u) _u.checked = NEWS_PERM.unitOn;
   $$('input[name="npermUnitMode"]').forEach(r=>{ r.checked = (r.value===NEWS_PERM.unitMode); });
   var _urw=$('#permUnitRolesWrap'); if(_urw) _urw.style.display = (NEWS_PERM.unitMode==='especificos') ? '' : 'none';
-  const rc=$('#unitRoleCount'); if(rc) rc.textContent=NEWS_PERM.unitRoles.length; var _ur=$('#permUnitRoles'); if(_ur) _ur.innerHTML = (NEWS_PERM.unitRoles.length?('<table><tbody>'+NEWS_PERM.unitRoles.map(rid=>{const u=UNIT_ROLES.find(x=>x[0]===rid)||[rid,rid,'fa-user'];return '<tr><td><div class="perm-person"><span class="avatar" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div></div></td><td style="text-align:right"><button class="perm-remove" data-role="'+rid+'"><i class="fa-solid fa-trash-can"></i> Remover</button></td></tr>';}).join('')+'</tbody></table>'):'<div class="perm-empty">Nenhum cargo. Clique em \u201cAdicionar cargo\u201d.</div>');
+  const rc=$('#unitRoleCount'); if(rc) rc.textContent=NEWS_PERM.unitRoles.length; var _ur=$('#permUnitRoles'); if(_ur) _ur.innerHTML = (NEWS_PERM.unitRoles.length?('<table><tbody>'+NEWS_PERM.unitRoles.map(rid=>{const u=UNIT_ROLES.find(x=>x[0]===rid)||[rid,rid,'fa-user'];return '<tr><td><div class="perm-person"><span class="avatar" style="background:#1e4fb0"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div></div></td><td style="text-align:right"><button class="perm-remove" data-role="'+rid+'"><i class="fa-solid fa-trash-can"></i> Remover</button></td></tr>';}).join('')+'</tbody></table>'):'<div class="perm-empty">Nenhum cargo. Clique em \u201cAdicionar cargo\u201d.</div>');
   var _c=$('#permCentralOn'); if(_c) _c.checked = NEWS_PERM.centralOn;
   $$('input[name="npermMode"]').forEach(r => { r.checked = (r.value === NEWS_PERM.mode); });
   var _pm=$('#npermMembers'); if(_pm) _pm.style.display = NEWS_PERM.mode==='selecionados' ? '' : 'none';
@@ -12363,14 +12464,14 @@ function renderNewsPerm(){
   const cCard=$('#permCentralFoot')?$('#permCentralFoot').closest('.perm-card'):null; if(cCard) cCard.classList.toggle('on',NEWS_PERM.centralOn);
   const uF=$('#permUnitFoot'); if(uF){ if(NEWS_PERM.unitOn){ const some=NEWS_PERM.unitMode!=='todos'; const n=UNIT_SEL.pub.length; uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="unit"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
     '<div class="perm-radio'+(!some?' on':'')+'" data-seg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
-    '<div class="perm-radio'+(some?' on':'')+'" data-seg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe nominalmente quais unidades publicam.</span>'+
+    '<div class="perm-radio'+(some?' on':'')+'" data-seg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
     (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="pub">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
-    '</span></div></div></div>'; } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="unit"><span class="nv-tk"></span> Inativo</label>'; }
+    '</span></div></div></div>'; } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>'; }
   const cF=$('#permCentralFoot'); if(cF){ if(NEWS_PERM.centralOn){ const some=NEWS_PERM.mode!=='todos'; const n=NEWS_PERM.members.length; cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="central"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
     '<div class="perm-radio'+(!some?' on':'')+'" data-seg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
-    '<div class="perm-radio'+(some?' on':'')+'" data-seg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe nominalmente quem publica.</span>'+
+    '<div class="perm-radio'+(some?' on':'')+'" data-seg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
     (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-which="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
-    '</span></div></div></div>'; } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="central"><span class="nv-tk"></span> Inativo</label>'; }
+    '</span></div></div></div>'; } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>'; }
 }
 let permWhoOpen=null, permWhoParent=null, permWhoNext=null;
 function openPermWho(which){
@@ -12439,7 +12540,7 @@ $('#unitAddList') && $('#unitAddList').addEventListener('click', e=>{
 });
 function unitSelLabel(scope){ const sel=UNIT_SEL[scope]; return sel.length ? sel.length+' unidade(s) selecionada(s)' : 'Nenhuma unidade selecionada'; }
 const uroleModal=$('#uroleModal');
-function renderUrolePick(){ const avail=UNIT_ROLES.filter(u=>!NEWS_PERM.unitRoles.includes(u[0])); const el=$('#urolePickList'); el.innerHTML= avail.length? avail.map(u=>'<div class="perm-pickrow" data-role="'+u[0]+'"><span class="avatar" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Todos os cargos já foram adicionados.</div>'; }
+function renderUrolePick(){ const avail=UNIT_ROLES.filter(u=>!NEWS_PERM.unitRoles.includes(u[0])); const el=$('#urolePickList'); el.innerHTML= avail.length? avail.map(u=>'<div class="perm-pickrow" data-role="'+u[0]+'"><span class="avatar" style="background:#1e4fb0"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Todos os cargos já foram adicionados.</div>'; }
 $('#unitRoleAdd') && $('#unitRoleAdd').addEventListener('click', ()=>{ renderUrolePick(); uroleModal.classList.add('open'); });
 $('#uroleModalClose') && $('#uroleModalClose').addEventListener('click', ()=>uroleModal.classList.remove('open'));
 uroleModal && uroleModal.addEventListener('click', e=>{ if(e.target===uroleModal) uroleModal.classList.remove('open'); });

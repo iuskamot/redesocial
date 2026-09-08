@@ -156,9 +156,10 @@
 .fg-pane.on{display:block}
 .fg-field{margin-bottom:16px}
 .fg-label{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block}
-.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;color:var(--ink);outline:none}
-.fg-input:focus,.fg-textarea:focus{border-color:var(--teal)}
-.fg-textarea{resize:vertical;min-height:64px}
+.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:6px;font:inherit;font-size:13px;color:var(--ink);outline:none}
+.fg-input{height:36px;padding:0 12px}
+.fg-textarea{padding:10px 12px;resize:vertical;min-height:64px}
+.fg-input:focus,.fg-textarea:focus{border-color:var(--linha-campo-forte)}
 .fg-swatches,.fg-icons{display:flex;flex-wrap:wrap;gap:9px}
 .fg-sw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
 .fg-sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--ink)}

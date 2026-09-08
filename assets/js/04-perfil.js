@@ -168,10 +168,10 @@ function stPermFeet(){
       cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="central"><span class="nv-tk"></span> Ativo</label>'+
         '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
         '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
-        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe nominalmente quem publica.</span>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
         (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-stwhich="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
         '</span></div></div></div>';
-    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> Inativo</label>';
+    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
   if(uF){
     const uCard=uF.closest('.perm-card'); if(uCard) uCard.classList.toggle('on', STORY_PERM.unitOn);
@@ -181,10 +181,10 @@ function stPermFeet(){
       uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="unit"><span class="nv-tk"></span> Ativo</label>'+
         '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
         '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
-        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe nominalmente quais unidades publicam.</span>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
         (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="story">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
         '</span></div></div></div>';
-    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> Inativo</label>';
+    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
 }
 document.addEventListener('change', e=>{

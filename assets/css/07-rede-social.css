@@ -30,6 +30,7 @@
   white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
+.nmod-tab svg{width:20px;height:20px}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .nmod-tab.active{background:#00ACAC;color:#fff}
@@ -1413,7 +1414,7 @@
 #nvTeamScreen .rlist tbody td.perm-id{font-weight:700}
 #nvCatsScreen .rlist tbody td .cat-name{font-size:14px;font-weight:400;color:#5F666C}
 #nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
-#nvTeamScreen .rlist tbody td .perm-person span{font-size:12px;color:#999}
+#nvTeamScreen .rlist tbody td .perm-person span{font-size:11px;color:#999}
 #nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
 /* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
    toda a largura disponivel da celula, sem bloco de largura fixa.
@@ -1429,9 +1430,9 @@
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
 #nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
 #nvTeamScreen .cat-actwrap .cat-arch:hover{background:#F7685B;color:#fff;border-color:#F7685B}
-#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;color:#fff;padding:12px;border-radius:6px;font-size:14px}
 #nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
-#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
 #nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn,#nvPermScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
   border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
@@ -1464,7 +1465,7 @@
 /* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
 .nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
 .nv-catsearch .rx-search{flex:0 0 auto}
-#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0;padding:12px}
 .nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
   display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
 .nv-catsearch-btn:hover{background:var(--teal-dark)}
@@ -1478,8 +1479,50 @@
 #nvCatModal .cat-sw{border-radius:6px}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
-#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{width:120px;border-radius:6px;justify-content:center;font-size:14px}
+#nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
+#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
-#nvCatModal #nvCatSave{background:#0088FF}
-#nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
-#nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor}
+#nvCatModal #nvCatSave{background:#57C279}
+#nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
+#teamAddModal .fg-head{border-bottom:0}
+#teamAddModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#teamAddModal .tadd-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+#teamAddModal .tadd-head{display:flex;align-items:center;gap:12px;padding:0 12px;height:46px;box-sizing:border-box;font-size:14px;font-weight:700;color:#0c334a;background:#fff;border-bottom:1px solid var(--line)}
+#teamAddModal .tadd-head span:first-child{width:18px;flex-shrink:0}
+#teamAddModal .tadd-th-person{flex:1;min-width:0;border-left:1px solid var(--line);padding-left:12px;align-self:stretch;display:inline-flex;align-items:center}
+#teamAddModal .tadd-th-unit{width:190px;flex-shrink:0;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-body{max-height:320px;overflow-y:auto}
+#teamAddModal .tadd-row{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;transition:background .12s}
+#teamAddModal .tadd-row:nth-child(odd){background:#F0F3F5}
+#teamAddModal .tadd-row:nth-child(even){background:#fff}
+#teamAddModal .tadd-row:hover{background:#e6eaec}
+#teamAddModal .tadd-row.on{background:#dcecf3}
+#teamAddModal .tadd-chk{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex-shrink:0;margin:0;border-radius:4px;border:1.5px solid #c7ccd1;background:#fff;position:relative;pointer-events:none}
+#teamAddModal .tadd-chk:checked{background:var(--teal);border-color:var(--teal)}
+#teamAddModal .tadd-chk:checked::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+#teamAddModal .tadd-person{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-row .avatar{width:40px;height:40px;font-size:0;flex-shrink:0}
+#teamAddModal .tadd-info{flex:1;min-width:0}
+#teamAddModal .tadd-info b{font-size:14px;font-weight:400;color:#5F666C;display:block}
+#teamAddModal .tadd-info span{font-size:11px;color:#999}
+#teamAddModal .tadd-unit{width:190px;flex-shrink:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-unit-badge{width:32px;height:32px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+#teamAddModal .tadd-unit-info{min-width:0}
+#teamAddModal .tadd-unit-info b{font-size:14px;font-weight:400;color:#5F666C;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
+#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:120px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
+#teamAddModal #teamAddCancel{border:0}
+#teamAddModal #teamAddConfirm{background:#57C279}
+#teamAddModal #teamAddConfirm:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#teamAddModal #teamAddConfirm svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#teamAddModal .cat-th-in{display:inline-flex;align-items:center;gap:6px}
+#teamAddModal .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#teamAddModal .cat-sortbtn:hover{color:#2F8EE5}
+#teamAddModal .cat-sortbtn svg{width:24px;height:24px;display:block}
+#teamAddModal .nv-catsearch{display:flex;align-items:center;width:100%}
+#teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}

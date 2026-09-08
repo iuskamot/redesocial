@@ -478,14 +478,14 @@ function renderNewsPerm(){
   const cCard=$('#permCentralFoot')?$('#permCentralFoot').closest('.perm-card'):null; if(cCard) cCard.classList.toggle('on',NEWS_PERM.centralOn);
   const uF=$('#permUnitFoot'); if(uF){ if(NEWS_PERM.unitOn){ const some=NEWS_PERM.unitMode!=='todos'; const n=UNIT_SEL.pub.length; uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="unit"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
     '<div class="perm-radio'+(!some?' on':'')+'" data-seg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
-    '<div class="perm-radio'+(some?' on':'')+'" data-seg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe nominalmente quais unidades publicam.</span>'+
+    '<div class="perm-radio'+(some?' on':'')+'" data-seg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
     (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="pub">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
-    '</span></div></div></div>'; } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="unit"><span class="nv-tk"></span> Inativo</label>'; }
+    '</span></div></div></div>'; } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>'; }
   const cF=$('#permCentralFoot'); if(cF){ if(NEWS_PERM.centralOn){ const some=NEWS_PERM.mode!=='todos'; const n=NEWS_PERM.members.length; cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="central"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
     '<div class="perm-radio'+(!some?' on':'')+'" data-seg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
-    '<div class="perm-radio'+(some?' on':'')+'" data-seg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe nominalmente quem publica.</span>'+
+    '<div class="perm-radio'+(some?' on':'')+'" data-seg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
     (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-which="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
-    '</span></div></div></div>'; } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="central"><span class="nv-tk"></span> Inativo</label>'; }
+    '</span></div></div></div>'; } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>'; }
 }
 let permWhoOpen=null, permWhoParent=null, permWhoNext=null;
 function openPermWho(which){

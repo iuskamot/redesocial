@@ -462,7 +462,7 @@ $('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm');
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
-let teamQuery='', teamAddQuery='';
+let teamQuery='', teamAddQuery='', teamAddSel=new Set();
 function teamPhone(id){ const d=String(9000+(id*37)%9999).padStart(4,'0'); return '(34) 9'+String(8000+(id*13)%1999).slice(0,4)+'-'+d; }
 function teamMail(name){ const p=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(' '); return p[0]+'.'+p[p.length-1]+'@sults.com.br'; }
 let teamSortCol=null, teamSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
@@ -505,17 +505,61 @@ $('#teamList') && $('#teamList').addEventListener('click', e=>{
   else { teamSortCol=null; teamSortDir=0; }
   teamRender();
 });
+let teamAddSortCol=null, teamAddSortDir=0; // dir: 0 neutro, 1 asc, 2 desc
+const TEAM_UNIT_INFO = {
+  'Matriz': { company:'Sua Marca Franquias LTDA', color:'#2e7ed4', ini:'MT' },
+  'Pit Stop Barra': { company:'Pit Stop Barra Comércio LTDA', color:'#2aa17e', ini:'PS' }
+};
+function teamAddCountText(){
+  const n=teamAddSel.size;
+  return n===0 ? 'Nenhum selecionado' : 'Selecionados: '+n;
+}
+function teamAddSortIcon(col){
+  const dir=(teamAddSortCol===col)?teamAddSortDir:0;
+  return dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
+}
 function teamAddRender(){
   const el=document.getElementById('teamAddList'); if(!el) return;
-  const list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
+  let list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
     .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()));
-  el.innerHTML = list.length ? list.map(p=>'<div class="perm-pickrow" data-teamadd="'+p.id+'"><span class="avatar '+p.av+'"></span><div><b>'+p.name+'</b><span>'+p.role+'</span></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
+  if(teamAddSortDir && teamAddSortCol){
+    const dir=teamAddSortDir===1?1:-1;
+    if(teamAddSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
+    else if(teamAddSortCol==='unit') list=list.slice().sort((a,b)=>dir*(a.unidade||'').localeCompare(b.unidade||''));
+  }
+  el.innerHTML = list.length ? list.map(p=>{
+    const u=TEAM_UNIT_INFO[p.unidade]||{company:'',color:'#8e8e93',ini:(p.unidade||'?').slice(0,2).toUpperCase()};
+    return '<div class="tadd-row'+(teamAddSel.has(p.id)?' on':'')+'" data-teamadd="'+p.id+'"><input type="checkbox" class="tadd-chk"'+(teamAddSel.has(p.id)?' checked':'')+'><span class="tadd-person"><span class="avatar '+p.av+'"></span><span class="tadd-info"><b>'+p.name+'</b><span>#'+p.id+' - '+p.role+'</span></span></span><span class="tadd-unit"><span class="tadd-unit-badge" style="background:'+u.color+'">'+u.ini+'</span><span class="tadd-unit-info"><b>'+(p.unidade||'')+'</b><span>'+u.company+'</span></span></span></div>';
+  }).join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
+  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.textContent=teamAddCountText();
+  const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
+  const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
+  const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
 }
 document.addEventListener('click', e=>{
-  if(e.target.closest('#teamAdd')){ teamAddQuery=''; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
-  if(e.target.closest('#teamAddClose') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAddClose') || e.target.closest('#teamAddCancel') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  const taSortBtn=e.target.closest('#teamAddModal .cat-sortbtn');
+  if(taSortBtn){
+    const col=taSortBtn.dataset.sortcol;
+    if(teamAddSortCol!==col){ teamAddSortCol=col; teamAddSortDir=1; }
+    else if(teamAddSortDir===1){ teamAddSortDir=2; }
+    else { teamAddSortCol=null; teamAddSortDir=0; }
+    teamAddRender();
+    return;
+  }
+  if(e.target.closest('#teamAddConfirm')){
+    if(!teamAddSel.size) return;
+    const n=teamAddSel.size;
+    teamAddSel.forEach(id=>{ if(!TEAM.includes(id)) TEAM.push(id); });
+    teamAddSel=new Set();
+    teamRender();
+    document.getElementById('teamAddModal').classList.remove('open');
+    fgToast(n>1?'Administradores adicionados':'Administrador adicionado');
+    return;
+  }
   const add=e.target.closest('[data-teamadd]');
-  if(add){ TEAM.push(+add.dataset.teamadd); teamAddRender(); teamRender(); fgToast('Administrador adicionado'); return; }
+  if(add){ const id=+add.dataset.teamadd; if(teamAddSel.has(id)) teamAddSel.delete(id); else teamAddSel.add(id); teamAddRender(); return; }
   const rm=e.target.closest('[data-teamrm]');
   if(rm){ TEAM=TEAM.filter(x=>x!==+rm.dataset.teamrm); teamRender(); fgToast('Administrador removido'); return; }
 });
