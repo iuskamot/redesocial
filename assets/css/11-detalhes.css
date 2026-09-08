@@ -486,3 +486,30 @@
      duas abas dele, entao nao ha o que trocar */
 }
 
+
+
+/* ---- Shorts no celular: a informacao e as acoes dentro do video ----
+   No desktop a coluna da esquerda e a trilha da direita ficam FORA do card,
+   que e estreito. No celular o card ocupa a tela toda, entao os dois entram no
+   video, como no YouTube Shorts: autor e legenda embaixo a esquerda, curtir e
+   compartilhar a direita, sobre um esmaecido que garante a leitura.
+   O short aguardando aprovacao segue sem eles: ali quem manda e a caixa de
+   aprovar e reprovar, que ja aparece dentro do card. */
+@media (max-width:640px){
+  .rv-reel:not(.is-pend)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:4;pointer-events:none;
+    background:linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.32) 45%, transparent)}
+  .rv-reel:not(.is-pend) .rv-footer{display:block;left:16px;right:88px;width:auto;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px))}
+  .rv-footer .rv-date{margin-top:8px;font-size:12px;color:rgba(255,255,255,.7)}
+  .rv-footer .rv-caption{-webkit-line-clamp:2;line-clamp:2}
+  .rv-reel:not(.is-pend) .rv-rail{position:absolute;right:8px;left:auto;align-self:auto;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px));width:auto;margin:0;transform:none;gap:14px;z-index:5}
+  /* a coluna toda com a mesma largura: os dois botoes ficam no mesmo eixo.
+     Embaixo do curtir fica so a contagem; o compartilhar dispensa rotulo,
+     como no TikTok — e a palavra inteira nao caberia na coluna. */
+  .rv-reel:not(.is-pend) .rv-rail{align-items:center;width:56px;right:10px;gap:18px}
+  .rv-act{width:56px}
+  .rv-act button{width:44px;height:44px;font-size:19px;background:rgba(0,0,0,.28)}
+  .rv-act span{font-size:11px;text-shadow:0 1px 4px rgba(0,0,0,.6);text-align:center}
+  .rv-act.share span{display:none}
+}

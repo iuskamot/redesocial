@@ -4898,6 +4898,33 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 }
 
 
+
+/* ---- Shorts no celular: a informacao e as acoes dentro do video ----
+   No desktop a coluna da esquerda e a trilha da direita ficam FORA do card,
+   que e estreito. No celular o card ocupa a tela toda, entao os dois entram no
+   video, como no YouTube Shorts: autor e legenda embaixo a esquerda, curtir e
+   compartilhar a direita, sobre um esmaecido que garante a leitura.
+   O short aguardando aprovacao segue sem eles: ali quem manda e a caixa de
+   aprovar e reprovar, que ja aparece dentro do card. */
+@media (max-width:640px){
+  .rv-reel:not(.is-pend)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:4;pointer-events:none;
+    background:linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.32) 45%, transparent)}
+  .rv-reel:not(.is-pend) .rv-footer{display:block;left:16px;right:88px;width:auto;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px))}
+  .rv-footer .rv-date{margin-top:8px;font-size:12px;color:rgba(255,255,255,.7)}
+  .rv-footer .rv-caption{-webkit-line-clamp:2;line-clamp:2}
+  .rv-reel:not(.is-pend) .rv-rail{position:absolute;right:8px;left:auto;align-self:auto;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px));width:auto;margin:0;transform:none;gap:14px;z-index:5}
+  /* a coluna toda com a mesma largura: os dois botoes ficam no mesmo eixo.
+     Embaixo do curtir fica so a contagem; o compartilhar dispensa rotulo,
+     como no TikTok — e a palavra inteira nao caberia na coluna. */
+  .rv-reel:not(.is-pend) .rv-rail{align-items:center;width:56px;right:10px;gap:18px}
+  .rv-act{width:56px}
+  .rv-act button{width:44px;height:44px;font-size:19px;background:rgba(0,0,0,.28)}
+  .rv-act span{font-size:11px;text-shadow:0 1px 4px rgba(0,0,0,.6);text-align:center}
+  .rv-act.share span{display:none}
+}
+
 /* cenario: funcionario Crunchyroll */
 /* ============ Cenário: funcionário da Crunchyroll (só consome) ============ */
 /* Liga e desliga pelo ícone da Google Play no rodapé do menu. A pessoa vê,
@@ -5042,7 +5069,7 @@ body.demo-custom .hm-side__foot{margin-top:0}
   /* a logo fica solta, sem bloco (o header inteiro e da cor da marca; regra no fim da folha) */
   /* mesma regra do menu: a altura do header menos 4px em cima e 4px embaixo */
   body.demo-custom .top-logo-cliente{display:flex;align-items:center;height:60px;padding:4px 0;flex:none;box-sizing:border-box}
-  body.demo-custom .top-logo-cliente img{height:40px;width:auto;max-width:46vw;object-fit:contain;display:block}
+  body.demo-custom .top-logo-cliente img{height:40px;width:auto;max-width:140px;object-fit:contain;display:block}
 }
 
 /* ---- Cartao de perfil: a faixa vira a capa da empresa ---- */
@@ -5074,7 +5101,14 @@ body.demo-custom{
      tom e derivado em OKLCH — mesma matiz da marca, luminosidade fixa em 23%
      e um resto de saturacao. Assim fica escuro como preto a 90%, mas limpo e
      ainda claramente laranja. O color-mix e o fallback para navegador antigo. */
-  --marca-escura:color-mix(in srgb, #000 80%, var(--marca));
+  /* Fundo do menu e do cabecalho: a marca com 80% de preto por cima. Quando
+     a marca ja e escura (o preto da Marvel), o preto nao tem para onde ir e a
+     superficie fica chapada; ai vale o inverso, uma camada de branco. Em vez
+     de escolher caso a caso, a mistura ganha um piso de luminosidade: quem ja
+     esta acima dele nao muda, quem esta abaixo sobe ate ele. */
+  --marca-escura-base:color-mix(in srgb, #000 80%, var(--marca));
+  --marca-escura:var(--marca-escura-base);
+  --marca-escura:oklch(from var(--marca-escura-base) max(l, 0.26) c h);
   --marca-suave:color-mix(in srgb, var(--marca) 40%, transparent);
   /* Acento do menu escuro: a propria cor da marca, com um piso de
      luminosidade. Marcas claras nao mudam; marcas escuras (o preto da Marvel,
@@ -5234,7 +5268,7 @@ body.demo-custom .pp-logo-cliente{display:block;height:44px;width:auto;max-width
   /* no celular o header do perfil e inteiro da cor da marca, como o da home */
   body.demo-custom .pp-top{background:var(--marca)}
   body.demo-custom .pp-toplogo{width:auto;margin-left:0;padding:0;background:none}
-  body.demo-custom .pp-logo-cliente{height:40px;max-width:46vw}
+  body.demo-custom .pp-logo-cliente{height:40px;max-width:140px}
 }
 body.demo-custom[data-logo-cor] .pp-logo-cliente{filter:none}
 body.demo-custom .pp-cover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
@@ -7668,7 +7702,7 @@ function reelSlideHTML(r, idx, total){
   const timer = '<div class="rv-timer'+(post.video?' isvid':'')+'"><span></span></div>';
   return '<div class="rv-reel' + (pend ? ' is-pend' : '') + '"><div class="rv-card">' +
     (pend ? '<div class="rv-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>' + rvModboxHTML(r) : '') +
-    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
     timer + (post.video ? '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button><input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' : '') +
@@ -8084,11 +8118,21 @@ function rvFitMedia(root){
 /* Só o short em tela baixa vídeo. Antes todo slide nascia com src e autoplay,
    então abrir o player disparava o download de vários vídeos ao mesmo tempo —
    eles disputavam banda e o primeiro quadro demorava a aparecer. */
-function rvCarregaVideo(v){
+function rvCarregaVideo(v, tocar){
   if(!v) return;
   const s = v.getAttribute('data-src');
-  if(s && !v.getAttribute('src')){ v.setAttribute('src', s); v.load(); }
+  if(s && !v.getAttribute('src')){ v.setAttribute('src', s); v.preload = tocar ? 'auto' : 'metadata'; v.load(); }
+  else if(tocar && v.preload !== 'auto'){ v.preload = 'auto'; }
 }
+/* Fala com o player do YouTube ja carregado, em vez de tirar e repor o src —
+   repor recomeca o download e e ele que causa a espera ao trocar de short. */
+function rvComandaEmbed(f, comando){
+  if(!f || !f.contentWindow) return;
+  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:[] }), '*'); } catch(e){}
+}
+/* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
+   lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
+const RV_VIZINHOS = 1;
 function rvArmTimer(){
   clearTimeout(window.__rvT);
   const w=rvFeed.clientHeight||1;
@@ -8096,12 +8140,22 @@ function rvArmTimer(){
   const slides=rvFeed.querySelectorAll('.rv-reel');
   slides.forEach((s,k)=>{ s.classList.toggle('playing', k===i); s.classList.remove('paused'); });
   const cur=slides[i];
-  /* embed do YouTube segue a mesma regra do video: so o short em tela carrega */
-  slides.forEach((s,k)=>{ const f=s.querySelector('iframe[data-src]'); if(!f) return;
-    if(k===i){ if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src')); }
-    else if(f.getAttribute('src')) f.removeAttribute('src'); });
+  /* O short em tela e os vizinhos ficam montados; o resto e descarregado. O
+     que esta em tela toca, os vizinhos ficam parados no primeiro quadro. */
+  slides.forEach((s,k)=>{
+    const perto = Math.abs(k - i) <= RV_VIZINHOS;
+    const f = s.querySelector('iframe[data-src]');
+    if(f){
+      if(perto){
+        if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src'));
+        else rvComandaEmbed(f, k===i ? 'playVideo' : 'pauseVideo');
+      } else if(f.getAttribute('src')) f.removeAttribute('src');
+    }
+    const v = s.querySelector('video');
+    if(v && perto && k!==i){ rvCarregaVideo(v, false); try{ v.pause(); }catch(e){} }
+  });
   const vid=cur&&cur.querySelector('video');
-  if(vid){ rvCarregaVideo(vid); try{ vid.currentTime=0; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
+  if(vid){ rvCarregaVideo(vid, true); try{ vid.currentTime=0; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
   if(typeof rvSyncAudio==='function') rvSyncAudio();
   if(vid){
     const bar=cur.querySelector('.rv-timer span');
@@ -8797,6 +8851,40 @@ $('#permPickList').addEventListener('click', e => { const row = e.target.closest
 $('#permList').addEventListener('click', e => { const btn = e.target.closest('.perm-remove'); if(!btn) return; const id = +btn.dataset.id; PERM.members = PERM.members.filter(m => m !== id); fgToast('Membro removido'); renderPermList(); });
 $('#rpClose').addEventListener('click', closePlayer);
 (function(){ let t=null; rvFeed.addEventListener('scroll', ()=>{ clearTimeout(t); t=setTimeout(rvArmTimer, 160); }); })();
+
+/* ---- Rolagem infinita ----
+   A lista tem fim, mas o gesto nao: insistir para baixo no ultimo short leva
+   ao primeiro, e insistir para cima no primeiro leva ao ultimo. E a mesma
+   volta que as setas ja davam, agora tambem na roda do mouse e no dedo.
+   O intervalo evita que um unico gesto (que dispara varios eventos) de mais
+   de uma volta. */
+(function(){
+  let ultimaVolta = 0;
+  function pontaDaLista(dir){
+    const alt = rvFeed.clientHeight || 1;
+    const fim = (playerList.length - 1) * alt;
+    if (dir > 0 && rvFeed.scrollTop >= fim - 2) return 1;    /* passou do ultimo */
+    if (dir < 0 && rvFeed.scrollTop <= 2) return -1;         /* subiu do primeiro */
+    return 0;
+  }
+  function volta(dir){
+    if (!playerList.length || playerList.length < 2) return;
+    const d = pontaDaLista(dir); if (!d) return;
+    const agora = Date.now(); if (agora - ultimaVolta < 700) return;
+    ultimaVolta = agora;
+    playerGo(d);
+  }
+  rvFeed.addEventListener('wheel', e => { volta(e.deltaY); }, { passive:true });
+  let toqueY = null;
+  rvFeed.addEventListener('touchstart', e => { toqueY = e.touches[0].clientY; }, { passive:true });
+  rvFeed.addEventListener('touchmove', e => {
+    if (toqueY === null) return;
+    const d = toqueY - e.touches[0].clientY;      /* arrastar para cima = avancar */
+    if (Math.abs(d) < 40) return;
+    volta(d);
+  }, { passive:true });
+  rvFeed.addEventListener('touchend', () => { toqueY = null; }, { passive:true });
+})();
 let rvMuted = true;
 function rvSyncAudio(){
   const slides=rvFeed.querySelectorAll('.rv-reel');

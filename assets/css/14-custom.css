@@ -46,7 +46,7 @@ body.demo-custom .hm-side__foot{margin-top:0}
   /* a logo fica solta, sem bloco (o header inteiro e da cor da marca; regra no fim da folha) */
   /* mesma regra do menu: a altura do header menos 4px em cima e 4px embaixo */
   body.demo-custom .top-logo-cliente{display:flex;align-items:center;height:60px;padding:4px 0;flex:none;box-sizing:border-box}
-  body.demo-custom .top-logo-cliente img{height:40px;width:auto;max-width:46vw;object-fit:contain;display:block}
+  body.demo-custom .top-logo-cliente img{height:40px;width:auto;max-width:140px;object-fit:contain;display:block}
 }
 
 /* ---- Cartao de perfil: a faixa vira a capa da empresa ---- */
@@ -78,7 +78,14 @@ body.demo-custom{
      tom e derivado em OKLCH — mesma matiz da marca, luminosidade fixa em 23%
      e um resto de saturacao. Assim fica escuro como preto a 90%, mas limpo e
      ainda claramente laranja. O color-mix e o fallback para navegador antigo. */
-  --marca-escura:color-mix(in srgb, #000 80%, var(--marca));
+  /* Fundo do menu e do cabecalho: a marca com 80% de preto por cima. Quando
+     a marca ja e escura (o preto da Marvel), o preto nao tem para onde ir e a
+     superficie fica chapada; ai vale o inverso, uma camada de branco. Em vez
+     de escolher caso a caso, a mistura ganha um piso de luminosidade: quem ja
+     esta acima dele nao muda, quem esta abaixo sobe ate ele. */
+  --marca-escura-base:color-mix(in srgb, #000 80%, var(--marca));
+  --marca-escura:var(--marca-escura-base);
+  --marca-escura:oklch(from var(--marca-escura-base) max(l, 0.26) c h);
   --marca-suave:color-mix(in srgb, var(--marca) 40%, transparent);
   /* Acento do menu escuro: a propria cor da marca, com um piso de
      luminosidade. Marcas claras nao mudam; marcas escuras (o preto da Marvel,
@@ -238,7 +245,7 @@ body.demo-custom .pp-logo-cliente{display:block;height:44px;width:auto;max-width
   /* no celular o header do perfil e inteiro da cor da marca, como o da home */
   body.demo-custom .pp-top{background:var(--marca)}
   body.demo-custom .pp-toplogo{width:auto;margin-left:0;padding:0;background:none}
-  body.demo-custom .pp-logo-cliente{height:40px;max-width:46vw}
+  body.demo-custom .pp-logo-cliente{height:40px;max-width:140px}
 }
 body.demo-custom[data-logo-cor] .pp-logo-cliente{filter:none}
 body.demo-custom .pp-cover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}

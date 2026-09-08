@@ -274,6 +274,40 @@ $('#permPickList').addEventListener('click', e => { const row = e.target.closest
 $('#permList').addEventListener('click', e => { const btn = e.target.closest('.perm-remove'); if(!btn) return; const id = +btn.dataset.id; PERM.members = PERM.members.filter(m => m !== id); fgToast('Membro removido'); renderPermList(); });
 $('#rpClose').addEventListener('click', closePlayer);
 (function(){ let t=null; rvFeed.addEventListener('scroll', ()=>{ clearTimeout(t); t=setTimeout(rvArmTimer, 160); }); })();
+
+/* ---- Rolagem infinita ----
+   A lista tem fim, mas o gesto nao: insistir para baixo no ultimo short leva
+   ao primeiro, e insistir para cima no primeiro leva ao ultimo. E a mesma
+   volta que as setas ja davam, agora tambem na roda do mouse e no dedo.
+   O intervalo evita que um unico gesto (que dispara varios eventos) de mais
+   de uma volta. */
+(function(){
+  let ultimaVolta = 0;
+  function pontaDaLista(dir){
+    const alt = rvFeed.clientHeight || 1;
+    const fim = (playerList.length - 1) * alt;
+    if (dir > 0 && rvFeed.scrollTop >= fim - 2) return 1;    /* passou do ultimo */
+    if (dir < 0 && rvFeed.scrollTop <= 2) return -1;         /* subiu do primeiro */
+    return 0;
+  }
+  function volta(dir){
+    if (!playerList.length || playerList.length < 2) return;
+    const d = pontaDaLista(dir); if (!d) return;
+    const agora = Date.now(); if (agora - ultimaVolta < 700) return;
+    ultimaVolta = agora;
+    playerGo(d);
+  }
+  rvFeed.addEventListener('wheel', e => { volta(e.deltaY); }, { passive:true });
+  let toqueY = null;
+  rvFeed.addEventListener('touchstart', e => { toqueY = e.touches[0].clientY; }, { passive:true });
+  rvFeed.addEventListener('touchmove', e => {
+    if (toqueY === null) return;
+    const d = toqueY - e.touches[0].clientY;      /* arrastar para cima = avancar */
+    if (Math.abs(d) < 40) return;
+    volta(d);
+  }, { passive:true });
+  rvFeed.addEventListener('touchend', () => { toqueY = null; }, { passive:true });
+})();
 let rvMuted = true;
 function rvSyncAudio(){
   const slides=rvFeed.querySelectorAll('.rv-reel');

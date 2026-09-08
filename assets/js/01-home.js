@@ -279,7 +279,7 @@ function reelSlideHTML(r, idx, total){
   const timer = '<div class="rv-timer'+(post.video?' isvid':'')+'"><span></span></div>';
   return '<div class="rv-reel' + (pend ? ' is-pend' : '') + '"><div class="rv-card">' +
     (pend ? '<div class="rv-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>' + rvModboxHTML(r) : '') +
-    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
     timer + (post.video ? '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button><input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' : '') +
@@ -695,11 +695,21 @@ function rvFitMedia(root){
 /* Só o short em tela baixa vídeo. Antes todo slide nascia com src e autoplay,
    então abrir o player disparava o download de vários vídeos ao mesmo tempo —
    eles disputavam banda e o primeiro quadro demorava a aparecer. */
-function rvCarregaVideo(v){
+function rvCarregaVideo(v, tocar){
   if(!v) return;
   const s = v.getAttribute('data-src');
-  if(s && !v.getAttribute('src')){ v.setAttribute('src', s); v.load(); }
+  if(s && !v.getAttribute('src')){ v.setAttribute('src', s); v.preload = tocar ? 'auto' : 'metadata'; v.load(); }
+  else if(tocar && v.preload !== 'auto'){ v.preload = 'auto'; }
 }
+/* Fala com o player do YouTube ja carregado, em vez de tirar e repor o src —
+   repor recomeca o download e e ele que causa a espera ao trocar de short. */
+function rvComandaEmbed(f, comando){
+  if(!f || !f.contentWindow) return;
+  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:[] }), '*'); } catch(e){}
+}
+/* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
+   lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
+const RV_VIZINHOS = 1;
 function rvArmTimer(){
   clearTimeout(window.__rvT);
   const w=rvFeed.clientHeight||1;
@@ -707,12 +717,22 @@ function rvArmTimer(){
   const slides=rvFeed.querySelectorAll('.rv-reel');
   slides.forEach((s,k)=>{ s.classList.toggle('playing', k===i); s.classList.remove('paused'); });
   const cur=slides[i];
-  /* embed do YouTube segue a mesma regra do video: so o short em tela carrega */
-  slides.forEach((s,k)=>{ const f=s.querySelector('iframe[data-src]'); if(!f) return;
-    if(k===i){ if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src')); }
-    else if(f.getAttribute('src')) f.removeAttribute('src'); });
+  /* O short em tela e os vizinhos ficam montados; o resto e descarregado. O
+     que esta em tela toca, os vizinhos ficam parados no primeiro quadro. */
+  slides.forEach((s,k)=>{
+    const perto = Math.abs(k - i) <= RV_VIZINHOS;
+    const f = s.querySelector('iframe[data-src]');
+    if(f){
+      if(perto){
+        if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src'));
+        else rvComandaEmbed(f, k===i ? 'playVideo' : 'pauseVideo');
+      } else if(f.getAttribute('src')) f.removeAttribute('src');
+    }
+    const v = s.querySelector('video');
+    if(v && perto && k!==i){ rvCarregaVideo(v, false); try{ v.pause(); }catch(e){} }
+  });
   const vid=cur&&cur.querySelector('video');
-  if(vid){ rvCarregaVideo(vid); try{ vid.currentTime=0; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
+  if(vid){ rvCarregaVideo(vid, true); try{ vid.currentTime=0; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
   if(typeof rvSyncAudio==='function') rvSyncAudio();
   if(vid){
     const bar=cur.querySelector('.rv-timer span');
