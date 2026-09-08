@@ -383,10 +383,36 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
             </g>
           </svg>
           <img class="profile-logo profile-logo--crunch" src="uploads/crunch/logo.webp" alt="Crunchyroll">
+          <!-- so na home customizavel: a faixa vira capa e ganha o botao de trocar -->
+          <button type="button" class="capa-trocar" id="capaTrocar" hidden><i class="fa-solid fa-camera"></i> Trocar capa</button>
+          <input type="file" id="capaFile" accept="image/*" hidden>
         </div>
         <span class="avatar av-rc lg">RC</span>
         <div class="profile-name">Rodrigo Caetano</div>
         <div class="profile-role">CEO · SULTS</div>
+        <!-- so na home customizavel: contexto, numeros da pessoa e atalhos -->
+        <div class="pc-extra" hidden>
+          <div class="pc-ctx">
+            <span class="pc-ctx-item"><i class="fa-solid fa-location-dot"></i> <span data-pc="unidade">Uberaba · MG</span></span>
+            <!-- desde quando e quantas unidades, lado a lado -->
+            <span class="pc-ctx-linha">
+              <span class="pc-ctx-item"><i class="fa-regular fa-calendar"></i> <span>Na rede desde <span data-pc="desde">2019</span></span></span>
+              <span class="pc-ctx-item"><i class="fa-solid fa-store"></i> <span data-pc="unidades">3 unidades</span></span>
+            </span>
+          </div>
+          <!-- gamificado: dias seguidos ativo na rede, como no Duolingo -->
+          <div class="pc-streak">
+            <span class="pc-flame"><i class="fa-solid fa-fire"></i></span>
+            <div class="pc-streak-tx">
+              <b><span data-pc="streak">0</span> dias seguidos</b>
+              <span data-pc-meta>Recorde: <span data-pc="recorde">0</span> dias · faltam <span data-pc="faltam">0</span></span>
+            </div>
+            <div class="pc-week" data-pc-week></div>
+          </div>
+          <div class="pc-links">
+            <button type="button" class="pc-link" data-pcgo="perfil">Ver meu perfil <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
       </div>
 
       <!-- Painel de Comunicados -->

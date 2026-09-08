@@ -38,6 +38,7 @@ function basicoLigar(){
   if (basicoLigado()) return;
   /* os dois cenários não convivem: um substitui o outro */
   if (typeof crunchDesligar === 'function' && document.body.classList.contains('demo-crunch')) crunchDesligar();
+  if (typeof customDesligar === 'function') customDesligar();
 
   /* o Rede Social e justamente o modulo que traz o feed e os shorts. Sai pelo
      style inline, e nao por folha de estilo: e assim que a dobra da grade

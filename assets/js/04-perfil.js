@@ -147,6 +147,8 @@ document.addEventListener('click', e=>{
   fgToast(map[mi.dataset.ppmenu]||'');
 });
 $('#ppBack').addEventListener('click', ()=>{ $('#personProfile').hidden=true; document.body.style.overflow=''; });
+/* o botao Modulos do cabecalho tambem fecha o perfil e volta para a home */
+$('#ppTopApps') && $('#ppTopApps').addEventListener('click', ()=>{ $('#personProfile').hidden=true; document.body.style.overflow=''; window.scrollTo({top:0,behavior:'smooth'}); });
 document.addEventListener('click', e=>{
   const nm=e.target.closest('.post-name, .comment-name, .nvf-cm-bub b, .np-name');
   if(nm){ let name=nm.textContent.replace(/\s+/g,' ').replace(/✓|Fixado|Editado/g,'').trim(); if(name==='SULTS'||!name) return; const art=nm.closest('[data-id],.post,.nvf-cm-item,.comment'); let av=''; const avEl=art&&art.querySelector('.avatar'); if(avEl){ av=[...avEl.classList].find(c=>/^av-/.test(c))||''; } if(av==='av-brand') return; e.preventDefault(); openPersonProfile(name, av); }

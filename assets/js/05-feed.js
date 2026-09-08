@@ -262,6 +262,7 @@ function addHomePost(n, append){
   const txt = (n.text||'').replace(/\n/g,'<br>');
   let media = '';
   if (n.video) media = '<div class="post-img"><video class="nvf-img" src="'+n.video+'" controls playsinline style="max-height:560px;background:#000"></video></div>';
+  else if (n.yt) media = ytPostHTML(n.yt, n.title);
   else if (n.images && n.images.length>1) media = '<div class="post-img">'+nvImgCollage(n.images,'post-imggrid')+'</div>';
   else if (n.image) media = '<div class="post-img"><img class="nvf-img" src="'+n.image+'"></div>';
   else if (n.colorBg) media = '<div class="post-img"><div class="banner" style="background:'+n.colorBg+'">'+(n.colorEmoji?'<span class="big-emoji">'+n.colorEmoji+'</span>':'')+'<h4 style="font-size:24px">'+(n.text||'')+'</h4>'+(n.colorSub?'<p>'+n.colorSub+'</p>':'')+'</div></div>';

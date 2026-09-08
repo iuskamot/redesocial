@@ -362,6 +362,12 @@ function crunchAdmin(ligar){
 }
 function crunchDesligar(){
   if (!document.body.classList.contains('demo-crunch') || !CRUNCH_BK) return;
+  /* a home customizavel vive em cima deste cenario: sair dele e sair dela.
+     customDesligar tira a classe antes de chamar de volta, entao nao recorre. */
+  if (typeof customDesligar === 'function' && document.body.classList.contains('demo-custom') && document.body.dataset.cliente === 'crunch'){
+    customDesligar();
+    if (!document.body.classList.contains('demo-crunch') || !CRUNCH_BK) return;
+  }
   NEWS = CRUNCH_BK.news; NEWS_CATS = CRUNCH_BK.cats; CATEGORIES = CRUNCH_BK.scats;
   POSTS.splice(0, POSTS.length); CRUNCH_BK.posts.forEach(function(p){ POSTS.push(p); });
   REELS_DATA.splice(0, REELS_DATA.length); CRUNCH_BK.reels.forEach(function(r){ REELS_DATA.push(r); });
