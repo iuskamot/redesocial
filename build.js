@@ -261,8 +261,10 @@ function paginaShort(s){
 <meta name="twitter:title" content="${titulo}">
 <meta name="twitter:description" content="${desc}">
 <meta name="twitter:image" content="${capa}">
-<!-- quem clica no link vai direto para o short dentro da rede -->
-<meta http-equiv="refresh" content="0; url=${destino}">
+<!-- Sem encaminhamento por meta refresh: o robo do WhatsApp o segue, cai no
+     index.html de 1,2 MB e desiste, e a previa nao aparece. Quem le so as
+     etiquetas fica nesta pagina, de 1,5 KB; quem abre no navegador e levado
+     pelo script do corpo, que o robo nao executa. -->
 <style>body{margin:0;display:grid;place-items:center;min-height:100vh;background:#0a0a0a;color:#fff;
   font:14px/1.5 system-ui,Segoe UI,Roboto,sans-serif;text-align:center;padding:24px}
 a{color:#00acac}</style>
