@@ -667,6 +667,13 @@ input,textarea,select{font-size:14px}
 }
 
 
+/* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 12px 4px;text-align:center}
+.pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#98a2ad;white-space:nowrap}
+.pp-sults-por img{height:15px;width:auto;display:block;opacity:.55;filter:grayscale(1)}
+.pp-sults-dir{font-size:10px;line-height:14px;color:#aab3bd}
+
 /* grade de modulos e titulos de secao */
 /* ============ Módulos (estilo iCloud) ============ */
 .apps-panel{
@@ -2954,7 +2961,8 @@ input,textarea,select{font-size:14px}
   padding:9px 12px;background:#fff8e6;color:#8A6A00;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 .rv-pend i{font-size:13px;line-height:1;position:relative;top:.5px}
 /* o botao de som desce a altura da faixa */
-.rv-reel.is-pend .rv-audio{top:50px}
+.rv-reel.is-pend .rv-ctl{top:50px}
+.rv-ctl .rv-audio{position:static;top:auto;left:auto}
 .rv-modbox{display:flex;flex-direction:column;gap:8px}
 .rv-sent{display:flex;align-items:center;gap:7px;font-size:12px;line-height:16px;color:#c9d1d9;margin-bottom:2px}
 .rv-sent i{font-size:11px}
@@ -2970,6 +2978,17 @@ input,textarea,select{font-size:14px}
 /* a copia de dentro do card so aparece quando a coluna some (<=1100px) */
 .rv-card > .rv-modbox{display:none;position:absolute;left:16px;right:16px;bottom:24px;z-index:7}
 @media (max-width:1100px){ .rv-card > .rv-modbox{display:flex} }
+/* Controles do short, no alto a esquerda, na mesma linha do fechar: primeiro
+   pausar/tocar, depois o volume. As setas de anterior e proximo seguem na
+   lateral, no desktop; o que sumiu do meio foi o play do proprio YouTube. */
+.rv-ctl{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:8px}
+.rv-play{width:36px;height:36px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
+  background:rgba(28,28,30,.55);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.rv-play:hover{background:rgba(28,28,30,.78)}
+/* pausado, o YouTube desenha o proprio play e as setas de playlist dentro do
+   quadro; este veu cobre tudo isso e deixa so o nosso icone no meio */
+.rv-reel.paused .rv-card::after{content:"";position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.42)}
 .rv-audio{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:0;
   border-radius:32px;transition:background 120ms cubic-bezier(.4,0,.2,1),padding 120ms cubic-bezier(.4,0,.2,1)}
 .rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:12px;gap:8px}
@@ -3008,6 +3027,40 @@ input,textarea,select{font-size:14px}
    altura util do formulario, para os tres passos nao mudarem de tamanho */
 #crModal{--cr-util:578px}
 #crStep1,#crStepUp{min-height:var(--cr-util);box-sizing:border-box}
+
+
+/* ---- Compartilhar o short ----
+   A folha sobe de baixo dentro do player, acima de tudo o que ele desenha. */
+/* No desktop a caixa fica no meio da tela, escura, como a do YouTube; no
+   celular ela sobe de baixo, que e o gesto de la. */
+.rvsh-back{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;cursor:default}
+.rvsh-back[hidden]{display:none}
+.rvsh{width:min(560px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.7);animation:rvshSobe .22s cubic-bezier(.4,0,.2,1)}
+@keyframes rvshSobe{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+.rvsh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 6px}
+.rvsh-head h3{font-size:16px;line-height:22px;font-weight:700;color:#fff}
+.rvsh-x{width:34px;height:34px;border:0;border-radius:50%;background:none;color:#d7dbe0;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .15s}
+.rvsh-x:hover{background:rgba(255,255,255,.12)}
+.rvsh-apps{display:flex;gap:14px;overflow-x:auto;padding:10px 18px 14px;scrollbar-width:none}
+.rvsh-apps::-webkit-scrollbar{display:none}
+.rvsh-app{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:64px}
+.rvsh-ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;
+  transition:transform .12s}
+.rvsh-app:hover .rvsh-ic{transform:scale(1.06)}
+.rvsh-nome{font-size:12px;line-height:16px;color:#e7ebef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
+.rvsh-link{display:flex;align-items:center;gap:10px;margin:0 18px;padding:8px 8px 8px 14px;border-radius:32px;background:rgba(255,255,255,.1)}
+.rvsh-url{flex:1;min-width:0;font-size:13px;line-height:18px;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rvsh-copy{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;border:0;border-radius:32px;flex:none;
+  background:var(--teal);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
+.rvsh-copy:hover{background:var(--teal-dark)}
+
+/* no celular a folha volta a subir de baixo, colada na borda */
+@media (max-width:640px){
+  .rvsh-back{align-items:flex-end}
+  .rvsh{border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
+}
 
 /* feed da home, destaque e coluna direita */
 /* ============ Central "Para hoje" v2 ============ */
@@ -5321,6 +5374,14 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
    ponteiro nele os avisos de hover nao aparecem, e a leve ampliacao empurra a
    faixa do topo e a barra de baixo para fora do cartao: fica so o video. */
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
+
+/* o copiar da folha de compartilhar na cor da marca */
+/* preto puro (Marvel) some no botao: quem for escuro demais usa o acento
+   ja calculado, a propria marca com piso de luminosidade */
+body.demo-custom .rvsh-copy{background:var(--marca);color:#fff}
+body.demo-custom[data-cliente="marvel"] .rvsh-copy{background:var(--marca-viva)}
+body.demo-custom[data-cliente="marvel"] .rvsh-copy:hover{background:#000}
+body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}
 </style>
 </head>
 <body>
@@ -5524,6 +5585,11 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
             <button class="pp-menuitem" data-ppmenu="seguranca"><i class="fa-solid fa-shield-halved"></i><span>Segurança</span><i class="fa-solid fa-chevron-right pp-mchev"></i></button>
             <button class="pp-menuitem" data-ppmenu="termos"><i class="fa-solid fa-file-lines"></i><span>Meus termos</span><i class="fa-solid fa-chevron-right pp-mchev"></i></button>
             <button class="pp-menuitem danger" data-ppmenu="sair"><i class="fa-solid fa-right-from-bracket"></i><span>Sair</span><i class="fa-solid fa-chevron-right pp-mchev"></i></button>
+          </div>
+          <!-- a mesma marca do rodape do menu, aqui em cinza, fora do cartao -->
+          <div class="pp-sults">
+            <span class="pp-sults-por">Desenvolvido por <img src="uploads/pacote_logotipos_sults/png/sults-logo-horizontal-s-verde-escrito-azul.png" alt="SULTS"></span>
+            <span class="pp-sults-dir">© 2018 Todos os direitos reservados</span>
           </div>
         </div>
       </div>
@@ -7207,6 +7273,21 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <button id="rvUp" title="Anterior"><i class="fa-solid fa-chevron-up"></i></button>
     <button id="rvDown" title="Próximo"><i class="fa-solid fa-chevron-down"></i></button>
   </div>
+  <!-- Compartilhar: a folha sobe de baixo, como no YouTube. Os aplicativos
+       abrem com o link do short pronto; a linha de baixo copia. -->
+  <div class="rvsh-back" id="rvShareBack" hidden>
+    <div class="rvsh" id="rvShare" role="dialog" aria-modal="true" aria-label="Compartilhar">
+      <div class="rvsh-head">
+        <h3>Compartilhar</h3>
+        <button class="rvsh-x" id="rvShareClose" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="rvsh-apps" id="rvShareApps"></div>
+      <div class="rvsh-link">
+        <span class="rvsh-url" id="rvShareUrl"></span>
+        <button class="rvsh-copy" id="rvShareCopy"><i class="fa-regular fa-copy"></i> Copiar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ==================== MÓDULO FÓRUM ==================== -->
@@ -7705,7 +7786,12 @@ function reelSlideHTML(r, idx, total){
     (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
-    timer + (post.video ? '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button><input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' : '') +
+    timer + ((post.video || post.embed) ?
+      '<div class="rv-ctl">' +
+        '<button class="rv-play" data-rvplay title="Pausar"><i class="fa-solid fa-pause"></i></button>' +
+        '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button>' +
+        '<input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' +
+      '</div>' : '') +
     '<div class="rv-tap"></div><div class="rv-pauseic"><i class="fa-solid fa-play"></i></div>' +
   '</div>' +
     (pend ? '' : '<div class="rv-rail">' +
@@ -8081,6 +8167,10 @@ function rvTogglePause(slide){
   const on = slide.classList.toggle('paused');
   const v = slide.querySelector('video');
   if(v){ if(on){ v.pause(); } else { const p=v.play(); if(p&&p.catch) p.catch(()=>{}); } }
+  const f = slide.querySelector('iframe[data-src]');
+  if(f) rvComandaEmbed(f, on ? 'pauseVideo' : 'playVideo');
+  const bt = slide.querySelector('[data-rvplay]');
+  if(bt){ bt.innerHTML = '<i class="fa-solid fa-' + (on ? 'play' : 'pause') + '"></i>'; bt.title = on ? 'Tocar' : 'Pausar'; }
   if(on){ clearTimeout(window.__rvT); }
   else if(slide.querySelector('.rv-timer')){
     const el = slide.querySelector('.rv-timer span');
@@ -8126,9 +8216,9 @@ function rvCarregaVideo(v, tocar){
 }
 /* Fala com o player do YouTube ja carregado, em vez de tirar e repor o src —
    repor recomeca o download e e ele que causa a espera ao trocar de short. */
-function rvComandaEmbed(f, comando){
+function rvComandaEmbed(f, comando, args){
   if(!f || !f.contentWindow) return;
-  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:[] }), '*'); } catch(e){}
+  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:args || [] }), '*'); } catch(e){}
 }
 /* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
    lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
@@ -8148,7 +8238,7 @@ function rvArmTimer(){
     if(f){
       if(perto){
         if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src'));
-        else rvComandaEmbed(f, k===i ? 'playVideo' : 'pauseVideo');
+        else if(k===i){ rvComandaEmbed(f, 'seekTo', [0, true]); rvComandaEmbed(f, 'playVideo'); }
       } else if(f.getAttribute('src')) f.removeAttribute('src');
     }
     const v = s.querySelector('video');
@@ -8890,7 +8980,16 @@ function rvSyncAudio(){
   const slides=rvFeed.querySelectorAll('.rv-reel');
   const w=rvFeed.clientHeight||1;
   const i=Math.min(Math.max(Math.round(rvFeed.scrollTop/w),0),Math.max(0,slides.length-1));
-  slides.forEach((s,k)=>{ const v=s.querySelector('video'); if(v){ v.muted = rvMuted || k!==i; v.volume = rvVol; } });
+  slides.forEach((s,k)=>{
+    const v=s.querySelector('video'); if(v){ v.muted = rvMuted || k!==i; v.volume = rvVol; }
+    /* o embed do YouTube nao tem propriedade: recebe comando */
+    const f=s.querySelector('iframe[data-src]');
+    if(f && typeof rvComandaEmbed === 'function'){
+      const mudo = rvMuted || k!==i;
+      rvComandaEmbed(f, mudo ? 'mute' : 'unMute');
+      if(!mudo) rvComandaEmbed(f, 'setVolume', [Math.round(rvVol*100)]);
+    }
+  });
   rvFeed.querySelectorAll('[data-rvmute]').forEach(b=>{
     const ic = rvMuted ? 'xmark' : (rvVol<.5 ? 'low' : 'high');
     b.innerHTML='<i class="fa-solid fa-volume-'+ic+'"></i>';
@@ -8941,8 +9040,15 @@ reelsPlayer.addEventListener('pointerup', e => {
   const t=rvFeed.scrollTop;
   requestAnimationFrame(()=>{ if(Math.abs(rvFeed.scrollTop-t)>2) rvFeed.scrollTop=t; });
 });
+/* o botao de pausar do topo, na mesma linha do fechar */
 reelsPlayer.addEventListener('click', e => {
-  if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,[data-rvvol],input,button,a')){
+  const bp = e.target.closest('[data-rvplay]');
+  if (bp){ e.preventDefault(); e.stopPropagation(); rvTogglePause(bp.closest('.rv-reel')); return; }
+  const bs = e.target.closest('[data-rvshare]');
+  if (bs && typeof rvShareAbrir === 'function'){ e.preventDefault(); e.stopPropagation(); rvShareAbrir(bs.closest('.rv-reel')); }
+}, true);
+reelsPlayer.addEventListener('click', e => {
+  if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,.rv-ctl,[data-rvvol],input,button,a')){
     e.preventDefault(); e.stopPropagation();
     rvTogglePause(rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel'));
     return;
@@ -13994,6 +14100,72 @@ document.addEventListener('click', function(e){
   vv.addEventListener('scroll', ajusta);
   window.addEventListener('orientationchange', ajusta);
   ajusta();
+})();
+
+/* ---- Compartilhar o short ----
+   Uma folha com os aplicativos, como a do YouTube. Cada um recebe o link do
+   short e o titulo ja montados; o WhatsApp leva titulo e link em linhas
+   separadas, que e o que rende a previa bonita na conversa. */
+const RV_APPS = [
+  { id:'whatsapp', nome:'WhatsApp', ic:'fa-brands fa-whatsapp',  cor:'#25D366',
+    url:(l,t)=>'https://api.whatsapp.com/send?text=' + encodeURIComponent(t + '\n\n' + l) },
+  { id:'instagram',nome:'Instagram',ic:'fa-brands fa-instagram', cor:'#E1306C',
+    url:()=>'https://www.instagram.com/', copiar:true },
+  { id:'facebook', nome:'Facebook', ic:'fa-brands fa-facebook-f',cor:'#1877F2',
+    url:(l)=>'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(l) },
+  { id:'x',        nome:'X',        ic:'fa-brands fa-x-twitter', cor:'#000000',
+    url:(l,t)=>'https://twitter.com/intent/tweet?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(t) },
+  { id:'telegram', nome:'Telegram', ic:'fa-brands fa-telegram',  cor:'#2AABEE',
+    url:(l,t)=>'https://t.me/share/url?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(t) },
+  { id:'linkedin', nome:'LinkedIn', ic:'fa-brands fa-linkedin-in', cor:'#0A66C2',
+    url:(l)=>'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(l) },
+  { id:'email',    nome:'E-mail',   ic:'fa-solid fa-envelope',   cor:'#5b6672',
+    url:(l,t)=>'mailto:?subject=' + encodeURIComponent(t) + '&body=' + encodeURIComponent(t + '\n\n' + l) }
+];
+let rvShareAtual = null;
+function rvShareDados(reel){
+  const r = (reel && playerList) ? playerList[[...rvFeed.querySelectorAll('.rv-reel')].indexOf(reel)] : null;
+  const post = r ? POSTS[r.p] : null;
+  const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
+  /* o prototipo nao publica na internet: o link aponta para a propria tela */
+  const base = location.origin + location.pathname;
+  const link = base + '?short=' + (post && post.embed ? post.embed : (r ? r.p : 0));
+  return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
+}
+function rvShareAbrir(reel){
+  const fundo = document.getElementById('rvShareBack'); if (!fundo) return;
+  rvShareAtual = rvShareDados(reel);
+  const apps = document.getElementById('rvShareApps');
+  apps.innerHTML = RV_APPS.map(function(a){
+    return '<button class="rvsh-app" data-rvapp="' + a.id + '">' +
+      '<span class="rvsh-ic" style="background:' + a.cor + '"><i class="' + a.ic + '"></i></span>' +
+      '<span class="rvsh-nome">' + a.nome + '</span></button>';
+  }).join('');
+  document.getElementById('rvShareUrl').textContent = rvShareAtual.link;
+  fundo.hidden = false;
+}
+function rvShareFechar(){
+  const fundo = document.getElementById('rvShareBack'); if (fundo) fundo.hidden = true;
+}
+function rvShareCopiar(){
+  const txt = rvShareAtual ? rvShareAtual.link : '';
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(function(){});
+  if (typeof fgToast === 'function') fgToast('Link copiado');
+}
+(function(){
+  const fundo = document.getElementById('rvShareBack'); if (!fundo) return;
+  document.getElementById('rvShareClose').addEventListener('click', rvShareFechar);
+  fundo.addEventListener('click', function(e){ if (e.target === fundo) rvShareFechar(); });
+  document.getElementById('rvShareCopy').addEventListener('click', rvShareCopiar);
+  fundo.addEventListener('click', function(e){
+    const b = e.target.closest('[data-rvapp]'); if (!b) return;
+    const a = RV_APPS.find(function(x){ return x.id === b.dataset.rvapp; }); if (!a || !rvShareAtual) return;
+    /* o Instagram nao abre com texto por link: copia e leva para o aplicativo */
+    if (a.copiar) rvShareCopiar();
+    window.open(a.url(rvShareAtual.link, rvShareAtual.titulo), '_blank', 'noopener');
+    rvShareFechar();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !fundo.hidden) rvShareFechar(); });
 })();
 
 /* ===================== assets/js/14-crunch.js ===================== */

@@ -1372,7 +1372,8 @@
   padding:9px 12px;background:#fff8e6;color:#8A6A00;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 .rv-pend i{font-size:13px;line-height:1;position:relative;top:.5px}
 /* o botao de som desce a altura da faixa */
-.rv-reel.is-pend .rv-audio{top:50px}
+.rv-reel.is-pend .rv-ctl{top:50px}
+.rv-ctl .rv-audio{position:static;top:auto;left:auto}
 .rv-modbox{display:flex;flex-direction:column;gap:8px}
 .rv-sent{display:flex;align-items:center;gap:7px;font-size:12px;line-height:16px;color:#c9d1d9;margin-bottom:2px}
 .rv-sent i{font-size:11px}
@@ -1388,6 +1389,17 @@
 /* a copia de dentro do card so aparece quando a coluna some (<=1100px) */
 .rv-card > .rv-modbox{display:none;position:absolute;left:16px;right:16px;bottom:24px;z-index:7}
 @media (max-width:1100px){ .rv-card > .rv-modbox{display:flex} }
+/* Controles do short, no alto a esquerda, na mesma linha do fechar: primeiro
+   pausar/tocar, depois o volume. As setas de anterior e proximo seguem na
+   lateral, no desktop; o que sumiu do meio foi o play do proprio YouTube. */
+.rv-ctl{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:8px}
+.rv-play{width:36px;height:36px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
+  background:rgba(28,28,30,.55);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.rv-play:hover{background:rgba(28,28,30,.78)}
+/* pausado, o YouTube desenha o proprio play e as setas de playlist dentro do
+   quadro; este veu cobre tudo isso e deixa so o nosso icone no meio */
+.rv-reel.paused .rv-card::after{content:"";position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.42)}
 .rv-audio{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:0;
   border-radius:32px;transition:background 120ms cubic-bezier(.4,0,.2,1),padding 120ms cubic-bezier(.4,0,.2,1)}
 .rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:12px;gap:8px}
@@ -1426,3 +1438,37 @@
    altura util do formulario, para os tres passos nao mudarem de tamanho */
 #crModal{--cr-util:578px}
 #crStep1,#crStepUp{min-height:var(--cr-util);box-sizing:border-box}
+
+
+/* ---- Compartilhar o short ----
+   A folha sobe de baixo dentro do player, acima de tudo o que ele desenha. */
+/* No desktop a caixa fica no meio da tela, escura, como a do YouTube; no
+   celular ela sobe de baixo, que e o gesto de la. */
+.rvsh-back{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;cursor:default}
+.rvsh-back[hidden]{display:none}
+.rvsh{width:min(560px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.7);animation:rvshSobe .22s cubic-bezier(.4,0,.2,1)}
+@keyframes rvshSobe{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+.rvsh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 6px}
+.rvsh-head h3{font-size:16px;line-height:22px;font-weight:700;color:#fff}
+.rvsh-x{width:34px;height:34px;border:0;border-radius:50%;background:none;color:#d7dbe0;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .15s}
+.rvsh-x:hover{background:rgba(255,255,255,.12)}
+.rvsh-apps{display:flex;gap:14px;overflow-x:auto;padding:10px 18px 14px;scrollbar-width:none}
+.rvsh-apps::-webkit-scrollbar{display:none}
+.rvsh-app{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:64px}
+.rvsh-ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;
+  transition:transform .12s}
+.rvsh-app:hover .rvsh-ic{transform:scale(1.06)}
+.rvsh-nome{font-size:12px;line-height:16px;color:#e7ebef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
+.rvsh-link{display:flex;align-items:center;gap:10px;margin:0 18px;padding:8px 8px 8px 14px;border-radius:32px;background:rgba(255,255,255,.1)}
+.rvsh-url{flex:1;min-width:0;font-size:13px;line-height:18px;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rvsh-copy{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;border:0;border-radius:32px;flex:none;
+  background:var(--teal);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
+.rvsh-copy:hover{background:var(--teal-dark)}
+
+/* no celular a folha volta a subir de baixo, colada na borda */
+@media (max-width:640px){
+  .rvsh-back{align-items:flex-end}
+  .rvsh{border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
+}

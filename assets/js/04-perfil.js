@@ -313,7 +313,16 @@ function rvSyncAudio(){
   const slides=rvFeed.querySelectorAll('.rv-reel');
   const w=rvFeed.clientHeight||1;
   const i=Math.min(Math.max(Math.round(rvFeed.scrollTop/w),0),Math.max(0,slides.length-1));
-  slides.forEach((s,k)=>{ const v=s.querySelector('video'); if(v){ v.muted = rvMuted || k!==i; v.volume = rvVol; } });
+  slides.forEach((s,k)=>{
+    const v=s.querySelector('video'); if(v){ v.muted = rvMuted || k!==i; v.volume = rvVol; }
+    /* o embed do YouTube nao tem propriedade: recebe comando */
+    const f=s.querySelector('iframe[data-src]');
+    if(f && typeof rvComandaEmbed === 'function'){
+      const mudo = rvMuted || k!==i;
+      rvComandaEmbed(f, mudo ? 'mute' : 'unMute');
+      if(!mudo) rvComandaEmbed(f, 'setVolume', [Math.round(rvVol*100)]);
+    }
+  });
   rvFeed.querySelectorAll('[data-rvmute]').forEach(b=>{
     const ic = rvMuted ? 'xmark' : (rvVol<.5 ? 'low' : 'high');
     b.innerHTML='<i class="fa-solid fa-volume-'+ic+'"></i>';
@@ -364,8 +373,15 @@ reelsPlayer.addEventListener('pointerup', e => {
   const t=rvFeed.scrollTop;
   requestAnimationFrame(()=>{ if(Math.abs(rvFeed.scrollTop-t)>2) rvFeed.scrollTop=t; });
 });
+/* o botao de pausar do topo, na mesma linha do fechar */
 reelsPlayer.addEventListener('click', e => {
-  if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,[data-rvvol],input,button,a')){
+  const bp = e.target.closest('[data-rvplay]');
+  if (bp){ e.preventDefault(); e.stopPropagation(); rvTogglePause(bp.closest('.rv-reel')); return; }
+  const bs = e.target.closest('[data-rvshare]');
+  if (bs && typeof rvShareAbrir === 'function'){ e.preventDefault(); e.stopPropagation(); rvShareAbrir(bs.closest('.rv-reel')); }
+}, true);
+reelsPlayer.addEventListener('click', e => {
+  if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,.rv-ctl,[data-rvvol],input,button,a')){
     e.preventDefault(); e.stopPropagation();
     rvTogglePause(rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel'));
     return;

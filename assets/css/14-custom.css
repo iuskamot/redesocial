@@ -298,3 +298,11 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
    ponteiro nele os avisos de hover nao aparecem, e a leve ampliacao empurra a
    faixa do topo e a barra de baixo para fora do cartao: fica so o video. */
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
+
+/* o copiar da folha de compartilhar na cor da marca */
+/* preto puro (Marvel) some no botao: quem for escuro demais usa o acento
+   ja calculado, a propria marca com piso de luminosidade */
+body.demo-custom .rvsh-copy{background:var(--marca);color:#fff}
+body.demo-custom[data-cliente="marvel"] .rvsh-copy{background:var(--marca-viva)}
+body.demo-custom[data-cliente="marvel"] .rvsh-copy:hover{background:#000}
+body.demo-custom .rvsh-copy:hover{background:var(--marca-forte)}

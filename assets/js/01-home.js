@@ -282,7 +282,12 @@ function reelSlideHTML(r, idx, total){
     (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
-    timer + (post.video ? '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button><input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' : '') +
+    timer + ((post.video || post.embed) ?
+      '<div class="rv-ctl">' +
+        '<button class="rv-play" data-rvplay title="Pausar"><i class="fa-solid fa-pause"></i></button>' +
+        '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button>' +
+        '<input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' +
+      '</div>' : '') +
     '<div class="rv-tap"></div><div class="rv-pauseic"><i class="fa-solid fa-play"></i></div>' +
   '</div>' +
     (pend ? '' : '<div class="rv-rail">' +
@@ -658,6 +663,10 @@ function rvTogglePause(slide){
   const on = slide.classList.toggle('paused');
   const v = slide.querySelector('video');
   if(v){ if(on){ v.pause(); } else { const p=v.play(); if(p&&p.catch) p.catch(()=>{}); } }
+  const f = slide.querySelector('iframe[data-src]');
+  if(f) rvComandaEmbed(f, on ? 'pauseVideo' : 'playVideo');
+  const bt = slide.querySelector('[data-rvplay]');
+  if(bt){ bt.innerHTML = '<i class="fa-solid fa-' + (on ? 'play' : 'pause') + '"></i>'; bt.title = on ? 'Tocar' : 'Pausar'; }
   if(on){ clearTimeout(window.__rvT); }
   else if(slide.querySelector('.rv-timer')){
     const el = slide.querySelector('.rv-timer span');
@@ -703,9 +712,9 @@ function rvCarregaVideo(v, tocar){
 }
 /* Fala com o player do YouTube ja carregado, em vez de tirar e repor o src —
    repor recomeca o download e e ele que causa a espera ao trocar de short. */
-function rvComandaEmbed(f, comando){
+function rvComandaEmbed(f, comando, args){
   if(!f || !f.contentWindow) return;
-  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:[] }), '*'); } catch(e){}
+  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:args || [] }), '*'); } catch(e){}
 }
 /* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
    lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
@@ -725,7 +734,7 @@ function rvArmTimer(){
     if(f){
       if(perto){
         if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src'));
-        else rvComandaEmbed(f, k===i ? 'playVideo' : 'pauseVideo');
+        else if(k===i){ rvComandaEmbed(f, 'seekTo', [0, true]); rvComandaEmbed(f, 'playVideo'); }
       } else if(f.getAttribute('src')) f.removeAttribute('src');
     }
     const v = s.querySelector('video');

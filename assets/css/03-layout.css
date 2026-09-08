@@ -475,3 +475,10 @@
   max-width:1172px;margin:0 auto;width:100%;
 }
 
+
+/* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 12px 4px;text-align:center}
+.pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#98a2ad;white-space:nowrap}
+.pp-sults-por img{height:15px;width:auto;display:block;opacity:.55;filter:grayscale(1)}
+.pp-sults-dir{font-size:10px;line-height:14px;color:#aab3bd}
