@@ -458,7 +458,7 @@ function nvOpenSocialStories(){
 }
 $('#nmtPub') && $('#nmtPub').addEventListener('click', ()=>newsShow('list'));
 $('#nmtFeed') && $('#nmtFeed').addEventListener('click', ()=>newsShow('feed'));
-$('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(s1)s1.style.display='grid'; permStoriesSecShow(true); if(ac)ac.style.display='none'; $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=$('#nvcfgPubWho'); if(b) b.classList.add('active'); });
+$('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(s1)s1.style.display=''; permStoriesSecShow(true); if(ac)ac.style.display='none'; $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=$('#nvcfgPubWho'); if(b) b.classList.add('active'); });
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
@@ -529,42 +529,43 @@ document.getElementById('permTeamHelpDoubt') && document.getElementById('permTea
 document.getElementById('permTeamHelpOk') && document.getElementById('permTeamHelpOk').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
 document.getElementById('permTeamHelpModal') && document.getElementById('permTeamHelpModal').addEventListener('click', e=>{ if(e.target===document.getElementById('permTeamHelpModal')) document.getElementById('permTeamHelpModal').classList.remove('open'); });
 function cfgSetActive(id){ ['cfgNavWho','cfgNavApr','cfgNavTeam','nvcfgCats2'].forEach(x=>{ const b=document.getElementById(x); if(b) b.classList.toggle('active', x===id); }); }
-const PERM_TUT_ART = { who:'uploads/tutorial/post.svg', apr:'uploads/tutorial/approve.svg' };
-const PERM_TUT = {
-  who: ['PERMISSÃO DE PUBLICAÇÃO', 'Defina quem pode publicar na rede social',
-    'Escolha se a matriz e as unidades podem publicar e, em cada caso, se todos os colaboradores ou apenas pessoas selecionadas. Quem não tiver permissão continua vendo o conteúdo, mas não cria publicações.'],
-  apr: ['FLUXO DE APROVAÇÃO', 'Controle o que vai ao ar antes de publicar',
-    'Ative a aprovação para publicações e comentários. Com o fluxo ativo, cada conteúdo criado fica pendente até um administrador aprovar, e o autor é avisado do resultado.']
+const PERM_HELP = {
+  who: {
+    btn: 'Como usar quem pode postar?',
+    art: 'uploads/tutorial/image-post.svg',
+    title: 'Como usar quem pode postar?',
+    body: 'Defina quem pode postar na sua rede social. Escolha se a matriz e as unidades podem criar publicações e shorts e se a permissão é para todos ou apenas para pessoas e unidades selecionadas.'
+  },
+  apr: {
+    btn: 'Como usar aprovações?',
+    art: 'uploads/tutorial/image-aprovals.svg',
+    title: 'Como usar aprovações?',
+    body: 'Ative a aprovação para publicações, shorts e comentários. Assim, cada conteúdo criado fica pendente até a análise de um administrador e só é disponibilizado após sua <b>aprovação</b>. O autor é notificado sobre a decisão e, em caso de <b>reprovação</b>, também recebe o motivo.'
+  }
 };
-function permTutFill(which){
-  const t = PERM_TUT[which] || PERM_TUT.who;
-  const k=document.getElementById('permTutKicker'), ti=document.getElementById('permTutTitle'), tx=document.getElementById('permTutText');
-  if(k) k.textContent=t[0]; if(ti) ti.textContent=t[1]; if(tx) tx.textContent=t[2];
-  const art=document.getElementById('permTutArt');
-  if(art) art.src = PERM_TUT_ART[which] || PERM_TUT_ART.who;
+function permHelpFill(which){
+  const d = PERM_HELP[which] || PERM_HELP.who;
+  const b=document.getElementById('permHelpBtnLbl'); if(b) b.textContent = d.btn;
+  const art=document.getElementById('permHelpArt'); if(art) art.src = d.art;
+  const ti=document.getElementById('permHelpTitle'); if(ti) ti.textContent = d.title;
+  const tx=document.getElementById('permHelpText'); if(tx) tx.innerHTML = d.body;
 }
-function permTutBtn(on, which){
-  const b=document.getElementById('permTutorial'); if(b) b.hidden=!on;
-  const p=document.getElementById('permTut');
-  if(which) permTutFill(which);
-  if(p && !on) p.hidden=true;
-}
-document.addEventListener('click', function(e){
-  if(!e.target.closest('#permTutorial')) return;
-  const p=document.getElementById('permTut'), b=document.getElementById('permTutorial');
-  if(!p||!b) return;
-  const show = p.hidden;
-  p.hidden = !show;
-  b.querySelector('.pt-lbl').textContent = show ? 'Ocultar tutorial' : 'Exibir tutorial';
-  b.querySelector('.pt-carat').className = 'fa-solid fa-chevron-'+(show?'up':'down')+' pt-carat';
-});
+document.getElementById('permHelpBtn') && document.getElementById('permHelpBtn').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.add('open'));
+document.getElementById('permHelpClose') && document.getElementById('permHelpClose').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.remove('open'));
+document.getElementById('permHelpDoubt') && document.getElementById('permHelpDoubt').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.remove('open'));
+document.getElementById('permHelpOk') && document.getElementById('permHelpOk').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.remove('open'));
+document.getElementById('permHelpModal') && document.getElementById('permHelpModal').addEventListener('click', e=>{ if(e.target===document.getElementById('permHelpModal')) document.getElementById('permHelpModal').classList.remove('open'); });
+const PERM_HEAD_ICON = {
+  who: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" /></svg>',
+  apr: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg>'
+};
 function permHead(which){
   const ic=document.getElementById('permHeadIc'), t=document.getElementById('permHeadTtl');
   if(!ic||!t) return;
   const scr=document.getElementById('nvPermScreen'); if(scr) scr.dataset.permview = which||'who';
-  permTutBtn(true, which||'who');
+  permHelpFill(which||'who');
   const apr = which==='apr';
-  ic.className = apr ? 'fa-solid fa-circle-check' : 'fa-solid fa-user-shield';
+  ic.innerHTML = apr ? PERM_HEAD_ICON.apr : PERM_HEAD_ICON.who;
   t.textContent = apr ? 'Aprovações' : 'Quem pode postar';
 }
 function permStoriesSecShow(on){ const s=document.getElementById('permStoriesSec'); if(s) s.style.display = on ? '' : 'none'; if(on && typeof stPermFeet==='function') stPermFeet(); }
@@ -572,7 +573,7 @@ function cfgGo(which){
   if(which==='team'){ newsShow('team'); cfgSetActive('cfgNavTeam'); newsView.classList.add('catmode'); newsView.classList.add('cfg'); newsView.classList.remove('apr'); newsView.classList.remove('aprhome'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); return; }
   permHead(which); permStoriesSecShow(which==='who'||!which);
   if(which==='cats'){ newsShow('cats'); cfgSetActive('nvcfgCats2'); }
-  else { newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(which==='apr'){ if(s1)s1.style.display='none'; permStoriesSecShow(false); if(ac)ac.style.display='grid'; cfgSetActive('cfgNavApr'); } else { if(s1)s1.style.display='grid'; permStoriesSecShow(true); if(ac)ac.style.display='none'; cfgSetActive('cfgNavWho'); } }
+  else { newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(which==='apr'){ if(s1)s1.style.display='none'; permStoriesSecShow(false); if(ac)ac.style.display='grid'; cfgSetActive('cfgNavApr'); } else { if(s1)s1.style.display=''; permStoriesSecShow(true); if(ac)ac.style.display='none'; cfgSetActive('cfgNavWho'); } }
   newsView.classList.add('catmode'); newsView.classList.add('cfg'); newsView.classList.remove('apr'); newsView.classList.remove('aprhome'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active');
 }
 $('#cfgNavWho') && $('#cfgNavWho').addEventListener('click', ()=>cfgGo('who'));
@@ -586,7 +587,7 @@ $('#nvaprPub') && $('#nvaprPub').addEventListener('click', ()=>newsShow('pubappr
 $('#nvcfgCats') && $('#nvcfgCats').addEventListener('click', ()=>newsShow('cats'));
 $('#nvcfgPerm') && $('#nvcfgPerm').addEventListener('click', ()=>permShow('who'));
 $('#nvcfgPermPub') && $('#nvcfgPermPub').addEventListener('click', ()=>permShow('who'));
-function permShow(which){ permStoriesSecShow(which!=='apr'); newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(s1&&ac){ if(which==='apr'){ s1.style.display='none'; permStoriesSecShow(false); ac.style.display=''; } else { s1.style.display='grid'; permStoriesSecShow(true); ac.style.display='none'; } } $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=which==='apr'?$('#nvcfgPubApr'):$('#nvcfgPubWho'); if(b) b.classList.add('active'); }
+function permShow(which){ permStoriesSecShow(which!=='apr'); newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(s1&&ac){ if(which==='apr'){ s1.style.display='none'; permStoriesSecShow(false); ac.style.display=''; } else { s1.style.display=''; permStoriesSecShow(true); ac.style.display='none'; } } $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=which==='apr'?$('#nvcfgPubApr'):$('#nvcfgPubWho'); if(b) b.classList.add('active'); }
 $('#nvcfgPubWho') && $('#nvcfgPubWho').addEventListener('click', ()=>permShow('who'));
 $('#nvcfgPubApr') && $('#nvcfgPubApr').addEventListener('click', ()=>permShow('apr'));
 $('#nvcfgPermCom') && $('#nvcfgPermCom').addEventListener('click', ()=>newsShow('params'));

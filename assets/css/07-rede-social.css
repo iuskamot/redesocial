@@ -143,12 +143,10 @@
 .nmt-ic{position:relative;display:inline-flex}
 .nv-cfgside-hd{display:none}
 .nv-cfgside-hd i{font-size:15px;width:18px;text-align:center}
-.nv-cfgitem{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:11px 14px 11px 30px;border-radius:10px;font:inherit;font-size:15px;font-weight:600;color:rgba(255,255,255,.82);cursor:pointer;text-align:left}
-.nv-cfgitem i{width:18px;text-align:center;color:rgba(255,255,255,.6);font-size:14px}
-.nv-cfgitem svg{width:18px;height:18px;color:rgba(255,255,255,.6);flex-shrink:0}
+.nv-cfgitem{display:flex;align-items:center;width:100%;height:36px;border:0;background:none;padding:0 14px;border-radius:6px;font:inherit;font-size:15px;font-weight:400;color:rgba(255,255,255,.82);cursor:pointer;text-align:left;margin-bottom:2px}
+.nv-cfgdiv{height:1px;background:rgba(255,255,255,.1);margin:14px -12px 0}
 .nv-cfgitem:hover{background:rgba(255,255,255,.08);color:#fff}
-.nv-cfgitem.active{background:var(--teal);color:#fff}
-.nv-cfgitem.active i,.nv-cfgitem.active svg{color:#fff}
+.nv-cfgitem.active{background:rgba(0,172,172,.4);color:#fff}
 .news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:250px}
 .np-head{display:flex;align-items:center;gap:13px;margin-bottom:2px}
 .np-head .avatar{width:52px;height:52px;font-size:0;flex-shrink:0}
@@ -216,13 +214,13 @@
 #modQueue .rlist,#pubApprQueue .rlist,#reelApprQueue .rlist{overflow-x:scroll;overflow-y:hidden}
 #modQueue table,#pubApprQueue table,#reelApprQueue table{min-width:1080px}
 .cfg-badge.apr-cnt{background:rgba(255,255,255,.18)}
-.apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;padding:18px 14px 10px;border-top:1px solid rgba(255,255,255,.1)}
+.apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;margin:0 -12px;padding:18px 26px 10px;border-top:1px solid rgba(255,255,255,.1)}
 .apr-grp-hd i{font-size:15px;width:18px;text-align:center}
-#nvAprSide .apr-grp-hd:first-child{padding-top:16px;border-top:0}
-.apr-sub{padding:10px 14px 10px 24px !important;font-size:15px !important;font-weight:600 !important;color:rgba(255,255,255,.82) !important}
+.nv-cfgside .apr-grp-hd:first-child{padding-top:16px;border-top:0}
+.apr-sub{height:36px !important;padding:0 14px 0 24px !important;font-size:15px !important;font-weight:400 !important;color:rgba(255,255,255,.82) !important}
 .apr-sub i{font-size:14px}
 .apr-sub:hover{background:rgba(255,255,255,.08)}
-.apr-sub.active{background:var(--teal);color:#fff !important;border-radius:12px}
+.apr-sub.active{background:rgba(0,172,172,.4);color:#fff !important;border-radius:6px}
 .apr-sub.active i{color:#fff}
 .apr-seg button{border:0;background:none;cursor:pointer;font:inherit;font-size:13px;font-weight:700;color:var(--muted);padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
 .apr-seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px -2px rgba(16,32,48,.25)}
@@ -242,7 +240,7 @@
 #nvListScreen .cat-body{padding:10px 10px 12px}
 #nvInterScreen .cat-body{padding:10px 10px 10px}
 #nvCatsScreen .cat-body{padding:11px 14px 22px}
-#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:18px}
+#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:12px}
 .nv-filters .nv-fsearch{margin:16px 0 0;width:100%;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0 12px;border-radius:8px}
 .nv-filters .nv-fsearch input{font-size:14px}
 .rl-recpill{display:inline-flex;align-items:center;gap:5px;margin-top:4px;background:#B9860030;color:#B98600 !important;font-size:10px;font-weight:600;letter-spacing:.3px;padding:2px 9px;border-radius:32px}
@@ -419,7 +417,7 @@
 #nvList th:first-child{width:64px}
 .nv-listmain{flex:1;min-width:0;overflow-x:auto;display:flex;flex-direction:column}
 .nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:14px}
-#interList.rlist{background:#fff;border:1px solid var(--line);border-radius:14px;overflow-x:scroll;overflow-y:hidden}
+#interList.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow-x:scroll;overflow-y:hidden}
 .nv-listmain .rlist table{min-width:1100px}
 #interList.rlist table{min-width:1180px}
 .nv-fsel{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 13px;cursor:pointer;outline:none}
@@ -1147,6 +1145,8 @@
 .rx-header{display:flex;align-items:center;gap:20px;padding:14px 26px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0;box-shadow:0 1px 3px rgba(16,32,48,.04)}
 .rx-title{display:flex;align-items:center;gap:10px}
 .rx-title i{font-size:20px;color:var(--teal)}
+#permHeadIc{display:inline-flex;color:var(--teal)}
+#permHeadIc svg{width:26px;height:26px}
 .rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
   border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
@@ -1376,11 +1376,11 @@
 .news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
 .news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
 #nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
-#nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:12px 16px;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:none;flex-shrink:0}
+#nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:8px 12px;gap:8px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:none;flex-shrink:0}
 #nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
 #nvCatsScreen .cat-head,#nvTeamScreen .cat-head{height:62px}
 #nvCatsScreen .cat-body,#nvTeamScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
-#nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0}
+#nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0;border-radius:8px}
 #nvCatsScreen .rlist th,#nvTeamScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
 #nvCatsScreen .rlist tbody tr:nth-child(odd),#nvTeamScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
 #nvCatsScreen .rlist tbody tr:nth-child(even),#nvTeamScreen .rlist tbody tr:nth-child(even){background:#fff}
@@ -1427,16 +1427,16 @@
 #nvCatsScreen .cat-actwrap .cat-editbtn:hover{background:#2F8EE5;color:#fff}
 #nvCatsScreen .cat-actwrap .cat-arch{background:#fff;color:#5f666c;border:1px solid #CCCCCC}
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
-#nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#e0392c;border:1px solid #e0392c}
-#nvTeamScreen .cat-actwrap .cat-arch:hover{background:#e0392c;color:#fff;border-color:#e0392c}
+#nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
+#nvTeamScreen .cat-actwrap .cat-arch:hover{background:#F7685B;color:#fff;border-color:#F7685B}
 #nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;padding:12px;border-radius:6px;font-size:14px}
 #nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
 #nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
-#nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
+#nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn,#nvPermScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
   border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-#nvCatsScreen .cat-helpbtn:hover,#nvTeamScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
-#nvCatsScreen .cat-helpbtn svg,#nvTeamScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn:hover,#nvTeamScreen .cat-helpbtn:hover,#nvPermScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
+#nvCatsScreen .cat-helpbtn svg,#nvTeamScreen .cat-helpbtn svg,#nvPermScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
 /* Modal "Como usar categorias?": hero com ilustracao (bg image-categories) + texto + acoes,
    layout replicado do Figma (node 1515:288) */
@@ -1472,12 +1472,13 @@
 
 /* Editar/Nova categoria (nvCatModal): cores e dimensoes do Figma (node 1521:760) */
 #nvCatModal .fg-head{border-bottom:0}
-#nvCatModal .fg-head h2{color:#2F8EE5}
-#nvCatModal .fg-label{font-size:14px}
+#nvCatModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
+#nvCatModal .fg-input{font-size:14px;border-radius:6px}
 #nvCatModal .cat-sw{border-radius:6px}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
-#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{width:120px;border-radius:6px;justify-content:center}
+#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
 #nvCatModal #nvCatSave{background:#0088FF}
 #nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
