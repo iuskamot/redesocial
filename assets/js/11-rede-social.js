@@ -539,7 +539,7 @@ function teamAddRender(){
 document.addEventListener('click', e=>{
   if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
   if(e.target.closest('#teamAddClose') || e.target.closest('#teamAddCancel') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
-  const taSortBtn=e.target.closest('#teamAddModal .cat-sortbtn');
+  const taSortBtn=e.target.closest('#teamAddModal .tadd-sortbtn');
   if(taSortBtn){
     const col=taSortBtn.dataset.sortcol;
     if(teamAddSortCol!==col){ teamAddSortCol=col; teamAddSortDir=1; }

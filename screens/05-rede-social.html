@@ -597,7 +597,7 @@
         </div>
       </div>
       <div class="perm-card apr-rulecard">
-        <div class="perm2-ic" style="background:#1e4fb0"><i class="fa-solid fa-rectangle-list"></i></div>
+        <div class="perm2-ic" style="background:#2F8EE5"><i class="fa-solid fa-rectangle-list"></i></div>
         <input type="checkbox" id="pmPostApprove" checked hidden>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprPubSub">
@@ -641,7 +641,7 @@
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardComN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
       <button class="perm-card apr-card" id="aprCardPub">
-        <div class="perm2-ic" style="background:#1e4fb0"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#2F8EE5"><i class="fa-solid fa-newspaper"></i></div>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Revise as publicações de terceiros antes de irem ao ar. Aprove para publicar ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardPubN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
@@ -872,7 +872,17 @@
         <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
       <div class="tadd-panel">
-        <div class="tadd-head"><span></span><span class="cat-th-in tadd-th-person"><span>Pessoa <span id="teamAddHeadCount"></span></span><button type="button" class="cat-sortbtn" id="teamAddSortBtn" data-sortcol="name" aria-label="Ordenar por pessoa"></button></span><span class="cat-th-in tadd-th-unit"><span>Unidade</span><button type="button" class="cat-sortbtn" id="teamAddSortBtnUnit" data-sortcol="unit" aria-label="Ordenar por unidade"></button></span></div>
+        <div class="tadd-head">
+          <div class="tadd-th-check"></div>
+          <div class="tadd-th-col">
+            <span class="tadd-th-label">Pessoa <span id="teamAddHeadCount"></span></span>
+            <button type="button" class="tadd-sortbtn" id="teamAddSortBtn" data-sortcol="name" aria-label="Ordenar por pessoa"></button>
+          </div>
+          <div class="tadd-th-col">
+            <span class="tadd-th-label">Unidade</span>
+            <button type="button" class="tadd-sortbtn" id="teamAddSortBtnUnit" data-sortcol="unit" aria-label="Ordenar por unidade"></button>
+          </div>
+        </div>
         <div class="tadd-body" id="teamAddList"></div>
       </div>
     </div>
