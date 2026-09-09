@@ -1,0 +1,150 @@
+/* =====================================================================
+   GERENCIAR > SHORTS (admin) — assets/css/16-gerenciar-shorts.css
+
+   Estilos exclusivos da tabela de gerenciamento (#rxGrid quando
+   curView==='lista', ver assets/js/19-gerenciar-shorts.js) e da sidebar de
+   filtro avançado que só existe naquela tela. Tudo aqui é aditivo: as
+   seletoras usam #rxGrid/#mgSitCards ou classes novas (rl-ddwrap, rl-actwrap
+   etc.) que não existem em nenhuma outra tela, para não vazar para a grade/
+   feed social de Shorts, para a Home ou para as demais tabelas que
+   reaproveitam .rlist/.rl-tblwrap (nvList, modQueue, pubApprQueue…).
+   ===================================================================== */
+
+/* Tabela preenche a altura disponível de .rx-main e rola por conta própria
+   (vertical + horizontal), mantendo cabeçalho e filtros da tela fixos fora
+   dela — em vez da altura vazia que sobrava com o layout padrão de grade. */
+.reels-view.in-cfg #rxGrid:has(> .rl-tblwrap),
+.reels-view.in-module #rxGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
+#rxGrid .rl-tblwrap{ height:100%; overflow-y:auto }
+#rxGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
+/* border-collapse:separate porque border-radius não tem efeito em células com border-collapse:collapse */
+#rxGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
+#rxGrid .rl-tblwrap>table{ min-width:2150px }
+#rxGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4 }
+#rxGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C }
+#rxGrid .rl-author .avatar{ width:32px; height:32px }
+#rxGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
+#rxGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
+/* .rl-dt/.rl-cat/.nv-cellbtn são reaproveitadas por outras listas (06-shorts.css, 10-responsivo.css
+   — grade/feed social, outras tabelas de gerenciamento), então o ajuste de peso/cor/tamanho pedido
+   pra esta tabela fica preso a #rxGrid em vez de sobrescrever a regra genérica pra todo mundo. */
+#rxGrid .rl-dt{ font-size:14px; color:#5F666C; font-weight:400 }
+#rxGrid .rl-cat{ display:inline-flex; align-items:center; gap:8px; font-weight:400; color:#5F666c; font-size:14px }
+#rxGrid .nv-cellbtn{ border:0; background:none; font:inherit; font-size:14px; color:#5F666C; font-weight:400; cursor:pointer; padding:4px 8px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; transition:background .12s }
+/* Sem cor de destaque no texto do cabeçalho (hover ou coluna ativa) — só o ícone de ordenação muda */
+#rxGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
+#rxGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
+#rxGrid .rl-tblwrap th.sortable:hover .sort-ic{ color:#2F8EE5 }
+
+/* Colunas fixas (ID + Short) com colapso animado da ID ao rolar horizontalmente (ver
+   rxSyncFrozenCols em renderGerenciarShortsList) */
+#rxGrid .rl-tblwrap th:nth-child(1),#rxGrid .rl-tblwrap td:nth-child(1){ position:sticky; left:0; box-sizing:border-box }
+#rxGrid .rl-tblwrap th:nth-child(2),#rxGrid .rl-tblwrap td:nth-child(2){ position:sticky; box-sizing:border-box; min-width:400px; white-space:normal }
+#rxGrid .rl-tblwrap th:nth-child(1){ width:90px; min-width:90px; max-width:90px; z-index:7; background:#3D4F62; color:#fff; border-right:none }
+#rxGrid .rl-tblwrap th:nth-child(2){ z-index:6; background:#3D4F62; color:#fff; border-top-right-radius:8px }
+#rxGrid .rl-tblwrap th:nth-child(1) .sort-ic,#rxGrid .rl-tblwrap th:nth-child(2) .sort-ic{ color:#fff }
+#rxGrid .rl-tblwrap th.sortable:nth-child(1):hover,#rxGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
+#rxGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
+#rxGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#F0F3F5 }
+#rxGrid .rl-tblwrap tbody tr:nth-child(even){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#F0F3F5 }
+#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
+#rxGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
+/* Sombra nas colunas fixas indicando conteúdo por baixo ao rolar horizontalmente */
+#rxGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#rxGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
+
+/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 7 Autor,
+   8 Unidade do autor, 9 Visualizações, 10 Curtidas, 11 Categoria, 12 Data de encerramento */
+#rxGrid .rl-tblwrap th:nth-child(3),#rxGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:160px; min-width:160px }
+#rxGrid .rl-tblwrap th:nth-child(4),#rxGrid .rl-tblwrap td:nth-child(4){ width:204px }
+#rxGrid .rl-tblwrap th:nth-child(5),#rxGrid .rl-tblwrap td:nth-child(5){ width:200px }
+#rxGrid .rl-tblwrap th:nth-child(7),#rxGrid .rl-tblwrap td:nth-child(7){ width:240px }
+#rxGrid .rl-tblwrap td:nth-child(7) .rl-author{ min-width:212px }
+#rxGrid .rl-tblwrap td:nth-child(7) .rl-author b,#rxGrid .rl-tblwrap td:nth-child(7) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+#rxGrid .rl-tblwrap th:nth-child(8),#rxGrid .rl-tblwrap td:nth-child(8){ width:240px }
+#rxGrid .rl-tblwrap td:nth-child(8) .rl-unitcell{ min-width:212px }
+#rxGrid .rl-tblwrap th:nth-child(9),#rxGrid .rl-tblwrap td:nth-child(9){ width:140px }
+#rxGrid .rl-tblwrap th:nth-child(10),#rxGrid .rl-tblwrap td:nth-child(10){ width:140px }
+#rxGrid .rl-tblwrap th:nth-child(11),#rxGrid .rl-tblwrap td:nth-child(11){ width:240px }
+#rxGrid .rl-tblwrap td:nth-child(11) .rl-cat{ min-width:212px }
+#rxGrid .rl-tblwrap th:nth-child(12),#rxGrid .rl-tblwrap td:nth-child(12){ width:212px; min-width:212px }
+
+/* Coluna "Situação" e "Data de encerramento" */
+.rl-enddt{ font-size:14px; color:#5F666C }
+.rl-noend{ font-size:14px; color:#999999 }
+.rl-reach{ font-size:14px; color:#5F666C }
+.rl-dash{ color:#999999; font-size:14px }
+.rl-statrow{ display:flex; align-items:center; gap:8px }
+.rl-statdot{ width:8px; height:8px; border-radius:50%; flex-shrink:0 }
+.rl-statdot.ag{ background:#2F8EE5; box-shadow:0 0 0 3px rgba(47,142,229,.12) }
+.rl-statdot.pub{ background:#25B865; box-shadow:0 0 0 3px rgba(37,184,101,.12) }
+.rl-statdot.apr{ background:#FFB020; box-shadow:0 0 0 3px rgba(255,176,32,.12) }
+.rl-stattxt{ font-size:14px; font-weight:400; color:#5F666C }
+
+/* Coluna "Unidade do autor" — pílula redonda colorida com a sigla de 2 letras */
+#rxGrid .rl-unitcell{ display:flex; align-items:center; gap:8px; min-width:180px }
+#rxGrid .rl-unitcell .rxv-logo{ width:32px; height:32px; border-radius:32px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; flex-shrink:0 }
+#rxGrid .rl-unitcell>div{ min-width:0 }
+#rxGrid .rl-unitcell b{ display:block; font-size:14px; color:#5F666C; font-weight:400 }
+#rxGrid .rl-unitcell span{ display:block; max-width:100%; font-size:11px; color:#999999; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+/* Menu "Ações" dentro da célula Short (substitui os botões inline do renderList antigo) */
+#rxGrid .rl-reel{ position:relative; justify-content:space-between }
+#rxGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
+#rxGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
+#rxGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rxGrid .rl-actbtn i{ font-size:12px }
+#rxGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
+#rxGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }
+#rxGrid .rl-actmenu button:hover{ background:#f2f5f7 }
+#rxGrid .rl-actmenu button.danger{ color:#e0392c }
+#rxGrid .rl-actmenu button.danger:hover{ background:#fdecea }
+#rxGrid .rl-tblwrap td.rl-actz{ z-index:20 }
+
+/* Cartões de situação "Quais shorts você quer ver?" (#mgSitCards, 2x2 em vez do grid de 3
+   colunas usado pelas outras telas que reaproveitam .nv-sitcards.nv-sit2) */
+.nv-sitcards.nv-sit2{ grid-template-columns:1fr 1fr }
+#mgSitCards.nv-sit2{ gap:8px }
+.nv-sitcards.nv-sit2 .rxs-item2{ height:57px; box-sizing:border-box; padding:6px 8px }
+.nv-sitcards button svg{ width:20px; height:20px; flex-shrink:0; color:#9aa5b1 }
+.nv-sitcards button.active svg{ color:var(--teal) }
+/* o texto não muda de cor ao selecionar (só a borda/fundo indicam seleção); o ícone usa cor fixa
+   por status via style inline no próprio <i>/<svg>, que já vence a regra genérica de .active acima
+   por especificidade */
+#mgSitCards.nv-sit2 button.active{ color:#5b6672 }
+/* Cartão sem sombra (sobrescreve .cv-seg button.active) e com espaçamento/tipografia do Figma
+   (node 1631:763) — só desta tela */
+#mgSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
+#mgSitCards.nv-sit2 button.active{ box-shadow:none }
+#mgSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
+#mgSitCards .rxs-item2[data-rxstatus="agendado"] i{ font-size:16px; line-height:16px }
+
+/* Campos compactos da sidebar (Short, Publicado para, Períodos) e dropdown customizado
+   (Tipo/Categoria/Autor/Unidade/Publicado para/Períodos) */
+.nv-ffrow{ display:flex; gap:8px; margin-bottom:12px }
+.nv-ffrow-last{ margin-bottom:0 }
+.nv-ffcol{ flex:1; min-width:0; display:flex; flex-direction:column; gap:8px }
+.nv-ffcol label{ font-size:12px; color:#5f666c; line-height:14px }
+.nv-ffield{ display:flex; align-items:center; gap:6px; height:30px; padding:0 12px; background:#fff; border:1px solid #d9d9d9; border-radius:6px }
+.nv-ffield i.ico-l,.nv-ffield i.ico-r{ font-size:16px; color:#5F666C; flex-shrink:0; cursor:pointer }
+.nv-ffield input{ border:0; outline:0; background:transparent; flex:1; min-width:0; font:inherit; font-size:14px; color:var(--ink); padding:0; cursor:text }
+.nv-ffield input::placeholder{ color:#999 }
+.nv-ffield:focus-within{ border-color:rgba(153,153,153,.8); box-shadow:0 0 0 2px rgba(153,153,153,.16) }
+button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; cursor:pointer }
+.rl-ddwrap{ position:relative }
+.rl-ddbtn-label{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#5F666C }
+.rl-ddmenu{ position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:20; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 28px rgba(16,32,48,.16); padding:6px; max-height:280px; overflow-y:auto; display:flex; flex-direction:column; gap:4px }
+.rl-dditem{ display:flex; align-items:center; gap:10px; width:100%; padding:8px 10px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#465364; text-align:left; cursor:pointer; white-space:nowrap }
+.rl-dditem:hover,.rl-dditem.sel{ background:#F0F2F5 }
+.rl-ddicon{ width:26px; height:26px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px }
+.nv-fdaterow{ display:flex; align-items:stretch; width:100% }
+.nv-fdatewrap{ position:relative; flex:1; min-width:0 }
+.nv-fdateinput{ width:100%; height:30px; padding:0 12px; font:inherit; font-size:14px; color:transparent; background:#fff; border:1px solid #d9d9d9; border-right:0; border-radius:4px 0 0 4px; outline:none }
+.nv-fdateinput::-webkit-calendar-picker-indicator{ display:none }
+.nv-fdatewrap.has-value .nv-fdateinput{ color:var(--ink) }
+.nv-fdateph{ position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; color:#999; pointer-events:none }
+.nv-fdatewrap.has-value .nv-fdateph{ display:none }
+.nv-fdatebtn{ width:30px; height:30px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--teal); color:#fff; border:0; border-radius:0 4px 4px 0; cursor:pointer; font-size:14px }
+.nv-fdatebtn:hover{ background:#0c9797 }

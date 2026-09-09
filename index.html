@@ -2060,10 +2060,10 @@ input,textarea,select{font-size:14px}
 .nv-filters::-webkit-scrollbar{display:none}
 .nv-fsec{padding:16px 0;border-bottom:1px solid var(--line)}
 .nv-fsec:last-of-type{border-bottom:0}
-.nv-fsec-hd{display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px}
+.nv-fsec-hd{display:flex;align-items:center;justify-content:space-between;font-size: 18px;font-weight:700;color:#0C334A;margin-bottom:14px}
 .nv-fsec-hd i{font-size:12px;color:#9aa5b1}
 .nv-sitcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:none;padding:0}
-.nv-sitcards button{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 4px;font-size:12px;font-weight:700;color:#5b6672;box-shadow:none}
+.nv-sitcards button{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid #D9D9D9;border-radius:10px;padding:12px 4px;font-size:12px;font-weight:700;color:#5b6672;box-shadow:none}
 .nv-sitcards button i{font-size:16px;color:#9aa5b1}
 .nv-sitcards button.active{border-color:var(--teal);background:rgba(0,172,172,.06);color:var(--teal)}
 .nv-sitcards button.active i{color:var(--teal)}
@@ -6019,6 +6019,157 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-view .ia-chip-ic{font-size:18px}
 .ia-view .ia-act i{font-size:15px}
 .ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+
+/* =====================================================================
+   GERENCIAR > SHORTS (admin) — assets/css/16-gerenciar-shorts.css
+
+   Estilos exclusivos da tabela de gerenciamento (#rxGrid quando
+   curView==='lista', ver assets/js/19-gerenciar-shorts.js) e da sidebar de
+   filtro avançado que só existe naquela tela. Tudo aqui é aditivo: as
+   seletoras usam #rxGrid/#mgSitCards ou classes novas (rl-ddwrap, rl-actwrap
+   etc.) que não existem em nenhuma outra tela, para não vazar para a grade/
+   feed social de Shorts, para a Home ou para as demais tabelas que
+   reaproveitam .rlist/.rl-tblwrap (nvList, modQueue, pubApprQueue…).
+   ===================================================================== */
+
+/* Tabela preenche a altura disponível de .rx-main e rola por conta própria
+   (vertical + horizontal), mantendo cabeçalho e filtros da tela fixos fora
+   dela — em vez da altura vazia que sobrava com o layout padrão de grade. */
+.reels-view.in-cfg #rxGrid:has(> .rl-tblwrap),
+.reels-view.in-module #rxGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
+#rxGrid .rl-tblwrap{ height:100%; overflow-y:auto }
+#rxGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
+/* border-collapse:separate porque border-radius não tem efeito em células com border-collapse:collapse */
+#rxGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
+#rxGrid .rl-tblwrap>table{ min-width:2150px }
+#rxGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4 }
+#rxGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C }
+#rxGrid .rl-author .avatar{ width:32px; height:32px }
+#rxGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
+#rxGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
+/* .rl-dt/.rl-cat/.nv-cellbtn são reaproveitadas por outras listas (06-shorts.css, 10-responsivo.css
+   — grade/feed social, outras tabelas de gerenciamento), então o ajuste de peso/cor/tamanho pedido
+   pra esta tabela fica preso a #rxGrid em vez de sobrescrever a regra genérica pra todo mundo. */
+#rxGrid .rl-dt{ font-size:14px; color:#5F666C; font-weight:400 }
+#rxGrid .rl-cat{ display:inline-flex; align-items:center; gap:8px; font-weight:400; color:#5F666c; font-size:14px }
+#rxGrid .nv-cellbtn{ border:0; background:none; font:inherit; font-size:14px; color:#5F666C; font-weight:400; cursor:pointer; padding:4px 8px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; transition:background .12s }
+/* Sem cor de destaque no texto do cabeçalho (hover ou coluna ativa) — só o ícone de ordenação muda */
+#rxGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
+#rxGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
+#rxGrid .rl-tblwrap th.sortable:hover .sort-ic{ color:#2F8EE5 }
+
+/* Colunas fixas (ID + Short) com colapso animado da ID ao rolar horizontalmente (ver
+   rxSyncFrozenCols em renderGerenciarShortsList) */
+#rxGrid .rl-tblwrap th:nth-child(1),#rxGrid .rl-tblwrap td:nth-child(1){ position:sticky; left:0; box-sizing:border-box }
+#rxGrid .rl-tblwrap th:nth-child(2),#rxGrid .rl-tblwrap td:nth-child(2){ position:sticky; box-sizing:border-box; min-width:400px; white-space:normal }
+#rxGrid .rl-tblwrap th:nth-child(1){ width:90px; min-width:90px; max-width:90px; z-index:7; background:#3D4F62; color:#fff; border-right:none }
+#rxGrid .rl-tblwrap th:nth-child(2){ z-index:6; background:#3D4F62; color:#fff; border-top-right-radius:8px }
+#rxGrid .rl-tblwrap th:nth-child(1) .sort-ic,#rxGrid .rl-tblwrap th:nth-child(2) .sort-ic{ color:#fff }
+#rxGrid .rl-tblwrap th.sortable:nth-child(1):hover,#rxGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
+#rxGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
+#rxGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#F0F3F5 }
+#rxGrid .rl-tblwrap tbody tr:nth-child(even){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#F0F3F5 }
+#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
+#rxGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
+/* Sombra nas colunas fixas indicando conteúdo por baixo ao rolar horizontalmente */
+#rxGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#rxGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
+
+/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 7 Autor,
+   8 Unidade do autor, 9 Visualizações, 10 Curtidas, 11 Categoria, 12 Data de encerramento */
+#rxGrid .rl-tblwrap th:nth-child(3),#rxGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:160px; min-width:160px }
+#rxGrid .rl-tblwrap th:nth-child(4),#rxGrid .rl-tblwrap td:nth-child(4){ width:204px }
+#rxGrid .rl-tblwrap th:nth-child(5),#rxGrid .rl-tblwrap td:nth-child(5){ width:200px }
+#rxGrid .rl-tblwrap th:nth-child(7),#rxGrid .rl-tblwrap td:nth-child(7){ width:240px }
+#rxGrid .rl-tblwrap td:nth-child(7) .rl-author{ min-width:212px }
+#rxGrid .rl-tblwrap td:nth-child(7) .rl-author b,#rxGrid .rl-tblwrap td:nth-child(7) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+#rxGrid .rl-tblwrap th:nth-child(8),#rxGrid .rl-tblwrap td:nth-child(8){ width:240px }
+#rxGrid .rl-tblwrap td:nth-child(8) .rl-unitcell{ min-width:212px }
+#rxGrid .rl-tblwrap th:nth-child(9),#rxGrid .rl-tblwrap td:nth-child(9){ width:140px }
+#rxGrid .rl-tblwrap th:nth-child(10),#rxGrid .rl-tblwrap td:nth-child(10){ width:140px }
+#rxGrid .rl-tblwrap th:nth-child(11),#rxGrid .rl-tblwrap td:nth-child(11){ width:240px }
+#rxGrid .rl-tblwrap td:nth-child(11) .rl-cat{ min-width:212px }
+#rxGrid .rl-tblwrap th:nth-child(12),#rxGrid .rl-tblwrap td:nth-child(12){ width:212px; min-width:212px }
+
+/* Coluna "Situação" e "Data de encerramento" */
+.rl-enddt{ font-size:14px; color:#5F666C }
+.rl-noend{ font-size:14px; color:#999999 }
+.rl-reach{ font-size:14px; color:#5F666C }
+.rl-dash{ color:#999999; font-size:14px }
+.rl-statrow{ display:flex; align-items:center; gap:8px }
+.rl-statdot{ width:8px; height:8px; border-radius:50%; flex-shrink:0 }
+.rl-statdot.ag{ background:#2F8EE5; box-shadow:0 0 0 3px rgba(47,142,229,.12) }
+.rl-statdot.pub{ background:#25B865; box-shadow:0 0 0 3px rgba(37,184,101,.12) }
+.rl-statdot.apr{ background:#FFB020; box-shadow:0 0 0 3px rgba(255,176,32,.12) }
+.rl-stattxt{ font-size:14px; font-weight:400; color:#5F666C }
+
+/* Coluna "Unidade do autor" — pílula redonda colorida com a sigla de 2 letras */
+#rxGrid .rl-unitcell{ display:flex; align-items:center; gap:8px; min-width:180px }
+#rxGrid .rl-unitcell .rxv-logo{ width:32px; height:32px; border-radius:32px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; flex-shrink:0 }
+#rxGrid .rl-unitcell>div{ min-width:0 }
+#rxGrid .rl-unitcell b{ display:block; font-size:14px; color:#5F666C; font-weight:400 }
+#rxGrid .rl-unitcell span{ display:block; max-width:100%; font-size:11px; color:#999999; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+/* Menu "Ações" dentro da célula Short (substitui os botões inline do renderList antigo) */
+#rxGrid .rl-reel{ position:relative; justify-content:space-between }
+#rxGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
+#rxGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
+#rxGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rxGrid .rl-actbtn i{ font-size:12px }
+#rxGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
+#rxGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }
+#rxGrid .rl-actmenu button:hover{ background:#f2f5f7 }
+#rxGrid .rl-actmenu button.danger{ color:#e0392c }
+#rxGrid .rl-actmenu button.danger:hover{ background:#fdecea }
+#rxGrid .rl-tblwrap td.rl-actz{ z-index:20 }
+
+/* Cartões de situação "Quais shorts você quer ver?" (#mgSitCards, 2x2 em vez do grid de 3
+   colunas usado pelas outras telas que reaproveitam .nv-sitcards.nv-sit2) */
+.nv-sitcards.nv-sit2{ grid-template-columns:1fr 1fr }
+#mgSitCards.nv-sit2{ gap:8px }
+.nv-sitcards.nv-sit2 .rxs-item2{ height:57px; box-sizing:border-box; padding:6px 8px }
+.nv-sitcards button svg{ width:20px; height:20px; flex-shrink:0; color:#9aa5b1 }
+.nv-sitcards button.active svg{ color:var(--teal) }
+/* o texto não muda de cor ao selecionar (só a borda/fundo indicam seleção); o ícone usa cor fixa
+   por status via style inline no próprio <i>/<svg>, que já vence a regra genérica de .active acima
+   por especificidade */
+#mgSitCards.nv-sit2 button.active{ color:#5b6672 }
+/* Cartão sem sombra (sobrescreve .cv-seg button.active) e com espaçamento/tipografia do Figma
+   (node 1631:763) — só desta tela */
+#mgSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
+#mgSitCards.nv-sit2 button.active{ box-shadow:none }
+#mgSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
+#mgSitCards .rxs-item2[data-rxstatus="agendado"] i{ font-size:16px; line-height:16px }
+
+/* Campos compactos da sidebar (Short, Publicado para, Períodos) e dropdown customizado
+   (Tipo/Categoria/Autor/Unidade/Publicado para/Períodos) */
+.nv-ffrow{ display:flex; gap:8px; margin-bottom:12px }
+.nv-ffrow-last{ margin-bottom:0 }
+.nv-ffcol{ flex:1; min-width:0; display:flex; flex-direction:column; gap:8px }
+.nv-ffcol label{ font-size:12px; color:#5f666c; line-height:14px }
+.nv-ffield{ display:flex; align-items:center; gap:6px; height:30px; padding:0 12px; background:#fff; border:1px solid #d9d9d9; border-radius:6px }
+.nv-ffield i.ico-l,.nv-ffield i.ico-r{ font-size:16px; color:#5F666C; flex-shrink:0; cursor:pointer }
+.nv-ffield input{ border:0; outline:0; background:transparent; flex:1; min-width:0; font:inherit; font-size:14px; color:var(--ink); padding:0; cursor:text }
+.nv-ffield input::placeholder{ color:#999 }
+.nv-ffield:focus-within{ border-color:rgba(153,153,153,.8); box-shadow:0 0 0 2px rgba(153,153,153,.16) }
+button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; cursor:pointer }
+.rl-ddwrap{ position:relative }
+.rl-ddbtn-label{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#5F666C }
+.rl-ddmenu{ position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:20; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 28px rgba(16,32,48,.16); padding:6px; max-height:280px; overflow-y:auto; display:flex; flex-direction:column; gap:4px }
+.rl-dditem{ display:flex; align-items:center; gap:10px; width:100%; padding:8px 10px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#465364; text-align:left; cursor:pointer; white-space:nowrap }
+.rl-dditem:hover,.rl-dditem.sel{ background:#F0F2F5 }
+.rl-ddicon{ width:26px; height:26px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px }
+.nv-fdaterow{ display:flex; align-items:stretch; width:100% }
+.nv-fdatewrap{ position:relative; flex:1; min-width:0 }
+.nv-fdateinput{ width:100%; height:30px; padding:0 12px; font:inherit; font-size:14px; color:transparent; background:#fff; border:1px solid #d9d9d9; border-right:0; border-radius:4px 0 0 4px; outline:none }
+.nv-fdateinput::-webkit-calendar-picker-indicator{ display:none }
+.nv-fdatewrap.has-value .nv-fdateinput{ color:var(--ink) }
+.nv-fdateph{ position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; color:#999; pointer-events:none }
+.nv-fdatewrap.has-value .nv-fdateph{ display:none }
+.nv-fdatebtn{ width:30px; height:30px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--teal); color:#fff; border:0; border-radius:0 4px 4px 0; cursor:pointer; font-size:14px }
+.nv-fdatebtn:hover{ background:#0c9797 }
 </style>
 </head>
 <body>
@@ -8571,15 +8722,25 @@ let CATEGORIES = [
    Nao uso o sufixo do cargo porque ali a unidade vem como "SULTS" ou como
    nome de rede ("Pit Stop Barra"), e a faixa do card quer dizer a unidade de
    onde a pessoa publicou. */
-const SB_UNIDADES = ['Unidade Shopping','Unidade Centro','Unidade Vila Nova',
-                     'Unidade Litoral','Unidade Barra','Unidade Savassi'];
+/* GERENCIAR > SHORTS (admin, ver assets/js/19-gerenciar-shorts.js): cada unidade ganhou
+   company/color/ini (sigla de 2 letras) para a pilula redonda da coluna "Unidade do autor" —
+   extensao aditiva, os nomes e a ordem originais nao mudaram, entao sbUnidade(post) continua
+   devolvendo exatamente a mesma string de antes para cada autor. */
+const SB_UNIDADES = [
+  { name:'Unidade Shopping',  company:'SULTS Tecnologia LTDA', color:'#ad1457', ini:'SH' },
+  { name:'Unidade Centro',    company:'SULTS Tecnologia LTDA', color:'#1d4ed8', ini:'CE' },
+  { name:'Unidade Vila Nova', company:'SULTS Tecnologia LTDA', color:'#455a64', ini:'VN' },
+  { name:'Unidade Litoral',   company:'SULTS Tecnologia LTDA', color:'#d99e00', ini:'LT' },
+  { name:'Unidade Barra',     company:'SULTS Tecnologia LTDA', color:'#575fd1', ini:'BR' },
+  { name:'Unidade Savassi',   company:'SULTS Tecnologia LTDA', color:'#7c4cc4', ini:'SV' }
+];
 function sbUnidade(post){
   if (post && post.unit) return post.unit;   /* quem declara a unidade nao entra no sorteio */
   const nome = String((post && post.name) || '');
-  if (!nome) return SB_UNIDADES[0];
+  if (!nome) return SB_UNIDADES[0].name;
   let h = 0;
   for (let k = 0; k < nome.length; k++) h += nome.charCodeAt(k);
-  return SB_UNIDADES[h % SB_UNIDADES.length];
+  return SB_UNIDADES[h % SB_UNIDADES.length].name;
 }
 function catById(id){ return CATEGORIES.find(c => c.id === id) || null; }
 function rFormat(r){ return r.format || ((POSTS[r.p] && POSTS[r.p].video) ? 'video' : 'imagem'); }
@@ -8587,6 +8748,13 @@ function rxSchedDT(d){ const dd=new Date(d), p=x=>String(x).padStart(2,'0'); ret
 function rxSchedIn(d){ const days=Math.max(1,Math.round((d-Date.now())/86400000)); return 'Em '+days+(days===1?' dia':' dias'); }
 function catReelCount(id){ return REELS_DATA.filter(r => r.cat === id).length; }
 [2,6].forEach(function(i,k){ if(REELS_DATA[i]) REELS_DATA[i].agendado = Date.now() + (k?5:2)*86400000; });
+/* GERENCIAR > SHORTS (admin, ver assets/js/19-gerenciar-shorts.js): dados extras só para a
+   coluna "Data de encerramento" (nem todo item tem — o resto mostra "Não se encerra") e para a
+   situação "Em aprovação" da coluna "Situação". Aditivo: quem já lê REELS_DATA sem conhecer
+   esses campos continua funcionando igual. */
+REELS_DATA.forEach(function(r,i){ if(i%3===0) r.encerra = Date.now() + (((i*37)%120)+5)*86400000; });
+if (REELS_DATA[9])  REELS_DATA[9].aprovacao  = true;
+if (REELS_DATA[19]) REELS_DATA[19].aprovacao = true;
 let curSort = 'relevancia', curPeriod = 'tudo', curView = 'grade';
 let rxFormat='', rxDur='', rxReach='', rxStatus='', rxMinViews='', rxMinLikes='';
 let colSort = { key:null, dir:1 };
@@ -8692,14 +8860,26 @@ function matchReel(r){
   else {
     if(r.removido) return false;
     if(rxStatus==='agendado' && !r.agendado) return false;
-    if(rxStatus==='pub' && (r.agendado||r.proc||r.procFail)) return false;
+    /* GERENCIAR > SHORTS (admin): "Publicado" some quando em aprovação também */
+    if(rxStatus==='pub' && (r.agendado||r.proc||r.procFail||r.aprovacao)) return false;
     if(rxStatus==='rascunho' && !r.rascunho) return false;
+    if(rxStatus==='aprovacao' && !r.aprovacao) return false;
   }
   if (curFilter.indexOf('fmt:')===0 && rFormat(r)!==curFilter.slice(4)) return false;
   if (curFilter==='vistos' && !isSeen(r.p)) return false;
   if (curFilter==='curtidos' && !isLiked(r.p)) return false;
   if (rxMinViews && numVal(r.views) < +rxMinViews) return false;
   if (rxMinLikes && numVal(r.likes) < +rxMinLikes) return false;
+  /* GERENCIAR > SHORTS (admin, ver assets/js/19-gerenciar-shorts.js): filtros extras da tela de
+     gerenciamento (Tipo/Unidade do autor/Publicado para/Período de encerramento). Presos atrás de
+     curView==='lista' de propósito, para não vazar para a grade/feed social de Shorts — mesmo que
+     rxFormat/rxReach fiquem com um valor selecionado de uma visita anterior à tela de gerenciamento. */
+  if (curView === 'lista'){
+    if (rxFormat && rFormat(r)!==rxFormat) return false;
+    if (typeof rxUnitFilter!=='undefined' && rxUnitFilter && sbUnidade(post) !== rxUnitFilter) return false;
+    if (rxReach && typeof rxReachFor==='function' && rxReachFor(r.p) !== rxReach) return false;
+    if (typeof rxEndPeriod!=='undefined' && rxEndPeriod && rxEndPeriod!=='tudo' && typeof rxEndInPeriod==='function' && !rxEndInPeriod(r.encerra, rxEndPeriod, rxEndDateStart, rxEndDateEnd)) return false;
+  }
   if (catById(curFilter) && r.cat !== curFilter) return false;
   if (curQuery){
     if (!(r.cap + ' ' + post.name + ' ' + r.music).toLowerCase().includes(curQuery)) return false;
@@ -8761,7 +8941,10 @@ function foBuildReelFilters(){
   const nav = $('#rxFilters'); if(!nav) return;
   const adv = (curView === 'lista');
   nav.classList.toggle('rx-advmode', adv);
-  if(adv) foBuildAdvFilters(); else foBuildSocialFilters();
+  /* GERENCIAR > SHORTS (admin): sidebar de filtro avançado, implementada à parte em
+     assets/js/19-gerenciar-shorts.js (foBuildGerenciarShortsFilters) — o ramo social/grade
+     abaixo (foBuildSocialFilters) não muda. */
+  if(adv) foBuildGerenciarShortsFilters(); else foBuildSocialFilters();
 }
 
 function foFilterLabel(){
@@ -8813,7 +8996,10 @@ function renderGrid(){
     bn.addEventListener('click', () => { curFilter='naovistos'; foBuildReelFilters(); renderGrid(); });
     rxGrid.appendChild(bn);
   }
-  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderList(list); return; }
+  /* GERENCIAR > SHORTS (admin): tabela de gerenciamento, implementada à parte em
+     assets/js/19-gerenciar-shorts.js (renderGerenciarShortsList) para não misturar com a grade/feed
+     social de shorts abaixo, que continua sendo o resto desta função. */
+  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderGerenciarShortsList(list); return; }
   const plain = (curFilter!=='todos') || curQuery || curPeriod!=='tudo' || rxMinViews || rxMinLikes;
   if (plain){
     rxGrid.style.display='';
@@ -18052,6 +18238,373 @@ $('#navIA') && $('#navIA').addEventListener('click', e => { e.preventDefault(); 
 iaRenderUsuario();
 iaRenderLista();
 $('#iaZeroDock').appendChild($('#iaComp'));
+
+/* ===================== assets/js/19-gerenciar-shorts.js ===================== */
+/* =====================================================================
+   GERENCIAR > SHORTS (admin) — assets/js/19-gerenciar-shorts.js
+
+   Tabela e sidebar de filtro avançado da tela de gerenciamento de Shorts
+   (aba "Shorts" do alternador "Gerenciar", e a rota alternativa pelo módulo
+   avulso de Shorts > "Publicados"). Isolado num arquivo à parte para não
+   mexer no comportamento da grade/feed social de Shorts nem da Home — os
+   únicos pontos de contato com assets/js/01-home.js são:
+
+     - renderGrid() chama renderGerenciarShortsList(list) só quando
+       managed && curView==='lista' (ramo que já existia e já era exclusivo
+       da tela de gerenciamento).
+     - foBuildReelFilters() chama foBuildGerenciarShortsFilters() só quando
+       curView==='lista', pelo mesmo motivo.
+     - matchReel() ganhou condições extras (rxFormat/rxUnitFilter/rxReach/
+       rxEndPeriod) que só filtram algo quando esta tela preenche essas
+       variáveis — em qualquer outra tela elas ficam inertes.
+
+   Tudo o mais (estado, helpers, disparo de eventos) vive aqui.
+   ===================================================================== */
+
+/* Estado exclusivo desta tela (os demais filtros — rxFormat, rxReach,
+   rxStatus, rxMinViews, rxMinLikes, curFilter, curQuery, curPeriod,
+   colSort — já existem em 01-home.js e são reaproveitados). */
+let rxUnitFilter = '';
+let rxEndPeriod = 'tudo', rxEndDateStart = '', rxEndDateEnd = '';
+
+/* GERENCIAR > SHORTS (admin): mesma unidade de sbUnidade(post)/SB_UNIDADES (01-home.js), só que
+   devolvendo o objeto inteiro {name,company,color,ini} em vez do nome — usado pela pílula colorida
+   da coluna "Unidade do autor". Mantém a mesma conta de índice (hash do nome do autor) para que a
+   unidade mostrada aqui seja sempre a mesma já usada no player/feed. */
+function sbUnitObjFor(post){
+  if (post && post.unit){ const found = SB_UNIDADES.find(u => u.name === post.unit); if (found) return found; }
+  const nome = String((post && post.name) || '');
+  if (!nome) return SB_UNIDADES[0];
+  let h = 0;
+  for (let k = 0; k < nome.length; k++) h += nome.charCodeAt(k);
+  return SB_UNIDADES[h % SB_UNIDADES.length];
+}
+
+/* "Publicado para" — reaproveita o mesmo vocabulário do filtro "Alcance" (rxReach) que já existia
+   em 01-home.js, agora também usado para rotular a coluna própria da tabela de gerenciamento. */
+const RX_REACH = ['unidades', 'matriz', 'rede'];
+const RX_REACH_LABEL = { unidades: 'Unidades', matriz: 'Sua Marca (Matriz)', rede: 'Toda a rede' };
+function rxReachFor(seed){ return RX_REACH[seed % RX_REACH.length]; }
+
+/* "Há 5 h"/"Há 2 d" -> "Há 5 horas"/"Há 2 dias" (unidade por extenso, com plural), usado na coluna
+   Data de publicação desta tabela — o resto do app continua com a forma curta. */
+function rxSchedShort(d){ const dd=new Date(d), p=x=>String(x).padStart(2,'0'); return p(dd.getDate())+'/'+p(dd.getMonth()+1)+' às '+p(dd.getHours())+':'+p(dd.getMinutes()); }
+function rxFullRel(t){
+  const m = String(t).match(/^Há (\d+) (h|d)$/);
+  if (!m) return t;
+  const n = +m[1];
+  const unit = m[2] === 'h' ? (n === 1 ? 'hora' : 'horas') : (n === 1 ? 'dia' : 'dias');
+  return 'Há ' + n + ' ' + unit;
+}
+
+/* Filtro "Período de encerramento" — r.encerra é um timestamp futuro (ms) */
+function rxEndInPeriod(encerra, period, ds, de){
+  if (period === 'naoencerra') return !encerra;
+  if (!encerra) return false;
+  if (period === 'hoje') return new Date(encerra).toDateString() === new Date().toDateString();
+  if (period === '7d' || period === '30d'){ const days = period === '7d' ? 7 : 30; const diff = (encerra - Date.now()) / 86400000; return diff >= 0 && diff <= days; }
+  if (period === 'custom'){
+    if (ds && encerra < new Date(ds + 'T00:00:00').getTime()) return false;
+    if (de && encerra > new Date(de + 'T23:59:59').getTime()) return false;
+    return true;
+  }
+  return true;
+}
+
+function rxActiveFilterCount(){
+  let n = 0;
+  if (curFilter && curFilter !== 'todos') n++;
+  if (curQuery) n++;
+  if (curPeriod && curPeriod !== 'tudo') n++;
+  if (rxStatus) n++;
+  if (rxFormat) n++;
+  if (rxUnitFilter) n++;
+  if (rxReach) n++;
+  if (rxEndPeriod && rxEndPeriod !== 'tudo') n++;
+  return n;
+}
+
+/* Dropdown customizado do filtro avançado (Tipo/Categoria/Autor/Unidade/Publicado para/Períodos) —
+   substitui o <select> nativo por um botão + menu para ter o mesmo hover/gap/sombra em todos os
+   campos, com ícone colorido por item só na Categoria. */
+function rxDDMenu(items){
+  return items.map(it => {
+    const icon = it.color ? '<span class="rl-ddicon" style="background:' + it.color + '"><i class="fa-solid ' + (it.icon || 'fa-tag') + '"></i></span>' : '';
+    return '<button type="button" class="rl-dditem' + (it.selected ? ' sel' : '') + '" data-value="' + it.value + '">' + icon + '<span>' + it.label + '</span></button>';
+  }).join('');
+}
+function rxDDWrap(id, label, items, leftIcon, rightIcon){
+  return '<div class="rl-ddwrap" data-dd="' + id + '">' +
+    '<button type="button" class="nv-ffield" id="' + id + '">' + (leftIcon ? '<i class="fa-solid ' + leftIcon + ' ico-l"></i>' : '') +
+      '<span class="rl-ddbtn-label">' + label + '</span><i class="fa-solid ' + (rightIcon || 'fa-chevron-down') + ' ico-r"></i></button>' +
+    '<div class="rl-ddmenu" id="' + id + 'Menu" hidden>' + rxDDMenu(items) + '</div></div>';
+}
+function rxDateField(id, value){
+  const ph = id.indexOf('Start') > -1 ? 'Data inicial' : 'Data final';
+  return '<div class="nv-fdaterow"><div class="nv-fdatewrap' + (value ? ' has-value' : '') + '"><input type="date" class="nv-fdateinput" id="' + id + '" value="' + (value || '') + '"><span class="nv-fdateph">' + ph + '</span></div>' +
+    '<button type="button" class="nv-fdatebtn" data-datefor="' + id + '"><i class="mdi mdi-calendar-month"></i></button></div>';
+}
+
+/* GERENCIAR > SHORTS (admin): sidebar de filtro avançado — "Quais shorts você quer ver?" (situação),
+   Short (título/ID, Tipo, Categoria, Autor, Unidade do autor), Publicado para, Período de publicação
+   e Período de encerramento. Só é montada quando curView==='lista' (ver foBuildReelFilters). */
+function foBuildGerenciarShortsFilters(){
+  const nav = $('#rxFilters'); if (!nav) return;
+  const activeCats = (typeof CATEGORIES !== 'undefined' ? CATEGORIES.filter(c => c.active) : []);
+  const authors = [...new Set(REELS_DATA.map(r => POSTS[r.p].name))];
+  const SVG_ACCOUNT_CLOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.63,14.1C12.23,10.58 16.38,9.03 19.9,10.63C23.42,12.23 24.97,16.38 23.37,19.9C22.24,22.4 19.75,24 17,24C14.3,24 11.83,22.44 10.67,20H1V18C1.06,16.86 1.84,15.93 3.34,15.18C4.84,14.43 6.72,14.04 9,14C9.57,14 10.11,14.05 10.63,14.1V14.1M9,4C10.12,4.03 11.06,4.42 11.81,5.17C12.56,5.92 12.93,6.86 12.93,8C12.93,9.14 12.56,10.08 11.81,10.83C11.06,11.58 10.12,11.95 9,11.95C7.88,11.95 6.94,11.58 6.19,10.83C5.44,10.08 5.07,9.14 5.07,8C5.07,6.86 5.44,5.92 6.19,5.17C6.94,4.42 7.88,4.03 9,4M17,22A5,5 0 0,0 22,17A5,5 0 0,0 17,12A5,5 0 0,0 12,17A5,5 0 0,0 17,22M16,14H17.5V16.82L19.94,18.23L19.19,19.53L16,17.69V14Z"/></svg>';
+  const sit = [['', 'mdi mdi-layers-triple', 'Todos', ''], ['pub', 'mdi mdi-check-circle', 'Publicados', '#25B865'], ['agendado', 'fa-solid fa-clock', 'Agendados', '#2F8EE5'], ['aprovacao', SVG_ACCOUNT_CLOCK, 'Em aprovação', '#FFB020']];
+  let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais shorts você quer ver? <i class="fa-solid fa-chevron-up"></i></div><div class="cv-seg nv-sitcards nv-sit2" id="mgSitCards">' +
+    sit.map(s => { const isSvg = s[1].charAt(0) === '<'; const colorAttr = s[3] ? ' style="color:' + s[3] + '"' : ''; const icon = isSvg ? s[1].replace('<svg', '<svg' + colorAttr) : '<i class="' + s[1] + '"' + colorAttr + '></i>'; return '<button data-rxstatus="' + s[0] + '" class="rxs-item2 ' + (rxStatus === s[0] ? 'active' : '') + '">' + icon + s[2] + '</button>'; }).join('') + '</div></div>';
+  const units = SB_UNIDADES.map(u => u.name);
+  const fmtItems = [{ value: '', label: 'Todos', selected: rxFormat === '' }, { value: 'video', label: 'Vídeo', selected: rxFormat === 'video' }, { value: 'imagem', label: 'Imagem', selected: rxFormat === 'imagem' }];
+  const fmtLabel = (fmtItems.find(i => i.selected) || fmtItems[0]).label;
+  const curCat = catById(curFilter);
+  const catItems = [{ value: '', label: 'Todas', selected: !curCat }].concat(activeCats.map(c => ({ value: c.id, label: c.name, icon: c.icon, color: c.color, selected: curFilter === c.id })));
+  const catLabel = curCat ? curCat.name : 'Todas';
+  const isAutor = curFilter.indexOf('autor:') === 0;
+  const authorItems = [{ value: '', label: 'Todos', selected: !isAutor }].concat(authors.map(a => ({ value: a, label: a, selected: curFilter === 'autor:' + a })));
+  const authorLabel = isAutor ? curFilter.slice(6) : 'Todos';
+  const unitItems = [{ value: '', label: 'Todas', selected: !rxUnitFilter }].concat(units.map(u => ({ value: u, label: u, selected: rxUnitFilter === u })));
+  const unitLabel = rxUnitFilter || 'Todas';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Short <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Título ou ID</label><div class="nv-ffield"><input type="text" id="rxFTitulo" placeholder="Pesquisar short..." value="' + (curQuery || '') + '" autocomplete="off"></div></div>' +
+    '<div class="nv-ffrow">' +
+      '<div class="nv-ffcol"><label>Tipo</label>' + rxDDWrap('rxFFormat', fmtLabel, fmtItems) + '</div>' +
+      '<div class="nv-ffcol"><label>Categoria</label>' + rxDDWrap('rxFCat', catLabel, catItems) + '</div>' +
+    '</div>' +
+    '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('rxFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
+      '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('rxFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
+    '</div></div>';
+  const reachItems = [{ value: '', label: 'Todos', selected: !rxReach }].concat(RX_REACH.map(v => ({ value: v, label: RX_REACH_LABEL[v], selected: rxReach === v })));
+  const reachLabel = rxReach ? RX_REACH_LABEL[rxReach] : 'Todos';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicado para <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('rxFReach', reachLabel, reachItems) + '</div>' +
+    '</div>';
+  /* "Período de publicação" fica com as mesmas opções de PERIOD_H (24h/7d/30d/90d) já usadas em
+     todo o app — sem "hoje"/"personalizado" (que a referência tem, mas sem um filtro que as
+     avalie de fato); assim o campo continua totalmente funcional, só que com um menu customizado
+     em vez do <select> nativo, para o mesmo visual dos demais campos desta sidebar. */
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  const periodItems = periodDefs.map(p => ({ value: p[0], label: p[1], selected: curPeriod === p[0] }));
+  const periodLabel = (periodDefs.find(p => p[0] === curPeriod) || periodDefs[0])[1];
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de publicação <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Selecione um período</label>' + rxDDWrap('rxFPeriod', periodLabel, periodItems) + '</div>' +
+    '</div>';
+  const endPeriodDefs = [['tudo', 'Qualquer período'], ['hoje', 'Hoje'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado'], ['naoencerra', 'Não se encerra']];
+  const endPeriodItems = endPeriodDefs.map(p => ({ value: p[0], label: p[1], selected: rxEndPeriod === p[0] }));
+  const endPeriodLabel = (endPeriodDefs.find(p => p[0] === rxEndPeriod) || endPeriodDefs[0])[1];
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de encerramento <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"' + (rxEndPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione um período</label>' + rxDDWrap('rxFEndPeriod', endPeriodLabel, endPeriodItems) + '</div>' +
+    (rxEndPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('rxFEndDateStart', rxEndDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('rxFEndDateEnd', rxEndDateEnd) + '</div>' +
+    '</div>' : '') +
+    '</div>';
+  const activeN = rxActiveFilterCount();
+  html += '<div class="nv-filters-ft"><button class="nv-fclear' + (activeN > 0 ? ' has-active' : '') + '" id="rxFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros' + (activeN > 0 ? ' (' + activeN + ')' : '') + '</button><button class="nv-fapply" id="rxFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML = html;
+}
+
+/* GERENCIAR > SHORTS (admin): núcleo da tabela de gerenciamento — colunas ID, Short (+ menu de
+   Ações), Situação, Data de publicação, Publicado para, Tipo, Autor, Unidade do autor,
+   Visualizações, Curtidas, Categoria e Data de encerramento; ordenação de 3 estados por coluna;
+   colunas ID+Short congeladas (com colapso animado) ao rolar horizontalmente. */
+function renderGerenciarShortsList(list){
+  const wrap = document.createElement('div');
+  wrap.className = 'rlist rl-tblwrap'; wrap.style.gridColumn = '1/-1';
+  if (colSort.key && colSort.dir){
+    const val = r => { const p = POSTS[r.p]; switch (colSort.key){
+      case 'title': return (p.title || p.alt || '').toLowerCase();
+      case 'author': return p.name.toLowerCase();
+      case 'time': return hoursVal(p.time);
+      case 'views': return numVal(r.views);
+      case 'likes': return numVal(likeDisplay(r));
+      case 'unit': return sbUnitObjFor(p).name.toLowerCase();
+      case 'cat': { const c = catById(r.cat); return (c ? c.name : '').toLowerCase(); }
+      case 'enddate': return r.encerra || Infinity;
+      case 'status': return r.aprovacao ? 'aprovacao' : r.agendado ? 'agendado' : 'publicado';
+      case 'reach': return RX_REACH_LABEL[rxReachFor(r.p)].toLowerCase();
+      default: return 0; } };
+    list = list.slice().sort((a, b) => { const va = val(a), vb = val(b); return va < vb ? -colSort.dir : va > vb ? colSort.dir : 0; });
+  }
+  const rows = list.map((r, idx) => {
+    const post = POSTS[r.p];
+    const cat = catById(r.cat);
+    const unit = sbUnitObjFor(post);
+    return '<tr data-i="' + idx + '">' +
+      '<td class="perm-id">#' + (1000 + r.p) + '</td>' +
+      '<td><div class="rl-reel">' +
+        (r.proc ? '<span class="rl-procthumb"><span class="rl-spin"></span></span>'
+                : '<img src="' + (post.img || post.poster || '') + '" alt="">') +
+        '<div><b>' + (post.title || post.alt) + '</b>' +
+        (r.proc ? '<span class="rl-procpill">Em processamento</span>' : '') +
+        '</div>' +
+        '<div class="rl-actwrap">' +
+          '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
+          '<div class="rl-actmenu" hidden>' +
+            '<button type="button" data-ract="tab"><i class="fa-solid fa-up-right-from-square"></i> Abrir em nova guia</button>' +
+            '<button type="button" data-ract="ver"><i class="fa-solid fa-play"></i> Assistir short</button>' +
+            '<button type="button" data-ract="del" class="danger"><i class="fa-solid fa-trash"></i> Remover short</button>' +
+          '</div>' +
+        '</div>' +
+        '</div></td>' +
+      '<td style="white-space:nowrap">' + (r.proc
+        ? '<span class="rl-dash">—</span>'
+        : r.aprovacao
+        ? '<div class="rl-statrow"><span class="rl-statdot apr"></span><span class="rl-stattxt apr">Em aprovação</span></div>'
+        : r.agendado
+        ? '<div class="rl-statrow"><span class="rl-statdot ag"></span><span class="rl-stattxt ag">Agendado</span></div><span class="rl-rel">' + rxSchedShort(r.agendado) + '</span>'
+        : '<div class="rl-statrow"><span class="rl-statdot pub"></span><span class="rl-stattxt pub">Publicado</span></div>') + '</td>' +
+      '<td style="white-space:nowrap" class="' + (r.agendado ? 'rl-dtag' : '') + '">' + ((r.proc || r.aprovacao)
+        ? '<span class="rl-dash">—</span>'
+        : '<div class="rl-dt">' + (r.agendado ? rxSchedDT(r.agendado) : rxPubDT(post.time)) + '</div><span class="rl-rel">' + (r.agendado ? rxSchedIn(r.agendado) : rxFullRel(post.time)) + '</span>') + '</td>' +
+      '<td><span class="rl-reach">' + RX_REACH_LABEL[rxReachFor(r.p)] + '</span></td>' +
+      '<td>' + (rFormat(r) === 'imagem'
+        ? '<span class="nv-tp is-post"><i class="fa-solid fa-image"></i> Imagem</span>'
+        : '<span class="nv-tp is-art"><i class="fa-solid fa-video"></i> Vídeo</span>') + '</td>' +
+      '<td><div class="rl-author"><span class="avatar ' + post.av + '"></span><div><b>' + post.name + '</b><span class="rl-emp">' + (post.role || '') + '</span></div></div></td>' +
+      '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + unit.color + '">' + unit.ini + '</span><div><b>' + unit.name + '</b><span>' + unit.company + '</span></div></div></td>' +
+      '<td style="white-space:nowrap"><button class="nv-cellbtn" data-rx="views"><i class="fa-solid fa-play" style="font-size:10px;color:' + (!r.proc && numVal(r.views) > 0 ? '#43B3AE' : '#8a94a0') + '"></i> ' + (r.proc ? '0' : r.views) + '</button></td>' +
+      '<td style="white-space:nowrap"><button class="nv-cellbtn" data-rx="likes"><i class="fa-solid fa-heart" style="font-size:10px;color:' + (!r.proc && numVal(likeDisplay(r)) > 0 ? '#ff3040' : '#8a94a0') + '"></i> ' + (r.proc ? '0' : likeDisplay(r)) + '</button></td>' +
+      '<td>' + (cat ? '<span class="rl-cat"><span class="rl-cat-dot" style="background:' + cat.color + '"><i class="fa-solid ' + (cat.icon || 'fa-tag') + '"></i></span>' + cat.name + '</span>' : '<span style="color:#b8c2cc">,</span>') + '</td>' +
+      '<td style="white-space:nowrap">' + (r.encerra ? '<span class="rl-enddt">' + rxSchedDT(r.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
+      '</tr>';
+  }).join('');
+  const cols = [['id', 'ID'], ['title', 'Short (' + list.length + ')']];
+  const colsAfter = [['author', 'Autor'], ['unit', 'Unidade do autor'], ['views', 'Visualizações'], ['likes', 'Curtidas'], ['cat', 'Categoria']];
+  const thSort = c => {
+    const k = c[0], active = colSort.key === k && colSort.dir !== 0;
+    const icon = !active ? NV_SORT_ICONS.swap : (colSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
+    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
+  };
+  const thPlain = label => '<th>' + label + '</th>';
+  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicado para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
+  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';
+  wrap.querySelector('tbody').addEventListener('click', e => {
+    const tr = e.target.closest('tr'); if (!tr) return;
+    const idx = +tr.dataset.i; const r = list[idx];
+    const rxb = e.target.closest('[data-rx]');
+    if (rxb){ e.stopPropagation(); openReelAudience(r, rxb.dataset.rx); return; }
+    const actBtn = e.target.closest('.rl-actbtn');
+    if (actBtn){
+      e.stopPropagation();
+      const td = actBtn.closest('td');
+      const menu = actBtn.nextElementSibling;
+      const willOpen = menu.hidden;
+      wrap.querySelectorAll('.rl-actmenu').forEach(m => { m.hidden = true; });
+      wrap.querySelectorAll('td.rl-actz').forEach(c => c.classList.remove('rl-actz'));
+      menu.hidden = !willOpen;
+      td.classList.toggle('rl-actz', willOpen);
+      return;
+    }
+    const ract = e.target.closest('[data-ract]');
+    if (ract){
+      e.stopPropagation();
+      ract.closest('.rl-actmenu').hidden = true;
+      ract.closest('td').classList.remove('rl-actz');
+      const a = ract.dataset.ract;
+      if (a === 'ver') openPlayer(list, idx);
+      else if (a === 'tab') window.open(location.href, '_blank');
+      else { const gi = REELS_DATA.indexOf(r); if (gi > -1) REELS_DATA.splice(gi, 1); buildStories(); renderGrid(); fgToast('Short excluído'); }
+      return;
+    }
+    if (e.target.closest('.rl-actwrap')) return;
+    openReelInfo(r);
+  });
+  wrap.querySelector('thead').addEventListener('click', ev => {
+    const th = ev.target.closest('th.sortable'); if (!th) return;
+    const k = th.dataset.sort;
+    /* Ciclo de 3 estados por coluna: sem ordenação -> ascendente -> descendente -> sem ordenação */
+    if (colSort.key !== k){ colSort.key = k; colSort.dir = 1; }
+    else if (colSort.dir === 1){ colSort.dir = -1; }
+    else { colSort.key = null; colSort.dir = 0; }
+    renderGrid();
+  });
+  rxGrid.appendChild(wrap);
+  const RX_COLLAPSE_PX = 90;
+  let rxScrollTicking = false;
+  function rxSyncFrozenCols(){
+    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / RX_COLLAPSE_PX));
+    const idW = RX_COLLAPSE_PX * (1 - progress);
+    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(el => {
+      el.style.setProperty('width', idW + 'px', 'important');
+      el.style.setProperty('min-width', idW + 'px', 'important');
+      el.style.setProperty('max-width', idW + 'px', 'important');
+      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
+      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
+    });
+    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(el => { el.style.left = idW + 'px'; });
+    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
+  }
+  wrap.addEventListener('scroll', () => {
+    if (rxScrollTicking) return; rxScrollTicking = true;
+    requestAnimationFrame(() => { rxSyncFrozenCols(); rxScrollTicking = false; });
+  });
+  rxSyncFrozenCols();
+}
+
+/* Fecha o menu "Ações" da tabela e os dropdowns do filtro avançado ao clicar fora deles.
+   Listener próprio (não mexe nos já existentes em 01-home.js/13-extras.js). */
+document.addEventListener('click', e => {
+  if (!e.target.closest('.rl-actwrap')){
+    $$('#rxGrid .rl-actmenu').forEach(m => { m.hidden = true; });
+    $$('#rxGrid td.rl-actz').forEach(td => td.classList.remove('rl-actz'));
+  }
+  if (!e.target.closest('.rl-ddwrap')){
+    $$('#rxFilters .rl-ddmenu').forEach(m => { m.hidden = true; });
+  }
+});
+
+/* Cliques da sidebar de filtro avançado (cartões de situação, dropdowns customizados, botão de
+   calendário). Listener adicional sobre o mesmo #rxFilters já escutado em 01-home.js — cada um
+   trata só o que reconhece, então convivem sem conflito. */
+$('#rxFilters').addEventListener('click', e => {
+  const st = e.target.closest('#mgSitCards button');
+  if (st){ rxStatus = st.dataset.rxstatus; foBuildReelFilters(); renderGrid(); return; }
+  if (e.target.closest('#rxFClear')){
+    /* o handler de #rxFClear em 01-home.js já limpa curFilter/curQuery/curPeriod/rxFormat/rxStatus/
+       etc. e re-renderiza; aqui só falta zerar o que é exclusivo desta tela. */
+    rxUnitFilter = ''; rxEndPeriod = 'tudo'; rxEndDateStart = ''; rxEndDateEnd = '';
+    colSort.key = null; colSort.dir = 0;
+    foBuildReelFilters(); renderGrid();
+    return;
+  }
+  const db = e.target.closest('.nv-fdatebtn');
+  if (db){ const inp = $('#' + db.dataset.datefor); if (inp){ if (inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem = e.target.closest('.rl-dditem');
+  if (ddItem){
+    const wrap = ddItem.closest('.rl-ddwrap'); const id = wrap.dataset.dd; const v = ddItem.dataset.value;
+    if (id === 'rxFCat'){ curFilter = v || 'todos'; }
+    else if (id === 'rxFPeriod'){ curPeriod = v; }
+    else if (id === 'rxFEndPeriod'){ rxEndPeriod = v; }
+    else if (id === 'rxFAutor'){ curFilter = v ? ('autor:' + v) : 'todos'; }
+    else if (id === 'rxFUnit'){ rxUnitFilter = v; }
+    else if (id === 'rxFReach'){ rxReach = v; }
+    else if (id === 'rxFFormat'){ rxFormat = v; }
+    foBuildReelFilters(); renderGrid();
+    return;
+  }
+  const ddBtn = e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if (ddBtn){
+    const wrap = ddBtn.closest('.rl-ddwrap'); const menu = wrap.querySelector('.rl-ddmenu');
+    const willOpen = menu.hidden;
+    $$('#rxFilters .rl-ddmenu').forEach(m => { m.hidden = true; });
+    menu.hidden = !willOpen;
+    return;
+  }
+});
+$('#rxFilters').addEventListener('input', e => {
+  if (e.target.id === 'rxFTitulo'){ curQuery = e.target.value.trim().toLowerCase(); renderGrid(); }
+});
+$('#rxFilters').addEventListener('change', e => {
+  const t = e.target;
+  if (t.id === 'rxFEndDateStart'){ rxEndDateStart = t.value; }
+  else if (t.id === 'rxFEndDateEnd'){ rxEndDateEnd = t.value; }
+  else return;
+  foBuildReelFilters(); renderGrid();
+});
 </script>
 </body>
 </html>
