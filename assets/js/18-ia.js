@@ -199,8 +199,8 @@ function iaSaudacao(){
 
 const IA_TRATAMENTOS = ['senhor','senhora','sr','sra','dr','dra','seu','dona'];
 function iaPrimeiroNome(){
-  const p = iaEu().nome.split(/s+/);
-  const um = (p[0] || '').toLowerCase().replace(/.$/, '');
+  const p = iaEu().nome.split(/\s+/);
+  const um = (p[0] || '').toLowerCase().replace(/\.$/, '');
   return (IA_TRATAMENTOS.indexOf(um) >= 0 && p[1]) ? p[0] + ' ' + p[1] : p[0];
 }
 

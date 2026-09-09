@@ -1571,6 +1571,12 @@
 #nvCatModal .fg-head h2{color:#2F8EE5;font-size:22px}
 #nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
 #nvCatModal .fg-input{font-size:14px;border-radius:6px}
+/* campo de 36px com o traco de campo no foco: era global na 05-forum.css e
+   vazava para os modais de fora, entao mora aqui, nos dois do Gerenciar */
+#nvCatModal .fg-input,#teamAddModal .fg-input{height:36px;padding:0 12px;border-radius:6px}
+#nvCatModal .fg-textarea,#teamAddModal .fg-textarea{border-radius:6px}
+#nvCatModal .fg-input:focus,#nvCatModal .fg-textarea:focus,
+#teamAddModal .fg-input:focus,#teamAddModal .fg-textarea:focus{border-color:var(--linha-campo-forte)}
 #nvCatModal .cat-sw{border-radius:6px}
 #nvCatModal .cat-sw:hover{transform:scale(1.02)}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}

@@ -38,6 +38,11 @@ const CUSTOM_CLIENTES = [
     pessoa:{ nome:'Senhor Bigode', foto:'uploads/gatitos/perfil.jpg' } }
 ];
 let customClienteAtual = null;
+/* endereco absoluto a partir da pagina: ver o comentario em --capa-src */
+function customEndereco(u){
+  if (!u || /^(data:|blob:|https?:)/.test(u)) return u;
+  try { return new URL(u, document.baseURI).href; } catch (e) { return u; }
+}
 function customCliente(){ return CUSTOM_CLIENTES.find(c => c.id === customClienteAtual) || null; }
 function customAplicaCliente(c){
   document.body.style.setProperty('--marca', c.marca);
@@ -47,7 +52,7 @@ function customAplicaCliente(c){
   document.querySelectorAll('.hm-logo-cliente, .top-logo-cliente img').forEach(function(img){ img.src = c.logo; img.alt = c.nome; });
   /* a capa fica no body: o cartao da home, o bloco de perfil dos modulos e a
      tela "Ver meu perfil" leem a mesma variavel */
-  document.body.style.setProperty('--capa-src', 'url("' + c.capa + '")');
+  document.body.style.setProperty('--capa-src', 'url("' + customEndereco(c.capa) + '")');
   if (c.capaPos) document.body.style.setProperty('--capa-pos', c.capaPos); else document.body.style.removeProperty('--capa-pos');
   document.querySelectorAll('.profile-banner').forEach(function(b){ b.style.removeProperty('--capa-src'); b.style.removeProperty('--capa-pos'); });
   const ppLogo = document.querySelector('.pp-logo-cliente');
@@ -282,7 +287,7 @@ function customAlternar(){
     arq.addEventListener('change', function(){
       const f = arq.files && arq.files[0]; if (!f) return;
       const url = URL.createObjectURL(f);
-      document.body.style.setProperty('--capa-src', 'url("' + url + '")'); document.body.style.removeProperty('--capa-pos');
+      document.body.style.setProperty('--capa-src', 'url("' + customEndereco(url) + '")'); document.body.style.removeProperty('--capa-pos');
       if (typeof fgToast === 'function') fgToast('Capa atualizada');
       arq.value = '';
     });

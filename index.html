@@ -37,7 +37,7 @@
   --teal:#00acac;
   --teal-dark:#029191;
   --navy:#101c26;
-  --sidebar:#0B2D42;
+  --sidebar:#263f50;
   --sidebar-active:#1c2f3c;
   --bg:#E9EAED;
   --card:#ffffff;
@@ -1166,7 +1166,7 @@ input,textarea,select{font-size:14px}
 .fg-backdrop{position:fixed;inset:0;z-index:200;background:rgba(16,28,40,.55);display:none;align-items:center;justify-content:center;padding:20px}
 .fg-backdrop.open{display:flex}
 .fg-modal{width:560px;max-width:100%;max-height:92vh;overflow-y:auto;background:#fff;border-radius:14px;box-shadow:0 30px 70px -20px rgba(16,32,48,.5)}
-.fg-head{display:flex;align-items:center;gap:14px;padding:20px 20px 0px 20px;border-bottom:1px solid var(--line)}
+.fg-head{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line)}
 .fg-head h2{font-size:17px;font-weight:700;color:var(--ink)}
 .fg-steps{display:flex;gap:8px;margin-left:auto}
 .fg-step{font-size:11px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
@@ -1179,10 +1179,9 @@ input,textarea,select{font-size:14px}
 .fg-pane.on{display:block}
 .fg-field{margin-bottom:16px}
 .fg-label{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block}
-.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:6px;font:inherit;font-size:13px;color:var(--ink);outline:none}
-.fg-input{height:36px;padding:0 12px}
-.fg-textarea{padding:10px 12px;resize:vertical;min-height:64px}
-.fg-input:focus,.fg-textarea:focus{border-color:var(--linha-campo-forte)}
+.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;color:var(--ink);outline:none}
+.fg-input:focus,.fg-textarea:focus{border-color:var(--teal)}
+.fg-textarea{resize:vertical;min-height:64px}
 .fg-swatches,.fg-icons{display:flex;flex-wrap:wrap;gap:9px}
 .fg-sw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
 .fg-sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--ink)}
@@ -1301,6 +1300,7 @@ input,textarea,select{font-size:14px}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
 .rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow:hidden}
+.reels-view .rlist,#nvEmpList,#nvPeoList{border-color:var(--line)}
 .rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}
 .rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
@@ -3207,6 +3207,12 @@ input,textarea,select{font-size:14px}
 #nvCatModal .fg-head h2{color:#2F8EE5;font-size:22px}
 #nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
 #nvCatModal .fg-input{font-size:14px;border-radius:6px}
+/* campo de 36px com o traco de campo no foco: era global na 05-forum.css e
+   vazava para os modais de fora, entao mora aqui, nos dois do Gerenciar */
+#nvCatModal .fg-input,#teamAddModal .fg-input{height:36px;padding:0 12px;border-radius:6px}
+#nvCatModal .fg-textarea,#teamAddModal .fg-textarea{border-radius:6px}
+#nvCatModal .fg-input:focus,#nvCatModal .fg-textarea:focus,
+#teamAddModal .fg-input:focus,#teamAddModal .fg-textarea:focus{border-color:var(--linha-campo-forte)}
 #nvCatModal .cat-sw{border-radius:6px}
 #nvCatModal .cat-sw:hover{transform:scale(1.02)}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
@@ -16015,6 +16021,11 @@ const CUSTOM_CLIENTES = [
     pessoa:{ nome:'Senhor Bigode', foto:'uploads/gatitos/perfil.jpg' } }
 ];
 let customClienteAtual = null;
+/* endereco absoluto a partir da pagina: ver o comentario em --capa-src */
+function customEndereco(u){
+  if (!u || /^(data:|blob:|https?:)/.test(u)) return u;
+  try { return new URL(u, document.baseURI).href; } catch (e) { return u; }
+}
 function customCliente(){ return CUSTOM_CLIENTES.find(c => c.id === customClienteAtual) || null; }
 function customAplicaCliente(c){
   document.body.style.setProperty('--marca', c.marca);
@@ -16024,7 +16035,7 @@ function customAplicaCliente(c){
   document.querySelectorAll('.hm-logo-cliente, .top-logo-cliente img').forEach(function(img){ img.src = c.logo; img.alt = c.nome; });
   /* a capa fica no body: o cartao da home, o bloco de perfil dos modulos e a
      tela "Ver meu perfil" leem a mesma variavel */
-  document.body.style.setProperty('--capa-src', 'url("' + c.capa + '")');
+  document.body.style.setProperty('--capa-src', 'url("' + customEndereco(c.capa) + '")');
   if (c.capaPos) document.body.style.setProperty('--capa-pos', c.capaPos); else document.body.style.removeProperty('--capa-pos');
   document.querySelectorAll('.profile-banner').forEach(function(b){ b.style.removeProperty('--capa-src'); b.style.removeProperty('--capa-pos'); });
   const ppLogo = document.querySelector('.pp-logo-cliente');
@@ -16259,7 +16270,7 @@ function customAlternar(){
     arq.addEventListener('change', function(){
       const f = arq.files && arq.files[0]; if (!f) return;
       const url = URL.createObjectURL(f);
-      document.body.style.setProperty('--capa-src', 'url("' + url + '")'); document.body.style.removeProperty('--capa-pos');
+      document.body.style.setProperty('--capa-src', 'url("' + customEndereco(url) + '")'); document.body.style.removeProperty('--capa-pos');
       if (typeof fgToast === 'function') fgToast('Capa atualizada');
       arq.value = '';
     });
@@ -17363,8 +17374,8 @@ function iaSaudacao(){
 
 const IA_TRATAMENTOS = ['senhor','senhora','sr','sra','dr','dra','seu','dona'];
 function iaPrimeiroNome(){
-  const p = iaEu().nome.split(/s+/);
-  const um = (p[0] || '').toLowerCase().replace(/.$/, '');
+  const p = iaEu().nome.split(/\s+/);
+  const um = (p[0] || '').toLowerCase().replace(/\.$/, '');
   return (IA_TRATAMENTOS.indexOf(um) >= 0 && p[1]) ? p[0] + ' ' + p[1] : p[0];
 }
 
