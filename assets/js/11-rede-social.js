@@ -1611,11 +1611,11 @@ function renderNewsCats(){
     nvCatTh('Publicações','pub')+
     nvCatTh('Shorts','shorts')+
     '<th style="text-align:center">Ações</th></tr></thead><tbody>'+
-    list.map(c=>'<tr data-id="'+c.id+'"><td><div class="cat-name"><span class="cat-ic" style="background:'+c.color+'"><i class="fa-solid '+(c.icon||'fa-tag')+'"></i></span>'+c.name+'</div></td>'+
+    list.map(c=>'<tr data-id="'+c.id+'"><td><div class="cat-name"><span class="cat-ic" style="background:'+c.color+'"><i class="fa-solid '+(c.icon||'fa-tag')+'"></i></span><span class="cat-nm">'+c.name+'</span></div></td>'+
       '<td style="white-space:nowrap">'+newsCatCount(c.name)+' publicações</td>'+
       '<td style="white-space:nowrap">'+reelCount(c.name)+' shorts</td>'+
-      '<td class="rl-acts"><div class="cat-actwrap"><button class="cat-editbtn" data-act="edit">'+NV_ICON_EDIT+' Editar</button>'+
-      '<button class="cat-arch" data-act="arch">'+(c.active!==false?NV_ICON_CANCEL:'<i class="fa-solid fa-rotate-left"></i>')+' '+(c.active!==false?'Inativar':'Reativar')+'</button></div></td></tr>').join('')+'</tbody></table>';
+      '<td class="rl-acts"><div class="cat-actwrap"><button class="cat-editbtn" data-act="edit" title="Editar">'+NV_ICON_EDIT+'<span class="cat-btl">Editar</span></button>'+
+      '<button class="cat-arch" data-act="arch" title="'+(c.active!==false?'Inativar':'Reativar')+'">'+(c.active!==false?NV_ICON_CANCEL:'<i class="fa-solid fa-rotate-left"></i>')+'<span class="cat-btl">'+(c.active!==false?'Inativar':'Reativar')+'</span></button></div></td></tr>').join('')+'</tbody></table>';
 }
 function nvCatSwatches(){ $('#nvCatSw').innerHTML=CAT_COLORS.map(c=>'<span class="cat-sw'+(c===nvCatColor?' sel':'')+'" data-col="'+c+'" style="background:'+c+'">'+(c===nvCatColor?'<i class="fa-solid fa-check"></i>':'')+'</span>').join(''); }
 function nvCatIcons(){ $('#nvCatIcons').innerHTML=NEWS_CAT_ICONS.map(ic=>'<span class="cat-icpick'+(ic===nvCatIcon?' sel':'')+'" data-ic="'+ic+'"><i class="fa-solid '+ic+'"></i></span>').join(''); }

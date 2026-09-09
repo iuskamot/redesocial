@@ -1478,18 +1478,29 @@
 #nvCatsScreen .cat-sortbtn,#nvTeamScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
 #nvCatsScreen .cat-sortbtn svg,#nvTeamScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
 #nvCatsScreen .cat-sortbtn:hover,#nvTeamScreen .cat-sortbtn:hover{color:#2F8EE5}
-/* tabela nativa (table/tr/td): largura por porcentagem, nao grid do Bootstrap.
-   table-layout:fixed faz o navegador respeitar as porcentagens de verdade —
-   sem isso, o layout automatico deixa o conteudo (o bloco de botoes de 224px)
-   esticar a tabela alem do cartao, e o overflow:hidden do .rlist corta a
-   coluna Acoes.
-   !important pra vencer a regra generica .rlist th:first-child{width:84px !important}
-   de 06-shorts.css, que e' de outra tela e nao deveria valer aqui. */
-#nvCatsScreen .rlist table,#nvTeamScreen .rlist table{width:100%;table-layout:fixed}
-#nvCatsScreen .rlist th:nth-child(1),#nvCatsScreen .rlist td:nth-child(1){width:50% !important;min-width:0 !important;max-width:none !important}
+/* Administradores continua medido por porcentagem; Categorias passou a ser
+   medido pelo conteudo, logo abaixo. */
+#nvTeamScreen .rlist table{width:100%;table-layout:fixed}
+/* Categorias: quem manda e o conteudo, nao a porcentagem.
+   Publicacoes, Shorts e Acoes abracam o que tem dentro — width:1% numa tabela
+   de layout automatico e o jeito de pedir "so a largura minima do conteudo", e
+   o nowrap faz essa minima ser a linha inteira. A coluna Acoes, portanto, nunca
+   fica menor que os dois botoes, em largura nenhuma de janela.
+   Categoria fica com toda a sobra e trunca o nome com reticencias, em vez de
+   empurrar a tabela para fora do cartao.
+   Os !important vencem as regras genericas de .rlist em 06-shorts.css
+   (th:first-child 84px, nth-child(2) min-width:340px, last-child 330px), que
+   sao de outras telas e nao deveriam valer aqui. */
+#nvCatsScreen .rlist table{width:100%;table-layout:auto}
+#nvCatsScreen .rlist th:nth-child(1){width:auto !important;min-width:0 !important;max-width:none !important;white-space:nowrap}
+#nvCatsScreen .rlist td:nth-child(1){width:auto !important;min-width:0 !important;max-width:0 !important}
 #nvCatsScreen .rlist th:nth-child(2),#nvCatsScreen .rlist td:nth-child(2),
 #nvCatsScreen .rlist th:nth-child(3),#nvCatsScreen .rlist td:nth-child(3),
-#nvCatsScreen .rlist th:nth-child(4),#nvCatsScreen .rlist td:nth-child(4){width:16.66% !important;min-width:0 !important;max-width:none !important}
+#nvCatsScreen .rlist th:nth-child(4),#nvCatsScreen .rlist td:nth-child(4){width:1% !important;min-width:0 !important;max-width:none !important;white-space:nowrap}
+/* o nome trunca dentro da celula: sem isso e ele quem define a largura minima
+   da tabela e volta a empurrar todo o resto. */
+#nvCatsScreen .rlist tbody td:nth-child(1) .cat-name{min-width:0}
+#nvCatsScreen .rlist tbody td:nth-child(1) .cat-nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Administradores: coluna 1 (ID) fica com os 84px genericos de .rlist
    th:first-child; as demais dividem o resto (Administrador flexivel, as
    outras com largura fixa). */
@@ -1516,6 +1527,26 @@
 #nvCatsScreen .cat-actwrap .cat-arch,#nvTeamScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
 #nvCatsScreen .cat-actwrap .cat-editbtn{background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
 #nvCatsScreen .cat-actwrap .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+/* os botoes ficam no tamanho natural deles: e o par que define a largura da
+   coluna, ja que ela abraca o conteudo. Com flex:1 o Editar tomava metade e o
+   Inativar, que nao encolhe abaixo do proprio texto, vazava da celula. */
+#nvCatsScreen .cat-actwrap{width:auto;justify-content:center}
+/* Rede de seguranca: se em alguma largura o conteudo ainda nao couber, o
+   cartao rola na horizontal em vez de cortar os botoes no meio. */
+#nvCatsScreen .rlist{overflow-x:auto}
+/* Abaixo de 940px os rotulos nao cabem mais: o cartao mede a janela menos
+   275px fixos, e Publicacoes + Shorts + os dois botoes escritos ja pedem
+   489px, sem sobrar largura para o nome da categoria. Entao os botoes viram
+   so o icone (o texto continua no title) e a coluna abraca 36 + 8 + 36. */
+@media(max-width:940px){
+  /* o cabecalho da primeira coluna pode quebrar aqui: sao os 33px que fazem a
+     tabela ainda caber inteira num tablet de 768px, sem rolagem. */
+  #nvCatsScreen .rlist th:nth-child(1){white-space:normal}
+  #nvCatsScreen .cat-actwrap .cat-btl{display:none}
+  #nvCatsScreen .cat-actwrap .cat-editbtn,
+  #nvCatsScreen .cat-actwrap .cat-arch{width:36px;padding:0}
+}
+#nvCatsScreen .cat-actwrap .cat-editbtn,#nvCatsScreen .cat-actwrap .cat-arch{flex:0 0 auto}
 #nvCatsScreen .cat-actwrap .cat-arch{background:#fff;color:#5f666c;border:1px solid #CCCCCC}
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
 #nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
