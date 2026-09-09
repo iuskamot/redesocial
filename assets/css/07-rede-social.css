@@ -30,6 +30,7 @@
   white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
+.nmod-tab svg{width:20px;height:20px}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .nmod-tab.active{background:#00ACAC;color:#fff}
@@ -143,11 +144,10 @@
 .nmt-ic{position:relative;display:inline-flex}
 .nv-cfgside-hd{display:none}
 .nv-cfgside-hd i{font-size:15px;width:18px;text-align:center}
-.nv-cfgitem{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:11px 14px 11px 30px;border-radius:10px;font:inherit;font-size:15px;font-weight:600;color:rgba(255,255,255,.82);cursor:pointer;text-align:left}
-.nv-cfgitem i{width:18px;text-align:center;color:rgba(255,255,255,.6);font-size:14px}
+.nv-cfgitem{display:flex;align-items:center;width:100%;height:36px;border:0;background:none;padding:0 14px;border-radius:6px;font:inherit;font-size:15px;font-weight:400;color:rgba(255,255,255,.82);cursor:pointer;text-align:left;margin-bottom:2px}
+.nv-cfgdiv{height:1px;background:rgba(255,255,255,.1);margin:14px -12px 0}
 .nv-cfgitem:hover{background:rgba(255,255,255,.08);color:#fff}
-.nv-cfgitem.active{background:var(--teal);color:#fff}
-.nv-cfgitem.active i{color:#fff}
+.nv-cfgitem.active{background:rgba(0,172,172,.4);color:#fff}
 .news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:250px}
 .np-head{display:flex;align-items:center;gap:13px;margin-bottom:2px}
 .np-head .avatar{width:52px;height:52px;font-size:0;flex-shrink:0}
@@ -215,13 +215,13 @@
 #modQueue .rlist,#pubApprQueue .rlist,#reelApprQueue .rlist{overflow-x:scroll;overflow-y:hidden}
 #modQueue table,#pubApprQueue table,#reelApprQueue table{min-width:1080px}
 .cfg-badge.apr-cnt{background:rgba(255,255,255,.18)}
-.apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;padding:18px 14px 10px;border-top:1px solid rgba(255,255,255,.1)}
+.apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;margin:0 -12px;padding:18px 26px 10px;border-top:1px solid rgba(255,255,255,.1)}
 .apr-grp-hd i{font-size:15px;width:18px;text-align:center}
-#nvAprSide .apr-grp-hd:first-child{padding-top:16px;border-top:0}
-.apr-sub{padding:10px 14px 10px 24px !important;font-size:15px !important;font-weight:600 !important;color:rgba(255,255,255,.82) !important}
+.nv-cfgside .apr-grp-hd:first-child{padding-top:16px;border-top:0}
+.apr-sub{height:36px !important;padding:0 14px 0 24px !important;font-size:15px !important;font-weight:400 !important;color:rgba(255,255,255,.82) !important}
 .apr-sub i{font-size:14px}
 .apr-sub:hover{background:rgba(255,255,255,.08)}
-.apr-sub.active{background:var(--teal);color:#fff !important;border-radius:12px}
+.apr-sub.active{background:rgba(0,172,172,.4);color:#fff !important;border-radius:6px}
 .apr-sub.active i{color:#fff}
 .apr-seg button{border:0;background:none;cursor:pointer;font:inherit;font-size:13px;font-weight:700;color:var(--muted);padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
 .apr-seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px -2px rgba(16,32,48,.25)}
@@ -241,7 +241,7 @@
 #nvListScreen .cat-body{padding:10px 10px 12px}
 #nvInterScreen .cat-body{padding:10px 10px 10px}
 #nvCatsScreen .cat-body{padding:11px 14px 22px}
-#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:18px}
+#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:12px}
 .nv-filters .nv-fsearch{margin:16px 0 0;width:100%;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0 12px;border-radius:8px}
 .nv-filters .nv-fsearch input{font-size:14px}
 .rl-recpill{display:inline-flex;align-items:center;gap:5px;margin-top:4px;background:#B9860030;color:#B98600 !important;font-size:10px;font-weight:600;letter-spacing:.3px;padding:2px 9px;border-radius:32px}
@@ -457,7 +457,7 @@
 #nvList th:first-child{width:64px}
 .nv-listmain{flex:1;min-width:0;overflow-x:auto;display:flex;flex-direction:column}
 .nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:14px}
-#interList.rlist{background:#fff;border:1px solid var(--line);border-radius:14px;overflow-x:scroll;overflow-y:hidden}
+#interList.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow-x:scroll;overflow-y:hidden}
 .nv-listmain .rlist table{min-width:1100px}
 #interList.rlist table{min-width:1180px}
 .nv-fsel{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 13px;cursor:pointer;outline:none}
@@ -1206,7 +1206,9 @@
 .rx-header{display:flex;align-items:center;gap:20px;padding:14px 26px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0;box-shadow:0 1px 3px rgba(16,32,48,.04)}
 .rx-title{display:flex;align-items:center;gap:10px}
 .rx-title i{font-size:20px;color:var(--teal)}
-.rx-title h2{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+#permHeadIc{display:inline-flex;color:var(--teal)}
+#permHeadIc svg{width:26px;height:26px}
+.rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
   border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
 .rx-search:hover{background:#eef2f5}
@@ -1460,6 +1462,183 @@
 #crModal{--cr-util:578px}
 #crStep1,#crStepUp{min-height:var(--cr-util);box-sizing:border-box}
 
+/* Categorias e Administradores (Gerenciar > Configuracoes): tres blocos
+   empilhados (titulo, filtros e tabela), 8px de gap entre eles, 12px de
+   respiro ate a borda da tela, e a tabela esticando ate o fim (sem sobra de
+   espaco vazio abaixo). As duas telas compartilham as mesmas classes para
+   ficarem identicas visualmente. */
+#nvCatsScreen,#nvTeamScreen{margin:12px;gap:8px}
+.news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
+.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
+#nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
+#nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:8px 12px;gap:8px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:none;flex-shrink:0}
+#nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
+#nvCatsScreen .cat-head,#nvTeamScreen .cat-head{height:62px}
+#nvCatsScreen .cat-body,#nvTeamScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
+#nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0;border-radius:8px}
+#nvCatsScreen .rlist th,#nvTeamScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
+#nvCatsScreen .rlist tbody tr:nth-child(odd),#nvTeamScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
+#nvCatsScreen .rlist tbody tr:nth-child(even),#nvTeamScreen .rlist tbody tr:nth-child(even){background:#fff}
+#nvCatsScreen .cat-th-in,#nvTeamScreen .cat-th-in{display:inline-flex;align-items:center;gap:6px}
+#nvCatsScreen .cat-sortbtn,#nvTeamScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#nvCatsScreen .cat-sortbtn svg,#nvTeamScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
+#nvCatsScreen .cat-sortbtn:hover,#nvTeamScreen .cat-sortbtn:hover{color:#2F8EE5}
+/* tabela nativa (table/tr/td): largura por porcentagem, nao grid do Bootstrap.
+   table-layout:fixed faz o navegador respeitar as porcentagens de verdade —
+   sem isso, o layout automatico deixa o conteudo (o bloco de botoes de 224px)
+   esticar a tabela alem do cartao, e o overflow:hidden do .rlist corta a
+   coluna Acoes.
+   !important pra vencer a regra generica .rlist th:first-child{width:84px !important}
+   de 06-shorts.css, que e' de outra tela e nao deveria valer aqui. */
+#nvCatsScreen .rlist table,#nvTeamScreen .rlist table{width:100%;table-layout:fixed}
+#nvCatsScreen .rlist th:nth-child(1),#nvCatsScreen .rlist td:nth-child(1){width:50% !important;min-width:0 !important;max-width:none !important}
+#nvCatsScreen .rlist th:nth-child(2),#nvCatsScreen .rlist td:nth-child(2),
+#nvCatsScreen .rlist th:nth-child(3),#nvCatsScreen .rlist td:nth-child(3),
+#nvCatsScreen .rlist th:nth-child(4),#nvCatsScreen .rlist td:nth-child(4){width:16.66% !important;min-width:0 !important;max-width:none !important}
+/* Administradores: coluna 1 (ID) fica com os 84px genericos de .rlist
+   th:first-child; as demais dividem o resto (Administrador flexivel, as
+   outras com largura fixa). */
+#nvTeamScreen .rlist th:nth-child(3),#nvTeamScreen .rlist td:nth-child(3){width:15%}
+#nvTeamScreen .rlist th:nth-child(4),#nvTeamScreen .rlist td:nth-child(4){width:20%}
+#nvTeamScreen .rlist th:nth-child(5),#nvTeamScreen .rlist td:nth-child(5){width:140px}
+/* Tipografia das celulas de dados (tbody), thead continua como esta:
+   texto simples (Publicacoes/Shorts, Celular/E-mail) em 14px/400/#5F666C;
+   nome (categoria/administrador) na mesma cor, cargo/unidade em 12px/#999. */
+#nvCatsScreen .rlist tbody td,#nvTeamScreen .rlist tbody td{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td.perm-id{font-weight:700}
+#nvCatsScreen .rlist tbody td .cat-name{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person span{font-size:11px;color:#999}
+#nvTeamScreen .rlist tbody td .perm-person .avatar{width:32px;height:32px}
+#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
+/* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
+   toda a largura disponivel da celula, sem bloco de largura fixa.
+   Editar: outline azul, preenche de azul (texto/icone branco) no hover.
+   Inativar/Remover: neutro (#5f666c/#CCCCCC), preenche de preto (texto/icone branco) no hover. */
+#nvCatsScreen .rlist th:nth-child(4),#nvTeamScreen .rlist th:nth-child(5){text-align:center}
+#nvCatsScreen .cat-actwrap,#nvTeamScreen .cat-actwrap{display:flex;gap:8px;width:100%}
+#nvCatsScreen .cat-actwrap .cat-editbtn,
+#nvCatsScreen .cat-actwrap .cat-arch,#nvTeamScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-actwrap .cat-editbtn{background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
+#nvCatsScreen .cat-actwrap .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+#nvCatsScreen .cat-actwrap .cat-arch{background:#fff;color:#5f666c;border:1px solid #CCCCCC}
+#nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
+#nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
+#nvTeamScreen .cat-actwrap .cat-arch:hover{background:#F7685B;color:#fff;border-color:#F7685B}
+#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;color:#fff;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn,#nvPermScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
+  border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+#nvCatsScreen .cat-helpbtn:hover,#nvTeamScreen .cat-helpbtn:hover,#nvPermScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
+#nvCatsScreen .cat-helpbtn svg,#nvTeamScreen .cat-helpbtn svg,#nvPermScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* Modal "Como usar categorias?": hero com ilustracao (bg image-categories) + texto + acoes,
+   layout replicado do Figma (node 1515:288) */
+.cat-help-modal{width:650px;max-width:100%;max-height:92vh;overflow-y:auto;background:#fff;border-radius:8px;box-shadow:0 30px 70px -20px rgba(16,32,48,.5)}
+.cat-help-hero{position:relative;height:110px;background:#0088FF;overflow:hidden}
+.cat-help-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cat-help-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border:0;border-radius:6px;background:rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}
+.cat-help-close:hover{background:rgba(255,255,255,.32)}
+.cat-help-body{padding:20px;display:flex;flex-direction:column;gap:20px}
+.cat-help-body h2{font-size:20px;line-height:28px;font-weight:700;color:#1C1C1E}
+.cat-help-body p{margin-top:12px;font-size:14px;line-height:20px;letter-spacing:.3px;color:#1C1C1E;font-weight:400}
+.cat-help-body p b{font-weight:600}
+.cat-help-actions{display:flex;gap:12px;align-items:center;justify-content:flex-end}
+.cat-help-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:6px;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.cat-help-btn.ghost{background:#F4F5F6;color:#1C1C1E}
+.cat-help-btn.ghost:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#F4F5F6}
+.cat-help-btn.primary{background:#0088FF;color:#fff;width:120px}
+.cat-help-btn.primary:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
+#nvCatsScreen .nv-fsel{border-radius:6px;background:#fff;border-color:#C3C9D5;color:#5F666C;font-size:14px;font-weight:400}
+#nvCatsScreen .nvcat-sel{appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235F666C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding:0 36px 0 12px}
+#nvCatsScreen .nvcat-sel option{color:#5F666C;font-size:14px;font-weight:400}
+
+/* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
+.nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
+.nv-catsearch .rx-search{flex:0 0 auto}
+#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0;padding:12px}
+.nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
+.nv-catsearch-btn:hover{background:var(--teal-dark)}
+
+
+/* Editar/Nova categoria (nvCatModal): cores e dimensoes do Figma (node 1521:760) */
+#nvCatModal .fg-head{border-bottom:0}
+#nvCatModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
+#nvCatModal .fg-input{font-size:14px;border-radius:6px}
+#nvCatModal .cat-sw{border-radius:6px}
+#nvCatModal .cat-sw:hover{transform:scale(1.02)}
+#nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
+#nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
+#nvCatModal .cat-icpick:hover{transform:scale(1.02);color:var(--teal)}
+#nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
+#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
+#nvCatModal #nvCatCancel{border:0}
+#nvCatModal #nvCatSave{background:#57C279}
+#nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
+#teamAddModal .fg-modal{display:flex;flex-direction:column}
+#teamAddModal .fg-head{border-bottom:0}
+#teamAddModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#teamAddModal .fg-body{flex:1;min-height:0;overflow-y:auto}
+#teamAddModal .tadd-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+#teamAddModal .tadd-head{display:flex;align-items:center;gap:12px;height:46px;box-sizing:border-box;padding-left:12px;font-size:14px;font-weight:700;color:#0c334a;background:#fff;border-bottom:1px solid var(--line)}
+#teamAddModal .tadd-th-check{width:18px;flex-shrink:0}
+#teamAddModal .tadd-th-col{flex:1;min-width:0;display:flex;align-items:center;gap:6px;padding:12px}
+#teamAddModal .tadd-th-label{white-space:nowrap}
+#teamAddModal .tadd-body{max-height:320px;overflow-y:auto}
+#teamAddModal .tadd-row{display:flex;align-items:center;gap:12px;height:60px;padding:0 12px;box-sizing:border-box;cursor:pointer;transition:background .12s}
+#teamAddModal .tadd-row:nth-child(odd){background:#F0F3F5}
+#teamAddModal .tadd-row:nth-child(even){background:#fff}
+#teamAddModal .tadd-row:hover{background:#e6eaec}
+#teamAddModal .tadd-row.on{background:#dcecf3}
+#teamAddModal .tadd-chk{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex-shrink:0;margin:0;border-radius:4px;border:1.5px solid #c7ccd1;background:#fff;position:relative;pointer-events:none}
+#teamAddModal .tadd-chk:checked{background:var(--teal);border-color:var(--teal)}
+#teamAddModal .tadd-chk:checked::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+#teamAddModal .tadd-person{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-row .avatar{width:32px;height:32px;font-size:0;flex-shrink:0}
+#teamAddModal .tadd-info{flex:1;min-width:0}
+#teamAddModal .tadd-info b{font-size:14px;font-weight:400;color:#5F666C;display:block}
+#teamAddModal .tadd-info span{font-size:11px;color:#999}
+#teamAddModal .tadd-unit{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-unit-badge{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+#teamAddModal .tadd-unit-info{min-width:0}
+#teamAddModal .tadd-unit-info b{font-size:14px;font-weight:400;color:#5F666C;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
+#teamAddModal .fg-foot{border-top:0}
+#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:140px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
+#teamAddModal #teamAddCancel{border:0}
+#teamAddModal #teamAddConfirm{background:#57C279}
+#teamAddModal #teamAddConfirm:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#teamAddModal #teamAddConfirm svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#teamAddModal .tadd-sortbtn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#teamAddModal .tadd-sortbtn:hover{color:#2F8EE5}
+#teamAddModal .tadd-sortbtn svg{width:24px;height:24px;display:block}
+#teamAddModal .tadd-toprow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#teamAddModal .nv-catsearch{display:flex;align-items:center}
+#teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}
+#teamAddModal .tadd-unitsearch{flex:0 0 200px;width:200px}
+#teamAddModal .tadd-unitfield{width:100%;height:36px;box-sizing:border-box;padding:0 12px;border:1px solid #C3C9D5;border-radius:6px;background:#fff;display:flex;align-items:center;gap:0;font:inherit;cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden}
+#teamAddModal .tadd-unitfield i{font-size:13px;color:var(--muted);flex-shrink:0}
+#teamAddModal .tadd-unitfield i:first-child{margin-right:8px}
+#teamAddModal .tadd-unitfield i:last-child{margin-left:8px}
+#teamAddModal .tadd-unitfield span{flex:1;min-width:0;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-personsearch{flex:1;min-width:0}
+#teamAddModal .tadd-bulkacts{display:flex;gap:8px;flex-shrink:0}
+#teamAddModal .tadd-bulkacts .cat-editbtn{height:36px;padding:0 14px;border-radius:6px;font-size:14px;white-space:nowrap;background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
+#teamAddModal .tadd-bulkacts .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+#teamAddModal #teamAddSelClear{height:36px;padding:0 14px;font-size:14px;white-space:nowrap;border:0;border-radius:6px}
+#teamAddModal #teamAddSelClear:disabled{opacity:.5;cursor:not-allowed}
+#teamAddModal #teamAddSelClear:disabled:hover{background:#eef2f5}
 
 /* ---- Compartilhar o short ----
    A folha sobe de baixo dentro do player, acima de tudo o que ele desenha. */

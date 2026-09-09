@@ -21,8 +21,8 @@
     <div class="nmod-top-tabs nmod-grp" id="nmodGrpManage">
       <button class="nmod-tab" id="nmtPub"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
       <button class="nmod-tab" id="nmtMgShorts"><i class="fa-solid fa-clapperboard"></i> Shorts</button>
-      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><i class="fa-solid fa-circle-check"></i><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
-      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-heart"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
+      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
+      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
       <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
       <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
@@ -38,26 +38,27 @@
   <aside class="nv-cfgside" id="nvCfgSide">
     <div class="nv-cfgside-hd"></div>
     <div class="apr-grp-hd"><i class="fa-solid fa-newspaper"></i> Publicações</div>
-    <button class="nv-cfgitem apr-sub" id="nvcfgPubWho"><i class="fa-solid fa-users"></i> Quem pode postar</button>
-    <button class="nv-cfgitem apr-sub" id="nvcfgPubApr"><i class="fa-solid fa-circle-check"></i> Aprovação</button>
+    <button class="nv-cfgitem apr-sub" id="nvcfgPubWho">Quem pode postar</button>
+    <button class="nv-cfgitem apr-sub" id="nvcfgPubApr">Aprovação</button>
     <button class="nv-cfgitem" id="nvcfgPermPub" hidden></button>
     <button class="nv-cfgitem" id="nvcfgCats" hidden></button>
     <button class="nv-cfgitem" id="nvcfgPerm" hidden></button><button class="nv-cfgitem" id="nvcfgParams" hidden></button>
   </aside>
   <aside class="nv-cfgside" id="nvCatSide">
-    <div class="apr-grp-hd"><i class="fa-solid fa-user-shield"></i> Permissões</div>
-    <button class="nv-cfgitem apr-sub" id="cfgNavWho"><i class="fa-solid fa-users"></i> Quem pode postar</button>
-    <button class="nv-cfgitem apr-sub" id="cfgNavTeam"><i class="fa-solid fa-user-shield"></i> Administradores</button>
-    <button class="nv-cfgitem apr-sub" id="cfgNavApr"><i class="fa-solid fa-circle-check"></i> Aprovação</button>
-    <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-pen-to-square"></i> Postagem</div>
-    <button class="nv-cfgitem apr-sub active" id="nvcfgCats2"><i class="fa-solid fa-tags"></i> Categorias</button>
+    <div class="apr-grp-hd"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg> Postagem</div>
+    <button class="nv-cfgitem apr-sub active" id="nvcfgCats2">Categorias</button>
+    <div class="apr-grp-hd" style="margin-top:14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M6 8C6 5.79 7.79 4 10 4S14 5.79 14 8 12.21 12 10 12 6 10.21 6 8M12 18.2C12 17.24 12.5 16.34 13.2 15.74V14.5C13.2 14.45 13.22 14.39 13.22 14.34C12.23 14.12 11.15 14 10 14C5.58 14 2 15.79 2 18V20H12V18.2M22 18.3V21.8C22 22.4 21.4 23 20.7 23H15.2C14.6 23 14 22.4 14 21.7V18.2C14 17.6 14.6 17 15.2 17V14.5C15.2 13.1 16.6 12 18 12S20.8 13.1 20.8 14.5V15H19.5V14.5C19.5 13.7 18.8 13.2 18 13.2S16.5 13.7 16.5 14.5V17H20.8C21.4 17 22 17.6 22 18.3Z" /></svg> Permissões</div>
+    <button class="nv-cfgitem apr-sub" id="cfgNavTeam">Equipe administrativa</button>
+    <button class="nv-cfgitem apr-sub" id="cfgNavWho">Quem pode postar</button>
+    <button class="nv-cfgitem apr-sub" id="cfgNavApr">Aprovações</button>
+    <div class="nv-cfgdiv"></div>
   </aside>
   <aside class="nv-cfgside" id="nvAprSide">
     <div class="apr-grp-hd"><i class="fa-solid fa-newspaper"></i> Publicações</div>
-    <button class="nv-cfgitem apr-sub" data-scope="pub"><i class="fa-solid fa-align-left"></i> Postagens <span class="cfg-badge" id="aprPubBadge" hidden></span></button>
-    <button class="nv-cfgitem apr-sub" data-scope="com"><i class="fa-solid fa-comment-dots"></i> Comentário <span class="cfg-badge" id="aprComBadge" hidden></span></button>
+    <button class="nv-cfgitem apr-sub" data-scope="pub">Postagens <span class="cfg-badge" id="aprPubBadge" hidden></span></button>
+    <button class="nv-cfgitem apr-sub" data-scope="com">Comentário <span class="cfg-badge" id="aprComBadge" hidden></span></button>
     <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
-    <button class="nv-cfgitem apr-sub" data-scope="reel"><i class="fa-solid fa-align-left"></i> Postagens <span class="cfg-badge" id="aprReelBadge" hidden></span></button>
+    <button class="nv-cfgitem apr-sub" data-scope="reel">Postagens <span class="cfg-badge" id="aprReelBadge" hidden></span></button>
     <button class="nv-cfgitem" id="nvaprCom" hidden></button><button class="nv-cfgitem" id="nvaprPub" hidden></button>
   </aside>
   <!-- FEED (estilo LinkedIn) -->
@@ -534,20 +535,13 @@
   </div>
   <!-- PERMISSÕES -->
   <div class="nv-screen" id="nvPermScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-user-shield" id="permHeadIc"></i><h2 id="permHeadTtl">Quem pode postar</h2></div><span style="flex:1"></span><button type="button" class="perm-tutbtn" id="permTutorial" hidden><span class="pt-ic"><i class="fa-solid fa-info"></i></span> <span class="pt-lbl">Exibir tutorial</span> <i class="fa-solid fa-chevron-down pt-carat"></i></button></div>
-    <div class="perm-tut" id="permTut" hidden>
-      <div class="perm-tutart" aria-hidden="true"><img id="permTutArt" src="uploads/tutorial/post.svg" alt=""></div>
-      <div class="perm-tuttx">
-        <span class="perm-tutkicker" id="permTutKicker"></span>
-        <h3 id="permTutTitle"></h3>
-        <p id="permTutText"></p>
-      </div>
-    </div>
+    <div class="cat-head"><div class="rx-title"><span id="permHeadIc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" /></svg></span><h2 id="permHeadTtl">Quem pode postar</h2></div><span style="flex:1"></span><button type="button" class="cat-helpbtn" id="permHelpBtn"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> <span id="permHelpBtnLbl">Como usar quem pode postar?</span></button></div>
     <div class="perm-body">
+      <div id="permPubSec">
+        <div class="nv-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
       <div id="permStep1">
-        <div class="nv-secttl pub-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#a06be0,#5e35b1)"><i class="fa-solid fa-building"></i></div>
+        <div class="perm2-ic" style="background:#5e35b1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>office-building</title><path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/></svg></div>
         <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar comunicados e notícias oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
         <input type="checkbox" id="permCentralOn" hidden>
         <div class="perm2-foot" id="permCentralFoot"></div>
@@ -569,8 +563,8 @@
         </div>
       </div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-store"></i></div>
-        <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos (franqueado, gerente, etc.).</p>
+        <div class="perm2-ic" style="background:#1e4fb0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>store</title><path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"/></svg></div>
+        <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
         <input type="checkbox" id="permUnitOn" hidden>
         <div class="perm2-foot" id="permUnitFoot"></div>
         <div class="perm-summary" id="permUnitSummary" style="display:none"></div>
@@ -589,15 +583,6 @@
         </div>
       </div>
       </div>
-      <div id="permTeamSec" style="display:none">
-        <div class="perm-members" style="margin-top:0">
-          <div class="perm-mhead">
-            <button class="cat-add" id="teamAdd"><i class="fa-solid fa-user-plus"></i> Novo administrador</button>
-            <span style="flex:1"></span>
-            <div class="rx-search" style="max-width:280px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
-          </div>
-          <div id="teamList" class="perm-picktbl"></div>
-        </div>
       </div>
       <div id="permStoriesSec">
         <div class="nv-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
@@ -605,31 +590,31 @@
       </div>
       <input type="checkbox" id="pmCatReq" checked hidden>
       <div id="permApprGrid" style="display:none"><div class="nv-secttl apr-secttl"><i class="fa-solid fa-newspaper"></i> Publicações</div><div class="perm-card apr-rulecard" id="permApprCard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <input type="checkbox" id="pmApprove" checked hidden>
-        <h3>Aprovar comentários</h3><p class="perm2-desc">Os comentários das publicações ficam pendentes e só aparecem no feed após um administrador aprovar na fila de Aprovações.</p>
+        <h3>Aprovar comentários</h3><p class="perm2-desc">Comentários de terceiros ficam pendentes antes de irem ao ar. Um moderador revisa o conteúdo e libera o comentário na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprComSub">
-          <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da unidade</b><span>Comentários feitos por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da matriz</b><span>Comentários feitos por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
+          <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da unidade</b><span>Comentários feitos por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div>
       <div class="perm-card apr-rulecard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#2F8EE5"><i class="fa-solid fa-rectangle-list"></i></div>
         <input type="checkbox" id="pmPostApprove" checked hidden>
-        <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um administrador revisa e libera o conteúdo na fila de Aprovações.</p>
+        <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprPubSub">
-          <div class="apr-subrow2"><div class="apr-sublbl"><b>Publicações da unidade</b><span>Publicações feitas por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmPostApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Publicações da matriz</b><span>Publicações feitas por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmPostApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
+          <div class="apr-subrow2"><div class="apr-sublbl"><b>Publicações da unidade</b><span>Publicações feitas por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmPostApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div>
       <div class="nv-secttl apr-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
       <div class="perm-card apr-rulecard">
         <input type="checkbox" id="pmShortApprove" checked hidden>
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#f27794,#d63a5f)"><i class="fa-solid fa-clapperboard"></i></div>
-        <h3>Aprovar shorts</h3><p class="perm2-desc">Shorts publicados por terceiros passam por aprovação antes de irem ao ar. Um administrador revisa e libera o conteúdo na fila de Aprovações.</p>
+        <div class="perm2-ic" style="background:#d63a5f"><i class="fa-solid fa-clapperboard"></i></div>
+        <h3>Aprovar shorts</h3><p class="perm2-desc">Shorts publicados por terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprShortSub">
-          <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da unidade</b><span>Shorts publicados por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da matriz</b><span>Shorts publicados por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
+          <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da unidade</b><span>Shorts publicados por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div></div>
       </div>
@@ -653,12 +638,12 @@
     <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-circle-check"></i><h2>Aprovações</h2></div></div>
     <div class="perm-body"><div id="aprHome">
       <button class="perm-card apr-card" id="aprCardCom">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <h3>Aprovar comentários</h3><p class="perm2-desc">Modere os comentários enviados nas publicações. Aprove para exibir ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardComN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
       <button class="perm-card apr-card" id="aprCardPub">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#2F8EE5"><i class="fa-solid fa-newspaper"></i></div>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Revise as publicações de terceiros antes de irem ao ar. Aprove para publicar ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardPubN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
@@ -740,14 +725,69 @@
   </div>
   <!-- CATEGORIAS -->
   <div class="nv-screen" id="nvCatsScreen">
-    <div class="cat-head">
-      <div class="rx-title"><i class="fa-solid fa-tags"></i><h2>Categorias</h2></div>
-      <button class="cat-add" id="nvCatAdd"><i class="fa-solid fa-plus"></i> Nova categoria</button>
+    <div class="cat-toprow">
+      <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M5.5,9A1.5,1.5 0 0,0 7,7.5A1.5,1.5 0 0,0 5.5,6A1.5,1.5 0 0,0 4,7.5A1.5,1.5 0 0,0 5.5,9M17.41,11.58C17.77,11.94 18,12.44 18,13C18,13.55 17.78,14.05 17.41,14.41L12.41,19.41C12.05,19.77 11.55,20 11,20C10.45,20 9.95,19.78 9.58,19.41L2.59,12.42C2.22,12.05 2,11.55 2,11V6C2,4.89 2.89,4 4,4H9C9.55,4 10.05,4.22 10.41,4.58L17.41,11.58M13.54,5.71L14.54,4.71L21.41,11.58C21.78,11.94 22,12.45 22,13C22,13.55 21.78,14.05 21.42,14.41L16.04,19.79L15.04,18.79L20.75,13L13.54,5.71Z" /></svg><h2>Categorias</h2></div>
       <span style="flex:1"></span>
-      <select class="nv-fsel nvcat-sel" id="nvCatSeg"><option value="ativos">Ativos</option><option value="inativos">Inativos</option></select>
-      <div class="rx-search" style="max-width:280px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="nvCatSearch" placeholder="Buscar categoria" autocomplete="off"></div>
+      <button type="button" class="cat-helpbtn" id="nvCatHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar categorias?</button>
+    </div>
+    <div class="cat-head">
+      <button class="cat-add" id="nvCatAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Nova categoria</button>
+      <span style="flex:1"></span>
+      <select class="nv-fsel nvcat-sel" id="nvCatSeg"><option value="ativos">Ativas</option><option value="inativos">Inativas</option></select>
+      <div class="nv-catsearch">
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="nvCatSearch" placeholder="Pesquisar categoria..." autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="nvCatSearchBtn" aria-label="Buscar categoria"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
     </div>
     <div class="cat-body"><div class="rlist" id="nvCatList"></div></div>
+  </div>
+  <div class="nv-screen" id="nvTeamScreen">
+    <div class="cat-toprow">
+      <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg><h2>Equipe administrativa</h2></div>
+      <span style="flex:1"></span>
+      <button type="button" class="cat-helpbtn" id="permTeamHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar administradores?</button>
+    </div>
+    <div class="cat-head">
+      <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
+      <span style="flex:1"></span>
+      <div class="nv-catsearch">
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador..." autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </div>
+    <div class="cat-body"><div class="rlist" id="teamList"></div></div>
+  </div>
+  <div class="fg-backdrop" id="permTeamHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img src="uploads/tutorial/image-admins.svg" alt="">
+        <button type="button" class="cat-help-close" id="permTeamHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2>Como usar equipe administrativa?</h2>
+        <p>Defina os administradores da rede social. Selecione as pessoas da equipe administrativa que terão acesso às <b>configurações</b> do módulo, <b>acompanharão</b> a aprovação, curtidas, comentários e visualizações dos conteúdos compartilhados.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="permTeamHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="permTeamHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fg-backdrop" id="permHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img id="permHelpArt" src="uploads/tutorial/image-post.svg" alt="">
+        <button type="button" class="cat-help-close" id="permHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2 id="permHelpTitle">Como usar quem pode postar?</h2>
+        <p id="permHelpText">Defina quem pode postar na sua rede social. Escolha se a matriz e as unidades podem criar publicações e shorts e se a permissão é para todos ou apenas para pessoas e unidades selecionadas.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="permHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="permHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="fg-backdrop" id="nvCatModal">
     <div class="fg-modal" style="width:460px">
@@ -758,7 +798,23 @@
         <div style="margin-top:18px"><label class="fg-label">Ícone</label><div class="cat-icons" id="nvCatIcons"></div></div>
         <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">
           <button class="fo-btn ghost" id="nvCatCancel">Cancelar</button>
-          <button class="fo-btn" id="nvCatSave"><i class="fa-solid fa-check"></i> Salvar</button>
+          <button class="fo-btn" id="nvCatSave"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fg-backdrop" id="nvCatHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img src="uploads/tutorial/image-categories.svg" alt="">
+        <button type="button" class="cat-help-close" id="nvCatHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2>Como usar categorias?</h2>
+        <p>Use categorias para separar as postagens por <b>assunto, área ou finalidade</b>, facilitando a busca, a gestão dos conteúdos e mostrando ao leitor <b>sobre o que cada item se trata</b>.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="nvCatHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="nvCatHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
         </div>
       </div>
     </div>
@@ -810,13 +866,53 @@
   </div>
 </div>
 <div class="fg-backdrop" id="teamAddModal">
-  <div class="fg-modal" style="width:480px">
+  <div class="fg-modal" style="width:1000px;height:600px">
     <div class="fg-head"><h2>Novo administrador</h2><span style="flex:1"></span><button class="fg-close" id="teamAddClose"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="fg-body">
-      <p style="font-size:12px;line-height:16px;color:#8E8E93;margin:0 0 12px">Aplicação: apenas administradores da rede podem aprovar conteúdo.</p>
-      <div class="rx-search" style="margin-bottom:12px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamAddSearch" placeholder="Buscar pessoa" autocomplete="off"></div>
-      <div class="perm-pick" id="teamAddList"></div>
+      <div class="tadd-toprow">
+        <div class="nv-catsearch tadd-unitsearch">
+          <button type="button" id="teamAddUnitFilter" class="tadd-unitfield" aria-label="Selecionar unidade">
+            <i class="fa-solid fa-earth-americas"></i>
+            <span id="teamAddUnitLbl">Todas as unidades</span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="nv-catsearch tadd-personsearch">
+          <div class="rx-search"><input type="text" id="teamAddSearch" placeholder="Pesquisar pessoa..." autocomplete="off"></div>
+          <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="tadd-bulkacts">
+          <button type="button" class="cat-editbtn" id="teamAddSelAll">Selecionar tudo</button>
+          <button type="button" class="fo-btn ghost" id="teamAddSelClear">Limpar seleção</button>
+        </div>
+      </div>
+      <div class="tadd-panel">
+        <div class="tadd-head">
+          <div class="tadd-th-check"></div>
+          <div class="tadd-th-col">
+            <span class="tadd-th-label">Pessoa <span id="teamAddHeadCount"></span></span>
+            <button type="button" class="tadd-sortbtn" id="teamAddSortBtn" data-sortcol="name" aria-label="Ordenar por pessoa"></button>
+          </div>
+          <div class="tadd-th-col">
+            <span class="tadd-th-label">Unidade</span>
+            <button type="button" class="tadd-sortbtn" id="teamAddSortBtnUnit" data-sortcol="unit" aria-label="Ordenar por unidade"></button>
+          </div>
+        </div>
+        <div class="tadd-body" id="teamAddList"></div>
+      </div>
     </div>
+    <div class="fg-foot">
+      <span class="tadd-count" id="teamAddCount">Nenhum administrador selecionado</span>
+      <span class="sp"></span>
+      <button class="fo-btn ghost" id="teamAddCancel">Cancelar</button>
+      <button class="fo-btn" id="teamAddConfirm"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
+    </div>
+  </div>
+</div>
+<div class="fg-backdrop" id="teamAddUnitModal">
+  <div class="fg-modal" style="width:420px">
+    <div class="fg-head"><h2>Selecionar unidade</h2><span style="flex:1"></span><button class="fg-close" id="teamAddUnitModalClose"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="fg-body"></div>
   </div>
 </div>
 <div class="fg-backdrop" id="unitAddModal">

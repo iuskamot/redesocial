@@ -76,6 +76,7 @@ const PAGINAS = [
   ['publicacoes.html',   'SULTS | Publicações',    "abrirModuloSocial('list')"],
   ['configuracoes.html', 'SULTS | Configurações',  "openNewsModule(); newsShow('params')"],
   ['categorias.html',    'SULTS | Categorias',     "openNewsModule(); newsShow('cats')"],
+  ['administradores.html','SULTS | Equipe administrativa', "openNewsModule(); newsShow('team')"],
   ['permissoes.html',    'SULTS | Permissões',     "openNewsModule(); newsShow('perm')"],
   ['forum.html',         'SULTS | Fórum',          'openForum()'],
   ['ia.html',            'SULTS | Inteligência Artificial', 'abrirModuloIA()'],

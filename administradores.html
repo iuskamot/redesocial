@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SULTS | Equipe administrativa</title>
+<!-- Previa do link em WhatsApp, LinkedIn e afins: sem estas etiquetas o
+     aplicativo mostra so o endereco cru. A imagem precisa de endereco
+     absoluto; o do prototipo publicado. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SULTS">
+<meta property="og:title" content="SULTS Social">
+<meta property="og:description" content="A rede social da sua rede: comunicados, publicações e shorts, tudo em um lugar só.">
+<meta property="og:url" content="https://iuskamot.github.io/redesocial/">
+<meta property="og:image" content="https://iuskamot.github.io/redesocial/uploads/reels/abf-expo-dia4.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia4.jpg" data-resource-id="abfExpoDia4" />
+<meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia3.jpg" data-resource-id="abfExpoDia3" />
+<meta name="ext-resource-dependency" content="uploads/reels/abf-summit-dia2.jpg" data-resource-id="abfSummitDia2" />
+<meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia2.jpg" data-resource-id="abfExpoDia2" />
+<meta name="ext-resource-dependency" content="uploads/reels/abf-expo-dia1.jpg" data-resource-id="abfExpoDia1" />
+<meta name="ext-resource-dependency" content="uploads/reels/compras-b2b.jpg" data-resource-id="comprasB2b" />
+<meta name="ext-resource-dependency" content="uploads/reels/casa-construtor.jpg" data-resource-id="casaConstrutor" />
+<meta name="ext-resource-dependency" content="uploads/reels/mormaii.jpg" data-resource-id="mormaii" />
+<meta name="ext-resource-dependency" content="uploads/reels/bibi.jpg" data-resource-id="bibi" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Material Design Icons (Pictogrammers): a mesma lib que o SULTS usa nos
+     módulos que não têm ícone próprio, e nas mesmas classes (mdi mdi-<nome>) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+
+<!-- GERADO POR build.js — não edite à mão. A ordem do CSS importa: há regras
+     tardias que sobrescrevem as do começo de propósito. -->
+<link rel="stylesheet" href="assets/css/01-base.css">
+<link rel="stylesheet" href="assets/css/02-sidebar.css">
+<link rel="stylesheet" href="assets/css/03-layout.css">
+<link rel="stylesheet" href="assets/css/04-modulos.css">
+<link rel="stylesheet" href="assets/css/05-forum.css">
+<link rel="stylesheet" href="assets/css/06-shorts.css">
+<link rel="stylesheet" href="assets/css/07-rede-social.css">
+<link rel="stylesheet" href="assets/css/08-feed.css">
+<link rel="stylesheet" href="assets/css/09-comentarios.css">
+<link rel="stylesheet" href="assets/css/10-responsivo.css">
+<link rel="stylesheet" href="assets/css/11-detalhes.css">
+<link rel="stylesheet" href="assets/css/12-crunch.css">
+<link rel="stylesheet" href="assets/css/13-basico.css">
+<link rel="stylesheet" href="assets/css/14-custom.css">
+<link rel="stylesheet" href="assets/css/15-ia.css">
+</head>
+<body>
+
+<script>
+/* ============================================================
+   CARREGADOR — SULTS | Equipe administrativa     (gerado por build.js)
+
+   Todas as páginas montam a mesma aplicação; o que muda é a tela em que cada
+   uma abre. O index.html é a versão embutida, para abrir direto do disco;
+   estas leem os pedaços com fetch e precisam de servidor.
+
+   Por que toda página carrega TODAS as telas, e não só a sua: o JS faz 412
+   consultas ao DOM no carregamento apontando para elementos de outras telas,
+   sem proteção. Como é um script só, a primeira que falha aborta o resto —
+   numa página sem a tela de Shorts, a fileira de shorts da home nem chega a
+   ser montada. Carregar tudo mantém o comportamento intacto; são os mesmos
+   arquivos em todas as páginas, então o navegador busca uma vez e reaproveita.
+
+   Outros dois cuidados:
+
+   - Os fragmentos são juntados ANTES de entrar no documento. Vários abrem uma
+     tag que só fecha no seguinte — .main abre em 02-topbar e só fecha depois
+     da home. Injetar um a um faria o parser fechar as tags sozinho.
+
+   - O JS entra como UM script, e não como treze <script src>. Função
+     declarada num arquivo é usada antes disso em outro: 04-perfil registra
+     'crOpen' num clique e 'crOpen' só é declarada em 12-wizard. Num script
+     único o hoisting resolve; separados, quebra.
+   ============================================================ */
+(function () {
+  var TELAS = [
+    '01-sidebar.html',
+    '02-topbar.html',
+    '03-home.html',
+    '04-feed-modais.html',
+    '05-rede-social.html',
+    '06-shorts.html',
+    '07-forum.html',
+    '08-modais.html',
+    '09-ia.html',
+  ].map(function (f) { return 'screens/' + f; });
+
+  var SCRIPTS = [
+    '01-home.js',
+    '02-nav-mobile.js',
+    '03-shorts.js',
+    '04-perfil.js',
+    '05-feed.js',
+    '06-modulos.js',
+    '07-busca.js',
+    '08-novo-sino.js',
+    '09-demo.js',
+    '10-forum.js',
+    '11-rede-social.js',
+    '12-wizard.js',
+    '13-extras.js',
+    '14-crunch.js',
+    '15-basico.js',
+    '16-custom.js',
+    '17-marcas.js',
+    '18-ia.js',
+  ];
+
+  function buscar(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error(url + ' respondeu ' + r.status);
+      return r.text();
+    });
+  }
+
+  function avisar(erro) {
+    document.body.insertAdjacentHTML('afterbegin',
+      '<div style="font:15px/1.5 system-ui,sans-serif;color:#5b6672;padding:40px;max-width:640px;margin:0 auto">' +
+      '<h1 style="font-size:19px;color:#24344a;margin:0 0 10px">Não foi possível montar a página</h1>' +
+      '<p style="margin:0 0 10px">' + String(erro && erro.message || erro) + '</p>' +
+      '<p style="margin:0">Esta versão lê as telas por <code>fetch</code>, então precisa ser servida por HTTP. ' +
+      'Aberta direto do disco (<code>file://</code>) o navegador bloqueia a leitura dos pedaços — nesse caso use o ' +
+      '<a href="index.html" style="color:#0c7d7d">index.html</a>, que é autocontido.</p></div>');
+  }
+
+  Promise.all(TELAS.map(buscar))
+    .then(function (partes) {
+      document.body.insertAdjacentHTML('afterbegin', partes.join('\n'));
+      return Promise.all(SCRIPTS.map(function (f) { return buscar('assets/js/' + f); }))
+        .then(function (codigos) {
+          var junto = codigos.map(function (src, i) {
+            return '/* ===================== assets/js/' + SCRIPTS[i] + ' ===================== */\n' + src;
+          }).join('\n');
+          var s = document.createElement('script');
+          s.textContent = junto;
+          document.body.appendChild(s);   /* executa ao entrar no documento */
+        });
+    })
+    .then(function () {
+      /* O script entra depois do DOMContentLoaded já ter disparado, então
+         quem escuta o evento nunca seria chamado. */
+      document.dispatchEvent(new Event('DOMContentLoaded'));
+      /* Esta página abre direto nesta tela. A chamada vai depois do boot
+         porque só aí as funções existem. */
+      try { openNewsModule(); newsShow('team'); } catch (e) { console.warn('não abriu a tela:', e); }
+    })
+    .catch(avisar);
+})();
+</script>
+
+</body>
+</html>
