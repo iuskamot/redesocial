@@ -1481,7 +1481,7 @@
 #nvCatModal .cat-sw:hover{transform:scale(1.02)}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
-#nvCatModal .cat-icpick:hover{transform:scale(1.02);border-color:var(--teal);background:rgba(0,172,172,.08);color:var(--teal)}
+#nvCatModal .cat-icpick:hover{transform:scale(1.02);color:var(--teal)}
 #nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
