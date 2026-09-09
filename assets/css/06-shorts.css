@@ -52,9 +52,11 @@
 #permStoriesGrid.wide .perm-note{max-width:500px}
 /* Shorts publicados dentro de Configurações (Gerenciar) */
 .reels-view.in-cfg{left:0;top:60px;z-index:126}
-.reels-view.in-cfg .rx-header{margin:10px 10px 0;height:60px;min-height:60px;box-sizing:border-box;padding:0 18px;border-bottom:0;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED}
-.reels-view.in-cfg .rx-main{padding:10px 10px 44px}
-.reels-view.in-cfg .rx-filters{margin:10px 0 10px 10px;height:calc(100vh - 152px);max-height:calc(100vh - 152px);width:400px;display:flex;flex-direction:column}
+.reels-view.in-cfg .rx-header{margin:8px 8px 0;height:60px;min-height:60px;box-sizing:border-box;padding:0 12px;border-bottom:0;border-radius:8px;border:1px solid #D9D9D9}
+.reels-view.in-cfg .rx-main{padding:8px 8px 8px}
+/* Sem height/max-height fixos: align-self:stretch (em vez do flex-start herdado de .rx-filters)
+   faz a altura acompanhar a da tabela ao lado, que é quem manda no tamanho da linha (.rx-body). */
+.reels-view.in-cfg .rx-filters{margin:8px 0 8px 8px;width:400px;display:flex;flex-direction:column;align-self:stretch;max-height:none}
 .reels-view.in-cfg .rx-filters .nv-filters-ft{margin-top:auto}
 @media(max-width:900px){ .reels-view.in-cfg{left:0} }
 /* Shorts dentro do ambiente Social do módulo de Rede Social */
@@ -111,6 +113,7 @@
 .rl-reel span{font-size:11px;color:var(--muted)}
 .rl-dtag .rl-rel{color:#E08A1E}
 .rl-procthumb{width:38px;height:60px;border-radius:8px;flex-shrink:0;background:#F4F5F6;box-shadow:inset 0 0 0 1px #E9EAED;display:flex;align-items:center;justify-content:center}
+.rl-proc-ic{width:20px;height:20px;color:#999999;opacity:.5}
 .reel-failnote{display:flex;gap:12px;align-items:flex-start;margin:0 0 16px;padding:14px 16px;border-radius:8px;background:rgba(255,56,60,.12);box-shadow:inset 0 0 0 1px rgba(255,56,60,.32)}
 .reel-procnote{background:#E0F1FF !important;box-shadow:inset 0 0 0 1px rgba(0,136,255,.28) !important}
 .reel-procnote b{color:#0F377A !important}
@@ -422,3 +425,17 @@
 /* largura pensada para a descricao do passo 1 fechar em duas linhas */
 .cr-upsub{font-size:12px;line-height:18px;color:#8E8E93;margin:0;text-align:center;max-width:440px}
 .cr-btpick{justify-content:center;height:36px;padding:0 16px;border-radius:6px;font-size:14px;margin-top:10px}
+
+/* ============ Gerenciar > Shorts e Publicacoes: o desenho da Maria, escopado
+   Estas quatro regras chegaram no ramo dela mexendo no generico, e o generico
+   tambem desenha a lista do Shorts avulso, as Aprovacoes, o Administradores e
+   as Interacoes. Fora do Gerenciar vale o nosso; aqui dentro, o dela.
+   ============================================================================ */
+/* :not(.rl-procpill) porque a pilula tambem e um span dentro de .rl-reel: sem isso
+   esta regra a alcancava e a deixava azul, em vez do cinza da regra de baixo. */
+#rxGrid .rl-reel span:not(.rl-procpill),#pubGrid .rl-reel span:not(.rl-procpill){font-size:14px;color:#2F8EE5;font-weight:700}
+#rxGrid .rl-dtag .rl-rel,#pubGrid .rl-dtag .rl-rel{color:#999999}
+#rxGrid .rl-cat-dot,#pubGrid .rl-cat-dot{width:32px;height:32px;font-size:16px}
+/* a pilula azul vira texto cinza com o giro do lado: sem fundo, sem altura fixa */
+#rxGrid .rl-procpill,#pubGrid .rl-procpill{height:auto;padding:0;background:none;border-radius:0;
+  color:#999999;font-size:14px;line-height:normal;font-weight:400;letter-spacing:normal}

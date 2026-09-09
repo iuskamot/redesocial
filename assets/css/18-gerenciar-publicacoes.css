@@ -1,0 +1,122 @@
+/* =====================================================================
+   GERENCIAR > PUBLICAÇÕES (admin) — assets/css/18-gerenciar-publicacoes.css
+
+   Espelha assets/css/17-gerenciar-shorts.css (mesmos seletores, mesmos
+   valores já corrigidos manualmente naquela tela), só trocando #rxGrid por
+   #pubGrid e #mgSitCards por #pubSitCards, e ajustando as larguras de
+   coluna para a tabela de 13 colunas de Publicações (Reações e Comentários
+   entram como colunas próprias em vez de uma única "Curtidas"). Tudo aqui
+   é aditivo/escopado a #pubGrid, #pubFilters, #pubSitCards e #nvListScreen
+   — não toca em nada de #rxGrid/#mgSitCards/17-gerenciar-shorts.css.
+   ===================================================================== */
+
+/* Cabeçalho e coluna da tabela desta tela (#nvListScreen .cat-head ~ .rx-header,
+   #nvListScreen .nv-listmain ~ .rx-main de Shorts) — mesmos valores já corrigidos lá:
+   margem/padding 8px, radius 8px, borda #D9D9D9. Escopado a #nvListScreen porque
+   .cat-head/.cat-body são reaproveitadas por Categorias/Permissões também. */
+#nvListScreen .cat-head{ margin:8px 8px 0; height:60px; min-height:60px; box-sizing:border-box; padding:0 12px; border-radius:8px; border:1px solid #D9D9D9; box-shadow:none }
+/* zera o padding herdado de #nvListScreen .cat-body (07-rede-social.css) — o respiro passa a vir
+   da margem de .rx-filters (16px) e do padding de .nv-listmain abaixo, igual ao .rx-body de Shorts */
+#nvListScreen .cat-body{ padding:0 }
+#nvListScreen .nv-listmain{ padding:8px 8px 8px 0; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
+/* .rx-filters (base, 10-responsivo.css) tem align-self:flex-start e max-height fixo — aqui ela
+   precisa esticar (align-items:stretch já existe em .nv-listwrap) até a mesma altura da tabela */
+#nvListScreen .rx-filters{ align-self:stretch; max-height:none; display:flex; flex-direction:column }
+/* .rx-filters tem 16px de padding embaixo (10-responsivo.css); num elemento sticky isso deixa um
+   respiro visível entre o rodapé e a borda do painel mesmo com margin-bottom negativo (o scroll
+   port já reserva esse espaço). Solução igual à de Shorts (#reelsView .rx-nav.rx-filters, padding-
+   bottom condicional a .rx-advmode): zera o padding embaixo, e quem dá o respiro visual agora é o
+   padding:12px do próprio rodapé. Escopado a #nvListScreen pra não mexer em Shorts. */
+#nvListScreen .rx-filters{ padding-bottom:0 }
+#nvListScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
+#pubGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
+#pubGrid .rl-tblwrap{ height:100%; overflow-y:auto }
+#pubGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
+/* border-collapse:separate porque border-radius não tem efeito em células com border-collapse:collapse */
+#pubGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
+#pubGrid .rl-tblwrap>table{ min-width:2280px }
+#pubGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4 }
+/* Título trunca em 2 linhas com reticências, em vez de continuar quebrando */
+#pubGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis }
+/* Capa da publicação: não é vídeo em pé como em Shorts, é sempre 60x46 — tanto a imagem real quanto
+   o placeholder de "Em processamento"/sem imagem (.rl-procthumb, que em Shorts continua 38x60,
+   escopado só aqui pra não vazar pra #rxGrid) */
+#pubGrid .rl-reel img{ width:60px; height:46px; object-fit:cover; border-radius:8px; flex-shrink:0 }
+#pubGrid .rl-procthumb{ width:60px; height:46px }
+#pubGrid .rl-author .avatar,#pubGrid .rl-author .nv-logo{ width:32px; height:32px }
+#pubGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
+#pubGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
+#pubGrid .rl-dt{ font-size:14px; color:#5F666C; font-weight:400 }
+#pubGrid .rl-cat{ display:inline-flex; align-items:center; gap:8px; font-weight:400; color:#5F666c; font-size:14px }
+#pubGrid .nv-cellbtn{ border:0; background:none; font:inherit; font-size:14px; color:#5F666C; font-weight:400; cursor:pointer; padding:4px 8px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; transition:background .12s }
+/* Reações zeradas: o ícone de "like" (imagem colorida, sem cor via CSS) fica em cinza-padrão via
+   filtro, no mesmo espírito do ícone de Visualizações/Comentários ficando cinza quando é 0 */
+#pubGrid .nv-rxc-zero .rxs{ filter:grayscale(1) opacity(.55) }
+#pubGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
+#pubGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
+#pubGrid .rl-tblwrap th.sortable:hover .sort-ic{ color:#2F8EE5 }
+
+/* Colunas fixas (ID + Publicação) com colapso animado da ID ao rolar horizontalmente (ver
+   pglSyncFrozenCols em renderGerenciarPublicacoesList) */
+#pubGrid .rl-tblwrap th:nth-child(1),#pubGrid .rl-tblwrap td:nth-child(1){ position:sticky; left:0; box-sizing:border-box }
+#pubGrid .rl-tblwrap th:nth-child(2),#pubGrid .rl-tblwrap td:nth-child(2){ position:sticky; box-sizing:border-box; min-width:400px; white-space:normal }
+#pubGrid .rl-tblwrap th:nth-child(1){ width:90px; min-width:90px; max-width:90px; z-index:7; background:#3D4F62; color:#fff; border-right:none }
+#pubGrid .rl-tblwrap th:nth-child(2){ z-index:6; background:#3D4F62; color:#fff; border-top-right-radius:8px }
+#pubGrid .rl-tblwrap th:nth-child(1) .sort-ic,#pubGrid .rl-tblwrap th:nth-child(2) .sort-ic{ color:#fff }
+#pubGrid .rl-tblwrap th.sortable:nth-child(1):hover,#pubGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
+#pubGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
+#pubGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#F0F3F5 }
+#pubGrid .rl-tblwrap tbody tr:nth-child(even){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#F0F3F5 }
+#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
+#pubGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
+/* Sombra na coluna fixa indicando conteúdo por baixo ao rolar horizontalmente */
+#pubGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#pubGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
+
+/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 7 Autor,
+   8 Unidade do autor, 9 Visualizações, 10 Reações, 11 Comentários, 12 Categoria,
+   13 Data de encerramento */
+#pubGrid .rl-tblwrap th:nth-child(3),#pubGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:160px; min-width:160px }
+#pubGrid .rl-tblwrap th:nth-child(4),#pubGrid .rl-tblwrap td:nth-child(4){ width:204px }
+#pubGrid .rl-tblwrap th:nth-child(5),#pubGrid .rl-tblwrap td:nth-child(5){ width:200px }
+#pubGrid .rl-tblwrap th:nth-child(7),#pubGrid .rl-tblwrap td:nth-child(7){ width:240px }
+#pubGrid .rl-tblwrap td:nth-child(7) .rl-author{ min-width:212px }
+#pubGrid .rl-tblwrap td:nth-child(7) .rl-author b,#pubGrid .rl-tblwrap td:nth-child(7) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+#pubGrid .rl-tblwrap th:nth-child(8),#pubGrid .rl-tblwrap td:nth-child(8){ width:240px }
+#pubGrid .rl-tblwrap td:nth-child(8) .rl-unitcell{ min-width:212px }
+#pubGrid .rl-tblwrap th:nth-child(9),#pubGrid .rl-tblwrap td:nth-child(9){ width:140px }
+#pubGrid .rl-tblwrap th:nth-child(10),#pubGrid .rl-tblwrap td:nth-child(10){ width:140px }
+#pubGrid .rl-tblwrap th:nth-child(11),#pubGrid .rl-tblwrap td:nth-child(11){ width:140px }
+#pubGrid .rl-tblwrap th:nth-child(12),#pubGrid .rl-tblwrap td:nth-child(12){ width:240px }
+#pubGrid .rl-tblwrap td:nth-child(12) .rl-cat{ min-width:212px }
+#pubGrid .rl-tblwrap th:nth-child(13),#pubGrid .rl-tblwrap td:nth-child(13){ width:212px; min-width:212px }
+
+/* Coluna "Unidade do autor" — pílula redonda colorida com a sigla de 2 letras */
+#pubGrid .rl-unitcell{ display:flex; align-items:center; gap:8px; min-width:180px }
+#pubGrid .rl-unitcell .rxv-logo{ width:32px; height:32px; border-radius:32px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; flex-shrink:0 }
+#pubGrid .rl-unitcell>div{ min-width:0 }
+#pubGrid .rl-unitcell b{ display:block; font-size:14px; color:#5F666C; font-weight:400 }
+#pubGrid .rl-unitcell span{ display:block; max-width:100%; font-size:11px; color:#999999; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+/* Menu "Ações" dentro da célula Publicação */
+#pubGrid .rl-reel{ position:relative; justify-content:space-between }
+#pubGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
+#pubGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
+#pubGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#pubGrid .rl-actbtn i{ font-size:12px }
+#pubGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
+#pubGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }
+#pubGrid .rl-actmenu button:hover{ background:#f2f5f7 }
+#pubGrid .rl-actmenu button.danger{ color:#e0392c }
+#pubGrid .rl-actmenu button.danger:hover{ background:#fdecea }
+#pubGrid .rl-tblwrap td.rl-actz{ z-index:20 }
+
+/* Cartões de situação "Quais publicações você quer ver?" (#pubSitCards, 2x2 — mesmo padrão de
+   #mgSitCards em 17-gerenciar-shorts.css, valores já corrigidos manualmente naquela tela) */
+#pubSitCards.nv-sit2{ gap:8px }
+#pubSitCards.nv-sit2 button.active{ color:#5b6672; box-shadow:none }
+#pubSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
+#pubSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
+#pubSitCards .rxs-item2[data-pglstatus="agendado"] i{ font-size:18px; line-height:18px }

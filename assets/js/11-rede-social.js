@@ -1150,7 +1150,7 @@ function newsShow(screen){
   else if (screen==='pubappr'){ $('#nvPubApprScreen').classList.add('active'); nmodSetActive('nmodPubAppr'); renderPubAppr(); if(typeof aprSideSync==='function') aprSideSync('pub'); }
   else if (screen==='reelappr'){ $('#nvReelApprScreen').classList.add('active'); nmodSetActive('nmodPubAppr'); renderReelAppr(); if(typeof aprSideSync==='function') aprSideSync('reel'); }
   else if (screen==='article'){ $('#nvArticleScreen').classList.add('active'); nmodSetActive('nmodNew'); }
-  else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); renderNewsList(); }
+  else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); if (typeof pglRefresh==='function') pglRefresh(); else renderNewsList(); }
   else { $('#nvFeedScreen').classList.add('active'); nmodSetActive('nmodNew'); renderNewsFeed(); }
 }
 

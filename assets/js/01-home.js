@@ -197,15 +197,25 @@ let CATEGORIES = [
    Nao uso o sufixo do cargo porque ali a unidade vem como "SULTS" ou como
    nome de rede ("Pit Stop Barra"), e a faixa do card quer dizer a unidade de
    onde a pessoa publicou. */
-const SB_UNIDADES = ['Unidade Shopping','Unidade Centro','Unidade Vila Nova',
-                     'Unidade Litoral','Unidade Barra','Unidade Savassi'];
+/* GERENCIAR > SHORTS (admin, ver assets/js/20-gerenciar-shorts.js): cada unidade ganhou
+   company/color/ini (sigla de 2 letras) para a pilula redonda da coluna "Unidade do autor" —
+   extensao aditiva, os nomes e a ordem originais nao mudaram, entao sbUnidade(post) continua
+   devolvendo exatamente a mesma string de antes para cada autor. */
+const SB_UNIDADES = [
+  { name:'Unidade Shopping',  company:'SULTS Tecnologia LTDA', color:'#ad1457', ini:'SH' },
+  { name:'Unidade Centro',    company:'SULTS Tecnologia LTDA', color:'#1d4ed8', ini:'CE' },
+  { name:'Unidade Vila Nova', company:'SULTS Tecnologia LTDA', color:'#455a64', ini:'VN' },
+  { name:'Unidade Litoral',   company:'SULTS Tecnologia LTDA', color:'#d99e00', ini:'LT' },
+  { name:'Unidade Barra',     company:'SULTS Tecnologia LTDA', color:'#575fd1', ini:'BR' },
+  { name:'Unidade Savassi',   company:'SULTS Tecnologia LTDA', color:'#7c4cc4', ini:'SV' }
+];
 function sbUnidade(post){
   if (post && post.unit) return post.unit;   /* quem declara a unidade nao entra no sorteio */
   const nome = String((post && post.name) || '');
-  if (!nome) return SB_UNIDADES[0];
+  if (!nome) return SB_UNIDADES[0].name;
   let h = 0;
   for (let k = 0; k < nome.length; k++) h += nome.charCodeAt(k);
-  return SB_UNIDADES[h % SB_UNIDADES.length];
+  return SB_UNIDADES[h % SB_UNIDADES.length].name;
 }
 function catById(id){ return CATEGORIES.find(c => c.id === id) || null; }
 function rFormat(r){ return r.format || ((POSTS[r.p] && POSTS[r.p].video) ? 'video' : 'imagem'); }
@@ -213,6 +223,13 @@ function rxSchedDT(d){ const dd=new Date(d), p=x=>String(x).padStart(2,'0'); ret
 function rxSchedIn(d){ const days=Math.max(1,Math.round((d-Date.now())/86400000)); return 'Em '+days+(days===1?' dia':' dias'); }
 function catReelCount(id){ return REELS_DATA.filter(r => r.cat === id).length; }
 [2,6].forEach(function(i,k){ if(REELS_DATA[i]) REELS_DATA[i].agendado = Date.now() + (k?5:2)*86400000; });
+/* GERENCIAR > SHORTS (admin, ver assets/js/20-gerenciar-shorts.js): dados extras só para a
+   coluna "Data de encerramento" (nem todo item tem — o resto mostra "Não se encerra") e para a
+   situação "Em aprovação" da coluna "Situação". Aditivo: quem já lê REELS_DATA sem conhecer
+   esses campos continua funcionando igual. */
+REELS_DATA.forEach(function(r,i){ if(i%3===0) r.encerra = Date.now() + (((i*37)%120)+5)*86400000; });
+if (REELS_DATA[9])  REELS_DATA[9].aprovacao  = true;
+if (REELS_DATA[19]) REELS_DATA[19].aprovacao = true;
 let curSort = 'relevancia', curPeriod = 'tudo', curView = 'grade';
 let rxFormat='', rxDur='', rxReach='', rxStatus='', rxMinViews='', rxMinLikes='';
 let colSort = { key:null, dir:1 };
@@ -318,14 +335,26 @@ function matchReel(r){
   else {
     if(r.removido) return false;
     if(rxStatus==='agendado' && !r.agendado) return false;
-    if(rxStatus==='pub' && (r.agendado||r.proc||r.procFail)) return false;
+    /* GERENCIAR > SHORTS (admin): "Publicado" some quando em aprovação também */
+    if(rxStatus==='pub' && (r.agendado||r.proc||r.procFail||r.aprovacao)) return false;
     if(rxStatus==='rascunho' && !r.rascunho) return false;
+    if(rxStatus==='aprovacao' && !r.aprovacao) return false;
   }
   if (curFilter.indexOf('fmt:')===0 && rFormat(r)!==curFilter.slice(4)) return false;
   if (curFilter==='vistos' && !isSeen(r.p)) return false;
   if (curFilter==='curtidos' && !isLiked(r.p)) return false;
   if (rxMinViews && numVal(r.views) < +rxMinViews) return false;
   if (rxMinLikes && numVal(r.likes) < +rxMinLikes) return false;
+  /* GERENCIAR > SHORTS (admin, ver assets/js/20-gerenciar-shorts.js): filtros extras da tela de
+     gerenciamento (Tipo/Unidade do autor/Publicado para/Período de encerramento). Presos atrás de
+     curView==='lista' de propósito, para não vazar para a grade/feed social de Shorts — mesmo que
+     rxFormat/rxReach fiquem com um valor selecionado de uma visita anterior à tela de gerenciamento. */
+  if (curView === 'lista'){
+    if (rxFormat && rFormat(r)!==rxFormat) return false;
+    if (typeof rxUnitFilter!=='undefined' && rxUnitFilter && sbUnidade(post) !== rxUnitFilter) return false;
+    if (rxReach && typeof rxReachFor==='function' && rxReachFor(r.p) !== rxReach) return false;
+    if (typeof rxEndPeriod!=='undefined' && rxEndPeriod && rxEndPeriod!=='tudo' && typeof rxEndInPeriod==='function' && !rxEndInPeriod(r.encerra, rxEndPeriod, rxEndDateStart, rxEndDateEnd)) return false;
+  }
   if (catById(curFilter) && r.cat !== curFilter) return false;
   if (curQuery){
     if (!(r.cap + ' ' + post.name + ' ' + r.music).toLowerCase().includes(curQuery)) return false;
@@ -387,7 +416,10 @@ function foBuildReelFilters(){
   const nav = $('#rxFilters'); if(!nav) return;
   const adv = (curView === 'lista');
   nav.classList.toggle('rx-advmode', adv);
-  if(adv) foBuildAdvFilters(); else foBuildSocialFilters();
+  /* GERENCIAR > SHORTS (admin): sidebar de filtro avançado, implementada à parte em
+     assets/js/20-gerenciar-shorts.js (foBuildGerenciarShortsFilters) — o ramo social/grade
+     abaixo (foBuildSocialFilters) não muda. */
+  if(adv) foBuildGerenciarShortsFilters(); else foBuildSocialFilters();
 }
 
 function foFilterLabel(){
@@ -439,7 +471,10 @@ function renderGrid(){
     bn.addEventListener('click', () => { curFilter='naovistos'; foBuildReelFilters(); renderGrid(); });
     rxGrid.appendChild(bn);
   }
-  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderList(list); return; }
+  /* GERENCIAR > SHORTS (admin): tabela de gerenciamento, implementada à parte em
+     assets/js/20-gerenciar-shorts.js (renderGerenciarShortsList) para não misturar com a grade/feed
+     social de shorts abaixo, que continua sendo o resto desta função. */
+  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderGerenciarShortsList(list); return; }
   const plain = (curFilter!=='todos') || curQuery || curPeriod!=='tudo' || rxMinViews || rxMinLikes;
   if (plain){
     rxGrid.style.display='';

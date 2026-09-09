@@ -1720,3 +1720,32 @@
   .rv-vol{display:none}
   .rv-audio:hover,.rv-audio:focus-within{background:none;padding-right:0;gap:0}
 }
+
+/* ============ Gerenciar > filtros: o desenho da Maria, escopado ============
+   No ramo dela isto vinha no generico (.rx-filters, .nv-fsec-hd, .nv-sitcards,
+   .nv-fclear), que tambem desenha a barra de filtro do Shorts Explorar social.
+   Fora do Gerenciar vale o nosso; aqui dentro, o dela.
+   O painel dela: 400px, borda #D9D9D9, raio 8px e 16px de padding lateral — e
+   esse 16 que as margens negativas das secoes e do rodape usam de medida.
+   ========================================================================== */
+#nvListScreen .nv-listwrap{gap:8px}
+#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters{
+  width:400px;border-color:#D9D9D9;border-radius:8px;padding-left:16px;padding-right:16px}
+#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec{
+  margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
+#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd{font-size:18px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-sitcards button,.reels-view.in-cfg .rx-filters .nv-sitcards button{border-color:#D9D9D9}
+#nvListScreen .rx-filters .nv-filters-ft .nv-fclear,#nvListScreen .rx-filters .nv-filters-ft .nv-fapply,
+.reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fclear,.reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fapply{flex:1}
+/* Sem filtro ativo, "Limpar filtros" fica desabilitado; quem alterna has-active
+   e a JS dela (foBuildGerenciarShortsFilters / foBuildGerenciarPublicacoesFilters).
+   Precisa ficar escopado: o ramo social (foBuildSocialFilters) nunca poe essa
+   classe, entao no generico o botao do Shorts Explorar ficava desabilitado para
+   sempre, sem jeito de limpar filtro nenhum. */
+#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear{
+  background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
+#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active{
+  background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
+#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover{
+  background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}
