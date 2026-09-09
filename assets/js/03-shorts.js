@@ -86,15 +86,15 @@ $('#catList').addEventListener('click', e => {
 
 /* ---------- Permissões (quem pode publicar) ---------- */
 const PEOPLE = [
-  { id:1027, name:'Arthur Henrique Nunes', av:'av-wm', role:'Comercial' },
-  { id:978,  name:'Eduardo Almeida', av:'av-bo', role:'Marketing · Pit Stop Barra' },
-  { id:992,  name:'Iumy Sakamoto', av:'av-js', role:'Produto' },
-  { id:1007, name:'Mariana Áurea Martins', av:'av-cm', role:'Customer Success' },
-  { id:1036, name:'Paulo Henrique Soares Costa', av:'av-pl', role:'Design' },
-  { id:1,    name:'Rodrigo Caetano Silva', av:'av-rc', role:'CEO' },
-  { id:12,   name:'Ana Souza', av:'av-as', role:'Marketing · Pit Stop Barra' },
-  { id:34,   name:'Livia Fernandes', av:'av-lf', role:'Customer Success' },
-  { id:56,   name:'Matheus Scussel', av:'av-ms', role:'COO' },
-  { id:78,   name:'Ellen Rocha', av:'av-gc', role:'Conteúdo' }
+  { id:1027, name:'Arthur Henrique Nunes', av:'av-wm', role:'Comercial', unidade:'Matriz' },
+  { id:978,  name:'Eduardo Almeida', av:'av-bo', role:'Marketing · Pit Stop Barra', unidade:'Pit Stop Barra' },
+  { id:992,  name:'Iumy Sakamoto', av:'av-js', role:'Produto', unidade:'Matriz' },
+  { id:1007, name:'Mariana Áurea Martins', av:'av-cm', role:'Customer Success', unidade:'Matriz' },
+  { id:1036, name:'Paulo Henrique Soares Costa', av:'av-pl', role:'Design', unidade:'Matriz' },
+  { id:1,    name:'Rodrigo Caetano Silva', av:'av-rc', role:'CEO', unidade:'Matriz' },
+  { id:12,   name:'Ana Souza', av:'av-as', role:'Marketing · Pit Stop Barra', unidade:'Pit Stop Barra' },
+  { id:34,   name:'Livia Fernandes', av:'av-lf', role:'Customer Success', unidade:'Matriz' },
+  { id:56,   name:'Matheus Scussel', av:'av-ms', role:'COO', unidade:'Matriz' },
+  { id:78,   name:'Ellen Rocha', av:'av-gc', role:'Conteúdo', unidade:'Matriz' }
 ];
 

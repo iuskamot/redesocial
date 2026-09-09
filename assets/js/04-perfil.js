@@ -149,27 +149,27 @@ function stPermFeet(){
     const cCard=cF.closest('.perm-card'); if(cCard) cCard.classList.toggle('on', STORY_PERM.centralOn);
     if(STORY_PERM.centralOn){
       const some = STORY_PERM.mode!=='todos';
-      const who = (typeof PERM!=='undefined'?PERM.members.length:0)+' pessoa(s) selecionada(s)';
+      const n = typeof PERM!=='undefined'?PERM.members.length:0;
       cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="central"><span class="nv-tk"></span> Ativo</label>'+
-        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-choice">'+
-        '<button class="perm-opt2'+(!some?' on':'')+'" data-stseg="central-todos"><i class="fa-solid fa-users"></i> Todos da matriz</button>'+
-        '<button class="perm-opt2'+(some?' on':'')+'" data-stseg="central-alguns"><i class="fa-solid fa-user-check"></i> Somente pessoas selecionadas</button></div>'+
-        (some?'<div class="perm-cfg-foot"><a class="perm-cfg-link" data-stwhich="central"><i class="fa-solid fa-sliders"></i> Selecionar pessoas</a> <span style="color:var(--muted);font-size:12px;margin-left:4px">'+who+'</span></div>':'')+
-        '</div>';
-    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> Inativo</label>';
+        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
+        '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
+        (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-stwhich="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
+        '</span></div></div></div>';
+    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
   if(uF){
     const uCard=uF.closest('.perm-card'); if(uCard) uCard.classList.toggle('on', STORY_PERM.unitOn);
     if(STORY_PERM.unitOn){
       const some = STORY_PERM.unitMode!=='todos';
-      const who = (typeof unitSelLabel==='function')?unitSelLabel('story'):'';
+      const n = UNIT_SEL.story.length;
       uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="unit"><span class="nv-tk"></span> Ativo</label>'+
-        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-choice">'+
-        '<button class="perm-opt2'+(!some?' on':'')+'" data-stseg="unit-todos"><i class="fa-solid fa-users"></i> Todas unidades</button>'+
-        '<button class="perm-opt2'+(some?' on':'')+'" data-stseg="unit-alguns"><i class="fa-solid fa-user-check"></i> Unidades selecionadas</button></div>'+
-        (some?'<div class="perm-cfg-foot"><a class="perm-cfg-link" data-unitpick="story"><i class="fa-solid fa-sliders"></i> Selecionar unidades</a> <span style="color:var(--muted);font-size:12px;margin-left:4px">'+who+'</span></div>':'')+
-        '</div>';
-    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> Inativo</label>';
+        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
+        '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
+        (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="story">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
+        '</span></div></div></div>';
+    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
 }
 document.addEventListener('change', e=>{
@@ -188,6 +188,9 @@ document.addEventListener('change', e=>{
 document.addEventListener('click', e=>{
   const up=e.target.closest('[data-unitpick]');
   if(up){ if(typeof openUnitPick==='function') openUnitPick(up.dataset.unitpick); return; }
+  const wc=e.target.closest('[data-stwhich]');
+  if(wc){ if(wc.dataset.stwhich==='central'){ if(typeof openPermShortsWho==='function') openPermShortsWho(); }
+    else { const um=document.getElementById('uroleModal'); if(um){ if(typeof renderUrolePick==='function') renderUrolePick(); um.classList.add('open'); } } return; }
   const sg=e.target.closest('[data-stseg]');
   if(sg){ const v=sg.dataset.stseg;
     if(v==='central-todos') STORY_PERM.mode='todos';
@@ -195,9 +198,6 @@ document.addEventListener('click', e=>{
     else if(v==='unit-todos') STORY_PERM.unitMode='todos';
     else STORY_PERM.unitMode='selecionados';
     stPermFeet(); if(typeof PERM!=='undefined'){ PERM.mode=STORY_PERM.mode; } return; }
-  const wc=e.target.closest('[data-stwhich]');
-  if(wc){ if(wc.dataset.stwhich==='central'){ if(typeof openPermShortsWho==='function') openPermShortsWho(); }
-    else { const um=document.getElementById('uroleModal'); if(um){ if(typeof renderUrolePick==='function') renderUrolePick(); um.classList.add('open'); } } }
 });
 function renderPermList(){
   $$('input[name="permMode"]').forEach(r => { r.checked = (r.value === PERM.mode); });

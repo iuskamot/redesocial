@@ -37,7 +37,7 @@
   --teal:#00acac;
   --teal-dark:#029191;
   --navy:#101c26;
-  --sidebar:#263f50;
+  --sidebar:#0B2D42;
   --sidebar-active:#1c2f3c;
   --bg:#E9EAED;
   --card:#ffffff;
@@ -1169,7 +1169,7 @@ input,textarea,select{font-size:14px}
 .fg-backdrop{position:fixed;inset:0;z-index:200;background:rgba(16,28,40,.55);display:none;align-items:center;justify-content:center;padding:20px}
 .fg-backdrop.open{display:flex}
 .fg-modal{width:560px;max-width:100%;max-height:92vh;overflow-y:auto;background:#fff;border-radius:14px;box-shadow:0 30px 70px -20px rgba(16,32,48,.5)}
-.fg-head{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.fg-head{display:flex;align-items:center;gap:14px;padding:20px 20px 0px 20px;border-bottom:1px solid var(--line)}
 .fg-head h2{font-size:17px;font-weight:700;color:var(--ink)}
 .fg-steps{display:flex;gap:8px;margin-left:auto}
 .fg-step{font-size:11px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
@@ -1182,9 +1182,10 @@ input,textarea,select{font-size:14px}
 .fg-pane.on{display:block}
 .fg-field{margin-bottom:16px}
 .fg-label{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block}
-.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;color:var(--ink);outline:none}
-.fg-input:focus,.fg-textarea:focus{border-color:var(--teal)}
-.fg-textarea{resize:vertical;min-height:64px}
+.fg-input,.fg-textarea{width:100%;border:1.5px solid var(--line);border-radius:6px;font:inherit;font-size:13px;color:var(--ink);outline:none}
+.fg-input{height:36px;padding:0 12px}
+.fg-textarea{padding:10px 12px;resize:vertical;min-height:64px}
+.fg-input:focus,.fg-textarea:focus{border-color:var(--linha-campo-forte)}
 .fg-swatches,.fg-icons{display:flex;flex-wrap:wrap;gap:9px}
 .fg-sw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
 .fg-sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--ink)}
@@ -1230,7 +1231,7 @@ input,textarea,select{font-size:14px}
 .rmod-sp{flex:1}
 .reels-view.in-module{left:0;top:60px;z-index:125}
 /* Permissões de Shorts: seção dentro de "Quem pode postar" */
-.nv-secttl{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;color:#8E8E93}
+.nv-secttl{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;line-height:20px;font-weight:700;letter-spacing:.3px;color:#999999;text-transform:uppercase}
 .nv-secttl i{font-size:16px}
 #permStoriesSec{margin-top:26px}
 .perm-picktbl{max-height:360px;overflow-y:auto}
@@ -1240,28 +1241,6 @@ input,textarea,select{font-size:14px}
 .perm-picktbl tbody tr{cursor:pointer}
 .perm-picktbl tbody tr:hover{background:#F7F9FA}
 #unitPickModal .perm-mhead h3,#unitPickModal .perm-mhead .cat-add{white-space:nowrap}
-#permTeamSec .perm-mhead .cat-add,#permTeamSec .perm-mhead .rx-search{border-radius:8px;height:36px;padding-top:0;padding-bottom:0}
-#permTeamSec .perm-members{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;display:flex !important;flex-direction:column;gap:12px;overflow:visible !important}
-#permTeamSec{margin-top:0}
-#nvPermScreen .perm-body:has(#permTeamSec:not([style*="display: none"])){padding-top:10px}
-.perm-tut{display:flex;gap:32px;align-items:center;margin:10px 10px 0;padding:4px 28px;background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED}
-.perm-tut[hidden]{display:none}
-.perm-tutart{flex-shrink:0;width:280px}
-.perm-tutart img{display:block;width:100%;height:auto}
-.perm-tuttx{min-width:0;max-width:640px}
-.perm-tutkicker{display:block;font-family:var(--fonte);font-size:12px;line-height:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8E8E93}
-.perm-tuttx h3{margin:6px 0 10px;font-size:24px;line-height:30px;font-weight:700;letter-spacing:0;color:#1C1C1E;text-wrap:pretty}
-.perm-tuttx p{margin:0;font-size:15px;line-height:22px;color:#48484A;text-wrap:pretty}
-@media(max-width:900px){ .perm-tut{flex-direction:column;align-items:flex-start;gap:18px} .perm-tutart{width:100%} }
-.perm-tutbtn{display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 14px 0 8px;border:0;border-radius:8px;
-  background:#2F8EE5;color:#fff;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;
-  transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.perm-tutbtn .pt-ic{width:22px;height:22px;border-radius:50%;background:#fff;color:#2F8EE5;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
-.perm-tutbtn .pt-carat{font-size:10px;opacity:.9;margin-left:2px}
-.perm-tutbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
-.perm-tutbtn:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
-#permTeamSec .perm-mhead{background:#fff;border:0 !important;border-bottom:0 !important;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;height:60px;min-height:60px;box-sizing:border-box;padding:0 18px;margin:0}
-#permTeamSec .perm-picktbl{background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;padding:0 4px}
 #nvCatList td.rl-acts,#catList td.rl-acts{width:200px}
 #nvCatsScreen .cat-head{min-width:0}
 #nvCatsScreen .cat-head .rx-search{min-width:0;flex-shrink:1}
@@ -1270,11 +1249,11 @@ input,textarea,select{font-size:14px}
 .perm-picktbl .unit-on{background:rgba(11,168,74,.12);color:#0BA84A}
 .perm-picktbl .unit-off{background:#F4F5F6;color:#48484A;box-shadow:none}
 .perm-picktbl .unit-off:hover{background:#E9EAED;color:#1C1C1E}
-#permStoriesGrid{display:grid;grid-template-columns:repeat(2,500px);gap:18px;margin:18px 0 0;align-items:stretch}
-#permStoriesGrid .perm-card{width:500px;height:auto;min-height:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:30px 32px;position:relative}
-#permStoriesGrid .perm-card h3{font-size:26px;font-weight:700;color:var(--ink);margin:0 0 2px}
+#permStoriesGrid{display:grid;grid-template-columns:repeat(2,500px);gap:16px;margin:16px 0 0;align-items:stretch}
+#permStoriesGrid .perm-card{width:500px;height:auto;min-height:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:32px;position:relative}
+#permStoriesGrid .perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin:0 0 2px}
 #permStoriesGrid .perm2-desc{max-width:none;min-height:38px}
-#permStoriesGrid .perm2-ic{width:56px;height:56px;margin:0 0 18px;font-size:23px;border-radius:14px}
+#permStoriesGrid .perm2-ic{width:56px;height:56px;margin:0 0 18px;font-size:23px;border-radius:8px}
 #permStoriesGrid .perm-opts{margin-top:18px;padding-top:18px;border-top:1px solid #e6e9ec;width:100%;display:flex;flex-direction:column;gap:10px}
 #permStoriesGrid .perm-note{margin:18px 0 0}
 #permStoriesGrid .perm-members{margin-top:18px;padding-top:18px;border-top:1px solid #e6e9ec;width:100%}
@@ -1324,7 +1303,7 @@ input,textarea,select{font-size:14px}
 .rx-viewtg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
-.rlist{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow:hidden}
 .rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}
 .rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
@@ -1394,7 +1373,7 @@ input,textarea,select{font-size:14px}
 .rx-catdot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
 .cat-view{position:fixed;top:0;right:0;bottom:0;left:100px;z-index:125;background:#e9eaed;display:none;flex-direction:column}
 .cat-view.open{display:flex}
-.cat-head{display:flex;align-items:center;gap:14px;box-sizing:border-box;padding:8px 28px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0}
+.cat-head{display:flex;align-items:center;gap:14px;box-sizing:border-box;padding:8px 28px;background:#fff;border-bottom:1px solid #D9D9D9;flex-shrink:0}
 .cat-add{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;border:0;border-radius:999px;padding:10px 17px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
 .cat-add:hover{background:var(--teal-dark)}
 /* Toolbars: raio padrão (8px) e altura 36px nos controles */
@@ -1409,7 +1388,8 @@ input,textarea,select{font-size:14px}
 #nvModScreen .cat-head,
 #nvPubApprScreen .cat-head,
 #nvReelApprScreen .cat-head,
-#nvInterScreen .cat-head{margin:10px 10px 0;padding:8px 18px;border-bottom:0;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED;flex-shrink:0}
+#nvInterScreen .cat-head{margin:12px 12px 0;padding:8px 12px;border-bottom:0;border-radius:8px;box-shadow:inset 0 0 0 1px #D9D9D9;flex-shrink:0}
+#nvPermScreen .cat-head{height:54px}
 /* toolbar rola junto: a própria tela é o container de scroll */
 #nvPermScreen,#nvAprHomeScreen,#nvModScreen,#nvPubApprScreen,#nvReelApprScreen{display:none;flex-direction:column;min-height:0;overflow-y:auto}
 #nvPermScreen.active,#nvAprHomeScreen.active,#nvModScreen.active,#nvPubApprScreen.active,#nvReelApprScreen.active{display:flex}
@@ -1445,7 +1425,7 @@ input,textarea,select{font-size:14px}
 .cv-seg .seg-n{font-size:11px;font-weight:700;background:#e3e8ee;color:#5b6672;border-radius:999px;padding:0 7px;min-width:18px;text-align:center}
 .cv-seg button.active .seg-n{background:rgba(0,172,172,.16);color:var(--teal)}
 .cat-body{flex:1;overflow-y:auto;padding:22px 28px 44px}
-.cat-list{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cat-list{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow:hidden}
 .cat-list table{width:100%;border-collapse:collapse;font-size:13px}
 .cat-list th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:12px 18px;border-bottom:1px solid var(--line);background:#fafbfc}
 .cat-list td{padding:13px 18px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
@@ -1457,9 +1437,9 @@ input,textarea,select{font-size:14px}
 .cat-bar{width:5px;height:22px;border-radius:3px;flex-shrink:0}
 .cat-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0}
 .cat-icons{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
-.cat-icpick{width:100%;aspect-ratio:1;max-width:40px;border-radius:10px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;color:#5b6672;cursor:pointer;transition:.12s}
-.cat-icpick:hover{border-color:var(--teal);color:var(--teal)}
-.cat-icpick.sel{border-color:var(--teal);background:rgba(0,172,172,.1);color:var(--teal)}
+.cat-icpick{width:100%;aspect-ratio:1;max-width:40px;border-radius:10px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;color:#5b6672;cursor:pointer;transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}
+.cat-icpick:hover{transform:scale(1.05)}
+.cat-icpick.sel{color:var(--teal);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
 .cat-editbtn{display:inline-flex;align-items:center;gap:6px;height:32px;background:#fff;color:#5b6672;border:1px solid var(--line);border-radius:8px;padding:0 12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s}
 .cat-editbtn:hover{border-color:var(--teal);color:var(--teal);background:#fff}
 .cat-arch{display:inline-flex;align-items:center;gap:6px;width:auto;height:32px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#5b6672;cursor:pointer;margin-left:8px;font:inherit;font-size:12px;font-weight:700;white-space:nowrap}
@@ -1467,8 +1447,8 @@ input,textarea,select{font-size:14px}
 .cat-arch[data-act="del"]:hover{border-color:#e0392c;color:#e0392c;background:#fdecea}
 .cat-empty{padding:40px;text-align:center;color:var(--muted);font-size:13px}
 .cat-swatches{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}
-.cat-sw{width:100%;aspect-ratio:1;max-width:34px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;border:2px solid transparent;transition:transform .1s}
-.cat-sw:hover{transform:scale(1.08)}
+.cat-sw{width:100%;aspect-ratio:1;max-width:34px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;border:2px solid transparent;transition:transform .18s ease}
+.cat-sw:hover{transform:scale(1.05)}
 .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
 .fo-btn.ghost{background:#eef2f5;color:#5b6672}
 .fo-btn.ghost:hover{background:#e2e8ee;color:var(--ink)}
@@ -1476,7 +1456,7 @@ input,textarea,select{font-size:14px}
 .perm-view{position:fixed;top:0;right:0;bottom:0;left:100px;z-index:125;background:#e9eaed;display:none;flex-direction:column}
 .perm-view.open{display:flex}
 .perm-body{flex:1;overflow-y:auto;padding:24px 28px 48px;display:flex;flex-direction:column;gap:20px}
-.perm-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+.perm-card{background:#fff;border:1px solid #D9D9D9;border-radius:8px;padding:22px 24px}
 .perm-intro{display:flex;gap:16px;align-items:center;background:linear-gradient(120deg,rgba(0,172,172,.09),rgba(47,111,228,.06));border:1px solid rgba(0,172,172,.2);border-radius:14px;padding:20px 24px;margin-bottom:18px}
 .perm-intro-ic{width:52px;height:52px;border-radius:15px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .perm-intro h2{font-size:19px;font-weight:700;color:var(--ink)}
@@ -1486,13 +1466,12 @@ input,textarea,select{font-size:14px}
 .perm-tabs .perm-tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px -2px rgba(16,32,48,.25)}
 .perm-tabs .perm-tab i{font-size:13px}
 #aprHome{display:grid;grid-template-columns:repeat(2,minmax(0,500px));gap:18px;margin:18px 0 0}
-#permApprGrid{display:grid;grid-template-columns:repeat(2,500px);gap:18px;margin:18px 0 0;align-items:start}
+#permApprGrid{display:grid;grid-template-columns:repeat(2,500px);gap:16px;margin:8px 0 0;align-items:start}
 #permApprGrid .apr-secttl{grid-column:1/-1;margin:0}
-#permStep1 .pub-secttl{grid-column:1/-1;justify-self:start;margin:0 0 -4px}
 #permApprGrid .apr-secttl+.apr-rulecard{margin-top:0}
-.apr-rulecard{width:500px;height:auto;min-height:0;position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:30px 32px;background:#fff;border:1px solid #e9edf0;border-radius:18px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box}
-.apr-rulecard .perm2-ic{width:56px;height:56px;border-radius:14px;font-size:23px;margin-bottom:18px;opacity:1;overflow:visible}
-.apr-rulecard h3{font-size:26px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.apr-rulecard{width:500px;height:auto;min-height:0;position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:32px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box}
+.apr-rulecard .perm2-ic{width:56px;height:56px;border-radius:8px;font-size:23px;margin-bottom:12px;opacity:1;overflow:visible}
+.apr-rulecard.perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:0}
 .apr-rulecard>.perm-tog{position:absolute;top:26px;right:28px}
 .apr-rulecard>.perm-tog .nv-tk{width:58px;height:32px}
 .apr-rulecard>.perm-tog .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
@@ -1501,56 +1480,62 @@ input,textarea,select{font-size:14px}
 .apr-subrow2{display:flex;align-items:center;gap:16px}
 .apr-sublbl{flex:1;min-width:0}
 .apr-sublbl b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
-.apr-sublbl span{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+.apr-sublbl span{display:block;font-size:14px;color:#999999;margin-top:2px;line-height:1.4}
 .apr-subtg{flex-shrink:0;font-size:13px;font-weight:700;color:var(--ink)}
-.apr-subtg .nv-tk{width:52px;height:29px}
-.apr-subtg .nv-tk::after{width:23px;height:23px;top:3px;left:3px}
-.apr-subtg input:checked+.nv-tk::after{transform:translateX(23px)}
+.apr-subtg .tgtxt{font-weight:700;color:var(--ink)}
+.apr-subtg input:not(:checked)~.tgtxt{color:#999999}
+.apr-subtg.nv-toggle .nv-tk{width:58px;height:32px}
+.apr-subtg.nv-toggle .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
+.apr-subtg.nv-toggle input:checked+.nv-tk::after{transform:translateX(26px)}
 .apr-card{cursor:pointer;font:inherit}
 .apr-card-foot{margin-top:auto;padding-top:18px;border-top:1px solid #e6e9ec;width:100%;display:flex;align-items:center;justify-content:space-between}
 .apr-card-badge{font-size:13px;font-weight:700;color:#c0392f;background:#fdeceb;border:1px solid #f6d0cc;border-radius:999px;padding:5px 13px}
 .apr-card-go{font-size:13px;font-weight:700;color:var(--teal);display:inline-flex;align-items:center;gap:7px}
 .news-view.aprhome #nvAprSide{display:none}
 .news-view.aprhome #nvModScreen,.news-view.aprhome #nvPubApprScreen,.news-view.aprhome #nvReelApprScreen{margin-left:0}
-#permStep1{display:grid;grid-template-columns:repeat(2,500px);gap:18px;max-width:none;margin:18px 0 0;align-items:stretch;justify-content:start}
-#permStep1 .perm-card{width:500px;height:auto;min-height:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:30px 32px;position:relative;transition:border-color .18s,box-shadow .18s,transform .18s;background:#fff;border:1px solid #e9edf0;border-radius:18px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box;overflow:hidden}
-#permStep1 .perm-card .perm2-ic{width:56px;height:56px;margin:0 0 18px;overflow:visible;opacity:1;font-size:23px;border-radius:14px}
-.perm-tog{display:inline-flex;align-items:center;gap:11px;cursor:pointer;font-size:15px;font-weight:400;color:var(--ink)}
+#permPubSec{margin-top:8px}
+#permStep1{display:grid;grid-template-columns:repeat(2,500px);gap:16px;max-width:none;margin:16px 0 0;align-items:stretch;justify-content:start}
+#permStep1 .perm-card{width:500px;height:auto;min-height:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:32px;position:relative;transition:border-color .18s;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box;overflow:hidden}
+#permStep1 .perm-card .perm2-ic{width:56px;height:56px;margin:0 0 12px;overflow:visible;opacity:1;font-size:23px;border-radius:8px}
+.perm-tog{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;font-weight:400;color:var(--ink)}
+.perm-tog.nv-toggle{gap:8px}
 .perm-toglbl{font-size:14px;color:var(--ink);margin-bottom:10px}
-.perm-who{margin-top:18px}
-.perm-who-lbl{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:9px}
-.perm-choice{display:flex;gap:10px}
-.perm-opt2{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:13px;font-weight:700;color:#5b6672;cursor:pointer;transition:.15s}
-.perm-opt2:hover{border-color:#c8d0d7}
-.perm-opt2.on{border-color:var(--teal);background:rgba(0,172,172,.08);color:#0c7d7d}
-.perm-opt2 i{font-size:13px}
-.perm-cfg-link{display:inline-flex;align-items:center;gap:9px;margin-top:16px;font-size:13px;font-weight:700;color:var(--teal);cursor:pointer;text-decoration:none;background:rgba(0,172,172,.09);border:1px solid rgba(0,172,172,.28);border-radius:10px;padding:11px 16px;transition:.15s}
-.perm-cfg-link:hover{background:rgba(0,172,172,.16);border-color:var(--teal)}
-.perm-cfg-foot{margin-top:auto;padding-top:18px;border-top:1px solid #eceef0;width:100%}
-.perm-cfg-link:hover{text-decoration:underline}
+.perm-radiogrp{display:flex;flex-direction:column;gap:12px}
+.perm-radio{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;transition:.15s}
+.perm-radio:hover{border-color:#c8d0d7}
+.perm-radio.on{border-color:#2F8EE5;background:rgba(47,142,229,.05)}
+.perm-radio .pr-dot{flex-shrink:0;width:18px;height:18px;margin-top:1px;border-radius:50%;border:2px solid #c7ccd1;position:relative;transition:.15s}
+.perm-radio.on .pr-dot{border-color:#2F8EE5}
+.perm-radio.on .pr-dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#2F8EE5}
+.perm-radio .pr-body{min-width:0;flex:1}
+.perm-radio .pr-body>b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
+.perm-radio .pr-body>span{display:block;font-size:14px;color:#999999;margin-top:2px}
+.perm-pickwrap{display:flex;align-items:center;gap:10px;margin-top:16px}
+.perm-who-count{font-size:12px;color:#999999}
+.perm-pickbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 12px;border:1.5px solid #2F8EE5;border-radius:6px;background:#fff;color:#2F8EE5;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:.15s}
+.perm-pickbtn:hover{background:#2F8EE5;color:#fff}
+.perm-pickbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 #permStep1 .perm-card h3{margin-top:0}
 #permStep1 .perm2-desc{max-width:none;min-height:38px}
-#permStep1 .perm-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px -18px rgba(16,32,48,.4)}
-#permStep1 .perm-card.on{border-color:#e9edf1}
-#permStep1 .perm-card:hover,#permStoriesGrid .perm-card:hover{transform:translateY(-3px);box-shadow:0 1px 2px rgba(16,32,48,.04),0 22px 46px -22px rgba(16,32,48,.4)}
-#permStoriesGrid .perm-card{transition:border-color .18s,box-shadow .18s,transform .18s;border:1px solid #e9edf0;border-radius:18px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box;overflow:hidden}
-#permStep1 .perm-card:not(.on) .perm2-ic,#permStoriesGrid .perm-card:not(.on) .perm2-ic{filter:grayscale(.55);opacity:.7}
-.perm2-ic{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;margin-bottom:18px;box-shadow:0 10px 22px -10px rgba(16,32,48,.5)}
-#permStep1 .perm-card h3{font-size:26px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.perm2-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-top:10px;max-width:none}
+#permStep1 .perm-card.on{border-color:#D9D9D9}
+#permStoriesGrid .perm-card{transition:border-color .18s;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box;overflow:hidden}
+.perm2-ic{width:64px;height:64px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;margin-bottom:12px}
+#permStep1 .perm-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:0}
+.perm2-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-top:12px;max-width:none}
 #permWhoBody .perm-opts{display:none}
 #permWhoBody{padding:22px 24px}
 #permWhoBody .perm-members{display:flex!important;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden;height:100%}
 #permWhoBody .perm-mhead{padding:16px 18px;border-bottom:1px solid var(--line);background:#fafbfc;gap:12px}
 #permWhoBody #npermList,#permWhoBody #permUnitRoles{flex:1;overflow-y:auto;padding:6px}
 #permWhoBody .perm-empty{padding:48px 20px;text-align:center;color:var(--muted)}
-.perm-who{margin-top:26px}
-.perm-who-lbl{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:12px}
+.perm-who{margin-top:0}
+.perm-who-lbl{font-size:12px;color:#999999;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:16px}
 #permStep1 .perm2-foot>.perm-tog,#permStoriesGrid .perm2-foot>.perm-tog{position:absolute;top:26px;right:28px;font-size:14px;font-weight:700;color:var(--ink)}
 #permStep1 .perm2-foot>.perm-tog .nv-tk,#permStoriesGrid .perm2-foot>.perm-tog .nv-tk{width:58px;height:32px}
 #permStep1 .perm2-foot>.perm-tog .nv-tk::after,#permStoriesGrid .perm2-foot>.perm-tog .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
 #permStep1 .perm2-foot>.perm-tog input:checked+.nv-tk::after,#permStoriesGrid .perm2-foot>.perm-tog input:checked+.nv-tk::after{transform:translateX(26px)}
-.perm2-foot{margin-top:22px;padding-top:22px;border-top:1px solid #e6e9ec;width:100%;text-align:left;display:flex;flex-direction:column;flex:1}
+#permStep1 .perm2-foot>.perm-tog input:not(:checked)~.tgtxt,#permStoriesGrid .perm2-foot>.perm-tog input:not(:checked)~.tgtxt{color:#999999}
+.perm2-foot{margin-top:16px;padding-top:16px;border-top:1px solid #e6e9ec;width:100%;text-align:left;display:flex;flex-direction:column;flex:1}
 .perm2-who{text-align:left}
 .perm2-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;margin-bottom:12px}
 .perm2-badge.on{color:#128a3e;background:rgba(37,211,102,.15)}
@@ -1568,7 +1553,7 @@ input,textarea,select{font-size:14px}
 .perm-summary .ps-btn{border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:8px 16px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 .perm-summary .ps-btn:hover{background:rgba(0,172,172,.08)}
 .perm-card h3{font-size:16px;font-weight:700;color:var(--ink)}
-.perm-card>p{font-size:13px;color:var(--muted);margin-top:5px}
+.perm-card>p{font-size:14px;color:#5F666C;margin-top:5px}
 .perm-opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
 .perm-opt{position:relative;cursor:pointer}
 .perm-opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
@@ -1620,7 +1605,7 @@ input,textarea,select{font-size:14px}
 .ni-body .ri-btn.sm{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border:0;border-radius:8px;background:#0088FF;color:#fff;font:inherit;font-size:14px;font-weight:600;letter-spacing:.3px;cursor:pointer}
 .ni-body .ri-btn.sm:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
 @media(max-width:720px){ .ni-body .ri-top{grid-template-columns:1fr} .ni-body .ni-cover{width:100%} }
-.perm-id{color:var(--teal);font-weight:700;font-size:12px;white-space:nowrap}
+.perm-id{color:var(--teal);font-weight:700;font-size:12px;white-space:nowrap;text-align:center}
 .perm-person{display:flex;align-items:center;gap:12px}
 .perm-person .avatar{width:40px;height:40px;font-size:0;flex-shrink:0}
 .perm-person b{font-size:13px;color:var(--ink);display:block}
@@ -1684,6 +1669,7 @@ input,textarea,select{font-size:14px}
   white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
+.nmod-tab svg{width:20px;height:20px}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .nmod-tab.active{background:#00ACAC;color:#fff}
@@ -1797,11 +1783,10 @@ input,textarea,select{font-size:14px}
 .nmt-ic{position:relative;display:inline-flex}
 .nv-cfgside-hd{display:none}
 .nv-cfgside-hd i{font-size:15px;width:18px;text-align:center}
-.nv-cfgitem{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:11px 14px 11px 30px;border-radius:10px;font:inherit;font-size:15px;font-weight:600;color:rgba(255,255,255,.82);cursor:pointer;text-align:left}
-.nv-cfgitem i{width:18px;text-align:center;color:rgba(255,255,255,.6);font-size:14px}
+.nv-cfgitem{display:flex;align-items:center;width:100%;height:36px;border:0;background:none;padding:0 14px;border-radius:6px;font:inherit;font-size:15px;font-weight:400;color:rgba(255,255,255,.82);cursor:pointer;text-align:left;margin-bottom:2px}
+.nv-cfgdiv{height:1px;background:rgba(255,255,255,.1);margin:14px -12px 0}
 .nv-cfgitem:hover{background:rgba(255,255,255,.08);color:#fff}
-.nv-cfgitem.active{background:var(--teal);color:#fff}
-.nv-cfgitem.active i{color:#fff}
+.nv-cfgitem.active{background:rgba(0,172,172,.4);color:#fff}
 .news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:250px}
 .np-head{display:flex;align-items:center;gap:13px;margin-bottom:2px}
 .np-head .avatar{width:52px;height:52px;font-size:0;flex-shrink:0}
@@ -1869,13 +1854,13 @@ input,textarea,select{font-size:14px}
 #modQueue .rlist,#pubApprQueue .rlist,#reelApprQueue .rlist{overflow-x:scroll;overflow-y:hidden}
 #modQueue table,#pubApprQueue table,#reelApprQueue table{min-width:1080px}
 .cfg-badge.apr-cnt{background:rgba(255,255,255,.18)}
-.apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;padding:18px 14px 10px;border-top:1px solid rgba(255,255,255,.1)}
+.apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;margin:0 -12px;padding:18px 26px 10px;border-top:1px solid rgba(255,255,255,.1)}
 .apr-grp-hd i{font-size:15px;width:18px;text-align:center}
-#nvAprSide .apr-grp-hd:first-child{padding-top:16px;border-top:0}
-.apr-sub{padding:10px 14px 10px 24px !important;font-size:15px !important;font-weight:600 !important;color:rgba(255,255,255,.82) !important}
+.nv-cfgside .apr-grp-hd:first-child{padding-top:16px;border-top:0}
+.apr-sub{height:36px !important;padding:0 14px 0 24px !important;font-size:15px !important;font-weight:400 !important;color:rgba(255,255,255,.82) !important}
 .apr-sub i{font-size:14px}
 .apr-sub:hover{background:rgba(255,255,255,.08)}
-.apr-sub.active{background:var(--teal);color:#fff !important;border-radius:12px}
+.apr-sub.active{background:rgba(0,172,172,.4);color:#fff !important;border-radius:6px}
 .apr-sub.active i{color:#fff}
 .apr-seg button{border:0;background:none;cursor:pointer;font:inherit;font-size:13px;font-weight:700;color:var(--muted);padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
 .apr-seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px -2px rgba(16,32,48,.25)}
@@ -1895,7 +1880,7 @@ input,textarea,select{font-size:14px}
 #nvListScreen .cat-body{padding:10px 10px 12px}
 #nvInterScreen .cat-body{padding:10px 10px 10px}
 #nvCatsScreen .cat-body{padding:11px 14px 22px}
-#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:18px}
+#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:12px}
 .nv-filters .nv-fsearch{margin:16px 0 0;width:100%;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0 12px;border-radius:8px}
 .nv-filters .nv-fsearch input{font-size:14px}
 .rl-recpill{display:inline-flex;align-items:center;gap:5px;margin-top:4px;background:#B9860030;color:#B98600 !important;font-size:10px;font-weight:600;letter-spacing:.3px;padding:2px 9px;border-radius:32px}
@@ -2111,7 +2096,7 @@ input,textarea,select{font-size:14px}
 #nvList th:first-child{width:64px}
 .nv-listmain{flex:1;min-width:0;overflow-x:auto;display:flex;flex-direction:column}
 .nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:14px}
-#interList.rlist{background:#fff;border:1px solid var(--line);border-radius:14px;overflow-x:scroll;overflow-y:hidden}
+#interList.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow-x:scroll;overflow-y:hidden}
 .nv-listmain .rlist table{min-width:1100px}
 #interList.rlist table{min-width:1180px}
 .nv-fsel{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 13px;cursor:pointer;outline:none}
@@ -2860,7 +2845,9 @@ input,textarea,select{font-size:14px}
 .rx-header{display:flex;align-items:center;gap:20px;padding:14px 26px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0;box-shadow:0 1px 3px rgba(16,32,48,.04)}
 .rx-title{display:flex;align-items:center;gap:10px}
 .rx-title i{font-size:20px;color:var(--teal)}
-.rx-title h2{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+#permHeadIc{display:inline-flex;color:var(--teal)}
+#permHeadIc svg{width:26px;height:26px}
+.rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
   border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
 .rx-search:hover{background:#eef2f5}
@@ -3114,6 +3101,183 @@ input,textarea,select{font-size:14px}
 #crModal{--cr-util:578px}
 #crStep1,#crStepUp{min-height:var(--cr-util);box-sizing:border-box}
 
+/* Categorias e Administradores (Gerenciar > Configuracoes): tres blocos
+   empilhados (titulo, filtros e tabela), 8px de gap entre eles, 12px de
+   respiro ate a borda da tela, e a tabela esticando ate o fim (sem sobra de
+   espaco vazio abaixo). As duas telas compartilham as mesmas classes para
+   ficarem identicas visualmente. */
+#nvCatsScreen,#nvTeamScreen{margin:12px;gap:8px}
+.news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
+.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
+#nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
+#nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:8px 12px;gap:8px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:none;flex-shrink:0}
+#nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
+#nvCatsScreen .cat-head,#nvTeamScreen .cat-head{height:62px}
+#nvCatsScreen .cat-body,#nvTeamScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
+#nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0;border-radius:8px}
+#nvCatsScreen .rlist th,#nvTeamScreen .rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;height:46px;box-sizing:border-box}
+#nvCatsScreen .rlist tbody tr:nth-child(odd),#nvTeamScreen .rlist tbody tr:nth-child(odd){background:#F0F3F5}
+#nvCatsScreen .rlist tbody tr:nth-child(even),#nvTeamScreen .rlist tbody tr:nth-child(even){background:#fff}
+#nvCatsScreen .cat-th-in,#nvTeamScreen .cat-th-in{display:inline-flex;align-items:center;gap:6px}
+#nvCatsScreen .cat-sortbtn,#nvTeamScreen .cat-sortbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#nvCatsScreen .cat-sortbtn svg,#nvTeamScreen .cat-sortbtn svg{width:24px;height:24px;display:block}
+#nvCatsScreen .cat-sortbtn:hover,#nvTeamScreen .cat-sortbtn:hover{color:#2F8EE5}
+/* tabela nativa (table/tr/td): largura por porcentagem, nao grid do Bootstrap.
+   table-layout:fixed faz o navegador respeitar as porcentagens de verdade —
+   sem isso, o layout automatico deixa o conteudo (o bloco de botoes de 224px)
+   esticar a tabela alem do cartao, e o overflow:hidden do .rlist corta a
+   coluna Acoes.
+   !important pra vencer a regra generica .rlist th:first-child{width:84px !important}
+   de 06-shorts.css, que e' de outra tela e nao deveria valer aqui. */
+#nvCatsScreen .rlist table,#nvTeamScreen .rlist table{width:100%;table-layout:fixed}
+#nvCatsScreen .rlist th:nth-child(1),#nvCatsScreen .rlist td:nth-child(1){width:50% !important;min-width:0 !important;max-width:none !important}
+#nvCatsScreen .rlist th:nth-child(2),#nvCatsScreen .rlist td:nth-child(2),
+#nvCatsScreen .rlist th:nth-child(3),#nvCatsScreen .rlist td:nth-child(3),
+#nvCatsScreen .rlist th:nth-child(4),#nvCatsScreen .rlist td:nth-child(4){width:16.66% !important;min-width:0 !important;max-width:none !important}
+/* Administradores: coluna 1 (ID) fica com os 84px genericos de .rlist
+   th:first-child; as demais dividem o resto (Administrador flexivel, as
+   outras com largura fixa). */
+#nvTeamScreen .rlist th:nth-child(3),#nvTeamScreen .rlist td:nth-child(3){width:15%}
+#nvTeamScreen .rlist th:nth-child(4),#nvTeamScreen .rlist td:nth-child(4){width:20%}
+#nvTeamScreen .rlist th:nth-child(5),#nvTeamScreen .rlist td:nth-child(5){width:140px}
+/* Tipografia das celulas de dados (tbody), thead continua como esta:
+   texto simples (Publicacoes/Shorts, Celular/E-mail) em 14px/400/#5F666C;
+   nome (categoria/administrador) na mesma cor, cargo/unidade em 12px/#999. */
+#nvCatsScreen .rlist tbody td,#nvTeamScreen .rlist tbody td{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td.perm-id{font-weight:700}
+#nvCatsScreen .rlist tbody td .cat-name{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
+#nvTeamScreen .rlist tbody td .perm-person span{font-size:11px;color:#999}
+#nvTeamScreen .rlist tbody td .perm-person .avatar{width:32px;height:32px}
+#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
+/* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
+   toda a largura disponivel da celula, sem bloco de largura fixa.
+   Editar: outline azul, preenche de azul (texto/icone branco) no hover.
+   Inativar/Remover: neutro (#5f666c/#CCCCCC), preenche de preto (texto/icone branco) no hover. */
+#nvCatsScreen .rlist th:nth-child(4),#nvTeamScreen .rlist th:nth-child(5){text-align:center}
+#nvCatsScreen .cat-actwrap,#nvTeamScreen .cat-actwrap{display:flex;gap:8px;width:100%}
+#nvCatsScreen .cat-actwrap .cat-editbtn,
+#nvCatsScreen .cat-actwrap .cat-arch,#nvTeamScreen .cat-actwrap .cat-arch{flex:1;justify-content:center;height:36px;padding:0 12px;margin-left:0;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-actwrap .cat-editbtn{background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
+#nvCatsScreen .cat-actwrap .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+#nvCatsScreen .cat-actwrap .cat-arch{background:#fff;color:#5f666c;border:1px solid #CCCCCC}
+#nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
+#nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
+#nvTeamScreen .cat-actwrap .cat-arch:hover{background:#F7685B;color:#fff;border-color:#F7685B}
+#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;color:#fff;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+#nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn,#nvPermScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
+  border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+#nvCatsScreen .cat-helpbtn:hover,#nvTeamScreen .cat-helpbtn:hover,#nvPermScreen .cat-helpbtn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#E0F1FF}
+#nvCatsScreen .cat-helpbtn svg,#nvTeamScreen .cat-helpbtn svg,#nvPermScreen .cat-helpbtn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* Modal "Como usar categorias?": hero com ilustracao (bg image-categories) + texto + acoes,
+   layout replicado do Figma (node 1515:288) */
+.cat-help-modal{width:650px;max-width:100%;max-height:92vh;overflow-y:auto;background:#fff;border-radius:8px;box-shadow:0 30px 70px -20px rgba(16,32,48,.5)}
+.cat-help-hero{position:relative;height:110px;background:#0088FF;overflow:hidden}
+.cat-help-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cat-help-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border:0;border-radius:6px;background:rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}
+.cat-help-close:hover{background:rgba(255,255,255,.32)}
+.cat-help-body{padding:20px;display:flex;flex-direction:column;gap:20px}
+.cat-help-body h2{font-size:20px;line-height:28px;font-weight:700;color:#1C1C1E}
+.cat-help-body p{margin-top:12px;font-size:14px;line-height:20px;letter-spacing:.3px;color:#1C1C1E;font-weight:400}
+.cat-help-body p b{font-weight:600}
+.cat-help-actions{display:flex;gap:12px;align-items:center;justify-content:flex-end}
+.cat-help-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:6px;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.cat-help-btn.ghost{background:#F4F5F6;color:#1C1C1E}
+.cat-help-btn.ghost:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#F4F5F6}
+.cat-help-btn.primary{background:#0088FF;color:#fff;width:120px}
+.cat-help-btn.primary:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
+#nvCatsScreen .nv-fsel{border-radius:6px;background:#fff;border-color:#C3C9D5;color:#5F666C;font-size:14px;font-weight:400}
+#nvCatsScreen .nvcat-sel{appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235F666C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding:0 36px 0 12px}
+#nvCatsScreen .nvcat-sel option{color:#5F666C;font-size:14px;font-weight:400}
+
+/* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
+.nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
+.nv-catsearch .rx-search{flex:0 0 auto}
+#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0;padding:12px}
+.nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
+.nv-catsearch-btn:hover{background:var(--teal-dark)}
+
+
+/* Editar/Nova categoria (nvCatModal): cores e dimensoes do Figma (node 1521:760) */
+#nvCatModal .fg-head{border-bottom:0}
+#nvCatModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
+#nvCatModal .fg-input{font-size:14px;border-radius:6px}
+#nvCatModal .cat-sw{border-radius:6px}
+#nvCatModal .cat-sw:hover{transform:scale(1.02)}
+#nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
+#nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
+#nvCatModal .cat-icpick:hover{transform:scale(1.02);color:var(--teal)}
+#nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
+#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
+#nvCatModal #nvCatCancel{border:0}
+#nvCatModal #nvCatSave{background:#57C279}
+#nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
+#teamAddModal .fg-modal{display:flex;flex-direction:column}
+#teamAddModal .fg-head{border-bottom:0}
+#teamAddModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#teamAddModal .fg-body{flex:1;min-height:0;overflow-y:auto}
+#teamAddModal .tadd-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+#teamAddModal .tadd-head{display:flex;align-items:center;gap:12px;height:46px;box-sizing:border-box;padding-left:12px;font-size:14px;font-weight:700;color:#0c334a;background:#fff;border-bottom:1px solid var(--line)}
+#teamAddModal .tadd-th-check{width:18px;flex-shrink:0}
+#teamAddModal .tadd-th-col{flex:1;min-width:0;display:flex;align-items:center;gap:6px;padding:12px}
+#teamAddModal .tadd-th-label{white-space:nowrap}
+#teamAddModal .tadd-body{max-height:320px;overflow-y:auto}
+#teamAddModal .tadd-row{display:flex;align-items:center;gap:12px;height:60px;padding:0 12px;box-sizing:border-box;cursor:pointer;transition:background .12s}
+#teamAddModal .tadd-row:nth-child(odd){background:#F0F3F5}
+#teamAddModal .tadd-row:nth-child(even){background:#fff}
+#teamAddModal .tadd-row:hover{background:#e6eaec}
+#teamAddModal .tadd-row.on{background:#dcecf3}
+#teamAddModal .tadd-chk{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex-shrink:0;margin:0;border-radius:4px;border:1.5px solid #c7ccd1;background:#fff;position:relative;pointer-events:none}
+#teamAddModal .tadd-chk:checked{background:var(--teal);border-color:var(--teal)}
+#teamAddModal .tadd-chk:checked::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+#teamAddModal .tadd-person{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-row .avatar{width:32px;height:32px;font-size:0;flex-shrink:0}
+#teamAddModal .tadd-info{flex:1;min-width:0}
+#teamAddModal .tadd-info b{font-size:14px;font-weight:400;color:#5F666C;display:block}
+#teamAddModal .tadd-info span{font-size:11px;color:#999}
+#teamAddModal .tadd-unit{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border-left:1px solid var(--line);padding-left:12px;align-self:stretch}
+#teamAddModal .tadd-unit-badge{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+#teamAddModal .tadd-unit-info{min-width:0}
+#teamAddModal .tadd-unit-info b{font-size:14px;font-weight:400;color:#5F666C;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
+#teamAddModal .fg-foot{border-top:0}
+#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:140px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
+#teamAddModal #teamAddCancel{border:0}
+#teamAddModal #teamAddConfirm{background:#57C279}
+#teamAddModal #teamAddConfirm:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#teamAddModal #teamAddConfirm svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+#teamAddModal .tadd-sortbtn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
+#teamAddModal .tadd-sortbtn:hover{color:#2F8EE5}
+#teamAddModal .tadd-sortbtn svg{width:24px;height:24px;display:block}
+#teamAddModal .tadd-toprow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#teamAddModal .nv-catsearch{display:flex;align-items:center}
+#teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
+#teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}
+#teamAddModal .tadd-unitsearch{flex:0 0 200px;width:200px}
+#teamAddModal .tadd-unitfield{width:100%;height:36px;box-sizing:border-box;padding:0 12px;border:1px solid #C3C9D5;border-radius:6px;background:#fff;display:flex;align-items:center;gap:0;font:inherit;cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden}
+#teamAddModal .tadd-unitfield i{font-size:13px;color:var(--muted);flex-shrink:0}
+#teamAddModal .tadd-unitfield i:first-child{margin-right:8px}
+#teamAddModal .tadd-unitfield i:last-child{margin-left:8px}
+#teamAddModal .tadd-unitfield span{flex:1;min-width:0;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-personsearch{flex:1;min-width:0}
+#teamAddModal .tadd-bulkacts{display:flex;gap:8px;flex-shrink:0}
+#teamAddModal .tadd-bulkacts .cat-editbtn{height:36px;padding:0 14px;border-radius:6px;font-size:14px;white-space:nowrap;background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
+#teamAddModal .tadd-bulkacts .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+#teamAddModal #teamAddSelClear{height:36px;padding:0 14px;font-size:14px;white-space:nowrap;border:0;border-radius:6px}
+#teamAddModal #teamAddSelClear:disabled{opacity:.5;cursor:not-allowed}
+#teamAddModal #teamAddSelClear:disabled:hover{background:#eef2f5}
 
 /* ---- Compartilhar o short ----
    A folha sobe de baixo dentro do player, acima de tudo o que ele desenha. */
@@ -6826,8 +6990,8 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="nmod-top-tabs nmod-grp" id="nmodGrpManage">
       <button class="nmod-tab" id="nmtPub"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
       <button class="nmod-tab" id="nmtMgShorts"><i class="fa-solid fa-clapperboard"></i> Shorts</button>
-      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><i class="fa-solid fa-circle-check"></i><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
-      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-heart"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
+      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
+      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
       <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
       <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
@@ -6843,26 +7007,27 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <aside class="nv-cfgside" id="nvCfgSide">
     <div class="nv-cfgside-hd"></div>
     <div class="apr-grp-hd"><i class="fa-solid fa-newspaper"></i> Publicações</div>
-    <button class="nv-cfgitem apr-sub" id="nvcfgPubWho"><i class="fa-solid fa-users"></i> Quem pode postar</button>
-    <button class="nv-cfgitem apr-sub" id="nvcfgPubApr"><i class="fa-solid fa-circle-check"></i> Aprovação</button>
+    <button class="nv-cfgitem apr-sub" id="nvcfgPubWho">Quem pode postar</button>
+    <button class="nv-cfgitem apr-sub" id="nvcfgPubApr">Aprovação</button>
     <button class="nv-cfgitem" id="nvcfgPermPub" hidden></button>
     <button class="nv-cfgitem" id="nvcfgCats" hidden></button>
     <button class="nv-cfgitem" id="nvcfgPerm" hidden></button><button class="nv-cfgitem" id="nvcfgParams" hidden></button>
   </aside>
   <aside class="nv-cfgside" id="nvCatSide">
-    <div class="apr-grp-hd"><i class="fa-solid fa-user-shield"></i> Permissões</div>
-    <button class="nv-cfgitem apr-sub" id="cfgNavWho"><i class="fa-solid fa-users"></i> Quem pode postar</button>
-    <button class="nv-cfgitem apr-sub" id="cfgNavTeam"><i class="fa-solid fa-user-shield"></i> Administradores</button>
-    <button class="nv-cfgitem apr-sub" id="cfgNavApr"><i class="fa-solid fa-circle-check"></i> Aprovação</button>
-    <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-pen-to-square"></i> Postagem</div>
-    <button class="nv-cfgitem apr-sub active" id="nvcfgCats2"><i class="fa-solid fa-tags"></i> Categorias</button>
+    <div class="apr-grp-hd"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg> Postagem</div>
+    <button class="nv-cfgitem apr-sub active" id="nvcfgCats2">Categorias</button>
+    <div class="apr-grp-hd" style="margin-top:14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M6 8C6 5.79 7.79 4 10 4S14 5.79 14 8 12.21 12 10 12 6 10.21 6 8M12 18.2C12 17.24 12.5 16.34 13.2 15.74V14.5C13.2 14.45 13.22 14.39 13.22 14.34C12.23 14.12 11.15 14 10 14C5.58 14 2 15.79 2 18V20H12V18.2M22 18.3V21.8C22 22.4 21.4 23 20.7 23H15.2C14.6 23 14 22.4 14 21.7V18.2C14 17.6 14.6 17 15.2 17V14.5C15.2 13.1 16.6 12 18 12S20.8 13.1 20.8 14.5V15H19.5V14.5C19.5 13.7 18.8 13.2 18 13.2S16.5 13.7 16.5 14.5V17H20.8C21.4 17 22 17.6 22 18.3Z" /></svg> Permissões</div>
+    <button class="nv-cfgitem apr-sub" id="cfgNavTeam">Equipe administrativa</button>
+    <button class="nv-cfgitem apr-sub" id="cfgNavWho">Quem pode postar</button>
+    <button class="nv-cfgitem apr-sub" id="cfgNavApr">Aprovações</button>
+    <div class="nv-cfgdiv"></div>
   </aside>
   <aside class="nv-cfgside" id="nvAprSide">
     <div class="apr-grp-hd"><i class="fa-solid fa-newspaper"></i> Publicações</div>
-    <button class="nv-cfgitem apr-sub" data-scope="pub"><i class="fa-solid fa-align-left"></i> Postagens <span class="cfg-badge" id="aprPubBadge" hidden></span></button>
-    <button class="nv-cfgitem apr-sub" data-scope="com"><i class="fa-solid fa-comment-dots"></i> Comentário <span class="cfg-badge" id="aprComBadge" hidden></span></button>
+    <button class="nv-cfgitem apr-sub" data-scope="pub">Postagens <span class="cfg-badge" id="aprPubBadge" hidden></span></button>
+    <button class="nv-cfgitem apr-sub" data-scope="com">Comentário <span class="cfg-badge" id="aprComBadge" hidden></span></button>
     <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
-    <button class="nv-cfgitem apr-sub" data-scope="reel"><i class="fa-solid fa-align-left"></i> Postagens <span class="cfg-badge" id="aprReelBadge" hidden></span></button>
+    <button class="nv-cfgitem apr-sub" data-scope="reel">Postagens <span class="cfg-badge" id="aprReelBadge" hidden></span></button>
     <button class="nv-cfgitem" id="nvaprCom" hidden></button><button class="nv-cfgitem" id="nvaprPub" hidden></button>
   </aside>
   <!-- FEED (estilo LinkedIn) -->
@@ -7339,20 +7504,13 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- PERMISSÕES -->
   <div class="nv-screen" id="nvPermScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-user-shield" id="permHeadIc"></i><h2 id="permHeadTtl">Quem pode postar</h2></div><span style="flex:1"></span><button type="button" class="perm-tutbtn" id="permTutorial" hidden><span class="pt-ic"><i class="fa-solid fa-info"></i></span> <span class="pt-lbl">Exibir tutorial</span> <i class="fa-solid fa-chevron-down pt-carat"></i></button></div>
-    <div class="perm-tut" id="permTut" hidden>
-      <div class="perm-tutart" aria-hidden="true"><img id="permTutArt" src="uploads/tutorial/post.svg" alt=""></div>
-      <div class="perm-tuttx">
-        <span class="perm-tutkicker" id="permTutKicker"></span>
-        <h3 id="permTutTitle"></h3>
-        <p id="permTutText"></p>
-      </div>
-    </div>
+    <div class="cat-head"><div class="rx-title"><span id="permHeadIc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" /></svg></span><h2 id="permHeadTtl">Quem pode postar</h2></div><span style="flex:1"></span><button type="button" class="cat-helpbtn" id="permHelpBtn"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> <span id="permHelpBtnLbl">Como usar quem pode postar?</span></button></div>
     <div class="perm-body">
+      <div id="permPubSec">
+        <div class="nv-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
       <div id="permStep1">
-        <div class="nv-secttl pub-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#a06be0,#5e35b1)"><i class="fa-solid fa-building"></i></div>
+        <div class="perm2-ic" style="background:#5e35b1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>office-building</title><path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/></svg></div>
         <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar comunicados e notícias oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
         <input type="checkbox" id="permCentralOn" hidden>
         <div class="perm2-foot" id="permCentralFoot"></div>
@@ -7374,8 +7532,8 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
       </div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-store"></i></div>
-        <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos (franqueado, gerente, etc.).</p>
+        <div class="perm2-ic" style="background:#1e4fb0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>store</title><path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"/></svg></div>
+        <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
         <input type="checkbox" id="permUnitOn" hidden>
         <div class="perm2-foot" id="permUnitFoot"></div>
         <div class="perm-summary" id="permUnitSummary" style="display:none"></div>
@@ -7394,15 +7552,6 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
       </div>
       </div>
-      <div id="permTeamSec" style="display:none">
-        <div class="perm-members" style="margin-top:0">
-          <div class="perm-mhead">
-            <button class="cat-add" id="teamAdd"><i class="fa-solid fa-user-plus"></i> Novo administrador</button>
-            <span style="flex:1"></span>
-            <div class="rx-search" style="max-width:280px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamSearch" placeholder="Pesquisar administrador" autocomplete="off"></div>
-          </div>
-          <div id="teamList" class="perm-picktbl"></div>
-        </div>
       </div>
       <div id="permStoriesSec">
         <div class="nv-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
@@ -7410,31 +7559,31 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       </div>
       <input type="checkbox" id="pmCatReq" checked hidden>
       <div id="permApprGrid" style="display:none"><div class="nv-secttl apr-secttl"><i class="fa-solid fa-newspaper"></i> Publicações</div><div class="perm-card apr-rulecard" id="permApprCard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <input type="checkbox" id="pmApprove" checked hidden>
-        <h3>Aprovar comentários</h3><p class="perm2-desc">Os comentários das publicações ficam pendentes e só aparecem no feed após um administrador aprovar na fila de Aprovações.</p>
+        <h3>Aprovar comentários</h3><p class="perm2-desc">Comentários de terceiros ficam pendentes antes de irem ao ar. Um moderador revisa o conteúdo e libera o comentário na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprComSub">
-          <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da unidade</b><span>Comentários feitos por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da matriz</b><span>Comentários feitos por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
+          <div class="apr-subrow2"><div class="apr-sublbl"><b>Comentários da unidade</b><span>Comentários feitos por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div>
       <div class="perm-card apr-rulecard">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#2F8EE5"><i class="fa-solid fa-rectangle-list"></i></div>
         <input type="checkbox" id="pmPostApprove" checked hidden>
-        <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um administrador revisa e libera o conteúdo na fila de Aprovações.</p>
+        <h3>Aprovar publicações</h3><p class="perm2-desc">Publicações de terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprPubSub">
-          <div class="apr-subrow2"><div class="apr-sublbl"><b>Publicações da unidade</b><span>Publicações feitas por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmPostApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Publicações da matriz</b><span>Publicações feitas por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmPostApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
+          <div class="apr-subrow2"><div class="apr-sublbl"><b>Publicações da unidade</b><span>Publicações feitas por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmPostApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div>
       <div class="nv-secttl apr-secttl"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
       <div class="perm-card apr-rulecard">
         <input type="checkbox" id="pmShortApprove" checked hidden>
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#f27794,#d63a5f)"><i class="fa-solid fa-clapperboard"></i></div>
-        <h3>Aprovar shorts</h3><p class="perm2-desc">Shorts publicados por terceiros passam por aprovação antes de irem ao ar. Um administrador revisa e libera o conteúdo na fila de Aprovações.</p>
+        <div class="perm2-ic" style="background:#d63a5f"><i class="fa-solid fa-clapperboard"></i></div>
+        <h3>Aprovar shorts</h3><p class="perm2-desc">Shorts publicados por terceiros passam por aprovação antes de irem ao ar. Um moderador revisa e libera o conteúdo na fila de Aprovações.</p>
         <div class="apr-subtog" id="aprShortSub">
-          <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da unidade</b><span>Shorts publicados por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
           <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da matriz</b><span>Shorts publicados por colaboradores da matriz exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveMatriz" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
+          <div class="apr-subrow2"><div class="apr-sublbl"><b>Shorts da unidade</b><span>Shorts publicados por colaboradores das unidades exigem aprovação.</span></div><label class="perm-tog nv-toggle apr-subtg"><input type="checkbox" id="pmShortApproveUnit" checked><span class="nv-tk"></span> <span class="tgtxt">Ativo</span></label></div>
         </div>
       </div></div>
       </div>
@@ -7458,12 +7607,12 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-circle-check"></i><h2>Aprovações</h2></div></div>
     <div class="perm-body"><div id="aprHome">
       <button class="perm-card apr-card" id="aprCardCom">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#26c6da,#0097a7)"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="perm2-ic" style="background:#00A193"><i class="fa-solid fa-comment-dots"></i></div>
         <h3>Aprovar comentários</h3><p class="perm2-desc">Modere os comentários enviados nas publicações. Aprove para exibir ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardComN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
       <button class="perm-card apr-card" id="aprCardPub">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="perm2-ic" style="background:#2F8EE5"><i class="fa-solid fa-newspaper"></i></div>
         <h3>Aprovar publicações</h3><p class="perm2-desc">Revise as publicações de terceiros antes de irem ao ar. Aprove para publicar ou recuse com um motivo.</p>
         <div class="apr-card-foot"><span class="apr-card-badge" id="aprCardPubN">0 pendentes</span><span class="apr-card-go">Abrir <i class="fa-solid fa-arrow-right"></i></span></div>
       </button>
@@ -7545,14 +7694,69 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- CATEGORIAS -->
   <div class="nv-screen" id="nvCatsScreen">
-    <div class="cat-head">
-      <div class="rx-title"><i class="fa-solid fa-tags"></i><h2>Categorias</h2></div>
-      <button class="cat-add" id="nvCatAdd"><i class="fa-solid fa-plus"></i> Nova categoria</button>
+    <div class="cat-toprow">
+      <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M5.5,9A1.5,1.5 0 0,0 7,7.5A1.5,1.5 0 0,0 5.5,6A1.5,1.5 0 0,0 4,7.5A1.5,1.5 0 0,0 5.5,9M17.41,11.58C17.77,11.94 18,12.44 18,13C18,13.55 17.78,14.05 17.41,14.41L12.41,19.41C12.05,19.77 11.55,20 11,20C10.45,20 9.95,19.78 9.58,19.41L2.59,12.42C2.22,12.05 2,11.55 2,11V6C2,4.89 2.89,4 4,4H9C9.55,4 10.05,4.22 10.41,4.58L17.41,11.58M13.54,5.71L14.54,4.71L21.41,11.58C21.78,11.94 22,12.45 22,13C22,13.55 21.78,14.05 21.42,14.41L16.04,19.79L15.04,18.79L20.75,13L13.54,5.71Z" /></svg><h2>Categorias</h2></div>
       <span style="flex:1"></span>
-      <select class="nv-fsel nvcat-sel" id="nvCatSeg"><option value="ativos">Ativos</option><option value="inativos">Inativos</option></select>
-      <div class="rx-search" style="max-width:280px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="nvCatSearch" placeholder="Buscar categoria" autocomplete="off"></div>
+      <button type="button" class="cat-helpbtn" id="nvCatHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar categorias?</button>
+    </div>
+    <div class="cat-head">
+      <button class="cat-add" id="nvCatAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Nova categoria</button>
+      <span style="flex:1"></span>
+      <select class="nv-fsel nvcat-sel" id="nvCatSeg"><option value="ativos">Ativas</option><option value="inativos">Inativas</option></select>
+      <div class="nv-catsearch">
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="nvCatSearch" placeholder="Pesquisar categoria..." autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="nvCatSearchBtn" aria-label="Buscar categoria"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
     </div>
     <div class="cat-body"><div class="rlist" id="nvCatList"></div></div>
+  </div>
+  <div class="nv-screen" id="nvTeamScreen">
+    <div class="cat-toprow">
+      <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg><h2>Equipe administrativa</h2></div>
+      <span style="flex:1"></span>
+      <button type="button" class="cat-helpbtn" id="permTeamHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar administradores?</button>
+    </div>
+    <div class="cat-head">
+      <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
+      <span style="flex:1"></span>
+      <div class="nv-catsearch">
+        <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador..." autocomplete="off"></div>
+        <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </div>
+    <div class="cat-body"><div class="rlist" id="teamList"></div></div>
+  </div>
+  <div class="fg-backdrop" id="permTeamHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img src="uploads/tutorial/image-admins.svg" alt="">
+        <button type="button" class="cat-help-close" id="permTeamHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2>Como usar equipe administrativa?</h2>
+        <p>Defina os administradores da rede social. Selecione as pessoas da equipe administrativa que terão acesso às <b>configurações</b> do módulo, <b>acompanharão</b> a aprovação, curtidas, comentários e visualizações dos conteúdos compartilhados.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="permTeamHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="permTeamHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fg-backdrop" id="permHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img id="permHelpArt" src="uploads/tutorial/image-post.svg" alt="">
+        <button type="button" class="cat-help-close" id="permHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2 id="permHelpTitle">Como usar quem pode postar?</h2>
+        <p id="permHelpText">Defina quem pode postar na sua rede social. Escolha se a matriz e as unidades podem criar publicações e shorts e se a permissão é para todos ou apenas para pessoas e unidades selecionadas.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="permHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="permHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="fg-backdrop" id="nvCatModal">
     <div class="fg-modal" style="width:460px">
@@ -7563,7 +7767,23 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         <div style="margin-top:18px"><label class="fg-label">Ícone</label><div class="cat-icons" id="nvCatIcons"></div></div>
         <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">
           <button class="fo-btn ghost" id="nvCatCancel">Cancelar</button>
-          <button class="fo-btn" id="nvCatSave"><i class="fa-solid fa-check"></i> Salvar</button>
+          <button class="fo-btn" id="nvCatSave"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fg-backdrop" id="nvCatHelpModal">
+    <div class="cat-help-modal">
+      <div class="cat-help-hero">
+        <img src="uploads/tutorial/image-categories.svg" alt="">
+        <button type="button" class="cat-help-close" id="nvCatHelpClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="cat-help-body">
+        <h2>Como usar categorias?</h2>
+        <p>Use categorias para separar as postagens por <b>assunto, área ou finalidade</b>, facilitando a busca, a gestão dos conteúdos e mostrando ao leitor <b>sobre o que cada item se trata</b>.</p>
+        <div class="cat-help-actions">
+          <button type="button" class="cat-help-btn ghost" id="nvCatHelpDoubt">Ainda tenho dúvidas</button>
+          <button type="button" class="cat-help-btn primary" id="nvCatHelpOk"><i class="fa-solid fa-check"></i> Entendi</button>
         </div>
       </div>
     </div>
@@ -7615,13 +7835,53 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
 </div>
 <div class="fg-backdrop" id="teamAddModal">
-  <div class="fg-modal" style="width:480px">
+  <div class="fg-modal" style="width:1000px;height:600px">
     <div class="fg-head"><h2>Novo administrador</h2><span style="flex:1"></span><button class="fg-close" id="teamAddClose"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="fg-body">
-      <p style="font-size:12px;line-height:16px;color:#8E8E93;margin:0 0 12px">Aplicação: apenas administradores da rede podem aprovar conteúdo.</p>
-      <div class="rx-search" style="margin-bottom:12px"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="teamAddSearch" placeholder="Buscar pessoa" autocomplete="off"></div>
-      <div class="perm-pick" id="teamAddList"></div>
+      <div class="tadd-toprow">
+        <div class="nv-catsearch tadd-unitsearch">
+          <button type="button" id="teamAddUnitFilter" class="tadd-unitfield" aria-label="Selecionar unidade">
+            <i class="fa-solid fa-earth-americas"></i>
+            <span id="teamAddUnitLbl">Todas as unidades</span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="nv-catsearch tadd-personsearch">
+          <div class="rx-search"><input type="text" id="teamAddSearch" placeholder="Pesquisar pessoa..." autocomplete="off"></div>
+          <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="tadd-bulkacts">
+          <button type="button" class="cat-editbtn" id="teamAddSelAll">Selecionar tudo</button>
+          <button type="button" class="fo-btn ghost" id="teamAddSelClear">Limpar seleção</button>
+        </div>
+      </div>
+      <div class="tadd-panel">
+        <div class="tadd-head">
+          <div class="tadd-th-check"></div>
+          <div class="tadd-th-col">
+            <span class="tadd-th-label">Pessoa <span id="teamAddHeadCount"></span></span>
+            <button type="button" class="tadd-sortbtn" id="teamAddSortBtn" data-sortcol="name" aria-label="Ordenar por pessoa"></button>
+          </div>
+          <div class="tadd-th-col">
+            <span class="tadd-th-label">Unidade</span>
+            <button type="button" class="tadd-sortbtn" id="teamAddSortBtnUnit" data-sortcol="unit" aria-label="Ordenar por unidade"></button>
+          </div>
+        </div>
+        <div class="tadd-body" id="teamAddList"></div>
+      </div>
     </div>
+    <div class="fg-foot">
+      <span class="tadd-count" id="teamAddCount">Nenhum administrador selecionado</span>
+      <span class="sp"></span>
+      <button class="fo-btn ghost" id="teamAddCancel">Cancelar</button>
+      <button class="fo-btn" id="teamAddConfirm"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
+    </div>
+  </div>
+</div>
+<div class="fg-backdrop" id="teamAddUnitModal">
+  <div class="fg-modal" style="width:420px">
+    <div class="fg-head"><h2>Selecionar unidade</h2><span style="flex:1"></span><button class="fg-close" id="teamAddUnitModalClose"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="fg-body"></div>
   </div>
 </div>
 <div class="fg-backdrop" id="unitAddModal">
@@ -7742,13 +8002,13 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <div class="perm-body">
     <div id="permStoriesGrid">
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#a06be0,#5e35b1)"><i class="fa-solid fa-building"></i></div>
-        <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar shorts oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
+        <div class="perm2-ic" style="background:#5e35b1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>office-building</title><path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/></svg></div>
+        <h3>Sua Marca (Matriz)</h3><p class="perm2-desc">Equipes internas da franqueadora. Ao ativar, os colaboradores da matriz poderão publicar comunicados e notícias oficiais para toda a rede, libere para todos da matriz ou apenas para pessoas selecionadas.</p>
         <div class="perm2-foot" id="stPermCentralFoot"></div>
       </div>
       <div class="perm-card">
-        <div class="perm2-ic" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid fa-store"></i></div>
-        <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar shorts, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
+        <div class="perm2-ic" style="background:#1e4fb0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><title>store</title><path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"/></svg></div>
+        <h3>Unidades</h3><p class="perm2-desc">Franquias e suas equipes espalhadas pela rede. Ao ativar, os colaboradores das unidades poderão criar e publicar conteúdos no feed, você define se todos os cargos podem publicar ou apenas cargos específicos.</p>
         <div class="perm2-foot" id="stPermUnitFoot"></div>
       </div>
     </div>
@@ -9320,16 +9580,16 @@ $('#catList').addEventListener('click', e => {
 
 /* ---------- Permissões (quem pode publicar) ---------- */
 const PEOPLE = [
-  { id:1027, name:'Arthur Henrique Nunes', av:'av-wm', role:'Comercial' },
-  { id:978,  name:'Eduardo Almeida', av:'av-bo', role:'Marketing · Pit Stop Barra' },
-  { id:992,  name:'Iumy Sakamoto', av:'av-js', role:'Produto' },
-  { id:1007, name:'Mariana Áurea Martins', av:'av-cm', role:'Customer Success' },
-  { id:1036, name:'Paulo Henrique Soares Costa', av:'av-pl', role:'Design' },
-  { id:1,    name:'Rodrigo Caetano Silva', av:'av-rc', role:'CEO' },
-  { id:12,   name:'Ana Souza', av:'av-as', role:'Marketing · Pit Stop Barra' },
-  { id:34,   name:'Livia Fernandes', av:'av-lf', role:'Customer Success' },
-  { id:56,   name:'Matheus Scussel', av:'av-ms', role:'COO' },
-  { id:78,   name:'Ellen Rocha', av:'av-gc', role:'Conteúdo' }
+  { id:1027, name:'Arthur Henrique Nunes', av:'av-wm', role:'Comercial', unidade:'Matriz' },
+  { id:978,  name:'Eduardo Almeida', av:'av-bo', role:'Marketing · Pit Stop Barra', unidade:'Pit Stop Barra' },
+  { id:992,  name:'Iumy Sakamoto', av:'av-js', role:'Produto', unidade:'Matriz' },
+  { id:1007, name:'Mariana Áurea Martins', av:'av-cm', role:'Customer Success', unidade:'Matriz' },
+  { id:1036, name:'Paulo Henrique Soares Costa', av:'av-pl', role:'Design', unidade:'Matriz' },
+  { id:1,    name:'Rodrigo Caetano Silva', av:'av-rc', role:'CEO', unidade:'Matriz' },
+  { id:12,   name:'Ana Souza', av:'av-as', role:'Marketing · Pit Stop Barra', unidade:'Pit Stop Barra' },
+  { id:34,   name:'Livia Fernandes', av:'av-lf', role:'Customer Success', unidade:'Matriz' },
+  { id:56,   name:'Matheus Scussel', av:'av-ms', role:'COO', unidade:'Matriz' },
+  { id:78,   name:'Ellen Rocha', av:'av-gc', role:'Conteúdo', unidade:'Matriz' }
 ];
 
 
@@ -9485,27 +9745,27 @@ function stPermFeet(){
     const cCard=cF.closest('.perm-card'); if(cCard) cCard.classList.toggle('on', STORY_PERM.centralOn);
     if(STORY_PERM.centralOn){
       const some = STORY_PERM.mode!=='todos';
-      const who = (typeof PERM!=='undefined'?PERM.members.length:0)+' pessoa(s) selecionada(s)';
+      const n = typeof PERM!=='undefined'?PERM.members.length:0;
       cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="central"><span class="nv-tk"></span> Ativo</label>'+
-        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-choice">'+
-        '<button class="perm-opt2'+(!some?' on':'')+'" data-stseg="central-todos"><i class="fa-solid fa-users"></i> Todos da matriz</button>'+
-        '<button class="perm-opt2'+(some?' on':'')+'" data-stseg="central-alguns"><i class="fa-solid fa-user-check"></i> Somente pessoas selecionadas</button></div>'+
-        (some?'<div class="perm-cfg-foot"><a class="perm-cfg-link" data-stwhich="central"><i class="fa-solid fa-sliders"></i> Selecionar pessoas</a> <span style="color:var(--muted);font-size:12px;margin-left:4px">'+who+'</span></div>':'')+
-        '</div>';
-    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> Inativo</label>';
+        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
+        '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
+        (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-stwhich="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
+        '</span></div></div></div>';
+    } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
   if(uF){
     const uCard=uF.closest('.perm-card'); if(uCard) uCard.classList.toggle('on', STORY_PERM.unitOn);
     if(STORY_PERM.unitOn){
       const some = STORY_PERM.unitMode!=='todos';
-      const who = (typeof unitSelLabel==='function')?unitSelLabel('story'):'';
+      const n = UNIT_SEL.story.length;
       uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-stdisable="unit"><span class="nv-tk"></span> Ativo</label>'+
-        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-choice">'+
-        '<button class="perm-opt2'+(!some?' on':'')+'" data-stseg="unit-todos"><i class="fa-solid fa-users"></i> Todas unidades</button>'+
-        '<button class="perm-opt2'+(some?' on':'')+'" data-stseg="unit-alguns"><i class="fa-solid fa-user-check"></i> Unidades selecionadas</button></div>'+
-        (some?'<div class="perm-cfg-foot"><a class="perm-cfg-link" data-unitpick="story"><i class="fa-solid fa-sliders"></i> Selecionar unidades</a> <span style="color:var(--muted);font-size:12px;margin-left:4px">'+who+'</span></div>':'')+
-        '</div>';
-    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> Inativo</label>';
+        '<div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
+        '<div class="perm-radio'+(!some?' on':'')+'" data-stseg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
+        '<div class="perm-radio'+(some?' on':'')+'" data-stseg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
+        (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="story">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
+        '</span></div></div></div>';
+    } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-stenable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>';
   }
 }
 document.addEventListener('change', e=>{
@@ -9524,6 +9784,9 @@ document.addEventListener('change', e=>{
 document.addEventListener('click', e=>{
   const up=e.target.closest('[data-unitpick]');
   if(up){ if(typeof openUnitPick==='function') openUnitPick(up.dataset.unitpick); return; }
+  const wc=e.target.closest('[data-stwhich]');
+  if(wc){ if(wc.dataset.stwhich==='central'){ if(typeof openPermShortsWho==='function') openPermShortsWho(); }
+    else { const um=document.getElementById('uroleModal'); if(um){ if(typeof renderUrolePick==='function') renderUrolePick(); um.classList.add('open'); } } return; }
   const sg=e.target.closest('[data-stseg]');
   if(sg){ const v=sg.dataset.stseg;
     if(v==='central-todos') STORY_PERM.mode='todos';
@@ -9531,9 +9794,6 @@ document.addEventListener('click', e=>{
     else if(v==='unit-todos') STORY_PERM.unitMode='todos';
     else STORY_PERM.unitMode='selecionados';
     stPermFeet(); if(typeof PERM!=='undefined'){ PERM.mode=STORY_PERM.mode; } return; }
-  const wc=e.target.closest('[data-stwhich]');
-  if(wc){ if(wc.dataset.stwhich==='central'){ if(typeof openPermShortsWho==='function') openPermShortsWho(); }
-    else { const um=document.getElementById('uroleModal'); if(um){ if(typeof renderUrolePick==='function') renderUrolePick(); um.classList.add('open'); } } }
 });
 function renderPermList(){
   $$('input[name="permMode"]').forEach(r => { r.checked = (r.value === PERM.mode); });
@@ -11916,38 +12176,117 @@ function nvOpenSocialStories(){
 }
 $('#nmtPub') && $('#nmtPub').addEventListener('click', ()=>newsShow('list'));
 $('#nmtFeed') && $('#nmtFeed').addEventListener('click', ()=>newsShow('feed'));
-$('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(s1)s1.style.display='grid'; permStoriesSecShow(true); if(ac)ac.style.display='none'; $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=$('#nvcfgPubWho'); if(b) b.classList.add('active'); });
+$('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(s1)s1.style.display=''; permStoriesSecShow(true); if(ac)ac.style.display='none'; $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=$('#nvcfgPubWho'); if(b) b.classList.add('active'); });
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
-let teamQuery='', teamAddQuery='';
+let teamQuery='', teamAddQuery='', teamAddUnitQuery='', teamAddSel=new Set();
 function teamPhone(id){ const d=String(9000+(id*37)%9999).padStart(4,'0'); return '(34) 9'+String(8000+(id*13)%1999).slice(0,4)+'-'+d; }
 function teamMail(name){ const p=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(' '); return p[0]+'.'+p[p.length-1]+'@sults.com.br'; }
+let teamSortCol=null, teamSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
+function teamTh(label,col,style){
+  const dir=(teamSortCol===col)?teamSortDir:0;
+  const icon=dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
+  return '<th'+(style?' style="'+style+'"':'')+'><span class="cat-th-in"><span>'+label+'</span>'+
+    '<button type="button" class="cat-sortbtn" data-sortcol="'+col+'" aria-label="Ordenar por '+label+'">'+icon+'</button></span></th>';
+}
 function teamRender(){
   const el=document.getElementById('teamList'); if(!el) return;
-  const cnt=document.getElementById('teamCount'); if(cnt) cnt.textContent = TEAM.length ? TEAM.length+' pessoa(s)' : '';
-  const list=TEAM.map(id=>PEOPLE.find(p=>p.id===id)).filter(Boolean)
+  let list=TEAM.map(id=>PEOPLE.find(p=>p.id===id)).filter(Boolean)
     .filter(p=>!teamQuery || p.name.toLowerCase().includes(teamQuery.toLowerCase()) || (p.role||'').toLowerCase().includes(teamQuery.toLowerCase()));
-  if(!list.length){ el.innerHTML='<div class="perm-empty">Nenhum administrador ainda. Use "Novo administrador".</div>'; return; }
+  if(!list.length){ el.innerHTML='<div class="cat-empty">Nenhum administrador ainda. Use "Novo administrador".</div>'; return; }
+  if(teamSortDir){
+    const dir=teamSortDir===1?1:-1;
+    if(teamSortCol==='id') list=list.slice().sort((a,b)=>dir*(a.id-b.id));
+    else if(teamSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
+    else if(teamSortCol==='phone') list=list.slice().sort((a,b)=>dir*teamPhone(a.id).localeCompare(teamPhone(b.id)));
+    else if(teamSortCol==='mail') list=list.slice().sort((a,b)=>dir*teamMail(a.name).localeCompare(teamMail(b.name)));
+  }
   const rows=list.map(p=>'<tr>'+
     '<td class="perm-id">#'+p.id+'</td>'+
     '<td><div class="perm-person"><span class="avatar '+p.av+'"></span><div><b>'+p.name+'</b><span>'+p.role+'</span></div></div></td>'+
     '<td style="white-space:nowrap">'+teamPhone(p.id)+'</td>'+
     '<td style="white-space:nowrap">'+teamMail(p.name)+'</td>'+
-    '<td style="text-align:right"><button class="perm-remove" data-teamrm="'+p.id+'"><i class="fa-solid fa-xmark"></i> Remover</button></td></tr>').join('');
-  el.innerHTML='<table><thead><tr><th style="width:84px">ID</th><th>Administrador</th><th style="width:170px">Celular</th><th style="width:250px">E-mail</th><th style="width:140px;text-align:right">Ações</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    '<td class="rl-acts"><div class="cat-actwrap"><button class="cat-arch" data-teamrm="'+p.id+'"><i class="fa-solid fa-xmark"></i> Remover</button></div></td></tr>').join('');
+  el.innerHTML='<table><thead><tr>'+
+    teamTh('ID','id','width:84px')+
+    teamTh('Administrador ('+list.length+')','name')+
+    teamTh('Celular','phone')+
+    teamTh('E-mail','mail')+
+    '<th class="rl-acts" style="text-align:center">Ações</th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+$('#teamList') && $('#teamList').addEventListener('click', e=>{
+  const btn=e.target.closest('.cat-sortbtn'); if(!btn) return;
+  const col=btn.dataset.sortcol;
+  if(teamSortCol!==col){ teamSortCol=col; teamSortDir=1; }
+  else if(teamSortDir===1){ teamSortDir=2; }
+  else { teamSortCol=null; teamSortDir=0; }
+  teamRender();
+});
+let teamAddSortCol=null, teamAddSortDir=0; // dir: 0 neutro, 1 asc, 2 desc
+const TEAM_UNIT_INFO = {
+  'Matriz': { company:'Sua Marca Franquias LTDA', color:'#2e7ed4', ini:'MT' },
+  'Pit Stop Barra': { company:'Pit Stop Barra Comércio LTDA', color:'#2aa17e', ini:'PS' }
+};
+function teamAddCountText(){
+  const n=teamAddSel.size;
+  return n===0 ? 'Nenhum selecionado' : 'Selecionados: '+n;
+}
+function teamAddSortIcon(col){
+  const dir=(teamAddSortCol===col)?teamAddSortDir:0;
+  return dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
+}
+function teamAddFilteredList(){
+  return TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
+    .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()))
+    .filter(p=>!teamAddUnitQuery || p.unidade===teamAddUnitQuery);
 }
 function teamAddRender(){
   const el=document.getElementById('teamAddList'); if(!el) return;
-  const list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
-    .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()));
-  el.innerHTML = list.length ? list.map(p=>'<div class="perm-pickrow" data-teamadd="'+p.id+'"><span class="avatar '+p.av+'"></span><div><b>'+p.name+'</b><span>'+p.role+'</span></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
+  let list=teamAddFilteredList();
+  if(teamAddSortDir && teamAddSortCol){
+    const dir=teamAddSortDir===1?1:-1;
+    if(teamAddSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
+    else if(teamAddSortCol==='unit') list=list.slice().sort((a,b)=>dir*(a.unidade||'').localeCompare(b.unidade||''));
+  }
+  el.innerHTML = list.length ? list.map(p=>{
+    const u=TEAM_UNIT_INFO[p.unidade]||{company:'',color:'#8e8e93',ini:(p.unidade||'?').slice(0,2).toUpperCase()};
+    return '<div class="tadd-row'+(teamAddSel.has(p.id)?' on':'')+'" data-teamadd="'+p.id+'"><input type="checkbox" class="tadd-chk"'+(teamAddSel.has(p.id)?' checked':'')+'><span class="tadd-person"><span class="avatar '+p.av+'"></span><span class="tadd-info"><b>'+p.name+'</b><span>#'+p.id+' - '+p.role+'</span></span></span><span class="tadd-unit"><span class="tadd-unit-badge" style="background:'+u.color+'">'+u.ini+'</span><span class="tadd-unit-info"><b>'+(p.unidade||'')+'</b><span>'+u.company+'</span></span></span></div>';
+  }).join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
+  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.textContent=teamAddCountText();
+  const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
+  const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
+  const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
+  const clr=document.getElementById('teamAddSelClear'); if(clr) clr.disabled=teamAddSel.size===0;
 }
 document.addEventListener('click', e=>{
-  if(e.target.closest('#teamAdd')){ teamAddQuery=''; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
-  if(e.target.closest('#teamAddClose') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddUnitQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; const ul=document.getElementById('teamAddUnitLbl'); if(ul) ul.textContent='Todas as unidades'; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAddClose') || e.target.closest('#teamAddCancel') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAddUnitFilter')){ document.getElementById('teamAddUnitModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAddUnitModalClose') || e.target===document.getElementById('teamAddUnitModal')){ document.getElementById('teamAddUnitModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAddSelAll')){ teamAddFilteredList().forEach(p=>teamAddSel.add(p.id)); teamAddRender(); return; }
+  if(e.target.closest('#teamAddSelClear')){ teamAddSel=new Set(); teamAddRender(); return; }
+  const taSortBtn=e.target.closest('#teamAddModal .tadd-sortbtn');
+  if(taSortBtn){
+    const col=taSortBtn.dataset.sortcol;
+    if(teamAddSortCol!==col){ teamAddSortCol=col; teamAddSortDir=1; }
+    else if(teamAddSortDir===1){ teamAddSortDir=2; }
+    else { teamAddSortCol=null; teamAddSortDir=0; }
+    teamAddRender();
+    return;
+  }
+  if(e.target.closest('#teamAddConfirm')){
+    if(!teamAddSel.size) return;
+    const n=teamAddSel.size;
+    teamAddSel.forEach(id=>{ if(!TEAM.includes(id)) TEAM.push(id); });
+    teamAddSel=new Set();
+    teamRender();
+    document.getElementById('teamAddModal').classList.remove('open');
+    fgToast(n>1?'Administradores adicionados':'Administrador adicionado');
+    return;
+  }
   const add=e.target.closest('[data-teamadd]');
-  if(add){ TEAM.push(+add.dataset.teamadd); teamAddRender(); teamRender(); fgToast('Administrador adicionado'); return; }
+  if(add){ const id=+add.dataset.teamadd; if(teamAddSel.has(id)) teamAddSel.delete(id); else teamAddSel.add(id); teamAddRender(); return; }
   const rm=e.target.closest('[data-teamrm]');
   if(rm){ TEAM=TEAM.filter(x=>x!==+rm.dataset.teamrm); teamRender(); fgToast('Administrador removido'); return; }
 });
@@ -11955,54 +12294,57 @@ document.addEventListener('input', e=>{
   if(e.target.id==='teamSearch'){ teamQuery=e.target.value; teamRender(); }
   if(e.target.id==='teamAddSearch'){ teamAddQuery=e.target.value; teamAddRender(); }
 });
-function permTeamSecShow(on){ const s=document.getElementById('permTeamSec'); if(s) s.style.display = on ? '' : 'none'; if(on) teamRender(); }
+document.getElementById('permTeamHelp') && document.getElementById('permTeamHelp').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.add('open'));
+document.getElementById('permTeamHelpClose') && document.getElementById('permTeamHelpClose').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
+document.getElementById('permTeamHelpDoubt') && document.getElementById('permTeamHelpDoubt').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
+document.getElementById('permTeamHelpOk') && document.getElementById('permTeamHelpOk').addEventListener('click', ()=>document.getElementById('permTeamHelpModal').classList.remove('open'));
+document.getElementById('permTeamHelpModal') && document.getElementById('permTeamHelpModal').addEventListener('click', e=>{ if(e.target===document.getElementById('permTeamHelpModal')) document.getElementById('permTeamHelpModal').classList.remove('open'); });
 function cfgSetActive(id){ ['cfgNavWho','cfgNavApr','cfgNavTeam','nvcfgCats2'].forEach(x=>{ const b=document.getElementById(x); if(b) b.classList.toggle('active', x===id); }); }
-const PERM_TUT_ART = { who:'uploads/tutorial/post.svg', apr:'uploads/tutorial/approve.svg', team:'uploads/tutorial/admin.svg' };
-const PERM_TUT = {
-  who: ['PERMISSÃO DE PUBLICAÇÃO', 'Defina quem pode publicar na rede social',
-    'Escolha se a matriz e as unidades podem publicar e, em cada caso, se todos os colaboradores ou apenas pessoas selecionadas. Quem não tiver permissão continua vendo o conteúdo, mas não cria publicações.'],
-  apr: ['FLUXO DE APROVAÇÃO', 'Controle o que vai ao ar antes de publicar',
-    'Ative a aprovação para publicações e comentários. Com o fluxo ativo, cada conteúdo criado fica pendente até um administrador aprovar, e o autor é avisado do resultado.'],
-  team: ['ADMINISTRADORES DA REDE', 'Defina quem administra a rede social',
-    'Administradores têm acesso total ao módulo: publicam sem passar por aprovação, aprovam e reprovam o que vem das unidades, inativam publicações, veem em detalhe quem curtiu e comentou cada post e gerenciam as configurações do módulo. Apenas as pessoas desta lista recebem os itens pendentes.']
+const PERM_HELP = {
+  who: {
+    btn: 'Como usar quem pode postar?',
+    art: 'uploads/tutorial/image-post.svg',
+    title: 'Como usar quem pode postar?',
+    body: 'Defina quem pode postar na sua rede social. Escolha se a matriz e as unidades podem criar publicações e shorts e se a permissão é para todos ou apenas para pessoas e unidades selecionadas.'
+  },
+  apr: {
+    btn: 'Como usar aprovações?',
+    art: 'uploads/tutorial/image-aprovals.svg',
+    title: 'Como usar aprovações?',
+    body: 'Ative a aprovação para publicações, shorts e comentários. Assim, cada conteúdo criado fica pendente até a análise de um administrador e só é disponibilizado após sua <b>aprovação</b>. O autor é notificado sobre a decisão e, em caso de <b>reprovação</b>, também recebe o motivo.'
+  }
 };
-function permTutFill(which){
-  const t = PERM_TUT[which] || PERM_TUT.who;
-  const k=document.getElementById('permTutKicker'), ti=document.getElementById('permTutTitle'), tx=document.getElementById('permTutText');
-  if(k) k.textContent=t[0]; if(ti) ti.textContent=t[1]; if(tx) tx.textContent=t[2];
-  const art=document.getElementById('permTutArt');
-  if(art) art.src = PERM_TUT_ART[which] || PERM_TUT_ART.who;
+function permHelpFill(which){
+  const d = PERM_HELP[which] || PERM_HELP.who;
+  const b=document.getElementById('permHelpBtnLbl'); if(b) b.textContent = d.btn;
+  const art=document.getElementById('permHelpArt'); if(art) art.src = d.art;
+  const ti=document.getElementById('permHelpTitle'); if(ti) ti.textContent = d.title;
+  const tx=document.getElementById('permHelpText'); if(tx) tx.innerHTML = d.body;
 }
-function permTutBtn(on, which){
-  const b=document.getElementById('permTutorial'); if(b) b.hidden=!on;
-  const p=document.getElementById('permTut');
-  if(which) permTutFill(which);
-  if(p && !on) p.hidden=true;
-}
-document.addEventListener('click', function(e){
-  if(!e.target.closest('#permTutorial')) return;
-  const p=document.getElementById('permTut'), b=document.getElementById('permTutorial');
-  if(!p||!b) return;
-  const show = p.hidden;
-  p.hidden = !show;
-  b.querySelector('.pt-lbl').textContent = show ? 'Ocultar tutorial' : 'Exibir tutorial';
-  b.querySelector('.pt-carat').className = 'fa-solid fa-chevron-'+(show?'up':'down')+' pt-carat';
-});
+document.getElementById('permHelpBtn') && document.getElementById('permHelpBtn').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.add('open'));
+document.getElementById('permHelpClose') && document.getElementById('permHelpClose').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.remove('open'));
+document.getElementById('permHelpDoubt') && document.getElementById('permHelpDoubt').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.remove('open'));
+document.getElementById('permHelpOk') && document.getElementById('permHelpOk').addEventListener('click', ()=>document.getElementById('permHelpModal').classList.remove('open'));
+document.getElementById('permHelpModal') && document.getElementById('permHelpModal').addEventListener('click', e=>{ if(e.target===document.getElementById('permHelpModal')) document.getElementById('permHelpModal').classList.remove('open'); });
+const PERM_HEAD_ICON = {
+  who: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" /></svg>',
+  apr: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg>'
+};
 function permHead(which){
   const ic=document.getElementById('permHeadIc'), t=document.getElementById('permHeadTtl');
   if(!ic||!t) return;
-  permTutBtn(true, which||'who');
-  if(which==='team'){ ic.className='fa-solid fa-user-shield'; t.textContent='Administradores'; return; }
+  const scr=document.getElementById('nvPermScreen'); if(scr) scr.dataset.permview = which||'who';
+  permHelpFill(which||'who');
   const apr = which==='apr';
-  ic.className = apr ? 'fa-solid fa-circle-check' : 'fa-solid fa-user-shield';
+  ic.innerHTML = apr ? PERM_HEAD_ICON.apr : PERM_HEAD_ICON.who;
   t.textContent = apr ? 'Aprovações' : 'Quem pode postar';
 }
 function permStoriesSecShow(on){ const s=document.getElementById('permStoriesSec'); if(s) s.style.display = on ? '' : 'none'; if(on && typeof stPermFeet==='function') stPermFeet(); }
 function cfgGo(which){
-  permHead(which); permStoriesSecShow(which==='who'||!which); permTeamSecShow(which==='team');
+  if(which==='team'){ newsShow('team'); cfgSetActive('cfgNavTeam'); newsView.classList.add('catmode'); newsView.classList.add('cfg'); newsView.classList.remove('apr'); newsView.classList.remove('aprhome'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); return; }
+  permHead(which); permStoriesSecShow(which==='who'||!which);
   if(which==='cats'){ newsShow('cats'); cfgSetActive('nvcfgCats2'); }
-  else if(which==='team'){ newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(s1)s1.style.display='none'; if(ac)ac.style.display='none'; cfgSetActive('cfgNavTeam'); }
-  else { newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(which==='apr'){ if(s1)s1.style.display='none'; permStoriesSecShow(false); if(ac)ac.style.display='grid'; cfgSetActive('cfgNavApr'); } else { if(s1)s1.style.display='grid'; permStoriesSecShow(true); if(ac)ac.style.display='none'; cfgSetActive('cfgNavWho'); } }
+  else { newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(which==='apr'){ if(s1)s1.style.display='none'; permStoriesSecShow(false); if(ac)ac.style.display='grid'; cfgSetActive('cfgNavApr'); } else { if(s1)s1.style.display=''; permStoriesSecShow(true); if(ac)ac.style.display='none'; cfgSetActive('cfgNavWho'); } }
   newsView.classList.add('catmode'); newsView.classList.add('cfg'); newsView.classList.remove('apr'); newsView.classList.remove('aprhome'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active');
 }
 $('#cfgNavWho') && $('#cfgNavWho').addEventListener('click', ()=>cfgGo('who'));
@@ -12016,7 +12358,7 @@ $('#nvaprPub') && $('#nvaprPub').addEventListener('click', ()=>newsShow('pubappr
 $('#nvcfgCats') && $('#nvcfgCats').addEventListener('click', ()=>newsShow('cats'));
 $('#nvcfgPerm') && $('#nvcfgPerm').addEventListener('click', ()=>permShow('who'));
 $('#nvcfgPermPub') && $('#nvcfgPermPub').addEventListener('click', ()=>permShow('who'));
-function permShow(which){ permStoriesSecShow(which!=='apr'); newsShow('perm'); const s1=$('#permStep1'), ac=$('#permApprGrid'); if(s1&&ac){ if(which==='apr'){ s1.style.display='none'; permStoriesSecShow(false); ac.style.display=''; } else { s1.style.display='grid'; permStoriesSecShow(true); ac.style.display='none'; } } $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=which==='apr'?$('#nvcfgPubApr'):$('#nvcfgPubWho'); if(b) b.classList.add('active'); }
+function permShow(which){ permStoriesSecShow(which!=='apr'); newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(s1&&ac){ if(which==='apr'){ s1.style.display='none'; permStoriesSecShow(false); ac.style.display=''; } else { s1.style.display=''; permStoriesSecShow(true); ac.style.display='none'; } } $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=which==='apr'?$('#nvcfgPubApr'):$('#nvcfgPubWho'); if(b) b.classList.add('active'); }
 $('#nvcfgPubWho') && $('#nvcfgPubWho').addEventListener('click', ()=>permShow('who'));
 $('#nvcfgPubApr') && $('#nvcfgPubApr').addEventListener('click', ()=>permShow('apr'));
 $('#nvcfgPermCom') && $('#nvcfgPermCom').addEventListener('click', ()=>newsShow('params'));
@@ -12439,7 +12781,7 @@ $('#interFRole') && $('#interFRole').addEventListener('change', function(e){ int
 $('#interFApply') && $('#interFApply').addEventListener('click', function(){ interPage=1; renderInteractions(); fgToast('Filtros aplicados'); });
 $('#interFClear') && $('#interFClear').addEventListener('click', function(){ interQuery=''; interPerson=''; interStore=''; interPeriod=''; interOnlyNewOn=false; interReact=''; interPost=''; interRole=''; interPage=1; ['interFReact','interFPost','interFRole'].forEach(function(id){var el=document.getElementById(id); if(el)el.value='';}); var s=$('#interSearch'); if(s)s.value=''; ['interFPerson','interFStore','interFPeriod'].forEach(function(id){ var el=document.getElementById(id); if(el)el.value=''; }); renderInteractions(); });
 /* relocate appr screens */
-(function(){ const nv=document.getElementById('newsView'); ['nvInterScreen','nvArticleScreen','nvCatsScreen','nvPermScreen','nvParamsScreen','nvAprHomeScreen','nvModScreen','nvPubApprScreen','nvReelApprScreen'].forEach(id=>{ const el=document.getElementById(id); if(nv&&el&&!nv.contains(el)) nv.appendChild(el); }); })();
+(function(){ const nv=document.getElementById('newsView'); ['nvInterScreen','nvArticleScreen','nvCatsScreen','nvTeamScreen','nvPermScreen','nvParamsScreen','nvAprHomeScreen','nvModScreen','nvPubApprScreen','nvReelApprScreen'].forEach(id=>{ const el=document.getElementById(id); if(nv&&el&&!nv.contains(el)) nv.appendChild(el); }); })();
 function newsShow(screen){
   if(typeof nvArtAdvClose==='function') nvArtAdvClose();
   $$('.nv-screen').forEach(s => s.classList.remove('active'));
@@ -12479,6 +12821,7 @@ function newsShow(screen){
   else if (screen==='perm'){ $('#nvPermScreen').classList.add('active'); nmodSetActive('nmodPerm'); renderNewsPerm(); }
   else if (screen==='inter'){ $('#nvInterScreen').classList.add('active'); nmodSetActive('nmodInter'); renderInteractions(); }
   else if (screen==='cats'){ $('#nvCatsScreen').classList.add('active'); nmodSetActive('nmodCats'); renderNewsCats(); }
+  else if (screen==='team'){ $('#nvTeamScreen').classList.add('active'); nmodSetActive('nmodPerm'); newsView.classList.add('catmode'); if($('#nmtPerm'))$('#nmtPerm').classList.remove('active'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); cfgSetActive('cfgNavTeam'); teamRender(); }
   else if (screen==='params'){ $('#nvParamsScreen').classList.add('active'); nmodSetActive('nmodParams'); }
   else if (screen==='aprhome'){ $('#nvAprHomeScreen').classList.add('active'); nmodSetActive('nmodApr'); renderAprHome(); }
   else if (screen==='mod'){ $('#nvModScreen').classList.add('active'); nmodSetActive('nmodMod'); renderModQueue(); if(typeof aprSideSync==='function') aprSideSync('com'); }
@@ -12916,18 +13259,42 @@ const NEWS_CAT_ICONS = ['fa-bullhorn','fa-calendar-day','fa-hand-holding-heart',
 let nvCatQuery='', nvCatEditId=null, nvCatColor=CAT_COLORS[0], nvCatIcon=NEWS_CAT_ICONS[0];
 function newsCatByName(name){ return NEWS_CATS.find(c=>c.name===name); }
 function newsCatCount(name){ return NEWS.filter(n=>(n.sub||'')===name).length; }
+const NV_ICON_EDIT='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z"/></svg>';
+const NV_ICON_CANCEL='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z"/></svg>';
+const NV_SORT_ICONS = {
+  swap:'<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,6L7,11H17L12,6M7,13L12,18L17,13H7Z"/></svg>',
+  up:'<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7,15L12,10L17,15H7Z"/></svg>',
+  down:'<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7,10L12,15L17,10H7Z"/></svg>'
+};
+let nvCatSortCol=null, nvCatSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
+function nvCatTh(label,col,style){
+  const dir=(nvCatSortCol===col)?nvCatSortDir:0;
+  const icon=dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
+  return '<th'+(style?' style="'+style+'"':'')+'><span class="cat-th-in"><span>'+label+'</span>'+
+    '<button type="button" class="cat-sortbtn" data-sortcol="'+col+'" aria-label="Ordenar por '+label+'">'+icon+'</button></span></th>';
+}
 function renderNewsCats(){
   const q=rxNorm(nvCatQuery);
   const list=NEWS_CATS.filter(c=>(nvCatStatus==='inativos' ? c.active===false : c.active!==false) && (!q||rxNorm(c.name).includes(q)));
   const el=$('#nvCatList');
   if(!list.length){ el.innerHTML='<div class="cat-empty">Nenhuma categoria '+(nvCatStatus==='inativos'?'inativa':'ativa')+'.</div>'; return; }
   const reelCount = name => { const cat=(typeof CATEGORIES!=='undefined'?CATEGORIES.find(x=>x.name===name):null); return (cat&&typeof REELS_DATA!=='undefined') ? REELS_DATA.filter(r=>r.cat===cat.id).length : 0; };
-  el.innerHTML='<table><thead><tr><th>Categoria</th><th style="width:130px">Publicações</th><th style="width:110px">Shorts</th><th style="text-align:right;width:200px">Ações</th></tr></thead><tbody>'+
+  if(nvCatSortDir){
+    const dir=nvCatSortDir===1?1:-1;
+    if(nvCatSortCol==='name') list.sort((a,b)=>dir*a.name.localeCompare(b.name));
+    else if(nvCatSortCol==='pub') list.sort((a,b)=>dir*(newsCatCount(a.name)-newsCatCount(b.name)));
+    else if(nvCatSortCol==='shorts') list.sort((a,b)=>dir*(reelCount(a.name)-reelCount(b.name)));
+  }
+  el.innerHTML='<table><thead><tr>'+
+    nvCatTh('Categoria ('+list.length+')','name')+
+    nvCatTh('Publicações','pub')+
+    nvCatTh('Shorts','shorts')+
+    '<th style="text-align:center">Ações</th></tr></thead><tbody>'+
     list.map(c=>'<tr data-id="'+c.id+'"><td><div class="cat-name"><span class="cat-ic" style="background:'+c.color+'"><i class="fa-solid '+(c.icon||'fa-tag')+'"></i></span>'+c.name+'</div></td>'+
       '<td style="white-space:nowrap">'+newsCatCount(c.name)+' publicações</td>'+
       '<td style="white-space:nowrap">'+reelCount(c.name)+' shorts</td>'+
-      '<td class="rl-acts"><button class="cat-editbtn" data-act="edit"><i class="fa-solid fa-pen"></i> Editar</button>'+
-      '<button class="cat-arch" data-act="arch"><i class="fa-solid fa-'+(c.active!==false?'ban':'rotate-left')+'"></i> '+(c.active!==false?'Inativar':'Reativar')+'</button></td></tr>').join('')+'</tbody></table>';
+      '<td class="rl-acts"><div class="cat-actwrap"><button class="cat-editbtn" data-act="edit">'+NV_ICON_EDIT+' Editar</button>'+
+      '<button class="cat-arch" data-act="arch">'+(c.active!==false?NV_ICON_CANCEL:'<i class="fa-solid fa-rotate-left"></i>')+' '+(c.active!==false?'Inativar':'Reativar')+'</button></div></td></tr>').join('')+'</tbody></table>';
 }
 function nvCatSwatches(){ $('#nvCatSw').innerHTML=CAT_COLORS.map(c=>'<span class="cat-sw'+(c===nvCatColor?' sel':'')+'" data-col="'+c+'" style="background:'+c+'">'+(c===nvCatColor?'<i class="fa-solid fa-check"></i>':'')+'</span>').join(''); }
 function nvCatIcons(){ $('#nvCatIcons').innerHTML=NEWS_CAT_ICONS.map(ic=>'<span class="cat-icpick'+(ic===nvCatIcon?' sel':'')+'" data-ic="'+ic+'"><i class="fa-solid '+ic+'"></i></span>').join(''); }
@@ -12939,11 +13306,24 @@ $('#nvCatSearch').addEventListener('input', e=>{ nvCatQuery=e.target.value; rend
 $('#nvCatList').addEventListener('click', e=>{ const _tr=e.target.closest('tr'), _a=e.target.closest('[data-act]');
   if(_tr && _a && _a.dataset.act==='arch'){ const c=NEWS_CATS.find(x=>x.id===_tr.dataset.id); if(c){ c.active = c.active===false; renderNewsCats(); syncNewsCatSelect(); fgToast(c.active===false?'Categoria inativada':'Categoria reativada'); } return; }
   const tr=e.target.closest('tr'); if(!tr) return; const act=e.target.closest('[data-act]'); if(!act) return; const id=tr.dataset.id; if(act.dataset.act==='edit') nvCatOpenModal(id); else { NEWS_CATS=NEWS_CATS.filter(c=>c.id!==id); renderNewsCats(); fgToast('Categoria excluída'); } });
+$('#nvCatList').addEventListener('click', e=>{
+  const btn=e.target.closest('.cat-sortbtn'); if(!btn) return;
+  const col=btn.dataset.sortcol;
+  if(nvCatSortCol!==col){ nvCatSortCol=col; nvCatSortDir=1; }
+  else if(nvCatSortDir===1){ nvCatSortDir=2; }
+  else { nvCatSortCol=null; nvCatSortDir=0; }
+  renderNewsCats();
+});
 $('#nvCatSw').addEventListener('click', e=>{ const s=e.target.closest('.cat-sw'); if(!s) return; nvCatColor=s.dataset.col; nvCatSwatches(); });
 $('#nvCatIcons').addEventListener('click', e=>{ const s=e.target.closest('.cat-icpick'); if(!s) return; nvCatIcon=s.dataset.ic; nvCatIcons(); });
 $('#nvCatModalClose').addEventListener('click', ()=>$('#nvCatModal').classList.remove('open'));
 $('#nvCatCancel').addEventListener('click', ()=>$('#nvCatModal').classList.remove('open'));
 $('#nvCatModal').addEventListener('click', e=>{ if(e.target===$('#nvCatModal')) $('#nvCatModal').classList.remove('open'); });
+$('#nvCatHelp').addEventListener('click', ()=>$('#nvCatHelpModal').classList.add('open'));
+$('#nvCatHelpClose').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
+$('#nvCatHelpDoubt').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
+$('#nvCatHelpOk').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
+$('#nvCatHelpModal').addEventListener('click', e=>{ if(e.target===$('#nvCatHelpModal')) $('#nvCatHelpModal').classList.remove('open'); });
 $('#nvCatSave').addEventListener('click', ()=>{ const name=$('#nvCatName').value.trim(); if(!name){ $('#nvCatName').focus(); return; } if(nvCatEditId){ const c=NEWS_CATS.find(x=>x.id===nvCatEditId); if(c){c.name=name;c.color=nvCatColor;c.icon=nvCatIcon;} fgToast('Categoria atualizada'); } else { NEWS_CATS.push({id:rxNorm(name).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||('cat-'+Date.now()),name:name,color:nvCatColor,icon:nvCatIcon}); fgToast('Categoria criada'); } $('#nvCatModal').classList.remove('open'); renderNewsCats(); syncNewsCatSelect(); });
 function syncNewsCatSelect(){ if(typeof nvArtCatRender==='function') nvArtCatRender(); if(typeof crCatRender==='function') crCatRender();
   const sel=$('#nvDefCat'); if(sel){ const cur=sel.value; sel.innerHTML='<option value="">Sem categoria</option>'+NEWS_CATS.map(c=>'<option>'+c.name+'</option>').join(''); sel.value=cur; } if($('#qpCatBtn')){ if(!qpCatSel||!NEWS_CATS.find(c=>c.name===qpCatSel)) qpCatSel=NEWS_CATS[0].name; qpCatRender(); } }
@@ -13681,8 +14061,16 @@ function renderNewsPerm(){
   if(!permWhoOpen){ $('#permUnitBody').style.display='none'; $('#permCentralBody').style.display='none'; }
   const uCard=$('#permUnitFoot')?$('#permUnitFoot').closest('.perm-card'):null; if(uCard) uCard.classList.toggle('on',NEWS_PERM.unitOn);
   const cCard=$('#permCentralFoot')?$('#permCentralFoot').closest('.perm-card'):null; if(cCard) cCard.classList.toggle('on',NEWS_PERM.centralOn);
-  const uF=$('#permUnitFoot'); if(uF){ if(NEWS_PERM.unitOn){ const some=NEWS_PERM.unitMode!=='todos'; const who = unitSelLabel('pub'); uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="unit"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-choice"><button class="perm-opt2'+(!some?' on':'')+'" data-seg="unit-todos"><i class="fa-solid fa-users"></i> Todas unidades</button><button class="perm-opt2'+(some?' on':'')+'" data-seg="unit-alguns"><i class="fa-solid fa-user-check"></i> Unidades selecionadas</button></div>'+(some?'<div class="perm-cfg-foot"><a class="perm-cfg-link" data-unitpick="pub"><i class="fa-solid fa-sliders"></i> Selecionar unidades</a> <span style="color:var(--muted);font-size:12px;margin-left:4px">'+who+'</span></div>':'')+'</div>'; } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="unit"><span class="nv-tk"></span> Inativo</label>'; }
-  const cF=$('#permCentralFoot'); if(cF){ if(NEWS_PERM.centralOn){ const some=NEWS_PERM.mode!=='todos'; const who = NEWS_PERM.members.length+' pessoa(s) selecionada(s)'; cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="central"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-choice"><button class="perm-opt2'+(!some?' on':'')+'" data-seg="central-todos"><i class="fa-solid fa-users"></i> Todos da matriz</button><button class="perm-opt2'+(some?' on':'')+'" data-seg="central-alguns"><i class="fa-solid fa-user-check"></i> Somente pessoas selecionadas</button></div>'+(some?'<div class="perm-cfg-foot"><a class="perm-cfg-link" data-which="central"><i class="fa-solid fa-sliders"></i> Selecionar pessoas</a> <span style="color:var(--muted);font-size:12px;margin-left:4px">'+who+'</span></div>':'')+'</div>'; } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="central"><span class="nv-tk"></span> Inativo</label>'; }
+  const uF=$('#permUnitFoot'); if(uF){ if(NEWS_PERM.unitOn){ const some=NEWS_PERM.unitMode!=='todos'; const n=UNIT_SEL.pub.length; uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="unit"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
+    '<div class="perm-radio'+(!some?' on':'')+'" data-seg="unit-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todas as unidades</b><span>Qualquer unidade vinculada à rede.</span></span></div>'+
+    '<div class="perm-radio'+(some?' on':'')+'" data-seg="unit-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Unidades selecionadas</b><span>Você escolhe as unidades que publicam.</span>'+
+    (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-unitpick="pub">'+NV_ICON_EDIT+' Selecionar unidades</button><span class="perm-who-count">'+n+' unidade(s) selecionada(s)</span></div>':'')+
+    '</span></div></div></div>'; } else uF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="unit"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>'; }
+  const cF=$('#permCentralFoot'); if(cF){ if(NEWS_PERM.centralOn){ const some=NEWS_PERM.mode!=='todos'; const n=NEWS_PERM.members.length; cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" checked data-disable="central"><span class="nv-tk"></span> Ativo</label><div class="perm-who"><div class="perm-who-lbl">Quem pode publicar</div><div class="perm-radiogrp">'+
+    '<div class="perm-radio'+(!some?' on':'')+'" data-seg="central-todos"><span class="pr-dot"></span><span class="pr-body"><b>Todos da matriz</b><span>Qualquer colaborador vinculado à matriz.</span></span></div>'+
+    '<div class="perm-radio'+(some?' on':'')+'" data-seg="central-alguns"><span class="pr-dot"></span><span class="pr-body"><b>Somente pessoas selecionadas</b><span>Você escolhe os colaboradores que publicam.</span>'+
+    (some?'<div class="perm-pickwrap"><button type="button" class="perm-pickbtn" data-which="central">'+NV_ICON_EDIT+' Selecionar pessoas</button><span class="perm-who-count">'+n+' pessoa(s) selecionada(s)</span></div>':'')+
+    '</span></div></div></div>'; } else cF.innerHTML='<label class="perm-tog nv-toggle"><input type="checkbox" data-enable="central"><span class="nv-tk"></span> <span class="tgtxt">Inativo</span></label>'; }
 }
 let permWhoOpen=null, permWhoParent=null, permWhoNext=null;
 function openPermWho(which){

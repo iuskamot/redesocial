@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad\" *)",
+      "Bash(node \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/shot.js\" \"categorias.html\" \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/before.png\" \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/modal.png\")",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(start \"\" \"index.html\")",
+      "Bash(rm -rf \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/node_modules\" \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/package-lock.json\")",
+      "mcp__claude_ai_Figma__get_design_context",
+      "mcp__claude_ai_Figma__get_figma_skill"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\MARIAL~1\\AppData\\Local\\Temp\\claude\\c--Users-Maria-Luiza-Documents-GitHub-redesocial\\9a76b1b7-38f8-4524-8f14-6fe007e85747\\scratchpad",
+      "C:\\Users\\MARIAL~1\\AppData\\Local\\Temp\\claude\\c--Users-Maria-Luiza-Documents-GitHub-redesocial\\9a76b1b7-38f8-4524-8f14-6fe007e85747\\scratchpad\\node_modules"
+    ]
+  }
+}
