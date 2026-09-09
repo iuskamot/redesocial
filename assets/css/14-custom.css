@@ -1,0 +1,319 @@
+/* ============================================================
+   Home customizável (body.demo-custom)
+   Liga pelo ícone da Microsoft. Começa como uma cópia exata da home: toda
+   diferença dessa versão entra aqui, sempre sob body.demo-custom, para a home
+   original seguir intacta. Carrega por último de propósito: só sobrescreve.
+   ============================================================ */
+
+/* Os pedacos que so existem nesta versao ficam escondidos por padrao aqui,
+   e nao so pelo [hidden] que o JS tira ao ligar: a logo do cliente do header,
+   por exemplo, e um PNG grande e sem esta regra aparecia inteira no desktop
+   assim que o hidden saia, cobrindo o header. */
+.top-logo-cliente,.hm-logo-cliente,.hm-sults-mark,.capa-trocar,.pc-extra{display:none}
+
+/* o icone aceso enquanto a versao esta ligada, para se saber onde se esta */
+body.demo-custom .hm-store--windows{background:var(--marca-selecao);border-radius:4px;opacity:1}
+
+/* ---- Menu: a logo do cliente no lugar da do sistema, sobre a cor da marca ----
+   A caixa e a cor da marca e a logo vai em branco: o filtro (brightness 0 +
+   invert) pinta de branco qualquer pixel opaco e preserva a transparencia —
+   serve para toda logo de uma cor so. O contain com folga garante que uma
+   logo alta ou larga caiba. */
+body.demo-custom .top-logo-cliente{display:none}
+body.demo-custom .hm-side__logo{background:var(--marca);padding:8px 0;justify-content:center}
+body.demo-custom .hm-logo-cliente,
+body.demo-custom .top-logo-cliente img{filter:brightness(0) invert(1)}
+body.demo-custom .hm-side__logo .hm-logo-full{display:none}
+/* a logo ocupa a altura do bloco (60px) menos 8px em cima e 8px embaixo */
+body.demo-custom .hm-logo-cliente{display:block;height:44px;max-width:64%;width:auto;object-fit:contain}
+/* menu recolhido: a logo do cliente tambem some e sobra o simbolo */
+body.demo-custom .hm-side.is-collapsed .hm-logo-cliente{display:none}
+
+/* ---- A marca do sistema desce para o pe do menu ---- */
+/* margin-top:auto leva a marca ate o fim da area de navegacao, logo acima da
+   linha que abre o rodape */
+body.demo-custom .hm-sults-mark{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:auto;padding:8px 12px 10px;text-align:center}
+body.demo-custom .hm-sults-mark__por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.55);white-space:nowrap}
+body.demo-custom .hm-sults-mark img{height:16px;width:auto;display:block;opacity:.6}
+body.demo-custom .hm-sults-mark__dir{font-size:10px;line-height:14px;color:rgba(255,255,255,.45);white-space:nowrap}
+/* o rodape tambem tem margin-top:auto; com os dois, a sobra se dividia e a
+   marca ficava perdida no meio. Aqui so a marca absorve a sobra. */
+body.demo-custom .hm-side__foot{margin-top:0}
+
+/* ---- Celular: a logo do cliente no header, sobre um bloco branco ---- */
+@media(max-width:640px){
+  body.demo-custom .top-logo{display:none}
+  /* a logo fica solta, sem bloco (o header inteiro e da cor da marca; regra no fim da folha) */
+  /* mesma regra do menu: a altura do header menos 4px em cima e 4px embaixo */
+  body.demo-custom .top-logo-cliente{display:flex;align-items:center;height:60px;padding:4px 0;flex:none;box-sizing:border-box}
+  body.demo-custom .top-logo-cliente img{height:40px;width:auto;max-width:140px;object-fit:contain;display:block}
+}
+
+/* ---- Cartao de perfil: a faixa vira a capa da empresa ---- */
+body.demo-custom .profile-banner{
+  background:var(--marca-escura) var(--capa-src, url("uploads/crunch/capa.jpg")) var(--capa-pos, center)/cover no-repeat;
+  position:relative;
+}
+body.demo-custom .profile-banner .profile-logo{display:none}
+body.demo-custom .capa-trocar{
+  position:absolute;right:10px;top:10px;display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 12px;
+  border:1px solid var(--line);border-radius:999px;background:#fff;color:#5b6672;
+  font:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:.15s;
+}
+body.demo-custom .capa-trocar i{font-size:12px;color:inherit}
+body.demo-custom .capa-trocar:hover,
+body.demo-custom .apps-edit:hover{border-color:var(--marca);color:var(--marca)}
+
+/* ---- Cores da marca ----
+   A marca da Crunchyroll e laranja. Os detalhes do menu e do header (indicador
+   do item ativo, icones, Acoes Rapidas, foco da busca, badge) passam para ela,
+   e o fundo do menu e do header e a propria cor da marca com preto puro por
+   cima em 80% — um escuro que ainda tem o calor do laranja. */
+body.demo-custom{
+  /* --marca e escrita pelo JS conforme o cliente ligado (Crunchyroll,
+     Casa do Construtor...); tudo abaixo deriva dela */
+  --marca:#F47521;
+  --marca-forte:color-mix(in srgb, #000 12%, var(--marca));
+  /* o escuro do fundo: em vez de so somar preto (que embarrenta o laranja), o
+     tom e derivado em OKLCH — mesma matiz da marca, luminosidade fixa em 23%
+     e um resto de saturacao. Assim fica escuro como preto a 90%, mas limpo e
+     ainda claramente laranja. O color-mix e o fallback para navegador antigo. */
+  /* Fundo do menu e do cabecalho: a marca com 80% de preto por cima. Quando
+     a marca ja e escura (o preto da Marvel), o preto nao tem para onde ir e a
+     superficie fica chapada; ai vale o inverso, uma camada de branco. Em vez
+     de escolher caso a caso, a mistura ganha um piso de luminosidade: quem ja
+     esta acima dele nao muda, quem esta abaixo sobe ate ele. */
+  --marca-escura-base:color-mix(in srgb, #000 80%, var(--marca));
+  --marca-escura:var(--marca-escura-base);
+  --marca-escura:oklch(from var(--marca-escura-base) max(l, 0.26) c h);
+  --marca-suave:color-mix(in srgb, var(--marca) 40%, transparent);
+  /* Acento do menu escuro: a propria cor da marca, com um piso de
+     luminosidade. Marcas claras nao mudam; marcas escuras (o preto da Marvel,
+     o azul da Casa do Construtor) sobem ate ficarem legiveis sobre o menu.
+     Uma regra so, igual para todos os clientes. */
+  --marca-viva:color-mix(in srgb, #fff 10%, var(--marca));
+  --marca-viva:oklch(from var(--marca) calc(max(l, 0.62)) c h);
+  --marca-selecao:color-mix(in srgb, var(--marca-viva) 24%, transparent);
+  --marca-hover:color-mix(in srgb, var(--marca-viva) 14%, transparent);
+  --sidebar:var(--marca-escura);
+}
+body.demo-custom .hm-side{background:var(--marca-escura)}
+body.demo-custom .topbar{background:var(--marca-escura)}
+body.demo-custom .hm-sel{background:var(--marca-selecao)}
+/* hover dos itens do menu, do pe (Novidades, suporte) e dos icones das lojas:
+   o mesmo tom do selecionado, um pouco mais claro */
+body.demo-custom .hm-navitem:hover,
+body.demo-custom .hm-store:hover{background:var(--marca-hover)}
+body.demo-custom .hm-sel__bar{background:var(--marca-viva)}
+body.demo-custom .hm-navitem.is-active .hm-navitem__ic{color:var(--marca-viva)}
+body.demo-custom .hm-navitem__badge{background:var(--marca)}
+body.demo-custom .newbtn{background:var(--marca)}
+body.demo-custom .newbtn:hover{background:var(--marca-forte);box-shadow:0 6px 14px -6px var(--marca-suave)}
+body.demo-custom .top-search:focus-within{box-shadow:0 0 0 2px var(--marca-suave)}
+body.demo-custom .gs-title mark{color:var(--marca)}
+
+/* a barra de baixo do celular segue: fundo branco, detalhes na marca */
+@media(max-width:640px){
+  body.demo-custom .mnav button.on{color:var(--marca)}
+  body.demo-custom .mnav button.on::before{background:var(--marca)}
+  body.demo-custom .mnav .fab i{background:var(--marca);
+    box-shadow:0 8px 18px -8px var(--marca-suave),0 4px 12px -6px rgba(16,32,48,.26),0 0 0 5px #fff}
+}
+
+/* ---- Cartao de perfil: nome a esquerda, foto a direita ----
+   A capa fica por baixo da foto: a faixa ganhou position:relative para o
+   botao de trocar, e um elemento posicionado pinta por cima dos irmaos comuns
+   — a foto precisa subir de camada. O cartao vira uma grade: a capa ocupa a
+   linha de cima, a foto desce sobre ela pela direita, e o nome fica na linha
+   da foto, a esquerda, com cargo e empresa logo abaixo. */
+body.demo-custom .profile-card{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"capa capa" "nome foto" "cargo cargo" "extra extra";
+  grid-template-rows:auto auto auto 1fr;
+  align-items:start;text-align:left;padding-bottom:0;
+}
+/* ---- o resto do cartao: contexto, numeros da pessoa e atalhos ----
+   A altura do cartao e sincronizada com a do painel de modulos pelo JS; a
+   linha de atalhos vai para o pe (margin-top:auto) e o que sobra fica entre
+   os numeros e ela. */
+/* align-self:stretch: o cartao e align-items:start, e sem isso o bloco nao
+   ocupava a linha 1fr — os atalhos ficavam soltos no meio, nao no pe */
+body.demo-custom .pc-extra{grid-area:extra;align-self:stretch;display:flex;flex-direction:column;min-height:0;padding:0 16px 0}
+body.demo-custom #homeProfileCard{cursor:default !important}
+body.demo-custom .pc-ctx{display:flex;flex-direction:column;gap:6px;margin:auto 0 12px;padding-top:12px;font-size:12px;line-height:16px;color:var(--muted)}
+body.demo-custom .pc-ctx-item{display:flex;align-items:center;gap:8px;white-space:nowrap}
+body.demo-custom .pc-ctx-linha{display:flex;flex-wrap:wrap;gap:6px 16px}
+body.demo-custom .pc-ctx i{font-size:13px;color:#8a94a0;width:16px;text-align:center;flex:none}
+/* ---- Sequencia de dias ativos ----
+   O bloco tem a cor da marca bem diluida; a chama e o numero carregam a
+   marca. A semana e uma fileira de sete bolinhas: cheias nos dias ativos,
+   a de hoje com um anel, vazias nas que faltam. */
+body.demo-custom .pc-streak{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"chama texto" "semana semana";
+  gap:10px 12px;align-items:center;margin:auto 0;padding:12px;border-radius:12px;
+  background:color-mix(in srgb, var(--marca) 8%, transparent)}
+body.demo-custom .pc-flame{grid-area:chama;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--marca);color:#fff;font-size:18px;box-shadow:0 6px 14px -8px var(--marca)}
+body.demo-custom .pc-streak-tx{grid-area:texto;display:flex;flex-direction:column;gap:1px;min-width:0}
+/* numero e rotulo no mesmo corpo e na mesma cor da marca: dois tamanhos ali
+   davam informacao demais para uma linha so */
+body.demo-custom .pc-streak-tx b{display:flex;align-items:baseline;gap:5px;font-size:15px;line-height:20px;font-weight:700;color:var(--marca-meio)}
+body.demo-custom .pc-num{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit}
+body.demo-custom .pc-streak-tx > span{font-size:12px;line-height:16px;color:var(--muted)}
+body.demo-custom .pc-week{grid-area:semana;display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+body.demo-custom .pc-day{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;line-height:12px;font-weight:700;color:var(--muted)}
+body.demo-custom .pc-day i{width:18px;height:18px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
+/* o check exatamente no centro da bolinha */
+body.demo-custom .pc-day i{line-height:1;font-style:normal}
+body.demo-custom .pc-day i svg{display:block;width:10px;height:10px}
+body.demo-custom .pc-day.on i{background:var(--marca)}
+body.demo-custom .pc-day.hoje i{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--marca)}
+body.demo-custom .pc-day.hoje{color:var(--marca-meio)}
+body.demo-custom .pc-links{margin-top:12px;width:calc(100% + 32px);margin-left:-16px;margin-right:-16px;border-top:1px solid var(--line)}
+body.demo-custom .pc-link{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:14px;
+  border:0;background:none;font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:var(--marca-meio)}
+body.demo-custom .pc-link i{font-size:11px;transition:transform .15s}
+body.demo-custom .pc-link:hover i{transform:translateX(3px)}
+body.demo-custom .profile-card .profile-banner{grid-area:capa;padding-bottom:0}
+body.demo-custom .profile-card .avatar.lg{grid-area:foto;position:relative;z-index:1;margin:-39px 16px 0 0}
+body.demo-custom .profile-card .profile-name{grid-area:nome;margin:14px 12px 0 16px;align-self:end;line-height:22px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.demo-custom .profile-card .profile-role{grid-area:cargo;margin:2px 16px 0 16px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- Links e botao de "ver mais" na cor do cliente, 50% mais escura ----
+   "Ver todos os shorts", "Ver todas as publicacoes" e "Ver +N modulos": o
+   laranja puro e claro demais para texto sobre fundo claro; misturado meio a
+   meio com preto vira um tom que le bem e ainda e da marca. */
+body.demo-custom{--marca-meio:color-mix(in srgb, #000 50%, var(--marca))}
+body.demo-custom .see-all,
+body.demo-custom .com-more{color:var(--marca-meio)}
+/* no hover, os "Ver..." (shorts, publicacoes, comunicados, modulos, perfil)
+   acendem na cor pura da marca */
+body.demo-custom .see-all:hover,
+body.demo-custom .com-more:hover,
+body.demo-custom .pc-link:hover{color:var(--marca)}
+/* Botao de pilula (o "Ver +N modulos"): texto na marca escurecida, fundo na
+   marca diluida. No hover so o fundo muda; o texto fica onde esta. */
+body.demo-custom .apps-expand button{color:var(--marca-meio);background:color-mix(in srgb, var(--marca) 12%, transparent)}
+body.demo-custom .apps-expand button:hover{color:var(--marca-meio);background:color-mix(in srgb, var(--marca) 22%, transparent)}
+
+/* a bolinha da lupa em "Buscar modulo" segue o "Ver +N": fundo da marca a 12%
+   e icone na marca 50% mais escura; o foco do campo tambem vai para a marca */
+body.demo-custom .apps-search .as-ic{background:color-mix(in srgb, var(--marca) 12%, transparent);color:var(--marca-meio)}
+body.demo-custom .apps-search:focus-within{border-color:var(--marca);box-shadow:0 0 0 3px color-mix(in srgb, var(--marca) 15%, transparent)}
+
+/* ---- Logo nas cores originais ----
+   Clientes cuja logo e uma forma preenchida (o oval azul da Fini) perdem o
+   desenho se virarem brancas: o JS marca data-logo-cor e o filtro sai. */
+body.demo-custom[data-logo-cor] .hm-logo-cliente,
+body.demo-custom[data-logo-cor] .top-logo-cliente img{filter:none}
+
+/* ---- Conteudo por marca (17-marcas.js) ----
+   Os posts do SULTS ficam no lugar, so escondidos, para voltarem intactos. */
+body.demo-marca .col-main > .feed > .post[data-sults]{display:none}
+/* comunicados: em toda a versao customizavel so a lista corrida, sem o destaque */
+body.demo-custom #homeComPanel .com-featured{display:none}
+/* avatares das marcas (a logo sobre a cor da marca; a da Fini sobre branco) */
+.av-marca-casa,.av-marca-fini,.av-marca-habibs,.av-marca-petlove,.av-marca-piticas{color:transparent;text-shadow:none;background-repeat:no-repeat;background-position:center;background-origin:border-box}
+.av-marca-casa{background-color:#013E8F;background-image:url("../../uploads/casa/logo.svg");background-size:72% auto}
+.av-marca-fini{background-color:#fff;background-image:url("../../uploads/fini/logo.png");background-size:80% auto;box-shadow:inset 0 0 0 1px var(--line)}
+.av-marca-habibs{background-color:#FE0C18;background-image:url("../../uploads/habibs/logo.svg");background-size:74% auto}
+.av-marca-petlove{background-color:#4E2096;background-image:url("../../uploads/petlove/logo.svg");background-size:80% auto}
+.av-marca-piticas{background-color:#ED7E0A;background-image:url("../../uploads/piticas/logo.svg");background-size:74% auto}
+/* publicacao com video do YouTube: player em 16:9 no lugar da imagem */
+.post-yt{aspect-ratio:16/9;background:#000;overflow:hidden}
+.post-yt iframe{display:block;width:100%;height:100%;border:0}
+
+/* ---- Celular: o header inteiro na cor da marca ----
+   Depois da regra geral do header (marca escura) para vencer por ordem. */
+@media(max-width:640px){
+  body.demo-custom .topbar{background:var(--marca)}
+}
+
+/* ---- Gatitos (ficticia) ---- */
+.av-marca-gatitos{color:transparent;text-shadow:none;background:#F06292 url("../../uploads/gatitos/logo.svg") center/78% auto no-repeat border-box}
+/* a pessoa da vez: o Senhor Bigode no lugar da foto do Rodrigo */
+/* logo branca com fundo preto: em screen sobre a cor da marca o preto some e as letras seguem brancas */
+body.demo-custom[data-logo-fundo-preto] .hm-logo-cliente,
+body.demo-custom[data-logo-fundo-preto] .top-logo-cliente img{filter:none;mix-blend-mode:screen}
+body.demo-custom[data-cliente="gatitos"] .av-rc{background:#f48fb1 url("../../uploads/gatitos/perfil.jpg") center/cover no-repeat border-box}
+
+/* ---- A marca tambem nos modulos e na tela "Ver meu perfil" ----
+   A capa vem da variavel no body (a mesma do cartao da home). */
+body.demo-custom .nvf-pcover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
+body.demo-custom .pp-top{background:var(--marca-escura)}
+body.demo-custom .pp-toplogo .pp-logomark,
+body.demo-custom .pp-toplogo .pp-logoword{display:none}
+/* a logo no mesmo bloco da home: 250x60 na cor da marca, 8px em cima e embaixo, logo com 44px */
+/* mesma proporcao e posicao do bloco da home, sem o fundo da marca */
+body.demo-custom .pp-toplogo{width:250px;height:60px;margin-left:-20px;padding:8px 0;justify-content:center;box-sizing:border-box}
+body.demo-custom .pp-logo-cliente{display:block;height:44px;width:auto;max-width:64%;object-fit:contain;filter:brightness(0) invert(1)}
+@media(max-width:640px){
+  /* no celular o header do perfil e inteiro da cor da marca, como o da home */
+  body.demo-custom .pp-top{background:var(--marca)}
+  body.demo-custom .pp-toplogo{width:auto;margin-left:0;padding:0;background:none}
+  body.demo-custom .pp-logo-cliente{height:40px;max-width:140px}
+}
+body.demo-custom[data-logo-cor] .pp-logo-cliente{filter:none}
+body.demo-custom .pp-cover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
+body.demo-custom .pp-cover-pat{display:none}
+body.demo-custom .pp-btn.primary{background:var(--marca)}
+body.demo-custom .pp-btn.primary:hover{background:var(--marca-forte)}
+body.demo-custom .pp-name .pp-verif{color:var(--marca)}
+body.demo-custom .pp-linklogo--marca{background:var(--marca) var(--logo-cliente, none) center/70% auto no-repeat}
+
+/* ---- Perfil: o verdigris vira a cor da marca ---- */
+body.demo-custom .pp-role{color:var(--marca)}
+body.demo-custom .pp-avedit{background:var(--marca)}
+body.demo-custom .pp-avedit:hover{background:var(--marca-forte)}
+body.demo-custom .pp-menuitem>i:first-child{color:var(--marca)}
+/* Sair continua vermelho em toda versao */
+body.demo-custom .pp-menuitem.danger,
+body.demo-custom .pp-menuitem.danger>i:first-child{color:#B3272A}
+body.demo-custom .pp-act-ic{background:color-mix(in srgb, var(--marca) 10%, transparent);color:var(--marca-meio)}
+/* botao de contorno: no hover mudam so a borda, o texto e o icone; o fundo fica branco */
+body.demo-custom .pp-btn:hover{box-shadow:inset 0 0 0 1px var(--marca);color:var(--marca);background:#fff}
+body.demo-custom .pp-btn:focus-visible{box-shadow:inset 0 0 0 1px var(--marca),0 0 0 2px var(--marca-suave)}
+body.demo-custom .pp-btn.primary:hover{background:var(--marca-forte);color:#fff}
+/* botoes de contorno: o texto na mesma cor da borda, a marca cheia */
+body.demo-custom .pp-docbtn{color:var(--marca)}
+body.demo-custom .pp-docbtn:hover{box-shadow:inset 0 0 0 1px var(--marca);background:#fff;color:var(--marca)}
+body.demo-custom .pp-docbtn:focus-visible{box-shadow:inset 0 0 0 1px var(--marca),0 0 0 2px var(--marca-suave)}
+
+/* o titulo do comunicado no hover acende na cor da marca */
+body.demo-custom .com-item:hover h4{color:var(--marca)}
+
+/* ---- Marvel ---- */
+.av-marca-marvel{color:transparent;text-shadow:none;background:#000 url("../../uploads/marvel/logo.svg") center/86% auto no-repeat border-box}
+/* os personagens com o retrato de cada um; a arte e vertical, entao a
+   posicao sobe um pouco para o rosto ficar no meio do circulo */
+[class*="av-mv-"]{color:transparent;text-shadow:none;background-color:#1c1c1e;background-repeat:no-repeat;background-size:cover;background-position:center 22%}
+.av-mv-tony{background-image:url("../../uploads/marvel/p-tony.jpg")}
+.av-mv-steve{background-image:url("../../uploads/marvel/p-steve.jpg")}
+.av-mv-natasha{background-image:url("../../uploads/marvel/p-natasha.jpg")}
+.av-mv-bruce{background-image:url("../../uploads/marvel/p-bruce.jpg")}
+.av-mv-wanda{background-image:url("../../uploads/marvel/p-wanda.jpg")}
+.av-mv-thor{background-image:url("../../uploads/marvel/p-thor.jpg")}
+.av-mv-loki{background-image:url("../../uploads/marvel/p-loki.jpg")}
+/* a foto do Homem-Aranha no lugar da do Rodrigo */
+body.demo-custom[data-cliente="marvel"] .av-rc{background:#111 url("../../uploads/marvel/perfil.jpg") center/cover no-repeat border-box}
+/* a logo ja vem com o retangulo vermelho: fica nas cores originais */
+body.demo-custom[data-cliente="marvel"] .hm-logo-cliente,
+body.demo-custom[data-cliente="marvel"] .top-logo-cliente img,
+body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
+
+/* ---- Short do YouTube sem a moldura do player ----
+   O embed mostra titulo, canal, curtir e compartilhar por cima do video. Sem
+   ponteiro nele os avisos de hover nao aparecem, e a leve ampliacao empurra a
+   faixa do topo e a barra de baixo para fora do cartao: fica so o video. */
+.rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
+
+/* capa removida: a faixa fica na cor cheia da marca */
+body.demo-custom .profile-banner,
+body.demo-custom .pp-cover,
+body.demo-custom .nvf-pcover{background-color:var(--marca)}
+
+/* A capa e recortada em 3:1; as faixas seguem essa proporcao para mostrar
+   exatamente o que foi enquadrado, em qualquer largura de tela. */
+body.demo-custom .profile-banner,
+body.demo-custom .nvf-pcover{aspect-ratio:3 / 1;height:auto}
+/* no perfil a faixa e larga demais para caber em 3:1 sem virar um paredao */
+body.demo-custom .pp-cover{aspect-ratio:auto}

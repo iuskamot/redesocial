@@ -363,10 +363,49 @@
 .sb-likes{position:absolute;left:10px;bottom:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 .sb-likes i{font-size:13px}
 .sb-cat{position:absolute;top:var(--selo-topo);left:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;height:var(--selo-alt);padding:0 10px;border-radius:32px;background:rgba(12,31,56,.72);color:#fff;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.3px}
-.sb-cat i{font-size:11px}
+.sb-cat i{font-size:11px;flex:none}
+/* teto: 10px da borda esquerda, a bolinha (10px + 10px de folga) na direita */
+.sb-cat{max-width:calc(100% - 44px)}
+.sb-cat-tx{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-pend-short{display:none}
 .sb-newdot{position:absolute;right:10px;top:10px;z-index:3;border-radius:50%;background:#0BA84A;
   width:var(--ponto);height:var(--ponto);
   box-shadow:0 0 0 2px #fff}
+/* Short aguardando aprovacao: a mesma faixa amarela e a mesma borda ambar das
+   publicacoes. Tudo mora DENTRO da capa, para o card nao crescer — a faixa
+   ocupa o topo e empurra a categoria e a bolinha para baixo. */
+.sb-pend{position:absolute;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:8px 12px;background:#fff8e6;color:#8A6A00;font-size:12px;line-height:16px;
+  font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-pend i{font-size:12px;line-height:1;flex:none;position:relative;top:.5px}
+/* como no .post.is-pend: a borda vem de um pseudo-elemento por cima, porque
+   uma borda comum ficaria atras da imagem */
+.sb-card.is-pend{position:relative;border-color:#f4d98a}
+/* 1px da borda do proprio card + 1px daqui = os mesmos 2px da fileira */
+.sb-card.is-pend::after{content:"";position:absolute;inset:0;border:1px solid #f4d98a;
+  border-radius:inherit;pointer-events:none;z-index:10}
+/* a capa escurecida, por cima do degrade e por baixo do titulo e dos botoes */
+.sb-card.is-pend .sb-media::after{background:linear-gradient(rgba(0,0,0,.42),rgba(0,0,0,.42)),
+  linear-gradient(180deg,transparent 28%,rgba(0,0,0,.38) 52%,rgba(0,0,0,.78) 70%,rgba(0,0,0,.94) 100%)}
+/* a categoria e a bolinha descem a altura da faixa */
+.sb-card.is-pend .sb-media{--selo-topo:44px}
+.sb-card.is-pend .sb-newdot{top:44px}
+/* os dois botoes empilhados no meio da capa, como na referencia */
+.sb-modbar{position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);z-index:5;
+  display:flex;flex-direction:column;gap:8px}
+/* os mesmos botoes da moderacao de comentarios, so que sobre a capa escura:
+   Aprovar continua verde cheio; Reprovar vira translucido com contorno claro,
+   porque um botao branco ali pesaria mais que o principal */
+.sb-modbar button{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  height:40px;padding:0 16px;border:0;border-radius:6px;font:inherit;font-size:14px;line-height:20px;
+  font-weight:700;cursor:pointer;transition:background .14s,box-shadow .14s}
+/* os dois solidos, cada um na cor da sua acao, com o mesmo peso sobre a capa */
+.sb-modbar .cmod-ok{background:#1E8E3E;color:#fff;box-shadow:0 6px 16px -8px rgba(0,0,0,.6)}
+.sb-modbar .cmod-ok:hover{background:#17722F}
+.sb-modbar .cmod-no{background:#B3261E;color:#fff;box-shadow:0 6px 16px -8px rgba(0,0,0,.6)}
+.sb-modbar .cmod-no:hover{background:#961f18}
+/* o degrade da capa nao pode receber o clique dos botoes */
+.sb-card.is-pend .sb-media::after{pointer-events:none}
 .sb-author{display:flex;align-items:center;gap:8px;padding:8px;min-width:0}
 .sb-auid{min-width:0;display:flex;flex-direction:column;gap:0}
 .sb-author .avatar{width:28px;height:28px;font-size:0;flex-shrink:0;box-shadow:0 0 0 1px #E9EAED}
@@ -701,9 +740,11 @@
 .nv-rev-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
 .nv-def-sec{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin:26px 0 2px}
 .nv-def-sec:first-child{margin-top:6px}
-.nv-seg2{display:inline-flex;background:#eef2f5;border-radius:10px;padding:3px;gap:2px}
-.nv-seg2 button{border:0;background:none;cursor:pointer;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:7px 15px;border-radius:8px;transition:all .15s}
-.nv-seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 2px 5px -2px rgba(16,32,48,.3)}
+/* mesmo desenho das abas Video/Capa do short (.cr-tabs) */
+.nv-seg2{display:inline-flex;background:#e0e6ea;border-radius:999px;padding:4px;gap:4px}
+.nv-seg2 button{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 18px;border:0;border-radius:999px;background:none;font:inherit;font-size:14px;font-weight:700;color:#5b6672;cursor:pointer;transition:background .15s,color .15s}
+.nv-seg2 button:hover{color:var(--ink)}
+.nv-seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,32,48,.16)}
 /* Conteúdo do wizard travado na mesma largura do painel inicial */
 #nvComposeScreen .nv-steps{display:none}
 .nv-sheet{flex:1;min-height:0;display:flex;flex-direction:column;max-width:1300px;width:100%;margin:20px auto;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(16,32,48,.06),0 12px 30px -18px rgba(16,32,48,.25)}
@@ -752,9 +793,19 @@
 .qp-aud>.fa-earth-americas,.qp-aud>.fa-store,.qp-aud>.fa-building{color:#1667B8}
 .qp-aud:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .qp-x{width:38px;height:38px;border:0;background:none;border-radius:50%;color:#5b6672;font-size:18px;cursor:pointer;flex-shrink:0}
-.qp-cat{margin-left:auto;display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:13px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--linha-campo);border-radius:999px;padding:8px 14px;cursor:pointer;outline:none;transition:border-color 120ms cubic-bezier(.4,0,.2,1)}
-.qp-cat:hover,.qp-cat:focus{border-color:var(--linha-campo-forte)}
-.qp-cat-ic{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0}
+.qp-cat{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px;color:var(--ink);background:#fff;border:0;border-radius:999px;box-shadow:inset 0 0 0 1px var(--linha-campo);cursor:pointer;outline:none;transition:background 120ms cubic-bezier(.4,0,.2,1),box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.qp-cat:hover,.qp-cat:focus{box-shadow:inset 0 0 0 1px var(--linha-campo-forte)}
+.qp-cat:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--linha-campo),0 0 0 2px rgba(0,136,255,.16)}
+.qp-cat .fa-chevron-down{font-size:11px !important}
+.qp-cat-ic{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;flex-shrink:0}
+/* Os dois seletores do cabeçalho são campos, não rótulos que encolhem: mesma
+   largura fixa, seta presa à direita e reticências se o texto passar. A linha
+   deixa de se remexer quando a escolha muda de "Todos" para "Unidades". */
+.qp-head .qp-aud,.qp-head .qp-cat,.nv-author .qp-aud,.cr-audwrap .qp-aud{width:224px;flex-shrink:0}
+.qp-head .qp-aud>span,.qp-head .qp-cat>span:not(.qp-cat-ic),
+.nv-author .qp-aud>span,.cr-audwrap .qp-aud>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.qp-aud .fa-chevron-down,.qp-cat .fa-chevron-down{margin-left:auto}
+.nv-def-aud .qp-aud{width:252px}
 .qp-audwrap{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
 .qp-audwrap>b{width:100%}
 .qp-head .qp-aud,.nv-author .qp-aud{white-space:nowrap;flex-shrink:0}
@@ -939,11 +990,14 @@
 .cr-autor{display:flex;align-items:center;gap:12px;padding:8px 20px;background:#f7fafb;border-bottom:1px solid var(--line)}
 .cr-autor > b,.cr-autor > div > b{white-space:nowrap}
 #crModal .cr-audwrap{display:flex;margin-left:auto}
-#crModal .cr-audwrap .qp-aud{height:36px;margin-top:0;border-radius:999px;padding:0 14px}
+#crModal .cr-audwrap .qp-aud,
+#qpAudBtn{height:36px;margin-top:0;border-radius:999px;padding:0 14px}
 /* Enviar e Avancado em 14px */
 #crModal #crShare,#crModal .qp-adv{font-size:14px}
 /* campos do modal: 36px, raio 6 e a mesma borda dos demais campos */
 #crModal .fg-input,#crModal .fg-textarea,#crModal .cr-catwrap .qp-cat{border:1px solid var(--linha-campo);border-radius:6px;font-size:14px}
+#crModal .cr-catwrap .qp-cat{box-shadow:none}
+#crModal .cr-catwrap .qp-cat:hover,#crModal .cr-catwrap .qp-cat:focus{box-shadow:none}
 #crModal .fg-input,#crModal .cr-catwrap .qp-cat{height:36px;padding:0 12px}
 #crModal .fg-textarea{padding:8px 12px}
 #crModal .fg-input:focus,#crModal .fg-textarea:focus,#crModal .cr-catwrap .qp-cat:hover,#crModal .cr-catwrap .qp-cat:focus{border-color:var(--linha-campo-forte)}
@@ -964,14 +1018,20 @@
 .cr-catwrap .qp-catmenu{width:100%}
 .cr-advover{position:absolute;inset:0;z-index:3;background:#fff;display:flex;flex-direction:column}
 .cr-advover[hidden]{display:none}
-.cr-advhd{display:flex;align-items:center;gap:12px;height:56px;flex-shrink:0;padding:0 20px;box-shadow:inset 0 -1px 0 #E9EAED;font-size:15px;font-weight:600;letter-spacing:.3px;color:#1C1C1E}
-.cr-advback{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:4px;background:#F4F5F6;color:#48484A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer}
-.cr-advback:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#F4F5F6;color:#1C1C1E}
+/* O par "Voltar" e "Avancado" tinha o mesmo peso: a caixa cinza puxava o olho
+   para o botao e o titulo parecia legenda. O Voltar fica discreto, so ganha
+   fundo no hover, e o titulo sobe para 16px em negrito. */
+.cr-advhd{display:flex;align-items:center;gap:6px;height:56px;flex-shrink:0;padding:0 14px 0 8px;box-shadow:inset 0 -1px 0 #E9EAED}
+.cr-advhd b{font-size:16px;font-weight:700;letter-spacing:.2px;color:#1C1C1E}
+.cr-advback{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 9px;border:0;border-radius:999px;background:none;color:#6B7280;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.cr-advback i{font-size:13px}
+.cr-advback:hover{background:#F1F3F5;color:#1C1C1E}
+.cr-advback:focus-visible{outline:none;background:#F1F3F5;color:#1C1C1E;box-shadow:0 0 0 2px rgba(0,136,255,.2)}
 .cr-advbody{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 20px}
 .cr-advbody .nv-def-wrap{max-width:none;margin:0}
 .cr-advbody .nv-def-row{padding:16px 0}
 .qp-advpanel{padding:0 24px 12px;overflow-y:auto;max-height:52vh}
-.qp-advhd{margin:0 -24px 8px;padding:0 24px}
+.qp-advhd{margin:0 -24px 8px;padding:0 18px 0 12px}
 .qp-advpanel .nv-def-wrap{max-width:none;margin:0}
 .qp-advpanel .nv-def-row{padding:16px 0}
 .qp-advpanel .nv-def-lbl{width:230px}
@@ -1329,13 +1389,47 @@
   display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .rv-music{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;opacity:.92;text-shadow:0 1px 4px rgba(0,0,0,.6)}
 .rv-nav{position:absolute;left:auto;right:24px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:14px;padding:0;pointer-events:none}
+/* ---- Short aguardando aprovacao, dentro do player ---- */
+.rv-pend{position:absolute;left:0;right:0;top:0;z-index:7;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 12px;background:#fff8e6;color:#8A6A00;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
+.rv-pend i{font-size:13px;line-height:1;position:relative;top:.5px}
+/* o botao de som desce a altura da faixa */
+.rv-reel.is-pend .rv-ctl{top:50px}
+.rv-ctl .rv-audio{position:static;top:auto;left:auto}
+.rv-modbox{display:flex;flex-direction:column;gap:8px}
+.rv-sent{display:flex;align-items:center;gap:7px;font-size:12px;line-height:16px;color:#c9d1d9;margin-bottom:2px}
+.rv-sent i{font-size:11px}
+.rv-modbox button{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  height:40px;padding:0 16px;border:0;border-radius:6px;font:inherit;font-size:14px;line-height:20px;
+  font-weight:700;color:#fff;cursor:pointer;transition:background .14s;box-shadow:0 6px 16px -8px rgba(0,0,0,.6)}
+.rv-modbox .cmod-ok{background:#1E8E3E}
+.rv-modbox .cmod-ok:hover{background:#17722F}
+.rv-modbox .cmod-no{background:#B3261E}
+.rv-modbox .cmod-no:hover{background:#961f18}
+/* na coluna da esquerda, acima da autora */
+.rv-footer .rv-modbox{margin-bottom:16px;max-width:260px}
+/* a copia de dentro do card so aparece quando a coluna some (<=1100px) */
+.rv-card > .rv-modbox{display:none;position:absolute;left:16px;right:16px;bottom:24px;z-index:7}
+@media (max-width:1100px){ .rv-card > .rv-modbox{display:flex} }
+/* Controles do short, no alto a esquerda, na mesma linha do fechar: primeiro
+   pausar/tocar, depois o volume. As setas de anterior e proximo seguem na
+   lateral, no desktop; o que sumiu do meio foi o play do proprio YouTube. */
+.rv-ctl{position:absolute;top:18px;left:24px;z-index:8;display:flex;align-items:center;gap:10px}
+/* pausar e volume do mesmo tamanho do fechar, do outro lado da linha */
+.rv-play{width:48px;height:48px;border-radius:50%;border:0;flex-shrink:0;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.rv-play:hover{background:rgba(255,255,255,.26)}
+/* pausado, o YouTube desenha o proprio play e as setas de playlist dentro do
+   quadro; este veu cobre tudo isso e deixa so o nosso icone no meio */
+.rv-reel.paused .rv-card::after{content:"";position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.42)}
 .rv-audio{position:absolute;top:14px;left:14px;z-index:8;display:flex;align-items:center;gap:0;
   border-radius:32px;transition:background 120ms cubic-bezier(.4,0,.2,1),padding 120ms cubic-bezier(.4,0,.2,1)}
-.rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:12px;gap:8px}
-.rv-mute{width:36px;height:36px;border:0;border-radius:50%;flex-shrink:0;
-  background:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+.rv-audio:hover,.rv-audio:focus-within{background:rgba(28,28,30,.55);padding-right:14px;gap:10px}
+.rv-mute{width:48px;height:48px;border:0;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.rv-mute:hover{background:rgba(255,255,255,.08)}
+.rv-mute:hover{background:rgba(255,255,255,.26)}
 .rv-vol{width:0;opacity:0;pointer-events:none;height:4px;-webkit-appearance:none;appearance:none;
   background:rgba(255,255,255,.32);border-radius:32px;outline:none;cursor:pointer;
   transition:width 120ms cubic-bezier(.4,0,.2,1),opacity 120ms cubic-bezier(.4,0,.2,1)}
@@ -1545,3 +1639,52 @@
 #teamAddModal #teamAddSelClear{height:36px;padding:0 14px;font-size:14px;white-space:nowrap;border:0;border-radius:6px}
 #teamAddModal #teamAddSelClear:disabled{opacity:.5;cursor:not-allowed}
 #teamAddModal #teamAddSelClear:disabled:hover{background:#eef2f5}
+
+/* ---- Compartilhar o short ----
+   A folha sobe de baixo dentro do player, acima de tudo o que ele desenha. */
+/* No desktop a caixa fica no meio da tela, escura, como a do YouTube; no
+   celular ela sobe de baixo, que e o gesto de la. */
+.rvsh-back{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;cursor:default}
+.rvsh-back[hidden]{display:none}
+/* no desktop uma largura folgada e fixa: os aplicativos ficam centralizados e
+   a linha do endereco ocupa a largura toda */
+.rvsh{width:min(460px,100%);background:#212121;color:#fff;border-radius:14px;padding:6px 0 18px;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.7);animation:rvshSobe .22s cubic-bezier(.4,0,.2,1)}
+@keyframes rvshSobe{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+.rvsh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 6px}
+.rvsh-head h3{font-size:16px;line-height:22px;font-weight:700;color:#fff}
+.rvsh-x{width:34px;height:34px;border:0;border-radius:50%;background:none;color:#d7dbe0;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .15s}
+.rvsh-x:hover{background:rgba(255,255,255,.12)}
+.rvsh-apps{display:flex;gap:20px;justify-content:center;overflow-x:auto;padding:12px 20px 16px;scrollbar-width:none}
+.rvsh-apps::-webkit-scrollbar{display:none}
+.rvsh-app{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:64px}
+.rvsh-ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;
+  transition:transform .12s}
+.rvsh-app:hover .rvsh-ic{transform:scale(1.06)}
+.rvsh-nome{font-size:12px;line-height:16px;color:#e7ebef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
+.rvsh-link{display:flex;align-items:center;gap:10px;margin:0 20px;padding:8px 8px 8px 16px;border-radius:32px;background:rgba(255,255,255,.1)}
+/* o endereco nao manda na largura da caixa: ele ocupa o que sobra e, se
+   nao couber, termina em reticencias */
+.rvsh-url{flex:1 1 0;width:0;min-width:0;font-size:13px;line-height:18px;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rvsh-copy{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;border:0;border-radius:32px;flex:none;
+  background:var(--teal);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
+.rvsh-copy:hover{background:var(--teal-dark)}
+
+/* no celular a folha volta a subir de baixo, colada na borda */
+@media (max-width:640px){
+  .rvsh-back{align-items:flex-end}
+  /* no celular ela volta a ocupar a largura toda, colada na borda de baixo */
+  .rvsh{width:100%;max-width:none;border-radius:16px 16px 0 0;padding-bottom:max(18px, env(safe-area-inset-bottom, 0px))}
+  /* centralizados tambem no celular; quando nao couberem, a fileira rola */
+  .rvsh-apps{justify-content:center}
+}
+
+/* No celular nao ha ponteiro: a barra de volume nunca apareceria e ainda
+   roubava o toque. Fica so o alto-falante, que liga e desliga o som — o mesmo
+   gesto do TikTok. Os controles acompanham a margem do fechar. */
+@media (max-width:640px){
+  .rv-ctl{top:14px;left:14px;gap:8px}
+  .rv-vol{display:none}
+  .rv-audio:hover,.rv-audio:focus-within{background:none;padding-right:0;gap:0}
+}

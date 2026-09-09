@@ -4,9 +4,11 @@
   <header class="topbar">
     <!-- só aparece no mobile, onde a busca e as ações saem do header -->
     <img class="top-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 294.1 76.6' fill='%23fff'%3E %3Cpath d='M55.5 28 24.1 59.4c-.2.2-.6.2-.9 0l-9.9-9.9c-.2-.2-.2-.6 0-.9l31.4-31.4c.2-.2.6-.2.9 0l9.9 9.9c.3.3.3.6 0 .9'/%3E %3Cpath d='M28.9.9 2.2 27.5c-3 3-3 7.8 0 10.7l4.9 4.9c.2.2.6.2.9 0L49.5 1.7c.4-.4.1-1-.4-1H29.3c-.1 0-.3 0-.4.2'/%3E %3Cpath d='M60.9 33.3 19.4 74.9c-.4.4-.1 1 .4 1h19.8c.2 0 .3-.1.4-.2L66.7 49c3-3 3-7.8 0-10.7l-4.9-4.9c-.3-.3-.7-.3-.9-.1'/%3E %3Cpath d='M158.2 12.3c-.3 0-.6.3-.6.6v30.8c0 1.6-.4 3.1-1.1 4.7-1.6 3.1-4.2 4.5-8.1 4.5-3.9 0-6.5-1.5-8-4.5-.8-1.5-1.2-3.1-1.2-4.6V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v30.8c0 3.6.9 7.2 2.8 10.8 3.6 7.2 10 10.9 18.9 10.9 8.9 0 15.2-3.7 18.9-10.9 1.7-3.6 2.6-7.2 2.6-10.8V12.9c0-.3-.3-.6-.6-.6h-11.2z'/%3E %3Cpath d='M187.7 51.3V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v50.8c0 .3.3.6.6.6h34.9c.3 0 .6-.3.6-.6V52.6c0-.3-.3-.6-.6-.6h-22.5c-.3 0-.6-.3-.6-.7'/%3E %3Cpath d='M203.6 12.9V24c0 .3.3.6.6.6h14.1c.3 0 .6.3.6.6v38.5c0 .3.3.6.6.6h11.3c.3 0 .6-.3.6-.6V25.2c0-.3.3-.6.6-.6h14.1c.3 0 .6-.3.6-.6V12.9c0-.3-.3-.6-.6-.6h-42c-.3 0-.5.2-.5.6'/%3E %3Cpath d='M117.8 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3Cpath d='M290.4 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3C/svg%3E" alt="SULTS">
+    <!-- so na home customizavel: a logo do cliente, no celular -->
+    <span class="top-logo-cliente" hidden><img src="uploads/crunch/logo.webp" alt="Crunchyroll"></span>
     <div class="top-search" id="gsBox">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="gsInput" placeholder="Buscar ações na plataforma" autocomplete="off">
+      <span class="gs-spark" aria-hidden="true"></span>
+      <input type="text" id="gsInput" placeholder="No que vamos trabalhar?" autocomplete="off">
       <span class="gs-kbd">Ctrl K</span>
       <div class="gs-panel" id="gsPanel" hidden></div>
     </div>
@@ -33,14 +35,16 @@
       <button class="pp-toplogo" id="ppBack" title="Voltar">
         <svg class="pp-logomark" viewBox="0 0 76.6 76.6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M59.4 28.2 28.2 59.4c-.4.4-1.2.4-1.6 0L17.2 50c-.4-.4-.4-1.2 0-1.6l31.2-31.2c.4-.4 1.2-.4 1.6 0l9.3 9.3c.4.4.4 1.1 0 1.7z"/><path fill="currentColor" d="M32.6.2 5.5 27.4c-3 3-3 7.9 0 10.9l5 5c.2.2.6.2.9 0L53.6 1.1C54 .7 53.8 0 53.2 0H33.1c-.2 0-.3.1-.5.2z"/><path fill="currentColor" d="M65.2 33.3 22.9 75.5c-.4.4-.1 1.1.4 1.1h20.1c.2 0 .3-.1.4-.2l27.2-27.2c3-3 3-7.9 0-10.9l-5-5c-.3-.3-.7-.3-.9 0z"/></svg>
         <span class="pp-logoword">SULTS</span>
+        <!-- so na home customizavel: a logo do cliente no lugar da do SULTS -->
+        <img class="pp-logo-cliente" alt="" hidden>
       </button>
       <span style="flex:1"></span>
-      <button class="pp-topic" id="ppTopApps" title="Módulos"><i class="fa-solid fa-grip"></i></button>
-      <span class="avatar av-rc pp-topav"></span>
+      <button class="pp-topic" id="ppTopApps" title="Módulos"><i class="fa-solid fa-grip"></i><span class="pp-topic-lbl">Módulos</span></button>
+      <button class="user-chip pp-topchip" id="ppTopUser"><span class="avatar av-rc pp-topav"></span><span class="uname">Rodrigo</span><i class="fa-solid fa-chevron-down"></i></button>
     </div>
     <div class="pp-scroll">
       <div class="pp-hero-card">
-        <div class="pp-cover" id="ppCover"><span class="pp-cover-pat"></span></div>
+        <div class="pp-cover" id="ppCover"><span class="pp-cover-pat"></span><!-- so na home customizavel: o mesmo Trocar capa do cartao da home --><button type="button" class="capa-trocar" id="ppCapaTrocar" hidden><i class="fa-solid fa-camera"></i> Trocar capa</button></div>
         <div class="pp-hero-in">
           <div class="pp-avwrap"><div class="pp-avatar avatar" id="ppAvatar"><span class="pp-online"></span></div><button class="pp-avedit" id="ppAvEdit" title="Alterar foto do perfil"><i class="fa-solid fa-camera"></i></button></div>
           <div class="pp-hero-main">
@@ -72,20 +76,40 @@
             <button class="pp-menuitem" data-ppmenu="termos"><i class="fa-solid fa-file-lines"></i><span>Meus termos</span><i class="fa-solid fa-chevron-right pp-mchev"></i></button>
             <button class="pp-menuitem danger" data-ppmenu="sair"><i class="fa-solid fa-right-from-bracket"></i><span>Sair</span><i class="fa-solid fa-chevron-right pp-mchev"></i></button>
           </div>
+          <!-- a mesma marca do rodape do menu, aqui em cinza, fora do cartao -->
+          <div class="pp-sults">
+            <span class="pp-sults-por">Desenvolvido por <img src="uploads/pacote_logotipos_sults/png/sults-logo-horizontal-branco.png" alt="SULTS"></span>
+            <span class="pp-sults-dir">© 2018 Todos os direitos reservados</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- Recorte da foto e da capa: o mesmo modal serve aos dois, mudando so a
+       proporcao da janela (circulo para a foto, faixa para a capa). A imagem
+       arrasta por baixo da janela e a barra aproxima. -->
   <div class="fg-backdrop" id="ppAvModal">
     <div class="fg-modal" style="width:min(720px,94vw)">
       <div class="fg-head" style="gap:10px">
-        <button type="button" class="cat-add" id="ppAvPick"><i class="fa-solid fa-upload"></i> Selecionar</button>
-        <button type="button" class="pp-btn" id="ppAvRemove"><i class="fa-solid fa-trash-can"></i> Remover</button>
+        <h2 id="ppAvTitulo">Foto do perfil</h2>
         <span style="flex:1"></span>
         <button class="fg-close" id="ppAvClose"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="fg-body">
-        <div class="ppav-stage" id="ppAvStage"><span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span></div>
+        <div class="ppav-stage" id="ppAvStage">
+          <span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma imagem selecionada</span>
+        </div>
+        <div class="ppav-zoom" id="ppAvZoomWrap" hidden>
+          <i class="fa-solid fa-magnifying-glass-minus"></i>
+          <input type="range" id="ppAvZoom" min="100" max="300" step="1" value="100" aria-label="Aproximar">
+          <i class="fa-solid fa-magnifying-glass-plus"></i>
+        </div>
+        <div class="ppav-acoes">
+          <button type="button" class="pp-btn" id="ppAvPick"><i class="fa-solid fa-upload"></i> Escolher arquivo</button>
+          <button type="button" class="pp-btn" id="ppAvRemove"><i class="fa-solid fa-trash-can"></i> Remover</button>
+          <span style="flex:1"></span>
+          <button type="button" class="pp-btn primary" id="ppAvSalvar"><i class="fa-solid fa-check"></i> Selecionar</button>
+        </div>
       </div>
       <input type="file" id="ppAvFile" accept="image/*" hidden>
     </div>

@@ -50,7 +50,7 @@ const CRUNCH_CATS = [
    foto e a "unidade" é de onde ele vem. */
 const CRUNCH_PESSOAS = {
   naruto:  { nome:'Naruto Uzumaki',  ini:'NU', cargo:'Sétimo Hokage',          unidade:'Konoha' },
-  sasuke:  { nome:'Sasuke Uchiha',   ini:'SU', cargo:'Shinobi · Missões externas', unidade:'Konoha' },
+  sasuke:  { nome:'Sasuke Uchiha',   ini:'SU', cargo:'Shinobi',                 unidade:'Konoha' },
   luffy:   { nome:'Monkey D. Luffy', ini:'ML', cargo:'Capitão',                 unidade:'Bando do Chapéu de Palha' },
   tanjiro: { nome:'Tanjiro Kamado',  ini:'TK', cargo:'Caçador de Onis',         unidade:'Corpo de Caçadores' },
   gojo:    { nome:'Satoru Gojo',     ini:'SG', cargo:'Professor',               unidade:'Escola Jujutsu de Tóquio' },
@@ -58,7 +58,7 @@ const CRUNCH_PESSOAS = {
   anya:    { nome:'Anya Forger',     ini:'AF', cargo:'Estudante',               unidade:'Academia Eden' },
   spike:   { nome:'Spike Spiegel',   ini:'SS', cargo:'Caçador de recompensas',  unidade:'Bebop' },
   frieren: { nome:'Frieren',         ini:'F',  cargo:'Maga',                    unidade:'Grupo do Herói Himmel' },
-  saitama: { nome:'Saitama',         ini:'S',  cargo:'Herói · Classe B',        unidade:'Cidade Z' }
+  saitama: { nome:'Saitama',         ini:'S',  cargo:'Herói Classe B',          unidade:'Cidade Z' }
 };
 /* a linha abaixo do nome mostra cargo · unidade; a categoria (n.sub) segue
    "Time Crunchyroll" só para os filtros da coluna */
@@ -282,8 +282,10 @@ const CRUNCH_POSTS = CRUNCH_SHORTS.map(function(s){
     alt:s.t + ' · ' + s.s, title:s.t, time:s.time, embed:s.id };
 });
 const CRUNCH_REELS = CRUNCH_SHORTS.map(function(s, i){
+  /* o terceiro chega aguardando aprovacao: o Pikachu funcionario nao o ve, o
+     Pikachu administrador ve e decide */
   return { p:i, format:'video', cat:'animes', cap:s.t + ' 🎬 ' + s.s, likes:s.likes, comments:s.c,
-    views:s.views, rec:i < 6, music:'Crunchyroll · YouTube Shorts' };
+    views:s.views, rec:i < 6, music:'Crunchyroll · YouTube Shorts', pendAppr: i === 2 };
 });
 
 /* ---------- liga / desliga ---------- */
@@ -297,7 +299,7 @@ function podeAprovar(){ return !document.body.classList.contains('demo-crunch') 
 const CRUNCH_TEXTOS = [
   ['.profile-name', 'Pikachu'], ['.profile-role', crunchPapel],
   ['.nvf-pname', 'Pikachu'],    ['.nvf-prole', crunchPapel],
-  ['#topUserChip .uname', 'Pikachu']
+  ['#topUserChip .uname', 'Pikachu'], ['#ppTopUser .uname', 'Pikachu'], ['#ppName', 'Pikachu'], ['#ppRole', crunchPapel]
 ];
 function crunchTextos(ligar){
   CRUNCH_TEXTOS.forEach(function(par){
@@ -354,10 +356,18 @@ function crunchAdmin(ligar){
   document.querySelectorAll('.profile-role, .nvf-prole').forEach(function(el){ el.textContent = crunchPapel(); });
   crunchInjetaHome();
   if (typeof renderNewsFeed === 'function') renderNewsFeed();
+  if (typeof buildStories === 'function') buildStories();
+  if (typeof renderShortsB === 'function') renderShortsB();
   if (typeof fgToast === 'function') fgToast(ligar ? 'Pikachu agora é administrador: publica e aprova' : 'Pikachu voltou a só consumir');
 }
 function crunchDesligar(){
   if (!document.body.classList.contains('demo-crunch') || !CRUNCH_BK) return;
+  /* a home customizavel vive em cima deste cenario: sair dele e sair dela.
+     customDesligar tira a classe antes de chamar de volta, entao nao recorre. */
+  if (typeof customDesligar === 'function' && document.body.classList.contains('demo-custom') && document.body.dataset.cliente === 'crunch'){
+    customDesligar();
+    if (!document.body.classList.contains('demo-crunch') || !CRUNCH_BK) return;
+  }
   NEWS = CRUNCH_BK.news; NEWS_CATS = CRUNCH_BK.cats; CATEGORIES = CRUNCH_BK.scats;
   POSTS.splice(0, POSTS.length); CRUNCH_BK.posts.forEach(function(p){ POSTS.push(p); });
   REELS_DATA.splice(0, REELS_DATA.length); CRUNCH_BK.reels.forEach(function(r){ REELS_DATA.push(r); });

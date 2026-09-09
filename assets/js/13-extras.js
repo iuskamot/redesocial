@@ -536,6 +536,13 @@ document.addEventListener('click', function(e){
     if (typeof abre !== 'function') return;
     abre();
     newsShow(tela || 'shorts');
+    /* cada tela do modulo rola por conta propria e lembraria onde parou;
+       trocar de aba na barra sempre comeca do topo */
+    requestAnimationFrame(function(){
+      const s = (tela === 'feed') ? document.querySelector('#nvFeedScreen .nvf-body')
+                                  : document.getElementById('nvShortsBScreen');
+      if (s) s.scrollTop = 0;
+    });
   };
   window.abrirShorts = function () { window.abrirModuloSocial('shorts'); };
 })();
@@ -622,4 +629,294 @@ document.addEventListener('click', function(e){
   vv.addEventListener('scroll', ajusta);
   window.addEventListener('orientationchange', ajusta);
   ajusta();
+})();
+
+/* ---- Compartilhar o short ----
+   Uma folha com os aplicativos, como a do YouTube. Cada um recebe o link do
+   short e o titulo ja montados; o WhatsApp leva titulo e link em linhas
+   separadas, que e o que rende a previa bonita na conversa. */
+const RV_APPS = [
+  { id:'whatsapp', nome:'WhatsApp', ic:'fa-brands fa-whatsapp',  cor:'#25D366',
+    url:(l,t)=>'https://api.whatsapp.com/send?text=' + encodeURIComponent(l) },
+  { id:'instagram',nome:'Instagram',ic:'fa-brands fa-instagram', cor:'#E1306C',
+    url:()=>'https://www.instagram.com/', copiar:true },
+  { id:'facebook', nome:'Facebook', ic:'fa-brands fa-facebook-f',cor:'#1877F2',
+    url:(l)=>'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(l) },
+  { id:'linkedin', nome:'LinkedIn', ic:'fa-brands fa-linkedin-in', cor:'#0A66C2',
+    url:(l)=>'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(l) }
+];
+let rvShareAtual = null;
+function rvShareDados(reel){
+  const r = (reel && playerList) ? playerList[[...rvFeed.querySelectorAll('.rv-reel')].indexOf(reel)] : null;
+  const post = r ? POSTS[r.p] : null;
+  const titulo = (post && (post.title || post.alt)) || (r && r.cap) || 'Short';
+  /* O link e sempre o do proprio site, nunca o do YouTube: quem recebe entra
+     na rede, nao sai dela. Cada short do YouTube tem a propria pagina em
+     s/<id>.html, gerada no build, com a capa e o titulo nas etiquetas Open
+     Graph — e dali que sai a previa bonita no WhatsApp. Os shorts do proprio
+     projeto seguem pelo endereco da home. */
+  const base = location.origin + location.pathname.replace(/[^/]*$/, '');
+  const link = (post && post.embed)
+    ? base + 's/' + post.embed
+    : base + '?short=' + (r ? r.p : 0);
+  return { titulo: String(titulo).replace(/\s+/g, ' ').trim(), link: link };
+}
+function rvShareAbrir(reel){
+  const fundo = document.getElementById('rvShareBack'); if (!fundo) return;
+  rvShareAtual = rvShareDados(reel);
+  const apps = document.getElementById('rvShareApps');
+  apps.innerHTML = RV_APPS.map(function(a){
+    return '<button class="rvsh-app" data-rvapp="' + a.id + '">' +
+      '<span class="rvsh-ic" style="background:' + a.cor + '"><i class="' + a.ic + '"></i></span>' +
+      '<span class="rvsh-nome">' + a.nome + '</span></button>';
+  }).join('');
+  document.getElementById('rvShareUrl').textContent = rvShareAtual.link;
+  fundo.hidden = false;
+}
+function rvShareFechar(){
+  const fundo = document.getElementById('rvShareBack'); if (fundo) fundo.hidden = true;
+}
+function rvShareCopiar(){
+  const txt = rvShareAtual ? rvShareAtual.link : '';
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(function(){});
+  if (typeof fgToast === 'function') fgToast('Link copiado');
+}
+(function(){
+  const fundo = document.getElementById('rvShareBack'); if (!fundo) return;
+  document.getElementById('rvShareClose').addEventListener('click', rvShareFechar);
+  fundo.addEventListener('click', function(e){ if (e.target === fundo) rvShareFechar(); });
+  document.getElementById('rvShareCopy').addEventListener('click', rvShareCopiar);
+  fundo.addEventListener('click', function(e){
+    const b = e.target.closest('[data-rvapp]'); if (!b) return;
+    const a = RV_APPS.find(function(x){ return x.id === b.dataset.rvapp; }); if (!a || !rvShareAtual) return;
+    /* o Instagram nao abre com texto por link: copia e leva para o aplicativo */
+    if (a.copiar) rvShareCopiar();
+    window.open(a.url(rvShareAtual.link, rvShareAtual.titulo), '_blank', 'noopener');
+    rvShareFechar();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !fundo.hidden) rvShareFechar(); });
+})();
+
+/* ---- Abrir o short que veio pelo link ----
+   A pagina de compartilhamento encaminha para ?short=<id>. Aqui a rede
+   descobre de qual cliente aquele short e, liga o cenario certo e abre o
+   player nele. Sem isso o link cairia na home e o short ficaria perdido. */
+(function(){
+  const alvo = new URLSearchParams(location.search).get('short');
+  if (!alvo) return;
+  function abre(){
+    /* short do proprio projeto: o parametro e a posicao na lista */
+    if (/^\d+$/.test(alvo)){
+      if (typeof openPlayer === 'function' && typeof orderedShorts === 'function') openPlayer(orderedShorts(), +alvo);
+      return;
+    }
+    /* short do YouTube: procura o cliente dono dele */
+    let cliente = null;
+    if (typeof MARCAS !== 'undefined'){
+      for (const k of Object.keys(MARCAS)){
+        if (MARCAS[k].shorts.some(s => s.id === alvo)){ cliente = k; break; }
+      }
+    }
+    const noCrunch = (typeof CRUNCH_SHORTS !== 'undefined') && CRUNCH_SHORTS.some(s => s.id === alvo);
+    if (cliente && typeof customLigar === 'function') customLigar(cliente);
+    else if (noCrunch && typeof customLigar === 'function') customLigar('crunch');
+    setTimeout(function(){
+      if (typeof orderedShorts !== 'function' || typeof openPlayer !== 'function') return;
+      const lista = orderedShorts();
+      const i = lista.findIndex(r => { const p = POSTS[r.p]; return p && p.embed === alvo; });
+      if (i >= 0) openPlayer(lista, i);
+    }, 400);
+  }
+  /* espera a home terminar de montar */
+  if (document.readyState === 'complete') setTimeout(abre, 300);
+  else window.addEventListener('load', () => setTimeout(abre, 300));
+})();
+
+/* ---- Recorte da foto do perfil e da capa ----
+   O mesmo modal atende aos dois: muda a proporcao da janela e para onde o
+   recorte vai. A imagem e desenhada num quadro pelo canvas, na escala e na
+   posicao que a pessoa escolheu, e o resultado vira a nova foto ou capa. */
+(function(){
+  const modal = document.getElementById('ppAvModal');
+  if (!modal) return;
+  const palco  = document.getElementById('ppAvStage');
+  const arq    = document.getElementById('ppAvFile');
+  const zoomBx = document.getElementById('ppAvZoomWrap');
+  const zoom   = document.getElementById('ppAvZoom');
+  const titulo = document.getElementById('ppAvTitulo');
+  const bSalvar= document.getElementById('ppAvSalvar');
+  const bPick  = document.getElementById('ppAvPick');
+  const bRem   = document.getElementById('ppAvRemove');
+
+  /* a janela de cada tipo: proporcao na tela e tamanho do arquivo final */
+  const TIPOS = {
+    foto: { classe:'foto', titulo:'Foto do perfil', prop:1,    saida:[512, 512] },
+    capa: { classe:'capa', titulo:'Foto de capa',   prop:3,    saida:[1200, 400] }
+  };
+  let tipo = 'foto', img = null, escala = 1, base = 1, x = 0, y = 0, janela = null;
+
+  function medeJanela(){
+    const j = palco.querySelector('.ppav-janela');
+    if (!j) return { w:260, h:260 };
+    const r = j.getBoundingClientRect();
+    return { w:r.width, h:r.height };
+  }
+  function aplica(){
+    if (!img) return;
+    img.style.transform = 'translate(-50%, -50%) translate(' + x + 'px, ' + y + 'px) scale(' + escala + ')';
+  }
+  function limites(){
+    /* a imagem nunca deixa aparecer o fundo dentro da janela */
+    if (!img || !janela) return;
+    const lw = img.naturalWidth * base * escala, lh = img.naturalHeight * base * escala;
+    const mx = Math.max(0, (lw - janela.w) / 2), my = Math.max(0, (lh - janela.h) / 2);
+    x = Math.min(mx, Math.max(-mx, x));
+    y = Math.min(my, Math.max(-my, y));
+  }
+  function monta(url){
+    palco.innerHTML = '';
+    const j = document.createElement('div');
+    j.className = 'ppav-janela ' + TIPOS[tipo].classe;
+    const el = new Image();
+    el.className = 'ppav-img';
+    el.onload = function(){
+      /* a janela so tem tamanho depois de o modal estar na tela; enquanto nao
+         tiver, tenta de novo no quadro seguinte */
+      let tentativas = 0;
+      (function encaixa(){
+        janela = medeJanela();
+        if ((!janela.w || !janela.h) && tentativas++ < 30) return requestAnimationFrame(encaixa);
+        /* comeca cobrindo a janela por inteiro, sem deformar */
+        base = Math.max(janela.w / el.naturalWidth, janela.h / el.naturalHeight);
+        el.style.width = (el.naturalWidth * base) + 'px';
+        el.style.height = (el.naturalHeight * base) + 'px';
+        escala = 1; x = 0; y = 0; zoom.value = 100;
+        aplica();
+      })();
+    };
+    el.src = url;
+    img = el;
+    palco.appendChild(el);
+    palco.appendChild(j);
+    palco.classList.add('tem-imagem');
+    zoomBx.hidden = false;
+  }
+  function vazio(){
+    palco.innerHTML = '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma imagem selecionada</span>';
+    palco.classList.remove('tem-imagem');
+    zoomBx.hidden = true;
+    img = null;
+  }
+  /* arrastar */
+  let arrastando = false, px = 0, py = 0;
+  palco.addEventListener('pointerdown', function(e){
+    if (!img) return;
+    arrastando = true; px = e.clientX; py = e.clientY;
+    palco.setPointerCapture(e.pointerId);
+  });
+  palco.addEventListener('pointermove', function(e){
+    if (!arrastando || !img) return;
+    x += e.clientX - px; y += e.clientY - py; px = e.clientX; py = e.clientY;
+    limites(); aplica();
+  });
+  palco.addEventListener('pointerup', function(e){ arrastando = false; try { palco.releasePointerCapture(e.pointerId); } catch(err){} });
+  zoom.addEventListener('input', function(){
+    escala = (+zoom.value) / 100;
+    limites(); aplica();
+  });
+
+  /* recorta no tamanho de saida e devolve o endereco da imagem pronta */
+  function recorta(){
+    if (!img) return null;
+    const [lw, lh] = TIPOS[tipo].saida;
+    const c = document.createElement('canvas');
+    c.width = lw; c.height = lh;
+    const ctx = c.getContext('2d');
+    const fator = lw / janela.w;                    /* da tela para o arquivo */
+    const dw = img.naturalWidth * base * escala * fator;
+    const dh = img.naturalHeight * base * escala * fator;
+    ctx.drawImage(img, (lw - dw) / 2 + x * fator, (lh - dh) / 2 + y * fator, dw, dh);
+    return c.toDataURL('image/jpeg', 0.92);
+  }
+
+  /* o que ja esta no ar: a capa vem da variavel do corpo (ou do cliente da
+     vez) e a foto, do fundo do proprio avatar */
+  function imagemAtual(){
+    if (tipo === 'capa'){
+      const v = getComputedStyle(document.body).getPropertyValue('--capa-src').trim();
+      if (v && v !== 'none'){ const m = v.match(/url\(["']?(.*?)["']?\)/); if (m) return m[1]; }
+      const c = (typeof customCliente === 'function') ? customCliente() : null;
+      return c ? c.capa : '';
+    }
+    const av = document.getElementById('ppAvatar') || document.querySelector('.profile-card .avatar.lg');
+    if (!av) return '';
+    const m = getComputedStyle(av).backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+    return m ? m[1] : '';
+  }
+  window.ppAvAbrir = function(qual){
+    tipo = TIPOS[qual] ? qual : 'foto';
+    titulo.textContent = TIPOS[tipo].titulo;
+    vazio();
+    modal.classList.add('open');
+    /* ja mostra a imagem que esta no ar, pronta para reenquadrar; o modal
+       precisa estar aberto antes, senao a janela mede zero */
+    const atual = imagemAtual();
+    if (atual) monta(atual);
+    /* o navegador so abre o seletor de arquivo em resposta a um clique da
+       pessoa; abrir sozinho aqui era ignorado. O modal ja mostra o botao. */
+  };
+  bPick.addEventListener('click', function(){ arq.click(); });
+  arq.addEventListener('change', function(){
+    const f = arq.files && arq.files[0]; if (!f) return;
+    monta(URL.createObjectURL(f));
+    arq.value = '';
+  });
+  /* sem foto, sobra a inicial do nome sobre a cor da marca — o mesmo que a
+     rede faz com quem nunca subiu retrato */
+  function iniciaisDoNome(){
+    const el = document.querySelector('.profile-name');
+    const nome = (el ? el.textContent : 'SULTS').trim();
+    /* nome e sobrenome: "Rodrigo Caetano" vira RC */
+    /* nome e sobrenome: "Rodrigo Caetano" vira RC, "Homem-Aranha" vira HA */
+    return nome.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(function(p){ return p[0]; }).join('').toUpperCase();
+  }
+  bRem.addEventListener('click', function(){
+    if (tipo === 'foto'){
+      const ini = iniciaisDoNome();
+      const marca = getComputedStyle(document.body).getPropertyValue('--marca').trim() || 'var(--teal)';
+      document.querySelectorAll('#ppAvatar, .profile-card .avatar.lg, #topUserChip .avatar, .pp-topav, .nvf-pav, #nmodTopAv').forEach(function(el){
+        el.style.background = marca;
+        el.style.color = '#fff';
+        el.textContent = ini;
+      });
+      const av = document.getElementById('ppAvatar');
+      if (av) av.insertAdjacentHTML('beforeend', '<span class="pp-online"></span>');
+      if (typeof fgToast === 'function') fgToast('Foto do perfil removida');
+    } else {
+      /* sem imagem, a faixa fica na cor da marca: o "none" vence o padrao da folha */
+      document.body.style.setProperty('--capa-src', 'none');
+      document.body.style.removeProperty('--capa-pos');
+      if (typeof fgToast === 'function') fgToast('Capa removida');
+    }
+    vazio();
+    modal.classList.remove('open');
+  });
+  bSalvar.addEventListener('click', function(){
+    const url = recorta();
+    if (!url){ modal.classList.remove('open'); return; }
+    if (tipo === 'foto'){
+      document.querySelectorAll('#ppAvatar, .profile-card .avatar.lg, #topUserChip .avatar, .pp-topav, .nvf-pav, #nmodTopAv').forEach(function(el){
+        el.style.background = 'url(' + url + ') center/cover no-repeat';
+        el.textContent = '';
+      });
+      const av = document.getElementById('ppAvatar');
+      if (av && !av.querySelector('.pp-online')) av.insertAdjacentHTML('beforeend', '<span class="pp-online"></span>');
+      if (typeof fgToast === 'function') fgToast('Foto do perfil atualizada');
+    } else {
+      document.body.style.setProperty('--capa-src', 'url(' + url + ')');
+      document.body.style.removeProperty('--capa-pos');
+      if (typeof fgToast === 'function') fgToast('Capa atualizada');
+    }
+    modal.classList.remove('open');
+  });
 })();

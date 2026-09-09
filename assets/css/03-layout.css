@@ -9,12 +9,20 @@
   position:sticky;top:0;z-index:15;
 }
 .top-search{
-  position:relative;display:flex;align-items:center;gap:10px;flex:1;max-width:420px;
+  position:relative;display:flex;align-items:center;gap:10px;flex:1;max-width:520px;
   background:rgba(255,255,255,.12);border-radius:999px;padding:10px 18px;color:#aebccb;
   transition:box-shadow .15s;
 }
-.top-search:focus-within{box-shadow:0 0 0 2px rgba(0,172,172,.35)}
+/* o anel de foco em verdigris cheio: a 35% ele desbotava contra o azul
+   escuro do cabeçalho e parecia apagado */
+.top-search:focus-within{box-shadow:0 0 0 2px var(--teal)}
 .top-search i{font-size:14px}
+/* O campo do topo virou pergunta, não busca: a lupa dá lugar à faísca, que é
+   o mesmo sinal do módulo de IA. A navegação continua no painel, embaixo. */
+.gs-spark{width:17px;height:17px;flex:none;background-color:#cfe0ea;
+  -webkit-mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat;mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat;
+  transition:background-color .15s}
+.top-search:focus-within .gs-spark{background-color:#fff}
 .top-search input{border:0;background:none;outline:none;flex:1;font:inherit;font-size:14px;color:#fff}
 .top-search input::placeholder{color:#aebccb}
 .gs-kbd{
@@ -22,7 +30,7 @@
   border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:2px 7px;background:rgba(255,255,255,.08);
 }
 .gs-panel{
-  position:absolute;top:calc(100% + 8px);left:0;width:480px;max-width:82vw;
+  position:absolute;top:calc(100% + 8px);left:0;right:0;width:auto;
   background:#fff;border:1px solid var(--line);border-radius:14px;
   box-shadow:0 22px 48px -14px rgba(16,32,48,.32);
   max-height:460px;overflow-y:auto;z-index:40;padding:8px;
@@ -40,6 +48,14 @@
   width:34px;height:34px;border-radius:9px;flex-shrink:0;color:#fff;font-size:14px;
   display:flex;align-items:center;justify-content:center;background:var(--c,#5b6672);
 }
+/* a linha da pergunta é a ação principal do painel: um pouco mais alta que
+   as outras e com a faísca no lugar do ícone quadrado do módulo */
+.gs-ask{padding:11px 10px}
+.gs-ic-ia{background:linear-gradient(135deg,#9b8cff,#4f3bd4)}
+.gs-spark-ic{width:18px;height:18px;background-color:#fff;
+  -webkit-mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat;mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat}
+.gs-ic-conv{background:#EDEFF2;color:#5b6672}
+.gs-ask .gs-sub{font-style:italic}
 .gs-txt{flex:1;min-width:0;display:flex;flex-direction:column}
 .gs-title{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gs-title mark{background:none;color:var(--teal);font-weight:700}
@@ -162,7 +178,9 @@
 .pp-avedit:focus-visible{outline:none;box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(0,172,172,.24)}
 .ppav-stage{min-height:320px;display:flex;align-items:center;justify-content:center;background:#F4F5F6;border-radius:8px;
   box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;padding:16px}
-.ppav-stage img{max-width:100%;max-height:420px;display:block;border-radius:4px}
+/* a imagem do recorte tem tamanho proprio, calculado no script: o limite
+   antigo (max-width e max-height) achatava as compridas */
+.ppav-stage img:not(.ppav-img){max-width:100%;max-height:420px;display:block;border-radius:4px}
 .ppav-empty{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--muted)}
 .ppav-empty i{font-size:22px;color:#C7C7CC}
 .pp-morewrap{position:relative}
@@ -231,14 +249,24 @@
 .pp-toplogo{display:flex;align-items:center;gap:9px;border:0;background:none;color:#fff;padding:0;cursor:pointer;flex-shrink:0}
 .pp-logomark{width:26px;height:26px;color:var(--teal);flex-shrink:0}
 .pp-logoword{font-size:22px;font-weight:700;letter-spacing:-.5px}
-.pp-topic{width:36px;height:36px;border:0;border-radius:8px;background:none;color:#fff;font-size:17px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:background 120ms cubic-bezier(.4,0,.2,1)}
+/* mesmo botao do cabecalho dos modulos: icone de 20px com o rotulo embaixo */
+.pp-topic{min-width:96px;height:48px;border:0;border-radius:4px;background:none;color:rgba(255,255,255,.72);cursor:pointer;
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 12px;
+  font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px;white-space:nowrap;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.pp-topic i{font-size:20px}
+.pp-topic:hover{color:#fff}
 .pp-topic:hover{background:rgba(255,255,255,.1)}
-.pp-topav{width:36px;height:36px;font-size:0;flex-shrink:0;margin-left:6px}
+/* o chip do perfil e o mesmo da home: foto, nome e chevron */
+.pp-topchip{border:0;background:none;font:inherit;cursor:pointer}
+.pp-topav{width:38px;height:38px;font-size:0;flex-shrink:0}
 .pp-back:hover{background:rgba(255,255,255,.22)}
 .pp-top-title{font-size:17px;line-height:24px;font-weight:700;letter-spacing:0}
 .pp-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 60px}
 .pp-hero-card{background:#fff;border-bottom:1px solid var(--line)}
+/* faixa larga e baixa: a proporcao do recorte (3:1) nao cabe aqui sem
+   deixar a capa altissima no desktop, entao o corte de cima e de baixo e o
+   preco. O cartao da home e o bloco dos modulos seguem fieis ao recorte. */
 .pp-cover{height:190px;position:relative;overflow:hidden;background:linear-gradient(120deg,#02394e 0%,#00acac 100%)}
 .pp-cover-pat{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.14) 1.5px, transparent 0);background-size:26px 26px}
 .pp-hero-in{max-width:1180px;margin:0 auto;padding:0 32px 20px;display:block;position:relative}
@@ -468,3 +496,40 @@
   max-width:1172px;margin:0 auto;width:100%;
 }
 
+
+/* Marca do sistema no pe da coluna do perfil, fora do cartao, discreta */
+.pp-sults{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0;text-align:center}
+.pp-sults-por{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#98a2ad;white-space:nowrap}
+/* a versao branca vira cinza por inteiro: simbolo e nominativo no mesmo tom */
+.pp-sults-por img{height:15px;width:auto;display:block;filter:brightness(0) invert(1) brightness(.68)}
+.pp-sults-dir{font-size:10px;line-height:14px;color:#aab3bd}
+
+
+/* ---- Recorte da foto e da capa ----
+   O palco e escuro para a janela clara aparecer. A imagem fica inteira por
+   baixo; a janela e um buraco, desenhado com uma sombra enorme por fora. */
+/* vazio, o palco fica claro como o resto do modal; o escuro so entra quando
+   ha imagem, para a janela de recorte aparecer */
+.ppav-stage{position:relative;overflow:hidden;background:#F4F5F6;touch-action:none;user-select:none;
+  transition:background 160ms cubic-bezier(.4,0,.2,1)}
+.ppav-stage.tem-imagem{background:#1c1c1e}
+.ppav-img{position:absolute;left:50%;top:50%;transform-origin:center;max-width:none;max-height:none;
+  will-change:transform;pointer-events:none;-webkit-user-drag:none}
+.ppav-janela{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.9)}
+.ppav-janela.foto{width:260px;height:260px;border-radius:50%}
+.ppav-janela.capa{width:min(560px,86%);aspect-ratio:1200 / 400;border-radius:8px}
+.ppav-stage.tem-imagem{cursor:grab}
+.ppav-stage.tem-imagem:active{cursor:grabbing}
+.ppav-zoom{display:flex;align-items:center;gap:12px;margin-top:14px;color:var(--muted)}
+.ppav-zoom i{font-size:13px}
+.ppav-zoom input{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--line);border-radius:32px;outline:none;cursor:pointer}
+.ppav-zoom input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--teal);cursor:pointer}
+.ppav-zoom input::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--teal);cursor:pointer}
+.ppav-acoes{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+#ppAvTitulo{font-size:17px;line-height:24px;font-weight:700;color:var(--ink)}
+@media(max-width:640px){
+  .ppav-janela.foto{width:200px;height:200px}
+  .ppav-acoes .pp-btn{flex:1;justify-content:center}
+}

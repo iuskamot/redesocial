@@ -3,7 +3,7 @@
    O índice abaixo simula o registro de rotas gerado a partir do menu.
    Em produção: GS_INDEX = JSON vindo do menu/permissões do usuário. */
 const escapeHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const GS_ORDER = ['Recentes','Módulos','Telas'];
+const GS_ORDER = ['Módulos','Telas'];
 const GS_INDEX = [
   {cat:'Módulos', t:'Expansão', sub:'Módulo', icon:'fa-up-right-and-down-left-from-center', c:'#e0392c', k:'crm captação leads funil franquia crescimento'},
   {cat:'Módulos', t:'Implantação de Unidades', sub:'Módulo', icon:'fa-flag', c:'#2aa17e', k:'abertura obras cronograma inauguração'},
@@ -57,21 +57,50 @@ function gsMark(t, q){
   return t.slice(0, i) + '<mark>' + t.slice(i, i + q.length) + '</mark>' + t.slice(i + q.length);
 }
 
+/* as conversas com a IA, quando o módulo já carregou */
+function gsConversas(){
+  try { return iaConvs(); } catch (e) { return []; }
+}
+
 function gsRender(){
-  const q = norm(gsInput.value.trim());
-  const lista = !q
-    ? GS_INDEX.filter(it => it.r).map(it => Object.assign({}, it, { cat:'Recentes' }))
-    : GS_INDEX.filter(it =>
+  const cru = gsInput.value.trim();
+  const q = norm(cru);
+  const lista = !q ? [] : GS_INDEX.filter(it =>
         norm(it.t).includes(q) || norm(it.sub || '').includes(q) || norm(it.k || '').includes(q));
 
   const grupos = {};
   lista.forEach(it => { (grupos[it.cat] = grupos[it.cat] || []).push(it); });
 
   let out = '', n = 0;
+
+  /* escrevendo, a primeira linha é a pergunta — é ela que o Enter dispara */
+  if (q){
+    out += '<button class="gs-item gs-ask sel" data-gsask="1">' +
+      '<span class="gs-ic gs-ic-ia"><span class="gs-spark-ic"></span></span>' +
+      '<span class="gs-txt"><span class="gs-title">Perguntar à IA</span>' +
+      '<span class="gs-sub">' + escapeHtml(cru) + '</span></span>' +
+      '<span class="gs-enter">Enter</span></button>';
+    n++;
+  }
+
+  /* as conversas: as recentes com o campo vazio, as que casam quando há busca */
+  const convs = gsConversas().filter(c => !q || norm(c.t).includes(q)).slice(0, q ? 3 : 4);
+  if (convs.length){
+    out += '<div class="gs-label">' + (q ? 'Conversas' : 'Conversas recentes') + '</div>';
+    convs.forEach(c => {
+      out += '<button class="gs-item' + (n === 0 ? ' sel' : '') + '" data-gsconv="' + c.id + '">' +
+        '<span class="gs-ic gs-ic-conv"><i class="fa-regular fa-comment"></i></span>' +
+        '<span class="gs-txt"><span class="gs-title">' + gsMark(c.t, q) + '</span>' +
+        '<span class="gs-sub">' + escapeHtml(c.g) + '</span></span>' +
+        '<span class="gs-enter">Enter</span></button>';
+      n++;
+    });
+  }
+
   GS_ORDER.forEach(cat => {
     const its = (grupos[cat] || []).slice(0, 6);
     if (!its.length) return;
-    out += '<div class="gs-label">' + (cat === 'Recentes' ? 'Acessados recentemente' : cat) + '</div>';
+    out += '<div class="gs-label">' + cat + '</div>';
     its.forEach(it => {
       const ic = '<span class="gs-ic" style="--c:' + it.c + '"><i class="fa-solid ' + it.icon + '"></i></span>';
       out += '<button class="gs-item' + (n === 0 ? ' sel' : '') + '">' + ic +
@@ -81,7 +110,7 @@ function gsRender(){
       n++;
     });
   });
-  if (!n) out = '<div class="gs-empty">Nenhum resultado para "' + escapeHtml(gsInput.value.trim()) + '"</div>';
+  if (!n) out = '<div class="gs-empty">Comece a escrever para perguntar à IA</div>';
   out += '<div class="gs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navegar</span><span><kbd>Enter</kbd> abrir</span><span><kbd>Esc</kbd> fechar</span></div>';
   gsPanel.innerHTML = out;
   gsSel = 0;
@@ -94,7 +123,12 @@ gsInput.addEventListener('focus', gsOpen);
 gsInput.addEventListener('input', gsOpen);
 document.addEventListener('click', e => { if (!gsBox.contains(e.target)) gsClose(); });
 gsPanel.addEventListener('click', e => {
-  if (e.target.closest('.gs-item')){ gsClose(); gsInput.blur(); }
+  const it = e.target.closest('.gs-item');
+  if (!it) return;
+  const pergunta = gsInput.value.trim();
+  gsClose(); gsInput.blur();
+  if (it.dataset.gsask){ gsInput.value = ''; iaAbrirModulo(pergunta); return; }
+  if (it.dataset.gsconv){ gsInput.value = ''; iaAbrirModulo(); iaAbrirConversa(it.dataset.gsconv); return; }
 });
 
 function gsMove(d){

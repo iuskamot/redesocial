@@ -140,6 +140,21 @@
     <button id="rvUp" title="Anterior"><i class="fa-solid fa-chevron-up"></i></button>
     <button id="rvDown" title="Próximo"><i class="fa-solid fa-chevron-down"></i></button>
   </div>
+  <!-- Compartilhar: a folha sobe de baixo, como no YouTube. Os aplicativos
+       abrem com o link do short pronto; a linha de baixo copia. -->
+  <div class="rvsh-back" id="rvShareBack" hidden>
+    <div class="rvsh" id="rvShare" role="dialog" aria-modal="true" aria-label="Compartilhar">
+      <div class="rvsh-head">
+        <h3>Compartilhar</h3>
+        <button class="rvsh-x" id="rvShareClose" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="rvsh-apps" id="rvShareApps"></div>
+      <div class="rvsh-link">
+        <span class="rvsh-url" id="rvShareUrl"></span>
+        <button class="rvsh-copy" id="rvShareCopy"><i class="fa-regular fa-copy"></i> Copiar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ==================== MÓDULO FÓRUM ==================== -->

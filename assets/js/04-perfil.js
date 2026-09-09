@@ -52,30 +52,13 @@ function openPersonProfile(name, av){
     '<div class="pp-linkmain"><b>'+l[0]+'</b><span>'+(l[3]||'—')+'</span><span class="pp-linkq">'+(l[2]||'Colaborador')+'</span></div></div>').join('');
   $('#personProfile').hidden=false; document.body.style.overflow='hidden'; $('.pp-scroll').scrollTop=0;
 }
-let ppAvURL=null;
-function ppAvRender(){
-  const st=$('#ppAvStage'); if(!st) return;
-  st.innerHTML = ppAvURL ? '<img src="'+ppAvURL+'" alt="Foto do perfil">'
-    : '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma foto selecionada</span>';
-}
-$('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); ppAvRender(); $('#ppAvModal').classList.add('open'); });
+/* A foto e a capa passam pelo modal de recorte (13-extras.js): aqui ficam so
+   os ganchos que abrem esse modal e o que fecha. O tratador antigo do campo de
+   arquivo saiu — ele escutava o mesmo campo e transformava a capa escolhida em
+   foto de perfil. */
+$('#ppAvEdit') && $('#ppAvEdit').addEventListener('click', e=>{ e.stopPropagation(); if (typeof ppAvAbrir === 'function') ppAvAbrir('foto'); });
 $('#ppAvClose') && $('#ppAvClose').addEventListener('click', ()=>$('#ppAvModal').classList.remove('open'));
 $('#ppAvModal') && $('#ppAvModal').addEventListener('click', e=>{ if(e.target===$('#ppAvModal')) $('#ppAvModal').classList.remove('open'); });
-$('#ppAvPick') && $('#ppAvPick').addEventListener('click', ()=>$('#ppAvFile').click());
-$('#ppAvFile') && $('#ppAvFile').addEventListener('change', e=>{
-  const f=e.target.files[0]; if(!f) return;
-  ppAvURL=URL.createObjectURL(f);
-  ppAvRender();
-  const av=$('#ppAvatar');
-  if(av){ av.style.backgroundImage='url('+ppAvURL+')'; av.style.backgroundSize='cover'; av.style.backgroundPosition='center'; av.textContent=''; av.insertAdjacentHTML('beforeend','<span class="pp-online"></span>'); }
-  fgToast('Foto do perfil atualizada');
-});
-$('#ppAvRemove') && $('#ppAvRemove').addEventListener('click', ()=>{
-  ppAvURL=null; ppAvRender();
-  const av=$('#ppAvatar'); if(av) av.style.backgroundImage='';
-  const f=$('#ppAvFile'); if(f) f.value='';
-  fgToast('Foto do perfil removida');
-});
 $('#ppMore') && $('#ppMore').addEventListener('click', e=>{ e.stopPropagation(); const m=$('#ppMoreMenu'); m.hidden=!m.hidden; });
 document.addEventListener('click', e=>{ const m=$('#ppMoreMenu'); if(m && !e.target.closest('.pp-morewrap')) m.hidden=true; });
 (function(){
@@ -147,6 +130,8 @@ document.addEventListener('click', e=>{
   fgToast(map[mi.dataset.ppmenu]||'');
 });
 $('#ppBack').addEventListener('click', ()=>{ $('#personProfile').hidden=true; document.body.style.overflow=''; });
+/* o botao Modulos do cabecalho tambem fecha o perfil e volta para a home */
+$('#ppTopApps') && $('#ppTopApps').addEventListener('click', ()=>{ $('#personProfile').hidden=true; document.body.style.overflow=''; window.scrollTo({top:0,behavior:'smooth'}); });
 document.addEventListener('click', e=>{
   const nm=e.target.closest('.post-name, .comment-name, .nvf-cm-bub b, .np-name');
   if(nm){ let name=nm.textContent.replace(/\s+/g,' ').replace(/✓|Fixado|Editado/g,'').trim(); if(name==='SULTS'||!name) return; const art=nm.closest('[data-id],.post,.nvf-cm-item,.comment'); let av=''; const avEl=art&&art.querySelector('.avatar'); if(avEl){ av=[...avEl.classList].find(c=>/^av-/.test(c))||''; } if(av==='av-brand') return; e.preventDefault(); openPersonProfile(name, av); }
@@ -272,12 +257,55 @@ $('#permPickList').addEventListener('click', e => { const row = e.target.closest
 $('#permList').addEventListener('click', e => { const btn = e.target.closest('.perm-remove'); if(!btn) return; const id = +btn.dataset.id; PERM.members = PERM.members.filter(m => m !== id); fgToast('Membro removido'); renderPermList(); });
 $('#rpClose').addEventListener('click', closePlayer);
 (function(){ let t=null; rvFeed.addEventListener('scroll', ()=>{ clearTimeout(t); t=setTimeout(rvArmTimer, 160); }); })();
+
+/* ---- Rolagem infinita ----
+   A lista tem fim, mas o gesto nao: insistir para baixo no ultimo short leva
+   ao primeiro, e insistir para cima no primeiro leva ao ultimo. E a mesma
+   volta que as setas ja davam, agora tambem na roda do mouse e no dedo.
+   O intervalo evita que um unico gesto (que dispara varios eventos) de mais
+   de uma volta. */
+(function(){
+  let ultimaVolta = 0;
+  function pontaDaLista(dir){
+    const alt = rvFeed.clientHeight || 1;
+    const fim = (playerList.length - 1) * alt;
+    if (dir > 0 && rvFeed.scrollTop >= fim - 2) return 1;    /* passou do ultimo */
+    if (dir < 0 && rvFeed.scrollTop <= 2) return -1;         /* subiu do primeiro */
+    return 0;
+  }
+  function volta(dir){
+    if (!playerList.length || playerList.length < 2) return;
+    const d = pontaDaLista(dir); if (!d) return;
+    const agora = Date.now(); if (agora - ultimaVolta < 700) return;
+    ultimaVolta = agora;
+    playerGo(d);
+  }
+  rvFeed.addEventListener('wheel', e => { volta(e.deltaY); }, { passive:true });
+  let toqueY = null;
+  rvFeed.addEventListener('touchstart', e => { toqueY = e.touches[0].clientY; }, { passive:true });
+  rvFeed.addEventListener('touchmove', e => {
+    if (toqueY === null) return;
+    const d = toqueY - e.touches[0].clientY;      /* arrastar para cima = avancar */
+    if (Math.abs(d) < 40) return;
+    volta(d);
+  }, { passive:true });
+  rvFeed.addEventListener('touchend', () => { toqueY = null; }, { passive:true });
+})();
 let rvMuted = true;
 function rvSyncAudio(){
   const slides=rvFeed.querySelectorAll('.rv-reel');
   const w=rvFeed.clientHeight||1;
   const i=Math.min(Math.max(Math.round(rvFeed.scrollTop/w),0),Math.max(0,slides.length-1));
-  slides.forEach((s,k)=>{ const v=s.querySelector('video'); if(v){ v.muted = rvMuted || k!==i; v.volume = rvVol; } });
+  slides.forEach((s,k)=>{
+    const v=s.querySelector('video'); if(v){ v.muted = rvMuted || k!==i; v.volume = rvVol; }
+    /* o embed do YouTube nao tem propriedade: recebe comando */
+    const f=s.querySelector('iframe[data-src]');
+    if(f && typeof rvComandaEmbed === 'function'){
+      const mudo = rvMuted || k!==i;
+      rvComandaEmbed(f, mudo ? 'mute' : 'unMute');
+      if(!mudo) rvComandaEmbed(f, 'setVolume', [Math.round(rvVol*100)]);
+    }
+  });
   rvFeed.querySelectorAll('[data-rvmute]').forEach(b=>{
     const ic = rvMuted ? 'xmark' : (rvVol<.5 ? 'low' : 'high');
     b.innerHTML='<i class="fa-solid fa-volume-'+ic+'"></i>';
@@ -328,10 +356,32 @@ reelsPlayer.addEventListener('pointerup', e => {
   const t=rvFeed.scrollTop;
   requestAnimationFrame(()=>{ if(Math.abs(rvFeed.scrollTop-t)>2) rvFeed.scrollTop=t; });
 });
+/* o botao de pausar do topo, na mesma linha do fechar */
 reelsPlayer.addEventListener('click', e => {
-  if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,[data-rvvol],input,button,a')){
+  const bp = e.target.closest('[data-rvplay]');
+  if (bp){ e.preventDefault(); e.stopPropagation(); rvTogglePause(bp.closest('.rv-reel')); return; }
+  const bs = e.target.closest('[data-rvshare]');
+  if (bs && typeof rvShareAbrir === 'function'){ e.preventDefault(); e.stopPropagation(); rvShareAbrir(bs.closest('.rv-reel')); }
+}, true);
+reelsPlayer.addEventListener('click', e => {
+  if (!e.target.closest('.rv-rail,.rv-info,.rv-nav,.rp-close,.rv-audio,.rv-ctl,[data-rvvol],input,button,a')){
     e.preventDefault(); e.stopPropagation();
-    rvTogglePause(rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel'));
+    const alvo = rvFeed.querySelector('.rv-reel.playing') || rvFeed.querySelector('.rv-reel');
+    const emb = alvo && alvo.querySelector('iframe[data-src]');
+    if (emb && !alvo.classList.contains('embed-ok') && !alvo.classList.contains('paused')){
+      /* o video nunca chegou a andar: o toque e a autorizacao que faltava */
+      if (typeof rvComandaEmbed === 'function'){ rvComandaEmbed(emb, 'unMute'); rvComandaEmbed(emb, 'mute'); rvComandaEmbed(emb, 'playVideo'); }
+      return;
+    }
+    rvTogglePause(alvo);
+    return;
+  }
+  /* aprovar/reprovar: o slide diz qual short e, pela posicao na lista */
+  const dec = e.target.closest('[data-rvapr],[data-rvrej]');
+  if (dec){
+    const slide = dec.closest('.rv-reel');
+    const i = slide ? [...rvFeed.children].indexOf(slide) : -1;
+    if (i > -1 && typeof rvDecidir === 'function') rvDecidir(playerList[i], dec.hasAttribute('data-rvapr'));
     return;
   }
   const like = e.target.closest('.rv-act.like');
@@ -407,8 +457,9 @@ function renderShortsInto(row){
   list.forEach((r, i) => {
     const post = POSTS[r.p];
     const b = document.createElement('button');
-    b.className = 'reel' + (isSeen(r.p) ? ' seen' : '');
+    b.className = 'reel' + (isSeen(r.p) ? ' seen' : '') + (r.pendAppr ? ' is-pend' : '');
     b.innerHTML =
+      (r.pendAppr ? '<span class="reel-pend" title="Aguardando aprovação"><i class="fa-solid fa-clock"></i> Aguardando</span><span class="pend-borda"></span>' : '') +
       '<span class="reel-fundo"></span>' +
       ((post.img||post.poster) ? '<img class="reel-img" src="' + (post.img||post.poster) + '" alt="' + post.alt + '" loading="lazy">'
                 : '<video class="reel-img" src="' + post.video + '" muted preload="metadata"></video>') +

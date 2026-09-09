@@ -79,6 +79,7 @@ const PAGINAS = [
   ['administradores.html','SULTS | Equipe administrativa', "openNewsModule(); newsShow('team')"],
   ['permissoes.html',    'SULTS | Permissões',     "openNewsModule(); newsShow('perm')"],
   ['forum.html',         'SULTS | Fórum',          'openForum()'],
+  ['ia.html',            'SULTS | Inteligência Artificial', 'abrirModuloIA()'],
 ];
 
 const lista = arr => arr.map(f => "    '" + f + "',").join('\n');
@@ -179,6 +180,125 @@ ${lista(JS)}
 `;
 }
 
+
+/* =================== paginas de compartilhamento ===================
+   O WhatsApp, o LinkedIn e afins nao olham o video: eles buscam a pagina do
+   link e leem as etiquetas Open Graph dela. Como o prototipo e estatico e
+   todo short cai no mesmo index.html, a previa sairia igual para todos.
+
+   Entao cada short ganha aqui a propria pagina em s/<id>.html: so as
+   etiquetas (capa, titulo, descricao) e um encaminhamento para o player. Quem
+   clica cai no short; quem so le o link ve a capa e o titulo certos.
+   =================================================================== */
+const SITE = 'https://iuskamot.github.io/redesocial';
+
+/* os shorts vivem espalhados pelos cenarios; aqui so interessa o que tem
+   video do YouTube, que e onde a capa existe em endereco publico */
+function shortsDosCenarios(){
+  const fontes = [
+    { arq:'assets/js/14-crunch.js', marca:'Crunchyroll' },
+    { arq:'assets/js/17-marcas.js', marca:null }
+  ];
+  const achados = [];
+  fontes.forEach(function(f){
+    let txt; try { txt = ler(f.arq); } catch(e){ return; }
+    /* nas marcas, o nome vem do proprio bloco; no cenario da Crunchyroll e fixo */
+    const marcas = [];
+    const reNome = /MARCAS\.(\w+) = \{\s*\n\s*nome:\s*(?:'([^']*)'|"([^"]*)")/g;
+    let m;
+    while ((m = reNome.exec(txt))) marcas.push({ pos:m.index, nome:m[2] || m[3] });
+    const reId = /\{ id:'([\w-]{11})'/g;
+    let e;
+    while ((e = reId.exec(txt))){
+      /* o objeto vai do { ate a chave que fecha; sao literais simples */
+      const ini = e.index;
+      let nivel = 0, fim = ini;
+      for (let i = ini; i < txt.length; i++){
+        if (txt[i] === '{') nivel++;
+        else if (txt[i] === '}'){ nivel--; if (!nivel){ fim = i + 1; break; } }
+      }
+      let obj;
+      try { obj = (new Function('return ' + txt.slice(ini, fim)))(); } catch(err){ continue; }
+      if (!obj || !obj.id || !obj.t) continue;
+      let marca = f.marca;
+      if (!marca){
+        for (const x of marcas){ if (x.pos < ini) marca = x.nome; else break; }
+      }
+      /* a previa pede imagem horizontal e grande; o oardefault e vertical */
+      const capa = (!obj.thumb || obj.thumb === 'oardefault' || obj.thumb === 'hq720') ? 'hq720' : obj.thumb;
+      achados.push({ id:obj.id, titulo:obj.t, thumb:capa, marca:marca || 'SULTS' });
+      reId.lastIndex = fim;
+    }
+  });
+  /* um short pode aparecer em mais de um cenario: fica a primeira ocorrencia */
+  const vistos = new Set();
+  return achados.filter(function(s){ if (vistos.has(s.id)) return false; vistos.add(s.id); return true; });
+}
+
+/* largura e altura de um JPEG, lidas do proprio arquivo: a previa usa esses
+   numeros para montar o cartao, e errar neles estraga o enquadramento */
+function medeJpeg(caminho){
+  const b = fs.readFileSync(caminho);
+  let p = 2;
+  while (p < b.length){
+    if (b[p] !== 0xFF){ p++; continue; }
+    const m = b[p + 1];
+    if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return [b.readUInt16BE(p + 7), b.readUInt16BE(p + 5)];
+    p += 2 + b.readUInt16BE(p + 2);
+  }
+  return [1280, 720];
+}
+function escapaAtributo(s){
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function paginaShort(s){
+  const titulo = escapaAtributo(s.titulo);
+  const desc = escapaAtributo(s.marca + ' · Shorts na rede SULTS');
+  /* a capa e servida pelo proprio site: hospedeiro de fora as vezes e
+     recusado por quem monta a previa, e assim ela nao depende do YouTube */
+  const local = 'uploads/shorts/' + s.id + '.jpg';
+  const temLocal = fs.existsSync(path.join(RAIZ, local));
+  const capa = temLocal ? (SITE + '/' + local) : ('https://i.ytimg.com/vi/' + s.id + '/' + s.thumb + '.jpg');
+  const medida = temLocal ? medeJpeg(path.join(RAIZ, local)) : (s.thumb === 'hq720' ? [1280, 720] : [480, 360]);
+  const destino = '../?short=' + s.id;
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${titulo} · SULTS</title>
+<link rel="canonical" href="${SITE}/s/${s.id}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SULTS">
+<meta property="og:url" content="${SITE}/s/${s.id}">
+<meta property="og:title" content="${titulo}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${capa}">
+<meta property="og:image:secure_url" content="${capa}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="${medida[0]}">
+<meta property="og:image:height" content="${medida[1]}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${titulo}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${capa}">
+<!-- Sem encaminhamento por meta refresh: o robo do WhatsApp o segue, cai no
+     index.html de 1,2 MB e desiste, e a previa nao aparece. Quem le so as
+     etiquetas fica nesta pagina, de 1,5 KB; quem abre no navegador e levado
+     pelo script do corpo, que o robo nao executa. -->
+<style>body{margin:0;display:grid;place-items:center;min-height:100vh;background:#0a0a0a;color:#fff;
+  font:14px/1.5 system-ui,Segoe UI,Roboto,sans-serif;text-align:center;padding:24px}
+a{color:#00acac}</style>
+</head>
+<body>
+<p>Abrindo o short na rede…<br><a href="${destino}">Continuar</a></p>
+<script>location.replace('${destino}');<\/script>
+</body>
+</html>
+`;
+}
+
 /* =================== executa =================== */
 const kb = t => (t.length / 1024).toFixed(1).padStart(7) + ' KB';
 
@@ -191,5 +311,13 @@ PAGINAS.forEach(([arq, titulo, abrir]) => {
   fs.writeFileSync(path.join(RAIZ, arq), txt, 'utf8');
   console.log(arq.padEnd(20) + kb(txt) + '   ' + (abrir || 'abre na home'));
 });
+
+const shorts = shortsDosCenarios();
+const dirS = path.join(RAIZ, 's');
+fs.mkdirSync(dirS, { recursive: true });
+/* limpa as paginas antigas: short que saiu do cenario nao fica para tras */
+fs.readdirSync(dirS).filter(f => f.endsWith('.html')).forEach(f => fs.unlinkSync(path.join(dirS, f)));
+shorts.forEach(s => fs.writeFileSync(path.join(dirS, s.id + '.html'), paginaShort(s), 'utf8'));
+console.log('s/*.html'.padEnd(20) + String(shorts.length).padStart(7) + '      paginas de compartilhamento');
 
 console.log('\nfontes: ' + CSS.length + ' folhas · ' + TELAS.length + ' telas · ' + JS.length + ' scripts');

@@ -222,6 +222,14 @@ function buildComment(c, fresh, pending){
   return el;
 }
 
+/* o modulo guarda o autor em "author" e a home espera "name": a mesma lista
+   serve para os dois depois desta passada */
+function comentariosDoPost(n){
+  const lista = (n && Array.isArray(n.cmts)) ? n.cmts : [];
+  return lista.map(function(c){
+    return Object.assign({}, c, { name: c.name || c.author || '', ini: c.ini || '', av: c.av || 'av-rc' });
+  });
+}
 function initComments(post, comments){
   const box = document.createElement('div');
   box.className = 'comments';
@@ -254,6 +262,7 @@ function addHomePost(n, append){
   const txt = (n.text||'').replace(/\n/g,'<br>');
   let media = '';
   if (n.video) media = '<div class="post-img"><video class="nvf-img" src="'+n.video+'" controls playsinline style="max-height:560px;background:#000"></video></div>';
+  else if (n.yt) media = ytPostHTML(n.yt, n.title);
   else if (n.images && n.images.length>1) media = '<div class="post-img">'+nvImgCollage(n.images,'post-imggrid')+'</div>';
   else if (n.image) media = '<div class="post-img"><img class="nvf-img" src="'+n.image+'"></div>';
   else if (n.colorBg) media = '<div class="post-img"><div class="banner" style="background:'+n.colorBg+'">'+(n.colorEmoji?'<span class="big-emoji">'+n.colorEmoji+'</span>':'')+'<h4 style="font-size:24px">'+(n.text||'')+'</h4>'+(n.colorSub?'<p>'+n.colorSub+'</p>':'')+'</div></div>';
@@ -268,7 +277,7 @@ function addHomePost(n, append){
     '<div class="post-head">'+avatarHtml+
       '<div class="post-id"><div class="post-name">'+nameHtml+(n.pinned?'<span class="nvf-pinchip"><i class="fa-solid fa-thumbtack"></i> Fixado</span>':'')+'</div>'+
       '<div class="post-sub">'+postSub(n)+'</div>'+
-      '<div class="post-meta">'+metaTxt+(n.edited?' · <span class="edited-tag">editado</span>':'')+' · <i class="fa-solid fa-earth-americas"></i>'+postCatMeta(n)+'</div></div>'+
+      '<div class="post-meta">'+postMetaHTML(n, n.edited)+'</div></div>'+
       '<button class="post-more"><i class="fa-solid fa-ellipsis"></i></button></div>';
   const rodape =
     '<div class="post-stats"><span class="rx"><span class="rxs" data-rx="like"></span>'+(rcount>=90?'<span class="rxs" data-rx="love"></span>':'')+(rcount>=120?'<span class="rxs" data-rx="celebrate"></span>':'')+'</span><span class="rx-count">'+rcount+'</span><span class="right">'+(ccount?'Ver ':'')+ccount+' comentários</span></div>'+
@@ -289,7 +298,7 @@ function addHomePost(n, append){
       if (typeof openArticle === 'function') openArticle(n);
     }));
     if (append) feed.appendChild(art); else feed.insertBefore(art, feed.firstChild);
-    if (!n.pendAppr){ initReactions(art.querySelector('.p-act.like')); initComments(art, []); }
+    if (!n.pendAppr){ initReactions(art.querySelector('.p-act.like')); initComments(art, comentariosDoPost(n)); }
     else {
       /* aprovar redesenha o cartao no mesmo lugar, ja liberado; reprovar tira
          do ar. O feed do modulo le o mesmo objeto e acompanha. */
@@ -316,7 +325,7 @@ function addHomePost(n, append){
     '<div class="post-actions"><button class="p-act like"><i class="fa-regular fa-thumbs-up"></i> Gostei</button><button class="p-act comment-toggle"><i class="fa-regular fa-comment"></i> Comentar</button></div>';
   if (append) feed.appendChild(art); else feed.insertBefore(art, feed.firstChild);
   initReactions(art.querySelector('.p-act.like'));
-  initComments(art, []);
+  initComments(art, comentariosDoPost(n));
 }
 /* Injeta as notícias-semente (ids 7+) no feed do painel inicial */
 

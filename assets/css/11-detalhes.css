@@ -363,10 +363,20 @@
      própria (altura 0), então o espaço entre as duas linhas conta dois gaps. */
   .qp-head{flex-wrap:wrap;align-items:center;align-content:flex-start;gap:2px 10px;padding:10px 12px 12px;border-bottom:1px solid var(--line)}
   /* o próprio botão traz margin-top:6px, que somava à distância entre as linhas */
-  .qp-head .qp-aud,.qp-head .qp-cat{margin-top:0;height:32px}
+  /* 36px nos dois, a altura de campo do resto do app: com 32 o de categoria
+     ficava 4px mais baixo que o de público, que já vinha de uma regra por id. */
+  .qp-head .qp-aud,.qp-head .qp-cat{margin-top:0;height:36px}
   .qp-head .avatar{order:1;width:44px;height:44px}
-  .qp-head .qp-audwrap{order:2;flex:1 1 0;min-width:0;gap:0}
+  /* O invólucro do público deixa de ser caixa (display:contents) para que o
+     nome fique na primeira linha, com a foto e o X, e a pílula desça para a
+     segunda, ao lado da de categoria — os dois seletores na mesma linha. */
+  .qp-head .qp-audwrap{display:contents}
   .qp-audwrap>b{width:auto;font-size:16px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .qp-head .qp-audwrap>b{order:2;flex:1 1 0;min-width:0}
+  .qp-head .qp-audwrap>.qp-aud{order:5;flex:1 1 0}
+  /* sem a caixa, o menu se apoia no próprio cabeçalho */
+  .qp-head{position:relative}
+  .qp-head .qp-audmenu{left:14px;right:14px;min-width:0;top:calc(100% - 2px)}
   .qp-head .qp-x{order:3;margin:0 -4px 0 0;flex:none}
   .qp-head::after{content:"";order:4;flex-basis:100%;height:0}
   /* sem poder encolher (o padrão é nowrap + flex-shrink:0) o segundo seletor
@@ -385,6 +395,15 @@
   .qp-tool{flex:1 0 auto;justify-content:center;gap:0;padding:0 10px;font-size:0}
   .qp-tool i{font-size:19px}
   .qp-foot{padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+
+  /* Painel Avançado: no celular o rótulo de 230px mais o controle não cabem
+     lado a lado e o controle saía pela direita. A faixa passa a empilhar. */
+  .qp-advpanel{padding:0 16px 12px;max-height:none}
+  .qp-advhd{margin:0 -16px 4px;padding:0 12px 0 6px}
+  .qp-advpanel .nv-def-row,.cr-advbody .nv-def-row{flex-direction:column;align-items:stretch;gap:12px}
+  .qp-advpanel .nv-def-lbl,.cr-advbody .nv-def-lbl{width:auto}
+  .qp-advpanel .nv-seg2,.cr-advbody .nv-seg2{display:flex;width:100%}
+  .qp-advpanel .nv-seg2 button,.cr-advbody .nv-seg2 button{flex:1;padding:0 10px}
   /* alvo de toque maior para a ação principal */
   .qp-pub{height:42px;padding:0 26px;font-size:15px;gap:10px}
   .qp-pub i{font-size:15px}
@@ -396,8 +415,24 @@
      fecha e volta para a home. Fica abaixo do player (130), que é tela cheia. */
   .mnav{z-index:128}
   .news-view.reelsmode{left:0}
+  /* ---- Publicacoes e Shorts no celular: o mesmo ritmo da home ----
+     16px entre os blocos e nas laterais, compositor e posts de ponta a ponta
+     (compositor arredondado so em cima, posts sem cantos), e a fita de shorts
+     sangrando pela direita como na home. */
+  .news-view .nvf-body{padding:16px 0 calc(74px + env(safe-area-inset-bottom,0px))}
+  .nvf-layout .nvf-wrap{gap:0}
+  .nvf-wrap > .nvf-stories{margin:0 16px 16px}
+  .nvf-wrap .section-title-row{margin:0 0 4px}
+  .nvf-stories .shorts{gap:8px;margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:0}
+  .nvf-wrap > .nvf-composer{margin:0 0 8px;border-radius:22px 22px 0 0;border-left:0;border-right:0}
+  .nvf-wrap:has(> #nvfChipsBar:not([hidden])) > .nvf-composer{margin-bottom:16px}
+  .nvf-wrap > #nvfChipsBar{margin:0 16px 16px}
+  #nvFeed .post{border-radius:0;border-left:0;border-right:0}
+
+  /* a tela de shorts: o padding de 40px sai da tela e a lateral de 16px fica no corpo */
+  .news-view #nvShortsBScreen{padding:16px 0 0}
   .news-view .sb-body{
-    flex-direction:column;gap:0;padding:12px 12px calc(74px + env(safe-area-inset-bottom,0px));
+    flex-direction:column;gap:0;padding:0 16px calc(74px + env(safe-area-inset-bottom,0px));
     /* o padrão é align-items:flex-start, que faz o filho encolher até o
        conteúdo — a grade ficava mais larga que a tela e era cortada */
     align-items:stretch;
@@ -405,12 +440,50 @@
   .news-view .sb-main{width:100%;min-width:0}
   .news-view .sb-side{display:none}
   /* auto-fill com 190px de mínimo só cabia uma coluna em 390px */
-  .news-view .sb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}
+  .news-view .sb-pillrow{margin:0 0 16px}
+  /* ---- Filtros no celular ----
+     Um botao no topo de cada tela abre a folha com os mesmos cartoes da
+     coluna lateral. O numero e a quantidade de filtros ativos. */
+  .mfiltro{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px}
+  .nvf-wrap > .mfiltro{margin:0 16px 16px}
+  .mfiltro-titulo{font-size:20px;line-height:26px;font-weight:700;color:var(--ink);margin:0;letter-spacing:-.2px}
+  /* em Publicacoes, no celular, a fileira de shorts nao aparece: a tela e so
+     das publicacoes, e os shorts tem a sua propria aba na barra */
+  .news-view .nvf-wrap > .nvf-stories{display:none}
+  .mfiltro-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:999px;
+    background:#fff;box-shadow:inset 0 0 0 1px var(--linha-campo);font:inherit;font-size:13px;font-weight:700;
+    color:var(--ink);cursor:pointer}
+  .mfiltro-btn i{font-size:13px;color:var(--teal)}
+  .mfiltro-btn:active{background:#f3f5f8}
+  /* com filtro ativo o botao vira "Filtrando (N)" e ganha um "x" ao lado que
+     limpa tudo; as fichas de "Resultados para" nao aparecem no celular */
+  .mfiltro-acoes{display:flex;align-items:center;gap:8px}
+  .mfiltro-btn.on{background:var(--teal);color:#fff;box-shadow:none}
+  .mfiltro-btn.on i{color:#fff}
+  .mfiltro-x{width:36px;height:36px;border:0;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--linha-campo);
+    color:var(--ink);font-size:14px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+  .mfiltro-x[hidden]{display:none}
+  .news-view #sbChipsBar,.news-view #nvfChipsBar{display:none !important}
+  .nvf-wrap:has(> #nvfChipsBar:not([hidden])) > .nvf-composer{margin-bottom:8px}
+  /* dentro da folha os cartoes empilham com o mesmo respiro da lateral */
+  #filtroSheetBody{display:flex;flex-direction:column;gap:12px;padding-top:4px}
+  #filtroSheetBody .nvf-side-card{margin:0}
+  .news-view .sb-pend-full{display:none}
+  .news-view .sb-pend-short{display:inline}
+  .news-view .sb-cat{font-size:11px;padding:0 8px;gap:5px}
+  .news-view .sb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
   .news-view .sb-title{font-size:12px}
 
   /* cabeçalho do módulo no celular: símbolo à esquerda; à direita o ícone de
-     Módulos (volta para a home) e a foto, como na home */
-  .nmod-top{padding:0 14px;gap:10px}
+     Módulos (volta para a home) e a foto, como na home. As medidas copiam a
+     barra da home — padding 0 16px, símbolo com os 26px de altura do logotipo,
+     foto de 34px — e os seletores levam .env-social porque as regras do
+     desktop (padding-inline e foto de 40px) tem essa especificidade e
+     venceriam as genericas. */
+  .news-view.env-social .nmod-top{padding:0 16px;gap:10px}
+  .news-view.env-social .nmod-top-logo{width:26px;height:26px}
+  .news-view.env-social .nmod-topav{width:34px;height:34px}
+  .nmod-top{padding:0 16px;gap:10px}
   .nmod-top .nmod-grp,.nmod-top .nmod-envname,.nmod-top .nmod-envdiv,
   .nmod-top #nmodSearchWrap,.nmod-top #nmodEnvSwitch{display:none !important}
   .nmod-top #nmtApps{
@@ -432,3 +505,30 @@
      duas abas dele, entao nao ha o que trocar */
 }
 
+
+
+/* ---- Shorts no celular: a informacao e as acoes dentro do video ----
+   No desktop a coluna da esquerda e a trilha da direita ficam FORA do card,
+   que e estreito. No celular o card ocupa a tela toda, entao os dois entram no
+   video, como no YouTube Shorts: autor e legenda embaixo a esquerda, curtir e
+   compartilhar a direita, sobre um esmaecido que garante a leitura.
+   O short aguardando aprovacao segue sem eles: ali quem manda e a caixa de
+   aprovar e reprovar, que ja aparece dentro do card. */
+@media (max-width:640px){
+  .rv-reel:not(.is-pend)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:4;pointer-events:none;
+    background:linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.32) 45%, transparent)}
+  .rv-reel:not(.is-pend) .rv-footer{display:block;left:16px;right:88px;width:auto;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px))}
+  .rv-footer .rv-date{margin-top:8px;font-size:12px;color:rgba(255,255,255,.7)}
+  .rv-footer .rv-caption{-webkit-line-clamp:2;line-clamp:2}
+  .rv-reel:not(.is-pend) .rv-rail{position:absolute;right:8px;left:auto;align-self:auto;
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px));width:auto;margin:0;transform:none;gap:14px;z-index:5}
+  /* a coluna toda com a mesma largura: os dois botoes ficam no mesmo eixo.
+     Embaixo do curtir fica so a contagem; o compartilhar dispensa rotulo,
+     como no TikTok — e a palavra inteira nao caberia na coluna. */
+  .rv-reel:not(.is-pend) .rv-rail{align-items:center;width:56px;right:10px;gap:18px}
+  .rv-act{width:56px}
+  .rv-act button{width:44px;height:44px;font-size:19px;background:rgba(0,0,0,.28)}
+  .rv-act span{font-size:11px;text-shadow:0 1px 4px rgba(0,0,0,.6);text-align:center}
+  .rv-act.share span{display:none}
+}

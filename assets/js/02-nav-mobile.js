@@ -63,12 +63,79 @@
     if (typeof qpOpen !== 'function') return;
     if (tipo === 'pub') qpOpen(); else qpOpen(tipo);
   });
+  /* Filtros: os cartoes de filtro da coluna lateral sao MOVIDOS para a folha
+     (nao clonados), para os listeners presos a eles — Autor, Periodo, o
+     Localizar — continuarem funcionando; ao fechar voltam ao lugar. */
+  let filtroOrigem = [];   /* [{el, pai, depois}] para devolver na ordem */
+  let filtroTela = null;
+  const filtroCartoes = tela => {
+    const sel = tela === 'shorts'
+      ? '#nvShortsBScreen .sb-side .nvf-side-card'
+      : '#nvFeedScreen .nvf-profile .nvf-side-card, #nvFeedScreen .nvf-side .nvf-side-card';
+    return [...document.querySelectorAll(sel)].filter(c => !c.hidden);
+  };
+  const filtrosAtivos = tela => {
+    try {
+      if (tela === 'shorts' && typeof sbFiltrosAtivos === 'function') return sbFiltrosAtivos().length;
+      if (tela === 'feed' && typeof nvfFiltrosAtivos === 'function') return nvfFiltrosAtivos().length;
+    } catch (e) {}
+    return 0;
+  };
+  window.filtrosBadge = function(){
+    document.querySelectorAll('.mfiltro-btn').forEach(b => {
+      const tela = b.dataset.mfiltro, n = filtrosAtivos(tela);
+      const lbl = b.querySelector('.mfiltro-lbl');
+      if (lbl) lbl.textContent = n ? 'Filtrando (' + n + ')' : 'Filtros';
+      b.classList.toggle('on', n > 0);
+      const x = b.parentNode.querySelector('[data-mfiltrox="' + tela + '"]');
+      if (x) x.hidden = n === 0;
+    });
+  };
+  /* o "x" limpa todos os filtros da tela, com as mesmas funcoes das fichas */
+  document.addEventListener('click', e => {
+    const x = e.target.closest('[data-mfiltrox]'); if (!x) return;
+    if (x.dataset.mfiltrox === 'shorts' && typeof sbClearAll === 'function') sbClearAll();
+    if (x.dataset.mfiltrox === 'feed' && typeof nvfLimparTudo === 'function') nvfLimparTudo();
+    setTimeout(filtrosBadge, 0);
+  });
+  window.filtrosAbrir = function(tela){
+    const fundo = $('#filtroSheetBack'), corpo = $('#filtroSheetBody'); if (!fundo || !corpo) return;
+    filtroTela = tela;
+    filtroOrigem = filtroCartoes(tela).map(el => ({ el, pai: el.parentNode, depois: el.nextSibling }));
+    filtroOrigem.forEach(o => corpo.appendChild(o.el));
+    /* a barra de baixo e fixa e passa por cima da folha: o fim reserva a altura dela */
+    const barra = $('#mnav'), fab = $('#mnav .fab');
+    const rb = barra ? barra.getBoundingClientRect() : null;
+    const alturaBarra = rb ? Math.round(rb.height) : 64;
+    const saliencia = (rb && fab) ? Math.max(0, Math.round(rb.top - fab.getBoundingClientRect().top)) : 0;
+    corpo.style.paddingBottom = (alturaBarra + saliencia + 24) + 'px';
+    fundo.hidden = false; document.body.style.overflow = 'hidden';
+    filtrosBadge();
+  };
+  window.filtrosFechar = function(){
+    const fundo = $('#filtroSheetBack'); if (!fundo || fundo.hidden) return;
+    /* de volta, na ordem inversa, cada um antes do irmao que tinha */
+    filtroOrigem.slice().reverse().forEach(o => { if (o.pai) o.pai.insertBefore(o.el, o.depois && o.depois.parentNode === o.pai ? o.depois : null); });
+    filtroOrigem = []; filtroTela = null;
+    fundo.hidden = true; document.body.style.overflow = '';
+    filtrosBadge();
+  };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.mfiltro-btn'); if (!b) return;
+    filtrosAbrir(b.dataset.mfiltro);
+  });
+  $('#filtroSheetClose') && $('#filtroSheetClose').addEventListener('click', filtrosFechar);
+  $('#filtroSheetBack') && $('#filtroSheetBack').addEventListener('click', e => { if (e.target.id === 'filtroSheetBack') filtrosFechar(); });
+  /* qualquer toque num filtro dentro da folha atualiza o numero do botao */
+  $('#filtroSheetBody') && $('#filtroSheetBody').addEventListener('click', () => setTimeout(filtrosBadge, 0));
+  $('#filtroSheetBody') && $('#filtroSheetBody').addEventListener('change', () => setTimeout(filtrosBadge, 0));
   $('#comSheetClose') && $('#comSheetClose').addEventListener('click', comSheetFechar);
   $('#comSheetBack') && $('#comSheetBack').addEventListener('click', e => { if (e.target.id === 'comSheetBack') comSheetFechar(); });
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!$('#comSheetBack').hidden) comSheetFechar();
     if (!$('#novoSheetBack').hidden) novoSheetFechar();
+    if ($('#filtroSheetBack') && !$('#filtroSheetBack').hidden) filtrosFechar();
   });
   const irPara = sel => {
     const el = sel && $(sel);
@@ -97,9 +164,11 @@
     /* numa barra de abas, tocar em Shorts abre o Shorts — nao rola ate um
        pedaco da home. Vem antes de fecharModulos(), que desfaria a abertura. */
     if (t === 'shorts' || t === 'feed') {
+      if (typeof filtrosFechar === 'function') filtrosFechar();
       mnav.querySelectorAll('button').forEach(x => x.classList.remove('on'));
       b.classList.add('on');
       if (typeof abrirModuloSocial === 'function') abrirModuloSocial(t);
+      if (typeof filtrosBadge === 'function') setTimeout(filtrosBadge, 50);
       return;
     }
     mnav.querySelectorAll('button').forEach(x => x.classList.remove('on'));

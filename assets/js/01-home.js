@@ -130,7 +130,7 @@ updArrows();
 
 /* ---------- Tela de Shorts · Explorar + Player ---------- */
 const REELS_DATA = [
-  { p:0, cat:'eventos',     cap:'4º dia de ABF Franchising Expo 2026! Bora conhecer o SULTS no estande. 🚀', likes:'3,1 mil', comments:212, views:'62,4 mil', rec:true, music:'SULTS · ABF 2026' },
+  { p:0, cat:'eventos', pendAppr:true, cap:'4º dia de ABF Franchising Expo 2026! Bora conhecer o SULTS no estande. 🚀', likes:'3,1 mil', comments:212, views:'62,4 mil', rec:true, music:'SULTS · ABF 2026' },
   { p:25, format:'imagem', cat:'depoimentos', cap:'Casa do Construtor: 780 lojas em 4 países com a gestão centralizada no SULTS. 🏗️', likes:'2,6 mil', comments:129, views:'47,3 mil', rec:true, music:'Casa do Construtor · Case' },
   { p:10, cat:'eventos',    cap:'ABF Expo 2026 · 2º dia. O time SULTS no meio de tudo. 💙', likes:'2,2 mil', comments:118, views:'44,9 mil', rec:false, music:'SULTS · ABF 2026' },
   { p:7, cat:'depoimentos', cap:'Mormaii: o SULTS facilita nosso processo de implantação. 🌊', likes:'1,2 mil', comments:64, views:'22,1 mil', rec:false, music:'Mormaii · Depoimento' },
@@ -228,7 +228,13 @@ var newsSeen = new Set();
 /* a fileira nao filtra por busca: quem pesquisa em Publicacoes esta buscando
    publicacoes, e a busca de Shorts age na tela de Shorts */
 function orderedShorts(vistosNoFim){
-  const lista = REELS_DATA.filter(function(r){ return !r.removido; });
+  /* short aguardando aprovacao so aparece para quem pode aprovar, como ja
+     acontece com a publicacao pendente */
+  const lista = REELS_DATA.filter(function(r){
+    if (r.removido) return false;
+    if (r.pendAppr && typeof podeAprovar === 'function' && !podeAprovar()) return false;
+    return true;
+  });
   if (vistosNoFim === false) return lista;
   const vistos = [...seenShorts];
   const posicao = r => isSeen(r.p) ? 1 + vistos.indexOf(r.p) : 0;
@@ -254,21 +260,43 @@ function reelCardHTML(r){
   '</div>';
 }
 
+/* Aprovacao dentro do player: faixa no topo do card e a caixa com "Enviado
+   em" + Aprovar/Reprovar. No desktop ela mora na coluna da esquerda, acima da
+   autora (e a informacao do short); abaixo de 1100px essa coluna nao existe,
+   entao a mesma caixa nasce dentro do card, no canto inferior esquerdo. As
+   duas sao renderizadas e o CSS mostra uma por vez. */
+function rvModboxHTML(r){
+  const post = POSTS[r.p];
+  return '<div class="rv-modbox">' +
+      '<span class="rv-sent"><i class="fa-solid fa-clock"></i> Enviado ' + fmtQuando(post) + '</span>' +
+      '<button type="button" class="cmod-ok" data-rvapr><i class="fa-solid fa-check"></i> Aprovar</button>' +
+      '<button type="button" class="cmod-no" data-rvrej><i class="fa-solid fa-xmark"></i> Reprovar</button>' +
+    '</div>';
+}
 function reelSlideHTML(r, idx, total){
   const post = POSTS[r.p];
+  const pend = !!r.pendAppr;
   const timer = '<div class="rv-timer'+(post.video?' isvid':'')+'"><span></span></div>';
-  return '<div class="rv-reel"><div class="rv-card">' +
-    (post.embed ? '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+  return '<div class="rv-reel' + (pend ? ' is-pend' : '') + '"><div class="rv-card">' +
+    (pend ? '<div class="rv-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</div>' + rvModboxHTML(r) : '') +
+    (post.embed ? '<img class="rv-capa" src="' + (post.img || '') + '" alt="" aria-hidden="true">' +
+      '<iframe data-src="https://www.youtube.com/embed/' + post.embed + '?autoplay=1&mute=1&loop=1&playlist=' + post.embed + '&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1" title="' + post.alt + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
      : post.video ? '<video data-src="' + post.video + '"' + ((post.img||post.poster) ? ' poster="' + (post.img||post.poster) + '"' : '') + ' preload="none" muted loop playsinline></video>'
                 : '<img src="' + post.img + '" alt="' + post.alt + '">') +
-    timer + (post.video ? '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button><input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' : '') +
+    timer + ((post.video || post.embed) ?
+      '<div class="rv-ctl">' +
+        '<button class="rv-play" data-rvplay title="Pausar"><i class="fa-solid fa-pause"></i></button>' +
+        '<div class="rv-audio" data-rvaudio><button class="rv-mute" data-rvmute title="Ativar som"><i class="fa-solid fa-volume-xmark"></i></button>' +
+        '<input class="rv-vol" type="range" min="0" max="100" step="1" value="70" data-rvvol aria-label="Volume"></div>' +
+      '</div>' : '') +
     '<div class="rv-tap"></div><div class="rv-pauseic"><i class="fa-solid fa-play"></i></div>' +
   '</div>' +
-    '<div class="rv-rail">' +
+    (pend ? '' : '<div class="rv-rail">' +
       '<div class="rv-act share" data-rvshare><button title="Compartilhar" aria-label="Compartilhar"><i class="fa-solid fa-paper-plane"></i></button><span>Compartilhar</span></div>' +
       '<div class="rv-act like' + (isLiked(r.p) ? ' on' : '') + '" data-p="' + r.p + '"><button><i class="fa-solid fa-heart"></i></button><span>' + likeDisplay(r) + '</span></div>' +
-    '</div>' +
+    '</div>') +
     '<div class="rv-footer">' +
+      (pend ? rvModboxHTML(r) : '') +
       '<div class="rv-author"><span class="avatar ' + post.av + '">' + post.initials + '</span>' +
         '<div class="rv-authorinfo">' +
           '<span class="rv-name">' + post.name + '</span>' +
@@ -636,6 +664,10 @@ function rvTogglePause(slide){
   const on = slide.classList.toggle('paused');
   const v = slide.querySelector('video');
   if(v){ if(on){ v.pause(); } else { const p=v.play(); if(p&&p.catch) p.catch(()=>{}); } }
+  const f = slide.querySelector('iframe[data-src]');
+  if(f) rvComandaEmbed(f, on ? 'pauseVideo' : 'playVideo');
+  const bt = slide.querySelector('[data-rvplay]');
+  if(bt){ bt.innerHTML = '<i class="fa-solid fa-' + (on ? 'play' : 'pause') + '"></i>'; bt.title = on ? 'Tocar' : 'Pausar'; }
   if(on){ clearTimeout(window.__rvT); }
   else if(slide.querySelector('.rv-timer')){
     const el = slide.querySelector('.rv-timer span');
@@ -673,11 +705,60 @@ function rvFitMedia(root){
 /* Só o short em tela baixa vídeo. Antes todo slide nascia com src e autoplay,
    então abrir o player disparava o download de vários vídeos ao mesmo tempo —
    eles disputavam banda e o primeiro quadro demorava a aparecer. */
-function rvCarregaVideo(v){
+function rvCarregaVideo(v, tocar){
   if(!v) return;
   const s = v.getAttribute('data-src');
-  if(s && !v.getAttribute('src')){ v.setAttribute('src', s); v.load(); }
+  if(s && !v.getAttribute('src')){ v.setAttribute('src', s); v.preload = tocar ? 'auto' : 'metadata'; v.load(); }
+  else if(tocar && v.preload !== 'auto'){ v.preload = 'auto'; }
 }
+/* Fala com o player do YouTube ja carregado, em vez de tirar e repor o src —
+   repor recomeca o download e e ele que causa a espera ao trocar de short. */
+function rvComandaEmbed(f, comando, args){
+  if(!f || !f.contentWindow) return;
+  try { f.contentWindow.postMessage(JSON.stringify({ event:'command', func:comando, args:args || [] }), '*'); } catch(e){}
+}
+/* Quantos shorts ficam prontos de cada lado do que esta em tela. Um de cada
+   lado cobre o gesto normal (subir ou descer um) sem pesar a rede. */
+const RV_VIZINHOS = 1;
+/* O player so avisa o que esta fazendo depois que a pagina pede para escutar.
+   E por esse aviso que a capa sai: quando o video comeca a andar de verdade. */
+function rvEscutaEmbed(f){
+  if(!f) return;
+  let n = 0;
+  const bate = setInterval(function(){
+    if(++n > 24 || !f.getAttribute('src')){ clearInterval(bate); return; }
+    if(f.contentWindow){ try { f.contentWindow.postMessage(JSON.stringify({ event:'listening' }), '*'); } catch(e){} }
+    /* enquanto o short em tela nao anda, pede de novo para tocar: no celular
+       o primeiro pedido costuma cair antes de o player estar de pe */
+    const s = f.closest('.rv-reel');
+    if (s && s.classList.contains('playing') && !s.classList.contains('embed-ok') && !s.classList.contains('paused')){
+      rvComandaEmbed(f, 'playVideo');
+    }
+  }, 250);
+}
+(function(){
+  /* O player avisa por 'onStateChange' (info numerico) e por 'infoDelivery'
+     (info com playerState e currentTime). Basta um dos dois dizer que o video
+     esta andando para a capa sair. */
+  window.addEventListener('message', function(e){
+    if (String(e.origin).indexOf('youtube') < 0) return;
+    let d; try { d = JSON.parse(e.data); } catch(err){ return; }
+    if (!d) return;
+    const st = (d.event === 'onStateChange') ? d.info
+             : (d.event === 'infoDelivery' && d.info) ? d.info.playerState : undefined;
+    if (st === undefined) return;
+    const slides = document.querySelectorAll('.rv-reel');
+    for (const s of slides){
+      const f = s.querySelector('iframe[data-src]');
+      if (f && f.contentWindow === e.source){
+        /* 1 = tocando. Qualquer outro estado devolve a capa: pausado, o
+           YouTube desenha o proprio play e as setas dentro do quadro. */
+        s.classList.toggle('embed-ok', st === 1);
+        break;
+      }
+    }
+  });
+})();
 function rvArmTimer(){
   clearTimeout(window.__rvT);
   const w=rvFeed.clientHeight||1;
@@ -685,12 +766,22 @@ function rvArmTimer(){
   const slides=rvFeed.querySelectorAll('.rv-reel');
   slides.forEach((s,k)=>{ s.classList.toggle('playing', k===i); s.classList.remove('paused'); });
   const cur=slides[i];
-  /* embed do YouTube segue a mesma regra do video: so o short em tela carrega */
-  slides.forEach((s,k)=>{ const f=s.querySelector('iframe[data-src]'); if(!f) return;
-    if(k===i){ if(!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src')); }
-    else if(f.getAttribute('src')) f.removeAttribute('src'); });
+  /* O short em tela e os vizinhos ficam montados; o resto e descarregado. O
+     que esta em tela toca, os vizinhos ficam parados no primeiro quadro. */
+  slides.forEach((s,k)=>{
+    const perto = Math.abs(k - i) <= RV_VIZINHOS;
+    const f = s.querySelector('iframe[data-src]');
+    if(f){
+      if(perto){
+        if(!f.getAttribute('src')){ f.setAttribute('src', f.getAttribute('data-src')); rvEscutaEmbed(f); }
+        else if(k===i){ rvComandaEmbed(f, 'seekTo', [0, true]); rvComandaEmbed(f, 'playVideo'); }
+      } else if(f.getAttribute('src')){ f.removeAttribute('src'); s.classList.remove('embed-ok'); }
+    }
+    const v = s.querySelector('video');
+    if(v && perto && k!==i){ rvCarregaVideo(v, false); try{ v.pause(); }catch(e){} }
+  });
   const vid=cur&&cur.querySelector('video');
-  if(vid){ rvCarregaVideo(vid); try{ vid.currentTime=0; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
+  if(vid){ rvCarregaVideo(vid, true); try{ vid.currentTime=0; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
   if(typeof rvSyncAudio==='function') rvSyncAudio();
   if(vid){
     const bar=cur.querySelector('.rv-timer span');
@@ -726,6 +817,14 @@ function markVisibleSeen(){
   const w = rvFeed.clientHeight || 1;
   const i = Math.min(Math.max(Math.round(rvFeed.scrollTop / w), 0), playerList.length - 1);
   if (playerList[i]) markReelSeen(playerList[i].p);
+}
+function rvDecidir(r, aprovar){
+  if (!r) return;
+  r.pendAppr = false;
+  if (!aprovar) r.removido = true;
+  closePlayer();
+  if (typeof renderShortsB === 'function') renderShortsB();
+  if (typeof fgToast === 'function') fgToast(aprovar ? 'Short aprovado' : 'Short reprovado');
 }
 function closePlayer(){
   clearTimeout(window.__rvT);
