@@ -1,0 +1,106 @@
+<!-- ============ Módulo Inteligência Artificial ============
+     A conversa com a IA da rede. O cabeçalho é o mesmo dos outros módulos; o
+     miolo é claro, com a coluna das conversas à esquerda e a conversa no meio.
+     O compositor é UM só: fica no centro enquanto não há conversa e desce para
+     o rodapé assim que a primeira pergunta é feita. -->
+<div class="ia-view" id="iaView">
+
+  <div class="nmod-top ia-top">
+    <button class="nmod-logobtn ia-logobtn" id="iaLogo" title="Ir para a home" aria-label="Ir para a home"><img class="ia-toplogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 294.1 76.6' fill='%23fff'%3E %3Cpath d='M55.5 28 24.1 59.4c-.2.2-.6.2-.9 0l-9.9-9.9c-.2-.2-.2-.6 0-.9l31.4-31.4c.2-.2.6-.2.9 0l9.9 9.9c.3.3.3.6 0 .9'/%3E %3Cpath d='M28.9.9 2.2 27.5c-3 3-3 7.8 0 10.7l4.9 4.9c.2.2.6.2.9 0L49.5 1.7c.4-.4.1-1-.4-1H29.3c-.1 0-.3 0-.4.2'/%3E %3Cpath d='M60.9 33.3 19.4 74.9c-.4.4-.1 1 .4 1h19.8c.2 0 .3-.1.4-.2L66.7 49c3-3 3-7.8 0-10.7l-4.9-4.9c-.3-.3-.7-.3-.9-.1'/%3E %3Cpath d='M158.2 12.3c-.3 0-.6.3-.6.6v30.8c0 1.6-.4 3.1-1.1 4.7-1.6 3.1-4.2 4.5-8.1 4.5-3.9 0-6.5-1.5-8-4.5-.8-1.5-1.2-3.1-1.2-4.6V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v30.8c0 3.6.9 7.2 2.8 10.8 3.6 7.2 10 10.9 18.9 10.9 8.9 0 15.2-3.7 18.9-10.9 1.7-3.6 2.6-7.2 2.6-10.8V12.9c0-.3-.3-.6-.6-.6h-11.2z'/%3E %3Cpath d='M187.7 51.3V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v50.8c0 .3.3.6.6.6h34.9c.3 0 .6-.3.6-.6V52.6c0-.3-.3-.6-.6-.6h-22.5c-.3 0-.6-.3-.6-.7'/%3E %3Cpath d='M203.6 12.9V24c0 .3.3.6.6.6h14.1c.3 0 .6.3.6.6v38.5c0 .3.3.6.6.6h11.3c.3 0 .6-.3.6-.6V25.2c0-.3.3-.6.6-.6h14.1c.3 0 .6-.3.6-.6V12.9c0-.3-.3-.6-.6-.6h-42c-.3 0-.5.2-.5.6'/%3E %3Cpath d='M117.8 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3Cpath d='M290.4 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3C/svg%3E" alt="SULTS"></button>
+    <span style="flex:1"></span>
+    <button class="nmod-switch" id="iaManage"><i class="mdi mdi-cog-outline"></i><span class="lbl">Gerenciar</span></button>
+    <button class="nmod-tab" id="iaApps"><i class="mdi mdi-view-grid-outline"></i> Módulos</button>
+    <span class="avatar av-rc nmod-topav" id="iaTopAv" title="Rodrigo Caetano"></span>
+  </div>
+
+  <div class="ia-body">
+
+    <!-- ---------- conversas ---------- -->
+    <aside class="ia-side" id="iaSide">
+      <button class="ia-new" id="iaNew"><i class="mdi mdi-square-edit-outline"></i> Nova conversa</button>
+      <nav class="ia-nav">
+        <button type="button" class="ia-item on" id="iaTodasBtn">
+          <i class="mdi mdi-forum-outline ia-ic-off"></i><i class="mdi mdi-forum ia-ic-on"></i><span>Conversas</span>
+        </button>
+        <button type="button" class="ia-item" id="iaArqBtn">
+          <i class="mdi mdi-archive-outline ia-ic-off"></i><i class="mdi mdi-archive ia-ic-on"></i><span>Arquivadas</span>
+        </button>
+      </nav>
+      <div class="ia-find">
+        <i class="mdi mdi-magnify"></i>
+        <input type="text" id="iaFind" placeholder="Buscar conversa" autocomplete="off">
+      </div>
+      <div class="ia-list" id="iaList"></div>
+
+      <div class="ia-sidefoot">
+        <div class="ia-userwrap">
+          <button type="button" class="ia-user" id="iaUser" aria-haspopup="menu" aria-expanded="false">
+            <span class="avatar av-rc ia-userav"></span>
+            <span class="ia-user-tx"><b id="iaUserNome">Rodrigo Caetano</b><span id="iaUserSub">CEO · SULTS</span></span>
+            <i class="mdi mdi-chevron-down"></i>
+          </button>
+          <div class="ia-usermenu" id="iaUserMenu" role="menu" hidden></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ---------- a conversa ---------- -->
+    <main class="ia-main">
+
+      <div class="ia-head" id="iaHead" hidden>
+        <span class="ia-head-tt" id="iaHeadTt"></span>
+        <span style="flex:1"></span>
+        <button class="ia-hbtn ia-hbtn-tx" id="iaShare" title="Compartilhar conversa"><i class="mdi mdi-export-variant"></i><span>Compartilhar</span></button>
+        <div class="ia-menuwrap">
+          <button class="ia-hbtn" id="iaMore" title="Mais ações"><i class="mdi mdi-dots-horizontal"></i></button>
+          <div class="ia-menu" id="iaMenu" hidden>
+            <button type="button" data-iam="renomear"><i class="mdi mdi-pencil-outline"></i> Renomear</button>
+            <button type="button" data-iam="arquivar"><i class="mdi mdi-archive-arrow-down-outline"></i> Arquivar</button>
+            <button type="button" class="danger" data-iam="excluir"><i class="mdi mdi-trash-can-outline"></i> Excluir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ia-scroll" id="iaScroll">
+
+        <!-- sem conversa: saudação, compositor no meio e sugestões -->
+        <section class="ia-zero" id="iaZero">
+          <span class="ia-mark ia-mark-lg" aria-hidden="true"></span>
+          <h1 class="ia-hello" id="iaHello">Boa tarde, Rodrigo</h1>
+          <p class="ia-sub">No que vamos trabalhar?</p>
+          <div class="ia-zerodock" id="iaZeroDock"></div>
+          <div class="ia-chips" id="iaChips"></div>
+        </section>
+
+        <!-- com conversa: as mensagens -->
+        <section class="ia-thread" id="iaThread" hidden></section>
+
+      </div>
+
+      <div class="ia-dock" id="iaDock" hidden></div>
+    </main>
+  </div>
+
+  <!-- o menu de cada conversa: mora fora da coluna, que corta o que passa
+       das bordas, e é posicionado na hora do clique -->
+  <div class="ia-menu ia-rowmenu" id="iaRowMenu" hidden>
+    <button type="button" data-iar="renomear"><i class="mdi mdi-pencil-outline"></i> Renomear</button>
+    <button type="button" data-iar="arquivar"><i class="mdi mdi-archive-arrow-down-outline"></i> Arquivar</button>
+    <button type="button" class="danger" data-iar="excluir"><i class="mdi mdi-trash-can-outline"></i> Excluir</button>
+  </div>
+
+  <!-- o compositor, que troca de lugar entre o centro e o rodapé -->
+  <div class="ia-comp" id="iaComp">
+    <div class="ia-compbox" id="iaCompBox">
+      <label class="sr-only" for="iaText">Sua pergunta</label>
+      <textarea class="ia-text" id="iaText" rows="1" placeholder="Pergunte alguma coisa sobre a rede…" autocomplete="off"></textarea>
+      <div class="ia-comprow">
+        <button type="button" class="ia-cbtn" id="iaAttach" title="Anexar arquivo"><i class="mdi mdi-paperclip"></i></button>
+        <span style="flex:1"></span>
+        <button type="button" class="ia-send" id="iaSend" disabled aria-label="Enviar pergunta"><i class="mdi mdi-arrow-up"></i></button>
+      </div>
+    </div>
+    <p class="ia-disc">A IA responde a partir dos documentos da sua rede e pode cometer erros. Confira o que for decisivo.</p>
+  </div>
+
+</div>

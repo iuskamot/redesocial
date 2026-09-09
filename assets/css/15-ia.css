@@ -1,0 +1,291 @@
+/* ============ Módulo Inteligência Artificial ============
+   Versão clara da conversa: fundo branco, coluna de leitura estreita e um
+   único acento — o teal da marca no compositor e na marca da IA. Todo o resto
+   é a escala de cinzas do DS, para o texto da resposta mandar na tela. */
+
+.ia-view{position:fixed;inset:0;z-index:130;background:#fff;display:none;flex-direction:column}
+.ia-view.open{display:flex}
+/* o cabeçalho escuro dos módulos: a regra original só vale dentro da Rede
+   Social, então aqui ele é ligado de novo */
+.ia-view .nmod-top{display:flex}
+/* o avatar do topo também só era exibido dentro da Rede Social */
+.ia-view .nmod-topav{display:block;width:36px;height:36px;font-size:0;flex:none}
+/* Sem o nome do módulo sobra espaço, então a barra usa a logo por extenso em
+   vez do símbolo sozinho */
+.ia-toplogo{height:26px;width:auto;display:block}
+@media(max-width:900px){ .ia-toplogo{height:22px} }
+
+/* Gerenciar no formato da Rede Social: quadradinho de 96 por 48, ícone em
+   cima e texto embaixo, encostado no de Módulos */
+.ia-view .nmod-switch{background:var(--teal);color:#fff;
+  flex-direction:column;justify-content:center;gap:2px;
+  height:48px;min-width:96px;padding:0 12px;border-radius:4px;
+  font-size:13px;line-height:17px;font-weight:600}
+/* os dois quadradinhos com o mesmo texto e o mesmo ícone, como na Rede Social */
+.ia-view .nmod-tab,.ia-view .nmod-switch{font-size:13px;line-height:17px;font-weight:600}
+.ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+.ia-view .nmod-switch:hover{background:linear-gradient(rgba(255,255,255,.10),rgba(255,255,255,.10)),var(--teal)}
+.ia-body{flex:1;min-height:0;display:flex;position:relative}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* a marca da IA: a mesma faísca do ícone do módulo, em teal */
+.ia-mark{display:block;flex-shrink:0;width:26px;height:26px;background-repeat:no-repeat;background-position:center;background-size:contain;
+  background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTI0IDZjLjUgMCAuOS4zIDEgLjhsMS45IDYuNmExMCAxMCAwIDAgMCA2LjkgNi45bDYuNiAxLjljLjUuMS44LjUuOCAxcy0uMy45LS44IDFsLTYuNiAxLjlhMTAgMTAgMCAwIDAtNi45IDYuOWwtMS45IDYuNmMtLjEuNS0uNS44LTEgLjhzLS45LS4zLTEtLjhsLTEuOS02LjZhMTAgMTAgMCAwIDAtNi45LTYuOWwtNi42LTEuOWMtLjUtLjEtLjgtLjUtLjgtMXMuMy0uOS44LTFsNi42LTEuOWExMCAxMCAwIDAgMCA2LjktNi45bDEuOS02LjZjLjEtLjUuNS0uOCAxLS44WiIvPjxwYXRoIGZpbGw9IiMwMGFjYWMiIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIi8+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTExIDMzYy4yNSAwIC40NS4xNy41Mi40MmwuNDUgMS42YTMgMyAwIDAgMCAyLjAxIDIuMDFsMS42LjQ1Yy4yNS4wNy40Mi4yNy40Mi41MnMtLjE3LjQ1LS40Mi41MmwtMS42LjQ1YTMgMyAwIDAgMC0yLjAxIDIuMDFsLS40NSAxLjZjLS4wNy4yNS0uMjcuNDItLjUyLjQycy0uNDUtLjE3LS41Mi0uNDJsLS40NS0xLjZhMyAzIDAgMCAwLTIuMDEtMi4wMWwtMS42LS40NWMtLjI1LS4wNy0uNDItLjI3LS40Mi0uNTJzLjE3LS40NS40Mi0uNTJsMS42LS40NWEzIDMgMCAwIDAgMi4wMS0yLjAxbC40NS0xLjZjLjA3LS4yNS4yNy0uNDIuNTItLjQyWiIvPjwvc3ZnPg==")}
+.ia-mark-lg{width:44px;height:44px;margin-bottom:18px}
+
+/* ---------------- coluna das conversas ---------------- */
+.ia-side{display:flex;width:276px;flex-shrink:0;flex-direction:column;gap:10px;padding:14px 12px;
+  background:#F7F8FA;border-right:1px solid var(--line)}
+
+.ia-new{display:flex;align-items:center;justify-content:center;gap:10px;height:36px;padding:0 14px;
+  border:0;border-radius:6px;background:var(--teal);color:#fff;
+  font:inherit;font-size:14px;line-height:20px;font-weight:700;letter-spacing:.3px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-new i{font-size:14px}
+.ia-new:hover{background:var(--teal-dark)}
+.ia-new:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.3)}
+
+.ia-find{display:flex;align-items:center;gap:9px;height:36px;padding:0 12px;border-radius:6px;
+  background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);
+  transition:box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.ia-find:focus-within{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.14)}
+.ia-find i{font-size:12px;flex:none}
+.ia-find input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:14px;color:var(--ink)}
+.ia-find input::placeholder{color:var(--muted)}
+
+.ia-list{flex:1;min-height:0;overflow-y:auto;margin:2px -4px 0;padding:0 4px;scrollbar-width:thin;
+  display:flex;flex-direction:column;gap:2px}
+.ia-grp{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:14px 10px 5px}
+.ia-grp:first-child{padding-top:4px}
+/* A linha é a caixa: o título ocupa quase tudo e os três pontos ficam à
+   direita. O espaço deles é reservado sempre, mesmo invisíveis, para o título
+   não mudar de largura quando o mouse entra. */
+.ia-linha{display:flex;align-items:center;gap:2px;border-radius:6px;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-conv{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-align:left;border:0;background:none;
+  padding:8px 4px 8px 10px;border-radius:6px;cursor:pointer;color:#5b6672;
+  font:inherit;font-size:13px;line-height:19px;font-weight:600;letter-spacing:.2px}
+.ia-convmais{display:flex;align-items:center;justify-content:center;width:26px;height:26px;flex:none;
+  margin-right:5px;border:0;border-radius:6px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity 120ms cubic-bezier(.4,0,.2,1),background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-linha:hover .ia-convmais,.ia-linha.menu-on .ia-convmais,.ia-convmais:focus-visible{opacity:1;pointer-events:auto}
+.ia-convmais:hover{background:color-mix(in srgb,var(--teal) 24%,transparent);color:#0a6e6e}
+/* a caixa de fora corta; a de dentro leva o texto e passeia no hover */
+.ia-conv-cx{flex:1;min-width:0;overflow:hidden}
+.ia-conv-tx{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transform:translateX(0);transition:transform .2s ease}
+.ia-linha.corta:hover .ia-conv-tx{overflow:visible;text-overflow:clip;
+  transform:translateX(var(--desl,0px));transition:transform var(--dur,1s) linear .3s}
+
+/* renomear na própria linha */
+.ia-ren{display:block;width:100%;height:22px;padding:0 6px;border:0;border-radius:5px;
+  background:#fff;box-shadow:inset 0 0 0 1px var(--teal);outline:none;
+  font:inherit;font-size:13px;font-weight:600;letter-spacing:.2px;color:var(--ink)}
+
+/* Arquivadas é um item de menu logo abaixo da busca, não uma gaveta no fim da
+   lista: numa conta com milhares de conversas o fim da lista fica longe. */
+/* As duas entradas de navegação são cinza de propósito: o verdigris já quer
+   dizer "esta é a conversa aberta", e usar a mesma cor para dizer "esta é a
+   lista que estou vendo" faria dois sinais diferentes com a mesma tinta. */
+.ia-nav{display:flex;flex-direction:column;gap:2px}
+.ia-item{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
+  padding:8px 10px;border-radius:6px;color:#5b6672;
+  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.2px;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-item>i{width:16px;font-size:16px;line-height:1;color:#8a94a0;transition:color 120ms cubic-bezier(.4,0,.2,1)}
+/* Contorno enquanto é só uma opção, cheio quando é a visão aberta. São dois
+   glifos diferentes na fonte, então os dois ficam no HTML e o CSS escolhe. */
+.ia-item .ia-ic-on{display:none}
+.ia-item.on .ia-ic-off{display:none}
+.ia-item.on .ia-ic-on{display:inline-block}
+.ia-item span{flex:1;min-width:0;text-align:left}
+.ia-item:hover{background:#EAEDF0}
+.ia-item.on{background:#E3E7EC;color:var(--ink);font-weight:700}
+.ia-item.on>i{color:var(--ink)}
+.ia-item.on:hover{background:#DBE0E6}
+.ia-item:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,172,172,.35)}
+
+/* Rodapé da coluna: a foto, o nome e a unidade, com o menu que troca as duas
+   coisas. É a última linha da coluna, então o menu sobe. */
+.ia-sidefoot{margin:2px -12px -14px;padding:8px 12px;border-top:1px solid var(--line)}
+.ia-userwrap{position:relative}
+.ia-user{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
+  padding:7px 8px;border-radius:8px;text-align:left;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-user:hover{background:#EDEFF2}
+.ia-user>i{font-size:10px;color:#9aa5b1;flex:none}
+.ia-userav{width:32px;height:32px;font-size:0;flex:none}
+.ia-user-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.ia-user-tx b{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ia-user-tx span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.ia-usermenu{position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:12;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;
+  max-height:420px;overflow-y:auto;box-shadow:0 18px 40px -12px rgba(16,32,48,.42)}
+.ia-umlbl{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:9px 10px 4px}
+.ia-usermenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
+  padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font:inherit}
+.ia-usermenu button:hover{background:#EAEDF0}
+.ia-usermenu button.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
+.ia-usermenu button>i{font-size:11px;color:var(--teal);opacity:0;flex:none}
+.ia-usermenu button.on>i{opacity:1}
+.ia-umav{width:28px;height:28px;font-size:0;flex:none}
+.ia-umic{width:28px;height:28px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:#EDEFF2;color:#5b6672;font-size:12px}
+.ia-umtx{flex:1;min-width:0;display:flex;flex-direction:column}
+.ia-umtx b{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* o menu de uma linha: preso à tela, posicionado no clique */
+.ia-view .ia-rowmenu{position:fixed;top:0;left:0;right:auto;width:max-content;min-width:184px;z-index:140}
+.ia-linha:hover,.ia-linha.menu-on{background:color-mix(in srgb,var(--teal) 9%,transparent)}
+.ia-linha.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
+.ia-linha.on .ia-conv{color:#0a6e6e;font-weight:700}
+.ia-linha.on:hover{background:color-mix(in srgb,var(--teal) 21%,transparent)}
+.ia-vazio{padding:26px 14px;text-align:center;color:var(--muted);font-size:12px}
+.ia-vazio b{display:block;font-size:14px;font-weight:600;color:#5b6672}
+.ia-vazio span{display:block;margin-top:5px;font-size:12px;line-height:1.5;color:var(--muted)}
+
+/* ---------------- a conversa ---------------- */
+.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff}
+.ia-head{display:flex;align-items:center;gap:10px;height:56px;flex-shrink:0;padding:0 20px;
+  box-shadow:inset 0 -1px 0 var(--line)}
+.ia-head-tt{font-size:14px;font-weight:700;letter-spacing:.2px;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+.ia-hbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
+  border:0;border-radius:999px;background:none;color:#5b6672;font-size:14px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-hbtn:hover{background:#F1F3F5;color:var(--ink)}
+/* o de compartilhar leva o rótulo: vira pílula em vez de círculo */
+.ia-hbtn-tx{width:auto;gap:8px;padding:0 14px;
+  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+.ia-menuwrap{position:relative}
+.ia-menu{position:absolute;top:calc(100% + 6px);right:0;min-width:190px;z-index:6;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;
+  box-shadow:0 14px 34px -12px rgba(16,32,48,.4)}
+.ia-menu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
+  padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#465364;
+  cursor:pointer;text-align:left}
+.ia-menu button i{width:14px;font-size:12px}
+.ia-menu button:hover{background:#EAEDF0}
+.ia-menu button.danger{color:var(--red)}
+.ia-menu button.danger:hover{background:#fdecec}
+
+.ia-scroll{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column}
+
+/* ----- estado inicial ----- */
+.ia-zero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;max-width:720px;margin:0 auto;padding:32px 24px 40px}
+.ia-hello{font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-.2px;color:var(--ink);text-align:center}
+.ia-sub{margin-top:8px;font-size:17px;color:var(--muted);text-align:center}
+.ia-zerodock{width:100%;margin-top:26px}
+.ia-chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:22px}
+.ia-chip{display:flex;align-items:center;gap:11px;text-align:left;border:0;background:#fff;
+  box-shadow:inset 0 0 0 1px var(--line);border-radius:12px;padding:14px;cursor:pointer;
+  transition:box-shadow 120ms cubic-bezier(.4,0,.2,1),transform 120ms cubic-bezier(.4,0,.2,1)}
+.ia-chip:hover{box-shadow:inset 0 0 0 1px var(--teal),0 6px 18px -12px rgba(16,32,48,.5);transform:translateY(-1px)}
+.ia-chip:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.16)}
+.ia-chip-ic{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;background:var(--c,#5b6672)}
+.ia-chip-tx{flex:1;min-width:0}
+.ia-chip-tx b{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+
+/* ----- as mensagens ----- */
+.ia-thread{width:100%;max-width:760px;margin:0 auto;padding:26px 24px 12px;display:flex;flex-direction:column;gap:26px}
+.ia-msg{display:flex;flex-direction:column}
+.ia-msg.eu{align-items:flex-end}
+.ia-bolha{max-width:78%;background:color-mix(in srgb,var(--teal) 15%,#fff);color:var(--ink);border-radius:16px 16px 5px 16px;
+  padding:12px 16px;font-size:16px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ia-resp{display:flex;gap:13px}
+.ia-resp .ia-mark{margin-top:1px}
+.ia-corpo{flex:1;min-width:0;font-size:16px;line-height:1.7;color:var(--body)}
+.ia-corpo p{margin:0 0 14px}
+.ia-corpo p:last-child{margin-bottom:0}
+.ia-corpo b{color:var(--ink)}
+.ia-corpo ul{margin:0 0 14px;padding-left:20px}
+.ia-corpo li{margin-bottom:7px}
+.ia-corpo li::marker{color:var(--teal)}
+.ia-cursor{display:inline-block;width:7px;height:16px;vertical-align:-2px;margin-left:2px;
+  border-radius:1px;background:var(--teal);animation:ia-pisca 1s steps(1) infinite}
+@keyframes ia-pisca{50%{opacity:0}}
+
+/* três pontos enquanto a resposta não começa */
+.ia-pensando{display:inline-flex;gap:5px;align-items:center;height:24px}
+.ia-pensando span{width:6px;height:6px;border-radius:50%;background:#c4ccd4;animation:ia-pulo 1.1s ease-in-out infinite}
+.ia-pensando span:nth-child(2){animation-delay:.16s}
+.ia-pensando span:nth-child(3){animation-delay:.32s}
+@keyframes ia-pulo{0%,60%,100%{transform:translateY(0);opacity:.55}30%{transform:translateY(-4px);opacity:1}}
+
+.ia-acts{display:flex;align-items:center;gap:2px;margin-top:10px;opacity:0;transition:opacity 120ms cubic-bezier(.4,0,.2,1)}
+.ia-msg:hover .ia-acts,.ia-msg:focus-within .ia-acts{opacity:1}
+.ia-act{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:0;border-radius:8px;
+  background:none;color:#8a94a0;font:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-act:hover{background:#F1F3F5;color:var(--ink)}
+/* sem mouse não há hover: no toque as ações ficam sempre à vista */
+@media(hover:none){.ia-acts{opacity:1}}
+
+/* ---------------- compositor ---------------- */
+.ia-dock{flex-shrink:0;padding:0 24px 16px;background:#fff}
+.ia-comp{width:100%;max-width:712px;margin:0 auto}
+.ia-compbox{background:#fff;border-radius:20px;padding:12px 12px 10px;
+  box-shadow:inset 0 0 0 1px var(--linha-campo),0 1px 2px rgba(16,32,48,.06),0 10px 26px -18px rgba(16,32,48,.5);
+  transition:box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.ia-compbox:focus-within{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.14),0 10px 26px -18px rgba(16,32,48,.5)}
+.ia-text{display:block;width:100%;max-height:190px;border:0;outline:none;resize:none;background:none;
+  padding:4px 4px 8px;font:inherit;font-size:16px;line-height:1.6;color:var(--ink);overflow-y:hidden}
+.ia-text::placeholder{color:var(--muted)}
+.ia-comprow{display:flex;align-items:center;gap:6px}
+.ia-cbtn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:0;
+  border-radius:999px;background:none;color:#8a94a0;font-size:14px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-cbtn:hover{background:#F1F3F5;color:var(--ink)}
+
+.ia-send{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:0;
+  border-radius:999px;background:var(--teal);color:#fff;font-size:14px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-send:hover{background:var(--teal-dark)}
+.ia-send:disabled{background:#DBE1E6;color:#fff;cursor:default}
+.ia-send:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.24)}
+.ia-send.parar{background:var(--ink)}
+.ia-send.parar:hover{background:#111c2b}
+.ia-disc{margin-top:9px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* ---------------- celular ---------------- */
+@media(max-width:900px){
+  /* cabeçalho apertado: os dois quadradinhos ficam só com o ícone, e a coluna
+     das conversas sai de cena — sem botão para abri-la, ela não cabe */
+  .ia-view .nmod-top{gap:8px;padding:0 12px}
+  .ia-view #iaApps{min-width:0;padding:0 8px;font-size:0;gap:0}
+  .ia-view #iaApps i{font-size:19px}
+  .ia-view #iaManage{min-width:0;padding:0 10px;gap:0}
+  .ia-view #iaManage .lbl{display:none}
+  .ia-side{display:none}
+  .ia-head{padding:0 14px;height:52px}
+  .ia-hbtn-tx{width:36px;padding:0;gap:0}
+  .ia-hbtn-tx span{display:none}
+  .ia-thread{padding:20px 16px 8px;gap:22px}
+  .ia-bolha{max-width:88%}
+  .ia-zero{padding:24px 16px 32px}
+  .ia-hello{font-size:24px}
+  .ia-sub{font-size:15px}
+  .ia-chips{grid-template-columns:1fr;gap:8px}
+  .ia-dock{padding:0 12px calc(12px + env(safe-area-inset-bottom,0px))}
+}
+
+/* ---------------- tamanho ótico dos ícones ----------------
+   Os desenhos do Pictogrammers nascem numa grade de 24 e ocupam menos da
+   caixa que os do Font Awesome, então no mesmo font-size saem menores. Estes
+   ajustes devolvem a presença que cada botão tinha. Ficam no fim da folha de
+   propósito: no meio dela as regras dos blocos seguintes os desfaziam. */
+.ia-view .mdi,.ia-rowmenu .mdi{line-height:1}
+.ia-view .ia-new i{font-size:17px}
+.ia-view .ia-find i{font-size:15px}
+.ia-view .ia-convmais{font-size:17px}
+.ia-view .ia-hbtn>i{font-size:17px}
+.ia-view .ia-menu button i,.ia-rowmenu button i,.ia-view .ia-usermenu button>i{font-size:15px;width:16px}
+.ia-view .ia-user>i{font-size:14px}
+.ia-view .ia-cbtn{font-size:17px}
+.ia-view .ia-send{font-size:17px}
+.ia-view .ia-chip-ic{font-size:15px}
+.ia-view .ia-act i{font-size:15px}
+.ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:22px;line-height:22px;height:22px}

@@ -80,7 +80,7 @@
   <div class="qp-modal">
     <div class="qp-head">
       <span class="avatar av-rc"></span>
-      <div class="qp-audwrap"><b>Rodrigo Caetano Silva</b><button type="button" class="qp-aud" id="qpAudBtn"><i class="fa-solid fa-earth-americas" id="qpAudIc"></i> <span id="qpAudLbl">Publicar para Todos</span> <i class="fa-solid fa-chevron-down" style="font-size:9px"></i></button>
+      <div class="qp-audwrap"><b>Rodrigo Caetano Silva</b><button type="button" class="qp-aud" id="qpAudBtn" title="Quem vê esta publicação"><i class="fa-solid fa-earth-americas" id="qpAudIc"></i> <span id="qpAudLbl">Publicar para Todos</span> <i class="fa-solid fa-chevron-down" style="font-size:9px"></i></button>
       <div class="qp-catmenu qp-audmenu" id="qpAudMenu" hidden>
         <button type="button" data-aud="rede" data-ic="fa-earth-americas"><i class="fa-solid fa-earth-americas"></i>Publicar para Todos</button>
         <button type="button" data-aud="unidades" data-ic="fa-store"><i class="fa-solid fa-store"></i>Publicar para Unidades</button>
@@ -94,7 +94,7 @@
     <div class="qp-colors hidden" id="qpColors"></div>
     <div class="qp-colorback hidden" id="qpColorBack"><button type="button" class="pp-btn" id="qpColorExit"><i class="fa-solid fa-arrow-left"></i> Voltar</button></div>
     <div class="qp-advpanel" id="qpAdvPanel" hidden>
-      <div class="cr-advhd qp-advhd"><button type="button" class="cr-advback" id="qpAdvBack"><i class="fa-solid fa-arrow-left"></i> Voltar</button><b>Avançado</b></div>
+      <div class="cr-advhd qp-advhd"><button type="button" class="cr-advback" id="qpAdvBack" title="Voltar"><i class="fa-solid fa-chevron-left"></i> Voltar</button><b>Avançado</b></div>
       <div class="nv-def-wrap">
 
         <div class="nv-def-sec">Publicação</div>
@@ -102,9 +102,9 @@
           <div class="nv-def-ctl"><div class="nv-seg2" id="qpDefStartSeg"><button type="button" data-s="now" class="on">Imediato</button><button type="button" data-s="sched">Agendar</button></div><div class="nv-dtrow" id="qpDefStartRow" style="display:none"><input type="date" id="qpDefStart"><input type="time" id="qpDefStartTime" value="08:00"></div></div></div>
         <div class="nv-def-row"><div class="nv-def-lbl"><b>Encerra em</b><span>Deixe como "sem expiração" para manter no feed.</span></div>
           <div class="nv-def-ctl"><div class="nv-seg2" id="qpDefEndSeg"><button type="button" data-s="never" class="on">Sem expiração</button><button type="button" data-s="date">Definir data</button></div><div class="nv-dtrow" id="qpDefEndRow" style="display:none"><input type="date" id="qpDefEnd"><input type="time" id="qpDefEndTime" value="23:59"></div></div></div>
-        <input type="checkbox" id="qpDefEmail" checked hidden>
-        <input type="checkbox" id="qpDefPush" checked hidden>
       </div>
+      <input type="checkbox" id="qpDefEmail" checked hidden>
+      <input type="checkbox" id="qpDefPush" checked hidden>
     </div>
     <div class="qp-tools">
       <button class="qp-tool img" id="qpToolImg" title="Imagem"><i class="fa-solid fa-image"></i> Imagem</button>

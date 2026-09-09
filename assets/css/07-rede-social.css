@@ -740,9 +740,11 @@
 .nv-rev-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
 .nv-def-sec{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin:26px 0 2px}
 .nv-def-sec:first-child{margin-top:6px}
-.nv-seg2{display:inline-flex;background:#eef2f5;border-radius:10px;padding:3px;gap:2px}
-.nv-seg2 button{border:0;background:none;cursor:pointer;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:7px 15px;border-radius:8px;transition:all .15s}
-.nv-seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 2px 5px -2px rgba(16,32,48,.3)}
+/* mesmo desenho das abas Video/Capa do short (.cr-tabs) */
+.nv-seg2{display:inline-flex;background:#e0e6ea;border-radius:999px;padding:4px;gap:4px}
+.nv-seg2 button{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 18px;border:0;border-radius:999px;background:none;font:inherit;font-size:14px;font-weight:700;color:#5b6672;cursor:pointer;transition:background .15s,color .15s}
+.nv-seg2 button:hover{color:var(--ink)}
+.nv-seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,32,48,.16)}
 /* Conteúdo do wizard travado na mesma largura do painel inicial */
 #nvComposeScreen .nv-steps{display:none}
 .nv-sheet{flex:1;min-height:0;display:flex;flex-direction:column;max-width:1300px;width:100%;margin:20px auto;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(16,32,48,.06),0 12px 30px -18px rgba(16,32,48,.25)}
@@ -791,9 +793,19 @@
 .qp-aud>.fa-earth-americas,.qp-aud>.fa-store,.qp-aud>.fa-building{color:#1667B8}
 .qp-aud:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .qp-x{width:38px;height:38px;border:0;background:none;border-radius:50%;color:#5b6672;font-size:18px;cursor:pointer;flex-shrink:0}
-.qp-cat{margin-left:auto;display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:13px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--linha-campo);border-radius:999px;padding:8px 14px;cursor:pointer;outline:none;transition:border-color 120ms cubic-bezier(.4,0,.2,1)}
-.qp-cat:hover,.qp-cat:focus{border-color:var(--linha-campo-forte)}
-.qp-cat-ic{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0}
+.qp-cat{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px;color:var(--ink);background:#fff;border:0;border-radius:999px;box-shadow:inset 0 0 0 1px var(--linha-campo);cursor:pointer;outline:none;transition:background 120ms cubic-bezier(.4,0,.2,1),box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.qp-cat:hover,.qp-cat:focus{box-shadow:inset 0 0 0 1px var(--linha-campo-forte)}
+.qp-cat:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--linha-campo),0 0 0 2px rgba(0,136,255,.16)}
+.qp-cat .fa-chevron-down{font-size:11px !important}
+.qp-cat-ic{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;flex-shrink:0}
+/* Os dois seletores do cabeçalho são campos, não rótulos que encolhem: mesma
+   largura fixa, seta presa à direita e reticências se o texto passar. A linha
+   deixa de se remexer quando a escolha muda de "Todos" para "Unidades". */
+.qp-head .qp-aud,.qp-head .qp-cat,.nv-author .qp-aud,.cr-audwrap .qp-aud{width:224px;flex-shrink:0}
+.qp-head .qp-aud>span,.qp-head .qp-cat>span:not(.qp-cat-ic),
+.nv-author .qp-aud>span,.cr-audwrap .qp-aud>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.qp-aud .fa-chevron-down,.qp-cat .fa-chevron-down{margin-left:auto}
+.nv-def-aud .qp-aud{width:252px}
 .qp-audwrap{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
 .qp-audwrap>b{width:100%}
 .qp-head .qp-aud,.nv-author .qp-aud{white-space:nowrap;flex-shrink:0}
@@ -984,6 +996,8 @@
 #crModal #crShare,#crModal .qp-adv{font-size:14px}
 /* campos do modal: 36px, raio 6 e a mesma borda dos demais campos */
 #crModal .fg-input,#crModal .fg-textarea,#crModal .cr-catwrap .qp-cat{border:1px solid var(--linha-campo);border-radius:6px;font-size:14px}
+#crModal .cr-catwrap .qp-cat{box-shadow:none}
+#crModal .cr-catwrap .qp-cat:hover,#crModal .cr-catwrap .qp-cat:focus{box-shadow:none}
 #crModal .fg-input,#crModal .cr-catwrap .qp-cat{height:36px;padding:0 12px}
 #crModal .fg-textarea{padding:8px 12px}
 #crModal .fg-input:focus,#crModal .fg-textarea:focus,#crModal .cr-catwrap .qp-cat:hover,#crModal .cr-catwrap .qp-cat:focus{border-color:var(--linha-campo-forte)}
@@ -1004,14 +1018,20 @@
 .cr-catwrap .qp-catmenu{width:100%}
 .cr-advover{position:absolute;inset:0;z-index:3;background:#fff;display:flex;flex-direction:column}
 .cr-advover[hidden]{display:none}
-.cr-advhd{display:flex;align-items:center;gap:12px;height:56px;flex-shrink:0;padding:0 20px;box-shadow:inset 0 -1px 0 #E9EAED;font-size:15px;font-weight:600;letter-spacing:.3px;color:#1C1C1E}
-.cr-advback{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:4px;background:#F4F5F6;color:#48484A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer}
-.cr-advback:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#F4F5F6;color:#1C1C1E}
+/* O par "Voltar" e "Avancado" tinha o mesmo peso: a caixa cinza puxava o olho
+   para o botao e o titulo parecia legenda. O Voltar fica discreto, so ganha
+   fundo no hover, e o titulo sobe para 16px em negrito. */
+.cr-advhd{display:flex;align-items:center;gap:6px;height:56px;flex-shrink:0;padding:0 14px 0 8px;box-shadow:inset 0 -1px 0 #E9EAED}
+.cr-advhd b{font-size:16px;font-weight:700;letter-spacing:.2px;color:#1C1C1E}
+.cr-advback{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 9px;border:0;border-radius:999px;background:none;color:#6B7280;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.cr-advback i{font-size:13px}
+.cr-advback:hover{background:#F1F3F5;color:#1C1C1E}
+.cr-advback:focus-visible{outline:none;background:#F1F3F5;color:#1C1C1E;box-shadow:0 0 0 2px rgba(0,136,255,.2)}
 .cr-advbody{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 20px}
 .cr-advbody .nv-def-wrap{max-width:none;margin:0}
 .cr-advbody .nv-def-row{padding:16px 0}
 .qp-advpanel{padding:0 24px 12px;overflow-y:auto;max-height:52vh}
-.qp-advhd{margin:0 -24px 8px;padding:0 24px}
+.qp-advhd{margin:0 -24px 8px;padding:0 18px 0 12px}
 .qp-advpanel .nv-def-wrap{max-width:none;margin:0}
 .qp-advpanel .nv-def-row{padding:16px 0}
 .qp-advpanel .nv-def-lbl{width:230px}

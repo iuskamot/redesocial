@@ -78,6 +78,7 @@ const PAGINAS = [
   ['categorias.html',    'SULTS | Categorias',     "openNewsModule(); newsShow('cats')"],
   ['permissoes.html',    'SULTS | Permissões',     "openNewsModule(); newsShow('perm')"],
   ['forum.html',         'SULTS | Fórum',          'openForum()'],
+  ['ia.html',            'SULTS | Inteligência Artificial', 'abrirModuloIA()'],
 ];
 
 const lista = arr => arr.map(f => "    '" + f + "',").join('\n');

@@ -363,10 +363,20 @@
      própria (altura 0), então o espaço entre as duas linhas conta dois gaps. */
   .qp-head{flex-wrap:wrap;align-items:center;align-content:flex-start;gap:2px 10px;padding:10px 12px 12px;border-bottom:1px solid var(--line)}
   /* o próprio botão traz margin-top:6px, que somava à distância entre as linhas */
-  .qp-head .qp-aud,.qp-head .qp-cat{margin-top:0;height:32px}
+  /* 36px nos dois, a altura de campo do resto do app: com 32 o de categoria
+     ficava 4px mais baixo que o de público, que já vinha de uma regra por id. */
+  .qp-head .qp-aud,.qp-head .qp-cat{margin-top:0;height:36px}
   .qp-head .avatar{order:1;width:44px;height:44px}
-  .qp-head .qp-audwrap{order:2;flex:1 1 0;min-width:0;gap:0}
+  /* O invólucro do público deixa de ser caixa (display:contents) para que o
+     nome fique na primeira linha, com a foto e o X, e a pílula desça para a
+     segunda, ao lado da de categoria — os dois seletores na mesma linha. */
+  .qp-head .qp-audwrap{display:contents}
   .qp-audwrap>b{width:auto;font-size:16px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .qp-head .qp-audwrap>b{order:2;flex:1 1 0;min-width:0}
+  .qp-head .qp-audwrap>.qp-aud{order:5;flex:1 1 0}
+  /* sem a caixa, o menu se apoia no próprio cabeçalho */
+  .qp-head{position:relative}
+  .qp-head .qp-audmenu{left:14px;right:14px;min-width:0;top:calc(100% - 2px)}
   .qp-head .qp-x{order:3;margin:0 -4px 0 0;flex:none}
   .qp-head::after{content:"";order:4;flex-basis:100%;height:0}
   /* sem poder encolher (o padrão é nowrap + flex-shrink:0) o segundo seletor
@@ -385,6 +395,15 @@
   .qp-tool{flex:1 0 auto;justify-content:center;gap:0;padding:0 10px;font-size:0}
   .qp-tool i{font-size:19px}
   .qp-foot{padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+
+  /* Painel Avançado: no celular o rótulo de 230px mais o controle não cabem
+     lado a lado e o controle saía pela direita. A faixa passa a empilhar. */
+  .qp-advpanel{padding:0 16px 12px;max-height:none}
+  .qp-advhd{margin:0 -16px 4px;padding:0 12px 0 6px}
+  .qp-advpanel .nv-def-row,.cr-advbody .nv-def-row{flex-direction:column;align-items:stretch;gap:12px}
+  .qp-advpanel .nv-def-lbl,.cr-advbody .nv-def-lbl{width:auto}
+  .qp-advpanel .nv-seg2,.cr-advbody .nv-seg2{display:flex;width:100%}
+  .qp-advpanel .nv-seg2 button,.cr-advbody .nv-seg2 button{flex:1;padding:0 10px}
   /* alvo de toque maior para a ação principal */
   .qp-pub{height:42px;padding:0 26px;font-size:15px;gap:10px}
   .qp-pub i{font-size:15px}

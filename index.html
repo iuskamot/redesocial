@@ -199,6 +199,9 @@ input,textarea,select{font-size:14px}
 .hm-store--apple img{filter:brightness(0) invert(1)}
 
 
+/* Inteligência Artificial: a mesma faísca do ícone do módulo */
+.hm-ic--ia{--ic:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+")}
+
 /* estrutura, header, botao +Novo, perfil e sino */
 /* ============ Estrutura principal ============ */
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -210,12 +213,20 @@ input,textarea,select{font-size:14px}
   position:sticky;top:0;z-index:15;
 }
 .top-search{
-  position:relative;display:flex;align-items:center;gap:10px;flex:1;max-width:420px;
+  position:relative;display:flex;align-items:center;gap:10px;flex:1;max-width:520px;
   background:rgba(255,255,255,.12);border-radius:999px;padding:10px 18px;color:#aebccb;
   transition:box-shadow .15s;
 }
-.top-search:focus-within{box-shadow:0 0 0 2px rgba(0,172,172,.35)}
+/* o anel de foco em verdigris cheio: a 35% ele desbotava contra o azul
+   escuro do cabeçalho e parecia apagado */
+.top-search:focus-within{box-shadow:0 0 0 2px var(--teal)}
 .top-search i{font-size:14px}
+/* O campo do topo virou pergunta, não busca: a lupa dá lugar à faísca, que é
+   o mesmo sinal do módulo de IA. A navegação continua no painel, embaixo. */
+.gs-spark{width:17px;height:17px;flex:none;background-color:#cfe0ea;
+  -webkit-mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat;mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat;
+  transition:background-color .15s}
+.top-search:focus-within .gs-spark{background-color:#fff}
 .top-search input{border:0;background:none;outline:none;flex:1;font:inherit;font-size:14px;color:#fff}
 .top-search input::placeholder{color:#aebccb}
 .gs-kbd{
@@ -223,7 +234,7 @@ input,textarea,select{font-size:14px}
   border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:2px 7px;background:rgba(255,255,255,.08);
 }
 .gs-panel{
-  position:absolute;top:calc(100% + 8px);left:0;width:480px;max-width:82vw;
+  position:absolute;top:calc(100% + 8px);left:0;right:0;width:auto;
   background:#fff;border:1px solid var(--line);border-radius:14px;
   box-shadow:0 22px 48px -14px rgba(16,32,48,.32);
   max-height:460px;overflow-y:auto;z-index:40;padding:8px;
@@ -241,6 +252,14 @@ input,textarea,select{font-size:14px}
   width:34px;height:34px;border-radius:9px;flex-shrink:0;color:#fff;font-size:14px;
   display:flex;align-items:center;justify-content:center;background:var(--c,#5b6672);
 }
+/* a linha da pergunta é a ação principal do painel: um pouco mais alta que
+   as outras e com a faísca no lugar do ícone quadrado do módulo */
+.gs-ask{padding:11px 10px}
+.gs-ic-ia{background:linear-gradient(135deg,#9b8cff,#4f3bd4)}
+.gs-spark-ic{width:18px;height:18px;background-color:#fff;
+  -webkit-mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat;mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+") center / contain no-repeat}
+.gs-ic-conv{background:#EDEFF2;color:#5b6672}
+.gs-ask .gs-sub{font-style:italic}
 .gs-txt{flex:1;min-width:0;display:flex;flex-direction:column}
 .gs-title{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gs-title mark{background:none;color:var(--teal);font-weight:700}
@@ -826,6 +845,7 @@ input,textarea,select{font-size:14px}
   filter:drop-shadow(0 1px 1px rgba(0,0,0,.18)) drop-shadow(0 2px 6px rgba(0,0,0,.14))}
 .smi-empresa{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAQAAACSoYmJAAAAAmJLR0QA/4ePzL8AAADsSURBVHja7do7DsIwEEXRKEWksPLQ8hHZIKEjNNA+tmDLM2PHurekQEcojEeRh4GIiKi9NOmsTSk9tWhqA70op6UN9JaFftUgnnTXR1btumn2R6+ybvUmj/qZo78aQYc8Hg//Z3rWVbsZ+K1LwB+RiKjCphGzjTgcJd7biMuh7X2wHxJd7fEo20aMN43IbSTSbDf4QFdAR34OGjTontDMadCgQTOnQYMGze4BGjRodg/QoEH3gc64CWZV+Y2yzJtgVpXdKAv+lW1ulKlSoA+KLhlVKd8DGjToXtElQ6q5OQ0aNOiQtx9ERERp/QHJMu++coyn1AAAAABJRU5ErkJggg==")}
 .smi-processo{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAQAAACSoYmJAAAAAmJLR0QA/4ePzL8AAAOfSURBVHgB7cHPbxRlAMfhb3e3ayMcxNIeRGv/AI3GqLEIqXelXgQhEonGNtGTBLV66hsrpoSTCkdvcDEg0WgMWcSTbYkm/PBeKoE2VtqQoIfuYD+Wdss7287sTt+XdGeTeR5lMplMJpN69FFigjnKlJljkj84w1EGeIqc0ok+Fohzix94l06lDeeo5w4lXqeg9GCcZP7kQzYrBkYbiU9Ibpp+8loDA9pI5DlOQHKXeU5VMCySGwx1KRJtdNNOkQJb6KKH/XzGOW4TLWCYoiowLJErDHVoHSiwky+5QZQLbNMiDBVyxyA1ad3IsYsSC6w2Qy+Ge+QDQw1yxA5GWS0gRH4wxJIzWtjLDLHkC0MMeaGDU8SQL3oIiCRvHCIggvzwKNPE0H3ACSLIB0V+I5a8YYgkH3xODfKEIYbc8TwBVsBJqsgLhlhyRZ4rhB2UMITIA4Ya5IoBwr7REgz3yBmGmuSGzUxj/U2nKhikQo4w1CE3fETYHoVgWCInGOqSCwpcwxqjRVUYZJHShb2EbdcaGFC6UML6RZEwShM6CLBeVTPgPazr5NUM+BHrCzUDctzC2qFmwNNYtymoGTCAVVJz4CjWsBqCIsNcYpR9SoYzWPvVEHzNiteUBFewetQAPMh/rPhZSXAN6zE1AF1Yk0qCOayH1ABsxbqpJChjtaoBeABrXkkwj1VUA1DEmlcSzGK1qwFox7qpJJjE6lID8DjWpJKgxIqANjUAL2JdVBL0scCyY2oIDmCdVjLsosQ4H5NXQ3AY64iaA+ex3lEzoJV/sZ5QM+AlrFlyagYcw/pOzYACU1j9agbswQroUJowokj8ivWT0gUwWoNewnYrXbhrRFVoYRTrKgW5oD4jJywzCuENwt6XG+oZkiNWjKiCDv7Cus4muaE2I2dYRoto4VvC3pIrajHyQJiR+ICwi+TkinhGXqh2kgCrzDNyR5wheaKWIfkgmpE34o3RKh9EOaH7gDhTPCI/RAk4JG9EC3hBvohzik55IY6RL+LNsI8WOSOekR/CAlYbZ6ccUYuRD6whephird95k4LWjdpG5I4VRovYxgWiTPEVvRS0DtRj5IplRhW08ikB0f7hPIc5wHa62UIrRR6mmzZFoj4jN9xlVIVnuURydzhOXhsJMFqDHG9zg+QGtZEwisEmDnKVZMaUHuTZzVkC6jmrtGErA3zPLHEWeFnpRI4n6ecIp7nMBHOUKTPHBCVeUSaTyWQyafc/7YQf3cQilrkAAAAASUVORK5CYII=")}
+.smi-ia{background-image:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+")}
 .smi-rede-social{background-image:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyLjQ5MiA4QzEzLjcyMDQgOCAxNC44OTg0IDguNDgxMzIgMTUuNzY3IDkuMzM4MDhDMTYuNjM1NSAxMC4xOTQ4IDE3LjEyMzUgMTEuMzU2OSAxNy4xMjM1IDEyLjU2ODVDMTcuMTIzNSAxMy43ODAxIDE2LjYzNTUgMTQuOTQyMSAxNS43NjcgMTUuNzk4OUMxNC44OTg0IDE2LjY1NTcgMTMuNzIwNCAxNy4xMzcgMTIuNDkyIDE3LjEzN0MxMS4yNjM3IDE3LjEzNyAxMC4wODU2IDE2LjY1NTcgOS4yMTcwNyAxNS43OTg5QzguMzQ4NSAxNC45NDIxIDcuODYwNTQgMTMuNzgwMSA3Ljg2MDU0IDEyLjU2ODVDNy44NjA1NCAxMS4zNTY5IDguMzQ4NSAxMC4xOTQ4IDkuMjE3MDcgOS4zMzgwOEMxMC4wODU2IDguNDgxMzIgMTEuMjYzNyA4IDEyLjQ5MiA4Wk0zNS41NTkgOEMzNi43ODczIDggMzcuOTY1NCA4LjQ4MTMyIDM4LjgzMzkgOS4zMzgwOEMzOS43MDI1IDEwLjE5NDggNDAuMTkwNSAxMS4zNTY5IDQwLjE5MDUgMTIuNTY4NUM0MC4xOTA1IDEzLjc4MDEgMzkuNzAyNSAxNC45NDIxIDM4LjgzMzkgMTUuNzk4OUMzNy45NjU0IDE2LjY1NTcgMzYuNzg3MyAxNy4xMzcgMzUuNTU5IDE3LjEzN0MzNC4zMzA2IDE3LjEzNyAzMy4xNTI2IDE2LjY1NTcgMzIuMjg0IDE1Ljc5ODlDMzEuNDE1NSAxNC45NDIxIDMwLjkyNzUgMTMuNzgwMSAzMC45Mjc1IDEyLjU2ODVDMzAuOTI3NSAxMS4zNTY5IDMxLjQxNTUgMTAuMTk0OCAzMi4yODQgOS4zMzgwOEMzMy4xNTI2IDguNDgxMzIgMzQuMzMwNiA4IDM1LjU1OSA4Wk0zMS40MDU3IDI3LjAxMzNDMzAuOTY3MSAyNy4wMTMzIDMwLjc0MSAyNi40NTQ2IDMxLjAxNzQgMjYuMTE4OEMzMi4xMSAyNC43OTA4IDMyLjc0MjMgMjMuMDk0MiAzMi43NDIzIDIxLjI0NTVDMzIuNzE5NSAyMC44ODkyIDMyLjcwMTIgMjAuNjAzIDMyLjY4NjUgMjAuMzczMkMzMi42NTM0IDE5Ljg1NTIgMzMuMDUxNCAxOS40MTEyIDMzLjU3NzEgMTkuMzg4QzM0LjUxNDYgMTkuMzQ2NiAzNi4wNTg0IDE5LjI5MzYgMzcuODA5NSAxOS4yOTM2QzQwLjkyMTcgMTkuNzYzMiA0My40OTIzIDIxLjQ5MDQgNDMuOTY3NyAyNS4yNjRDNDQuMDY5IDI2LjA2NzkgNDMuOTY3NyAyNy4wMTMzIDQzLjE0NTcgMjcuMDEzM0gzMS40MDU3Wk0xOC4zNjUzIDIxLjE0MjhDMTguMzY1MyAxOS42NDAzIDE4Ljk1OSAxOC4xOTk0IDIwLjAxNTcgMTcuMTM3QzIxLjA3MjQgMTYuMDc0NiAyMi41MDU2IDE1LjQ3NzcgMjQgMTUuNDc3N0MyNS40OTQ0IDE1LjQ3NzcgMjYuOTI3NiAxNi4wNzQ2IDI3Ljk4NDQgMTcuMTM3QzI5LjA0MTEgMTguMTk5NCAyOS42MzQ3IDE5LjY0MDMgMjkuNjM0NyAyMS4xNDI4QzI5LjYzNDcgMjIuNjQ1MiAyOS4wNDExIDI0LjA4NjIgMjcuOTg0NCAyNS4xNDg2QzI2LjkyNzYgMjYuMjExIDI1LjQ5NDQgMjYuODA3OCAyNCAyNi44MDc4QzIyLjUwNTYgMjYuODA3OCAyMS4wNzI0IDI2LjIxMSAyMC4wMTU3IDI1LjE0ODZDMTguOTU5IDI0LjA4NjIgMTguMzY1MyAyMi42NDUyIDE4LjM2NTMgMjEuMTQyOFpNMTIuMTYzNiAzNi45MjYyQzEyLjE2MzYgMzIuNTA0MiAxNS44MDYgMjkuMzg3IDIwLjI4ODkgMjkuMzg3SDI3LjQzMzZDMzEuOTIyNyAyOS4zODcgMzUuNTU5IDMyLjUwNDIgMzUuNTU5IDM2LjkyNjJDMzUuNTU5IDM4LjA2MDcgMzUuNTU5IDM5IDM0LjQwODEgMzlIMTMuMzE0NEMxMi4xNjM1IDM5IDEyLjE2MzYgMzguMDYwNyAxMi4xNjM2IDM2LjkyNjJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTUuMjU3NyAyMS4yOTU5QzE1LjI1NzcgMjMuMTQ0NSAxNS44OSAyNC44NDEyIDE2Ljk4MjYgMjYuMTY5MUMxNy4yNTkgMjYuNTA1IDE3LjAzMjkgMjcuMDYzNyAxNi41OTQzIDI3LjA2MzdINC44NTQzQzQuMDMyMzEgMjcuMDYzNyAzLjkzMTA0IDI2LjExODIgNC4wMzIzMSAyNS4zMTQzQzQuNTA3NzEgMjEuNTQwNyA3LjA3ODI4IDE5LjgxMzYgMTAuMTkwNSAxOS4zNDM5QzExLjk0MTYgMTkuMzQzOSAxMy40ODU0IDE5LjM5NyAxNC40MjI5IDE5LjQzODRDMTQuOTQ4NiAxOS40NjE1IDE1LjM0NjYgMTkuOTA1NiAxNS4zMTM1IDIwLjQyMzVMMTUuMjU3NyAyMS4yOTU5WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==")}
 .smi-unidades{background-image:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQzLjA4MzQgMTIuNjUwNUwzOC44NzA5IDUuOTY1NTJDMzguNDk2IDUuMzY4NTIgMzcuODI3IDUgMzcuMTEzOSA1SDEwLjg4MzNDMTAuMTcwMiA1IDkuNTAxMTUgNS4zNjg1MiA5LjEyNjIyIDUuOTY1NTJMNC45MDYzOSAxMi42NTA1QzIuNzMwMyAxNi4wOTk4IDQuNjU2NDMgMjAuODk3OSA4LjcyMTg4IDIxLjQ1MDdDOS4wMTU5NCAyMS40ODc1IDkuMzE3MzYgMjEuNTA5NyA5LjYxMTQzIDIxLjUwOTdDMTEuNDEzMiAyMS41MDk3IDEzLjAyNyAyMC43Njg4IDE0LjE4NDkgMTkuNjA0NEMxNC4zMDU1IDE5LjQ4MzIgMTQuNTAzOSAxOS40ODMyIDE0LjYyNDQgMTkuNjA0NEMxNS43ODI0IDIwLjc2ODggMTcuMzk2MiAyMS41MDk3IDE5LjE5NzkgMjEuNTA5N0MyMC45OTk3IDIxLjUwOTcgMjIuNjEzNSAyMC43Njg4IDIzLjc3MTUgMTkuNjA0NEMyMy44OTIgMTkuNDgzMiAyNC4wOTA0IDE5LjQ4MzIgMjQuMjExIDE5LjYwNDRDMjUuMzY4OSAyMC43Njg4IDI2Ljk4MjcgMjEuNTA5NyAyOC43ODQ1IDIxLjUwOTdDMzAuNTkzNSAyMS41MDk3IDMyLjIwMTUgMjAuNzY4NSAzMy4zNTg3IDE5LjYwMzdDMzMuNDc4OSAxOS40ODI3IDMzLjY3NjkgMTkuNDgyNCAzMy43OTc0IDE5LjYwMzFDMzQuOTYwOCAyMC43NjgyIDM2LjU2ODYgMjEuNTA5NyAzOC4zNzEgMjEuNTA5N0MzOC42NzI0IDIxLjUwOTcgMzguOTY2NSAyMS40ODc1IDM5LjI2MDUgMjEuNDUwN0M0My4zNDA3IDIwLjkwNTMgNDUuMjc0MiAxNi4xMDcyIDQzLjA5MDcgMTIuNjUwNUg0My4wODM0Wk00MC40NjYyIDI0LjI3NUM0MC40NjYyIDIzLjkyNjggNDAuMTY0OCAyMy42ODUgMzkuODI5MSAyMy43Nzc0QzM5LjQyODIgMjMuODg3NyAzOC45MjA1IDI0LjAxMjIgMzguMzYzNiAyNC4wMTIyQzM3LjcyNDMgMjQuMDEyMiAzNy4xMDMxIDIzLjg3MjUgMzYuNTA3NSAyMy43MDI2QzM2LjEzNDkgMjMuNTk2MyAzNS43NjEyIDIzLjg2OTcgMzUuNzYxMiAyNC4yNTcyVjM2Ljc1OUMzNS43NjEyIDM3LjM5NTQgMzUuMjQ1MyAzNy45MTEzIDM0LjYwODkgMzcuOTExM0gxMy4zODgyQzEyLjc1MTggMzcuOTExMyAxMi4yMzYgMzcuMzk1NCAxMi4yMzYgMzYuNzU5VjI0LjQwMThDMTIuMjM2IDI0LjAxMyAxMS44NTggMjMuNzM1NCAxMS40Nzc3IDIzLjgxNjdDMTAuODc2NSAyMy45NDUzIDEwLjI0OTQgMjQuMDEyMiA5LjYxMTQzIDI0LjAxMjJDOS4wNzQ0OCAyNC4wMTIyIDguNTY5NjggMjMuODg3MiA4LjE2ODE3IDIzLjc3NjhDNy44MzI0MSAyMy42ODQ1IDcuNTMwOTIgMjMuOTI2OCA3LjUzMDkyIDI0LjI3NVYzMy4zMDIzVjM4LjAxOTNDNy41MzA5MiA0MC42MjExIDkuNjQwODMgNDIuNzM2NCAxMi4yMzYgNDIuNzM2NEgzNS43NjEyQzM4LjM1NjMgNDIuNzM2NCA0MC40NjYyIDQwLjYyMTEgNDAuNDY2MiAzOC4wMTkzVjMzLjMwMjNWMjQuMjc1WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==")}
 .smi-chamados{background-image:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yNCA2QzM1LjA0NjkgNiA0NCAxMy43OTg4IDQ0IDIyLjY3ODNDNDQgMzMuMTI3IDMzLjMxMyAzOC4xNTkgMjQgMzguMTQ4NUMyMS42MzgzIDM4LjE0NTggMTkuMTg4NSAzNy44MjA3IDE2Ljg0NjggMzcuMTY3N0w4LjU4MTY0IDQxLjIwOUM3Ljg3NjY4IDQxLjU1MzYgNy4wNjc1MiA0MC45ODkyIDcuMTQ3NjEgNDAuMjA4NUw3Ljk2MzggMzIuMjUzN0M1LjU0MTY2IDI5LjgzMDEgNCAyNi42NDY1IDQgMjIuNjc4M0M0IDEzLjc5ODggMTIuOTUzMSA2IDI0IDZaTTE0LjYxMDcgMTkuNjAxM0MxMy45NDc2IDE5LjYwMTMgMTMuMzExOSAxOS44NjE5IDEyLjg0MyAyMC4zMjU3QzEyLjM3NDIgMjAuNzg5NSAxMi4xMTA3IDIxLjQxODQgMTIuMTEwNyAyMi4wNzQyQzEyLjExMDcgMjIuNzMwMSAxMi4zNzQyIDIzLjM1OSAxMi44NDMgMjMuODIyOEMxMy4zMTE5IDI0LjI4NjUgMTMuOTQ3NiAyNC41NDcyIDE0LjYxMDcgMjQuNTQ3MkMxNS4yNzM3IDI0LjU0NzIgMTUuOTA5NSAyNC4yODY1IDE2LjM3ODMgMjMuODIyOEMxNi44NDcyIDIzLjM1OSAxNy4xMTA3IDIyLjczMDEgMTcuMTEwNyAyMi4wNzQyQzE3LjExMDcgMjEuNDE4NCAxNi44NDcyIDIwLjc4OTUgMTYuMzc4MyAyMC4zMjU3QzE1LjkwOTUgMTkuODYxOSAxNS4yNzM3IDE5LjYwMTMgMTQuNjEwNyAxOS42MDEzWk0yNCAxOS42MDEzQzIzLjMzNyAxOS42MDEzIDIyLjcwMTIgMTkuODYxOSAyMi4yMzIzIDIwLjMyNTdDMjEuNzYzNSAyMC43ODk1IDIxLjUgMjEuNDE4NCAyMS41IDIyLjA3NDJDMjEuNSAyMi43MzAxIDIxLjc2MzUgMjMuMzU5IDIyLjIzMjMgMjMuODIyOEMyMi43MDEyIDI0LjI4NjUgMjMuMzM3IDI0LjU0NzIgMjQgMjQuNTQ3MkMyNC42NjMgMjQuNTQ3MiAyNS4yOTg4IDI0LjI4NjUgMjUuNzY3NyAyMy44MjI4QzI2LjIzNjUgMjMuMzU5IDI2LjUgMjIuNzMwMSAyNi41IDIyLjA3NDJDMjYuNSAyMS40MTg0IDI2LjIzNjUgMjAuNzg5NSAyNS43Njc3IDIwLjMyNTdDMjUuMjk4OCAxOS44NjE5IDI0LjY2MyAxOS42MDEzIDI0IDE5LjYwMTNaTTMzLjM4OTMgMTkuNjAxM0MzMi43MjYzIDE5LjYwMTMgMzIuMDkwNSAxOS44NjE5IDMxLjYyMTcgMjAuMzI1N0MzMS4xNTI4IDIwLjc4OTUgMzAuODg5MyAyMS40MTg0IDMwLjg4OTMgMjIuMDc0MkMzMC44ODkzIDIyLjczMDEgMzEuMTUyOCAyMy4zNTkgMzEuNjIxNyAyMy44MjI4QzMyLjA5MDUgMjQuMjg2NSAzMi43MjYzIDI0LjU0NzIgMzMuMzg5MyAyNC41NDcyQzM0LjA1MjQgMjQuNTQ3MiAzNC42ODgxIDI0LjI4NjUgMzUuMTU3IDIzLjgyMjhDMzUuNjI1OCAyMy4zNTkgMzUuODg5MyAyMi43MzAxIDM1Ljg4OTMgMjIuMDc0MkMzNS44ODkzIDIxLjQxODQgMzUuNjI1OCAyMC43ODk1IDM1LjE1NyAyMC4zMjU3QzM0LjY4ODEgMTkuODYxOSAzNC4wNTI0IDE5LjYwMTMgMzMuMzg5MyAxOS42MDEzWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==")}
@@ -2374,9 +2394,11 @@ input,textarea,select{font-size:14px}
 .nv-rev-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
 .nv-def-sec{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin:26px 0 2px}
 .nv-def-sec:first-child{margin-top:6px}
-.nv-seg2{display:inline-flex;background:#eef2f5;border-radius:10px;padding:3px;gap:2px}
-.nv-seg2 button{border:0;background:none;cursor:pointer;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:7px 15px;border-radius:8px;transition:all .15s}
-.nv-seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 2px 5px -2px rgba(16,32,48,.3)}
+/* mesmo desenho das abas Video/Capa do short (.cr-tabs) */
+.nv-seg2{display:inline-flex;background:#e0e6ea;border-radius:999px;padding:4px;gap:4px}
+.nv-seg2 button{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 18px;border:0;border-radius:999px;background:none;font:inherit;font-size:14px;font-weight:700;color:#5b6672;cursor:pointer;transition:background .15s,color .15s}
+.nv-seg2 button:hover{color:var(--ink)}
+.nv-seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,32,48,.16)}
 /* Conteúdo do wizard travado na mesma largura do painel inicial */
 #nvComposeScreen .nv-steps{display:none}
 .nv-sheet{flex:1;min-height:0;display:flex;flex-direction:column;max-width:1300px;width:100%;margin:20px auto;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(16,32,48,.06),0 12px 30px -18px rgba(16,32,48,.25)}
@@ -2425,9 +2447,19 @@ input,textarea,select{font-size:14px}
 .qp-aud>.fa-earth-americas,.qp-aud>.fa-store,.qp-aud>.fa-building{color:#1667B8}
 .qp-aud:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .qp-x{width:38px;height:38px;border:0;background:none;border-radius:50%;color:#5b6672;font-size:18px;cursor:pointer;flex-shrink:0}
-.qp-cat{margin-left:auto;display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:13px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--linha-campo);border-radius:999px;padding:8px 14px;cursor:pointer;outline:none;transition:border-color 120ms cubic-bezier(.4,0,.2,1)}
-.qp-cat:hover,.qp-cat:focus{border-color:var(--linha-campo-forte)}
-.qp-cat-ic{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0}
+.qp-cat{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font:inherit;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px;color:var(--ink);background:#fff;border:0;border-radius:999px;box-shadow:inset 0 0 0 1px var(--linha-campo);cursor:pointer;outline:none;transition:background 120ms cubic-bezier(.4,0,.2,1),box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.qp-cat:hover,.qp-cat:focus{box-shadow:inset 0 0 0 1px var(--linha-campo-forte)}
+.qp-cat:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--linha-campo),0 0 0 2px rgba(0,136,255,.16)}
+.qp-cat .fa-chevron-down{font-size:11px !important}
+.qp-cat-ic{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;flex-shrink:0}
+/* Os dois seletores do cabeçalho são campos, não rótulos que encolhem: mesma
+   largura fixa, seta presa à direita e reticências se o texto passar. A linha
+   deixa de se remexer quando a escolha muda de "Todos" para "Unidades". */
+.qp-head .qp-aud,.qp-head .qp-cat,.nv-author .qp-aud,.cr-audwrap .qp-aud{width:224px;flex-shrink:0}
+.qp-head .qp-aud>span,.qp-head .qp-cat>span:not(.qp-cat-ic),
+.nv-author .qp-aud>span,.cr-audwrap .qp-aud>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.qp-aud .fa-chevron-down,.qp-cat .fa-chevron-down{margin-left:auto}
+.nv-def-aud .qp-aud{width:252px}
 .qp-audwrap{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
 .qp-audwrap>b{width:100%}
 .qp-head .qp-aud,.nv-author .qp-aud{white-space:nowrap;flex-shrink:0}
@@ -2618,6 +2650,8 @@ input,textarea,select{font-size:14px}
 #crModal #crShare,#crModal .qp-adv{font-size:14px}
 /* campos do modal: 36px, raio 6 e a mesma borda dos demais campos */
 #crModal .fg-input,#crModal .fg-textarea,#crModal .cr-catwrap .qp-cat{border:1px solid var(--linha-campo);border-radius:6px;font-size:14px}
+#crModal .cr-catwrap .qp-cat{box-shadow:none}
+#crModal .cr-catwrap .qp-cat:hover,#crModal .cr-catwrap .qp-cat:focus{box-shadow:none}
 #crModal .fg-input,#crModal .cr-catwrap .qp-cat{height:36px;padding:0 12px}
 #crModal .fg-textarea{padding:8px 12px}
 #crModal .fg-input:focus,#crModal .fg-textarea:focus,#crModal .cr-catwrap .qp-cat:hover,#crModal .cr-catwrap .qp-cat:focus{border-color:var(--linha-campo-forte)}
@@ -2638,14 +2672,20 @@ input,textarea,select{font-size:14px}
 .cr-catwrap .qp-catmenu{width:100%}
 .cr-advover{position:absolute;inset:0;z-index:3;background:#fff;display:flex;flex-direction:column}
 .cr-advover[hidden]{display:none}
-.cr-advhd{display:flex;align-items:center;gap:12px;height:56px;flex-shrink:0;padding:0 20px;box-shadow:inset 0 -1px 0 #E9EAED;font-size:15px;font-weight:600;letter-spacing:.3px;color:#1C1C1E}
-.cr-advback{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:4px;background:#F4F5F6;color:#48484A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer}
-.cr-advback:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#F4F5F6;color:#1C1C1E}
+/* O par "Voltar" e "Avancado" tinha o mesmo peso: a caixa cinza puxava o olho
+   para o botao e o titulo parecia legenda. O Voltar fica discreto, so ganha
+   fundo no hover, e o titulo sobe para 16px em negrito. */
+.cr-advhd{display:flex;align-items:center;gap:6px;height:56px;flex-shrink:0;padding:0 14px 0 8px;box-shadow:inset 0 -1px 0 #E9EAED}
+.cr-advhd b{font-size:16px;font-weight:700;letter-spacing:.2px;color:#1C1C1E}
+.cr-advback{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 9px;border:0;border-radius:999px;background:none;color:#6B7280;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.cr-advback i{font-size:13px}
+.cr-advback:hover{background:#F1F3F5;color:#1C1C1E}
+.cr-advback:focus-visible{outline:none;background:#F1F3F5;color:#1C1C1E;box-shadow:0 0 0 2px rgba(0,136,255,.2)}
 .cr-advbody{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 20px}
 .cr-advbody .nv-def-wrap{max-width:none;margin:0}
 .cr-advbody .nv-def-row{padding:16px 0}
 .qp-advpanel{padding:0 24px 12px;overflow-y:auto;max-height:52vh}
-.qp-advhd{margin:0 -24px 8px;padding:0 24px}
+.qp-advhd{margin:0 -24px 8px;padding:0 18px 0 12px}
 .qp-advpanel .nv-def-wrap{max-width:none;margin:0}
 .qp-advpanel .nv-def-row{padding:16px 0}
 .qp-advpanel .nv-def-lbl{width:230px}
@@ -4889,10 +4929,20 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
      própria (altura 0), então o espaço entre as duas linhas conta dois gaps. */
   .qp-head{flex-wrap:wrap;align-items:center;align-content:flex-start;gap:2px 10px;padding:10px 12px 12px;border-bottom:1px solid var(--line)}
   /* o próprio botão traz margin-top:6px, que somava à distância entre as linhas */
-  .qp-head .qp-aud,.qp-head .qp-cat{margin-top:0;height:32px}
+  /* 36px nos dois, a altura de campo do resto do app: com 32 o de categoria
+     ficava 4px mais baixo que o de público, que já vinha de uma regra por id. */
+  .qp-head .qp-aud,.qp-head .qp-cat{margin-top:0;height:36px}
   .qp-head .avatar{order:1;width:44px;height:44px}
-  .qp-head .qp-audwrap{order:2;flex:1 1 0;min-width:0;gap:0}
+  /* O invólucro do público deixa de ser caixa (display:contents) para que o
+     nome fique na primeira linha, com a foto e o X, e a pílula desça para a
+     segunda, ao lado da de categoria — os dois seletores na mesma linha. */
+  .qp-head .qp-audwrap{display:contents}
   .qp-audwrap>b{width:auto;font-size:16px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .qp-head .qp-audwrap>b{order:2;flex:1 1 0;min-width:0}
+  .qp-head .qp-audwrap>.qp-aud{order:5;flex:1 1 0}
+  /* sem a caixa, o menu se apoia no próprio cabeçalho */
+  .qp-head{position:relative}
+  .qp-head .qp-audmenu{left:14px;right:14px;min-width:0;top:calc(100% - 2px)}
   .qp-head .qp-x{order:3;margin:0 -4px 0 0;flex:none}
   .qp-head::after{content:"";order:4;flex-basis:100%;height:0}
   /* sem poder encolher (o padrão é nowrap + flex-shrink:0) o segundo seletor
@@ -4911,6 +4961,15 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   .qp-tool{flex:1 0 auto;justify-content:center;gap:0;padding:0 10px;font-size:0}
   .qp-tool i{font-size:19px}
   .qp-foot{padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+
+  /* Painel Avançado: no celular o rótulo de 230px mais o controle não cabem
+     lado a lado e o controle saía pela direita. A faixa passa a empilhar. */
+  .qp-advpanel{padding:0 16px 12px;max-height:none}
+  .qp-advhd{margin:0 -16px 4px;padding:0 12px 0 6px}
+  .qp-advpanel .nv-def-row,.cr-advbody .nv-def-row{flex-direction:column;align-items:stretch;gap:12px}
+  .qp-advpanel .nv-def-lbl,.cr-advbody .nv-def-lbl{width:auto}
+  .qp-advpanel .nv-seg2,.cr-advbody .nv-seg2{display:flex;width:100%}
+  .qp-advpanel .nv-seg2 button,.cr-advbody .nv-seg2 button{flex:1;padding:0 10px}
   /* alvo de toque maior para a ação principal */
   .qp-pub{height:42px;padding:0 26px;font-size:15px;gap:10px}
   .qp-pub i{font-size:15px}
@@ -5459,6 +5518,298 @@ body.demo-custom .profile-banner,
 body.demo-custom .nvf-pcover{aspect-ratio:3 / 1;height:auto}
 /* no perfil a faixa e larga demais para caber em 3:1 sem virar um paredao */
 body.demo-custom .pp-cover{aspect-ratio:auto}
+
+/* ============ Módulo Inteligência Artificial ============
+   Versão clara da conversa: fundo branco, coluna de leitura estreita e um
+   único acento — o teal da marca no compositor e na marca da IA. Todo o resto
+   é a escala de cinzas do DS, para o texto da resposta mandar na tela. */
+
+.ia-view{position:fixed;inset:0;z-index:130;background:#fff;display:none;flex-direction:column}
+.ia-view.open{display:flex}
+/* o cabeçalho escuro dos módulos: a regra original só vale dentro da Rede
+   Social, então aqui ele é ligado de novo */
+.ia-view .nmod-top{display:flex}
+/* o avatar do topo também só era exibido dentro da Rede Social */
+.ia-view .nmod-topav{display:block;width:36px;height:36px;font-size:0;flex:none}
+/* Sem o nome do módulo sobra espaço, então a barra usa a logo por extenso em
+   vez do símbolo sozinho */
+.ia-toplogo{height:26px;width:auto;display:block}
+@media(max-width:900px){ .ia-toplogo{height:22px} }
+
+/* Gerenciar no formato da Rede Social: quadradinho de 96 por 48, ícone em
+   cima e texto embaixo, encostado no de Módulos */
+.ia-view .nmod-switch{background:var(--teal);color:#fff;
+  flex-direction:column;justify-content:center;gap:2px;
+  height:48px;min-width:96px;padding:0 12px;border-radius:4px;
+  font-size:13px;line-height:17px;font-weight:600}
+/* os dois quadradinhos com o mesmo texto e o mesmo ícone, como na Rede Social */
+.ia-view .nmod-tab,.ia-view .nmod-switch{font-size:13px;line-height:17px;font-weight:600}
+.ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+.ia-view .nmod-switch:hover{background:linear-gradient(rgba(255,255,255,.10),rgba(255,255,255,.10)),var(--teal)}
+.ia-body{flex:1;min-height:0;display:flex;position:relative}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* a marca da IA: a mesma faísca do ícone do módulo, em teal */
+.ia-mark{display:block;flex-shrink:0;width:26px;height:26px;background-repeat:no-repeat;background-position:center;background-size:contain;
+  background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTI0IDZjLjUgMCAuOS4zIDEgLjhsMS45IDYuNmExMCAxMCAwIDAgMCA2LjkgNi45bDYuNiAxLjljLjUuMS44LjUuOCAxcy0uMy45LS44IDFsLTYuNiAxLjlhMTAgMTAgMCAwIDAtNi45IDYuOWwtMS45IDYuNmMtLjEuNS0uNS44LTEgLjhzLS45LS4zLTEtLjhsLTEuOS02LjZhMTAgMTAgMCAwIDAtNi45LTYuOWwtNi42LTEuOWMtLjUtLjEtLjgtLjUtLjgtMXMuMy0uOS44LTFsNi42LTEuOWExMCAxMCAwIDAgMCA2LjktNi45bDEuOS02LjZjLjEtLjUuNS0uOCAxLS44WiIvPjxwYXRoIGZpbGw9IiMwMGFjYWMiIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIi8+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTExIDMzYy4yNSAwIC40NS4xNy41Mi40MmwuNDUgMS42YTMgMyAwIDAgMCAyLjAxIDIuMDFsMS42LjQ1Yy4yNS4wNy40Mi4yNy40Mi41MnMtLjE3LjQ1LS40Mi41MmwtMS42LjQ1YTMgMyAwIDAgMC0yLjAxIDIuMDFsLS40NSAxLjZjLS4wNy4yNS0uMjcuNDItLjUyLjQycy0uNDUtLjE3LS41Mi0uNDJsLS40NS0xLjZhMyAzIDAgMCAwLTIuMDEtMi4wMWwtMS42LS40NWMtLjI1LS4wNy0uNDItLjI3LS40Mi0uNTJzLjE3LS40NS40Mi0uNTJsMS42LS40NWEzIDMgMCAwIDAgMi4wMS0yLjAxbC40NS0xLjZjLjA3LS4yNS4yNy0uNDIuNTItLjQyWiIvPjwvc3ZnPg==")}
+.ia-mark-lg{width:44px;height:44px;margin-bottom:18px}
+
+/* ---------------- coluna das conversas ---------------- */
+.ia-side{display:flex;width:276px;flex-shrink:0;flex-direction:column;gap:10px;padding:14px 12px;
+  background:#F7F8FA;border-right:1px solid var(--line)}
+
+.ia-new{display:flex;align-items:center;justify-content:center;gap:10px;height:36px;padding:0 14px;
+  border:0;border-radius:6px;background:var(--teal);color:#fff;
+  font:inherit;font-size:14px;line-height:20px;font-weight:700;letter-spacing:.3px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-new i{font-size:14px}
+.ia-new:hover{background:var(--teal-dark)}
+.ia-new:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.3)}
+
+.ia-find{display:flex;align-items:center;gap:9px;height:36px;padding:0 12px;border-radius:6px;
+  background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);
+  transition:box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.ia-find:focus-within{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.14)}
+.ia-find i{font-size:12px;flex:none}
+.ia-find input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:14px;color:var(--ink)}
+.ia-find input::placeholder{color:var(--muted)}
+
+.ia-list{flex:1;min-height:0;overflow-y:auto;margin:2px -4px 0;padding:0 4px;scrollbar-width:thin;
+  display:flex;flex-direction:column;gap:2px}
+.ia-grp{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:14px 10px 5px}
+.ia-grp:first-child{padding-top:4px}
+/* A linha é a caixa: o título ocupa quase tudo e os três pontos ficam à
+   direita. O espaço deles é reservado sempre, mesmo invisíveis, para o título
+   não mudar de largura quando o mouse entra. */
+.ia-linha{display:flex;align-items:center;gap:2px;border-radius:6px;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-conv{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-align:left;border:0;background:none;
+  padding:8px 4px 8px 10px;border-radius:6px;cursor:pointer;color:#5b6672;
+  font:inherit;font-size:13px;line-height:19px;font-weight:600;letter-spacing:.2px}
+.ia-convmais{display:flex;align-items:center;justify-content:center;width:26px;height:26px;flex:none;
+  margin-right:5px;border:0;border-radius:6px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity 120ms cubic-bezier(.4,0,.2,1),background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-linha:hover .ia-convmais,.ia-linha.menu-on .ia-convmais,.ia-convmais:focus-visible{opacity:1;pointer-events:auto}
+.ia-convmais:hover{background:color-mix(in srgb,var(--teal) 24%,transparent);color:#0a6e6e}
+/* a caixa de fora corta; a de dentro leva o texto e passeia no hover */
+.ia-conv-cx{flex:1;min-width:0;overflow:hidden}
+.ia-conv-tx{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transform:translateX(0);transition:transform .2s ease}
+.ia-linha.corta:hover .ia-conv-tx{overflow:visible;text-overflow:clip;
+  transform:translateX(var(--desl,0px));transition:transform var(--dur,1s) linear .3s}
+
+/* renomear na própria linha */
+.ia-ren{display:block;width:100%;height:22px;padding:0 6px;border:0;border-radius:5px;
+  background:#fff;box-shadow:inset 0 0 0 1px var(--teal);outline:none;
+  font:inherit;font-size:13px;font-weight:600;letter-spacing:.2px;color:var(--ink)}
+
+/* Arquivadas é um item de menu logo abaixo da busca, não uma gaveta no fim da
+   lista: numa conta com milhares de conversas o fim da lista fica longe. */
+/* As duas entradas de navegação são cinza de propósito: o verdigris já quer
+   dizer "esta é a conversa aberta", e usar a mesma cor para dizer "esta é a
+   lista que estou vendo" faria dois sinais diferentes com a mesma tinta. */
+.ia-nav{display:flex;flex-direction:column;gap:2px}
+.ia-item{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
+  padding:8px 10px;border-radius:6px;color:#5b6672;
+  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.2px;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-item>i{width:16px;font-size:16px;line-height:1;color:#8a94a0;transition:color 120ms cubic-bezier(.4,0,.2,1)}
+/* Contorno enquanto é só uma opção, cheio quando é a visão aberta. São dois
+   glifos diferentes na fonte, então os dois ficam no HTML e o CSS escolhe. */
+.ia-item .ia-ic-on{display:none}
+.ia-item.on .ia-ic-off{display:none}
+.ia-item.on .ia-ic-on{display:inline-block}
+.ia-item span{flex:1;min-width:0;text-align:left}
+.ia-item:hover{background:#EAEDF0}
+.ia-item.on{background:#E3E7EC;color:var(--ink);font-weight:700}
+.ia-item.on>i{color:var(--ink)}
+.ia-item.on:hover{background:#DBE0E6}
+.ia-item:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,172,172,.35)}
+
+/* Rodapé da coluna: a foto, o nome e a unidade, com o menu que troca as duas
+   coisas. É a última linha da coluna, então o menu sobe. */
+.ia-sidefoot{margin:2px -12px -14px;padding:8px 12px;border-top:1px solid var(--line)}
+.ia-userwrap{position:relative}
+.ia-user{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
+  padding:7px 8px;border-radius:8px;text-align:left;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-user:hover{background:#EDEFF2}
+.ia-user>i{font-size:10px;color:#9aa5b1;flex:none}
+.ia-userav{width:32px;height:32px;font-size:0;flex:none}
+.ia-user-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.ia-user-tx b{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ia-user-tx span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.ia-usermenu{position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:12;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;
+  max-height:420px;overflow-y:auto;box-shadow:0 18px 40px -12px rgba(16,32,48,.42)}
+.ia-umlbl{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:9px 10px 4px}
+.ia-usermenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
+  padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font:inherit}
+.ia-usermenu button:hover{background:#EAEDF0}
+.ia-usermenu button.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
+.ia-usermenu button>i{font-size:11px;color:var(--teal);opacity:0;flex:none}
+.ia-usermenu button.on>i{opacity:1}
+.ia-umav{width:28px;height:28px;font-size:0;flex:none}
+.ia-umic{width:28px;height:28px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:#EDEFF2;color:#5b6672;font-size:12px}
+.ia-umtx{flex:1;min-width:0;display:flex;flex-direction:column}
+.ia-umtx b{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* o menu de uma linha: preso à tela, posicionado no clique */
+.ia-view .ia-rowmenu{position:fixed;top:0;left:0;right:auto;width:max-content;min-width:184px;z-index:140}
+.ia-linha:hover,.ia-linha.menu-on{background:color-mix(in srgb,var(--teal) 9%,transparent)}
+.ia-linha.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
+.ia-linha.on .ia-conv{color:#0a6e6e;font-weight:700}
+.ia-linha.on:hover{background:color-mix(in srgb,var(--teal) 21%,transparent)}
+.ia-vazio{padding:26px 14px;text-align:center;color:var(--muted);font-size:12px}
+.ia-vazio b{display:block;font-size:14px;font-weight:600;color:#5b6672}
+.ia-vazio span{display:block;margin-top:5px;font-size:12px;line-height:1.5;color:var(--muted)}
+
+/* ---------------- a conversa ---------------- */
+.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff}
+.ia-head{display:flex;align-items:center;gap:10px;height:56px;flex-shrink:0;padding:0 20px;
+  box-shadow:inset 0 -1px 0 var(--line)}
+.ia-head-tt{font-size:14px;font-weight:700;letter-spacing:.2px;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+.ia-hbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
+  border:0;border-radius:999px;background:none;color:#5b6672;font-size:14px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-hbtn:hover{background:#F1F3F5;color:var(--ink)}
+/* o de compartilhar leva o rótulo: vira pílula em vez de círculo */
+.ia-hbtn-tx{width:auto;gap:8px;padding:0 14px;
+  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+.ia-menuwrap{position:relative}
+.ia-menu{position:absolute;top:calc(100% + 6px);right:0;min-width:190px;z-index:6;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;
+  box-shadow:0 14px 34px -12px rgba(16,32,48,.4)}
+.ia-menu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
+  padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#465364;
+  cursor:pointer;text-align:left}
+.ia-menu button i{width:14px;font-size:12px}
+.ia-menu button:hover{background:#EAEDF0}
+.ia-menu button.danger{color:var(--red)}
+.ia-menu button.danger:hover{background:#fdecec}
+
+.ia-scroll{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column}
+
+/* ----- estado inicial ----- */
+.ia-zero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;max-width:720px;margin:0 auto;padding:32px 24px 40px}
+.ia-hello{font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-.2px;color:var(--ink);text-align:center}
+.ia-sub{margin-top:8px;font-size:17px;color:var(--muted);text-align:center}
+.ia-zerodock{width:100%;margin-top:26px}
+.ia-chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:22px}
+.ia-chip{display:flex;align-items:center;gap:11px;text-align:left;border:0;background:#fff;
+  box-shadow:inset 0 0 0 1px var(--line);border-radius:12px;padding:14px;cursor:pointer;
+  transition:box-shadow 120ms cubic-bezier(.4,0,.2,1),transform 120ms cubic-bezier(.4,0,.2,1)}
+.ia-chip:hover{box-shadow:inset 0 0 0 1px var(--teal),0 6px 18px -12px rgba(16,32,48,.5);transform:translateY(-1px)}
+.ia-chip:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.16)}
+.ia-chip-ic{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;background:var(--c,#5b6672)}
+.ia-chip-tx{flex:1;min-width:0}
+.ia-chip-tx b{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+
+/* ----- as mensagens ----- */
+.ia-thread{width:100%;max-width:760px;margin:0 auto;padding:26px 24px 12px;display:flex;flex-direction:column;gap:26px}
+.ia-msg{display:flex;flex-direction:column}
+.ia-msg.eu{align-items:flex-end}
+.ia-bolha{max-width:78%;background:color-mix(in srgb,var(--teal) 15%,#fff);color:var(--ink);border-radius:16px 16px 5px 16px;
+  padding:12px 16px;font-size:16px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ia-resp{display:flex;gap:13px}
+.ia-resp .ia-mark{margin-top:1px}
+.ia-corpo{flex:1;min-width:0;font-size:16px;line-height:1.7;color:var(--body)}
+.ia-corpo p{margin:0 0 14px}
+.ia-corpo p:last-child{margin-bottom:0}
+.ia-corpo b{color:var(--ink)}
+.ia-corpo ul{margin:0 0 14px;padding-left:20px}
+.ia-corpo li{margin-bottom:7px}
+.ia-corpo li::marker{color:var(--teal)}
+.ia-cursor{display:inline-block;width:7px;height:16px;vertical-align:-2px;margin-left:2px;
+  border-radius:1px;background:var(--teal);animation:ia-pisca 1s steps(1) infinite}
+@keyframes ia-pisca{50%{opacity:0}}
+
+/* três pontos enquanto a resposta não começa */
+.ia-pensando{display:inline-flex;gap:5px;align-items:center;height:24px}
+.ia-pensando span{width:6px;height:6px;border-radius:50%;background:#c4ccd4;animation:ia-pulo 1.1s ease-in-out infinite}
+.ia-pensando span:nth-child(2){animation-delay:.16s}
+.ia-pensando span:nth-child(3){animation-delay:.32s}
+@keyframes ia-pulo{0%,60%,100%{transform:translateY(0);opacity:.55}30%{transform:translateY(-4px);opacity:1}}
+
+.ia-acts{display:flex;align-items:center;gap:2px;margin-top:10px;opacity:0;transition:opacity 120ms cubic-bezier(.4,0,.2,1)}
+.ia-msg:hover .ia-acts,.ia-msg:focus-within .ia-acts{opacity:1}
+.ia-act{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:0;border-radius:8px;
+  background:none;color:#8a94a0;font:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-act:hover{background:#F1F3F5;color:var(--ink)}
+/* sem mouse não há hover: no toque as ações ficam sempre à vista */
+@media(hover:none){.ia-acts{opacity:1}}
+
+/* ---------------- compositor ---------------- */
+.ia-dock{flex-shrink:0;padding:0 24px 16px;background:#fff}
+.ia-comp{width:100%;max-width:712px;margin:0 auto}
+.ia-compbox{background:#fff;border-radius:20px;padding:12px 12px 10px;
+  box-shadow:inset 0 0 0 1px var(--linha-campo),0 1px 2px rgba(16,32,48,.06),0 10px 26px -18px rgba(16,32,48,.5);
+  transition:box-shadow 120ms cubic-bezier(.4,0,.2,1)}
+.ia-compbox:focus-within{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.14),0 10px 26px -18px rgba(16,32,48,.5)}
+.ia-text{display:block;width:100%;max-height:190px;border:0;outline:none;resize:none;background:none;
+  padding:4px 4px 8px;font:inherit;font-size:16px;line-height:1.6;color:var(--ink);overflow-y:hidden}
+.ia-text::placeholder{color:var(--muted)}
+.ia-comprow{display:flex;align-items:center;gap:6px}
+.ia-cbtn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:0;
+  border-radius:999px;background:none;color:#8a94a0;font-size:14px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-cbtn:hover{background:#F1F3F5;color:var(--ink)}
+
+.ia-send{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:0;
+  border-radius:999px;background:var(--teal);color:#fff;font-size:14px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-send:hover{background:var(--teal-dark)}
+.ia-send:disabled{background:#DBE1E6;color:#fff;cursor:default}
+.ia-send:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.24)}
+.ia-send.parar{background:var(--ink)}
+.ia-send.parar:hover{background:#111c2b}
+.ia-disc{margin-top:9px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* ---------------- celular ---------------- */
+@media(max-width:900px){
+  /* cabeçalho apertado: os dois quadradinhos ficam só com o ícone, e a coluna
+     das conversas sai de cena — sem botão para abri-la, ela não cabe */
+  .ia-view .nmod-top{gap:8px;padding:0 12px}
+  .ia-view #iaApps{min-width:0;padding:0 8px;font-size:0;gap:0}
+  .ia-view #iaApps i{font-size:19px}
+  .ia-view #iaManage{min-width:0;padding:0 10px;gap:0}
+  .ia-view #iaManage .lbl{display:none}
+  .ia-side{display:none}
+  .ia-head{padding:0 14px;height:52px}
+  .ia-hbtn-tx{width:36px;padding:0;gap:0}
+  .ia-hbtn-tx span{display:none}
+  .ia-thread{padding:20px 16px 8px;gap:22px}
+  .ia-bolha{max-width:88%}
+  .ia-zero{padding:24px 16px 32px}
+  .ia-hello{font-size:24px}
+  .ia-sub{font-size:15px}
+  .ia-chips{grid-template-columns:1fr;gap:8px}
+  .ia-dock{padding:0 12px calc(12px + env(safe-area-inset-bottom,0px))}
+}
+
+/* ---------------- tamanho ótico dos ícones ----------------
+   Os desenhos do Pictogrammers nascem numa grade de 24 e ocupam menos da
+   caixa que os do Font Awesome, então no mesmo font-size saem menores. Estes
+   ajustes devolvem a presença que cada botão tinha. Ficam no fim da folha de
+   propósito: no meio dela as regras dos blocos seguintes os desfaziam. */
+.ia-view .mdi,.ia-rowmenu .mdi{line-height:1}
+.ia-view .ia-new i{font-size:17px}
+.ia-view .ia-find i{font-size:15px}
+.ia-view .ia-convmais{font-size:17px}
+.ia-view .ia-hbtn>i{font-size:17px}
+.ia-view .ia-menu button i,.ia-rowmenu button i,.ia-view .ia-usermenu button>i{font-size:15px;width:16px}
+.ia-view .ia-user>i{font-size:14px}
+.ia-view .ia-cbtn{font-size:17px}
+.ia-view .ia-send{font-size:17px}
+.ia-view .ia-chip-ic{font-size:15px}
+.ia-view .ia-act i{font-size:15px}
+.ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:22px;line-height:22px;height:22px}
 </style>
 </head>
 <body>
@@ -5487,6 +5838,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   <div class="hm-side__body">
     <nav class="hm-side__nav" data-nav>
       <a href="#" class="hm-navitem is-active" id="navHome" title="Home"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--home" aria-hidden="true"></span><span class="hm-navitem__label">Home</span></a>
+      <a href="#" class="hm-navitem" id="navIA" title="Inteligência Artificial"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--ia" aria-hidden="true"></span><span class="hm-navitem__label">Inteligência Artificial</span></a>
       <a href="#" class="hm-navitem" title="Aplicativos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--apps" aria-hidden="true"></span><span class="hm-navitem__label">Aplicativos</span></a>
       <a href="#" class="hm-navitem" title="Powerups"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--powerups" aria-hidden="true"></span><span class="hm-navitem__label">Powerups</span></a>
       <a href="#" class="hm-navitem" title="Links Externos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--links" aria-hidden="true"></span><span class="hm-navitem__label">Links Externos</span></a>
@@ -5594,8 +5946,8 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
     <!-- so na home customizavel: a logo do cliente, no celular -->
     <span class="top-logo-cliente" hidden><img src="uploads/crunch/logo.webp" alt="Crunchyroll"></span>
     <div class="top-search" id="gsBox">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="gsInput" placeholder="Buscar ações na plataforma" autocomplete="off">
+      <span class="gs-spark" aria-hidden="true"></span>
+      <input type="text" id="gsInput" placeholder="No que vamos trabalhar?" autocomplete="off">
       <span class="gs-kbd">Ctrl K</span>
       <div class="gs-panel" id="gsPanel" hidden></div>
     </div>
@@ -5763,6 +6115,11 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
           </div>
         </div>
         <div class="apps" id="appsGrid">
+        <a class="tile" style="--c1:#9b8cff;--c2:#4f3bd4" href="#" id="tileIA">
+          <span class="tile-ic"><span class="smi smi-ia" aria-hidden="true"></span></span>
+          <span class="tl">Inteligência Artificial</span>
+        </a>
+
         <a class="tile" style="--c1:#73beff;--c2:#0088FF" href="#" id="tileSocial">
           <span class="tile-ic"><span class="smi smi-rede-social" aria-hidden="true"></span></span>
           <span class="tl">Rede Social</span>
@@ -6329,7 +6686,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <div class="qp-modal">
     <div class="qp-head">
       <span class="avatar av-rc"></span>
-      <div class="qp-audwrap"><b>Rodrigo Caetano Silva</b><button type="button" class="qp-aud" id="qpAudBtn"><i class="fa-solid fa-earth-americas" id="qpAudIc"></i> <span id="qpAudLbl">Publicar para Todos</span> <i class="fa-solid fa-chevron-down" style="font-size:9px"></i></button>
+      <div class="qp-audwrap"><b>Rodrigo Caetano Silva</b><button type="button" class="qp-aud" id="qpAudBtn" title="Quem vê esta publicação"><i class="fa-solid fa-earth-americas" id="qpAudIc"></i> <span id="qpAudLbl">Publicar para Todos</span> <i class="fa-solid fa-chevron-down" style="font-size:9px"></i></button>
       <div class="qp-catmenu qp-audmenu" id="qpAudMenu" hidden>
         <button type="button" data-aud="rede" data-ic="fa-earth-americas"><i class="fa-solid fa-earth-americas"></i>Publicar para Todos</button>
         <button type="button" data-aud="unidades" data-ic="fa-store"><i class="fa-solid fa-store"></i>Publicar para Unidades</button>
@@ -6343,7 +6700,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="qp-colors hidden" id="qpColors"></div>
     <div class="qp-colorback hidden" id="qpColorBack"><button type="button" class="pp-btn" id="qpColorExit"><i class="fa-solid fa-arrow-left"></i> Voltar</button></div>
     <div class="qp-advpanel" id="qpAdvPanel" hidden>
-      <div class="cr-advhd qp-advhd"><button type="button" class="cr-advback" id="qpAdvBack"><i class="fa-solid fa-arrow-left"></i> Voltar</button><b>Avançado</b></div>
+      <div class="cr-advhd qp-advhd"><button type="button" class="cr-advback" id="qpAdvBack" title="Voltar"><i class="fa-solid fa-chevron-left"></i> Voltar</button><b>Avançado</b></div>
       <div class="nv-def-wrap">
 
         <div class="nv-def-sec">Publicação</div>
@@ -6351,9 +6708,9 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           <div class="nv-def-ctl"><div class="nv-seg2" id="qpDefStartSeg"><button type="button" data-s="now" class="on">Imediato</button><button type="button" data-s="sched">Agendar</button></div><div class="nv-dtrow" id="qpDefStartRow" style="display:none"><input type="date" id="qpDefStart"><input type="time" id="qpDefStartTime" value="08:00"></div></div></div>
         <div class="nv-def-row"><div class="nv-def-lbl"><b>Encerra em</b><span>Deixe como "sem expiração" para manter no feed.</span></div>
           <div class="nv-def-ctl"><div class="nv-seg2" id="qpDefEndSeg"><button type="button" data-s="never" class="on">Sem expiração</button><button type="button" data-s="date">Definir data</button></div><div class="nv-dtrow" id="qpDefEndRow" style="display:none"><input type="date" id="qpDefEnd"><input type="time" id="qpDefEndTime" value="23:59"></div></div></div>
-        <input type="checkbox" id="qpDefEmail" checked hidden>
-        <input type="checkbox" id="qpDefPush" checked hidden>
       </div>
+      <input type="checkbox" id="qpDefEmail" checked hidden>
+      <input type="checkbox" id="qpDefPush" checked hidden>
     </div>
     <div class="qp-tools">
       <button class="qp-tool img" id="qpToolImg" title="Imagem"><i class="fa-solid fa-image"></i> Imagem</button>
@@ -7520,7 +7877,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     </div>
     <div class="fg-body" id="crStep2" style="display:none;padding:0;flex:1;min-height:0;overflow-y:auto;flex-direction:column;position:relative">
       <div class="cr-advover" id="crAdvPanel" hidden>
-        <div class="cr-advhd"><button type="button" class="cr-advback" id="crAdvBack"><i class="fa-solid fa-arrow-left"></i> Voltar</button><b>Avançado</b></div>
+        <div class="cr-advhd"><button type="button" class="cr-advback" id="crAdvBack" title="Voltar"><i class="fa-solid fa-chevron-left"></i> Voltar</button><b>Avançado</b></div>
         <div class="cr-advbody">
           <div class="nv-def-wrap">
             <div class="nv-def-sec">Short</div>
@@ -7542,9 +7899,9 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         <div><b style="font-size:14px;color:var(--ink);display:block">Rodrigo Caetano</b></div>
         <div class="qp-catwrap cr-audwrap"><button type="button" class="qp-aud" id="crAudBtn"><i class="fa-solid fa-earth-americas" id="crAudIc"></i> <span id="crAudLbl">Publicar para Todos</span> <i class="fa-solid fa-chevron-down" style="font-size:9px"></i></button>
           <div class="qp-catmenu qp-audmenu" id="crAudMenu" hidden>
-            <button type="button" data-aud="rede" data-ic="fa-earth-americas" data-sub="toda a rede"><i class="fa-solid fa-earth-americas"></i>Toda a rede</button>
-            <button type="button" data-aud="unidades" data-ic="fa-store" data-sub="as unidades"><i class="fa-solid fa-store"></i>Unidades</button>
-            <button type="button" data-aud="matriz" data-ic="fa-building" data-sub="a Sua Marca (Matriz)"><i class="fa-solid fa-building"></i>Sua Marca (Matriz)</button>
+            <button type="button" data-aud="rede" data-ic="fa-earth-americas" data-sub="toda a rede"><i class="fa-solid fa-earth-americas"></i>Publicar para Todos</button>
+            <button type="button" data-aud="unidades" data-ic="fa-store" data-sub="as unidades"><i class="fa-solid fa-store"></i>Publicar para Unidades</button>
+            <button type="button" data-aud="matriz" data-ic="fa-building" data-sub="a Sua Marca (Matriz)"><i class="fa-solid fa-building"></i>Publicar para Matriz</button>
           </div></div>
       </div>
       <div class="cr-corpo">
@@ -7591,6 +7948,113 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
 </div>
 
+
+<!-- ============ Módulo Inteligência Artificial ============
+     A conversa com a IA da rede. O cabeçalho é o mesmo dos outros módulos; o
+     miolo é claro, com a coluna das conversas à esquerda e a conversa no meio.
+     O compositor é UM só: fica no centro enquanto não há conversa e desce para
+     o rodapé assim que a primeira pergunta é feita. -->
+<div class="ia-view" id="iaView">
+
+  <div class="nmod-top ia-top">
+    <button class="nmod-logobtn ia-logobtn" id="iaLogo" title="Ir para a home" aria-label="Ir para a home"><img class="ia-toplogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 294.1 76.6' fill='%23fff'%3E %3Cpath d='M55.5 28 24.1 59.4c-.2.2-.6.2-.9 0l-9.9-9.9c-.2-.2-.2-.6 0-.9l31.4-31.4c.2-.2.6-.2.9 0l9.9 9.9c.3.3.3.6 0 .9'/%3E %3Cpath d='M28.9.9 2.2 27.5c-3 3-3 7.8 0 10.7l4.9 4.9c.2.2.6.2.9 0L49.5 1.7c.4-.4.1-1-.4-1H29.3c-.1 0-.3 0-.4.2'/%3E %3Cpath d='M60.9 33.3 19.4 74.9c-.4.4-.1 1 .4 1h19.8c.2 0 .3-.1.4-.2L66.7 49c3-3 3-7.8 0-10.7l-4.9-4.9c-.3-.3-.7-.3-.9-.1'/%3E %3Cpath d='M158.2 12.3c-.3 0-.6.3-.6.6v30.8c0 1.6-.4 3.1-1.1 4.7-1.6 3.1-4.2 4.5-8.1 4.5-3.9 0-6.5-1.5-8-4.5-.8-1.5-1.2-3.1-1.2-4.6V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v30.8c0 3.6.9 7.2 2.8 10.8 3.6 7.2 10 10.9 18.9 10.9 8.9 0 15.2-3.7 18.9-10.9 1.7-3.6 2.6-7.2 2.6-10.8V12.9c0-.3-.3-.6-.6-.6h-11.2z'/%3E %3Cpath d='M187.7 51.3V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v50.8c0 .3.3.6.6.6h34.9c.3 0 .6-.3.6-.6V52.6c0-.3-.3-.6-.6-.6h-22.5c-.3 0-.6-.3-.6-.7'/%3E %3Cpath d='M203.6 12.9V24c0 .3.3.6.6.6h14.1c.3 0 .6.3.6.6v38.5c0 .3.3.6.6.6h11.3c.3 0 .6-.3.6-.6V25.2c0-.3.3-.6.6-.6h14.1c.3 0 .6-.3.6-.6V12.9c0-.3-.3-.6-.6-.6h-42c-.3 0-.5.2-.5.6'/%3E %3Cpath d='M117.8 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3Cpath d='M290.4 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3C/svg%3E" alt="SULTS"></button>
+    <span style="flex:1"></span>
+    <button class="nmod-switch" id="iaManage"><i class="mdi mdi-cog-outline"></i><span class="lbl">Gerenciar</span></button>
+    <button class="nmod-tab" id="iaApps"><i class="mdi mdi-view-grid-outline"></i> Módulos</button>
+    <span class="avatar av-rc nmod-topav" id="iaTopAv" title="Rodrigo Caetano"></span>
+  </div>
+
+  <div class="ia-body">
+
+    <!-- ---------- conversas ---------- -->
+    <aside class="ia-side" id="iaSide">
+      <button class="ia-new" id="iaNew"><i class="mdi mdi-square-edit-outline"></i> Nova conversa</button>
+      <nav class="ia-nav">
+        <button type="button" class="ia-item on" id="iaTodasBtn">
+          <i class="mdi mdi-forum-outline ia-ic-off"></i><i class="mdi mdi-forum ia-ic-on"></i><span>Conversas</span>
+        </button>
+        <button type="button" class="ia-item" id="iaArqBtn">
+          <i class="mdi mdi-archive-outline ia-ic-off"></i><i class="mdi mdi-archive ia-ic-on"></i><span>Arquivadas</span>
+        </button>
+      </nav>
+      <div class="ia-find">
+        <i class="mdi mdi-magnify"></i>
+        <input type="text" id="iaFind" placeholder="Buscar conversa" autocomplete="off">
+      </div>
+      <div class="ia-list" id="iaList"></div>
+
+      <div class="ia-sidefoot">
+        <div class="ia-userwrap">
+          <button type="button" class="ia-user" id="iaUser" aria-haspopup="menu" aria-expanded="false">
+            <span class="avatar av-rc ia-userav"></span>
+            <span class="ia-user-tx"><b id="iaUserNome">Rodrigo Caetano</b><span id="iaUserSub">CEO · SULTS</span></span>
+            <i class="mdi mdi-chevron-down"></i>
+          </button>
+          <div class="ia-usermenu" id="iaUserMenu" role="menu" hidden></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ---------- a conversa ---------- -->
+    <main class="ia-main">
+
+      <div class="ia-head" id="iaHead" hidden>
+        <span class="ia-head-tt" id="iaHeadTt"></span>
+        <span style="flex:1"></span>
+        <button class="ia-hbtn ia-hbtn-tx" id="iaShare" title="Compartilhar conversa"><i class="mdi mdi-export-variant"></i><span>Compartilhar</span></button>
+        <div class="ia-menuwrap">
+          <button class="ia-hbtn" id="iaMore" title="Mais ações"><i class="mdi mdi-dots-horizontal"></i></button>
+          <div class="ia-menu" id="iaMenu" hidden>
+            <button type="button" data-iam="renomear"><i class="mdi mdi-pencil-outline"></i> Renomear</button>
+            <button type="button" data-iam="arquivar"><i class="mdi mdi-archive-arrow-down-outline"></i> Arquivar</button>
+            <button type="button" class="danger" data-iam="excluir"><i class="mdi mdi-trash-can-outline"></i> Excluir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ia-scroll" id="iaScroll">
+
+        <!-- sem conversa: saudação, compositor no meio e sugestões -->
+        <section class="ia-zero" id="iaZero">
+          <span class="ia-mark ia-mark-lg" aria-hidden="true"></span>
+          <h1 class="ia-hello" id="iaHello">Boa tarde, Rodrigo</h1>
+          <p class="ia-sub">No que vamos trabalhar?</p>
+          <div class="ia-zerodock" id="iaZeroDock"></div>
+          <div class="ia-chips" id="iaChips"></div>
+        </section>
+
+        <!-- com conversa: as mensagens -->
+        <section class="ia-thread" id="iaThread" hidden></section>
+
+      </div>
+
+      <div class="ia-dock" id="iaDock" hidden></div>
+    </main>
+  </div>
+
+  <!-- o menu de cada conversa: mora fora da coluna, que corta o que passa
+       das bordas, e é posicionado na hora do clique -->
+  <div class="ia-menu ia-rowmenu" id="iaRowMenu" hidden>
+    <button type="button" data-iar="renomear"><i class="mdi mdi-pencil-outline"></i> Renomear</button>
+    <button type="button" data-iar="arquivar"><i class="mdi mdi-archive-arrow-down-outline"></i> Arquivar</button>
+    <button type="button" class="danger" data-iar="excluir"><i class="mdi mdi-trash-can-outline"></i> Excluir</button>
+  </div>
+
+  <!-- o compositor, que troca de lugar entre o centro e o rodapé -->
+  <div class="ia-comp" id="iaComp">
+    <div class="ia-compbox" id="iaCompBox">
+      <label class="sr-only" for="iaText">Sua pergunta</label>
+      <textarea class="ia-text" id="iaText" rows="1" placeholder="Pergunte alguma coisa sobre a rede…" autocomplete="off"></textarea>
+      <div class="ia-comprow">
+        <button type="button" class="ia-cbtn" id="iaAttach" title="Anexar arquivo"><i class="mdi mdi-paperclip"></i></button>
+        <span style="flex:1"></span>
+        <button type="button" class="ia-send" id="iaSend" disabled aria-label="Enviar pergunta"><i class="mdi mdi-arrow-up"></i></button>
+      </div>
+    </div>
+    <p class="ia-disc">A IA responde a partir dos documentos da sua rede e pode cometer erros. Confira o que for decisivo.</p>
+  </div>
+
+</div>
 
 <script>
 /* ===================== assets/js/01-home.js ===================== */
@@ -9905,7 +10369,7 @@ appsGrid.addEventListener('drop', () => appsGrid.querySelectorAll('.drop-before,
    O índice abaixo simula o registro de rotas gerado a partir do menu.
    Em produção: GS_INDEX = JSON vindo do menu/permissões do usuário. */
 const escapeHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const GS_ORDER = ['Recentes','Módulos','Telas'];
+const GS_ORDER = ['Módulos','Telas'];
 const GS_INDEX = [
   {cat:'Módulos', t:'Expansão', sub:'Módulo', icon:'fa-up-right-and-down-left-from-center', c:'#e0392c', k:'crm captação leads funil franquia crescimento'},
   {cat:'Módulos', t:'Implantação de Unidades', sub:'Módulo', icon:'fa-flag', c:'#2aa17e', k:'abertura obras cronograma inauguração'},
@@ -9959,21 +10423,50 @@ function gsMark(t, q){
   return t.slice(0, i) + '<mark>' + t.slice(i, i + q.length) + '</mark>' + t.slice(i + q.length);
 }
 
+/* as conversas com a IA, quando o módulo já carregou */
+function gsConversas(){
+  try { return iaConvs(); } catch (e) { return []; }
+}
+
 function gsRender(){
-  const q = norm(gsInput.value.trim());
-  const lista = !q
-    ? GS_INDEX.filter(it => it.r).map(it => Object.assign({}, it, { cat:'Recentes' }))
-    : GS_INDEX.filter(it =>
+  const cru = gsInput.value.trim();
+  const q = norm(cru);
+  const lista = !q ? [] : GS_INDEX.filter(it =>
         norm(it.t).includes(q) || norm(it.sub || '').includes(q) || norm(it.k || '').includes(q));
 
   const grupos = {};
   lista.forEach(it => { (grupos[it.cat] = grupos[it.cat] || []).push(it); });
 
   let out = '', n = 0;
+
+  /* escrevendo, a primeira linha é a pergunta — é ela que o Enter dispara */
+  if (q){
+    out += '<button class="gs-item gs-ask sel" data-gsask="1">' +
+      '<span class="gs-ic gs-ic-ia"><span class="gs-spark-ic"></span></span>' +
+      '<span class="gs-txt"><span class="gs-title">Perguntar à IA</span>' +
+      '<span class="gs-sub">' + escapeHtml(cru) + '</span></span>' +
+      '<span class="gs-enter">Enter</span></button>';
+    n++;
+  }
+
+  /* as conversas: as recentes com o campo vazio, as que casam quando há busca */
+  const convs = gsConversas().filter(c => !q || norm(c.t).includes(q)).slice(0, q ? 3 : 4);
+  if (convs.length){
+    out += '<div class="gs-label">' + (q ? 'Conversas' : 'Conversas recentes') + '</div>';
+    convs.forEach(c => {
+      out += '<button class="gs-item' + (n === 0 ? ' sel' : '') + '" data-gsconv="' + c.id + '">' +
+        '<span class="gs-ic gs-ic-conv"><i class="fa-regular fa-comment"></i></span>' +
+        '<span class="gs-txt"><span class="gs-title">' + gsMark(c.t, q) + '</span>' +
+        '<span class="gs-sub">' + escapeHtml(c.g) + '</span></span>' +
+        '<span class="gs-enter">Enter</span></button>';
+      n++;
+    });
+  }
+
   GS_ORDER.forEach(cat => {
     const its = (grupos[cat] || []).slice(0, 6);
     if (!its.length) return;
-    out += '<div class="gs-label">' + (cat === 'Recentes' ? 'Acessados recentemente' : cat) + '</div>';
+    out += '<div class="gs-label">' + cat + '</div>';
     its.forEach(it => {
       const ic = '<span class="gs-ic" style="--c:' + it.c + '"><i class="fa-solid ' + it.icon + '"></i></span>';
       out += '<button class="gs-item' + (n === 0 ? ' sel' : '') + '">' + ic +
@@ -9983,7 +10476,7 @@ function gsRender(){
       n++;
     });
   });
-  if (!n) out = '<div class="gs-empty">Nenhum resultado para "' + escapeHtml(gsInput.value.trim()) + '"</div>';
+  if (!n) out = '<div class="gs-empty">Comece a escrever para perguntar à IA</div>';
   out += '<div class="gs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navegar</span><span><kbd>Enter</kbd> abrir</span><span><kbd>Esc</kbd> fechar</span></div>';
   gsPanel.innerHTML = out;
   gsSel = 0;
@@ -9996,7 +10489,12 @@ gsInput.addEventListener('focus', gsOpen);
 gsInput.addEventListener('input', gsOpen);
 document.addEventListener('click', e => { if (!gsBox.contains(e.target)) gsClose(); });
 gsPanel.addEventListener('click', e => {
-  if (e.target.closest('.gs-item')){ gsClose(); gsInput.blur(); }
+  const it = e.target.closest('.gs-item');
+  if (!it) return;
+  const pergunta = gsInput.value.trim();
+  gsClose(); gsInput.blur();
+  if (it.dataset.gsask){ gsInput.value = ''; iaAbrirModulo(pergunta); return; }
+  if (it.dataset.gsconv){ gsInput.value = ''; iaAbrirModulo(); iaAbrirConversa(it.dataset.gsconv); return; }
 });
 
 function gsMove(d){
@@ -12434,7 +12932,7 @@ $('#qpCatMenu') && $('#qpCatMenu').addEventListener('click', e=>{ const b=e.targ
 document.addEventListener('click', e=>{ if($('#qpCatMenu') && !e.target.closest('.qp-catwrap')) $('#qpCatMenu').hidden=true; });
 var crAud='rede';
 $('#crAudBtn') && $('#crAudBtn').addEventListener('click', e=>{ e.stopPropagation(); const m=$('#crAudMenu'); m.hidden=!m.hidden; });
-$('#crAudMenu') && $('#crAudMenu').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; fgToast('Nota DEV: mostra apenas para EMPRESA PRINCIPAL / MATRIZ. Unidades sempre publica para TODOS'); crAud=b.dataset.aud; $('#crAudLbl').textContent=(b.dataset.aud==='rede'?'Publicar para Todos':b.textContent.trim()); $('#crAudIc').className='fa-solid '+b.dataset.ic; $('#crAudMenu').hidden=true; });
+$('#crAudMenu') && $('#crAudMenu').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; fgToast('Nota DEV: mostra apenas para EMPRESA PRINCIPAL / MATRIZ. Unidades sempre publica para TODOS'); crAud=b.dataset.aud; $('#crAudLbl').textContent=b.textContent.trim(); $('#crAudIc').className='fa-solid '+b.dataset.ic; $('#crAudMenu').hidden=true; });
 document.addEventListener('click', e=>{ if($('#crAudMenu') && !e.target.closest('.cr-audwrap')) $('#crAudMenu').hidden=true; });
 var crCatSel=null;
 function crCatRender(){
@@ -12497,7 +12995,7 @@ let qpColor=null, qpImg=null, qpImgs=[], qpVideo=null, qpBig=null, qpEmojiTarget
 function qpRenderColors(){ $('#qpColors').innerHTML='<span class="qp-color none'+(qpColor===null?' sel':'')+'" data-c=""><i class="fa-solid fa-ban"></i></span>'+QP_COLORS.map(c=>'<span class="qp-color'+(qpColor===c?' sel':'')+'" data-c="'+c+'" style="background:'+c+'"></span>').join('')+'<label class="qp-color custom" title="Escolher cor"><i class="fa-solid fa-eye-dropper"></i><input type="color" id="qpColorPick" value="#00acac"></label>'; }
 function qpSetColor(c){ qpColor=c||null; const body=$('#qpBody'); const sub=$('#qpSub'); if(qpColor){ body.classList.add('colored'); body.style.background=qpColor; sub.hidden=false; (document.getElementById('qpBigEmoji')||{}).hidden=false; } else { body.classList.remove('colored'); body.style.background=''; sub.hidden=true; sub.value=''; (document.getElementById('qpBigEmoji')||{}).hidden=true; } qpRenderColors(); }
 function qpOpen(mode){
-  qpUnit=null; if($('#qpUnitLbl')) $('#qpUnitLbl').textContent='Não vincular unidade'; if($('#qpUnitMenu')) $('#qpUnitMenu').hidden=true; $('#qpText').value=''; qpSetColor(null); qpImg=null; qpImgs=[]; qpVideo=null; qpBig=null; (document.getElementById('qpBigEmojiVal')||{}).innerHTML='<i class="fa-regular fa-face-smile"></i>'; $('#qpImgWrap').hidden=true; qpRenderImgs(); $('#qpImgFile').value=''; $('#qpVideoFile')&&($('#qpVideoFile').value=''); $('#qpAdvPanel').hidden=true; $('#qpBody').style.display=''; $('#qpAdv').classList.remove('on'); { const tb=$('#qpBody').closest('.qp-modal').querySelector('.qp-tools'); if(tb) tb.style.display=''; } if($('#qpDefStart')){$('#qpDefStart').value='';$('#qpDefStartRow').style.display='none';$$('#qpDefStartSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s==='now'));$('#qpDefEnd').value='';$('#qpDefEndRow').style.display='none';$$('#qpDefEndSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s==='never'));$('#qpDefEmail').checked=true;$('#qpDefPush').checked=true;var _qpp=$('#qpDefPin'); if(_qpp) _qpp.checked=false;} $('#qpColors').classList.toggle('hidden', mode!=='color'); if($('#qpEmojis'))$('#qpEmojis').hidden=true; $('#qpPub').disabled=true; $('#qpBack').classList.add('open'); if(mode==='color'){ qpRenderColors(); qpSetColor(QP_COLORS[0]); $('#qpToolColor').classList.add('on'); } else { $('#qpToolColor').classList.remove('on'); } setTimeout(()=>$('#qpText').focus(),40); if(mode==='img') $('#qpImgFile').click(); if(mode==='video') $('#qpVideoFile').click(); }
+  qpUnit=null; if($('#qpUnitLbl')) $('#qpUnitLbl').textContent='Não vincular unidade'; if($('#qpUnitMenu')) $('#qpUnitMenu').hidden=true; $('#qpText').value=''; qpSetColor(null); qpImg=null; qpImgs=[]; qpVideo=null; qpBig=null; (document.getElementById('qpBigEmojiVal')||{}).innerHTML='<i class="fa-regular fa-face-smile"></i>'; $('#qpImgWrap').hidden=true; qpRenderImgs(); $('#qpImgFile').value=''; $('#qpVideoFile')&&($('#qpVideoFile').value=''); $('#qpAdvPanel').hidden=true; $('#qpBody').style.display=''; $('#qpAdv').classList.remove('on'); { const cx=$('#qpBody').closest('.qp-modal'); const tb=cx.querySelector('.qp-tools'); if(tb) tb.style.display=''; const pe=cx.querySelector('.qp-foot'); if(pe) pe.style.display=''; } if($('#qpDefStart')){$('#qpDefStart').value='';$('#qpDefStartRow').style.display='none';$$('#qpDefStartSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s==='now'));$('#qpDefEnd').value='';$('#qpDefEndRow').style.display='none';$$('#qpDefEndSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s==='never'));$('#qpDefEmail').checked=true;$('#qpDefPush').checked=true;var _qpp=$('#qpDefPin'); if(_qpp) _qpp.checked=false;} $('#qpColors').classList.toggle('hidden', mode!=='color'); if($('#qpEmojis'))$('#qpEmojis').hidden=true; $('#qpPub').disabled=true; $('#qpBack').classList.add('open'); if(mode==='color'){ qpRenderColors(); qpSetColor(QP_COLORS[0]); $('#qpToolColor').classList.add('on'); } else { $('#qpToolColor').classList.remove('on'); } setTimeout(()=>$('#qpText').focus(),40); if(mode==='img') $('#qpImgFile').click(); if(mode==='video') $('#qpVideoFile').click(); }
 function qpClose(){ $('#qpBack').classList.remove('open'); }
 $('#qpX').addEventListener('click', qpClose);
 $('#qpBack').addEventListener('click', e=>{ if(e.target===$('#qpBack')) qpClose(); });
@@ -12542,7 +13040,7 @@ $('#qpImgX').addEventListener('click', ()=>{ qpImgs=[]; qpImg=null; $('#qpImgFil
 const QP_EMOJIS=['😀','😄','😁','🤣','😊','😍','😘','😉','🙌','👏','👍','🙏','💪','🔥','✨','🎉','🎊','❤️','💙','💚','🚀','⭐','✅','💡','📈','🎯','👋','🤝','🙋','😎','🥳','😂'];
 $('#qpColors').addEventListener('click', e=>{ const s=e.target.closest('.qp-color'); if(!s||s.classList.contains('custom')) return; qpSetColor(s.dataset.c); });
 $('#qpColors').addEventListener('input', e=>{ const p=e.target.closest('#qpColorPick'); if(!p) return; qpSetColor('linear-gradient(135deg,'+p.value+','+p.value+')'); });
-$('#qpAdv').addEventListener('click', ()=>{ const p=$('#qpAdvPanel'); const show=p.hidden; p.hidden=!show; $('#qpBody').style.display=show?'none':''; $('#qpColors').classList.add('hidden'); $('#qpAdv').classList.toggle('on',show); const tb=$('#qpBody').closest('.qp-modal').querySelector('.qp-tools'); if(tb) tb.style.display=show?'none':''; });
+$('#qpAdv').addEventListener('click', ()=>{ const p=$('#qpAdvPanel'); const show=p.hidden; p.hidden=!show; $('#qpBody').style.display=show?'none':''; $('#qpColors').classList.add('hidden'); $('#qpAdv').classList.toggle('on',show); const cx=$('#qpBody').closest('.qp-modal'); const tb=cx.querySelector('.qp-tools'); if(tb) tb.style.display=show?'none':''; const pe=cx.querySelector('.qp-foot'); if(pe) pe.style.display=show?'none':''; });
 $('#qpAdvBack') && $('#qpAdvBack').addEventListener('click', ()=>{ fgToast('Nota DEV: esse botão de avançado aparece apenas para Unidade principal / Matriz. Nunca aparece para unidades'); $('#qpAdv').click(); });
 $('#qpDefStartSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b)return; $$('#qpDefStartSeg button').forEach(x=>x.classList.toggle('on',x===b)); const s=b.dataset.s==='sched'; $('#qpDefStartRow').style.display=s?'flex':'none'; if(!s)$('#qpDefStart').value=''; });
 $('#qpDefEndSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b)return; $$('#qpDefEndSeg button').forEach(x=>x.classList.toggle('on',x===b)); const d=b.dataset.s==='date'; $('#qpDefEndRow').style.display=d?'flex':'none'; if(!d)$('#qpDefEnd').value=''; });
@@ -16180,6 +16678,718 @@ function marcaDesligar(){
   document.querySelectorAll('.col-main > .feed > .post[data-sults]').forEach(function(p){ p.removeAttribute('data-sults'); });
   if (typeof crunchRedesenha === 'function') crunchRedesenha();
 }
+
+/* ===================== assets/js/18-ia.js ===================== */
+/* ============ Módulo Inteligência Artificial ============
+   A conversa com a IA da rede. Aqui não há modelo nenhum atrás: as respostas
+   são escritas à mão e escolhidas por assunto, e o efeito de digitação existe
+   para o protótipo ter o mesmo ritmo do produto — quem testa espera ver a
+   resposta nascer, não aparecer pronta.
+
+   Quem pergunta não escolhe onde a IA procura: a base vem do que o
+   administrador montar para cada tipo de unidade, na tela que o botão
+   Gerenciar vai abrir. */
+
+/* ---------------------------------------------------------------- dados --- */
+
+/* quantos documentos a base tem — vira dado do administrador depois */
+const IA_DOCS = 128;
+
+/* As respostas. `k` é o assunto que a pergunta precisa tocar; `blocos` é o
+   corpo da resposta: parágrafo ou lista. */
+const IA_BASE = [
+  {
+    k: /chamad|ticket|sla|prazo de atendimento|suporte/,
+    blocos: [
+      { t:'p', x:'O chamado nasce em <b>Chamados &rarr; Novo chamado</b>. Quem abre escolhe o assunto, e é o assunto que decide para qual fila ele vai e qual prazo passa a valer.' },
+      { t:'p', x:'Os prazos em vigor na rede são estes:' },
+      { t:'ul', x:[
+        '<b>Crítico</b> &mdash; 4 horas para a primeira resposta e 1 dia útil para a solução.',
+        '<b>Alto</b> &mdash; 8 horas úteis para responder e 3 dias úteis para resolver.',
+        '<b>Normal</b> &mdash; 1 dia útil para responder e 5 dias úteis para resolver.'
+      ]},
+      { t:'p', x:'O relógio para enquanto o chamado estiver aguardando a unidade, e volta a correr assim que ela responde. O que estoura o prazo aparece no painel de atrasos da matriz no mesmo dia.' }
+    ]
+  },
+  {
+    k: /checklist|auditor|vistoria|supervis|nota da loja|plano de a/,
+    blocos: [
+      { t:'p', x:'A auditoria mensal roda o modelo <b>Padrão de Loja</b>, com 48 itens divididos em cinco blocos:' },
+      { t:'ul', x:[
+        'Fachada e vitrine &mdash; 6 itens',
+        'Atendimento e experiência &mdash; 12 itens',
+        'Estoque e validade &mdash; 11 itens',
+        'Limpeza e conservação &mdash; 9 itens',
+        'Documentação e alvarás &mdash; 10 itens'
+      ]},
+      { t:'p', x:'A nota de corte é <b>85%</b>. Abaixo disso o sistema abre um plano de ação com prazo de 15 dias, já com o responsável da unidade no topo. Item marcado como crítico reprova a visita sozinho, mesmo que a média feche acima do corte.' }
+    ]
+  },
+  {
+    k: /nova unidade|abrir.*unidade|implanta|invent|inaugur|abertura/,
+    blocos: [
+      { t:'p', x:'A abertura corre em <b>Implantação de Unidades</b>, em quatro etapas encadeadas: viabilidade, obra, treinamento e inauguração. Cada etapa só libera a seguinte quando todas as tarefas obrigatórias estão concluídas.' },
+      { t:'p', x:'Os documentos que a etapa de viabilidade exige são:' },
+      { t:'ul', x:[
+        'Contrato social e cartão CNPJ da nova operação',
+        'Contrato de locação assinado, com a planta do ponto',
+        'Alvará de funcionamento e licença sanitária, quando o ramo pedir',
+        'Termo de adesão à franquia, assinado pelos sócios'
+      ]},
+      { t:'p', x:'O prazo médio da rede entre a assinatura e a inauguração é de <b>112 dias</b>. As unidades que atrasam quase sempre param na licença sanitária, então vale começar por ela.' }
+    ]
+  },
+  {
+    k: /comunicad|aviso|novidade|semana|n[aã]o li/,
+    blocos: [
+      { t:'p', x:'Saíram três comunicados para a sua unidade nesta semana:' },
+      { t:'ul', x:[
+        '<b>Convenção SULTS 2026</b> &mdash; encontro geral do time, com trilhas por área e festa de encerramento. Confirmação até 30/09.',
+        '<b>Nova trilha: Atendimento 2.0</b> &mdash; disponível na Universidade Corporativa, com certificado ao concluir.',
+        '<b>Atualização da plataforma v10.4</b> &mdash; melhorias de desempenho no Checklist e novos filtros nos relatórios.'
+      ]},
+      { t:'p', x:'Você ainda não abriu a trilha <b>Atendimento 2.0</b>, e ela é obrigatória para quem atende balcão. O prazo termina em 20/09.' }
+    ]
+  },
+  {
+    k: /treinament|universidade|trilha|curso|certific/,
+    blocos: [
+      { t:'p', x:'A sua unidade tem <b>4 trilhas obrigatórias</b> no ciclo de 2026. Três estão concluídas; falta a <b>Atendimento 2.0</b>, com prazo em 20/09.' },
+      { t:'p', x:'O time da unidade está assim:' },
+      { t:'ul', x:[
+        '9 de 12 pessoas concluíram todas as trilhas do cargo',
+        '2 estão em andamento, ambas na trilha nova',
+        '1 pessoa ainda não começou &mdash; entrou há duas semanas e o prazo dela conta a partir da admissão'
+      ]},
+      { t:'p', x:'O certificado sai sozinho quando a pessoa fecha a avaliação com 70% ou mais, e vai para o perfil dela na rede.' }
+    ]
+  },
+  {
+    k: /estoque|pedido|compra|fornecedor|reposi|mix/,
+    blocos: [
+      { t:'p', x:'O pedido à matriz sai por <b>Compras &rarr; Novo pedido</b>, sempre dentro do mix aprovado para o seu tipo de unidade. Item fora do mix precisa de liberação da matriz antes de entrar no carrinho.' },
+      { t:'ul', x:[
+        'A janela de pedidos abre toda segunda e fecha na quarta às 18h.',
+        'O pedido mínimo é de R$ 1.200 por fornecedor.',
+        'A entrega prevista é de 7 a 12 dias úteis, conforme a região.'
+      ]},
+      { t:'p', x:'Hoje há <b>3 itens</b> abaixo do estoque mínimo na sua unidade. Eles já entram sugeridos quando você abre o pedido.' }
+    ]
+  }
+];
+
+/* Quando nada casa: uma resposta honesta, que diz onde procurou e o que achou. */
+function iaRespostaPadrao(){
+  return {
+    blocos: [
+      { t:'p', x:'Procurei nos <b>' + IA_DOCS + ' documentos</b> da base de conhecimento da rede e não achei nada que responda isso com segurança.' },
+      { t:'p', x:'O que dá para fazer agora:' },
+      { t:'ul', x:[
+        'Refazer a pergunta com o nome do módulo ou do documento &mdash; a busca fica bem mais precisa.',
+        'Abrir um chamado para a matriz, que aí a resposta vira documento e passa a valer para a rede toda.'
+      ]},
+      { t:'p', x:'Se quiser, me conte o que você precisa resolver e eu indico por onde começar.' }
+    ]
+  };
+}
+
+function iaResponder(pergunta){
+  const q = norm(pergunta);
+  return IA_BASE.find(b => b.k.test(q)) || iaRespostaPadrao();
+}
+
+/* As conversas guardadas. Só as perguntas ficam salvas: a resposta é montada
+   pela mesma função da conversa ao vivo, então as duas nunca divergem. */
+const IA_CONVERSAS = [
+  { id:'c1', g:'Hoje',            t:'Prazo de SLA dos chamados críticos', p:['Qual é o prazo de SLA para um chamado crítico?'] },
+  { id:'c2', g:'Hoje',            t:'Comunicados da semana',              p:['Resuma os comunicados desta semana'] },
+  { id:'c3', g:'Ontem',           t:'Itens da auditoria mensal',          p:['O que cai na auditoria mensal da loja?'] },
+  { id:'c4', g:'Últimos 7 dias',  t:'Documentos para abrir uma unidade',  p:['Quais documentos preciso para abrir uma unidade nova?'] },
+  { id:'c5', g:'Últimos 7 dias',  t:'Trilhas obrigatórias do time',       p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
+  { id:'c6', g:'Últimos 30 dias', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] }
+];
+
+/* Quem está usando */
+const IA_PESSOA = { nome:'Rodrigo Caetano' };
+
+/* As unidades que essa pessoa alcança */
+const IA_UNIDADES = [
+  { id:'873', nome:'A1 - Academia PHD' },
+  { id:'412', nome:'Boatlux Marina Sul' },
+  { id:'205', nome:'Constance - Centro' },
+  { id:'158', nome:'Corpore Fit Barra' },
+  { id:'061', nome:'Sabor & Cia Shopping' }
+];
+
+const IA_SUGESTOES = [
+  { ic:'mdi-message-text-outline',    c:'#1d6ede', t:'Qual é o prazo de SLA para um chamado crítico?' },
+  { ic:'mdi-clipboard-check-outline', c:'#219348', t:'O que cai na auditoria mensal da loja?' },
+  { ic:'mdi-bullhorn-outline',        c:'#575fd1', t:'Resuma os comunicados desta semana' },
+  { ic:'mdi-flag-outline',            c:'#2aa17e', t:'Quais documentos preciso para abrir uma unidade?' }
+];
+
+/* ---------------------------------------------------------------- estado --- */
+
+const iaView   = $('#iaView');
+const iaThread = $('#iaThread');
+const iaZero   = $('#iaZero');
+const iaScroll = $('#iaScroll');
+const iaText   = $('#iaText');
+const iaSend   = $('#iaSend');
+
+let iaAtual    = null;       /* id da conversa aberta, ou null no estado inicial */
+let iaFiltro   = '';         /* busca na coluna das conversas */
+let iaArquivadas = new Set();/* ids fora da lista principal */
+let iaVerArq   = false;      /* a seção "Arquivadas" está aberta? */
+let iaMenuAlvo = null;       /* conversa cujo menu de linha está aberto */
+let iaUnidade  = '873';      /* unidade em uso */
+let iaNovas    = [];         /* conversas criadas nesta sessão */
+let iaEscrevendo = null;     /* controle da resposta que está sendo digitada */
+
+function iaConvs(){ return iaNovas.concat(IA_CONVERSAS); }
+function iaConv(id){ return iaConvs().find(c => c.id === id) || null; }
+
+/* --------------------------------------------------------------- montagem --- */
+
+function iaEscapa(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function iaSaudacao(){
+  const h = new Date().getHours();
+  return h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+}
+
+/* o primeiro nome de quem está logado — muda junto com o cliente da vez */
+function iaPrimeiroNome(){
+  const el = document.querySelector('#topUserChip .uname');
+  const nome = (el && el.textContent.trim()) || 'por aqui';
+  return nome.split(/\s+/)[0];
+}
+
+function iaBlocosHTML(blocos){
+  return blocos.map(b => b.t === 'ul'
+    ? '<ul>' + b.x.map(i => '<li>' + i + '</li>').join('') + '</ul>'
+    : '<p>' + b.x + '</p>').join('');
+}
+
+function iaAcoesHTML(){
+  return '<div class="ia-acts">' +
+    '<button type="button" class="ia-act" data-iact="copiar"><i class="mdi mdi-content-copy"></i> Copiar</button>' +
+    '<button type="button" class="ia-act" data-iact="refazer"><i class="mdi mdi-refresh"></i> Refazer</button>' +
+    '</div>';
+}
+
+function iaAddPergunta(txt){
+  const el = document.createElement('div');
+  el.className = 'ia-msg eu';
+  el.innerHTML = '<div class="ia-bolha">' + iaEscapa(txt) + '</div>';
+  iaThread.appendChild(el);
+  return el;
+}
+
+/* a casca da resposta: marca da IA à esquerda e o corpo, vazio, à direita */
+function iaAddResposta(){
+  const el = document.createElement('div');
+  el.className = 'ia-msg ia';
+  el.innerHTML = '<div class="ia-resp"><span class="ia-mark" aria-hidden="true"></span><div class="ia-corpo"></div></div>';
+  iaThread.appendChild(el);
+  return el;
+}
+
+function iaRolar(){
+  iaScroll.scrollTop = iaScroll.scrollHeight;
+}
+
+/* ------------------------------------------------------------- digitação ---
+   O bloco entra pronto no DOM e depois é revelado caractere a caractere pelos
+   nós de texto. Fatiar a string cortaria as tags no meio; percorrer os nós
+   preserva qualquer marcação. */
+
+function iaDigita(corpo, resp, aoTerminar){
+  const cursor = document.createElement('span');
+  cursor.className = 'ia-cursor';
+  let bi = 0, timer = null;
+
+  function encerra(){
+    if (timer) clearInterval(timer);
+    timer = null;
+    cursor.remove();
+    iaEscrevendo = null;
+    aoTerminar && aoTerminar();
+  }
+
+  /* o botão Parar e o fim natural caem os dois aqui: o que falta aparece
+     inteiro, sem deixar a resposta pela metade */
+  function completa(){
+    if (timer) clearInterval(timer);
+    timer = null;
+    corpo.innerHTML = iaBlocosHTML(resp.blocos);
+    encerra();
+  }
+
+  function proximo(){
+    if (bi >= resp.blocos.length) return encerra();
+    const b = resp.blocos[bi++];
+    if (b.t === 'ul'){
+      const ul = document.createElement('ul');
+      corpo.appendChild(ul);
+      let li = 0;
+      (function item(){
+        if (li >= b.x.length) return proximo();
+        const el = document.createElement('li');
+        ul.appendChild(el);
+        revela(el, b.x[li++], item);
+      })();
+    } else {
+      const p = document.createElement('p');
+      corpo.appendChild(p);
+      revela(p, b.x, proximo);
+    }
+  }
+
+  function revela(el, html, fim){
+    el.innerHTML = html;
+    const nos = [];
+    (function anda(n){
+      Array.prototype.forEach.call(n.childNodes, c => {
+        if (c.nodeType === 3){ nos.push({ no:c, txt:c.nodeValue }); c.nodeValue = ''; }
+        else anda(c);
+      });
+    })(el);
+    el.appendChild(cursor);
+    let ni = 0, ci = 0;
+    timer = setInterval(() => {
+      let passos = 4;
+      while (passos-- > 0){
+        if (ni >= nos.length){ clearInterval(timer); timer = null; return fim(); }
+        const n = nos[ni];
+        if (ci >= n.txt.length){ ni++; ci = 0; continue; }
+        ci++;
+        n.no.nodeValue = n.txt.slice(0, ci);
+      }
+      iaRolar();
+    }, 18);
+  }
+
+  iaEscrevendo = { completa: completa };
+  proximo();
+}
+
+/* ------------------------------------------------------------- conversas --- */
+
+function iaLinhaHTML(c){
+  return '<div class="ia-linha' + (c.id === iaAtual ? ' on' : '') + '" data-ialinha="' + c.id + '">' +
+    '<button type="button" class="ia-conv" data-iaconv="' + c.id + '">' +
+      '<span class="ia-conv-cx"><span class="ia-conv-tx">' + iaEscapa(c.t) + '</span></span>' +
+    '</button>' +
+    '<button type="button" class="ia-convmais" data-iamais="' + c.id + '" title="Mais ações" aria-label="Mais ações">' +
+      '<i class="mdi mdi-dots-horizontal"></i></button>' +
+  '</div>';
+}
+
+/* A lista mostra uma coisa de cada vez: as conversas ou o arquivo. Misturar
+   as duas no mesmo rolamento não escala — com milhares de conversas o arquivo
+   ficaria a um quilômetro do fim da lista. */
+function iaRenderLista(){
+  const q = norm(iaFiltro.trim());
+  const casa = c => !q || norm(c.t).includes(q);
+  const lista = iaConvs().filter(c => (iaVerArq ? iaArquivadas.has(c.id) : !iaArquivadas.has(c.id)) && casa(c));
+
+  let out = '', grupo = null;
+  lista.forEach(c => {
+    if (c.g !== grupo){ grupo = c.g; out += '<div class="ia-grp">' + iaEscapa(grupo) + '</div>'; }
+    out += iaLinhaHTML(c);
+  });
+  if (!lista.length){
+    out += '<div class="ia-vazio">' + (
+      q ? '<b>Nenhuma conversa com esse nome</b>'
+        : iaVerArq ? '<b>Nada arquivado por aqui</b><span>Arquivar tira a conversa da lista sem apagar nada.</span>'
+                   : '<b>Ainda não há conversas</b><span>Faça a primeira pergunta ali ao lado.</span>') + '</div>';
+  }
+  $('#iaList').innerHTML = out;
+
+  /* as duas entradas marcam a visão aberta; a busca diz onde está procurando */
+  $('#iaArqBtn').classList.toggle('on', iaVerArq);
+  $('#iaTodasBtn').classList.toggle('on', !iaVerArq);
+  $('#iaFind').placeholder = iaVerArq ? 'Buscar nas arquivadas' : 'Buscar conversa';
+
+  iaMedeTitulos();
+}
+
+/* ---------- perfil e unidade, no pé da coluna ---------- */
+
+function iaUnidadeAtual(){ return IA_UNIDADES.find(u => u.id === iaUnidade) || IA_UNIDADES[0]; }
+
+function iaRenderUsuario(){
+  $('#iaUserNome').textContent = IA_PESSOA.nome;
+  $('#iaUserSub').textContent = iaUnidadeAtual().nome;
+  $('#iaUserMenu').innerHTML =
+    '<div class="ia-umlbl">Unidade</div>' +
+    IA_UNIDADES.map(x =>
+      '<button type="button" data-iaunidade="' + x.id + '"' + (x.id === iaUnidade ? ' class="on"' : '') + '>' +
+        '<span class="ia-umic"><i class="mdi mdi-storefront-outline"></i></span>' +
+        '<span class="ia-umtx"><b>' + iaEscapa(x.nome) + '</b></span>' +
+        '<i class="mdi mdi-check"></i></button>').join('');
+}
+
+/* Quanto falta para o título caber: é esse valor que o hover desliza, e a
+   duração acompanha a distância para o passeio ter sempre o mesmo ritmo. */
+function iaMedeTitulos(){
+  requestAnimationFrame(() => {
+    $$('#iaList .ia-linha').forEach(b => {
+      const tx = b.querySelector('.ia-conv-tx');
+      if (!tx) return;
+      const sobra = tx.scrollWidth - tx.clientWidth;
+      if (sobra <= 2) return;
+      b.classList.add('corta');
+      b.style.setProperty('--desl', (-sobra) + 'px');
+      b.style.setProperty('--dur', Math.max(0.6, sobra / 45).toFixed(2) + 's');
+    });
+  });
+}
+
+/* ---------- renomear, arquivar e excluir ---------- */
+
+function iaExcluir(id){
+  iaNovas = iaNovas.filter(c => c.id !== id);
+  const i = IA_CONVERSAS.findIndex(c => c.id === id);
+  if (i >= 0) IA_CONVERSAS.splice(i, 1);
+  iaArquivadas.delete(id);
+  if (iaAtual === id) iaNovaConversa(); else iaRenderLista();
+  fgToast('Conversa excluída');
+}
+
+function iaArquivar(id){
+  const guardar = !iaArquivadas.has(id);
+  if (guardar) iaArquivadas.add(id); else iaArquivadas.delete(id);
+  if (guardar && iaAtual === id) iaNovaConversa(); else iaRenderLista();
+  fgToast(guardar ? 'Conversa arquivada' : 'Conversa desarquivada');
+}
+
+/* Renomear acontece na própria linha: a linha vira campo, o Enter confirma e
+   o Esc desiste. Sem caixa de diálogo para uma edição de duas palavras. */
+function iaRenomear(id){
+  const conv = iaConv(id);
+  const linha = document.querySelector('[data-ialinha="' + id + '"]');
+  if (!conv || !linha || linha.querySelector('.ia-ren')) return;
+  const cx = linha.querySelector('.ia-conv-cx');
+  const antes = conv.t;
+  cx.innerHTML = '<input class="ia-ren" type="text" maxlength="80">';
+  const campo = cx.querySelector('.ia-ren');
+  campo.value = antes;
+  campo.focus();
+  campo.select();
+  let fechado = false;
+  function fecha(salvar){
+    if (fechado) return;
+    fechado = true;
+    const novo = campo.value.trim();
+    if (salvar && novo && novo !== antes){
+      conv.t = novo;
+      if (iaAtual === id) $('#iaHeadTt').textContent = novo;
+      fgToast('Conversa renomeada');
+    }
+    iaRenderLista();
+  }
+  campo.addEventListener('keydown', e => {
+    e.stopPropagation();
+    if (e.key === 'Enter'){ e.preventDefault(); fecha(true); }
+    else if (e.key === 'Escape'){ e.preventDefault(); fecha(false); }
+  });
+  campo.addEventListener('blur', () => fecha(true));
+  campo.addEventListener('click', e => e.stopPropagation());
+}
+
+function iaAcao(nome, id){
+  if (nome === 'excluir') return iaExcluir(id);
+  if (nome === 'arquivar') return iaArquivar(id);
+  if (nome === 'renomear') return iaRenomear(id);
+}
+
+/* volta ao estado inicial: saudação, compositor no meio e sugestões */
+function iaNovaConversa(){
+  if (iaEscrevendo) iaEscrevendo.completa();
+  iaAtual = null;
+  iaVerArq = false;
+  iaThread.innerHTML = '';
+  iaThread.hidden = true;
+  iaZero.hidden = false;
+  $('#iaHead').hidden = true;
+  $('#iaDock').hidden = true;
+  $('#iaHello').textContent = iaSaudacao() + ', ' + iaPrimeiroNome();
+  $('#iaZeroDock').appendChild($('#iaComp'));
+  iaRenderLista();
+  iaText.value = '';
+  iaAltura();
+  iaBotao();
+  setTimeout(() => iaText.focus(), 40);
+}
+
+/* tira o compositor do centro e prende no rodapé */
+function iaModoConversa(titulo){
+  iaZero.hidden = true;
+  iaThread.hidden = false;
+  $('#iaHead').hidden = false;
+  $('#iaHeadTt').textContent = titulo;
+  $('#iaDock').hidden = false;
+  $('#iaDock').appendChild($('#iaComp'));
+}
+
+function iaAbrirConversa(id){
+  const c = iaConv(id);
+  if (!c) return;
+  if (iaEscrevendo) iaEscrevendo.completa();
+  iaAtual = id;
+  iaModoConversa(c.t);
+  iaThread.innerHTML = '';
+  c.p.forEach(pergunta => {
+    iaAddPergunta(pergunta);
+    const el = iaAddResposta();
+    const resp = iaResponder(pergunta);
+    el.querySelector('.ia-corpo').innerHTML = iaBlocosHTML(resp.blocos) + iaAcoesHTML();
+  });
+  iaRenderLista();
+  iaScroll.scrollTop = 0;
+}
+
+/* uma pergunta nova: cria a conversa se ainda não houver e responde */
+function iaPerguntar(txt){
+  const pergunta = String(txt || '').trim();
+  if (!pergunta || iaEscrevendo) return;
+
+  if (!iaAtual){
+    const c = {
+      id: 'n' + Date.now(),
+      g: 'Hoje',
+      t: pergunta.length > 42 ? pergunta.slice(0, 42).trim() + '…' : pergunta,
+      p: []
+    };
+    iaNovas.unshift(c);
+    iaAtual = c.id;
+    iaModoConversa(c.t);
+  }
+  const conv = iaConv(iaAtual);
+  conv.p.push(pergunta);
+
+  iaText.value = '';
+  iaAltura();
+  iaAddPergunta(pergunta);
+  iaRenderLista();
+
+  /* os três pontinhos enquanto a resposta não começa */
+  const msg = iaAddResposta();
+  const corpo = msg.querySelector('.ia-corpo');
+  corpo.innerHTML = '<div class="ia-pensando"><span></span><span></span><span></span></div>';
+  iaBotao();
+  iaRolar();
+
+  setTimeout(() => {
+    corpo.innerHTML = '';
+    const resp = iaResponder(pergunta);
+    iaDigita(corpo, resp, () => {
+      corpo.insertAdjacentHTML('beforeend', iaAcoesHTML());
+      iaBotao();
+      iaRolar();
+    });
+    iaBotao();
+  }, 620);
+}
+
+/* ------------------------------------------------------------ compositor --- */
+
+function iaAltura(){
+  iaText.style.height = 'auto';
+  const cheio = iaText.scrollHeight;
+  iaText.style.height = Math.min(cheio, 190) + 'px';
+  iaText.style.overflowY = cheio > 190 ? 'auto' : 'hidden';
+}
+
+/* enquanto escreve, o botão vira Parar */
+function iaBotao(){
+  if (iaEscrevendo){
+    iaSend.disabled = false;
+    iaSend.classList.add('parar');
+    iaSend.innerHTML = '<i class="mdi mdi-stop"></i>';
+    iaSend.setAttribute('aria-label', 'Parar a resposta');
+  } else {
+    iaSend.classList.remove('parar');
+    iaSend.innerHTML = '<i class="mdi mdi-arrow-up"></i>';
+    iaSend.setAttribute('aria-label', 'Enviar pergunta');
+    iaSend.disabled = !iaText.value.trim();
+  }
+}
+
+/* ------------------------------------------------------ abrir e fechar --- */
+
+function iaAbrirModulo(pergunta){
+  if (typeof closeStories === 'function') closeStories();
+  if (typeof closeForum === 'function') closeForum();
+  if (typeof closeNewsModule === 'function') closeNewsModule();
+  iaView.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (typeof setNav === 'function') setNav(null);
+  iaNovaConversa();
+  if (pergunta) setTimeout(() => iaPerguntar(pergunta), 90);
+}
+window.abrirModuloIA = iaAbrirModulo;
+
+function iaFecharModulo(){
+  if (iaEscrevendo) iaEscrevendo.completa();
+  iaView.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* --------------------------------------------------------------- eventos --- */
+
+$('#iaChips').innerHTML = IA_SUGESTOES.map(s =>
+  '<button type="button" class="ia-chip" data-iasug="' + iaEscapa(s.t) + '">' +
+  '<span class="ia-chip-ic" style="--c:' + s.c + '"><i class="mdi ' + s.ic + '"></i></span>' +
+  '<span class="ia-chip-tx"><b>' + iaEscapa(s.t) + '</b></span></button>'
+).join('');
+
+iaText.addEventListener('input', () => { iaAltura(); iaBotao(); });
+iaText.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); if (!iaEscrevendo) iaPerguntar(iaText.value); }
+});
+iaSend.addEventListener('click', () => {
+  if (iaEscrevendo){ iaEscrevendo.completa(); iaBotao(); return; }
+  iaPerguntar(iaText.value);
+});
+
+$('#iaNew').addEventListener('click', iaNovaConversa);
+$('#iaTodasBtn').addEventListener('click', () => { if (iaVerArq){ iaVerArq = false; iaRenderLista(); } });
+$('#iaArqBtn').addEventListener('click', () => { if (!iaVerArq){ iaVerArq = true; iaRenderLista(); } });
+
+$('#iaUser').addEventListener('click', e => {
+  e.stopPropagation();
+  const m = $('#iaUserMenu');
+  m.hidden = !m.hidden;
+  $('#iaUser').setAttribute('aria-expanded', String(!m.hidden));
+});
+$('#iaUserMenu').addEventListener('click', e => {
+  const u = e.target.closest('[data-iaunidade]');
+  if (!u) return;
+  iaUnidade = u.dataset.iaunidade;
+  fgToast('Unidade: ' + iaUnidadeAtual().nome);
+  iaRenderUsuario();
+  $('#iaUserMenu').hidden = true;
+  $('#iaUser').setAttribute('aria-expanded', 'false');
+});
+$('#iaFind').addEventListener('input', e => { iaFiltro = e.target.value; iaRenderLista(); });
+$('#iaList').addEventListener('click', e => {
+  const mais = e.target.closest('[data-iamais]');
+  if (mais){ e.stopPropagation(); iaAbreMenuLinha(mais, mais.dataset.iamais); return; }
+  const b = e.target.closest('[data-iaconv]');
+  if (b) iaAbrirConversa(b.dataset.iaconv);
+});
+
+/* o menu da linha é posicionado na hora: fica preso à tela, não à lista */
+function iaAbreMenuLinha(botao, id){
+  const m = $('#iaRowMenu');
+  if (!m.hidden && iaMenuAlvo === id){ iaFechaMenuLinha(); return; }
+  iaFechaMenuLinha();
+  iaMenuAlvo = id;
+  const arquivada = iaArquivadas.has(id);
+  const alvo = m.querySelector('[data-iar="arquivar"]');
+  alvo.innerHTML = arquivada
+    ? '<i class="mdi mdi-archive-arrow-up-outline"></i> Desarquivar'
+    : '<i class="mdi mdi-archive-arrow-down-outline"></i> Arquivar';
+  m.hidden = false;
+  const r = botao.getBoundingClientRect();
+  const alt = m.offsetHeight, larg = m.offsetWidth;
+  m.style.left = Math.min(r.left, window.innerWidth - larg - 12) + 'px';
+  m.style.top = (r.bottom + 6 + alt > window.innerHeight ? r.top - alt - 6 : r.bottom + 6) + 'px';
+  botao.closest('.ia-linha').classList.add('menu-on');
+}
+
+function iaFechaMenuLinha(){
+  $('#iaRowMenu').hidden = true;
+  iaMenuAlvo = null;
+  $$('#iaList .ia-linha.menu-on').forEach(l => l.classList.remove('menu-on'));
+}
+
+$('#iaRowMenu').addEventListener('click', e => {
+  const b = e.target.closest('[data-iar]');
+  if (!b) return;
+  const id = iaMenuAlvo;
+  iaFechaMenuLinha();
+  iaAcao(b.dataset.iar, id);
+});
+$('#iaList').addEventListener('scroll', iaFechaMenuLinha);
+$('#iaChips').addEventListener('click', e => {
+  const b = e.target.closest('[data-iasug]');
+  if (b) iaPerguntar(b.dataset.iasug);
+});
+$('#iaApps').addEventListener('click', iaFecharModulo);
+$('#iaLogo').addEventListener('click', iaFecharModulo);
+$('#iaManage').addEventListener('click', () => fgToast('Gerenciar entra na próxima etapa: é onde o administrador monta a base de conhecimento de cada tipo de unidade.'));
+$('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta — em breve'));
+$('#iaShare').addEventListener('click', () => fgToast('Link da conversa copiado'));
+
+$('#iaMore').addEventListener('click', e => {
+  e.stopPropagation();
+  const m = $('#iaMenu');
+  m.hidden = !m.hidden;
+});
+$('#iaMenu').addEventListener('click', e => {
+  const b = e.target.closest('[data-iam]');
+  if (!b || !iaAtual) return;
+  $('#iaMenu').hidden = true;
+  iaAcao(b.dataset.iam, iaAtual);
+});
+
+/* copiar, polegares e refazer */
+iaThread.addEventListener('click', e => {
+  const b = e.target.closest('[data-iact]');
+  if (!b) return;
+  const msg = b.closest('.ia-msg');
+  const acao = b.dataset.iact;
+  if (acao === 'copiar'){
+    const corpo = msg.querySelector('.ia-corpo').cloneNode(true);
+    const lixo = corpo.querySelector('.ia-acts'); if (lixo) lixo.remove();
+    const txt = corpo.textContent.replace(/\n{3,}/g, '\n\n').trim();
+    if (navigator.clipboard) navigator.clipboard.writeText(txt);
+    fgToast('Resposta copiada');
+  } else if (acao === 'refazer'){
+    const pergunta = msg.previousElementSibling && msg.previousElementSibling.querySelector('.ia-bolha');
+    if (!pergunta || iaEscrevendo) return;
+    const corpo = msg.querySelector('.ia-corpo');
+    corpo.innerHTML = '<div class="ia-pensando"><span></span><span></span><span></span></div>';
+    iaBotao();
+    setTimeout(() => {
+      corpo.innerHTML = '';
+      const resp = iaResponder(pergunta.textContent);
+      iaDigita(corpo, resp, () => {
+        corpo.insertAdjacentHTML('beforeend', iaAcoesHTML());
+        iaBotao();
+      });
+      iaBotao();
+    }, 500);
+  }
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.ia-menuwrap')) $('#iaMenu').hidden = true;
+  if (!e.target.closest('.ia-rowmenu') && !e.target.closest('[data-iamais]')) iaFechaMenuLinha();
+  if (!e.target.closest('.ia-userwrap')){ $('#iaUserMenu').hidden = true; $('#iaUser').setAttribute('aria-expanded','false'); }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && iaView.classList.contains('open')){
+    if (!$('#iaUserMenu').hidden){ $('#iaUserMenu').hidden = true; return; }
+    if (!$('#iaRowMenu').hidden){ iaFechaMenuLinha(); return; }
+    if (!$('#iaMenu').hidden){ $('#iaMenu').hidden = true; return; }
+    iaFecharModulo();
+  }
+});
+
+$('#tileIA') && $('#tileIA').addEventListener('click', e => { e.preventDefault(); iaAbrirModulo(); });
+$('#navIA') && $('#navIA').addEventListener('click', e => { e.preventDefault(); iaAbrirModulo(); });
+
+iaRenderUsuario();
+iaRenderLista();
+$('#iaZeroDock').appendChild($('#iaComp'));
 </script>
 </body>
 </html>
