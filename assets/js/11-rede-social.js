@@ -1528,7 +1528,6 @@ function renderNewsList(){
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-open="cm" title="Ver comentários"><i class="fa-solid fa-comment" style="font-size:13px;color:#2f6fe4"></i> '+n.comments+'</button></td>'+
       '<td><span class="nv-status '+(n.agendado?'agendado':n.status)+'">'+(n.agendado?'Agendado':(n.status==='pub'?'Publicada':'Rascunho'))+'</span></td>'+
       '<td class="rl-acts nv-actcell">'+
-        '<button class="nv-actbtn" data-act="edit"><i class="fa-solid fa-pen"></i> Editar</button>'+
         '<button class="nv-actbtn danger" data-act="del"><i class="fa-solid fa-trash"></i> Excluir</button>'+
       '</td></tr>';
   }).join('');

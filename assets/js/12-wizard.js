@@ -446,7 +446,7 @@ $('#nvList').addEventListener('click', e => {
     else { openInterModal((n0&&n0.title)|| (n0&&n0.text? n0.text.replace(/<[^>]+>/g,'').slice(0,60):'Publicação')); }
     return; }
   const act = e.target.closest('.rl-act,.nv-actbtn,[data-act]');
-  if (act){ if (act.dataset.act==='edit') nvEdit(id); else { NEWS = NEWS.filter(n=>n.id!==id); renderNewsList(); fgToast('Publicação excluída'); } return; }
+  if (act){ if (act.dataset.act==='del'){ NEWS = NEWS.filter(n=>n.id!==id); renderNewsList(); fgToast('Publicação excluída'); } return; }
   const n=NEWS.find(x=>x.id===id); if(n){ openNewsInfo(n); }
 });
 /* Permissões de Notícias */

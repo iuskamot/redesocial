@@ -426,7 +426,9 @@ function iaRenderLista(){
     out += iaLinhaHTML(c);
   });
   if (!lista.length){
-    out += '<div class="ia-vazio">' + (
+    /* o mesmo gif dos vazios do resto do app, em qualquer um dos tres casos */
+    const illu = '<img class="ia-vazio-illu" src="uploads/illustra/nao-encontrado.gif" alt="" width="350" height="250">';
+    out += '<div class="ia-vazio">' + illu + (
       q ? '<b>Nenhuma conversa com esse nome</b>'
         : iaVerArq ? '<b>Nada arquivado por aqui</b><span>Arquivar tira a conversa da lista sem apagar nada.</span>'
                    : '<b>Ainda não há conversas</b><span>Faça a primeira pergunta ali ao lado.</span>') + '</div>';
@@ -467,12 +469,14 @@ function iaRenderUsuario(){
   $('#iaUserNome').textContent = eu.nome;
   $('#iaUserSub').textContent = iaUnidadeAtual().nome;
   $('#iaUserMenu').innerHTML =
-    '<div class="ia-umlbl">Unidade</div>' +
+    '<div class="ia-umlbl">Ver como</div>' +
     lista.map(x =>
       '<button type="button" data-iaunidade="' + x.id + '"' + (x.id === iaUnidade ? ' class="on"' : '') + '>' +
         '<span class="ia-umav" style="background:' + x.cor + '">' + iaEscapa(x.ini) + '</span>' +
         '<span class="ia-umtx"><b>' + iaEscapa(x.nome) + '</b></span>' +
-        '<i class="mdi mdi-check-circle"></i></button>').join('');
+        '<i class="mdi mdi-check-circle"></i></button>').join('') +
+    '<p class="ia-umnota">Só a matriz enxerga outra unidade, e a troca fica registrada. ' +
+    'Cada resposta continua respeitando a permissão de quem pergunta.</p>';
 }
 
 /* Quanto falta para o título caber: é esse valor que o hover desliza, e a
@@ -616,7 +620,7 @@ function iaPerguntar(txt){
       g: 'Hoje',
       d: 0,
       h: dois(agora.getHours()) + ':' + dois(agora.getMinutes()),
-      t: pergunta.length > 42 ? pergunta.slice(0, 42).trim() + '…' : pergunta,
+      t: pergunta,
       p: []
     };
     iaNovas.unshift(c);
@@ -991,7 +995,9 @@ $('#iaUserMenu').addEventListener('click', e => {
   if (!u) return;
   if (u.dataset.iaunidade === iaUnidade){ $('#iaUserMenu').hidden = true; return; }
   iaUnidade = u.dataset.iaunidade;
-  fgToast('Unidade: ' + iaUnidadeAtual().nome);
+  fgToast(iaUnidade === 'matriz'
+    ? 'De volta à Matriz · Sua Marca'
+    : 'Vendo como ' + iaUnidadeAtual().nome + '. A troca fica registrada.');
   iaRenderUsuario();
   iaNovaConversa();
   $('#iaUserMenu').hidden = true;
@@ -1042,9 +1048,10 @@ $('#iaChips').addEventListener('click', e => {
   const b = e.target.closest('[data-iasug]');
   if (b) iaPerguntar(b.dataset.iasug);
 });
-$('#iaApps').addEventListener('click', iaFecharModulo);
+$('#iaApps').addEventListener('click', () => { iagFechar(); iaFecharModulo(); });
 $('#iaLogo').addEventListener('click', iaFecharModulo);
-$('#iaManage').addEventListener('click', () => fgToast('Gerenciar entra na próxima etapa: é onde o administrador monta a base de conhecimento de cada tipo de unidade.'));
+/* o Gerenciar mora em 19-ia-gerenciar.js; aqui só o gatilho */
+$('#iaManage').addEventListener('click', iagAlternar);
 $('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta: em breve'));
 $('#iaShare').addEventListener('click', () => fgToast('Link da conversa copiado'));
 

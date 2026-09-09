@@ -3,11 +3,13 @@
    único acento — o teal da marca no compositor e na marca da IA. Todo o resto
    é a escala de cinzas do DS, para o texto da resposta mandar na tela. */
 
-.ia-view{position:fixed;inset:0;z-index:130;background:#fff;display:none;flex-direction:column}
+.ia-view{position:fixed;inset:0;z-index:130;background:#F7F8FA;display:none;flex-direction:column}
 .ia-view.open{display:flex}
 /* o cabeçalho escuro dos módulos: a regra original só vale dentro da Rede
    Social, então aqui ele é ligado de novo */
-.ia-view .nmod-top{display:flex}
+/* Sem o fio branco embaixo: com a coluna escura ele virava um risco solto
+   entre dois azuis, e a diferença de tom já separa as duas faixas. */
+.ia-view .nmod-top{display:flex;box-shadow:none}
 /* o avatar do topo também só era exibido dentro da Rede Social */
 .ia-view .nmod-topav{display:block;width:36px;height:36px;font-size:0;flex:none}
 /* Sem o nome do módulo sobra espaço, então a barra usa a logo por extenso em
@@ -33,7 +35,7 @@
 
 /* ---------------- coluna das conversas ---------------- */
 .ia-side{display:flex;width:276px;flex-shrink:0;flex-direction:column;gap:10px;padding:14px 12px;
-  background:#F7F8FA;border-right:1px solid var(--line)}
+  background:#fff;border-right:1px solid var(--line)}
 
 .ia-new{display:flex;align-items:center;justify-content:center;gap:10px;height:36px;padding:0 14px;
   border:0;border-radius:6px;background:var(--teal);color:#fff;
@@ -62,12 +64,12 @@
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-conv{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-align:left;border:0;background:none;
   padding:6px 4px 6px 10px;border-radius:6px;cursor:pointer;color:#5b6672;
-  font:inherit;font-size:13px;line-height:19px;font-weight:600;letter-spacing:.2px}
+  font:inherit;font-size:13px;line-height:19px;font-weight:400;letter-spacing:.2px}
 .ia-convmais{display:flex;align-items:center;justify-content:center;width:26px;height:26px;flex:none;
   margin-right:5px;border:0;border-radius:4px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
   opacity:0;pointer-events:none;transition:opacity 120ms cubic-bezier(.4,0,.2,1),background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-linha:hover .ia-convmais,.ia-linha.menu-on .ia-convmais,.ia-convmais:focus-visible{opacity:1;pointer-events:auto}
-.ia-convmais:hover{background:#D2D8DF;color:var(--ink)}
+.ia-convmais:hover{background:#E3E7EC;color:var(--ink)}
 .ia-linha.on .ia-convmais{color:#0a6e6e}
 .ia-linha.on .ia-convmais:hover{background:color-mix(in srgb,var(--teal) 30%,transparent);color:#0a6e6e}
 /* a caixa de fora corta; a de dentro leva o texto e passeia no hover */
@@ -80,7 +82,7 @@
 /* renomear na própria linha */
 .ia-ren{display:block;width:100%;height:22px;padding:0 6px;border:0;border-radius:5px;
   background:#fff;box-shadow:inset 0 0 0 1px var(--teal);outline:none;
-  font:inherit;font-size:13px;font-weight:600;letter-spacing:.2px;color:var(--ink)}
+  font:inherit;font-size:13px;font-weight:400;letter-spacing:.2px;color:var(--ink)}
 
 /* Arquivadas é um item de menu logo abaixo da busca, não uma gaveta no fim da
    lista: numa conta com milhares de conversas o fim da lista fica longe. */
@@ -90,7 +92,7 @@
 .ia-nav{display:flex;flex-direction:column;gap:2px}
 .ia-item{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
   padding:8px 10px;border-radius:6px;color:#5b6672;
-  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.2px;
+  font:inherit;font-size:14px;line-height:20px;font-weight:400;letter-spacing:.2px;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .ia-item>i{width:16px;font-size:16px;line-height:1;color:#8a94a0;transition:color 120ms cubic-bezier(.4,0,.2,1)}
 /* Contorno enquanto é só uma opção, cheio quando é a visão aberta. São dois
@@ -99,10 +101,10 @@
 .ia-item.on .ia-ic-off{display:none}
 .ia-item.on .ia-ic-on{display:inline-block}
 .ia-item span{flex:1;min-width:0;text-align:left}
-.ia-item:hover{background:#E3E7EC}
-.ia-item.on{background:#E3E7EC;color:var(--ink);font-weight:700}
+.ia-item:hover{background:#F1F3F5}
+.ia-item.on{background:#EAEDF1;color:var(--ink);font-weight:700}
 .ia-item.on>i{color:var(--ink)}
-.ia-item.on:hover{background:#DBE0E6}
+.ia-item.on:hover{background:#E4E8ED}
 .ia-item:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,172,172,.35)}
 
 /* Rodapé da coluna: a foto, o nome e a unidade, com o menu que troca as duas
@@ -112,7 +114,7 @@
 .ia-user{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
   padding:7px 8px;border-radius:8px;text-align:left;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.ia-user:hover{background:#E3E7EC}
+.ia-user:hover{background:#F1F3F5}
 .ia-user>i{font-size:18px;color:#6B7280;flex:none;line-height:1}
 .ia-userav{width:32px;height:32px;font-size:0;flex:none}
 .ia-user-tx{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -126,10 +128,13 @@
 .ia-umlbl{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:9px 10px 4px}
 .ia-usermenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
   padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font:inherit}
-.ia-usermenu button:hover{background:#E3E7EC}
+.ia-usermenu button:hover{background:#F1F3F5}
 .ia-usermenu button.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-usermenu button>i{font-size:11px;color:var(--teal);opacity:0;flex:none}
 .ia-usermenu button.on>i{opacity:1}
+/* o recado de que trocar de unidade é inspeção, não escolha */
+.ia-umnota{margin:6px 4px 2px;padding-top:8px;border-top:1px solid var(--line);
+  font-size:11px;line-height:1.5;color:var(--muted)}
 .ia-umav{width:28px;height:28px;font-size:0;flex:none}
 .ia-umav{width:28px;height:28px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px}
@@ -138,21 +143,28 @@
 
 /* o menu de uma linha: preso à tela, posicionado no clique */
 .ia-view .ia-rowmenu{position:fixed;top:0;left:0;right:auto;width:max-content;min-width:184px;z-index:140}
-.ia-linha:hover,.ia-linha.menu-on{background:#E3E7EC}
+.ia-linha:hover,.ia-linha.menu-on{background:#F1F3F5}
 .ia-linha.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-linha.on .ia-conv{color:#0a6e6e;font-weight:700}
+.ia-linha.on .ia-ren{font-weight:700}
 .ia-linha.on:hover{background:color-mix(in srgb,var(--teal) 21%,transparent)}
-.ia-vazio{padding:26px 14px;text-align:center;color:var(--muted);font-size:12px}
+.ia-vazio{padding:0 14px 26px;text-align:center;color:var(--muted);font-size:12px}
+/* a coluna tem 252px úteis: a ilustração entra bem menor que nos vazios de
+   página inteira, só o bastante para o vazio não ficar seco */
+.ia-vazio-illu{display:block;width:100%;max-width:170px;margin:0 auto 10px;
+  /* o gif vem com fundo branco e a coluna também é branca: o multiply garante
+     que qualquer sobra clara do arquivo se dissolva no fundo */
+  mix-blend-mode:multiply;height:auto}
 .ia-vazio b{display:block;font-size:14px;font-weight:600;color:#5b6672}
 .ia-vazio span{display:block;margin-top:5px;font-size:12px;line-height:1.5;color:var(--muted)}
 
 /* ---------------- a conversa ---------------- */
-.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff;
+.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#F7F8FA;
   transition:background 240ms cubic-bezier(.4,0,.2,1)}
-/* Enquanto não há conversa, o branco ganha um clarão de verdigris no alto —
+/* Enquanto não há conversa, o cinza ganha um clarão de verdigris no alto —
    duas manchas largas e translúcidas, uma centrada e outra deslocada, que se
    somam num degradê sem costura. Some assim que a primeira pergunta é feita,
-   para o texto da resposta ficar sobre branco puro. */
+   para o texto da resposta ficar sobre o cinza limpo. */
 .ia-view.ia-inicio .ia-main{
   background:
     radial-gradient(1080px 780px at 50% 42%,
@@ -166,7 +178,7 @@
       color-mix(in srgb,#4bb8d8 1.5%,transparent) 36%,
       color-mix(in srgb,#4bb8d8 0.6%,transparent) 60%,
       transparent 82%),
-    #fff}
+    #F7F8FA}
 .ia-head{display:flex;align-items:center;gap:10px;height:56px;flex-shrink:0;padding:0 20px;
   box-shadow:inset 0 -1px 0 var(--line)}
 .ia-head-tt{font-size:14px;font-weight:700;letter-spacing:.2px;color:var(--ink);
@@ -174,7 +186,7 @@
 .ia-hbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
   border:0;border-radius:999px;background:none;color:#5b6672;font-size:14px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
-.ia-hbtn:hover{background:#F1F3F5;color:var(--ink)}
+.ia-hbtn:hover{background:#E6EAEE;color:var(--ink)}
 /* o de compartilhar leva o rótulo: vira pílula em vez de círculo */
 .ia-hbtn-tx{width:auto;gap:8px;padding:0 14px;
   font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
@@ -187,7 +199,7 @@
   padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#465364;
   cursor:pointer;text-align:left}
 .ia-menu button i{width:14px;font-size:12px}
-.ia-menu button:hover{background:#E3E7EC}
+.ia-menu button:hover{background:#F1F3F5}
 .ia-menu button.danger{color:var(--red)}
 .ia-menu button.danger:hover{background:#fdecec}
 
@@ -249,7 +261,7 @@
 @media(hover:none){.ia-acts{opacity:1}}
 
 /* ---------------- compositor ---------------- */
-.ia-dock{flex-shrink:0;padding:0 24px 16px;background:#fff}
+.ia-dock{flex-shrink:0;padding:0 24px 16px;background:#F7F8FA}
 .ia-comp{width:100%;max-width:712px;margin:0 auto}
 .ia-compbox{background:#fff;border-radius:20px;padding:12px 12px 10px;
   box-shadow:inset 0 0 0 1px var(--linha-campo),0 1px 2px rgba(16,32,48,.06),0 10px 26px -18px rgba(16,32,48,.5);
@@ -336,7 +348,7 @@
    propósito: no meio dela as regras dos blocos seguintes os desfaziam. */
 .ia-view .mdi,.ia-rowmenu .mdi{line-height:1}
 .ia-view .ia-new i{font-size:17px}
-.ia-view .ia-find i{font-size:15px}
+.ia-view .ia-find i{font-size:18px}
 .ia-view .ia-convmais{font-size:17px}
 .ia-view .ia-hbtn>i{font-size:17px}
 .ia-view .ia-menu button i,.ia-rowmenu button i{font-size:15px;width:16px}

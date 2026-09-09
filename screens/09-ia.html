@@ -18,6 +18,10 @@
     <!-- ---------- conversas ---------- -->
     <aside class="ia-side" id="iaSide">
       <button class="ia-new" id="iaNew"><i class="mdi mdi-square-edit-outline"></i> Nova conversa</button>
+      <div class="ia-find">
+        <i class="mdi mdi-magnify"></i>
+        <input type="text" id="iaFind" placeholder="Buscar conversa" autocomplete="off">
+      </div>
       <nav class="ia-nav">
         <button type="button" class="ia-item on" id="iaTodasBtn">
           <i class="mdi mdi-forum-outline ia-ic-off"></i><i class="mdi mdi-forum ia-ic-on"></i><span>Conversas</span>
@@ -26,10 +30,6 @@
           <i class="mdi mdi-archive-outline ia-ic-off"></i><i class="mdi mdi-archive ia-ic-on"></i><span>Arquivadas</span>
         </button>
       </nav>
-      <div class="ia-find">
-        <i class="mdi mdi-magnify"></i>
-        <input type="text" id="iaFind" placeholder="Buscar conversa" autocomplete="off">
-      </div>
       <div class="ia-list" id="iaList"></div>
 
       <div class="ia-sidefoot">
@@ -80,6 +80,185 @@
     </main>
   </div>
 
+  <!-- ============ Gerenciar ============
+       O outro lado do módulo: onde o administrador monta a base que a conversa
+       consulta. Mesma casca de tela cheia da Rede Social — coluna escura com a
+       navegação, miolo claro com as telas irmãs, só uma acesa por vez. -->
+  <div class="iag-body" id="iagBody">
+
+    <nav class="iag-side">
+      <div class="iag-grp">Conhecimento</div>
+      <button type="button" class="iag-item on" data-iag="base"><i class="mdi mdi-book-open-variant-outline"></i><span>Base de conhecimento</span></button>
+      <button type="button" class="iag-item" data-iag="fontes"><i class="mdi mdi-transit-connection-variant"></i><span>Fontes</span></button>
+      <button type="button" class="iag-item" data-iag="escopos"><i class="mdi mdi-layers-triple-outline"></i><span>Escopos</span></button>
+
+      <div class="iag-grp">Acesso</div>
+      <button type="button" class="iag-item" data-iag="perm"><i class="mdi mdi-shield-account-outline"></i><span>Permissões</span></button>
+
+      <div class="iag-grp">Acompanhamento</div>
+      <button type="button" class="iag-item" data-iag="lacunas"><i class="mdi mdi-comment-question-outline"></i><span>Perguntas sem resposta</span><b class="iag-n" id="iagLacN">0</b></button>
+      <button type="button" class="iag-item" data-iag="uso"><i class="mdi mdi-chart-box-outline"></i><span>Uso</span></button>
+
+      <div class="iag-grp">Assistente</div>
+      <button type="button" class="iag-item" data-iag="config"><i class="mdi mdi-tune-variant"></i><span>Configurações</span></button>
+    </nav>
+
+    <div class="iag-main">
+
+      <!-- ---------- 1. base de conhecimento ---------- -->
+      <section class="iag-screen active" id="iagBaseScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-book-open-variant-outline"></i><h2>Base de conhecimento</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Todo item da base tem dono, escopo e validade. Conhecimento vencido responde com a mesma confiança do vigente, por isso a validade é obrigatória."><i class="mdi mdi-help-circle-outline"></i> Como montar a base?</button>
+        </div>
+        <div class="iag-head">
+          <div class="iag-addwrap">
+            <button type="button" class="iag-add" id="iagAdd"><i class="mdi mdi-plus"></i> Adicionar conhecimento <i class="mdi mdi-chevron-down iag-addchev"></i></button>
+            <div class="iag-menu" id="iagAddMenu" hidden>
+              <button type="button" data-iagnovo="escrever"><i class="mdi mdi-text-box-edit-outline"></i><span><b>Escrever</b>Um parágrafo, quinze segundos</span></button>
+              <button type="button" data-iagnovo="arquivo"><i class="mdi mdi-file-upload-outline"></i><span><b>Enviar arquivo</b>PDF, Word, Excel, PowerPoint</span></button>
+              <button type="button" data-iagnovo="modulo"><i class="mdi mdi-transit-connection-variant"></i><span><b>Conectar módulo</b>Traz o que a rede já escreveu</span></button>
+            </div>
+          </div>
+          <span style="flex:1"></span>
+          <select class="iag-sel" id="iagBaseFiltro">
+            <option value="ativo">Ativos</option>
+            <option value="rascunho">Rascunhos</option>
+            <option value="vencido">Vencidos</option>
+            <option value="arquivado">Arquivados</option>
+            <option value="todos">Todos</option>
+          </select>
+          <div class="iag-search">
+            <i class="mdi mdi-magnify"></i>
+            <input type="text" id="iagBaseBusca" placeholder="Pesquisar conhecimento…" autocomplete="off">
+          </div>
+        </div>
+        <div class="iag-bodybox"><div class="rlist iag-rlist" id="iagBaseList"></div></div>
+      </section>
+
+      <!-- ---------- 2. fontes ---------- -->
+      <section class="iag-screen" id="iagFontesScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-transit-connection-variant"></i><h2>Fontes</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Ligar um módulo é o jeito mais rápido de encher a base: o conteúdo já existe no SULTS e continua sendo atualizado por quem sempre cuidou dele."><i class="mdi mdi-help-circle-outline"></i> Como as fontes funcionam?</button>
+        </div>
+        <div class="iag-scrollbox">
+          <p class="iag-lead">A IA lê o que a rede já escreveu. Ligue os módulos que devem alimentar a base — cada um entra com o conteúdo que o usuário já tem permissão de ver.</p>
+          <div class="iag-cards" id="iagFontesGrid"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 3. escopos ---------- -->
+      <section class="iag-screen" id="iagEscoposScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-layers-triple-outline"></i><h2>Escopos</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="A resposta usa a camada da rede mais as camadas de quem perguntou. Base por unidade individual não escala: com 200 unidades são 200 bases para manter."><i class="mdi mdi-help-circle-outline"></i> Como as camadas se somam?</button>
+        </div>
+        <div class="iag-scrollbox">
+          <p class="iag-lead">Três camadas, sempre somadas de cima para baixo. Quem pergunta recebe a camada da rede mais as camadas em que a unidade dele está.</p>
+          <div class="iag-camadas" id="iagEscoposLista"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 4. permissões ---------- -->
+      <section class="iag-screen" id="iagPermScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-shield-account-outline"></i><h2>Permissões</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Independente do papel, a resposta respeita a permissão de quem pergunta: documento que a pessoa não pode abrir no Disco Virtual, a IA não cita."><i class="mdi mdi-help-circle-outline"></i> Como as permissões valem?</button>
+        </div>
+        <div class="iag-scrollbox">
+          <div class="iag-aviso">
+            <i class="mdi mdi-lock-check-outline"></i>
+            <div><b>A resposta herda a permissão de quem pergunta.</b><span>Os papéis abaixo dizem quem administra a IA. O que cada pessoa consegue ler continua sendo decidido pelas permissões que ela já tem nos módulos.</span></div>
+          </div>
+          <div class="iag-cards" id="iagPermGrid"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 5. perguntas sem resposta ---------- -->
+      <section class="iag-screen" id="iagLacunasScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-comment-question-outline"></i><h2>Perguntas sem resposta</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Toda vez que a IA não encontra, a pergunta cai aqui. Responder uma delas vira conhecimento novo na base, e a próxima pessoa já recebe a resposta."><i class="mdi mdi-help-circle-outline"></i> Por que esta lista existe?</button>
+        </div>
+        <div class="iag-head">
+          <p class="iag-lead" style="margin:0">O que a rede perguntou e a base não sabia responder. É daqui que a base cresce.</p>
+          <span style="flex:1"></span>
+          <div class="iag-search">
+            <i class="mdi mdi-magnify"></i>
+            <input type="text" id="iagLacBusca" placeholder="Pesquisar pergunta…" autocomplete="off">
+          </div>
+        </div>
+        <div class="iag-bodybox"><div class="rlist iag-rlist" id="iagLacList"></div></div>
+      </section>
+
+      <!-- ---------- 6. uso ---------- -->
+      <section class="iag-screen" id="iagUsoScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-chart-box-outline"></i><h2>Uso</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="A conta é de consultas, não de tokens: franqueado compra resposta. Ao bater o limite a matriz continua e a unidade recebe o caminho do chamado."><i class="mdi mdi-help-circle-outline"></i> Como o limite funciona?</button>
+        </div>
+        <div class="iag-scrollbox" id="iagUsoBox"></div>
+      </section>
+
+      <!-- ---------- 7. configurações ---------- -->
+      <section class="iag-screen" id="iagConfigScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-tune-variant"></i><h2>Configurações</h2></span>
+        </div>
+        <div class="iag-scrollbox">
+          <div class="iag-painel">
+            <div class="iag-painel-tt"><b>Identidade</b><span>Como a IA se apresenta para a rede.</span></div>
+            <div class="iag-campo">
+              <label class="fg-label" for="iagCfgNome">Nome do assistente</label>
+              <input class="fg-input" id="iagCfgNome" maxlength="40" value="IA da Sua Marca">
+            </div>
+            <div class="iag-campo">
+              <label class="fg-label" for="iagCfgTom">Tom das respostas</label>
+              <select class="iag-sel iag-selw" id="iagCfgTom">
+                <option>Direto e objetivo</option>
+                <option>Cordial e explicativo</option>
+                <option>Formal</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="iag-painel">
+            <div class="iag-painel-tt"><b>Quando a IA não souber</b><span>A escada de três degraus, na ordem em que o usuário vê.</span></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Dizer que não encontrou</b><span>Sem inventar e sem enrolar. Este degrau não desliga.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" checked disabled><span class="nv-tk"></span><span class="tgtxt">Sempre</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Oferecer abrir chamado</b><span>Botão já preenchido com a pergunta e o link da conversa.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgChamado" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Registrar a lacuna</b><span>A pergunta cai na lista de perguntas sem resposta.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgLacuna" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Responder perguntas fora da base</b><span>Responde, marcado como fora dos documentos da rede.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgFora" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+          </div>
+
+          <div class="iag-painel">
+            <div class="iag-painel-tt"><b>Conversas</b><span>O que fica guardado, e por quanto tempo.</span></div>
+            <div class="iag-campo">
+              <label class="fg-label" for="iagCfgRet">Retenção do histórico</label>
+              <select class="iag-sel iag-selw" id="iagCfgRet">
+                <option>3 meses</option>
+                <option selected>12 meses</option>
+                <option>24 meses</option>
+                <option>Sem prazo</option>
+              </select>
+            </div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Memória entre conversas</b><span>Usar o que foi dito em outras conversas. Desligada: cada conversa é uma linha própria.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgMem"><span class="nv-tk"></span><span class="tgtxt">Inativo</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Compartilhar conversa por link</b><span>Quem é dono da conversa pode gerar um link para mostrá-la.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgShare" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+          </div>
+
+          <div class="iag-salvar"><button type="button" class="fo-btn iag-btsalvar" id="iagCfgSalvar"><i class="mdi mdi-check"></i> Salvar</button></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
   <!-- o menu de cada conversa: mora fora da coluna, que corta o que passa
        das bordas, e é posicionado na hora do clique -->
   <div class="ia-menu ia-rowmenu" id="iaRowMenu" hidden>
@@ -112,6 +291,66 @@
       </div>
     </div>
     <p class="ia-disc">A IA responde a partir dos documentos da sua rede e pode cometer erros. Confira o que for decisivo.</p>
+  </div>
+
+  <!-- ---------- escrever conhecimento ---------- -->
+  <div class="fg-backdrop iag-modal" id="iagAddModal">
+    <div class="fg-modal" style="width:560px">
+      <div class="fg-head"><h2 id="iagAddTitulo">Escrever conhecimento</h2><span style="flex:1"></span><button type="button" class="fg-close" id="iagAddClose"><i class="mdi mdi-close"></i></button></div>
+      <div class="fg-body">
+        <div class="fg-field">
+          <label class="fg-label" for="iagAddTit">Título <span style="color:#FF383C">*</span></label>
+          <input class="fg-input" id="iagAddTit" maxlength="80" placeholder="Do que trata este conhecimento">
+        </div>
+        <div class="fg-field">
+          <label class="fg-label" for="iagAddTxt">Conteúdo <span style="color:#FF383C">*</span></label>
+          <textarea class="fg-textarea" id="iagAddTxt" style="min-height:132px" placeholder="Escreva como você explicaria para alguém da unidade."></textarea>
+        </div>
+        <div class="iag-dupla">
+          <div class="fg-field">
+            <label class="fg-label" for="iagAddEsc">Escopo</label>
+            <select class="iag-sel iag-selw" id="iagAddEsc"></select>
+          </div>
+          <div class="fg-field">
+            <label class="fg-label" for="iagAddVal">Vale até</label>
+            <input class="fg-input" type="date" id="iagAddVal" value="2027-06-30">
+          </div>
+        </div>
+        <p class="iag-nota"><i class="mdi mdi-information-outline"></i> Passada a data, o item para de ser usado nas respostas e aparece em Vencidos.</p>
+        <div class="iag-modalfoot">
+          <button type="button" class="fo-btn ghost" id="iagAddCancel">Cancelar</button>
+          <button type="button" class="fo-btn" id="iagAddSave"><i class="mdi mdi-check"></i> Adicionar à base</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- responder uma lacuna ---------- -->
+  <div class="fg-backdrop iag-modal" id="iagGapModal">
+    <div class="fg-modal" style="width:560px">
+      <div class="fg-head"><h2>Responder e salvar na base</h2><span style="flex:1"></span><button type="button" class="fg-close" id="iagGapClose"><i class="mdi mdi-close"></i></button></div>
+      <div class="fg-body">
+        <div class="iag-pergunta" id="iagGapPerg"></div>
+        <div class="fg-field">
+          <label class="fg-label" for="iagGapTxt">Resposta <span style="color:#FF383C">*</span></label>
+          <textarea class="fg-textarea" id="iagGapTxt" style="min-height:132px" placeholder="A resposta que a próxima pessoa vai receber."></textarea>
+        </div>
+        <div class="iag-dupla">
+          <div class="fg-field">
+            <label class="fg-label" for="iagGapEsc">Escopo</label>
+            <select class="iag-sel iag-selw" id="iagGapEsc"></select>
+          </div>
+          <div class="fg-field">
+            <label class="fg-label" for="iagGapVal">Vale até</label>
+            <input class="fg-input" type="date" id="iagGapVal" value="2027-06-30">
+          </div>
+        </div>
+        <div class="iag-modalfoot">
+          <button type="button" class="fo-btn ghost" id="iagGapCancel">Cancelar</button>
+          <button type="button" class="fo-btn" id="iagGapSave"><i class="mdi mdi-check"></i> Salvar na base</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

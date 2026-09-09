@@ -1646,7 +1646,8 @@ input,textarea,select{font-size:14px}
   font-family:var(--fonte);background:#0C334A;color:#fff;
   box-shadow:inset 0 -1px 0 rgba(255,255,255,.08)}
 .news-view.mod-mode .nmod-top{display:flex}
-.nmod-top-logo{width:32px;height:32px;color:#00ACAC;flex-shrink:0;display:block}
+.nmod-top-logo{width:32px;height:32px;color:#fff;flex-shrink:0;display:block}
+.news-view.env-social .nmod-top-logo{color:#00ACAC}
 .nmod-logobtn{display:flex;align-items:center;flex:none;padding:0;border:0;background:none;
   cursor:pointer;border-radius:8px;transition:opacity .15s}
 .nmod-logobtn:hover{opacity:.75}
@@ -1691,30 +1692,24 @@ input,textarea,select{font-size:14px}
 .news-view:not(.env-social) .nmod-search{display:none}
 @media(max-width:1180px){ .nmod-search{flex-basis:300px} }
 @media(max-width:900px){ .nmod-search{display:none} }
-.nmod-switch{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:6px;height:36px;padding:0 16px;
-  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;
+.nmod-switch{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border:0;border-radius:4px;height:48px;min-width:96px;padding:0 12px;
+  font:inherit;font-size:13px;line-height:17px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;
   background:#00ACAC;color:#fff;transition:background 120ms cubic-bezier(.4,0,.2,1),box-shadow 120ms cubic-bezier(.4,0,.2,1)}
-.nmod-switch i{font-size:16px}
-/* a foto fecha o lado direito da barra, no ambiente social */
-.news-view.env-social .nmod-topav{display:block;width:40px;height:40px;cursor:pointer}
+.nmod-switch i{font-size:20px;line-height:20px;height:20px}
+/* a foto fecha o lado direito da barra, nos dois ambientes: é onde a pessoa
+   procura a própria conta, e ela não deixa de existir dentro do Gerenciar */
+.nmod-topav{display:block;width:40px;height:40px;cursor:pointer}
 /* Modulos segue o hover das abas do meio: so escurece, sem preenchimento.
    Ele nao esta dentro do #nmodGrpSocial, entao caia na regra generica que
    ainda pinta o fundo. */
 .news-view.env-social #nmtApps:hover{background:none;color:var(--ink)}
 .nmod-switch:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#00ACAC}
-.news-view.env-social .nmod-switch{
-  background:#0C334A;color:#fff;
-  flex-direction:column;justify-content:center;gap:2px;
-  height:48px;min-width:96px;padding:0 12px;border-radius:4px;
-  font-size:14px;line-height:18px;
-}
-.news-view.env-social .nmod-switch i{font-size:20px}
+.news-view.env-social .nmod-switch{background:#0C334A;color:#fff}
 /* os quatro botoes da barra com o mesmo texto e o mesmo icone: 13px de fonte,
    mesmo peso, e 20px de altura reservados para o icone nos dois formatos */
-.news-view.env-social .nmod-tab,
-.news-view.env-social .nmod-switch{font-size:13px;line-height:17px;font-weight:600}
-.news-view.env-social .nmod-tab i,
-.news-view.env-social .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+.news-view.env-social .nmod-tab{font-size:13px;line-height:17px;font-weight:600}
+.news-view.env-social .nmod-tab i{font-size:20px;line-height:20px;height:20px}
 .news-view.env-social .nmod-switch:hover{background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),#0C334A}
 .nmod-switch:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 /* Ambiente Social, fundo claro */
@@ -1770,7 +1765,7 @@ input,textarea,select{font-size:14px}
   .nv-reelsbanner{padding:12px 16px}
   #nmtApps{display:none}
 }
-.nv-cfgside{position:fixed;top:60px;left:0;bottom:0;width:250px;background:var(--sidebar);border-right:0;padding:12px 12px;display:none;z-index:126}
+.nv-cfgside{position:fixed;top:60px;left:0;bottom:0;width:250px;background:#0B2D42;border-right:0;padding:12px 12px;display:none;z-index:126}
 .news-view.cfg #nvCfgSide{display:block}
 .news-view.cfg.catmode #nvCfgSide{display:none}
 .news-view.cfg.catmode #nvCatSide{display:block}
@@ -4970,8 +4965,10 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 
 /* a logo do header é só do mobile; no desktop quem mostra a marca é o rail */
 .top-logo{display:none}
-/* foto no topo do módulo: só no celular */
-.nmod-topav{display:none}
+/* A foto no topo do módulo vale nos dois ambientes: é onde a pessoa procura
+   a própria conta, e ela não deixa de existir dentro do Gerenciar. A regra que
+   escondia isto no desktop saiu; o tamanho do celular continua na media query
+   mais abaixo. */
 /* rótulos de módulo em versão curta: só entram no celular */
 .tl-curto{display:none}
 
@@ -5701,11 +5698,13 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
    único acento — o teal da marca no compositor e na marca da IA. Todo o resto
    é a escala de cinzas do DS, para o texto da resposta mandar na tela. */
 
-.ia-view{position:fixed;inset:0;z-index:130;background:#fff;display:none;flex-direction:column}
+.ia-view{position:fixed;inset:0;z-index:130;background:#F7F8FA;display:none;flex-direction:column}
 .ia-view.open{display:flex}
 /* o cabeçalho escuro dos módulos: a regra original só vale dentro da Rede
    Social, então aqui ele é ligado de novo */
-.ia-view .nmod-top{display:flex}
+/* Sem o fio branco embaixo: com a coluna escura ele virava um risco solto
+   entre dois azuis, e a diferença de tom já separa as duas faixas. */
+.ia-view .nmod-top{display:flex;box-shadow:none}
 /* o avatar do topo também só era exibido dentro da Rede Social */
 .ia-view .nmod-topav{display:block;width:36px;height:36px;font-size:0;flex:none}
 /* Sem o nome do módulo sobra espaço, então a barra usa a logo por extenso em
@@ -5731,7 +5730,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 
 /* ---------------- coluna das conversas ---------------- */
 .ia-side{display:flex;width:276px;flex-shrink:0;flex-direction:column;gap:10px;padding:14px 12px;
-  background:#F7F8FA;border-right:1px solid var(--line)}
+  background:#fff;border-right:1px solid var(--line)}
 
 .ia-new{display:flex;align-items:center;justify-content:center;gap:10px;height:36px;padding:0 14px;
   border:0;border-radius:6px;background:var(--teal);color:#fff;
@@ -5760,12 +5759,12 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-conv{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-align:left;border:0;background:none;
   padding:6px 4px 6px 10px;border-radius:6px;cursor:pointer;color:#5b6672;
-  font:inherit;font-size:13px;line-height:19px;font-weight:600;letter-spacing:.2px}
+  font:inherit;font-size:13px;line-height:19px;font-weight:400;letter-spacing:.2px}
 .ia-convmais{display:flex;align-items:center;justify-content:center;width:26px;height:26px;flex:none;
   margin-right:5px;border:0;border-radius:4px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
   opacity:0;pointer-events:none;transition:opacity 120ms cubic-bezier(.4,0,.2,1),background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-linha:hover .ia-convmais,.ia-linha.menu-on .ia-convmais,.ia-convmais:focus-visible{opacity:1;pointer-events:auto}
-.ia-convmais:hover{background:#D2D8DF;color:var(--ink)}
+.ia-convmais:hover{background:#E3E7EC;color:var(--ink)}
 .ia-linha.on .ia-convmais{color:#0a6e6e}
 .ia-linha.on .ia-convmais:hover{background:color-mix(in srgb,var(--teal) 30%,transparent);color:#0a6e6e}
 /* a caixa de fora corta; a de dentro leva o texto e passeia no hover */
@@ -5778,7 +5777,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 /* renomear na própria linha */
 .ia-ren{display:block;width:100%;height:22px;padding:0 6px;border:0;border-radius:5px;
   background:#fff;box-shadow:inset 0 0 0 1px var(--teal);outline:none;
-  font:inherit;font-size:13px;font-weight:600;letter-spacing:.2px;color:var(--ink)}
+  font:inherit;font-size:13px;font-weight:400;letter-spacing:.2px;color:var(--ink)}
 
 /* Arquivadas é um item de menu logo abaixo da busca, não uma gaveta no fim da
    lista: numa conta com milhares de conversas o fim da lista fica longe. */
@@ -5788,7 +5787,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-nav{display:flex;flex-direction:column;gap:2px}
 .ia-item{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
   padding:8px 10px;border-radius:6px;color:#5b6672;
-  font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.2px;
+  font:inherit;font-size:14px;line-height:20px;font-weight:400;letter-spacing:.2px;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .ia-item>i{width:16px;font-size:16px;line-height:1;color:#8a94a0;transition:color 120ms cubic-bezier(.4,0,.2,1)}
 /* Contorno enquanto é só uma opção, cheio quando é a visão aberta. São dois
@@ -5797,10 +5796,10 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-item.on .ia-ic-off{display:none}
 .ia-item.on .ia-ic-on{display:inline-block}
 .ia-item span{flex:1;min-width:0;text-align:left}
-.ia-item:hover{background:#E3E7EC}
-.ia-item.on{background:#E3E7EC;color:var(--ink);font-weight:700}
+.ia-item:hover{background:#F1F3F5}
+.ia-item.on{background:#EAEDF1;color:var(--ink);font-weight:700}
 .ia-item.on>i{color:var(--ink)}
-.ia-item.on:hover{background:#DBE0E6}
+.ia-item.on:hover{background:#E4E8ED}
 .ia-item:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,172,172,.35)}
 
 /* Rodapé da coluna: a foto, o nome e a unidade, com o menu que troca as duas
@@ -5810,7 +5809,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-user{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
   padding:7px 8px;border-radius:8px;text-align:left;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.ia-user:hover{background:#E3E7EC}
+.ia-user:hover{background:#F1F3F5}
 .ia-user>i{font-size:18px;color:#6B7280;flex:none;line-height:1}
 .ia-userav{width:32px;height:32px;font-size:0;flex:none}
 .ia-user-tx{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -5824,10 +5823,13 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-umlbl{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:9px 10px 4px}
 .ia-usermenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
   padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font:inherit}
-.ia-usermenu button:hover{background:#E3E7EC}
+.ia-usermenu button:hover{background:#F1F3F5}
 .ia-usermenu button.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-usermenu button>i{font-size:11px;color:var(--teal);opacity:0;flex:none}
 .ia-usermenu button.on>i{opacity:1}
+/* o recado de que trocar de unidade é inspeção, não escolha */
+.ia-umnota{margin:6px 4px 2px;padding-top:8px;border-top:1px solid var(--line);
+  font-size:11px;line-height:1.5;color:var(--muted)}
 .ia-umav{width:28px;height:28px;font-size:0;flex:none}
 .ia-umav{width:28px;height:28px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px}
@@ -5836,21 +5838,28 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 
 /* o menu de uma linha: preso à tela, posicionado no clique */
 .ia-view .ia-rowmenu{position:fixed;top:0;left:0;right:auto;width:max-content;min-width:184px;z-index:140}
-.ia-linha:hover,.ia-linha.menu-on{background:#E3E7EC}
+.ia-linha:hover,.ia-linha.menu-on{background:#F1F3F5}
 .ia-linha.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-linha.on .ia-conv{color:#0a6e6e;font-weight:700}
+.ia-linha.on .ia-ren{font-weight:700}
 .ia-linha.on:hover{background:color-mix(in srgb,var(--teal) 21%,transparent)}
-.ia-vazio{padding:26px 14px;text-align:center;color:var(--muted);font-size:12px}
+.ia-vazio{padding:0 14px 26px;text-align:center;color:var(--muted);font-size:12px}
+/* a coluna tem 252px úteis: a ilustração entra bem menor que nos vazios de
+   página inteira, só o bastante para o vazio não ficar seco */
+.ia-vazio-illu{display:block;width:100%;max-width:170px;margin:0 auto 10px;
+  /* o gif vem com fundo branco e a coluna também é branca: o multiply garante
+     que qualquer sobra clara do arquivo se dissolva no fundo */
+  mix-blend-mode:multiply;height:auto}
 .ia-vazio b{display:block;font-size:14px;font-weight:600;color:#5b6672}
 .ia-vazio span{display:block;margin-top:5px;font-size:12px;line-height:1.5;color:var(--muted)}
 
 /* ---------------- a conversa ---------------- */
-.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff;
+.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#F7F8FA;
   transition:background 240ms cubic-bezier(.4,0,.2,1)}
-/* Enquanto não há conversa, o branco ganha um clarão de verdigris no alto —
+/* Enquanto não há conversa, o cinza ganha um clarão de verdigris no alto —
    duas manchas largas e translúcidas, uma centrada e outra deslocada, que se
    somam num degradê sem costura. Some assim que a primeira pergunta é feita,
-   para o texto da resposta ficar sobre branco puro. */
+   para o texto da resposta ficar sobre o cinza limpo. */
 .ia-view.ia-inicio .ia-main{
   background:
     radial-gradient(1080px 780px at 50% 42%,
@@ -5864,7 +5873,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
       color-mix(in srgb,#4bb8d8 1.5%,transparent) 36%,
       color-mix(in srgb,#4bb8d8 0.6%,transparent) 60%,
       transparent 82%),
-    #fff}
+    #F7F8FA}
 .ia-head{display:flex;align-items:center;gap:10px;height:56px;flex-shrink:0;padding:0 20px;
   box-shadow:inset 0 -1px 0 var(--line)}
 .ia-head-tt{font-size:14px;font-weight:700;letter-spacing:.2px;color:var(--ink);
@@ -5872,7 +5881,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-hbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
   border:0;border-radius:999px;background:none;color:#5b6672;font-size:14px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
-.ia-hbtn:hover{background:#F1F3F5;color:var(--ink)}
+.ia-hbtn:hover{background:#E6EAEE;color:var(--ink)}
 /* o de compartilhar leva o rótulo: vira pílula em vez de círculo */
 .ia-hbtn-tx{width:auto;gap:8px;padding:0 14px;
   font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
@@ -5885,7 +5894,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#465364;
   cursor:pointer;text-align:left}
 .ia-menu button i{width:14px;font-size:12px}
-.ia-menu button:hover{background:#E3E7EC}
+.ia-menu button:hover{background:#F1F3F5}
 .ia-menu button.danger{color:var(--red)}
 .ia-menu button.danger:hover{background:#fdecec}
 
@@ -5947,7 +5956,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 @media(hover:none){.ia-acts{opacity:1}}
 
 /* ---------------- compositor ---------------- */
-.ia-dock{flex-shrink:0;padding:0 24px 16px;background:#fff}
+.ia-dock{flex-shrink:0;padding:0 24px 16px;background:#F7F8FA}
 .ia-comp{width:100%;max-width:712px;margin:0 auto}
 .ia-compbox{background:#fff;border-radius:20px;padding:12px 12px 10px;
   box-shadow:inset 0 0 0 1px var(--linha-campo),0 1px 2px rgba(16,32,48,.06),0 10px 26px -18px rgba(16,32,48,.5);
@@ -6034,7 +6043,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
    propósito: no meio dela as regras dos blocos seguintes os desfaziam. */
 .ia-view .mdi,.ia-rowmenu .mdi{line-height:1}
 .ia-view .ia-new i{font-size:17px}
-.ia-view .ia-find i{font-size:15px}
+.ia-view .ia-find i{font-size:18px}
 .ia-view .ia-convmais{font-size:17px}
 .ia-view .ia-hbtn>i{font-size:17px}
 .ia-view .ia-menu button i,.ia-rowmenu button i{font-size:15px;width:16px}
@@ -6045,6 +6054,339 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-view .ia-chip-ic{font-size:18px}
 .ia-view .ia-act i{font-size:15px}
 .ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+
+/* ===================== Gerenciar da IA =====================
+   O outro lado do módulo de IA: onde a base de conhecimento é montada.
+   Tudo aqui usa o prefixo .iag-, que não existe em nenhuma outra folha — por
+   isso esta pode ser a última da pilha sem atropelar ninguém. As exceções são
+   .rlist e .nv-toggle, reaproveitados de propósito do Gerenciar da Rede Social
+   e escopados com .iag- na frente.
+
+   A divisão é a mesma do resto do app: navegação escura, conteúdo claro. A
+   coluna repete o azul do cabeçalho, então as duas faixas viram um L só. */
+
+/* ---------------- entrar e sair ---------------- */
+/* Duas metades do mesmo módulo, nunca as duas ao mesmo tempo. */
+.iag-body{display:none;flex:1;min-height:0}
+.ia-view.ia-admin .ia-body{display:none}
+.ia-view.ia-admin .iag-body{display:flex}
+/* o compositor e os menus da conversa não têm o que fazer no Gerenciar */
+.ia-view.ia-admin .ia-comp,
+.ia-view.ia-admin .ia-disc,
+.ia-view.ia-admin .ia-rowmenu{display:none}
+
+/* ---------------- coluna ---------------- */
+.iag-side{
+  width:260px;flex:none;display:flex;flex-direction:column;gap:2px;
+  padding:14px 12px;background:#0B2D42;overflow-y:auto;
+  scrollbar-color:rgba(255,255,255,.22) transparent;
+}
+.iag-grp{
+  font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
+  color:#7C8CA0;padding:16px 10px 6px;
+}
+.iag-grp:first-child{padding-top:2px}
+.iag-item{
+  display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
+  padding:9px 10px;border-radius:6px;color:#A7B6C6;text-align:left;
+  font:inherit;font-size:14px;line-height:20px;font-weight:400;letter-spacing:.2px;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1);
+}
+.iag-item>i{width:18px;font-size:18px;line-height:1;color:#8FA3B8;flex:none;
+  transition:color 120ms cubic-bezier(.4,0,.2,1)}
+.iag-item>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.iag-item:hover{background:rgba(255,255,255,.07)}
+.iag-item.on{background:rgba(255,255,255,.12);color:#fff;font-weight:700}
+.iag-item.on>i{color:#fff}
+.iag-item.on:hover{background:rgba(255,255,255,.16)}
+.iag-item:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,172,172,.45)}
+/* a contagem de lacunas: some no zero, e o mínimo 1:1 segura a bolinha redonda */
+.iag-n{
+  flex:none;box-sizing:border-box;min-width:20px;height:20px;padding:0 6px;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--red);color:#fff;font-size:11px;line-height:1;font-weight:700;
+}
+.iag-n[hidden]{display:none}
+
+/* ---------------- miolo ---------------- */
+.iag-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#E9EAED}
+.iag-screen{flex:1;min-height:0;display:none;flex-direction:column;margin:12px;gap:8px}
+.iag-screen.active{display:flex}
+
+/* as duas barras brancas do topo, iguais às do Gerenciar da Rede Social */
+.iag-toprow,.iag-head{
+  display:flex;align-items:center;gap:8px;flex-shrink:0;
+  padding:8px 12px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;
+}
+.iag-toprow{height:54px}
+.iag-head{min-height:62px}
+.iag-tt{display:flex;align-items:center;gap:10px;min-width:0}
+.iag-tt>i{font-size:24px;line-height:1;color:var(--teal);flex:none}
+.iag-tt h2{font-size:16px;font-weight:700;letter-spacing:.2px;color:var(--ink);margin:0}
+.iag-help{
+  display:inline-flex;align-items:center;gap:7px;flex:none;border:0;background:none;cursor:pointer;
+  color:#2F8EE5;font:inherit;font-size:14px;padding:6px 8px;border-radius:6px;
+}
+.iag-help>i{font-size:18px;line-height:1}
+.iag-help:hover{background:#EEF4FB}
+
+/* ---------------- caixas de conteúdo ---------------- */
+.iag-bodybox{flex:1;min-height:0;display:flex;flex-direction:column}
+.iag-scrollbox{
+  flex:1;min-height:0;overflow-y:auto;padding:16px 18px 22px;
+  background:#fff;border:1px solid #D9D9D9;border-radius:8px;
+}
+.iag-lead{font-size:14px;line-height:1.6;color:#5F666C;max-width:78ch;margin:0 0 16px}
+
+/* ---------------- tabela ---------------- */
+/* A .rlist vem da folha do Shorts com uppercase de 10px; aqui ela recebe o
+   mesmo tratamento que o Gerenciar da Rede Social dá: cabeçalho de 46px,
+   14px sem caixa alta, e linhas zebradas. */
+.iag-rlist{flex:1;min-height:0;border-radius:8px}
+.iag-rlist table{width:100%;table-layout:fixed}
+.iag-rlist th{text-transform:none;font-size:14px;font-weight:700;color:#0c334a;background:#fff;
+  height:46px;box-sizing:border-box}
+.iag-rlist tbody tr:nth-child(odd){background:#F0F3F5}
+.iag-rlist tbody tr:nth-child(even){background:#fff}
+.iag-rlist tbody tr{cursor:default}
+.iag-rlist tbody tr:hover{background:#E7F1FB}
+.iag-rlist tbody td{font-size:14px;font-weight:400;color:#5F666C;vertical-align:middle}
+.iag-th{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.iag-sortbtn{
+  display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex:none;font-size:16px;
+}
+.iag-sortbtn:hover{color:#2F8EE5}
+/* a primeira coluna da .rlist é travada em 84px lá na folha do Shorts; aqui a
+   tabela é outra, então a trava é desfeita */
+.iag-rlist th:first-child,.iag-rlist td:first-child{
+  width:auto !important;min-width:0 !important;max-width:none !important;white-space:normal}
+.iag-rlist th:last-child,.iag-rlist td:last-child{width:auto}
+
+/* o título do item, com a origem embaixo */
+.iag-item2{display:flex;align-items:center;gap:11px;min-width:0}
+.iag-ic{
+  width:34px;height:34px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:17px;background:var(--c,#8a94a0);
+}
+.iag-item2-tx{min-width:0}
+.iag-item2-tx b{display:block;font-size:14px;font-weight:600;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.iag-item2-tx span{display:block;font-size:12px;color:#8E8E93;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* etiquetas de estado */
+.iag-chip{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  font-size:12px;font-weight:600;line-height:16px;white-space:nowrap;
+}
+.iag-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.iag-chip.ativo{background:#E8F4EC;color:#1c7f40}
+.iag-chip.rascunho{background:#EEF0F3;color:#6b7684}
+.iag-chip.vencido{background:#FDF0E4;color:#A55B00}
+.iag-chip.arquivado{background:#EEF0F3;color:#8a94a0}
+.iag-esc{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#5F666C;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.iag-esc>i{font-size:15px;line-height:1;color:#8a94a0;flex:none}
+
+/* ações por linha, no mesmo desenho da Rede Social */
+.iag-acts{display:flex;gap:8px;width:100%;justify-content:flex-end}
+.iag-bt{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;height:34px;padding:0 12px;
+  border-radius:6px;border:1px solid var(--linha-campo);background:#fff;color:#5b6672;
+  font:inherit;font-size:14px;cursor:pointer;white-space:nowrap;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),border-color 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1);
+}
+.iag-bt>i{font-size:16px;line-height:1}
+.iag-bt:hover{background:#F1F3F5;border-color:var(--linha-campo-forte);color:var(--ink)}
+.iag-bt.forte{background:var(--teal);border-color:var(--teal);color:#fff}
+.iag-bt.forte:hover{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}
+.iag-bt.perigo{color:#F7685B;border-color:#F7685B}
+.iag-bt.perigo:hover{background:#F7685B;border-color:#F7685B;color:#fff}
+.iag-vazio{padding:44px 20px;text-align:center;color:var(--muted);font-size:13px}
+.iag-vazio b{display:block;font-size:15px;font-weight:600;color:#5b6672;margin-bottom:5px}
+
+/* ---------------- barra de ferramentas ---------------- */
+.iag-addwrap{position:relative;flex:none}
+.iag-add{
+  display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:0;border-radius:6px;
+  background:var(--teal);color:#fff;font:inherit;font-size:14px;font-weight:700;letter-spacing:.2px;
+  cursor:pointer;transition:background 120ms cubic-bezier(.4,0,.2,1);
+}
+.iag-add>i{font-size:18px;line-height:1}
+.iag-add:hover{background:var(--teal-dark)}
+.iag-addchev{font-size:16px;opacity:.85}
+.iag-menu{
+  position:absolute;top:calc(100% + 6px);left:0;z-index:20;width:max-content;min-width:268px;
+  display:flex;flex-direction:column;gap:2px;padding:6px;
+  background:#fff;border:1px solid var(--linha-campo);border-radius:10px;
+  box-shadow:0 18px 40px -12px rgba(16,32,48,.42);
+}
+.iag-menu[hidden]{display:none}
+.iag-menu button{
+  display:flex;align-items:flex-start;gap:11px;width:100%;border:0;background:none;cursor:pointer;
+  padding:9px 10px;border-radius:8px;text-align:left;font:inherit;color:var(--ink);
+}
+.iag-menu button:hover{background:#F1F3F5}
+.iag-menu button>i{font-size:19px;line-height:1;color:var(--teal);flex:none;margin-top:1px}
+.iag-menu button span{display:flex;flex-direction:column;min-width:0}
+.iag-menu button b{font-size:14px;font-weight:600;line-height:20px}
+.iag-menu button span span,.iag-menu button b+*{font-size:12px;color:var(--muted);line-height:17px}
+
+.iag-sel{
+  height:38px;padding:0 34px 0 12px;border-radius:6px;flex:none;
+  border:1px solid var(--linha-campo);background:#fff;color:var(--ink);
+  font:inherit;font-size:14px;cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238a94a0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;background-size:18px;
+}
+.iag-sel:focus{outline:none;border-color:var(--teal)}
+.iag-selw{width:100%}
+.iag-search{
+  display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:6px;flex:none;
+  width:300px;max-width:100%;background:#fff;border:1px solid var(--linha-campo);color:var(--muted);
+}
+.iag-search>i{font-size:18px;line-height:1;color:var(--teal);flex:none}
+.iag-search input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:14px;color:var(--ink)}
+.iag-search:focus-within{border-color:var(--teal)}
+
+/* ---------------- cartões (fontes, permissões) ---------------- */
+.iag-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(392px,1fr));gap:14px;align-items:start}
+.iag-card{
+  position:relative;display:flex;flex-direction:column;gap:9px;padding:20px 22px;
+  background:#fff;border:1px solid #D9D9D9;border-radius:8px;
+  box-shadow:0 1px 2px rgba(16,32,48,.04);
+}
+.iag-card-ic{
+  width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:22px;background:var(--c,#5b6672);
+}
+.iag-card h3{font-size:15px;font-weight:700;color:var(--ink);margin:0;padding-right:96px}
+.iag-card p{font-size:13px;line-height:1.6;color:#5F666C;margin:0}
+.iag-card-pe{
+  margin-top:6px;padding-top:12px;border-top:1px solid var(--line);
+  display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);
+}
+.iag-card-pe b{font-weight:600;color:#5b6672}
+/* o toggle ancorado no canto, como nos cards de permissão da Rede Social */
+.iag-cardtog{position:absolute;top:20px;right:22px;display:flex;align-items:center;gap:9px;
+  font-size:13px;font-weight:700;color:var(--ink);cursor:pointer}
+.iag-cardtog input:not(:checked)~.tgtxt{color:#999}
+
+/* ---------------- camadas de escopo ---------------- */
+.iag-camadas{display:flex;flex-direction:column;gap:12px}
+.iag-camada{
+  display:flex;align-items:center;gap:14px;padding:16px 18px;
+  background:#fff;border:1px solid #D9D9D9;border-radius:8px;
+}
+/* a hierarquia fica no recuo: rede na margem, tipo um degrau, unidade dois */
+.iag-camada.n1{margin-left:26px}
+.iag-camada.n2{margin-left:52px}
+.iag-camada-ic{
+  width:40px;height:40px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:20px;background:var(--c,#5b6672);
+}
+.iag-camada-tx{flex:1;min-width:0}
+.iag-camada-tx b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.iag-camada-tx span{display:block;font-size:13px;line-height:1.55;color:#5F666C;margin-top:2px}
+.iag-camada-n{
+  flex:none;text-align:right;font-size:13px;color:var(--muted);white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.iag-camada-n b{display:block;font-size:20px;font-weight:700;color:var(--ink);line-height:1.2}
+
+/* ---------------- aviso ---------------- */
+.iag-aviso{
+  display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin-bottom:16px;
+  background:#EEF4FB;border-radius:8px;
+}
+.iag-aviso>i{font-size:20px;line-height:1;color:#2F8EE5;flex:none;margin-top:1px}
+.iag-aviso b{display:block;font-size:14px;font-weight:700;color:var(--ink);line-height:20px}
+.iag-aviso span{display:block;font-size:13px;line-height:1.6;color:#5F666C;margin-top:2px;max-width:82ch}
+
+/* ---------------- uso ---------------- */
+/* o bloco do consumo vale por dois: fica largo o bastante para a barra, e os
+   outros tres dividem o resto sem sobrar linha solta */
+.iag-numeros{display:grid;grid-template-columns:minmax(280px,2fr) repeat(3,minmax(160px,1fr));gap:14px;margin-bottom:8px}
+.iag-num{padding:16px 18px;background:#fff;border:1px solid #D9D9D9;border-radius:8px}
+.iag-num span{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.iag-num b{display:block;font-size:28px;font-weight:700;color:var(--ink);line-height:1.25;margin-top:5px;
+  font-variant-numeric:tabular-nums}
+.iag-num small{display:block;font-size:12px;color:#5F666C;margin-top:3px}
+/* a barra do consumo: verdigris até 80%, âmbar depois */
+.iag-barra{height:8px;border-radius:999px;background:#E9EAED;overflow:hidden;margin-top:10px}
+.iag-barra>span{display:block;height:100%;border-radius:999px;background:var(--teal)}
+.iag-barra.alerta>span{background:#E8A33D}
+.iag-duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;margin-top:16px}
+.iag-lista{padding:16px 18px;background:#fff;border:1px solid #D9D9D9;border-radius:8px}
+.iag-lista h3{font-size:14px;font-weight:700;color:var(--ink);margin:0 0 10px}
+.iag-lin2{display:flex;align-items:center;gap:11px;padding:9px 0;box-shadow:inset 0 -1px 0 var(--line);font-size:13px;color:#5F666C}
+.iag-lin2:last-child{box-shadow:none}
+.iag-lin2 .nome{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.iag-lin2 .qtd{flex:none;font-weight:700;color:#5b6672;font-variant-numeric:tabular-nums}
+
+/* ---------------- painéis de configuração ---------------- */
+.iag-painel{
+  padding:18px 20px;margin-bottom:14px;
+  background:#fff;border:1px solid #D9D9D9;border-radius:8px;
+}
+.iag-painel-tt{margin-bottom:14px}
+.iag-painel-tt b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.iag-painel-tt span{display:block;font-size:13px;color:#5F666C;margin-top:2px}
+.iag-campo{margin-bottom:14px;max-width:420px}
+.iag-campo:last-child{margin-bottom:0}
+.iag-campo .fg-input{height:38px;padding:0 12px;border-radius:6px;font-size:14px}
+.iag-campo .fg-input:focus{border-color:var(--linha-campo-forte)}
+.iag-lin{display:flex;align-items:center;gap:16px;padding:12px 0;box-shadow:inset 0 -1px 0 var(--line)}
+.iag-lin:last-child{box-shadow:none;padding-bottom:0}
+.iag-lin-tx{flex:1;min-width:0}
+.iag-lin-tx b{display:block;font-size:14px;font-weight:600;color:var(--ink);line-height:20px}
+.iag-lin-tx span{display:block;font-size:12.5px;line-height:1.55;color:#5F666C;margin-top:1px;max-width:72ch}
+.iag-tog{display:flex;align-items:center;gap:9px;flex:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink)}
+.iag-tog input:not(:checked)~.tgtxt{color:#999}
+.iag-tog input:disabled~.nv-tk{opacity:.55;cursor:default}
+.iag-salvar{display:flex;justify-content:flex-end;padding-top:2px}
+.iag-btsalvar{border-radius:6px;min-width:130px;justify-content:center;font-size:14px;height:38px;padding:0 16px}
+
+/* ---------------- modais ---------------- */
+.iag-modal .fg-head{border-bottom:0;padding-bottom:4px}
+.iag-modal .fg-head h2{font-size:20px;color:var(--ink)}
+.iag-modal .fg-body{padding-top:8px}
+.iag-modal .fg-field{margin-bottom:16px}
+.iag-modal .fg-label{font-size:14px;font-weight:600;color:#5F666C;display:block;margin-bottom:6px}
+.iag-modal .fg-input{height:38px;padding:0 12px;border-radius:6px;font-size:14px}
+.iag-modal .fg-textarea{border-radius:6px;font-size:14px;padding:10px 12px}
+.iag-modal .fg-input:focus,.iag-modal .fg-textarea:focus{border-color:var(--linha-campo-forte)}
+.iag-dupla{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.iag-nota{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.55;color:var(--muted);margin:0}
+.iag-nota>i{font-size:16px;line-height:1;color:#8a94a0;flex:none;margin-top:1px}
+.iag-pergunta{
+  padding:13px 15px;margin-bottom:16px;border-radius:8px;background:#F4F6F8;
+  border-left:3px solid var(--teal);
+}
+.iag-pergunta b{display:block;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:5px}
+.iag-pergunta p{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}
+.iag-pergunta small{display:block;margin-top:7px;font-size:12px;color:var(--muted)}
+.iag-modalfoot{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.iag-modalfoot .fo-btn{min-width:130px;border-radius:6px;justify-content:center;font-size:14px;height:38px;padding:0 16px}
+.iag-modalfoot .fo-btn>i{font-size:18px;line-height:1}
+
+/* ---------------- celular ---------------- */
+/* A coluna sai de cena, como a das conversas: sem ela o miolo cabe. */
+@media(max-width:900px){
+  .iag-side{display:none}
+  .iag-screen{margin:8px}
+  .iag-head{flex-wrap:wrap;padding:10px 12px}
+  .iag-search{width:100%}
+  .iag-cards{grid-template-columns:1fr}
+  .iag-numeros{grid-template-columns:1fr 1fr}
+  .iag-num:first-child{grid-column:1 / -1}
+  .iag-camada.n1{margin-left:14px}
+  .iag-camada.n2{margin-left:28px}
+  .iag-dupla{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -6997,9 +7339,9 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="nmod-top-tabs nmod-grp" id="nmodGrpManage">
       <button class="nmod-tab" id="nmtPub"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
       <button class="nmod-tab" id="nmtMgShorts"><i class="fa-solid fa-clapperboard"></i> Shorts</button>
-      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
-      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
       <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
+      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
+      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
       <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
     <div class="nmod-top-tabs nmod-grp on" id="nmodGrpSocial">
@@ -8298,6 +8640,10 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <!-- ---------- conversas ---------- -->
     <aside class="ia-side" id="iaSide">
       <button class="ia-new" id="iaNew"><i class="mdi mdi-square-edit-outline"></i> Nova conversa</button>
+      <div class="ia-find">
+        <i class="mdi mdi-magnify"></i>
+        <input type="text" id="iaFind" placeholder="Buscar conversa" autocomplete="off">
+      </div>
       <nav class="ia-nav">
         <button type="button" class="ia-item on" id="iaTodasBtn">
           <i class="mdi mdi-forum-outline ia-ic-off"></i><i class="mdi mdi-forum ia-ic-on"></i><span>Conversas</span>
@@ -8306,10 +8652,6 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           <i class="mdi mdi-archive-outline ia-ic-off"></i><i class="mdi mdi-archive ia-ic-on"></i><span>Arquivadas</span>
         </button>
       </nav>
-      <div class="ia-find">
-        <i class="mdi mdi-magnify"></i>
-        <input type="text" id="iaFind" placeholder="Buscar conversa" autocomplete="off">
-      </div>
       <div class="ia-list" id="iaList"></div>
 
       <div class="ia-sidefoot">
@@ -8360,6 +8702,185 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     </main>
   </div>
 
+  <!-- ============ Gerenciar ============
+       O outro lado do módulo: onde o administrador monta a base que a conversa
+       consulta. Mesma casca de tela cheia da Rede Social — coluna escura com a
+       navegação, miolo claro com as telas irmãs, só uma acesa por vez. -->
+  <div class="iag-body" id="iagBody">
+
+    <nav class="iag-side">
+      <div class="iag-grp">Conhecimento</div>
+      <button type="button" class="iag-item on" data-iag="base"><i class="mdi mdi-book-open-variant-outline"></i><span>Base de conhecimento</span></button>
+      <button type="button" class="iag-item" data-iag="fontes"><i class="mdi mdi-transit-connection-variant"></i><span>Fontes</span></button>
+      <button type="button" class="iag-item" data-iag="escopos"><i class="mdi mdi-layers-triple-outline"></i><span>Escopos</span></button>
+
+      <div class="iag-grp">Acesso</div>
+      <button type="button" class="iag-item" data-iag="perm"><i class="mdi mdi-shield-account-outline"></i><span>Permissões</span></button>
+
+      <div class="iag-grp">Acompanhamento</div>
+      <button type="button" class="iag-item" data-iag="lacunas"><i class="mdi mdi-comment-question-outline"></i><span>Perguntas sem resposta</span><b class="iag-n" id="iagLacN">0</b></button>
+      <button type="button" class="iag-item" data-iag="uso"><i class="mdi mdi-chart-box-outline"></i><span>Uso</span></button>
+
+      <div class="iag-grp">Assistente</div>
+      <button type="button" class="iag-item" data-iag="config"><i class="mdi mdi-tune-variant"></i><span>Configurações</span></button>
+    </nav>
+
+    <div class="iag-main">
+
+      <!-- ---------- 1. base de conhecimento ---------- -->
+      <section class="iag-screen active" id="iagBaseScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-book-open-variant-outline"></i><h2>Base de conhecimento</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Todo item da base tem dono, escopo e validade. Conhecimento vencido responde com a mesma confiança do vigente, por isso a validade é obrigatória."><i class="mdi mdi-help-circle-outline"></i> Como montar a base?</button>
+        </div>
+        <div class="iag-head">
+          <div class="iag-addwrap">
+            <button type="button" class="iag-add" id="iagAdd"><i class="mdi mdi-plus"></i> Adicionar conhecimento <i class="mdi mdi-chevron-down iag-addchev"></i></button>
+            <div class="iag-menu" id="iagAddMenu" hidden>
+              <button type="button" data-iagnovo="escrever"><i class="mdi mdi-text-box-edit-outline"></i><span><b>Escrever</b>Um parágrafo, quinze segundos</span></button>
+              <button type="button" data-iagnovo="arquivo"><i class="mdi mdi-file-upload-outline"></i><span><b>Enviar arquivo</b>PDF, Word, Excel, PowerPoint</span></button>
+              <button type="button" data-iagnovo="modulo"><i class="mdi mdi-transit-connection-variant"></i><span><b>Conectar módulo</b>Traz o que a rede já escreveu</span></button>
+            </div>
+          </div>
+          <span style="flex:1"></span>
+          <select class="iag-sel" id="iagBaseFiltro">
+            <option value="ativo">Ativos</option>
+            <option value="rascunho">Rascunhos</option>
+            <option value="vencido">Vencidos</option>
+            <option value="arquivado">Arquivados</option>
+            <option value="todos">Todos</option>
+          </select>
+          <div class="iag-search">
+            <i class="mdi mdi-magnify"></i>
+            <input type="text" id="iagBaseBusca" placeholder="Pesquisar conhecimento…" autocomplete="off">
+          </div>
+        </div>
+        <div class="iag-bodybox"><div class="rlist iag-rlist" id="iagBaseList"></div></div>
+      </section>
+
+      <!-- ---------- 2. fontes ---------- -->
+      <section class="iag-screen" id="iagFontesScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-transit-connection-variant"></i><h2>Fontes</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Ligar um módulo é o jeito mais rápido de encher a base: o conteúdo já existe no SULTS e continua sendo atualizado por quem sempre cuidou dele."><i class="mdi mdi-help-circle-outline"></i> Como as fontes funcionam?</button>
+        </div>
+        <div class="iag-scrollbox">
+          <p class="iag-lead">A IA lê o que a rede já escreveu. Ligue os módulos que devem alimentar a base — cada um entra com o conteúdo que o usuário já tem permissão de ver.</p>
+          <div class="iag-cards" id="iagFontesGrid"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 3. escopos ---------- -->
+      <section class="iag-screen" id="iagEscoposScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-layers-triple-outline"></i><h2>Escopos</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="A resposta usa a camada da rede mais as camadas de quem perguntou. Base por unidade individual não escala: com 200 unidades são 200 bases para manter."><i class="mdi mdi-help-circle-outline"></i> Como as camadas se somam?</button>
+        </div>
+        <div class="iag-scrollbox">
+          <p class="iag-lead">Três camadas, sempre somadas de cima para baixo. Quem pergunta recebe a camada da rede mais as camadas em que a unidade dele está.</p>
+          <div class="iag-camadas" id="iagEscoposLista"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 4. permissões ---------- -->
+      <section class="iag-screen" id="iagPermScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-shield-account-outline"></i><h2>Permissões</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Independente do papel, a resposta respeita a permissão de quem pergunta: documento que a pessoa não pode abrir no Disco Virtual, a IA não cita."><i class="mdi mdi-help-circle-outline"></i> Como as permissões valem?</button>
+        </div>
+        <div class="iag-scrollbox">
+          <div class="iag-aviso">
+            <i class="mdi mdi-lock-check-outline"></i>
+            <div><b>A resposta herda a permissão de quem pergunta.</b><span>Os papéis abaixo dizem quem administra a IA. O que cada pessoa consegue ler continua sendo decidido pelas permissões que ela já tem nos módulos.</span></div>
+          </div>
+          <div class="iag-cards" id="iagPermGrid"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 5. perguntas sem resposta ---------- -->
+      <section class="iag-screen" id="iagLacunasScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-comment-question-outline"></i><h2>Perguntas sem resposta</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="Toda vez que a IA não encontra, a pergunta cai aqui. Responder uma delas vira conhecimento novo na base, e a próxima pessoa já recebe a resposta."><i class="mdi mdi-help-circle-outline"></i> Por que esta lista existe?</button>
+        </div>
+        <div class="iag-head">
+          <p class="iag-lead" style="margin:0">O que a rede perguntou e a base não sabia responder. É daqui que a base cresce.</p>
+          <span style="flex:1"></span>
+          <div class="iag-search">
+            <i class="mdi mdi-magnify"></i>
+            <input type="text" id="iagLacBusca" placeholder="Pesquisar pergunta…" autocomplete="off">
+          </div>
+        </div>
+        <div class="iag-bodybox"><div class="rlist iag-rlist" id="iagLacList"></div></div>
+      </section>
+
+      <!-- ---------- 6. uso ---------- -->
+      <section class="iag-screen" id="iagUsoScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-chart-box-outline"></i><h2>Uso</h2></span>
+          <span style="flex:1"></span>
+          <button type="button" class="iag-help" data-iagajuda="A conta é de consultas, não de tokens: franqueado compra resposta. Ao bater o limite a matriz continua e a unidade recebe o caminho do chamado."><i class="mdi mdi-help-circle-outline"></i> Como o limite funciona?</button>
+        </div>
+        <div class="iag-scrollbox" id="iagUsoBox"></div>
+      </section>
+
+      <!-- ---------- 7. configurações ---------- -->
+      <section class="iag-screen" id="iagConfigScreen">
+        <div class="iag-toprow">
+          <span class="iag-tt"><i class="mdi mdi-tune-variant"></i><h2>Configurações</h2></span>
+        </div>
+        <div class="iag-scrollbox">
+          <div class="iag-painel">
+            <div class="iag-painel-tt"><b>Identidade</b><span>Como a IA se apresenta para a rede.</span></div>
+            <div class="iag-campo">
+              <label class="fg-label" for="iagCfgNome">Nome do assistente</label>
+              <input class="fg-input" id="iagCfgNome" maxlength="40" value="IA da Sua Marca">
+            </div>
+            <div class="iag-campo">
+              <label class="fg-label" for="iagCfgTom">Tom das respostas</label>
+              <select class="iag-sel iag-selw" id="iagCfgTom">
+                <option>Direto e objetivo</option>
+                <option>Cordial e explicativo</option>
+                <option>Formal</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="iag-painel">
+            <div class="iag-painel-tt"><b>Quando a IA não souber</b><span>A escada de três degraus, na ordem em que o usuário vê.</span></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Dizer que não encontrou</b><span>Sem inventar e sem enrolar. Este degrau não desliga.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" checked disabled><span class="nv-tk"></span><span class="tgtxt">Sempre</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Oferecer abrir chamado</b><span>Botão já preenchido com a pergunta e o link da conversa.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgChamado" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Registrar a lacuna</b><span>A pergunta cai na lista de perguntas sem resposta.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgLacuna" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Responder perguntas fora da base</b><span>Responde, marcado como fora dos documentos da rede.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgFora" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+          </div>
+
+          <div class="iag-painel">
+            <div class="iag-painel-tt"><b>Conversas</b><span>O que fica guardado, e por quanto tempo.</span></div>
+            <div class="iag-campo">
+              <label class="fg-label" for="iagCfgRet">Retenção do histórico</label>
+              <select class="iag-sel iag-selw" id="iagCfgRet">
+                <option>3 meses</option>
+                <option selected>12 meses</option>
+                <option>24 meses</option>
+                <option>Sem prazo</option>
+              </select>
+            </div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Memória entre conversas</b><span>Usar o que foi dito em outras conversas. Desligada: cada conversa é uma linha própria.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgMem"><span class="nv-tk"></span><span class="tgtxt">Inativo</span></label></div>
+            <div class="iag-lin"><div class="iag-lin-tx"><b>Compartilhar conversa por link</b><span>Quem é dono da conversa pode gerar um link para mostrá-la.</span></div><label class="nv-toggle iag-tog"><input type="checkbox" id="iagCfgShare" checked><span class="nv-tk"></span><span class="tgtxt">Ativo</span></label></div>
+          </div>
+
+          <div class="iag-salvar"><button type="button" class="fo-btn iag-btsalvar" id="iagCfgSalvar"><i class="mdi mdi-check"></i> Salvar</button></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
   <!-- o menu de cada conversa: mora fora da coluna, que corta o que passa
        das bordas, e é posicionado na hora do clique -->
   <div class="ia-menu ia-rowmenu" id="iaRowMenu" hidden>
@@ -8392,6 +8913,66 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       </div>
     </div>
     <p class="ia-disc">A IA responde a partir dos documentos da sua rede e pode cometer erros. Confira o que for decisivo.</p>
+  </div>
+
+  <!-- ---------- escrever conhecimento ---------- -->
+  <div class="fg-backdrop iag-modal" id="iagAddModal">
+    <div class="fg-modal" style="width:560px">
+      <div class="fg-head"><h2 id="iagAddTitulo">Escrever conhecimento</h2><span style="flex:1"></span><button type="button" class="fg-close" id="iagAddClose"><i class="mdi mdi-close"></i></button></div>
+      <div class="fg-body">
+        <div class="fg-field">
+          <label class="fg-label" for="iagAddTit">Título <span style="color:#FF383C">*</span></label>
+          <input class="fg-input" id="iagAddTit" maxlength="80" placeholder="Do que trata este conhecimento">
+        </div>
+        <div class="fg-field">
+          <label class="fg-label" for="iagAddTxt">Conteúdo <span style="color:#FF383C">*</span></label>
+          <textarea class="fg-textarea" id="iagAddTxt" style="min-height:132px" placeholder="Escreva como você explicaria para alguém da unidade."></textarea>
+        </div>
+        <div class="iag-dupla">
+          <div class="fg-field">
+            <label class="fg-label" for="iagAddEsc">Escopo</label>
+            <select class="iag-sel iag-selw" id="iagAddEsc"></select>
+          </div>
+          <div class="fg-field">
+            <label class="fg-label" for="iagAddVal">Vale até</label>
+            <input class="fg-input" type="date" id="iagAddVal" value="2027-06-30">
+          </div>
+        </div>
+        <p class="iag-nota"><i class="mdi mdi-information-outline"></i> Passada a data, o item para de ser usado nas respostas e aparece em Vencidos.</p>
+        <div class="iag-modalfoot">
+          <button type="button" class="fo-btn ghost" id="iagAddCancel">Cancelar</button>
+          <button type="button" class="fo-btn" id="iagAddSave"><i class="mdi mdi-check"></i> Adicionar à base</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- responder uma lacuna ---------- -->
+  <div class="fg-backdrop iag-modal" id="iagGapModal">
+    <div class="fg-modal" style="width:560px">
+      <div class="fg-head"><h2>Responder e salvar na base</h2><span style="flex:1"></span><button type="button" class="fg-close" id="iagGapClose"><i class="mdi mdi-close"></i></button></div>
+      <div class="fg-body">
+        <div class="iag-pergunta" id="iagGapPerg"></div>
+        <div class="fg-field">
+          <label class="fg-label" for="iagGapTxt">Resposta <span style="color:#FF383C">*</span></label>
+          <textarea class="fg-textarea" id="iagGapTxt" style="min-height:132px" placeholder="A resposta que a próxima pessoa vai receber."></textarea>
+        </div>
+        <div class="iag-dupla">
+          <div class="fg-field">
+            <label class="fg-label" for="iagGapEsc">Escopo</label>
+            <select class="iag-sel iag-selw" id="iagGapEsc"></select>
+          </div>
+          <div class="fg-field">
+            <label class="fg-label" for="iagGapVal">Vale até</label>
+            <input class="fg-input" type="date" id="iagGapVal" value="2027-06-30">
+          </div>
+        </div>
+        <div class="iag-modalfoot">
+          <button type="button" class="fo-btn ghost" id="iagGapCancel">Cancelar</button>
+          <button type="button" class="fo-btn" id="iagGapSave"><i class="mdi mdi-check"></i> Salvar na base</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -13213,7 +13794,6 @@ function renderNewsList(){
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-open="cm" title="Ver comentários"><i class="fa-solid fa-comment" style="font-size:13px;color:#2f6fe4"></i> '+n.comments+'</button></td>'+
       '<td><span class="nv-status '+(n.agendado?'agendado':n.status)+'">'+(n.agendado?'Agendado':(n.status==='pub'?'Publicada':'Rascunho'))+'</span></td>'+
       '<td class="rl-acts nv-actcell">'+
-        '<button class="nv-actbtn" data-act="edit"><i class="fa-solid fa-pen"></i> Editar</button>'+
         '<button class="nv-actbtn danger" data-act="del"><i class="fa-solid fa-trash"></i> Excluir</button>'+
       '</td></tr>';
   }).join('');
@@ -14038,7 +14618,7 @@ $('#nvList').addEventListener('click', e => {
     else { openInterModal((n0&&n0.title)|| (n0&&n0.text? n0.text.replace(/<[^>]+>/g,'').slice(0,60):'Publicação')); }
     return; }
   const act = e.target.closest('.rl-act,.nv-actbtn,[data-act]');
-  if (act){ if (act.dataset.act==='edit') nvEdit(id); else { NEWS = NEWS.filter(n=>n.id!==id); renderNewsList(); fgToast('Publicação excluída'); } return; }
+  if (act){ if (act.dataset.act==='del'){ NEWS = NEWS.filter(n=>n.id!==id); renderNewsList(); fgToast('Publicação excluída'); } return; }
   const n=NEWS.find(x=>x.id===id); if(n){ openNewsInfo(n); }
 });
 /* Permissões de Notícias */
@@ -17601,7 +18181,9 @@ function iaRenderLista(){
     out += iaLinhaHTML(c);
   });
   if (!lista.length){
-    out += '<div class="ia-vazio">' + (
+    /* o mesmo gif dos vazios do resto do app, em qualquer um dos tres casos */
+    const illu = '<img class="ia-vazio-illu" src="uploads/illustra/nao-encontrado.gif" alt="" width="350" height="250">';
+    out += '<div class="ia-vazio">' + illu + (
       q ? '<b>Nenhuma conversa com esse nome</b>'
         : iaVerArq ? '<b>Nada arquivado por aqui</b><span>Arquivar tira a conversa da lista sem apagar nada.</span>'
                    : '<b>Ainda não há conversas</b><span>Faça a primeira pergunta ali ao lado.</span>') + '</div>';
@@ -17642,12 +18224,14 @@ function iaRenderUsuario(){
   $('#iaUserNome').textContent = eu.nome;
   $('#iaUserSub').textContent = iaUnidadeAtual().nome;
   $('#iaUserMenu').innerHTML =
-    '<div class="ia-umlbl">Unidade</div>' +
+    '<div class="ia-umlbl">Ver como</div>' +
     lista.map(x =>
       '<button type="button" data-iaunidade="' + x.id + '"' + (x.id === iaUnidade ? ' class="on"' : '') + '>' +
         '<span class="ia-umav" style="background:' + x.cor + '">' + iaEscapa(x.ini) + '</span>' +
         '<span class="ia-umtx"><b>' + iaEscapa(x.nome) + '</b></span>' +
-        '<i class="mdi mdi-check-circle"></i></button>').join('');
+        '<i class="mdi mdi-check-circle"></i></button>').join('') +
+    '<p class="ia-umnota">Só a matriz enxerga outra unidade, e a troca fica registrada. ' +
+    'Cada resposta continua respeitando a permissão de quem pergunta.</p>';
 }
 
 /* Quanto falta para o título caber: é esse valor que o hover desliza, e a
@@ -17791,7 +18375,7 @@ function iaPerguntar(txt){
       g: 'Hoje',
       d: 0,
       h: dois(agora.getHours()) + ':' + dois(agora.getMinutes()),
-      t: pergunta.length > 42 ? pergunta.slice(0, 42).trim() + '…' : pergunta,
+      t: pergunta,
       p: []
     };
     iaNovas.unshift(c);
@@ -18166,7 +18750,9 @@ $('#iaUserMenu').addEventListener('click', e => {
   if (!u) return;
   if (u.dataset.iaunidade === iaUnidade){ $('#iaUserMenu').hidden = true; return; }
   iaUnidade = u.dataset.iaunidade;
-  fgToast('Unidade: ' + iaUnidadeAtual().nome);
+  fgToast(iaUnidade === 'matriz'
+    ? 'De volta à Matriz · Sua Marca'
+    : 'Vendo como ' + iaUnidadeAtual().nome + '. A troca fica registrada.');
   iaRenderUsuario();
   iaNovaConversa();
   $('#iaUserMenu').hidden = true;
@@ -18217,9 +18803,10 @@ $('#iaChips').addEventListener('click', e => {
   const b = e.target.closest('[data-iasug]');
   if (b) iaPerguntar(b.dataset.iasug);
 });
-$('#iaApps').addEventListener('click', iaFecharModulo);
+$('#iaApps').addEventListener('click', () => { iagFechar(); iaFecharModulo(); });
 $('#iaLogo').addEventListener('click', iaFecharModulo);
-$('#iaManage').addEventListener('click', () => fgToast('Gerenciar entra na próxima etapa: é onde o administrador monta a base de conhecimento de cada tipo de unidade.'));
+/* o Gerenciar mora em 19-ia-gerenciar.js; aqui só o gatilho */
+$('#iaManage').addEventListener('click', iagAlternar);
 $('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta: em breve'));
 $('#iaShare').addEventListener('click', () => fgToast('Link da conversa copiado'));
 
@@ -18286,6 +18873,571 @@ $('#tileIA') && $('#tileIA').addEventListener('click', e => { e.preventDefault()
 iaRenderUsuario();
 iaRenderLista();
 $('#iaZeroDock').appendChild($('#iaComp'));
+
+/* ===================== assets/js/19-ia-gerenciar.js ===================== */
+/* ===================== Gerenciar da IA =====================
+   O administrador monta aqui a base que a conversa consulta. Sete telas irmãs,
+   uma acesa por vez, no mesmo esquema do Gerenciar da Rede Social.
+
+   A regra que organiza tudo: a IA responde a partir do que a rede já escreveu,
+   com a permissão de quem pergunta. Por isso Fontes vem antes de arquivo
+   avulso, Escopos são camadas que se somam, e Perguntas sem resposta é a tela
+   que faz a base crescer. */
+
+/* ---------------- as fontes: o que a rede já escreveu ---------------- */
+const IAG_FONTES = [
+  { id:'com', nome:'Comunicados',              ic:'mdi-bullhorn-outline',        c:'#e0464f', on:true,  n:'248 comunicados',   sync:'hoje às 07:10',
+    d:'Tudo que a matriz já publicou para a rede, com a data e o público de cada um.' },
+  { id:'uni', nome:'Universidade Corporativa',  ic:'mdi-school-outline',          c:'#6d47b5', on:true,  n:'96 trilhas',        sync:'hoje às 07:10',
+    d:'Trilhas, aulas e materiais de apoio. O vídeo entra pela descrição; a transcrição vem depois.' },
+  { id:'pro', nome:'Processos',                 ic:'mdi-sitemap-outline',         c:'#575fd1', on:true,  n:'134 documentos',    sync:'ontem às 22:40',
+    d:'Os procedimentos escritos da rede. É a fonte mais precisa que existe, porque já nasceu para ser seguida.' },
+  { id:'dis', nome:'Disco Virtual',             ic:'mdi-cloud-outline',           c:'#1d6ede', on:true,  n:'1.284 arquivos',    sync:'hoje às 06:55',
+    d:'Os arquivos da rede. Cada resposta respeita a permissão de pasta de quem perguntou.' },
+  { id:'chk', nome:'Checklist',                 ic:'mdi-clipboard-check-outline', c:'#219348', on:true,  n:'18 modelos',        sync:'hoje às 07:10',
+    d:'Os modelos de auditoria e o que cada item cobra. Não entram as respostas das visitas.' },
+  { id:'cha', nome:'Chamados resolvidos',       ic:'mdi-message-text-outline',    c:'#2aa17e', on:false, n:'3.910 chamados',   sync:'nunca',
+    d:'Respostas antigas viram conhecimento, mas trazem junto o que já mudou. Ligue quando a base estiver madura.' },
+  { id:'imp', nome:'Implantação de Unidades',   ic:'mdi-flag-outline',            c:'#c2410c', on:false, n:'42 tarefas-modelo', sync:'nunca',
+    d:'O roteiro de abertura de uma unidade nova, etapa por etapa.' }
+];
+
+/* ---------------- os escopos: três camadas que se somam ---------------- */
+const IAG_CAMADAS = [
+  { nivel:0, grupo:'Rede', nome:'Sua Marca', ic:'mdi-earth', c:'#00acac', n:42,
+    d:'Vale para todo mundo, da matriz à última unidade. É onde mora quase tudo.' },
+
+  { nivel:1, grupo:'Tipos de unidade', nome:'Academia',  ic:'mdi-dumbbell',      c:'#6d47b5', n:9,  d:'2 unidades neste tipo.' },
+  { nivel:1, nome:'Food',      ic:'mdi-silverware-fork-knife', c:'#c2410c', n:12, d:'1 unidade neste tipo.' },
+  { nivel:1, nome:'Loja de rua', ic:'mdi-storefront-outline',  c:'#1d6ede', n:7,  d:'2 unidades neste tipo.' },
+
+  { nivel:2, grupo:'Unidades', nome:'A1 - Academia PHD',   ic:'mdi-map-marker-outline', c:'#575fd1', n:4, d:'Alvará, horário e o que só vale nesta loja.' },
+  { nivel:2, nome:'Constance - Centro',    ic:'mdi-map-marker-outline', c:'#219348', n:3, d:'Alvará, horário e o que só vale nesta loja.' },
+  { nivel:2, nome:'Sabor & Cia Shopping',  ic:'mdi-map-marker-outline', c:'#e0464f', n:4, d:'Alvará, horário e o que só vale nesta loja.' }
+];
+
+/* os escopos que um item de conhecimento pode receber */
+const IAG_ESCOPOS = [
+  { v:'rede',       t:'Rede · Sua Marca',        ic:'mdi-earth' },
+  { v:'t:academia', t:'Tipo · Academia',         ic:'mdi-dumbbell' },
+  { v:'t:food',     t:'Tipo · Food',             ic:'mdi-silverware-fork-knife' },
+  { v:'t:loja',     t:'Tipo · Loja de rua',      ic:'mdi-storefront-outline' },
+  { v:'u:873',      t:'Unidade · A1 - Academia PHD',  ic:'mdi-map-marker-outline' },
+  { v:'u:205',      t:'Unidade · Constance - Centro', ic:'mdi-map-marker-outline' },
+  { v:'u:061',      t:'Unidade · Sabor & Cia Shopping', ic:'mdi-map-marker-outline' }
+];
+
+/* ---------------- a base ---------------- */
+/* origem: escrito | arquivo | modulo — é o que decide o ícone da linha */
+let IAG_BASE = [
+  { id:'b1', t:'Prazo de SLA por prioridade de chamado', o:'escrito', of:'Escrito por Rodrigo Caetano', e:'rede',       s:'ativo',      val:'30/06/27', at:'02/09/26' },
+  { id:'b2', t:'Padrão de Loja: os 48 itens da auditoria', o:'arquivo', of:'padrao-de-loja-2026.pdf',    e:'rede',       s:'ativo',      val:'31/12/26', at:'28/08/26' },
+  { id:'b3', t:'Janela de pedidos e estoque mínimo',     o:'modulo',  of:'Processos',                   e:'rede',       s:'ativo',      val:'30/06/27', at:'01/09/26' },
+  { id:'b4', t:'Documentos para abrir uma unidade nova', o:'arquivo', of:'checklist-abertura.docx',     e:'rede',       s:'ativo',      val:'31/03/27', at:'19/08/26' },
+  { id:'b5', t:'Layout de fachada para academias',       o:'escrito', of:'Escrito por Marina Alves',    e:'t:academia', s:'ativo',      val:'31/12/26', at:'26/08/26' },
+  { id:'b6', t:'Ficha técnica do mix de food',           o:'arquivo', of:'mix-food-v4.xlsx',            e:'t:food',     s:'rascunho',   val:'',          at:'05/09/26' },
+  { id:'b7', t:'Horário de funcionamento e feriados',    o:'escrito', of:'Escrito por Paulo Menezes',   e:'u:873',      s:'ativo',      val:'31/12/26', at:'12/08/26' },
+  { id:'b8', t:'Tabela de preços sugeridos 2025',        o:'arquivo', of:'precos-2025.xlsx',            e:'rede',       s:'vencido',    val:'31/12/25', at:'14/01/25' },
+  { id:'b9', t:'Manual de marca v3',                     o:'arquivo', of:'manual-marca-v3.pdf',         e:'rede',       s:'arquivado',  val:'',          at:'03/07/25' }
+];
+
+/* ---------------- quem administra ---------------- */
+const IAG_PAPEIS = [
+  { id:'usuario', nome:'Usuário',                ic:'mdi-account-outline',        c:'#1d6ede', on:true,
+    d:'Pergunta à IA e enxerga as próprias conversas. Não vê a base nem o histórico de ninguém.',
+    quem:'Todos com acesso ao módulo · 214 pessoas' },
+  { id:'editor',  nome:'Editor de conhecimento', ic:'mdi-text-box-edit-outline',  c:'#6d47b5', on:true,
+    d:'Adiciona e edita conhecimento dentro do escopo dele, e responde as perguntas sem resposta.',
+    quem:'Consultores de campo, Gestores de rede · 12 pessoas' },
+  { id:'admin',   nome:'Administrador da IA',    ic:'mdi-shield-account-outline', c:'#219348', on:true,
+    d:'Tudo do editor, mais fontes, escopos, permissões, limites e os relatórios de uso.',
+    quem:'3 pessoas' }
+];
+
+/* ---------------- lacunas: o que a base ainda não sabe ---------------- */
+let IAG_LACUNAS = [
+  { id:'l1', p:'Posso vender pelo iFood sem avisar a matriz?',              u:'Sabor & Cia Shopping', q:'há 6 dias', v:8 },
+  { id:'l2', p:'Qual o prazo para devolver produto com avaria?',            u:'Constance - Centro',   q:'hoje',      v:9 },
+  { id:'l3', p:'Como funciona o rateio da verba de marketing?',             u:'A1 - Academia PHD',    q:'ontem',     v:6 },
+  { id:'l4', p:'Qual a meta de NPS da minha unidade neste trimestre?',      u:'Constance - Centro',   q:'hoje',      v:5 },
+  { id:'l5', p:'Posso trocar o fornecedor de embalagem por conta própria?', u:'Sabor & Cia Shopping', q:'há 2 dias', v:4 },
+  { id:'l6', p:'Quem aprova uma reforma de fachada?',                       u:'Boatlux Marina Sul',   q:'há 3 dias', v:3 },
+  { id:'l7', p:'Tem modelo de contrato de estágio?',                        u:'Corpore Fit Barra',    q:'há 5 dias', v:2 }
+];
+
+/* ---------------- uso do mês ---------------- */
+const IAG_USO = {
+  consultas: 4128, limite: 6000, mes: 'setembro de 2026',
+  unidades: 5, unidadesTotal: 6, pessoas: 87,
+  topUnidades: [
+    { n:'Constance - Centro',   v:1204 },
+    { n:'A1 - Academia PHD',    v:968 },
+    { n:'Sabor & Cia Shopping', v:742 },
+    { n:'Corpore Fit Barra',    v:610 },
+    { n:'Boatlux Marina Sul',   v:411 }
+  ],
+  topPerguntas: [
+    { n:'Qual é o prazo de SLA para um chamado crítico?', v:186 },
+    { n:'O que cai na auditoria mensal da loja?',         v:154 },
+    { n:'Como funciona a janela de pedidos?',             v:131 },
+    { n:'Quais documentos preciso para abrir uma unidade?', v:98 },
+    { n:'Resuma os comunicados desta semana',             v:87 }
+  ]
+};
+
+/* ================= estado ================= */
+let iagTela = 'base';
+let iagBaseFiltro = 'ativo';
+let iagBaseQ = '';
+let iagLacQ = '';
+let iagBaseCol = null, iagBaseDir = 0;   /* 0 neutro · 1 crescente · 2 decrescente */
+let iagGapId = null;
+
+const IAG_ORIGEM = {
+  escrito: { ic:'mdi-text-box-outline',   c:'#00acac' },
+  arquivo: { ic:'mdi-file-document-outline', c:'#575fd1' },
+  modulo:  { ic:'mdi-transit-connection-variant', c:'#219348' }
+};
+const IAG_STATUS = { ativo:'Ativo', rascunho:'Rascunho', vencido:'Vencido', arquivado:'Arquivado' };
+const IAG_SETAS = { neutro:'mdi-unfold-more-horizontal', cima:'mdi-menu-up', baixo:'mdi-menu-down' };
+
+function iagEscapa(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function iagEscopoTexto(v){
+  const e = IAG_ESCOPOS.find(x => x.v === v);
+  return e ? e : { t:'Rede · Sua Marca', ic:'mdi-earth' };
+}
+
+/* ================= entrar e sair ================= */
+/* O botão do cabeçalho é um só e troca de papel, como o "Acessar Social" da
+   Rede Social: de um lado leva ao Gerenciar, do outro traz de volta. */
+function iagAbrir(){
+  const v = document.getElementById('iaView'); if (!v) return;
+  v.classList.add('ia-admin');
+  iagBotao();
+  iagShow(iagTela);
+}
+function iagFechar(){
+  const v = document.getElementById('iaView'); if (!v) return;
+  v.classList.remove('ia-admin');
+  iagBotao();
+}
+function iagAlternar(){
+  const v = document.getElementById('iaView'); if (!v) return;
+  v.classList.contains('ia-admin') ? iagFechar() : iagAbrir();
+}
+function iagBotao(){
+  const b = document.getElementById('iaManage'); if (!b) return;
+  const dentro = document.getElementById('iaView').classList.contains('ia-admin');
+  b.innerHTML = dentro
+    ? '<i class="fa-solid fa-wand-magic-sparkles"></i><span class="lbl">Acessar IA</span>'
+    : '<i class="fa-solid fa-gear"></i><span class="lbl">Gerenciar</span>';
+  b.title = dentro ? 'Voltar para a conversa' : 'Gerenciar a base de conhecimento';
+}
+
+/* ================= o roteador ================= */
+const IAG_TELAS = {
+  base:    { el:'iagBaseScreen',    render: iagRenderBase },
+  fontes:  { el:'iagFontesScreen',  render: iagRenderFontes },
+  escopos: { el:'iagEscoposScreen', render: iagRenderEscopos },
+  perm:    { el:'iagPermScreen',    render: iagRenderPerm },
+  lacunas: { el:'iagLacunasScreen', render: iagRenderLacunas },
+  uso:     { el:'iagUsoScreen',     render: iagRenderUso },
+  config:  { el:'iagConfigScreen',  render: null }
+};
+function iagShow(tela){
+  if (!IAG_TELAS[tela]) tela = 'base';
+  iagTela = tela;
+  document.querySelectorAll('.iag-screen').forEach(s => s.classList.remove('active'));
+  const alvo = document.getElementById(IAG_TELAS[tela].el);
+  if (alvo) alvo.classList.add('active');
+  document.querySelectorAll('.iag-item').forEach(b => b.classList.toggle('on', b.dataset.iag === tela));
+  if (IAG_TELAS[tela].render) IAG_TELAS[tela].render();
+  iagContador();
+}
+function iagContador(){
+  const n = document.getElementById('iagLacN'); if (!n) return;
+  n.textContent = IAG_LACUNAS.length;
+  n.hidden = !IAG_LACUNAS.length;
+}
+
+/* ================= 1. base de conhecimento ================= */
+function iagBaseTh(rotulo, col, largura){
+  const dir = (iagBaseCol === col) ? iagBaseDir : 0;
+  const ic = dir === 1 ? IAG_SETAS.cima : dir === 2 ? IAG_SETAS.baixo : IAG_SETAS.neutro;
+  return '<th' + (largura ? ' style="width:' + largura + '"' : '') + '><span class="iag-th"><span>' + rotulo + '</span>' +
+    '<button type="button" class="iag-sortbtn" data-iagsort="' + col + '" aria-label="Ordenar por ' + rotulo + '">' +
+    '<i class="mdi ' + ic + '"></i></button></span></th>';
+}
+function iagRenderBase(){
+  const el = document.getElementById('iagBaseList'); if (!el) return;
+  const q = iagBaseQ.trim().toLowerCase();
+  let lista = IAG_BASE.filter(b => (iagBaseFiltro === 'todos' || b.s === iagBaseFiltro))
+                      .filter(b => !q || b.t.toLowerCase().includes(q) || b.of.toLowerCase().includes(q));
+  if (iagBaseDir){
+    const d = iagBaseDir === 1 ? 1 : -1;
+    lista = lista.slice().sort((a, b) => {
+      if (iagBaseCol === 'titulo') return d * a.t.localeCompare(b.t);
+      if (iagBaseCol === 'escopo') return d * iagEscopoTexto(a.e).t.localeCompare(iagEscopoTexto(b.e).t);
+      if (iagBaseCol === 'validade') return d * (a.val || '').split('/').reverse().join('').localeCompare((b.val || '').split('/').reverse().join(''));
+      return d * (a.at || '').split('/').reverse().join('').localeCompare((b.at || '').split('/').reverse().join(''));
+    });
+  }
+  if (!lista.length){
+    el.innerHTML = '<div class="iag-vazio"><b>' +
+      (q ? 'Nada com esse nome' : 'Nada aqui ainda') + '</b>' +
+      (q ? 'Tente outro termo ou troque o filtro.' : 'Use "Adicionar conhecimento" para começar.') + '</div>';
+    return;
+  }
+  const linhas = lista.map(b => {
+    const o = IAG_ORIGEM[b.o] || IAG_ORIGEM.escrito;
+    const e = iagEscopoTexto(b.e);
+    return '<tr>' +
+      '<td><div class="iag-item2"><span class="iag-ic" style="--c:' + o.c + '"><i class="mdi ' + o.ic + '"></i></span>' +
+        '<div class="iag-item2-tx"><b title="' + iagEscapa(b.t) + '">' + iagEscapa(b.t) + '</b><span>' + iagEscapa(b.of) + '</span></div></div></td>' +
+      '<td><span class="iag-esc"><i class="mdi ' + e.ic + '"></i>' + iagEscapa(e.t) + '</span></td>' +
+      '<td><span class="iag-chip ' + b.s + '">' + IAG_STATUS[b.s] + '</span></td>' +
+      '<td style="white-space:nowrap">' + (b.val || '—') + '</td>' +
+      '<td style="white-space:nowrap">' + b.at + '</td>' +
+      '<td><div class="iag-acts">' +
+        '<button type="button" class="iag-bt" data-iagedit="' + b.id + '"><i class="mdi mdi-pencil-outline"></i> Editar</button>' +
+        (b.s === 'arquivado'
+          ? '<button type="button" class="iag-bt" data-iagrestaura="' + b.id + '"><i class="mdi mdi-archive-arrow-up-outline"></i> Restaurar</button>'
+          : '<button type="button" class="iag-bt perigo" data-iagarq="' + b.id + '"><i class="mdi mdi-archive-arrow-down-outline"></i> Arquivar</button>') +
+      '</div></td></tr>';
+  }).join('');
+  el.innerHTML = '<table><thead><tr>' +
+    iagBaseTh('Conhecimento (' + lista.length + ')', 'titulo') +
+    iagBaseTh('Escopo', 'escopo', '172px') +
+    '<th style="width:100px">Status</th>' +
+    iagBaseTh('Vale até', 'validade', '104px') +
+    iagBaseTh('Atualizado', 'atualizado', '110px') +
+    '<th style="width:208px;text-align:center">Ações</th>' +
+    '</tr></thead><tbody>' + linhas + '</tbody></table>';
+}
+
+/* ================= 2. fontes ================= */
+function iagRenderFontes(){
+  const el = document.getElementById('iagFontesGrid'); if (!el) return;
+  el.innerHTML = IAG_FONTES.map(f =>
+    '<div class="iag-card">' +
+      '<span class="iag-card-ic" style="--c:' + f.c + '"><i class="mdi ' + f.ic + '"></i></span>' +
+      '<label class="nv-toggle iag-cardtog"><input type="checkbox" data-iagfonte="' + f.id + '"' + (f.on ? ' checked' : '') + '>' +
+        '<span class="nv-tk"></span><span class="tgtxt">' + (f.on ? 'Ativa' : 'Inativa') + '</span></label>' +
+      '<h3>' + iagEscapa(f.nome) + '</h3>' +
+      '<p>' + iagEscapa(f.d) + '</p>' +
+      '<div class="iag-card-pe"><i class="mdi mdi-database-outline"></i><b>' + f.n + '</b>' +
+        '<span style="flex:1"></span>Sincronizado ' + f.sync + '</div>' +
+    '</div>'
+  ).join('');
+}
+
+/* ================= 3. escopos ================= */
+function iagRenderEscopos(){
+  const el = document.getElementById('iagEscoposLista'); if (!el) return;
+  el.innerHTML = IAG_CAMADAS.map(c =>
+    (c.grupo ? '<div class="iag-grp" style="color:#8a94a0;padding:10px 0 2px">' + c.grupo + '</div>' : '') +
+    '<div class="iag-camada' + (c.nivel ? ' n' + c.nivel : '') + '">' +
+      '<span class="iag-camada-ic" style="--c:' + c.c + '"><i class="mdi ' + c.ic + '"></i></span>' +
+      '<div class="iag-camada-tx"><b>' + iagEscapa(c.nome) + '</b><span>' + iagEscapa(c.d) + '</span></div>' +
+      '<div class="iag-camada-n"><b>' + c.n + '</b>itens</div>' +
+    '</div>'
+  ).join('');
+}
+
+/* ================= 4. permissões ================= */
+function iagRenderPerm(){
+  const el = document.getElementById('iagPermGrid'); if (!el) return;
+  el.innerHTML = IAG_PAPEIS.map(p =>
+    '<div class="iag-card">' +
+      '<span class="iag-card-ic" style="--c:' + p.c + '"><i class="mdi ' + p.ic + '"></i></span>' +
+      '<label class="nv-toggle iag-cardtog"><input type="checkbox" data-iagpapel="' + p.id + '"' + (p.on ? ' checked' : '') + '>' +
+        '<span class="nv-tk"></span><span class="tgtxt">' + (p.on ? 'Ativo' : 'Inativo') + '</span></label>' +
+      '<h3>' + iagEscapa(p.nome) + '</h3>' +
+      '<p>' + iagEscapa(p.d) + '</p>' +
+      '<div class="iag-card-pe"><i class="mdi mdi-account-group-outline"></i><b>' + iagEscapa(p.quem) + '</b>' +
+        '<span style="flex:1"></span>' +
+        '<button type="button" class="iag-bt" style="height:30px;font-size:13px" data-iagquem="' + p.id + '">Definir quem</button></div>' +
+    '</div>'
+  ).join('');
+}
+
+/* ================= 5. perguntas sem resposta ================= */
+function iagRenderLacunas(){
+  const el = document.getElementById('iagLacList'); if (!el) return;
+  const q = iagLacQ.trim().toLowerCase();
+  const lista = IAG_LACUNAS.filter(l => !q || l.p.toLowerCase().includes(q) || l.u.toLowerCase().includes(q));
+  if (!lista.length){
+    el.innerHTML = '<div class="iag-vazio"><b>' + (q ? 'Nada com esse nome' : 'Nenhuma lacuna aberta') + '</b>' +
+      (q ? 'Tente outro termo.' : 'Toda pergunta feita este mês encontrou resposta na base.') + '</div>';
+    return;
+  }
+  const linhas = lista.map(l =>
+    '<tr>' +
+      '<td><div class="iag-item2"><span class="iag-ic" style="--c:#E8A33D"><i class="mdi mdi-comment-question-outline"></i></span>' +
+        '<div class="iag-item2-tx"><b>' + iagEscapa(l.p) + '</b><span>' + iagEscapa(l.u) + '</span></div></div></td>' +
+      '<td style="white-space:nowrap">' + iagEscapa(l.q) + '</td>' +
+      '<td style="white-space:nowrap"><b style="font-weight:700;color:#5b6672">' + l.v + '</b> vezes</td>' +
+      '<td><div class="iag-acts">' +
+        '<button type="button" class="iag-bt forte" data-iagresp="' + l.id + '"><i class="mdi mdi-check"></i> Responder e salvar</button>' +
+        '<button type="button" class="iag-bt" data-iagdescarta="' + l.id + '"><i class="mdi mdi-close"></i> Descartar</button>' +
+      '</div></td></tr>'
+  ).join('');
+  el.innerHTML = '<table><thead><tr>' +
+    '<th>Pergunta (' + lista.length + ')</th>' +
+    '<th style="width:126px">Última vez</th>' +
+    '<th style="width:118px">Frequência</th>' +
+    '<th style="width:322px;text-align:center">Ações</th>' +
+    '</tr></thead><tbody>' + linhas + '</tbody></table>';
+}
+
+/* ================= 6. uso ================= */
+function iagRenderUso(){
+  const el = document.getElementById('iagUsoBox'); if (!el) return;
+  const u = IAG_USO;
+  const pct = Math.min(100, Math.round(u.consultas / u.limite * 100));
+  const barras = lista => {
+    const topo = Math.max.apply(null, lista.map(x => x.v)) || 1;
+    return lista.map(x =>
+      '<div class="iag-lin2"><span class="nome">' + iagEscapa(x.n) + '</span>' +
+      '<span style="flex:none;width:88px;height:6px;border-radius:999px;background:#E9EAED;overflow:hidden">' +
+      '<span style="display:block;height:100%;width:' + Math.round(x.v / topo * 100) + '%;background:var(--teal);border-radius:999px"></span></span>' +
+      '<span class="qtd">' + x.v.toLocaleString('pt-BR') + '</span></div>'
+    ).join('');
+  };
+  el.innerHTML =
+    '<p class="iag-lead">A conta é de consultas, não de tokens: o que a rede compra é resposta. ' +
+      'Ao bater o limite a matriz continua respondendo e a unidade recebe o caminho do chamado.</p>' +
+    '<div class="iag-numeros">' +
+      '<div class="iag-num"><span>Consultas em ' + u.mes + '</span>' +
+        '<b>' + u.consultas.toLocaleString('pt-BR') + ' <span style="display:inline;font-size:15px;font-weight:400;color:#8a94a0;text-transform:none;letter-spacing:0">de ' + u.limite.toLocaleString('pt-BR') + '</span></b>' +
+        '<div class="iag-barra' + (pct >= 80 ? ' alerta' : '') + '"><span style="width:' + pct + '%"></span></div>' +
+        '<small>' + pct + '% do bolo do mês. A matriz é avisada em 80%.</small></div>' +
+      '<div class="iag-num"><span>Unidades ativas</span><b>' + u.unidades + '</b><small>de ' + u.unidadesTotal + ' na rede</small></div>' +
+      '<div class="iag-num"><span>Pessoas que perguntaram</span><b>' + u.pessoas + '</b><small>no mês</small></div>' +
+      '<div class="iag-num"><span>Perguntas sem resposta</span><b>' + IAG_LACUNAS.length + '</b><small>o que falta escrever</small></div>' +
+    '</div>' +
+    '<div class="iag-duas">' +
+      '<div class="iag-lista"><h3>Unidades que mais usam</h3>' + barras(u.topUnidades) + '</div>' +
+      '<div class="iag-lista"><h3>Perguntas mais frequentes</h3>' + barras(u.topPerguntas) + '</div>' +
+    '</div>';
+}
+
+/* ================= modais ================= */
+function iagOpcoesEscopo(sel){
+  return IAG_ESCOPOS.map(e => '<option value="' + e.v + '"' + (e.v === sel ? ' selected' : '') + '>' + e.t + '</option>').join('');
+}
+let iagEditId = null;
+function iagAddAbrir(id){
+  iagEditId = id || null;
+  const b = id ? IAG_BASE.find(x => x.id === id) : null;
+  document.getElementById('iagAddTitulo').textContent = b ? 'Editar conhecimento' : 'Escrever conhecimento';
+  document.getElementById('iagAddTit').value = b ? b.t : '';
+  document.getElementById('iagAddTxt').value = b ? 'Conteúdo já gravado para este item. Edite à vontade.' : '';
+  document.getElementById('iagAddEsc').innerHTML = iagOpcoesEscopo(b ? b.e : 'rede');
+  document.getElementById('iagAddModal').classList.add('open');
+  setTimeout(() => document.getElementById('iagAddTit').focus(), 40);
+}
+function iagAddFechar(){ document.getElementById('iagAddModal').classList.remove('open'); }
+
+function iagGapAbrir(id){
+  const l = IAG_LACUNAS.find(x => x.id === id); if (!l) return;
+  iagGapId = id;
+  document.getElementById('iagGapPerg').innerHTML =
+    '<b>A pergunta que ficou sem resposta</b><p>' + iagEscapa(l.p) + '</p>' +
+    '<small>' + iagEscapa(l.u) + ' · ' + l.v + ' vezes · última ' + iagEscapa(l.q) + '</small>';
+  document.getElementById('iagGapTxt').value = '';
+  document.getElementById('iagGapEsc').innerHTML = iagOpcoesEscopo('rede');
+  document.getElementById('iagGapModal').classList.add('open');
+  setTimeout(() => document.getElementById('iagGapTxt').focus(), 40);
+}
+function iagGapFechar(){ document.getElementById('iagGapModal').classList.remove('open'); iagGapId = null; }
+
+/* ================= eventos =================
+   Um listener só no documento: as tabelas e os cartões são reescritos por
+   innerHTML a cada render, então prender listener em cada botão não sobreviveria. */
+document.addEventListener('click', e => {
+  /* ----- navegação ----- */
+  const nav = e.target.closest('.iag-item');
+  if (nav){ iagShow(nav.dataset.iag); return; }
+
+  /* ----- o menu de adicionar ----- */
+  const abre = e.target.closest('#iagAdd');
+  const menu = document.getElementById('iagAddMenu');
+  if (abre && menu){ menu.hidden = !menu.hidden; return; }
+  if (menu && !menu.hidden && !e.target.closest('#iagAddMenu')) menu.hidden = true;
+
+  const novo = e.target.closest('[data-iagnovo]');
+  if (novo){
+    if (menu) menu.hidden = true;
+    const tipo = novo.dataset.iagnovo;
+    if (tipo === 'escrever') iagAddAbrir();
+    else if (tipo === 'arquivo') fgToast('Enviar arquivo: PDF, Word, Excel e PowerPoint entram nesta etapa.');
+    else { iagShow('fontes'); fgToast('Ligue aqui o módulo que deve alimentar a base.'); }
+    return;
+  }
+
+  /* ----- ordenação da base ----- */
+  const ord = e.target.closest('[data-iagsort]');
+  if (ord){
+    const col = ord.dataset.iagsort;
+    if (iagBaseCol !== col){ iagBaseCol = col; iagBaseDir = 1; }
+    else if (iagBaseDir === 1) iagBaseDir = 2;
+    else { iagBaseCol = null; iagBaseDir = 0; }
+    iagRenderBase();
+    return;
+  }
+
+  /* ----- ações da base ----- */
+  const ed = e.target.closest('[data-iagedit]');
+  if (ed){ iagAddAbrir(ed.dataset.iagedit); return; }
+  const arq = e.target.closest('[data-iagarq]');
+  if (arq){
+    const b = IAG_BASE.find(x => x.id === arq.dataset.iagarq);
+    if (b){ b.s = 'arquivado'; b.val = ''; iagRenderBase(); fgToast('Arquivado. Ele sai das respostas, mas continua no histórico.'); }
+    return;
+  }
+  const res = e.target.closest('[data-iagrestaura]');
+  if (res){
+    const b = IAG_BASE.find(x => x.id === res.dataset.iagrestaura);
+    if (b){ b.s = 'rascunho'; iagRenderBase(); fgToast('Restaurado como rascunho. Defina a validade antes de ativar.'); }
+    return;
+  }
+
+  /* ----- lacunas ----- */
+  const resp = e.target.closest('[data-iagresp]');
+  if (resp){ iagGapAbrir(resp.dataset.iagresp); return; }
+  const desc = e.target.closest('[data-iagdescarta]');
+  if (desc){
+    IAG_LACUNAS = IAG_LACUNAS.filter(l => l.id !== desc.dataset.iagdescarta);
+    iagRenderLacunas(); iagContador();
+    fgToast('Descartada. Se voltarem a perguntar, ela reaparece.');
+    return;
+  }
+
+  /* ----- permissões ----- */
+  const quem = e.target.closest('[data-iagquem]');
+  if (quem){ fgToast('Escolher perfis e escopo deste papel entra na próxima etapa.'); return; }
+
+  /* ----- ajuda ----- */
+  const aj = e.target.closest('[data-iagajuda]');
+  if (aj){ fgToast(aj.dataset.iagajuda); return; }
+
+  /* ----- modal: escrever ----- */
+  if (e.target.closest('#iagAddClose') || e.target.closest('#iagAddCancel') || e.target === document.getElementById('iagAddModal')){
+    iagAddFechar(); return;
+  }
+  if (e.target.closest('#iagAddSave')){
+    const tit = document.getElementById('iagAddTit').value.trim();
+    const txt = document.getElementById('iagAddTxt').value.trim();
+    if (!tit){ document.getElementById('iagAddTit').focus(); return; }
+    if (!txt){ document.getElementById('iagAddTxt').focus(); return; }
+    const esc = document.getElementById('iagAddEsc').value;
+    const val = iagDataBR(document.getElementById('iagAddVal').value);
+    if (iagEditId){
+      const b = IAG_BASE.find(x => x.id === iagEditId);
+      if (b){ b.t = tit; b.e = esc; b.val = val; b.s = b.s === 'arquivado' ? 'ativo' : b.s; }
+      fgToast('Conhecimento atualizado');
+    } else {
+      IAG_BASE.unshift({ id:'n' + IAG_BASE.length + Math.round(performance.now()), t:tit, o:'escrito',
+        of:'Escrito por ' + iagEu(), e:esc, s:'ativo', val:val, at:iagHoje() });
+      iagBaseFiltro = 'ativo';
+      const sel = document.getElementById('iagBaseFiltro'); if (sel) sel.value = 'ativo';
+      fgToast('Está na base. A próxima pergunta sobre isso já usa esta resposta.');
+    }
+    iagAddFechar(); iagRenderBase();
+    return;
+  }
+
+  /* ----- modal: responder lacuna ----- */
+  if (e.target.closest('#iagGapClose') || e.target.closest('#iagGapCancel') || e.target === document.getElementById('iagGapModal')){
+    iagGapFechar(); return;
+  }
+  if (e.target.closest('#iagGapSave')){
+    const txt = document.getElementById('iagGapTxt').value.trim();
+    if (!txt){ document.getElementById('iagGapTxt').focus(); return; }
+    const l = IAG_LACUNAS.find(x => x.id === iagGapId);
+    if (l){
+      IAG_BASE.unshift({ id:'g' + l.id, t:l.p, o:'escrito', of:'Escrito por ' + iagEu(),
+        e:document.getElementById('iagGapEsc').value, s:'ativo',
+        val:iagDataBR(document.getElementById('iagGapVal').value), at:iagHoje() });
+      IAG_LACUNAS = IAG_LACUNAS.filter(x => x.id !== l.id);
+    }
+    iagGapFechar(); iagRenderLacunas(); iagContador();
+    fgToast('Virou conhecimento. Quem perguntar de novo já recebe a resposta.');
+    return;
+  }
+
+  /* ----- salvar configurações ----- */
+  if (e.target.closest('#iagCfgSalvar')){ fgToast('Configurações salvas'); return; }
+});
+
+/* os toggles avisam o que mudou e acertam a palavra ao lado */
+document.addEventListener('change', e => {
+  const f = e.target.closest('[data-iagfonte]');
+  if (f){
+    const fonte = IAG_FONTES.find(x => x.id === f.dataset.iagfonte);
+    if (fonte){
+      fonte.on = f.checked;
+      const tx = f.parentElement.querySelector('.tgtxt'); if (tx) tx.textContent = fonte.on ? 'Ativa' : 'Inativa';
+      fgToast(fonte.on ? fonte.nome + ' passa a alimentar a base' : fonte.nome + ' sai da base');
+    }
+    return;
+  }
+  const p = e.target.closest('[data-iagpapel]');
+  if (p){
+    const papel = IAG_PAPEIS.find(x => x.id === p.dataset.iagpapel);
+    if (papel){
+      papel.on = p.checked;
+      const tx = p.parentElement.querySelector('.tgtxt'); if (tx) tx.textContent = papel.on ? 'Ativo' : 'Inativo';
+    }
+    return;
+  }
+  /* os toggles das configurações só trocam a palavra */
+  const t = e.target.closest('.iag-tog input');
+  if (t){
+    const tx = t.parentElement.querySelector('.tgtxt');
+    if (tx && tx.textContent !== 'Sempre') tx.textContent = t.checked ? 'Ativo' : 'Inativo';
+  }
+});
+
+/* filtros e buscas */
+document.addEventListener('input', e => {
+  if (e.target.id === 'iagBaseBusca'){ iagBaseQ = e.target.value; iagRenderBase(); }
+  if (e.target.id === 'iagLacBusca'){ iagLacQ = e.target.value; iagRenderLacunas(); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'iagBaseFiltro'){ iagBaseFiltro = e.target.value; iagRenderBase(); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const a = document.getElementById('iagAddModal'), g = document.getElementById('iagGapModal');
+  if (a && a.classList.contains('open')) iagAddFechar();
+  else if (g && g.classList.contains('open')) iagGapFechar();
+});
+
+/* ================= apoio ================= */
+/* dd/mm/aa a partir do valor de um <input type="date"> */
+function iagDataBR(iso){
+  if (!iso) return '';
+  const p = iso.split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0].slice(2) : '';
+}
+function iagHoje(){
+  const d = new Date(), z = n => String(n).padStart(2, '0');
+  return z(d.getDate()) + '/' + z(d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2);
+}
+/* quem está assinando: a mesma identidade que a conversa usa */
+function iagEu(){
+  return (typeof iaEu === 'function') ? iaEu().nome : 'Rodrigo Caetano';
+}
+
+/* deixa a porta aberta para uma página própria do Gerenciar */
+window.abrirGerenciarIA = function(){
+  if (typeof abrirModuloIA === 'function') abrirModuloIA();
+  iagAbrir();
+};
 </script>
 </body>
 </html>

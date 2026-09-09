@@ -237,8 +237,10 @@
 
 /* a logo do header é só do mobile; no desktop quem mostra a marca é o rail */
 .top-logo{display:none}
-/* foto no topo do módulo: só no celular */
-.nmod-topav{display:none}
+/* A foto no topo do módulo vale nos dois ambientes: é onde a pessoa procura
+   a própria conta, e ela não deixa de existir dentro do Gerenciar. A regra que
+   escondia isto no desktop saiu; o tamanho do celular continua na media query
+   mais abaixo. */
 /* rótulos de módulo em versão curta: só entram no celular */
 .tl-curto{display:none}
 

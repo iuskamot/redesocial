@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SULTS | Home</title>
+<title>SULTS | Gerenciar a IA</title>
 <!-- Previa do link em WhatsApp, LinkedIn e afins: sem estas etiquetas o
      aplicativo mostra so o endereco cru. A imagem precisa de endereco
      absoluto; o do prototipo publicado. -->
@@ -53,7 +53,7 @@
 
 <script>
 /* ============================================================
-   CARREGADOR — SULTS | Home     (gerado por build.js)
+   CARREGADOR — SULTS | Gerenciar a IA     (gerado por build.js)
 
    Todas as páginas montam a mesma aplicação; o que muda é a tela em que cada
    uma abre. O index.html é a versão embutida, para abrir direto do disco;
@@ -146,6 +146,9 @@
       /* O script entra depois do DOMContentLoaded já ter disparado, então
          quem escuta o evento nunca seria chamado. */
       document.dispatchEvent(new Event('DOMContentLoaded'));
+      /* Esta página abre direto nesta tela. A chamada vai depois do boot
+         porque só aí as funções existem. */
+      try { abrirGerenciarIA(); } catch (e) { console.warn('não abriu a tela:', e); }
     })
     .catch(avisar);
 })();

@@ -80,6 +80,7 @@ const PAGINAS = [
   ['permissoes.html',    'SULTS | Permissões',     "openNewsModule(); newsShow('perm')"],
   ['forum.html',         'SULTS | Fórum',          'openForum()'],
   ['ia.html',            'SULTS | Inteligência Artificial', 'abrirModuloIA()'],
+  ['ia-gerenciar.html',  'SULTS | Gerenciar a IA',          'abrirGerenciarIA()'],
 ];
 
 const lista = arr => arr.map(f => "    '" + f + "',").join('\n');
