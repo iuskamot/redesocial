@@ -130,14 +130,21 @@ const IA_CONVERSAS = [
 /* Quem está usando */
 const IA_PESSOA = { nome:'Rodrigo Caetano' };
 
-/* As unidades que essa pessoa alcança */
+/* As unidades que essa pessoa alcança. A cor e as iniciais saem de STORES,
+   a mesma tabela que desenha a unidade nas outras telas, para a bolinha ser
+   a mesma em todo lugar. */
 const IA_UNIDADES = [
   { id:'873', nome:'A1 - Academia PHD' },
   { id:'412', nome:'Boatlux Marina Sul' },
   { id:'205', nome:'Constance - Centro' },
   { id:'158', nome:'Corpore Fit Barra' },
   { id:'061', nome:'Sabor & Cia Shopping' }
-];
+].map(u => {
+  const s = (typeof STORES !== 'undefined' ? STORES : []).find(x => x.code === u.id);
+  u.cor = (s && s.color) || '#5b6672';
+  u.ini = (s && s.ini) || '??';
+  return u;
+});
 
 const IA_SUGESTOES = [
   { ic:'mdi-message-text-outline',    c:'#1d6ede', t:'Qual é o prazo de SLA para um chamado crítico?' },
@@ -346,9 +353,9 @@ function iaRenderUsuario(){
     '<div class="ia-umlbl">Unidade</div>' +
     IA_UNIDADES.map(x =>
       '<button type="button" data-iaunidade="' + x.id + '"' + (x.id === iaUnidade ? ' class="on"' : '') + '>' +
-        '<span class="ia-umic"><i class="mdi mdi-storefront-outline"></i></span>' +
+        '<span class="ia-umav" style="background:' + x.cor + '">' + iaEscapa(x.ini) + '</span>' +
         '<span class="ia-umtx"><b>' + iaEscapa(x.nome) + '</b></span>' +
-        '<i class="mdi mdi-check"></i></button>').join('');
+        '<i class="mdi mdi-check-circle"></i></button>').join('');
 }
 
 /* Quanto falta para o título caber: é esse valor que o hover desliza, e a
@@ -430,6 +437,7 @@ function iaNovaConversa(){
   if (iaEscrevendo) iaEscrevendo.completa();
   iaAtual = null;
   iaVerArq = false;
+  iaView.classList.add('ia-inicio');
   iaThread.innerHTML = '';
   iaThread.hidden = true;
   iaZero.hidden = false;
@@ -446,6 +454,7 @@ function iaNovaConversa(){
 
 /* tira o compositor do centro e prende no rodapé */
 function iaModoConversa(titulo){
+  iaView.classList.remove('ia-inicio');
   iaZero.hidden = true;
   iaThread.hidden = false;
   $('#iaHead').hidden = false;
@@ -553,10 +562,220 @@ function iaAbrirModulo(pergunta){
 window.abrirModuloIA = iaAbrirModulo;
 
 function iaFecharModulo(){
+  if (typeof vzFechar === 'function') vzFechar(false);
   if (iaEscrevendo) iaEscrevendo.completa();
   iaView.classList.remove('open');
   document.body.style.overflow = '';
 }
+
+
+/* ============ Ditar ============
+   A transcrição é de verdade: quem ouve é a API de fala do próprio navegador,
+   em pt-BR, e o texto vai caindo no campo enquanto a pessoa fala. O medidor ao
+   lado é um segundo fluxo do microfone, só para desenhar o que está entrando —
+   sem ele a barra ficaria parada e ninguém saberia se o microfone pegou.
+
+   Um aviso honesto: no Chrome essa API manda o áudio para o servidor da Google
+   para reconhecer. Em produção isso vira o serviço de transcrição da própria
+   rede; aqui serve para o protótipo funcionar sem back-end. */
+
+const IA_FALA = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+let vzEstado  = 'off';   /* off | gravando | pausado */
+let vzRec     = null;    /* o reconhecedor da vez */
+let vzBase    = '';      /* o que já estava escrito antes de gravar */
+let vzFirme   = '';      /* o transcrito consolidado das sessões anteriores */
+let vzSessao  = '';      /* o consolidado da sessão em curso */
+let vzT0 = 0, vzAcum = 0, vzRelogio = null;
+let vzFluxo = null, vzAudio = null, vzAnalise = null, vzQuadro = null;
+const vzNiveis = [];
+
+function vzTexto(interim){
+  const bruto = vzBase + vzFirme + vzSessao + (interim || '');
+  iaText.value = bruto.replace(/\s+/g, ' ').replace(/^ /, '');
+  iaAltura();
+  iaBotao();
+}
+
+/* uma sessão de escuta. O Chrome encerra sozinho depois de um tempo calado,
+   então o fim de uma sessão abre a seguinte enquanto o estado for "gravando" */
+function vzOuvir(){
+  vzRec = new IA_FALA();
+  vzRec.lang = 'pt-BR';
+  vzRec.continuous = true;
+  vzRec.interimResults = true;
+  vzSessao = '';
+
+  vzRec.onresult = e => {
+    let firme = '', interim = '';
+    for (let i = 0; i < e.results.length; i++){
+      const r = e.results[i];
+      if (r.isFinal) firme += r[0].transcript;
+      else interim += r[0].transcript;
+    }
+    vzSessao = firme;
+    vzTexto(interim);
+  };
+
+  vzRec.onerror = e => {
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed'){
+      fgToast('Permita o microfone no navegador para ditar.');
+      vzFechar(false);
+    } else if (e.error === 'no-speech' || e.error === 'aborted'){
+      /* silêncio ou parada nossa: o onend resolve */
+    } else {
+      fgToast('Não consegui ouvir agora (' + e.error + ').');
+      vzFechar(false);
+    }
+  };
+
+  vzRec.onend = () => {
+    vzFirme += vzSessao;
+    vzSessao = '';
+    if (vzEstado === 'gravando'){ try { vzRec.start(); } catch (x) {} }
+  };
+
+  try { vzRec.start(); } catch (x) {}
+}
+
+/* o medidor: um segundo fluxo do microfone, só para a onda */
+function vzMedidor(){
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+  navigator.mediaDevices.getUserMedia({ audio:true }).then(fluxo => {
+    if (vzEstado === 'off'){ fluxo.getTracks().forEach(x => x.stop()); return; }
+    vzFluxo = fluxo;
+    vzAudio = new (window.AudioContext || window.webkitAudioContext)();
+    vzAnalise = vzAudio.createAnalyser();
+    vzAnalise.fftSize = 512;
+    vzAudio.createMediaStreamSource(fluxo).connect(vzAnalise);
+    vzDesenhar();
+  }).catch(() => { /* sem medidor: a onda fica na linha de base */ });
+}
+
+function vzDesenhar(){
+  const cv = $('#iaRecWave');
+  const dpr = window.devicePixelRatio || 1;
+  const cx = cv.getContext('2d');
+  const dados = new Uint8Array(vzAnalise.frequencyBinCount);
+  const LARG = 3, VAO = 2;
+
+  function quadro(){
+    vzQuadro = requestAnimationFrame(quadro);
+    const cai = cv.getBoundingClientRect();
+    if (!cai.width) return;
+    if (cv.width !== Math.round(cai.width * dpr)){
+      cv.width  = Math.round(cai.width * dpr);
+      cv.height = Math.round(cai.height * dpr);
+    }
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const L = cai.width, A = cai.height, cabem = Math.floor(L / (LARG + VAO));
+
+    if (vzEstado === 'gravando'){
+      vzAnalise.getByteTimeDomainData(dados);
+      let soma = 0;
+      for (let i = 0; i < dados.length; i++){ const v = (dados[i] - 128) / 128; soma += v * v; }
+      vzNiveis.push(Math.min(1, Math.sqrt(soma / dados.length) * 3.4));
+      while (vzNiveis.length > cabem) vzNiveis.shift();
+    }
+
+    cx.clearRect(0, 0, L, A);
+    cx.fillStyle = vzEstado === 'pausado' ? '#C6CDD5' : '#00acac';
+    for (let i = 0; i < vzNiveis.length; i++){
+      const h = Math.max(2, vzNiveis[i] * (A - 2));
+      const x = L - (vzNiveis.length - i) * (LARG + VAO);
+      cx.beginPath();
+      cx.roundRect(x, (A - h) / 2, LARG, h, LARG / 2);
+      cx.fill();
+    }
+  }
+  quadro();
+}
+
+function vzMarcar(liga){
+  clearInterval(vzRelogio);
+  vzRelogio = null;
+  const pinta = () => {
+    const s = Math.floor((vzAcum + (liga ? Date.now() - vzT0 : 0)) / 1000);
+    $('#iaRecTime').textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  };
+  if (liga){ vzT0 = Date.now(); pinta(); vzRelogio = setInterval(pinta, 250); }
+  else pinta();
+}
+
+function vzAbrir(){
+  if (vzEstado !== 'off') return;
+  if (!IA_FALA){ fgToast('Este navegador não transcreve voz. Use o Chrome ou o Edge.'); return; }
+  vzBase   = iaText.value.trim() ? iaText.value.trim() + ' ' : '';
+  vzFirme  = '';
+  vzSessao = '';
+  vzAcum   = 0;
+  vzNiveis.length = 0;
+  vzEstado = 'gravando';
+  iaText.readOnly = true;          /* o texto é reescrito a cada resultado */
+  $('#iaCompRow').hidden = true;
+  $('#iaRec').hidden = false;
+  $('#iaRec').classList.remove('pausado');
+  $('#iaRecPause').innerHTML = '<i class="mdi mdi-pause"></i>';
+  $('#iaRecPause').title = 'Pausar';
+  $('#iaComp').classList.add('gravando');
+  vzMarcar(true);
+  vzOuvir();
+  vzMedidor();
+}
+
+function vzPausar(){
+  if (vzEstado === 'gravando'){
+    vzEstado = 'pausado';                       /* antes do stop: o onend lê isto */
+    vzAcum += Date.now() - vzT0;
+    vzMarcar(false);
+    try { vzRec && vzRec.stop(); } catch (x) {}
+    $('#iaRec').classList.add('pausado');
+    $('#iaRecPause').innerHTML = '<i class="mdi mdi-microphone"></i>';
+    $('#iaRecPause').title = 'Continuar';
+  } else if (vzEstado === 'pausado'){
+    vzEstado = 'gravando';
+    vzMarcar(true);
+    vzOuvir();
+    $('#iaRec').classList.remove('pausado');
+    $('#iaRecPause').innerHTML = '<i class="mdi mdi-pause"></i>';
+    $('#iaRecPause').title = 'Pausar';
+  }
+}
+
+function vzFechar(manter){
+  if (vzEstado === 'off') return;
+  vzEstado = 'off';
+  try { vzRec && vzRec.stop(); } catch (x) {}
+  vzRec = null;
+  clearInterval(vzRelogio); vzRelogio = null;
+  if (vzQuadro){ cancelAnimationFrame(vzQuadro); vzQuadro = null; }
+  if (vzFluxo){ vzFluxo.getTracks().forEach(x => x.stop()); vzFluxo = null; }
+  if (vzAudio){ try { vzAudio.close(); } catch (x) {} vzAudio = null; }
+  vzAnalise = null;
+  vzNiveis.length = 0;
+  iaText.readOnly = false;
+  $('#iaRec').hidden = true;
+  $('#iaRec').classList.remove('pausado');
+  $('#iaCompRow').hidden = false;
+  $('#iaComp').classList.remove('gravando');
+  $('#iaRecTime').textContent = '0:00';
+  if (manter){
+    iaText.value = (vzBase + vzFirme + vzSessao).replace(/\s+/g, ' ').trim();
+  } else {
+    iaText.value = vzBase.trim();
+  }
+  vzBase = vzFirme = vzSessao = '';
+  iaAltura();
+  iaBotao();
+  if (manter) iaText.focus();
+}
+
+$('#iaMic').addEventListener('click', vzAbrir);
+$('#iaRecPause').addEventListener('click', vzPausar);
+$('#iaRecOk').addEventListener('click', () => vzFechar(true));
+$('#iaRecCancel').addEventListener('click', () => vzFechar(false));
+/* fechar o módulo ou trocar de conversa não deixa o microfone ligado */
+window.addEventListener('beforeunload', () => vzFechar(false));
 
 /* --------------------------------------------------------------- eventos --- */
 
@@ -695,6 +914,7 @@ document.addEventListener('click', e => {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && iaView.classList.contains('open')){
+    if (vzEstado !== 'off'){ vzFechar(false); return; }
     if (!$('#iaUserMenu').hidden){ $('#iaUserMenu').hidden = true; return; }
     if (!$('#iaRowMenu').hidden){ iaFechaMenuLinha(); return; }
     if (!$('#iaMenu').hidden){ $('#iaMenu').hidden = true; return; }

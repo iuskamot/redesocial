@@ -11,7 +11,9 @@
 /* o avatar do topo também só era exibido dentro da Rede Social */
 .ia-view .nmod-topav{display:block;width:36px;height:36px;font-size:0;flex:none}
 /* Sem o nome do módulo sobra espaço, então a barra usa a logo por extenso em
-   vez do símbolo sozinho */
+   vez do símbolo sozinho. Ela não responde ao mouse: a regra compartilhada
+   apagava a logo no hover, e aqui isso lia como a marca piscando. */
+.ia-view .ia-logobtn:hover{opacity:1}
 .ia-toplogo{height:26px;width:auto;display:block}
 @media(max-width:900px){ .ia-toplogo{height:22px} }
 
@@ -31,7 +33,6 @@
 /* a marca da IA: a mesma faísca do ícone do módulo, em teal */
 .ia-mark{display:block;flex-shrink:0;width:26px;height:26px;background-repeat:no-repeat;background-position:center;background-size:contain;
   background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTI0IDZjLjUgMCAuOS4zIDEgLjhsMS45IDYuNmExMCAxMCAwIDAgMCA2LjkgNi45bDYuNiAxLjljLjUuMS44LjUuOCAxcy0uMy45LS44IDFsLTYuNiAxLjlhMTAgMTAgMCAwIDAtNi45IDYuOWwtMS45IDYuNmMtLjEuNS0uNS44LTEgLjhzLS45LS4zLTEtLjhsLTEuOS02LjZhMTAgMTAgMCAwIDAtNi45LTYuOWwtNi42LTEuOWMtLjUtLjEtLjgtLjUtLjgtMXMuMy0uOS44LTFsNi42LTEuOWExMCAxMCAwIDAgMCA2LjktNi45bDEuOS02LjZjLjEtLjUuNS0uOCAxLS44WiIvPjxwYXRoIGZpbGw9IiMwMGFjYWMiIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIi8+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTExIDMzYy4yNSAwIC40NS4xNy41Mi40MmwuNDUgMS42YTMgMyAwIDAgMCAyLjAxIDIuMDFsMS42LjQ1Yy4yNS4wNy40Mi4yNy40Mi41MnMtLjE3LjQ1LS40Mi41MmwtMS42LjQ1YTMgMyAwIDAgMC0yLjAxIDIuMDFsLS40NSAxLjZjLS4wNy4yNS0uMjcuNDItLjUyLjQycy0uNDUtLjE3LS41Mi0uNDJsLS40NS0xLjZhMyAzIDAgMCAwLTIuMDEtMi4wMWwtMS42LS40NWMtLjI1LS4wNy0uNDItLjI3LS40Mi0uNTJzLjE3LS40NS40Mi0uNTJsMS42LS40NWEzIDMgMCAwIDAgMi4wMS0yLjAxbC40NS0xLjZjLjA3LS4yNS4yNy0uNDIuNTItLjQyWiIvPjwvc3ZnPg==")}
-.ia-mark-lg{width:44px;height:44px;margin-bottom:18px}
 
 /* ---------------- coluna das conversas ---------------- */
 .ia-side{display:flex;width:276px;flex-shrink:0;flex-direction:column;gap:10px;padding:14px 12px;
@@ -46,10 +47,10 @@
 .ia-new:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.3)}
 
 .ia-find{display:flex;align-items:center;gap:9px;height:36px;padding:0 12px;border-radius:6px;
-  background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);
+  background:#fff;box-shadow:inset 0 0 0 1px var(--linha-campo);color:var(--muted);
   transition:box-shadow 120ms cubic-bezier(.4,0,.2,1)}
 .ia-find:focus-within{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.14)}
-.ia-find i{font-size:12px;flex:none}
+.ia-find i{font-size:12px;flex:none;color:var(--teal)}
 .ia-find input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:14px;color:var(--ink)}
 .ia-find input::placeholder{color:var(--muted)}
 
@@ -99,7 +100,7 @@
 .ia-item.on .ia-ic-off{display:none}
 .ia-item.on .ia-ic-on{display:inline-block}
 .ia-item span{flex:1;min-width:0;text-align:left}
-.ia-item:hover{background:#EAEDF0}
+.ia-item:hover{background:#F1F3F6}
 .ia-item.on{background:#E3E7EC;color:var(--ink);font-weight:700}
 .ia-item.on>i{color:var(--ink)}
 .ia-item.on:hover{background:#DBE0E6}
@@ -113,31 +114,32 @@
   padding:7px 8px;border-radius:8px;text-align:left;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-user:hover{background:#EDEFF2}
-.ia-user>i{font-size:10px;color:#9aa5b1;flex:none}
+.ia-user>i{font-size:18px;color:#6B7280;flex:none;line-height:1}
 .ia-userav{width:32px;height:32px;font-size:0;flex:none}
 .ia-user-tx{flex:1;min-width:0;display:flex;flex-direction:column}
 .ia-user-tx b{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ia-user-tx span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .ia-usermenu{position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:12;
-  background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;
+  display:flex;flex-direction:column;gap:2px;
+  background:#fff;border:1px solid var(--linha-campo);border-radius:12px;padding:6px;
   max-height:420px;overflow-y:auto;box-shadow:0 18px 40px -12px rgba(16,32,48,.42)}
 .ia-umlbl{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:9px 10px 4px}
 .ia-usermenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
   padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font:inherit}
-.ia-usermenu button:hover{background:#EAEDF0}
+.ia-usermenu button:hover{background:#F1F3F6}
 .ia-usermenu button.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-usermenu button>i{font-size:11px;color:var(--teal);opacity:0;flex:none}
 .ia-usermenu button.on>i{opacity:1}
 .ia-umav{width:28px;height:28px;font-size:0;flex:none}
-.ia-umic{width:28px;height:28px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;
-  background:#EDEFF2;color:#5b6672;font-size:12px}
+.ia-umav{width:28px;height:28px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px}
 .ia-umtx{flex:1;min-width:0;display:flex;flex-direction:column}
 .ia-umtx b{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* o menu de uma linha: preso à tela, posicionado no clique */
 .ia-view .ia-rowmenu{position:fixed;top:0;left:0;right:auto;width:max-content;min-width:184px;z-index:140}
-.ia-linha:hover,.ia-linha.menu-on{background:color-mix(in srgb,var(--teal) 9%,transparent)}
+.ia-linha:hover,.ia-linha.menu-on{background:#F1F3F6}
 .ia-linha.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-linha.on .ia-conv{color:#0a6e6e;font-weight:700}
 .ia-linha.on:hover{background:color-mix(in srgb,var(--teal) 21%,transparent)}
@@ -146,7 +148,26 @@
 .ia-vazio span{display:block;margin-top:5px;font-size:12px;line-height:1.5;color:var(--muted)}
 
 /* ---------------- a conversa ---------------- */
-.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff}
+.ia-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff;
+  transition:background 240ms cubic-bezier(.4,0,.2,1)}
+/* Enquanto não há conversa, o branco ganha um clarão de verdigris no alto —
+   duas manchas largas e translúcidas, uma centrada e outra deslocada, que se
+   somam num degradê sem costura. Some assim que a primeira pergunta é feita,
+   para o texto da resposta ficar sobre branco puro. */
+.ia-view.ia-inicio .ia-main{
+  background:
+    radial-gradient(1080px 780px at 50% 42%,
+      color-mix(in srgb,var(--teal) 3.5%,transparent) 0%,
+      color-mix(in srgb,var(--teal) 2.8%,transparent) 20%,
+      color-mix(in srgb,var(--teal) 1.8%,transparent) 42%,
+      color-mix(in srgb,var(--teal) 0.8%,transparent) 64%,
+      transparent 86%),
+    radial-gradient(820px 600px at 37% 57%,
+      color-mix(in srgb,#4bb8d8 2.5%,transparent) 0%,
+      color-mix(in srgb,#4bb8d8 1.5%,transparent) 36%,
+      color-mix(in srgb,#4bb8d8 0.6%,transparent) 60%,
+      transparent 82%),
+    #fff}
 .ia-head{display:flex;align-items:center;gap:10px;height:56px;flex-shrink:0;padding:0 20px;
   box-shadow:inset 0 -1px 0 var(--line)}
 .ia-head-tt{font-size:14px;font-weight:700;letter-spacing:.2px;color:var(--ink);
@@ -160,13 +181,14 @@
   font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
 .ia-menuwrap{position:relative}
 .ia-menu{position:absolute;top:calc(100% + 6px);right:0;min-width:190px;z-index:6;
-  background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;
+  display:flex;flex-direction:column;gap:2px;
+  background:#fff;border:1px solid var(--linha-campo);border-radius:12px;padding:6px;
   box-shadow:0 14px 34px -12px rgba(16,32,48,.4)}
 .ia-menu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
   padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#465364;
   cursor:pointer;text-align:left}
 .ia-menu button i{width:14px;font-size:12px}
-.ia-menu button:hover{background:#EAEDF0}
+.ia-menu button:hover{background:#F1F3F6}
 .ia-menu button.danger{color:var(--red)}
 .ia-menu button.danger:hover{background:#fdecec}
 
@@ -175,7 +197,8 @@
 /* ----- estado inicial ----- */
 .ia-zero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   width:100%;max-width:720px;margin:0 auto;padding:32px 24px 40px}
-.ia-hello{font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-.2px;color:var(--ink);text-align:center}
+.ia-hello{font-size:30px;line-height:1.25;font-weight:600;letter-spacing:-.3px;text-align:center;
+  color:var(--ink)}
 .ia-sub{margin-top:8px;font-size:17px;color:var(--muted);text-align:center}
 .ia-zerodock{width:100%;margin-top:26px}
 .ia-chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:22px}
@@ -184,8 +207,8 @@
   transition:box-shadow 120ms cubic-bezier(.4,0,.2,1),transform 120ms cubic-bezier(.4,0,.2,1)}
 .ia-chip:hover{box-shadow:inset 0 0 0 1px var(--teal),0 6px 18px -12px rgba(16,32,48,.5);transform:translateY(-1px)}
 .ia-chip:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.16)}
-.ia-chip-ic{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:12px;background:var(--c,#5b6672)}
+.ia-chip-ic{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:18px;background:var(--c,#5b6672)}
 .ia-chip-tx{flex:1;min-width:0}
 .ia-chip-tx b{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
 
@@ -248,6 +271,24 @@
 .ia-send:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.24)}
 .ia-send.parar{background:var(--ink)}
 .ia-send.parar:hover{background:#111c2b}
+/* enquanto grava, a caixa toda ganha o anel da marca */
+.ia-comp.gravando .ia-compbox{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.16),0 10px 26px -18px rgba(16,32,48,.5)}
+.ia-rec{display:flex;align-items:center;gap:10px}
+.ia-recwave{flex:1;min-width:0;height:28px;display:block}
+.ia-rectime{flex:none;font-size:13px;font-weight:600;letter-spacing:.3px;color:#5b6672;
+  font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+.ia-rec.pausado .ia-rectime{color:var(--muted)}
+.ia-recx,.ia-recpause{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+  flex:none;border:0;border-radius:999px;background:none;color:#5b6672;font-size:18px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
+.ia-recx:hover{background:#FDECEC;color:var(--red)}
+.ia-recpause:hover{background:#F1F3F5;color:var(--ink)}
+.ia-recok{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:none;
+  border:0;border-radius:999px;background:var(--teal);color:#fff;font-size:18px;cursor:pointer;
+  transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.ia-recok:hover{background:var(--teal-dark)}
+.ia-recx:focus-visible,.ia-recpause:focus-visible,.ia-recok:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.28)}
+
 .ia-disc{margin-top:9px;text-align:center;font-size:12px;color:var(--muted)}
 
 /* ---------------- celular ---------------- */
@@ -270,6 +311,9 @@
   .ia-sub{font-size:15px}
   .ia-chips{grid-template-columns:1fr;gap:8px}
   .ia-dock{padding:0 12px calc(12px + env(safe-area-inset-bottom,0px))}
+  .ia-rec{gap:6px}
+  .ia-recwave{height:24px}
+  .ia-rectime{font-size:12px;min-width:30px}
 }
 
 /* ---------------- tamanho ótico dos ícones ----------------
@@ -282,10 +326,11 @@
 .ia-view .ia-find i{font-size:15px}
 .ia-view .ia-convmais{font-size:17px}
 .ia-view .ia-hbtn>i{font-size:17px}
-.ia-view .ia-menu button i,.ia-rowmenu button i,.ia-view .ia-usermenu button>i{font-size:15px;width:16px}
-.ia-view .ia-user>i{font-size:14px}
+.ia-view .ia-menu button i,.ia-rowmenu button i{font-size:15px;width:16px}
+.ia-view .ia-usermenu button>i{font-size:17px;width:17px}
+.ia-view .ia-user>i{font-size:18px}
 .ia-view .ia-cbtn{font-size:17px}
 .ia-view .ia-send{font-size:17px}
-.ia-view .ia-chip-ic{font-size:15px}
+.ia-view .ia-chip-ic{font-size:18px}
 .ia-view .ia-act i{font-size:15px}
-.ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:22px;line-height:22px;height:22px}
+.ia-view .nmod-tab i,.ia-view .nmod-switch i{font-size:20px;line-height:20px;height:20px}
