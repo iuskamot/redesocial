@@ -88,7 +88,7 @@ function gsRender(){
   if (convs.length){
     out += '<div class="gs-label">' + (q ? 'Conversas' : 'Conversas recentes') + '</div>';
     convs.forEach(c => {
-      out += '<button class="gs-item' + (n === 0 ? ' sel' : '') + '" data-gsconv="' + c.id + '">' +
+      out += '<button class="gs-item" data-gsconv="' + c.id + '">' +
         '<span class="gs-ic gs-ic-conv"><i class="fa-regular fa-comment"></i></span>' +
         '<span class="gs-txt"><span class="gs-title">' + gsMark(c.t, q) + '</span>' +
         '<span class="gs-sub">' + escapeHtml(c.g) + '</span></span>' +
@@ -113,7 +113,7 @@ function gsRender(){
   if (!n) out = '<div class="gs-empty">Comece a escrever para perguntar à IA</div>';
   out += '<div class="gs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navegar</span><span><kbd>Enter</kbd> abrir</span><span><kbd>Esc</kbd> fechar</span></div>';
   gsPanel.innerHTML = out;
-  gsSel = 0;
+  gsSel = q ? 0 : -1;   /* -1: nada marcado até a seta descer */
 }
 
 function gsOpen(){ gsRender(); gsPanel.hidden = false; }
@@ -135,7 +135,8 @@ function gsMove(d){
   const els = gsPanel.querySelectorAll('.gs-item');
   if (!els.length) return;
   els[gsSel] && els[gsSel].classList.remove('sel');
-  gsSel = (gsSel + d + els.length) % els.length;
+  gsSel = gsSel < 0 ? (d > 0 ? 0 : els.length - 1)
+                    : (gsSel + d + els.length) % els.length;
   els[gsSel].classList.add('sel');
   els[gsSel].scrollIntoView({ block:'nearest' });
 }

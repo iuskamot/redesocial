@@ -119,12 +119,12 @@ function iaResponder(pergunta){
 /* As conversas guardadas. Só as perguntas ficam salvas: a resposta é montada
    pela mesma função da conversa ao vivo, então as duas nunca divergem. */
 const IA_CONVERSAS = [
-  { id:'c1', g:'Hoje',            t:'Prazo de SLA dos chamados críticos', p:['Qual é o prazo de SLA para um chamado crítico?'] },
-  { id:'c2', g:'Hoje',            t:'Comunicados da semana',              p:['Resuma os comunicados desta semana'] },
-  { id:'c3', g:'Ontem',           t:'Itens da auditoria mensal',          p:['O que cai na auditoria mensal da loja?'] },
-  { id:'c4', g:'Últimos 7 dias',  t:'Documentos para abrir uma unidade',  p:['Quais documentos preciso para abrir uma unidade nova?'] },
-  { id:'c5', g:'Últimos 7 dias',  t:'Trilhas obrigatórias do time',       p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
-  { id:'c6', g:'Últimos 30 dias', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] }
+  { id:'c1', g:'Hoje',            d:0,  h:'09:12', t:'Prazo de SLA dos chamados críticos', p:['Qual é o prazo de SLA para um chamado crítico?'] },
+  { id:'c2', g:'Hoje',            d:0,  h:'08:40', t:'Comunicados da semana',              p:['Resuma os comunicados desta semana'] },
+  { id:'c3', g:'Ontem',           d:1,  h:'16:14', t:'Itens da auditoria mensal',          p:['O que cai na auditoria mensal da loja?'] },
+  { id:'c4', g:'Últimos 7 dias',  d:3,  h:'11:05', t:'Documentos para abrir uma unidade',  p:['Quais documentos preciso para abrir uma unidade nova?'] },
+  { id:'c5', g:'Últimos 7 dias',  d:5,  h:'14:37', t:'Trilhas obrigatórias do time',       p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
+  { id:'c6', g:'Últimos 30 dias', d:18, h:'10:22', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] }
 ];
 
 /* Quem está usando */
@@ -220,6 +220,42 @@ function iaAddResposta(){
   el.innerHTML = '<div class="ia-resp"><span class="ia-mark" aria-hidden="true"></span><div class="ia-corpo"></div></div>';
   iaThread.appendChild(el);
   return el;
+}
+
+/* ---------- quando ----------
+   O carimbo entra quando o dia muda, não a cada mensagem: dentro do mesmo dia
+   ele viraria ruído. Perto, diz o dia por nome; longe, a data. */
+
+const IA_DIAS = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+let iaDiaNoFio = null;   /* dia do último carimbo já posto no fio */
+
+function iaDataDaConversa(c){
+  const d = new Date();
+  d.setDate(d.getDate() - (c.d || 0));
+  const [hh, mm] = String(c.h || '09:00').split(':');
+  d.setHours(+hh, +mm, 0, 0);
+  return d;
+}
+
+function iaQuando(d){
+  const dois = n => String(n).padStart(2, '0');
+  const hora = dois(d.getHours()) + ':' + dois(d.getMinutes());
+  const so = x => new Date(x.getFullYear(), x.getMonth(), x.getDate());
+  const dias = Math.round((so(new Date()) - so(d)) / 86400000);
+  if (dias <= 0) return 'hoje ' + hora;
+  if (dias === 1) return 'ontem ' + hora;
+  if (dias < 7)  return IA_DIAS[d.getDay()] + ' ' + hora;
+  return dois(d.getDate()) + '/' + dois(d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2) + ' ' + hora;
+}
+
+function iaCarimbo(d){
+  const chave = d.toDateString();
+  if (chave === iaDiaNoFio) return;
+  iaDiaNoFio = chave;
+  const el = document.createElement('div');
+  el.className = 'ia-quando';
+  el.textContent = iaQuando(d);
+  iaThread.appendChild(el);
 }
 
 function iaRolar(){
@@ -438,6 +474,7 @@ function iaNovaConversa(){
   iaAtual = null;
   iaVerArq = false;
   iaView.classList.add('ia-inicio');
+  iaDiaNoFio = null;
   iaThread.innerHTML = '';
   iaThread.hidden = true;
   iaZero.hidden = false;
@@ -470,7 +507,10 @@ function iaAbrirConversa(id){
   iaAtual = id;
   iaModoConversa(c.t);
   iaThread.innerHTML = '';
+  iaDiaNoFio = null;
+  const quando = iaDataDaConversa(c);
   c.p.forEach(pergunta => {
+    iaCarimbo(quando);
     iaAddPergunta(pergunta);
     const el = iaAddResposta();
     const resp = iaResponder(pergunta);
@@ -486,9 +526,13 @@ function iaPerguntar(txt){
   if (!pergunta || iaEscrevendo) return;
 
   if (!iaAtual){
+    const agora = new Date();
+    const dois = n => String(n).padStart(2, '0');
     const c = {
       id: 'n' + Date.now(),
       g: 'Hoje',
+      d: 0,
+      h: dois(agora.getHours()) + ':' + dois(agora.getMinutes()),
       t: pergunta.length > 42 ? pergunta.slice(0, 42).trim() + '…' : pergunta,
       p: []
     };
@@ -501,6 +545,7 @@ function iaPerguntar(txt){
 
   iaText.value = '';
   iaAltura();
+  iaCarimbo(new Date());
   iaAddPergunta(pergunta);
   iaRenderLista();
 
@@ -586,16 +631,8 @@ let vzRec     = null;    /* o reconhecedor da vez */
 let vzBase    = '';      /* o que já estava escrito antes de gravar */
 let vzFirme   = '';      /* o transcrito consolidado das sessões anteriores */
 let vzSessao  = '';      /* o consolidado da sessão em curso */
-let vzT0 = 0, vzAcum = 0, vzRelogio = null;
 let vzFluxo = null, vzAudio = null, vzAnalise = null, vzQuadro = null;
 const vzNiveis = [];
-
-function vzTexto(interim){
-  const bruto = vzBase + vzFirme + vzSessao + (interim || '');
-  iaText.value = bruto.replace(/\s+/g, ' ').replace(/^ /, '');
-  iaAltura();
-  iaBotao();
-}
 
 /* uma sessão de escuta. O Chrome encerra sozinho depois de um tempo calado,
    então o fim de uma sessão abre a seguinte enquanto o estado for "gravando" */
@@ -614,7 +651,8 @@ function vzOuvir(){
       else interim += r[0].transcript;
     }
     vzSessao = firme;
-    vzTexto(interim);
+    /* o texto não entra no campo agora: ele aparece de uma vez ao concluir,
+       depois do "Transcrevendo…", que é como o modelo funciona */
   };
 
   vzRec.onerror = e => {
@@ -648,7 +686,6 @@ function vzMedidor(){
     vzAnalise = vzAudio.createAnalyser();
     vzAnalise.fftSize = 512;
     vzAudio.createMediaStreamSource(fluxo).connect(vzAnalise);
-    vzDesenhar();
   }).catch(() => { /* sem medidor: a onda fica na linha de base */ });
 }
 
@@ -656,7 +693,7 @@ function vzDesenhar(){
   const cv = $('#iaRecWave');
   const dpr = window.devicePixelRatio || 1;
   const cx = cv.getContext('2d');
-  const dados = new Uint8Array(vzAnalise.frequencyBinCount);
+  let dados = null;
   const LARG = 3, VAO = 2;
 
   function quadro(){
@@ -670,7 +707,8 @@ function vzDesenhar(){
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const L = cai.width, A = cai.height, cabem = Math.floor(L / (LARG + VAO));
 
-    if (vzEstado === 'gravando'){
+    if (vzEstado === 'gravando' && vzAnalise){
+      if (!dados || dados.length !== vzAnalise.frequencyBinCount) dados = new Uint8Array(vzAnalise.frequencyBinCount);
       vzAnalise.getByteTimeDomainData(dados);
       let soma = 0;
       for (let i = 0; i < dados.length; i++){ const v = (dados[i] - 128) / 128; soma += v * v; }
@@ -679,9 +717,17 @@ function vzDesenhar(){
     }
 
     cx.clearRect(0, 0, L, A);
-    cx.fillStyle = vzEstado === 'pausado' ? '#C6CDD5' : '#00acac';
+    /* o trecho ainda não gravado é um trilho de pontinhos */
+    cx.fillStyle = '#CDD4DB';
+    for (let i = 0; i < cabem - vzNiveis.length; i++){
+      cx.beginPath();
+      cx.arc(i * (LARG + VAO) + LARG / 2, A / 2, 1.4, 0, Math.PI * 2);
+      cx.fill();
+    }
+    /* e o que já entrou vira barra, encostando na direita */
+    cx.fillStyle = vzEstado === 'gravando' ? '#5b6672' : '#B8C0C9';
     for (let i = 0; i < vzNiveis.length; i++){
-      const h = Math.max(2, vzNiveis[i] * (A - 2));
+      const h = Math.max(3, vzNiveis[i] * (A - 2));
       const x = L - (vzNiveis.length - i) * (LARG + VAO);
       cx.beginPath();
       cx.roundRect(x, (A - h) / 2, LARG, h, LARG / 2);
@@ -691,24 +737,12 @@ function vzDesenhar(){
   quadro();
 }
 
-function vzMarcar(liga){
-  clearInterval(vzRelogio);
-  vzRelogio = null;
-  const pinta = () => {
-    const s = Math.floor((vzAcum + (liga ? Date.now() - vzT0 : 0)) / 1000);
-    $('#iaRecTime').textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
-  };
-  if (liga){ vzT0 = Date.now(); pinta(); vzRelogio = setInterval(pinta, 250); }
-  else pinta();
-}
-
 function vzAbrir(){
   if (vzEstado !== 'off') return;
   if (!IA_FALA){ fgToast('Este navegador não transcreve voz. Use o Chrome ou o Edge.'); return; }
   vzBase   = iaText.value.trim() ? iaText.value.trim() + ' ' : '';
   vzFirme  = '';
   vzSessao = '';
-  vzAcum   = 0;
   vzNiveis.length = 0;
   vzEstado = 'gravando';
   iaText.readOnly = true;          /* o texto é reescrito a cada resultado */
@@ -717,24 +751,22 @@ function vzAbrir(){
   $('#iaRec').classList.remove('pausado');
   $('#iaRecPause').innerHTML = '<i class="mdi mdi-pause"></i>';
   $('#iaRecPause').title = 'Pausar';
+  $('#iaRec').classList.remove('carregando');
   $('#iaComp').classList.add('gravando');
-  vzMarcar(true);
   vzOuvir();
+  vzDesenhar();
   vzMedidor();
 }
 
 function vzPausar(){
   if (vzEstado === 'gravando'){
     vzEstado = 'pausado';                       /* antes do stop: o onend lê isto */
-    vzAcum += Date.now() - vzT0;
-    vzMarcar(false);
     try { vzRec && vzRec.stop(); } catch (x) {}
     $('#iaRec').classList.add('pausado');
     $('#iaRecPause').innerHTML = '<i class="mdi mdi-microphone"></i>';
     $('#iaRecPause').title = 'Continuar';
   } else if (vzEstado === 'pausado'){
     vzEstado = 'gravando';
-    vzMarcar(true);
     vzOuvir();
     $('#iaRec').classList.remove('pausado');
     $('#iaRecPause').innerHTML = '<i class="mdi mdi-pause"></i>';
@@ -742,12 +774,34 @@ function vzPausar(){
   }
 }
 
+/* Concluir para de ouvir e espera o reconhecimento entregar o que ficou
+   pendente — é aí que a última frase vira texto. A espera é real, não enfeite;
+   o piso de 700ms existe só para o aviso não piscar quando ela é curta. */
+function vzConcluir(){
+  if (vzEstado === 'off' || vzEstado === 'transcrevendo') return;
+  const parado = vzEstado === 'pausado';
+  vzEstado = 'transcrevendo';
+  $('#iaRec').classList.add('carregando');
+
+  const inicio = Date.now();
+  let fechado = false;
+  const encerra = () => {
+    if (fechado) return;
+    fechado = true;
+    setTimeout(() => vzFechar(true), Math.max(0, 700 - (Date.now() - inicio)));
+  };
+
+  if (parado || !vzRec){ encerra(); return; }
+  vzRec.onend = () => { vzFirme += vzSessao; vzSessao = ''; encerra(); };
+  try { vzRec.stop(); } catch (x) { encerra(); }
+  setTimeout(encerra, 2500);   /* rede de segurança se o onend não vier */
+}
+
 function vzFechar(manter){
   if (vzEstado === 'off') return;
   vzEstado = 'off';
   try { vzRec && vzRec.stop(); } catch (x) {}
   vzRec = null;
-  clearInterval(vzRelogio); vzRelogio = null;
   if (vzQuadro){ cancelAnimationFrame(vzQuadro); vzQuadro = null; }
   if (vzFluxo){ vzFluxo.getTracks().forEach(x => x.stop()); vzFluxo = null; }
   if (vzAudio){ try { vzAudio.close(); } catch (x) {} vzAudio = null; }
@@ -755,10 +809,9 @@ function vzFechar(manter){
   vzNiveis.length = 0;
   iaText.readOnly = false;
   $('#iaRec').hidden = true;
-  $('#iaRec').classList.remove('pausado');
+  $('#iaRec').classList.remove('pausado', 'carregando');
   $('#iaCompRow').hidden = false;
   $('#iaComp').classList.remove('gravando');
-  $('#iaRecTime').textContent = '0:00';
   if (manter){
     iaText.value = (vzBase + vzFirme + vzSessao).replace(/\s+/g, ' ').trim();
   } else {
@@ -772,7 +825,7 @@ function vzFechar(manter){
 
 $('#iaMic').addEventListener('click', vzAbrir);
 $('#iaRecPause').addEventListener('click', vzPausar);
-$('#iaRecOk').addEventListener('click', () => vzFechar(true));
+$('#iaRecOk').addEventListener('click', vzConcluir);
 $('#iaRecCancel').addEventListener('click', () => vzFechar(false));
 /* fechar o módulo ou trocar de conversa não deixa o microfone ligado */
 window.addEventListener('beforeunload', () => vzFechar(false));

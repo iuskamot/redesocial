@@ -70,7 +70,9 @@
   margin-right:5px;border:0;border-radius:6px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
   opacity:0;pointer-events:none;transition:opacity 120ms cubic-bezier(.4,0,.2,1),background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-linha:hover .ia-convmais,.ia-linha.menu-on .ia-convmais,.ia-convmais:focus-visible{opacity:1;pointer-events:auto}
-.ia-convmais:hover{background:color-mix(in srgb,var(--teal) 24%,transparent);color:#0a6e6e}
+.ia-convmais:hover{background:#D2D8DF;color:var(--ink)}
+.ia-linha.on .ia-convmais{color:#0a6e6e}
+.ia-linha.on .ia-convmais:hover{background:color-mix(in srgb,var(--teal) 30%,transparent);color:#0a6e6e}
 /* a caixa de fora corta; a de dentro leva o texto e passeia no hover */
 .ia-conv-cx{flex:1;min-width:0;overflow:hidden}
 .ia-conv-tx{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -100,7 +102,7 @@
 .ia-item.on .ia-ic-off{display:none}
 .ia-item.on .ia-ic-on{display:inline-block}
 .ia-item span{flex:1;min-width:0;text-align:left}
-.ia-item:hover{background:#F1F3F6}
+.ia-item:hover{background:#E3E7EC}
 .ia-item.on{background:#E3E7EC;color:var(--ink);font-weight:700}
 .ia-item.on>i{color:var(--ink)}
 .ia-item.on:hover{background:#DBE0E6}
@@ -113,7 +115,7 @@
 .ia-user{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;cursor:pointer;
   padding:7px 8px;border-radius:8px;text-align:left;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
-.ia-user:hover{background:#EDEFF2}
+.ia-user:hover{background:#E3E7EC}
 .ia-user>i{font-size:18px;color:#6B7280;flex:none;line-height:1}
 .ia-userav{width:32px;height:32px;font-size:0;flex:none}
 .ia-user-tx{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -127,7 +129,7 @@
 .ia-umlbl{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#9aa5b1;padding:9px 10px 4px}
 .ia-usermenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;
   padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font:inherit}
-.ia-usermenu button:hover{background:#F1F3F6}
+.ia-usermenu button:hover{background:#E3E7EC}
 .ia-usermenu button.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-usermenu button>i{font-size:11px;color:var(--teal);opacity:0;flex:none}
 .ia-usermenu button.on>i{opacity:1}
@@ -139,7 +141,7 @@
 
 /* o menu de uma linha: preso à tela, posicionado no clique */
 .ia-view .ia-rowmenu{position:fixed;top:0;left:0;right:auto;width:max-content;min-width:184px;z-index:140}
-.ia-linha:hover,.ia-linha.menu-on{background:#F1F3F6}
+.ia-linha:hover,.ia-linha.menu-on{background:#E3E7EC}
 .ia-linha.on{background:color-mix(in srgb,var(--teal) 16%,transparent)}
 .ia-linha.on .ia-conv{color:#0a6e6e;font-weight:700}
 .ia-linha.on:hover{background:color-mix(in srgb,var(--teal) 21%,transparent)}
@@ -188,7 +190,7 @@
   padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#465364;
   cursor:pointer;text-align:left}
 .ia-menu button i{width:14px;font-size:12px}
-.ia-menu button:hover{background:#F1F3F6}
+.ia-menu button:hover{background:#E3E7EC}
 .ia-menu button.danger{color:var(--red)}
 .ia-menu button.danger:hover{background:#fdecec}
 
@@ -214,6 +216,9 @@
 
 /* ----- as mensagens ----- */
 .ia-thread{width:100%;max-width:760px;margin:0 auto;padding:26px 24px 12px;display:flex;flex-direction:column;gap:26px}
+/* o carimbo fica no meio da coluna, e encostado na mensagem que ele abre */
+.ia-quando{align-self:center;margin:2px 0 -12px;font-size:11px;letter-spacing:.2px;color:var(--muted)}
+.ia-thread>.ia-quando:first-child{margin-top:-6px}
 .ia-msg{display:flex;flex-direction:column}
 .ia-msg.eu{align-items:flex-end}
 .ia-bolha{max-width:78%;background:color-mix(in srgb,var(--teal) 15%,#fff);color:var(--ink);border-radius:16px 16px 5px 16px;
@@ -271,20 +276,32 @@
 .ia-send:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.24)}
 .ia-send.parar{background:var(--ink)}
 .ia-send.parar:hover{background:#111c2b}
-/* enquanto grava, a caixa toda ganha o anel da marca */
-.ia-comp.gravando .ia-compbox{box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.16),0 10px 26px -18px rgba(16,32,48,.5)}
-.ia-rec{display:flex;align-items:center;gap:10px}
-.ia-recwave{flex:1;min-width:0;height:28px;display:block}
-.ia-rectime{flex:none;font-size:13px;font-weight:600;letter-spacing:.3px;color:#5b6672;
-  font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
-.ia-rec.pausado .ia-rectime{color:var(--muted)}
+/* Gravando, a caixa vira só a barra: o campo some, porque o texto só aparece
+   no fim, e o que dá o retorno é a onda. */
+.ia-comp.gravando .ia-text{display:none}
+.ia-comp.gravando .ia-compbox{padding:8px;box-shadow:inset 0 0 0 1px var(--linha-campo),0 1px 2px rgba(16,32,48,.06),0 10px 26px -18px rgba(16,32,48,.5)}
+.ia-rec{display:flex;align-items:center;gap:8px;min-height:34px}
+.ia-recwave{flex:1;min-width:0;height:26px;display:block}
+.ia-rec.carregando .ia-recwave{display:none}
+
+/* o aviso ocupa o lugar da onda enquanto o reconhecimento fecha */
+.ia-recload{display:none;flex:1;min-width:0;align-items:center;justify-content:center;gap:9px;
+  font-size:13px;font-weight:600;letter-spacing:.2px;color:#5b6672}
+.ia-rec.carregando .ia-recload{display:flex}
+.ia-rec.carregando .ia-recx,.ia-rec.carregando .ia-recpause,.ia-rec.carregando .ia-recok{
+  opacity:.35;pointer-events:none}
+.ia-recspin{width:15px;height:15px;flex:none;border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--teal) 28%,transparent);border-top-color:var(--teal);
+  animation:ia-gira .7s linear infinite}
+@keyframes ia-gira{to{transform:rotate(360deg)}}
+
 .ia-recx,.ia-recpause{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
-  flex:none;border:0;border-radius:999px;background:none;color:#5b6672;font-size:18px;cursor:pointer;
+  flex:none;border:0;border-radius:999px;background:#F4F6F8;color:#5b6672;font-size:17px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .ia-recx:hover{background:#FDECEC;color:var(--red)}
-.ia-recpause:hover{background:#F1F3F5;color:var(--ink)}
+.ia-recpause:hover{background:#E5E8EC;color:var(--ink)}
 .ia-recok{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:none;
-  border:0;border-radius:999px;background:var(--teal);color:#fff;font-size:18px;cursor:pointer;
+  border:0;border-radius:999px;background:var(--teal);color:#fff;font-size:17px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-recok:hover{background:var(--teal-dark)}
 .ia-recx:focus-visible,.ia-recpause:focus-visible,.ia-recok:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,172,172,.28)}
@@ -313,7 +330,7 @@
   .ia-dock{padding:0 12px calc(12px + env(safe-area-inset-bottom,0px))}
   .ia-rec{gap:6px}
   .ia-recwave{height:24px}
-  .ia-rectime{font-size:12px;min-width:30px}
+  .ia-recload{font-size:12px;gap:7px}
 }
 
 /* ---------------- tamanho ótico dos ícones ----------------

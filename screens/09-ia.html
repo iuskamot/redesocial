@@ -100,13 +100,15 @@
         <button type="button" class="ia-send" id="iaSend" disabled aria-label="Enviar pergunta"><i class="mdi mdi-arrow-up"></i></button>
       </div>
 
-      <!-- gravando: cancelar, a onda do que está entrando, o tempo, pausar e concluir -->
+      <!-- gravando: cancelar, a onda do que está entrando, pausar e concluir.
+           Ao concluir, a onda dá lugar ao "Transcrevendo…" enquanto o
+           reconhecimento fecha o que ficou pendente. -->
       <div class="ia-rec" id="iaRec" hidden>
         <button type="button" class="ia-recx" id="iaRecCancel" title="Cancelar" aria-label="Cancelar a gravação"><i class="mdi mdi-close"></i></button>
         <canvas class="ia-recwave" id="iaRecWave" aria-hidden="true"></canvas>
-        <span class="ia-rectime" id="iaRecTime">0:00</span>
+        <span class="ia-recload" aria-live="polite"><span class="ia-recspin" aria-hidden="true"></span>Transcrevendo…</span>
         <button type="button" class="ia-recpause" id="iaRecPause" title="Pausar" aria-label="Pausar a gravação"><i class="mdi mdi-pause"></i></button>
-        <button type="button" class="ia-recok" id="iaRecOk" title="Concluir" aria-label="Concluir a gravação"><i class="mdi mdi-check"></i></button>
+        <button type="button" class="ia-recok" id="iaRecOk" title="Concluir" aria-label="Concluir a gravação"><i class="mdi mdi-arrow-up"></i></button>
       </div>
     </div>
     <p class="ia-disc">A IA responde a partir dos documentos da sua rede e pode cometer erros. Confira o que for decisivo.</p>
