@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '/id=\"nvCatsScreen\"/,/id=\"nvTeamScreen\"/' screens/05-rede-social.html)",
+      "Bash(node -e \"console.log\\(require.resolve\\('playwright'\\)\\)\")",
+      "Bash(command -v chromium-cli)",
+      "Bash(echo \"exit:$?\")"
+    ]
+  }
+}

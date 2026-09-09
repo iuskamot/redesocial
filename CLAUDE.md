@@ -52,9 +52,28 @@ valores — são os mais usados no projeto hoje:
 Isso é um ponto de partida, não uma regra rígida: uma instrução explícita da
 usuária para um elemento específico sempre vence esses padrões.
 
+## Regra 4 — Não escale ferramentas/automação além do necessário
+
+A maioria dos pedidos neste repo é simples: trocar um valor de CSS, mover um
+elemento de lugar no HTML, ajustar um texto. Se o pedido é sobre layout,
+quase sempre basta mexer no CSS (às vezes num pedacinho de HTML/JS junto) —
+não é motivo para nada mais elaborado.
+
+- Não instale pacotes, não suba servidor de dev, não rode `npx` nem
+  automação de navegador (headless Chrome, Playwright etc.) só para
+  "verificar" uma mudança que dá para confirmar lendo o código-fonte e o
+  HTML/CSS gerado pelo build.
+- Só recorra a esse tipo de ferramenta pesada se a usuária pedir
+  explicitamente um teste visual, ou se a mudança for complexa/arriscada o
+  bastante para que ler o código não seja suficiente para ter confiança nela.
+- Na dúvida, prefira terminar a tarefa e explicar o que foi conferido de
+  forma estática (fonte + build) a escalar para automação.
+
 ## Por quê
 
 O agente já "alucinou" mudanças extras não pedidas (achando que estava
-"padronizando" ou "limpando") e já rodou build em cima de edição manual não
-salva na fonte, obrigando a usuária a ficar refazendo ajustes manuais toda
-hora. As duas regras acima existem para isso parar de acontecer.
+"padronizando" ou "limpando"), já rodou build em cima de edição manual não
+salva na fonte, e já tentou instalar ferramentas e automatizar navegador
+para verificar uma mudança simples — tudo isso obrigou a usuária a ficar
+corrigindo ou interrompendo o agente. As regras acima existem para isso
+parar de acontecer.

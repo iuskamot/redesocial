@@ -624,13 +624,13 @@ document.getElementById('permTeamHelpModal') && document.getElementById('permTea
 function cfgSetActive(id){ ['cfgNavWho','cfgNavApr','cfgNavTeam','nvcfgCats2'].forEach(x=>{ const b=document.getElementById(x); if(b) b.classList.toggle('active', x===id); }); }
 const PERM_HELP = {
   who: {
-    btn: 'Como usar quem pode postar?',
+    btn: 'Como usar?',
     art: 'uploads/tutorial/image-post.svg',
     title: 'Como usar quem pode postar?',
     body: 'Defina quem pode postar na sua rede social. Escolha se a matriz e as unidades podem criar publicações e shorts e se a permissão é para todos ou apenas para pessoas e unidades selecionadas.'
   },
   apr: {
-    btn: 'Como usar aprovações?',
+    btn: 'Como usar?',
     art: 'uploads/tutorial/image-aprovals.svg',
     title: 'Como usar aprovações?',
     body: 'Ative a aprovação para publicações, shorts e comentários. Assim, cada conteúdo criado fica pendente até a análise de um administrador e só é disponibilizado após sua <b>aprovação</b>. O autor é notificado sobre a decisão e, em caso de <b>reprovação</b>, também recebe o motivo.'
@@ -1640,7 +1640,6 @@ $('#nvCatIcons').addEventListener('click', e=>{ const s=e.target.closest('.cat-i
 $('#nvCatModalClose').addEventListener('click', ()=>$('#nvCatModal').classList.remove('open'));
 $('#nvCatCancel').addEventListener('click', ()=>$('#nvCatModal').classList.remove('open'));
 $('#nvCatModal').addEventListener('click', e=>{ if(e.target===$('#nvCatModal')) $('#nvCatModal').classList.remove('open'); });
-$('#nvCatHelp').addEventListener('click', ()=>$('#nvCatHelpModal').classList.add('open'));
 $('#nvCatHelpClose').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
 $('#nvCatHelpDoubt').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
 $('#nvCatHelpOk').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));

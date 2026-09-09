@@ -1224,8 +1224,8 @@ input,textarea,select{font-size:14px}
 .perm-picktbl tbody tr:hover{background:#F7F9FA}
 #unitPickModal .perm-mhead h3,#unitPickModal .perm-mhead .cat-add{white-space:nowrap}
 #nvCatList td.rl-acts,#catList td.rl-acts{width:200px}
-#nvCatsScreen .cat-head{min-width:0}
-#nvCatsScreen .cat-head .rx-search{min-width:0;flex-shrink:1}
+#nvCatsScreen .cat-toprow{min-width:0}
+#nvCatsScreen .cat-toprow .rx-search{min-width:0;flex-shrink:1}
 .nvcat-sel{width:auto;min-width:150px;height:36px;padding:0 12px;border-radius:8px;flex-shrink:0;cursor:pointer}
 .perm-picktbl .unit-on,.perm-picktbl .unit-off{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border:0;border-radius:8px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.3px;cursor:pointer}
 .perm-picktbl .unit-on{background:rgba(11,168,74,.12);color:#0BA84A}
@@ -1375,7 +1375,7 @@ input,textarea,select{font-size:14px}
 #nvPubApprScreen .cat-head,
 #nvReelApprScreen .cat-head,
 #nvInterScreen .cat-head{margin:12px 12px 0;padding:8px 12px;border-bottom:0;border-radius:8px;box-shadow:inset 0 0 0 1px #D9D9D9;flex-shrink:0}
-#nvPermScreen .cat-head{height:54px}
+#nvPermScreen .cat-head{height:54px;margin:8px 8px 0}
 /* toolbar rola junto: a própria tela é o container de scroll */
 #nvPermScreen,#nvAprHomeScreen,#nvModScreen,#nvPubApprScreen,#nvReelApprScreen{display:none;flex-direction:column;min-height:0;overflow-y:auto}
 #nvPermScreen.active,#nvAprHomeScreen.active,#nvModScreen.active,#nvPubApprScreen.active,#nvReelApprScreen.active{display:flex}
@@ -1401,8 +1401,10 @@ input,textarea,select{font-size:14px}
   background:rgba(28,28,30,.08);color:inherit;border-radius:32px;padding:0 8px;font-size:12px;font-weight:600}
 #nvListScreen .cat-head .cat-add,
 #nvListScreen .cat-head .rx-search,
-#nvCatsScreen .cat-head .cat-add,
-#nvCatsScreen .cat-head .rx-search,
+#nvCatsScreen .cat-toprow .cat-add,
+#nvCatsScreen .cat-toprow .rx-search,
+#nvTeamScreen .cat-toprow .cat-add,
+#nvTeamScreen .cat-toprow .rx-search,
 #nvInterScreen .cat-head .cat-add,
 #nvInterScreen .cat-head .rx-search{border-radius:8px;height:36px;padding-top:0;padding-bottom:0}
 .cv-seg{display:inline-flex;background:#eef2f5;border-radius:999px;padding:3px;gap:2px}
@@ -1875,7 +1877,8 @@ input,textarea,select{font-size:14px}
 #nvListScreen .cat-body{padding:10px 10px 12px}
 #nvInterScreen .cat-body{padding:10px 10px 10px}
 #nvCatsScreen .cat-body{padding:11px 14px 22px}
-#nvPermScreen .perm-body,#nvAprHomeScreen .perm-body{padding:12px}
+#nvAprHomeScreen .perm-body{padding:12px}
+#nvPermScreen .perm-body{padding:8px}
 .nv-filters .nv-fsearch{margin:16px 0 0;width:100%;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0 12px;border-radius:8px}
 .nv-filters .nv-fsearch input{font-size:14px}
 .rl-recpill{display:inline-flex;align-items:center;gap:5px;margin-top:4px;background:#B9860030;color:#B98600 !important;font-size:10px;font-weight:600;letter-spacing:.3px;padding:2px 9px;border-radius:32px}
@@ -3101,12 +3104,14 @@ input,textarea,select{font-size:14px}
    respiro ate a borda da tela, e a tabela esticando ate o fim (sem sobra de
    espaco vazio abaixo). As duas telas compartilham as mesmas classes para
    ficarem identicas visualmente. */
-#nvCatsScreen,#nvTeamScreen{margin:12px;gap:8px}
+#nvCatsScreen,#nvTeamScreen{margin:8px;gap:8px}
 .news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
 .news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
 #nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
 #nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:8px 12px;gap:8px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:none;flex-shrink:0}
 #nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
+#nvCatsScreen .cat-toprow #nvCatAdd{margin-left:4px}
+#nvTeamScreen .cat-toprow #teamAdd{margin-left:4px}
 #nvCatsScreen .cat-head,#nvTeamScreen .cat-head{height:62px}
 #nvCatsScreen .cat-body,#nvTeamScreen .cat-body{flex:1;min-height:0;padding:0;display:flex;flex-direction:column}
 #nvCatsScreen .rlist,#nvTeamScreen .rlist{flex:1;min-height:0;border-radius:8px}
@@ -3190,9 +3195,9 @@ input,textarea,select{font-size:14px}
 #nvCatsScreen .cat-actwrap .cat-arch:hover{background:#5F666C;color:#fff;border-color:#5F666C}
 #nvTeamScreen .cat-actwrap .cat-arch{background:#fff;color:#F7685B;border:1px solid #F7685B}
 #nvTeamScreen .cat-actwrap .cat-arch:hover{background:#F7685B;color:#fff;border-color:#F7685B}
-#nvCatsScreen .cat-head #nvCatAdd,#nvTeamScreen .cat-head #teamAdd{background:#57C279;color:#fff;padding:12px;border-radius:6px;font-size:14px}
-#nvCatsScreen .cat-head #nvCatAdd:hover,#nvTeamScreen .cat-head #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
-#nvCatsScreen .cat-head #nvCatAdd svg,#nvTeamScreen .cat-head #teamAdd svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+#nvCatsScreen .cat-toprow #nvCatAdd,#nvTeamScreen .cat-toprow #teamAdd{background:#57C279;color:#fff;padding:12px;border-radius:6px;font-size:14px}
+#nvCatsScreen .cat-toprow #nvCatAdd:hover,#nvTeamScreen .cat-toprow #teamAdd:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatsScreen .cat-toprow #nvCatAdd svg,#nvTeamScreen .cat-toprow #teamAdd svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
 #nvCatsScreen .cat-helpbtn,#nvTeamScreen .cat-helpbtn,#nvPermScreen .cat-helpbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border:0;
   border-radius:6px;background:#E0F1FF;color:#0F377A;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
@@ -3225,7 +3230,7 @@ input,textarea,select{font-size:14px}
 /* busca de categorias: campo + botao grudados, em vez do icone dentro do campo */
 .nv-catsearch{display:flex;align-items:center;min-width:0;flex-shrink:1}
 .nv-catsearch .rx-search{flex:0 0 auto}
-#nvCatsScreen .cat-head .nv-catsearch .rx-search,#nvTeamScreen .cat-head .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0;padding:12px}
+#nvCatsScreen .cat-toprow .nv-catsearch .rx-search,#nvTeamScreen .cat-toprow .nv-catsearch .rx-search{border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0;padding:12px}
 .nv-catsearch-btn{height:36px;width:38px;border:0;border-radius:0 6px 6px 0;background:var(--teal);color:#fff;
   display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px}
 .nv-catsearch-btn:hover{background:var(--teal-dark)}
@@ -8193,7 +8198,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- PERMISSÕES -->
   <div class="nv-screen" id="nvPermScreen">
-    <div class="cat-head"><div class="rx-title"><span id="permHeadIc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" /></svg></span><h2 id="permHeadTtl">Quem pode postar</h2></div><span style="flex:1"></span><button type="button" class="cat-helpbtn" id="permHelpBtn"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> <span id="permHelpBtnLbl">Como usar quem pode postar?</span></button></div>
+    <div class="cat-head"><div class="rx-title"><span id="permHeadIc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" /></svg></span><h2 id="permHeadTtl">Quem pode postar</h2></div><span style="flex:1"></span><button type="button" class="cat-helpbtn" id="permHelpBtn"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> <span id="permHelpBtnLbl">Como usar?</span></button></div>
     <div class="perm-body">
       <div id="permPubSec">
         <div class="nv-secttl" id="permPubSecTtl"><i class="fa-solid fa-newspaper"></i> Publicações</div>
@@ -8385,10 +8390,6 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <div class="nv-screen" id="nvCatsScreen">
     <div class="cat-toprow">
       <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M5.5,9A1.5,1.5 0 0,0 7,7.5A1.5,1.5 0 0,0 5.5,6A1.5,1.5 0 0,0 4,7.5A1.5,1.5 0 0,0 5.5,9M17.41,11.58C17.77,11.94 18,12.44 18,13C18,13.55 17.78,14.05 17.41,14.41L12.41,19.41C12.05,19.77 11.55,20 11,20C10.45,20 9.95,19.78 9.58,19.41L2.59,12.42C2.22,12.05 2,11.55 2,11V6C2,4.89 2.89,4 4,4H9C9.55,4 10.05,4.22 10.41,4.58L17.41,11.58M13.54,5.71L14.54,4.71L21.41,11.58C21.78,11.94 22,12.45 22,13C22,13.55 21.78,14.05 21.42,14.41L16.04,19.79L15.04,18.79L20.75,13L13.54,5.71Z" /></svg><h2>Categorias</h2></div>
-      <span style="flex:1"></span>
-      <button type="button" class="cat-helpbtn" id="nvCatHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar categorias?</button>
-    </div>
-    <div class="cat-head">
       <button class="cat-add" id="nvCatAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Nova categoria</button>
       <span style="flex:1"></span>
       <select class="nv-fsel nvcat-sel" id="nvCatSeg"><option value="ativos">Ativas</option><option value="inativos">Inativas</option></select>
@@ -8402,16 +8403,13 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <div class="nv-screen" id="nvTeamScreen">
     <div class="cat-toprow">
       <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z" /></svg><h2>Equipe administrativa</h2></div>
-      <span style="flex:1"></span>
-      <button type="button" class="cat-helpbtn" id="permTeamHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar administradores?</button>
-    </div>
-    <div class="cat-head">
       <button class="cat-add" id="teamAdd"><svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg> Novo administrador</button>
       <span style="flex:1"></span>
       <div class="nv-catsearch">
         <div class="rx-search" style="width:300px;max-width:300px"><input type="text" id="teamSearch" placeholder="Pesquisar administrador..." autocomplete="off"></div>
         <button type="button" class="nv-catsearch-btn" id="teamSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
+      <button type="button" class="cat-helpbtn" id="permTeamHelp"><svg viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg> Como usar?</button>
     </div>
     <div class="cat-body"><div class="rlist" id="teamList"></div></div>
   </div>
@@ -13230,13 +13228,13 @@ document.getElementById('permTeamHelpModal') && document.getElementById('permTea
 function cfgSetActive(id){ ['cfgNavWho','cfgNavApr','cfgNavTeam','nvcfgCats2'].forEach(x=>{ const b=document.getElementById(x); if(b) b.classList.toggle('active', x===id); }); }
 const PERM_HELP = {
   who: {
-    btn: 'Como usar quem pode postar?',
+    btn: 'Como usar?',
     art: 'uploads/tutorial/image-post.svg',
     title: 'Como usar quem pode postar?',
     body: 'Defina quem pode postar na sua rede social. Escolha se a matriz e as unidades podem criar publicações e shorts e se a permissão é para todos ou apenas para pessoas e unidades selecionadas.'
   },
   apr: {
-    btn: 'Como usar aprovações?',
+    btn: 'Como usar?',
     art: 'uploads/tutorial/image-aprovals.svg',
     title: 'Como usar aprovações?',
     body: 'Ative a aprovação para publicações, shorts e comentários. Assim, cada conteúdo criado fica pendente até a análise de um administrador e só é disponibilizado após sua <b>aprovação</b>. O autor é notificado sobre a decisão e, em caso de <b>reprovação</b>, também recebe o motivo.'
@@ -14246,7 +14244,6 @@ $('#nvCatIcons').addEventListener('click', e=>{ const s=e.target.closest('.cat-i
 $('#nvCatModalClose').addEventListener('click', ()=>$('#nvCatModal').classList.remove('open'));
 $('#nvCatCancel').addEventListener('click', ()=>$('#nvCatModal').classList.remove('open'));
 $('#nvCatModal').addEventListener('click', e=>{ if(e.target===$('#nvCatModal')) $('#nvCatModal').classList.remove('open'); });
-$('#nvCatHelp').addEventListener('click', ()=>$('#nvCatHelpModal').classList.add('open'));
 $('#nvCatHelpClose').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
 $('#nvCatHelpDoubt').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
 $('#nvCatHelpOk').addEventListener('click', ()=>$('#nvCatHelpModal').classList.remove('open'));
