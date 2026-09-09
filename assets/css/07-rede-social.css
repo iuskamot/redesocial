@@ -1478,8 +1478,10 @@
 #nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
 #nvCatModal .fg-input{font-size:14px;border-radius:6px}
 #nvCatModal .cat-sw{border-radius:6px}
+#nvCatModal .cat-sw:hover{transform:scale(1.02)}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
+#nvCatModal .cat-icpick:hover{transform:scale(1.02);border-color:var(--teal);background:rgba(0,172,172,.08);color:var(--teal)}
 #nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
@@ -1488,8 +1490,10 @@
 #nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
 /* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
+#teamAddModal .fg-modal{display:flex;flex-direction:column}
 #teamAddModal .fg-head{border-bottom:0}
 #teamAddModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#teamAddModal .fg-body{flex:1;min-height:0;overflow-y:auto}
 #teamAddModal .tadd-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
 #teamAddModal .tadd-head{display:flex;align-items:center;gap:12px;height:46px;box-sizing:border-box;padding-left:12px;font-size:14px;font-weight:700;color:#0c334a;background:#fff;border-bottom:1px solid var(--line)}
 #teamAddModal .tadd-th-check{width:18px;flex-shrink:0}
@@ -1516,7 +1520,7 @@
 #teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
 #teamAddModal .fg-foot{border-top:0}
-#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:120px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
+#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:140px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
 #teamAddModal #teamAddCancel{border:0}
 #teamAddModal #teamAddConfirm{background:#57C279}
 #teamAddModal #teamAddConfirm:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
@@ -1524,6 +1528,20 @@
 #teamAddModal .tadd-sortbtn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
 #teamAddModal .tadd-sortbtn:hover{color:#2F8EE5}
 #teamAddModal .tadd-sortbtn svg{width:24px;height:24px;display:block}
-#teamAddModal .nv-catsearch{display:flex;align-items:center;width:100%}
+#teamAddModal .tadd-toprow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#teamAddModal .nv-catsearch{display:flex;align-items:center}
 #teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
 #teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}
+#teamAddModal .tadd-unitsearch{flex:0 0 200px;width:200px}
+#teamAddModal .tadd-unitfield{width:100%;height:36px;box-sizing:border-box;padding:0 12px;border:1px solid #C3C9D5;border-radius:6px;background:#fff;display:flex;align-items:center;gap:0;font:inherit;cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden}
+#teamAddModal .tadd-unitfield i{font-size:13px;color:var(--muted);flex-shrink:0}
+#teamAddModal .tadd-unitfield i:first-child{margin-right:8px}
+#teamAddModal .tadd-unitfield i:last-child{margin-left:8px}
+#teamAddModal .tadd-unitfield span{flex:1;min-width:0;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-personsearch{flex:1;min-width:0}
+#teamAddModal .tadd-bulkacts{display:flex;gap:8px;flex-shrink:0}
+#teamAddModal .tadd-bulkacts .cat-editbtn{height:36px;padding:0 14px;border-radius:6px;font-size:14px;white-space:nowrap;background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
+#teamAddModal .tadd-bulkacts .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+#teamAddModal #teamAddSelClear{height:36px;padding:0 14px;font-size:14px;white-space:nowrap;border:0;border-radius:6px}
+#teamAddModal #teamAddSelClear:disabled{opacity:.5;cursor:not-allowed}
+#teamAddModal #teamAddSelClear:disabled:hover{background:#eef2f5}

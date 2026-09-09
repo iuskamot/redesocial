@@ -1093,7 +1093,7 @@ input,textarea,select{font-size:14px}
 .fg-step.on{color:var(--teal)}
 .fg-step.on .n{background:var(--teal);color:#fff}
 .fg-close{background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer}
-.fg-body{padding:20px 20px}
+.fg-body{padding:20px 22px}
 .fg-pane{display:none}
 .fg-pane.on{display:block}
 .fg-field{margin-bottom:16px}
@@ -1149,7 +1149,7 @@ input,textarea,select{font-size:14px}
 /* Permissões de Shorts: seção dentro de "Quem pode postar" */
 .nv-secttl{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;line-height:20px;font-weight:700;letter-spacing:.3px;color:#999999;text-transform:uppercase}
 .nv-secttl i{font-size:16px}
-#permStoriesSec{margin-top:20px}
+#permStoriesSec{margin-top:26px}
 .perm-picktbl{max-height:360px;overflow-y:auto}
 .perm-picktbl table{width:100%;border-collapse:collapse;font-size:13px}
 .perm-picktbl th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:#8E8E93;padding:8px 10px;border-bottom:1px solid #E9EAED}
@@ -1416,8 +1416,8 @@ input,textarea,select{font-size:14px}
 .perm-tog{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;font-weight:400;color:var(--ink)}
 .perm-tog.nv-toggle{gap:8px}
 .perm-toglbl{font-size:14px;color:var(--ink);margin-bottom:10px}
-.perm-radiogrp{display:flex;flex-direction:column;gap:12px}
-.perm-radio{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;transition:.15s}
+.perm-radiogrp{display:flex;flex-direction:column;gap:8px}
+.perm-radio{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;transition:.15s}
 .perm-radio:hover{border-color:#c8d0d7}
 .perm-radio.on{border-color:#2F8EE5;background:rgba(47,142,229,.05)}
 .perm-radio .pr-dot{flex-shrink:0;width:18px;height:18px;margin-top:1px;border-radius:50%;border:2px solid #c7ccd1;position:relative;transition:.15s}
@@ -1469,7 +1469,7 @@ input,textarea,select{font-size:14px}
 .perm-summary .ps-btn{border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:8px 16px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 .perm-summary .ps-btn:hover{background:rgba(0,172,172,.08)}
 .perm-card h3{font-size:16px;font-weight:700;color:var(--ink)}
-.perm-card>p{font-size:14px;color:#5F666C;margin-top:5px}
+.perm-card>p{font-size:14px;color:#5F666C;margin-top:4px}
 .perm-opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
 .perm-opt{position:relative;cursor:pointer}
 .perm-opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
@@ -3033,8 +3033,10 @@ input,textarea,select{font-size:14px}
 #nvCatModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
 #nvCatModal .fg-input{font-size:14px;border-radius:6px}
 #nvCatModal .cat-sw{border-radius:6px}
+#nvCatModal .cat-sw:hover{transform:scale(1.02)}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
+#nvCatModal .cat-icpick:hover{transform:scale(1.02);border-color:var(--teal);background:rgba(0,172,172,.08);color:var(--teal)}
 #nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
@@ -3043,8 +3045,10 @@ input,textarea,select{font-size:14px}
 #nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
 /* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
+#teamAddModal .fg-modal{display:flex;flex-direction:column}
 #teamAddModal .fg-head{border-bottom:0}
 #teamAddModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#teamAddModal .fg-body{flex:1;min-height:0;overflow-y:auto}
 #teamAddModal .tadd-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
 #teamAddModal .tadd-head{display:flex;align-items:center;gap:12px;height:46px;box-sizing:border-box;padding-left:12px;font-size:14px;font-weight:700;color:#0c334a;background:#fff;border-bottom:1px solid var(--line)}
 #teamAddModal .tadd-th-check{width:18px;flex-shrink:0}
@@ -3071,7 +3075,7 @@ input,textarea,select{font-size:14px}
 #teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
 #teamAddModal .fg-foot{border-top:0}
-#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:120px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
+#teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:140px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
 #teamAddModal #teamAddCancel{border:0}
 #teamAddModal #teamAddConfirm{background:#57C279}
 #teamAddModal #teamAddConfirm:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
@@ -3079,9 +3083,23 @@ input,textarea,select{font-size:14px}
 #teamAddModal .tadd-sortbtn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
 #teamAddModal .tadd-sortbtn:hover{color:#2F8EE5}
 #teamAddModal .tadd-sortbtn svg{width:24px;height:24px;display:block}
-#teamAddModal .nv-catsearch{display:flex;align-items:center;width:100%}
+#teamAddModal .tadd-toprow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#teamAddModal .nv-catsearch{display:flex;align-items:center}
 #teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
 #teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}
+#teamAddModal .tadd-unitsearch{flex:0 0 200px;width:200px}
+#teamAddModal .tadd-unitfield{width:100%;height:36px;box-sizing:border-box;padding:0 12px;border:1px solid #C3C9D5;border-radius:6px;background:#fff;display:flex;align-items:center;gap:0;font:inherit;cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden}
+#teamAddModal .tadd-unitfield i{font-size:13px;color:var(--muted);flex-shrink:0}
+#teamAddModal .tadd-unitfield i:first-child{margin-right:8px}
+#teamAddModal .tadd-unitfield i:last-child{margin-left:8px}
+#teamAddModal .tadd-unitfield span{flex:1;min-width:0;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamAddModal .tadd-personsearch{flex:1;min-width:0}
+#teamAddModal .tadd-bulkacts{display:flex;gap:8px;flex-shrink:0}
+#teamAddModal .tadd-bulkacts .cat-editbtn{height:36px;padding:0 14px;border-radius:6px;font-size:14px;white-space:nowrap;background:#fff;color:#2F8EE5;border:1px solid #2F8EE5}
+#teamAddModal .tadd-bulkacts .cat-editbtn:hover{background:#2F8EE5;color:#fff}
+#teamAddModal #teamAddSelClear{height:36px;padding:0 14px;font-size:14px;white-space:nowrap;border:0;border-radius:6px}
+#teamAddModal #teamAddSelClear:disabled{opacity:.5;cursor:not-allowed}
+#teamAddModal #teamAddSelClear:disabled:hover{background:#eef2f5}
 
 /* feed da home, destaque e coluna direita */
 /* ============ Central "Para hoje" v2 ============ */
@@ -6715,12 +6733,25 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
 </div>
 <div class="fg-backdrop" id="teamAddModal">
-  <div class="fg-modal" style="width:600px">
+  <div class="fg-modal" style="width:1000px;height:600px">
     <div class="fg-head"><h2>Novo administrador</h2><span style="flex:1"></span><button class="fg-close" id="teamAddClose"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="fg-body">
-      <div class="nv-catsearch" style="margin-bottom:14px">
-        <div class="rx-search"><input type="text" id="teamAddSearch" placeholder="Pesquisar pessoa..." autocomplete="off"></div>
-        <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <div class="tadd-toprow">
+        <div class="nv-catsearch tadd-unitsearch">
+          <button type="button" id="teamAddUnitFilter" class="tadd-unitfield" aria-label="Selecionar unidade">
+            <i class="fa-solid fa-earth-americas"></i>
+            <span id="teamAddUnitLbl">Todas as unidades</span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="nv-catsearch tadd-personsearch">
+          <div class="rx-search"><input type="text" id="teamAddSearch" placeholder="Pesquisar pessoa..." autocomplete="off"></div>
+          <button type="button" class="nv-catsearch-btn" id="teamAddSearchBtn" aria-label="Buscar administrador"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="tadd-bulkacts">
+          <button type="button" class="cat-editbtn" id="teamAddSelAll">Selecionar tudo</button>
+          <button type="button" class="fo-btn ghost" id="teamAddSelClear">Limpar seleção</button>
+        </div>
       </div>
       <div class="tadd-panel">
         <div class="tadd-head">
@@ -6743,6 +6774,12 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       <button class="fo-btn ghost" id="teamAddCancel">Cancelar</button>
       <button class="fo-btn" id="teamAddConfirm"><svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar</button>
     </div>
+  </div>
+</div>
+<div class="fg-backdrop" id="teamAddUnitModal">
+  <div class="fg-modal" style="width:420px">
+    <div class="fg-head"><h2>Selecionar unidade</h2><span style="flex:1"></span><button class="fg-close" id="teamAddUnitModalClose"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="fg-body"></div>
   </div>
 </div>
 <div class="fg-backdrop" id="unitAddModal">
@@ -10605,7 +10642,7 @@ $('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm');
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
-let teamQuery='', teamAddQuery='', teamAddSel=new Set();
+let teamQuery='', teamAddQuery='', teamAddUnitQuery='', teamAddSel=new Set();
 function teamPhone(id){ const d=String(9000+(id*37)%9999).padStart(4,'0'); return '(34) 9'+String(8000+(id*13)%1999).slice(0,4)+'-'+d; }
 function teamMail(name){ const p=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(' '); return p[0]+'.'+p[p.length-1]+'@sults.com.br'; }
 let teamSortCol=null, teamSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
@@ -10661,10 +10698,14 @@ function teamAddSortIcon(col){
   const dir=(teamAddSortCol===col)?teamAddSortDir:0;
   return dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
 }
+function teamAddFilteredList(){
+  return TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
+    .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()))
+    .filter(p=>!teamAddUnitQuery || p.unidade===teamAddUnitQuery);
+}
 function teamAddRender(){
   const el=document.getElementById('teamAddList'); if(!el) return;
-  let list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
-    .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()));
+  let list=teamAddFilteredList();
   if(teamAddSortDir && teamAddSortCol){
     const dir=teamAddSortDir===1?1:-1;
     if(teamAddSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
@@ -10678,11 +10719,16 @@ function teamAddRender(){
   const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
   const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
   const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
+  const clr=document.getElementById('teamAddSelClear'); if(clr) clr.disabled=teamAddSel.size===0;
 }
 document.addEventListener('click', e=>{
-  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddUnitQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; const ul=document.getElementById('teamAddUnitLbl'); if(ul) ul.textContent='Todas as unidades'; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
   if(e.target.closest('#teamAddClose') || e.target.closest('#teamAddCancel') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
-  const taSortBtn=e.target.closest('#teamAddModal .cat-sortbtn');
+  if(e.target.closest('#teamAddUnitFilter')){ document.getElementById('teamAddUnitModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAddUnitModalClose') || e.target===document.getElementById('teamAddUnitModal')){ document.getElementById('teamAddUnitModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAddSelAll')){ teamAddFilteredList().forEach(p=>teamAddSel.add(p.id)); teamAddRender(); return; }
+  if(e.target.closest('#teamAddSelClear')){ teamAddSel=new Set(); teamAddRender(); return; }
+  const taSortBtn=e.target.closest('#teamAddModal .tadd-sortbtn');
   if(taSortBtn){
     const col=taSortBtn.dataset.sortcol;
     if(teamAddSortCol!==col){ teamAddSortCol=col; teamAddSortDir=1; }
@@ -12455,7 +12501,7 @@ function renderNewsPerm(){
   var _u=$('#permUnitOn'); if(_u) _u.checked = NEWS_PERM.unitOn;
   $$('input[name="npermUnitMode"]').forEach(r=>{ r.checked = (r.value===NEWS_PERM.unitMode); });
   var _urw=$('#permUnitRolesWrap'); if(_urw) _urw.style.display = (NEWS_PERM.unitMode==='especificos') ? '' : 'none';
-  const rc=$('#unitRoleCount'); if(rc) rc.textContent=NEWS_PERM.unitRoles.length; var _ur=$('#permUnitRoles'); if(_ur) _ur.innerHTML = (NEWS_PERM.unitRoles.length?('<table><tbody>'+NEWS_PERM.unitRoles.map(rid=>{const u=UNIT_ROLES.find(x=>x[0]===rid)||[rid,rid,'fa-user'];return '<tr><td><div class="perm-person"><span class="avatar" style="background:#1e4fb0"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div></div></td><td style="text-align:right"><button class="perm-remove" data-role="'+rid+'"><i class="fa-solid fa-trash-can"></i> Remover</button></td></tr>';}).join('')+'</tbody></table>'):'<div class="perm-empty">Nenhum cargo. Clique em \u201cAdicionar cargo\u201d.</div>');
+  const rc=$('#unitRoleCount'); if(rc) rc.textContent=NEWS_PERM.unitRoles.length; var _ur=$('#permUnitRoles'); if(_ur) _ur.innerHTML = (NEWS_PERM.unitRoles.length?('<table><tbody>'+NEWS_PERM.unitRoles.map(rid=>{const u=UNIT_ROLES.find(x=>x[0]===rid)||[rid,rid,'fa-user'];return '<tr><td><div class="perm-person"><span class="avatar" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div></div></td><td style="text-align:right"><button class="perm-remove" data-role="'+rid+'"><i class="fa-solid fa-trash-can"></i> Remover</button></td></tr>';}).join('')+'</tbody></table>'):'<div class="perm-empty">Nenhum cargo. Clique em \u201cAdicionar cargo\u201d.</div>');
   var _c=$('#permCentralOn'); if(_c) _c.checked = NEWS_PERM.centralOn;
   $$('input[name="npermMode"]').forEach(r => { r.checked = (r.value === NEWS_PERM.mode); });
   var _pm=$('#npermMembers'); if(_pm) _pm.style.display = NEWS_PERM.mode==='selecionados' ? '' : 'none';
@@ -12551,7 +12597,7 @@ $('#unitAddList') && $('#unitAddList').addEventListener('click', e=>{
 });
 function unitSelLabel(scope){ const sel=UNIT_SEL[scope]; return sel.length ? sel.length+' unidade(s) selecionada(s)' : 'Nenhuma unidade selecionada'; }
 const uroleModal=$('#uroleModal');
-function renderUrolePick(){ const avail=UNIT_ROLES.filter(u=>!NEWS_PERM.unitRoles.includes(u[0])); const el=$('#urolePickList'); el.innerHTML= avail.length? avail.map(u=>'<div class="perm-pickrow" data-role="'+u[0]+'"><span class="avatar" style="background:#1e4fb0"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Todos os cargos já foram adicionados.</div>'; }
+function renderUrolePick(){ const avail=UNIT_ROLES.filter(u=>!NEWS_PERM.unitRoles.includes(u[0])); const el=$('#urolePickList'); el.innerHTML= avail.length? avail.map(u=>'<div class="perm-pickrow" data-role="'+u[0]+'"><span class="avatar" style="background:linear-gradient(135deg,#4d96e8,#1e4fb0)"><i class="fa-solid '+u[2]+'"></i></span><div><b>'+u[1]+'</b></div><span class="perm-add"><i class="fa-solid fa-plus"></i></span></div>').join('') : '<div class="perm-empty">Todos os cargos já foram adicionados.</div>'; }
 $('#unitRoleAdd') && $('#unitRoleAdd').addEventListener('click', ()=>{ renderUrolePick(); uroleModal.classList.add('open'); });
 $('#uroleModalClose') && $('#uroleModalClose').addEventListener('click', ()=>uroleModal.classList.remove('open'));
 uroleModal && uroleModal.addEventListener('click', e=>{ if(e.target===uroleModal) uroleModal.classList.remove('open'); });

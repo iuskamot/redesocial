@@ -462,7 +462,7 @@ $('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm');
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
-let teamQuery='', teamAddQuery='', teamAddSel=new Set();
+let teamQuery='', teamAddQuery='', teamAddUnitQuery='', teamAddSel=new Set();
 function teamPhone(id){ const d=String(9000+(id*37)%9999).padStart(4,'0'); return '(34) 9'+String(8000+(id*13)%1999).slice(0,4)+'-'+d; }
 function teamMail(name){ const p=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(' '); return p[0]+'.'+p[p.length-1]+'@sults.com.br'; }
 let teamSortCol=null, teamSortDir=0; // dir: 0 neutro, 1 asc (up), 2 desc (down)
@@ -518,10 +518,14 @@ function teamAddSortIcon(col){
   const dir=(teamAddSortCol===col)?teamAddSortDir:0;
   return dir===1?NV_SORT_ICONS.up:dir===2?NV_SORT_ICONS.down:NV_SORT_ICONS.swap;
 }
+function teamAddFilteredList(){
+  return TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
+    .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()))
+    .filter(p=>!teamAddUnitQuery || p.unidade===teamAddUnitQuery);
+}
 function teamAddRender(){
   const el=document.getElementById('teamAddList'); if(!el) return;
-  let list=TEAM_ADMINS.map(id=>PEOPLE.find(p=>p.id===id)).filter(p=>p && !TEAM.includes(p.id))
-    .filter(p=>!teamAddQuery || p.name.toLowerCase().includes(teamAddQuery.toLowerCase()));
+  let list=teamAddFilteredList();
   if(teamAddSortDir && teamAddSortCol){
     const dir=teamAddSortDir===1?1:-1;
     if(teamAddSortCol==='name') list=list.slice().sort((a,b)=>dir*a.name.localeCompare(b.name));
@@ -535,10 +539,15 @@ function teamAddRender(){
   const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
   const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
   const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
+  const clr=document.getElementById('teamAddSelClear'); if(clr) clr.disabled=teamAddSel.size===0;
 }
 document.addEventListener('click', e=>{
-  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAdd')){ teamAddQuery=''; teamAddUnitQuery=''; teamAddSel=new Set(); teamAddSortCol=null; teamAddSortDir=0; const s=document.getElementById('teamAddSearch'); if(s) s.value=''; const ul=document.getElementById('teamAddUnitLbl'); if(ul) ul.textContent='Todas as unidades'; teamAddRender(); document.getElementById('teamAddModal').classList.add('open'); return; }
   if(e.target.closest('#teamAddClose') || e.target.closest('#teamAddCancel') || e.target===document.getElementById('teamAddModal')){ document.getElementById('teamAddModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAddUnitFilter')){ document.getElementById('teamAddUnitModal').classList.add('open'); return; }
+  if(e.target.closest('#teamAddUnitModalClose') || e.target===document.getElementById('teamAddUnitModal')){ document.getElementById('teamAddUnitModal').classList.remove('open'); return; }
+  if(e.target.closest('#teamAddSelAll')){ teamAddFilteredList().forEach(p=>teamAddSel.add(p.id)); teamAddRender(); return; }
+  if(e.target.closest('#teamAddSelClear')){ teamAddSel=new Set(); teamAddRender(); return; }
   const taSortBtn=e.target.closest('#teamAddModal .tadd-sortbtn');
   if(taSortBtn){
     const col=taSortBtn.dataset.sortcol;
