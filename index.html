@@ -199,8 +199,6 @@ input,textarea,select{font-size:14px}
 .hm-store--apple img{filter:brightness(0) invert(1)}
 
 
-/* Inteligência Artificial: a mesma faísca do ícone do módulo */
-.hm-ic--ia{--ic:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjQgNmMuNSAwIC45LjMgMSAuOGwxLjkgNi42YTEwIDEwIDAgMCAwIDYuOSA2LjlsNi42IDEuOWMuNS4xLjguNS44IDFzLS4zLjktLjggMWwtNi42IDEuOWExMCAxMCAwIDAgMC02LjkgNi45bC0xLjkgNi42Yy0uMS41LS41LjgtMSAuOHMtLjktLjMtMS0uOGwtMS45LTYuNmExMCAxMCAwIDAgMC02LjktNi45bC02LjYtMS45Yy0uNS0uMS0uOC0uNS0uOC0xcy4zLS45LjgtMWw2LjYtMS45YTEwIDEwIDAgMCAwIDYuOS02LjlsMS45LTYuNmMuMS0uNS41LS44IDEtLjhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMSAzM2MuMjUgMCAuNDUuMTcuNTIuNDJsLjQ1IDEuNmEzIDMgMCAwIDAgMi4wMSAyLjAxbDEuNi40NWMuMjUuMDcuNDIuMjcuNDIuNTJzLS4xNy40NS0uNDIuNTJsLTEuNi40NWEzIDMgMCAwIDAtMi4wMSAyLjAxbC0uNDUgMS42Yy0uMDcuMjUtLjI3LjQyLS41Mi40MnMtLjQ1LS4xNy0uNTItLjQybC0uNDUtMS42YTMgMyAwIDAgMC0yLjAxLTIuMDFsLTEuNi0uNDVjLS4yNS0uMDctLjQyLS4yNy0uNDItLjUycy4xNy0uNDUuNDItLjUybDEuNi0uNDVhMyAzIDAgMCAwIDIuMDEtMi4wMWwuNDUtMS42Yy4wNy0uMjUuMjctLjQyLjUyLS40MloiIGZpbGw9IndoaXRlIi8+PC9zdmc+")}
 
 /* estrutura, header, botao +Novo, perfil e sino */
 /* ============ Estrutura principal ============ */
@@ -451,8 +449,7 @@ input,textarea,select{font-size:14px}
 .pp-linkq{font-size:12px !important;color:var(--muted) !important;margin-top:2px !important}
 .pp-top{height:60px;flex-shrink:0;background:var(--sidebar);color:#fff;display:flex;align-items:center;gap:10px;padding:0 20px}
 .pp-toplogo{display:flex;align-items:center;gap:9px;border:0;background:none;color:#fff;padding:0;cursor:pointer;flex-shrink:0}
-.pp-logomark{width:26px;height:26px;color:var(--teal);flex-shrink:0}
-.pp-logoword{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.pp-logo-sults{height:26px;width:auto;display:block;flex-shrink:0}
 /* mesmo botao do cabecalho dos modulos: icone de 20px com o rotulo embaixo */
 .pp-topic{min-width:96px;height:48px;border:0;border-radius:4px;background:none;color:rgba(255,255,255,.72);cursor:pointer;
   display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 12px;
@@ -557,7 +554,7 @@ input,textarea,select{font-size:14px}
 }
 @media(max-width:640px){
   .pp-top{padding:0 14px}
-  .pp-logoword{font-size:19px}
+  .pp-logo-sults{height:22px}
   .pp-hero-in,.pp-grid{padding-left:14px;padding-right:14px}
   .pp-stats{flex-wrap:wrap;gap:10px 0}
   .pp-stat{flex:1 1 45%;padding-right:14px;margin-right:14px}
@@ -5109,7 +5106,9 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 /* zoom leve para o rosto encher o circulo; some so a ponta das orelhas e os pes */
 body.demo-crunch .av-rc{background:#e9eaed url("uploads/crunch/p-pikachu.webp") center 32%/135% auto no-repeat border-box}
 body.demo-crunch .profile-banner,
-body.demo-crunch .nvf-pcover{background:#23252B}
+body.demo-crunch .nvf-pcover{background:#F47521}
+body.demo-crunch:not(.demo-custom) .profile-banner .profile-logo--crunch,
+body.demo-crunch:not(.demo-custom) .nvf-pcover .profile-logo--crunch{filter:brightness(0) invert(1)}
 /* com dois seletores para ganhar do .profile-banner .profile-logo{display:block} da base */
 .profile-banner .profile-logo--crunch{display:none}
 body.demo-crunch .profile-banner svg{display:none}
@@ -5148,6 +5147,15 @@ body.demo-crunch #homeComPanel .com-featured{display:none}
 .av-cr-frieren{background-image:url("uploads/crunch/p-frieren.webp");background-size:170% auto;background-position:center top}
 .av-cr-gojo   {background-image:url("uploads/crunch/p-gojo.webp");background-size:200% auto;background-position:center top}
 
+/* A capa do "Ver meu perfil" segue a marca do cenário: laranja cheio e a logo
+   em branco. Só fora da home customizável, que ali a capa é a foto. */
+body.demo-crunch:not(.demo-custom) .pp-cover{background:#F47521}
+body.demo-crunch:not(.demo-custom) .pp-cover-pat{display:none}
+body.demo-crunch:not(.demo-custom) .pp-cover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:url("uploads/crunch/logo.webp") center / auto 30% no-repeat;
+  filter:brightness(0) invert(1);
+}
 
 /* ============================================================
    Cenário "sem Shorts e sem Feed" (body.demo-basico)
@@ -5441,8 +5449,7 @@ body.demo-custom[data-cliente="gatitos"] .av-rc{background:#f48fb1 url("uploads/
    A capa vem da variavel no body (a mesma do cartao da home). */
 body.demo-custom .nvf-pcover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
 body.demo-custom .pp-top{background:var(--marca-escura)}
-body.demo-custom .pp-toplogo .pp-logomark,
-body.demo-custom .pp-toplogo .pp-logoword{display:none}
+body.demo-custom .pp-toplogo .pp-logo-sults{display:none}
 /* a logo no mesmo bloco da home: 250x60 na cor da marca, 8px em cima e embaixo, logo com 44px */
 /* mesma proporcao e posicao do bloco da home, sem o fundo da marca */
 body.demo-custom .pp-toplogo{width:250px;height:60px;margin-left:-20px;padding:8px 0;justify-content:center;box-sizing:border-box}
@@ -5551,9 +5558,6 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-body{flex:1;min-height:0;display:flex;position:relative}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-/* a marca da IA: a mesma faísca do ícone do módulo, em teal */
-.ia-mark{display:block;flex-shrink:0;width:26px;height:26px;background-repeat:no-repeat;background-position:center;background-size:contain;
-  background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTI0IDZjLjUgMCAuOS4zIDEgLjhsMS45IDYuNmExMCAxMCAwIDAgMCA2LjkgNi45bDYuNiAxLjljLjUuMS44LjUuOCAxcy0uMy45LS44IDFsLTYuNiAxLjlhMTAgMTAgMCAwIDAtNi45IDYuOWwtMS45IDYuNmMtLjEuNS0uNS44LTEgLjhzLS45LS4zLTEtLjhsLTEuOS02LjZhMTAgMTAgMCAwIDAtNi45LTYuOWwtNi42LTEuOWMtLjUtLjEtLjgtLjUtLjgtMXMuMy0uOS44LTFsNi42LTEuOWExMCAxMCAwIDAgMCA2LjktNi45bDEuOS02LjZjLjEtLjUuNS0uOCAxLS44WiIvPjxwYXRoIGZpbGw9IiMwMGFjYWMiIGQ9Ik0zNy41IDRjLjMgMCAuNS4yLjYuNWwuNiAyLjNhNCA0IDAgMCAwIDIuNSAyLjVsMi4zLjZjLjMuMS41LjMuNS42cy0uMi41LS41LjZsLTIuMy42YTQgNCAwIDAgMC0yLjUgMi41bC0uNiAyLjNjLS4xLjMtLjMuNS0uNi41cy0uNS0uMi0uNi0uNWwtLjYtMi4zYTQgNCAwIDAgMC0yLjUtMi41bC0yLjMtLjZjLS4zLS4xLS41LS4zLS41LS42cy4yLS41LjUtLjZsMi4zLS42YTQgNCAwIDAgMCAyLjUtMi41bC42LTIuM2MuMS0uMy4zLS41LjYtLjVaIi8+PHBhdGggZmlsbD0iIzAwYWNhYyIgZD0iTTExIDMzYy4yNSAwIC40NS4xNy41Mi40MmwuNDUgMS42YTMgMyAwIDAgMCAyLjAxIDIuMDFsMS42LjQ1Yy4yNS4wNy40Mi4yNy40Mi41MnMtLjE3LjQ1LS40Mi41MmwtMS42LjQ1YTMgMyAwIDAgMC0yLjAxIDIuMDFsLS40NSAxLjZjLS4wNy4yNS0uMjcuNDItLjUyLjQycy0uNDUtLjE3LS41Mi0uNDJsLS40NS0xLjZhMyAzIDAgMCAwLTIuMDEtMi4wMWwtMS42LS40NWMtLjI1LS4wNy0uNDItLjI3LS40Mi0uNTJzLjE3LS40NS40Mi0uNTJsMS42LS40NWEzIDMgMCAwIDAgMi4wMS0yLjAxbC40NS0xLjZjLjA3LS4yNS4yNy0uNDIuNTItLjQyWiIvPjwvc3ZnPg==")}
 
 /* ---------------- coluna das conversas ---------------- */
 .ia-side{display:flex;width:276px;flex-shrink:0;flex-direction:column;gap:10px;padding:14px 12px;
@@ -5585,10 +5589,10 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-linha{display:flex;align-items:center;gap:2px;border-radius:6px;
   transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-conv{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-align:left;border:0;background:none;
-  padding:8px 4px 8px 10px;border-radius:6px;cursor:pointer;color:#5b6672;
+  padding:6px 4px 6px 10px;border-radius:6px;cursor:pointer;color:#5b6672;
   font:inherit;font-size:13px;line-height:19px;font-weight:600;letter-spacing:.2px}
 .ia-convmais{display:flex;align-items:center;justify-content:center;width:26px;height:26px;flex:none;
-  margin-right:5px;border:0;border-radius:6px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
+  margin-right:5px;border:0;border-radius:4px;background:none;color:#8a94a0;font-size:13px;cursor:pointer;
   opacity:0;pointer-events:none;transition:opacity 120ms cubic-bezier(.4,0,.2,1),background 120ms cubic-bezier(.4,0,.2,1)}
 .ia-linha:hover .ia-convmais,.ia-linha.menu-on .ia-convmais,.ia-convmais:focus-visible{opacity:1;pointer-events:auto}
 .ia-convmais:hover{background:#D2D8DF;color:var(--ink)}
@@ -5730,7 +5734,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   transition:box-shadow 120ms cubic-bezier(.4,0,.2,1),transform 120ms cubic-bezier(.4,0,.2,1)}
 .ia-chip:hover{box-shadow:inset 0 0 0 1px var(--teal),0 6px 18px -12px rgba(16,32,48,.5);transform:translateY(-1px)}
 .ia-chip:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--teal),0 0 0 3px rgba(0,172,172,.16)}
-.ia-chip-ic{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+.ia-chip-ic{width:36px;height:36px;border-radius:100%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:18px;background:var(--c,#5b6672)}
 .ia-chip-tx{flex:1;min-width:0}
 .ia-chip-tx b{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
@@ -5744,8 +5748,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-msg.eu{align-items:flex-end}
 .ia-bolha{max-width:78%;background:color-mix(in srgb,var(--teal) 15%,#fff);color:var(--ink);border-radius:16px 16px 5px 16px;
   padding:12px 16px;font-size:16px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
-.ia-resp{display:flex;gap:13px}
-.ia-resp .ia-mark{margin-top:1px}
+.ia-resp{display:flex}
 .ia-corpo{flex:1;min-width:0;font-size:16px;line-height:1.7;color:var(--body)}
 .ia-corpo p{margin:0 0 14px}
 .ia-corpo p:last-child{margin-bottom:0}
@@ -5784,7 +5787,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   padding:4px 4px 8px;font:inherit;font-size:16px;line-height:1.6;color:var(--ink);overflow-y:hidden}
 .ia-text::placeholder{color:var(--muted)}
 .ia-comprow{display:flex;align-items:center;gap:6px}
-.ia-cbtn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:0;
+.ia-cbtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:0;
   border-radius:999px;background:none;color:#8a94a0;font-size:14px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .ia-cbtn:hover{background:#F1F3F5;color:var(--ink)}
@@ -5816,7 +5819,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   animation:ia-gira .7s linear infinite}
 @keyframes ia-gira{to{transform:rotate(360deg)}}
 
-.ia-recx,.ia-recpause{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+.ia-recx,.ia-recpause{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
   flex:none;border:0;border-radius:999px;background:#F4F6F8;color:#5b6672;font-size:17px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .ia-recx:hover{background:#FDECEC;color:var(--red)}
@@ -5867,7 +5870,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .ia-view .ia-menu button i,.ia-rowmenu button i{font-size:15px;width:16px}
 .ia-view .ia-usermenu button>i{font-size:17px;width:17px}
 .ia-view .ia-user>i{font-size:18px}
-.ia-view .ia-cbtn{font-size:17px}
+.ia-view .ia-cbtn{font-size:20px}
 .ia-view .ia-send{font-size:17px}
 .ia-view .ia-chip-ic{font-size:18px}
 .ia-view .ia-act i{font-size:15px}
@@ -5900,7 +5903,6 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   <div class="hm-side__body">
     <nav class="hm-side__nav" data-nav>
       <a href="#" class="hm-navitem is-active" id="navHome" title="Home"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--home" aria-hidden="true"></span><span class="hm-navitem__label">Home</span></a>
-      <a href="#" class="hm-navitem" id="navIA" title="Inteligência Artificial"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--ia" aria-hidden="true"></span><span class="hm-navitem__label">Inteligência Artificial</span></a>
       <a href="#" class="hm-navitem" title="Aplicativos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--apps" aria-hidden="true"></span><span class="hm-navitem__label">Aplicativos</span></a>
       <a href="#" class="hm-navitem" title="Powerups"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--powerups" aria-hidden="true"></span><span class="hm-navitem__label">Powerups</span></a>
       <a href="#" class="hm-navitem" title="Links Externos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--links" aria-hidden="true"></span><span class="hm-navitem__label">Links Externos</span></a>
@@ -6009,7 +6011,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
     <span class="top-logo-cliente" hidden><img src="uploads/crunch/logo.webp" alt="Crunchyroll"></span>
     <div class="top-search" id="gsBox">
       <span class="gs-spark" aria-hidden="true"></span>
-      <input type="text" id="gsInput" placeholder="No que vamos trabalhar?" autocomplete="off">
+      <input type="text" id="gsInput" placeholder="No que posso te ajudar hoje?" autocomplete="off">
       <span class="gs-kbd">Ctrl K</span>
       <div class="gs-panel" id="gsPanel" hidden></div>
     </div>
@@ -6034,8 +6036,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
   <div class="pp-view" id="personProfile" hidden>
     <div class="pp-top">
       <button class="pp-toplogo" id="ppBack" title="Voltar">
-        <svg class="pp-logomark" viewBox="0 0 76.6 76.6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M59.4 28.2 28.2 59.4c-.4.4-1.2.4-1.6 0L17.2 50c-.4-.4-.4-1.2 0-1.6l31.2-31.2c.4-.4 1.2-.4 1.6 0l9.3 9.3c.4.4.4 1.1 0 1.7z"/><path fill="currentColor" d="M32.6.2 5.5 27.4c-3 3-3 7.9 0 10.9l5 5c.2.2.6.2.9 0L53.6 1.1C54 .7 53.8 0 53.2 0H33.1c-.2 0-.3.1-.5.2z"/><path fill="currentColor" d="M65.2 33.3 22.9 75.5c-.4.4-.1 1.1.4 1.1h20.1c.2 0 .3-.1.4-.2l27.2-27.2c3-3 3-7.9 0-10.9l-5-5c-.3-.3-.7-.3-.9 0z"/></svg>
-        <span class="pp-logoword">SULTS</span>
+        <img class="pp-logo-sults" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 294.1 76.6' fill='%23fff'%3E %3Cpath d='M55.5 28 24.1 59.4c-.2.2-.6.2-.9 0l-9.9-9.9c-.2-.2-.2-.6 0-.9l31.4-31.4c.2-.2.6-.2.9 0l9.9 9.9c.3.3.3.6 0 .9'/%3E %3Cpath d='M28.9.9 2.2 27.5c-3 3-3 7.8 0 10.7l4.9 4.9c.2.2.6.2.9 0L49.5 1.7c.4-.4.1-1-.4-1H29.3c-.1 0-.3 0-.4.2'/%3E %3Cpath d='M60.9 33.3 19.4 74.9c-.4.4-.1 1 .4 1h19.8c.2 0 .3-.1.4-.2L66.7 49c3-3 3-7.8 0-10.7l-4.9-4.9c-.3-.3-.7-.3-.9-.1'/%3E %3Cpath d='M158.2 12.3c-.3 0-.6.3-.6.6v30.8c0 1.6-.4 3.1-1.1 4.7-1.6 3.1-4.2 4.5-8.1 4.5-3.9 0-6.5-1.5-8-4.5-.8-1.5-1.2-3.1-1.2-4.6V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v30.8c0 3.6.9 7.2 2.8 10.8 3.6 7.2 10 10.9 18.9 10.9 8.9 0 15.2-3.7 18.9-10.9 1.7-3.6 2.6-7.2 2.6-10.8V12.9c0-.3-.3-.6-.6-.6h-11.2z'/%3E %3Cpath d='M187.7 51.3V12.9c0-.3-.3-.6-.6-.6h-11.2c-.3 0-.6.3-.6.6v50.8c0 .3.3.6.6.6h34.9c.3 0 .6-.3.6-.6V52.6c0-.3-.3-.6-.6-.6h-22.5c-.3 0-.6-.3-.6-.7'/%3E %3Cpath d='M203.6 12.9V24c0 .3.3.6.6.6h14.1c.3 0 .6.3.6.6v38.5c0 .3.3.6.6.6h11.3c.3 0 .6-.3.6-.6V25.2c0-.3.3-.6.6-.6h14.1c.3 0 .6-.3.6-.6V12.9c0-.3-.3-.6-.6-.6h-42c-.3 0-.5.2-.5.6'/%3E %3Cpath d='M117.8 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3Cpath d='M290.4 38.8c-9.2-10.2-19.7-3.6-25.2-9-.7-.7-.8-1.7-.7-2.6.4-2.8 3.5-4.3 9.2-4.3 3.7 0 6.5.7 9.4 2.1.7.3 1.2.6 1.6.8.2.1.5.1.7-.1l7.5-7.5c.3-.3.2-.7 0-.9-8.8-6.8-25-8.5-34.2-2.1-7.3 5.1-9.1 15.9-2.8 22.4 8.9 10.2 19.3 3.6 24.9 9 .7.8 1 1.7.9 2.6-.5 3-3.6 4.5-9.4 4.5-4.3 0-7.7-1-11-3.1-.2-.2-.6-.1-.8.1l-7.6 7.6c-.3.3-.2.7.1.9 1.3 1 3 2.1 5 3 8.4 4 21.9 4.7 29.4-.9 3.8-2.7 6-6.2 6.5-10.5.5-4.4-.7-8.5-3.7-12'/%3E %3C/svg%3E" alt="SULTS">
         <!-- so na home customizavel: a logo do cliente no lugar da do SULTS -->
         <img class="pp-logo-cliente" alt="" hidden>
       </button>
@@ -8079,7 +8080,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         <!-- sem conversa: saudação, compositor no meio e sugestões -->
         <section class="ia-zero" id="iaZero">
           <h1 class="ia-hello" id="iaHello">Boa tarde, Rodrigo</h1>
-          <p class="ia-sub">No que vamos trabalhar?</p>
+          <p class="ia-sub">No que posso te ajudar hoje?</p>
           <div class="ia-zerodock" id="iaZeroDock"></div>
           <div class="ia-chips" id="iaChips"></div>
         </section>
@@ -15476,7 +15477,13 @@ function crunchAlternar(){
 }
 (function(){
   const ic = document.querySelector('.hm-store--googleplay');
-  if (ic) ic.addEventListener('click', function(e){ e.preventDefault(); crunchAlternar(); });
+  /* vindo da home customizável, o clique sai dela e entra no cenário limpo,
+     em vez de misturar os dois estados */
+  if (ic) ic.addEventListener('click', function(e){
+    e.preventDefault();
+    if (typeof customLigado === 'function' && customLigado()){ customDesligar(); crunchLigar(); return; }
+    crunchAlternar();
+  });
   /* no mobile o rodapé do menu não aparece: o Comunicados da barra de baixo
      liga e desliga o cenário, e a rolagem até o painel segue acontecendo */
   /* clique no nome do Pikachu no header alterna o papel; fora do cenario o
@@ -15571,7 +15578,12 @@ function basicoAlternar(){ if (basicoLigado()) basicoDesligar(); else basicoLiga
 
 (function(){
   const ic = document.querySelector('.hm-store--apple');
-  if (ic) ic.addEventListener('click', function(e){ e.preventDefault(); basicoAlternar(); });
+  /* o mesmo aqui: quem estava na home customizável sai dela primeiro */
+  if (ic) ic.addEventListener('click', function(e){
+    e.preventDefault();
+    if (typeof customLigado === 'function' && customLigado()){ customDesligar(); basicoLigar(); return; }
+    basicoAlternar();
+  });
 })();
 
 /* ===================== assets/js/16-custom.js ===================== */
@@ -15728,6 +15740,11 @@ function customAlternar(){
     'Rodrigo Caetano':  { unidade:'Uberaba · MG',             desde:'2019',     pubs:'48', shorts:'9', reacoes:'1,2 mil', comentarios:'120', unidades:'3 unidades',
                           streak:'12', recorde:'40', semana:[1,1,1,1,1,1,0], hoje:5 }
   };
+  /* o módulo de IA também precisa saber de onde a pessoa fala */
+  window.customUnidadeDe = function(nome){
+    const d = PC_PESSOA[nome] || PC_PESSOA['Rodrigo Caetano'];
+    return d ? d.unidade : '';
+  };
   function pcPreenche(){
     const eu = (typeof usuarioAtual === 'function') ? usuarioAtual() : { nome:'Rodrigo Caetano' };
     const cli = (typeof customCliente === 'function') ? customCliente() : null;
@@ -15786,8 +15803,11 @@ function customAlternar(){
     const abrirOrig = openPersonProfile;
     window.openPersonProfile = function(name, av){
       abrirOrig(name, av);
-      if (!customLigado() || name !== 'Rodrigo Caetano Silva') return;
-      const c = customCliente(); if (!c) return;
+      if (name !== 'Rodrigo Caetano Silva') return;
+      const noCrunch = document.body.classList.contains('demo-crunch');
+      if (!customLigado() && !noCrunch) return;
+      const c = customCliente() || CUSTOM_CLIENTES.find(function(x){ return x.id === 'crunch'; });
+      if (!c) return;
       const q = function(s){ return document.querySelector(s); };
       const nome = q('.profile-name') ? q('.profile-name').textContent.trim() : name;
       const cargo = q('.profile-role') ? q('.profile-role').textContent.trim() : '';
@@ -16766,9 +16786,6 @@ function marcaDesligar(){
 
 /* ---------------------------------------------------------------- dados --- */
 
-/* quantos documentos a base tem — vira dado do administrador depois */
-const IA_DOCS = 128;
-
 /* As respostas. `k` é o assunto que a pergunta precisa tocar; `blocos` é o
    corpo da resposta: parágrafo ou lista. */
 const IA_BASE = [
@@ -16778,9 +16795,9 @@ const IA_BASE = [
       { t:'p', x:'O chamado nasce em <b>Chamados &rarr; Novo chamado</b>. Quem abre escolhe o assunto, e é o assunto que decide para qual fila ele vai e qual prazo passa a valer.' },
       { t:'p', x:'Os prazos em vigor na rede são estes:' },
       { t:'ul', x:[
-        '<b>Crítico</b> &mdash; 4 horas para a primeira resposta e 1 dia útil para a solução.',
-        '<b>Alto</b> &mdash; 8 horas úteis para responder e 3 dias úteis para resolver.',
-        '<b>Normal</b> &mdash; 1 dia útil para responder e 5 dias úteis para resolver.'
+        '<b>Crítico</b>: 4 horas para a primeira resposta e 1 dia útil para a solução.',
+        '<b>Alto</b>: 8 horas úteis para responder e 3 dias úteis para resolver.',
+        '<b>Normal</b>: 1 dia útil para responder e 5 dias úteis para resolver.'
       ]},
       { t:'p', x:'O relógio para enquanto o chamado estiver aguardando a unidade, e volta a correr assim que ela responde. O que estoura o prazo aparece no painel de atrasos da matriz no mesmo dia.' }
     ]
@@ -16790,11 +16807,11 @@ const IA_BASE = [
     blocos: [
       { t:'p', x:'A auditoria mensal roda o modelo <b>Padrão de Loja</b>, com 48 itens divididos em cinco blocos:' },
       { t:'ul', x:[
-        'Fachada e vitrine &mdash; 6 itens',
-        'Atendimento e experiência &mdash; 12 itens',
-        'Estoque e validade &mdash; 11 itens',
-        'Limpeza e conservação &mdash; 9 itens',
-        'Documentação e alvarás &mdash; 10 itens'
+        'Fachada e vitrine: 6 itens',
+        'Atendimento e experiência: 12 itens',
+        'Estoque e validade: 11 itens',
+        'Limpeza e conservação: 9 itens',
+        'Documentação e alvarás: 10 itens'
       ]},
       { t:'p', x:'A nota de corte é <b>85%</b>. Abaixo disso o sistema abre um plano de ação com prazo de 15 dias, já com o responsável da unidade no topo. Item marcado como crítico reprova a visita sozinho, mesmo que a média feche acima do corte.' }
     ]
@@ -16818,9 +16835,9 @@ const IA_BASE = [
     blocos: [
       { t:'p', x:'Saíram três comunicados para a sua unidade nesta semana:' },
       { t:'ul', x:[
-        '<b>Convenção SULTS 2026</b> &mdash; encontro geral do time, com trilhas por área e festa de encerramento. Confirmação até 30/09.',
-        '<b>Nova trilha: Atendimento 2.0</b> &mdash; disponível na Universidade Corporativa, com certificado ao concluir.',
-        '<b>Atualização da plataforma v10.4</b> &mdash; melhorias de desempenho no Checklist e novos filtros nos relatórios.'
+        '<b>Convenção SULTS 2026.</b> Encontro geral do time, com trilhas por área e festa de encerramento. Confirmação até 30/09.',
+        '<b>Nova trilha de Atendimento 2.0.</b> Já está na Universidade Corporativa, com certificado ao concluir.',
+        '<b>Atualização da plataforma v10.4.</b> Melhorias de desempenho no Checklist e novos filtros nos relatórios.'
       ]},
       { t:'p', x:'Você ainda não abriu a trilha <b>Atendimento 2.0</b>, e ela é obrigatória para quem atende balcão. O prazo termina em 20/09.' }
     ]
@@ -16833,7 +16850,7 @@ const IA_BASE = [
       { t:'ul', x:[
         '9 de 12 pessoas concluíram todas as trilhas do cargo',
         '2 estão em andamento, ambas na trilha nova',
-        '1 pessoa ainda não começou &mdash; entrou há duas semanas e o prazo dela conta a partir da admissão'
+        '1 pessoa ainda não começou. Ela entrou há duas semanas, e o prazo dela conta a partir da admissão'
       ]},
       { t:'p', x:'O certificado sai sozinho quando a pessoa fecha a avaliação com 70% ou mais, e vai para o perfil dela na rede.' }
     ]
@@ -16856,13 +16873,13 @@ const IA_BASE = [
 function iaRespostaPadrao(){
   return {
     blocos: [
-      { t:'p', x:'Procurei nos <b>' + IA_DOCS + ' documentos</b> da base de conhecimento da rede e não achei nada que responda isso com segurança.' },
-      { t:'p', x:'O que dá para fazer agora:' },
+      { t:'p', x:'Procurei na base de conhecimento da rede e não achei nada que responda isso com segurança.' },
+      { t:'p', x:'Isso costuma ter dois motivos:' },
       { t:'ul', x:[
-        'Refazer a pergunta com o nome do módulo ou do documento &mdash; a busca fica bem mais precisa.',
-        'Abrir um chamado para a matriz, que aí a resposta vira documento e passa a valer para a rede toda.'
+        'A pergunta é da rede, mas ficou genérica. Me conte o que você precisa resolver e em que situação, que eu procuro de novo.',
+        'O assunto ainda não foi documentado. Nesse caso vale abrir um chamado para a matriz: a resposta vira documento e passa a valer para todo mundo.'
       ]},
-      { t:'p', x:'Se quiser, me conte o que você precisa resolver e eu indico por onde começar.' }
+      { t:'p', x:'E se for assunto de fora da rede, esse eu não tenho como responder por aqui.' }
     ]
   };
 }
@@ -16883,8 +16900,23 @@ const IA_CONVERSAS = [
   { id:'c6', g:'Últimos 30 dias', d:18, h:'10:22', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] }
 ];
 
-/* Quem está usando */
-const IA_PESSOA = { nome:'Rodrigo Caetano' };
+/* Quem está usando vem do app, não daqui: o cenário da vez troca a pessoa e
+   a unidade, e o módulo só lê. */
+function iaEu(){
+  let nome = '';
+  const cli = (typeof customCliente === 'function') ? customCliente() : null;
+  if (cli && cli.pessoa && cli.pessoa.nome) nome = cli.pessoa.nome;
+  if (!nome && typeof usuarioAtual === 'function'){ const u = usuarioAtual(); nome = (u && u.nome) || ''; }
+  if (!nome){ const el = document.querySelector('.profile-name'); nome = el ? el.textContent.trim() : ''; }
+  nome = nome || 'Rodrigo Caetano';
+  const unidade = (typeof customUnidadeDe === 'function') ? (customUnidadeDe(nome) || '') : '';
+  return { nome: nome, unidade: unidade };
+}
+
+function iaIniciais(texto){
+  const partes = String(texto).split(/[\s·-]+/).filter(Boolean);
+  return ((partes[0] || '?')[0] + (partes[1] ? partes[1][0] : '')).toUpperCase();
+}
 
 /* As unidades que essa pessoa alcança. A cor e as iniciais saem de STORES,
    a mesma tabela que desenha a unidade nas outras telas, para a bolinha ser
@@ -16941,11 +16973,11 @@ function iaSaudacao(){
   return h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
 }
 
-/* o primeiro nome de quem está logado — muda junto com o cliente da vez */
+const IA_TRATAMENTOS = ['senhor','senhora','sr','sra','dr','dra','seu','dona'];
 function iaPrimeiroNome(){
-  const el = document.querySelector('#topUserChip .uname');
-  const nome = (el && el.textContent.trim()) || 'por aqui';
-  return nome.split(/\s+/)[0];
+  const p = iaEu().nome.split(/s+/);
+  const um = (p[0] || '').toLowerCase().replace(/.$/, '');
+  return (IA_TRATAMENTOS.indexOf(um) >= 0 && p[1]) ? p[0] + ' ' + p[1] : p[0];
 }
 
 function iaBlocosHTML(blocos){
@@ -16973,7 +17005,7 @@ function iaAddPergunta(txt){
 function iaAddResposta(){
   const el = document.createElement('div');
   el.className = 'ia-msg ia';
-  el.innerHTML = '<div class="ia-resp"><span class="ia-mark" aria-hidden="true"></span><div class="ia-corpo"></div></div>';
+  el.innerHTML = '<div class="ia-resp"><div class="ia-corpo"></div></div>';
   iaThread.appendChild(el);
   return el;
 }
@@ -16998,10 +17030,10 @@ function iaQuando(d){
   const hora = dois(d.getHours()) + ':' + dois(d.getMinutes());
   const so = x => new Date(x.getFullYear(), x.getMonth(), x.getDate());
   const dias = Math.round((so(new Date()) - so(d)) / 86400000);
-  if (dias <= 0) return 'hoje ' + hora;
-  if (dias === 1) return 'ontem ' + hora;
-  if (dias < 7)  return IA_DIAS[d.getDay()] + ' ' + hora;
-  return dois(d.getDate()) + '/' + dois(d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2) + ' ' + hora;
+  if (dias <= 0) return 'hoje às ' + hora;
+  if (dias === 1) return 'ontem às ' + hora;
+  if (dias < 7)  return IA_DIAS[d.getDay()] + ' às ' + hora;
+  return dois(d.getDate()) + '/' + dois(d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2) + ' às ' + hora;
 }
 
 function iaCarimbo(d){
@@ -17136,14 +17168,32 @@ function iaRenderLista(){
 
 /* ---------- perfil e unidade, no pé da coluna ---------- */
 
-function iaUnidadeAtual(){ return IA_UNIDADES.find(u => u.id === iaUnidade) || IA_UNIDADES[0]; }
+/* A lista do drop começa pela unidade de quem está no app. Nos cenários ela
+   não é uma das lojas do SULTS (o Pikachu fala de Kanto), então entra na
+   frente em vez de sumir. */
+function iaUnidades(){
+  const minha = iaEu().unidade;
+  const lista = IA_UNIDADES.slice();
+  if (minha && !lista.some(u => u.nome === minha)){
+    lista.unshift({ id:'eu', nome:minha, cor:'var(--marca, var(--teal))', ini:iaIniciais(minha) });
+  }
+  return lista;
+}
+
+function iaUnidadeAtual(){
+  const lista = iaUnidades();
+  return lista.find(u => u.id === iaUnidade) || lista[0];
+}
 
 function iaRenderUsuario(){
-  $('#iaUserNome').textContent = IA_PESSOA.nome;
+  const eu = iaEu();
+  const lista = iaUnidades();
+  if (!lista.some(u => u.id === iaUnidade)) iaUnidade = lista[0].id;
+  $('#iaUserNome').textContent = eu.nome;
   $('#iaUserSub').textContent = iaUnidadeAtual().nome;
   $('#iaUserMenu').innerHTML =
     '<div class="ia-umlbl">Unidade</div>' +
-    IA_UNIDADES.map(x =>
+    lista.map(x =>
       '<button type="button" data-iaunidade="' + x.id + '"' + (x.id === iaUnidade ? ' class="on"' : '') + '>' +
         '<span class="ia-umav" style="background:' + x.cor + '">' + iaEscapa(x.ini) + '</span>' +
         '<span class="ia-umtx"><b>' + iaEscapa(x.nome) + '</b></span>' +
@@ -17357,6 +17407,8 @@ function iaAbrirModulo(pergunta){
   iaView.classList.add('open');
   document.body.style.overflow = 'hidden';
   if (typeof setNav === 'function') setNav(null);
+  iaUnidade = 'eu';        /* o cenário manda; se não houver, cai na primeira */
+  iaRenderUsuario();
   iaNovaConversa();
   if (pergunta) setTimeout(() => iaPerguntar(pergunta), 90);
 }
@@ -17390,6 +17442,39 @@ let vzSessao  = '';      /* o consolidado da sessão em curso */
 let vzFluxo = null, vzAudio = null, vzAnalise = null, vzQuadro = null;
 const vzNiveis = [];
 
+/* Sem microfone — navegador que não transcreve, permissão negada, máquina sem
+   entrada de áudio — a gravação passa a ser simulada, para o fluxo continuar
+   demonstrável. A onda é sintetizada e a fala sai desta lista. */
+let vzFalso = false, vzAvisou = false, vzTique = 0, vzDitado = 0;
+const IA_DITADOS = [
+  'Qual é o prazo de SLA para um chamado crítico?',
+  'Resuma os comunicados desta semana',
+  'O que cai na auditoria mensal da loja?',
+  'Quais documentos preciso para abrir uma unidade nova?',
+  'Como funciona a janela de pedidos para a matriz?'
+];
+
+function vzSimular(){
+  if (vzFalso) return;
+  vzFalso = true;
+  try { vzRec && vzRec.stop(); } catch (x) {}
+  vzRec = null;
+  if (!vzAvisou){
+    vzAvisou = true;
+    fgToast('Sem microfone disponível: a gravação está sendo simulada.');
+  }
+}
+
+/* uma envoltória com ritmo de sílaba e respiros no meio, só para a onda ter
+   a cara de fala e não de ruído constante */
+function vzNivelFalso(){
+  const k = vzTique++;
+  const silaba = Math.abs(Math.sin(k * 0.34));
+  const frase  = 0.35 + 0.55 * Math.abs(Math.sin(k * 0.045));
+  const respiro = Math.sin(k * 0.09) > 0.93 ? 0.12 : 1;
+  return Math.min(1, (silaba * frase * respiro) + Math.random() * 0.06);
+}
+
 /* uma sessão de escuta. O Chrome encerra sozinho depois de um tempo calado,
    então o fim de uma sessão abre a seguinte enquanto o estado for "gravando" */
 function vzOuvir(){
@@ -17412,21 +17497,15 @@ function vzOuvir(){
   };
 
   vzRec.onerror = e => {
-    if (e.error === 'not-allowed' || e.error === 'service-not-allowed'){
-      fgToast('Permita o microfone no navegador para ditar.');
-      vzFechar(false);
-    } else if (e.error === 'no-speech' || e.error === 'aborted'){
-      /* silêncio ou parada nossa: o onend resolve */
-    } else {
-      fgToast('Não consegui ouvir agora (' + e.error + ').');
-      vzFechar(false);
-    }
+    if (e.error === 'no-speech' || e.error === 'aborted') return;  /* o onend resolve */
+    /* sem permissão, sem entrada de áudio ou sem serviço: simula */
+    vzSimular();
   };
 
   vzRec.onend = () => {
     vzFirme += vzSessao;
     vzSessao = '';
-    if (vzEstado === 'gravando'){ try { vzRec.start(); } catch (x) {} }
+    if (vzEstado === 'gravando' && !vzFalso && vzRec){ try { vzRec.start(); } catch (x) {} }
   };
 
   try { vzRec.start(); } catch (x) {}
@@ -17451,6 +17530,7 @@ function vzDesenhar(){
   const cx = cv.getContext('2d');
   let dados = null;
   const LARG = 3, VAO = 2;
+  let salto = 0;
 
   function quadro(){
     vzQuadro = requestAnimationFrame(quadro);
@@ -17463,12 +17543,16 @@ function vzDesenhar(){
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const L = cai.width, A = cai.height, cabem = Math.floor(L / (LARG + VAO));
 
-    if (vzEstado === 'gravando' && vzAnalise){
-      if (!dados || dados.length !== vzAnalise.frequencyBinCount) dados = new Uint8Array(vzAnalise.frequencyBinCount);
-      vzAnalise.getByteTimeDomainData(dados);
-      let soma = 0;
-      for (let i = 0; i < dados.length; i++){ const v = (dados[i] - 128) / 128; soma += v * v; }
-      vzNiveis.push(Math.min(1, Math.sqrt(soma / dados.length) * 3.4));
+    if (vzEstado === 'gravando' && (salto++ % 3 === 0)){
+      if (vzAnalise){
+        if (!dados || dados.length !== vzAnalise.frequencyBinCount) dados = new Uint8Array(vzAnalise.frequencyBinCount);
+        vzAnalise.getByteTimeDomainData(dados);
+        let soma = 0;
+        for (let i = 0; i < dados.length; i++){ const v = (dados[i] - 128) / 128; soma += v * v; }
+        vzNiveis.push(Math.min(1, Math.sqrt(soma / dados.length) * 3.4));
+      } else {
+        vzNiveis.push(vzNivelFalso());
+      }
       while (vzNiveis.length > cabem) vzNiveis.shift();
     }
 
@@ -17495,7 +17579,8 @@ function vzDesenhar(){
 
 function vzAbrir(){
   if (vzEstado !== 'off') return;
-  if (!IA_FALA){ fgToast('Este navegador não transcreve voz. Use o Chrome ou o Edge.'); return; }
+  vzFalso  = false;
+  vzTique  = 0;
   vzBase   = iaText.value.trim() ? iaText.value.trim() + ' ' : '';
   vzFirme  = '';
   vzSessao = '';
@@ -17509,7 +17594,7 @@ function vzAbrir(){
   $('#iaRecPause').title = 'Pausar';
   $('#iaRec').classList.remove('carregando');
   $('#iaComp').classList.add('gravando');
-  vzOuvir();
+  if (IA_FALA) vzOuvir(); else vzSimular();
   vzDesenhar();
   vzMedidor();
 }
@@ -17523,7 +17608,7 @@ function vzPausar(){
     $('#iaRecPause').title = 'Continuar';
   } else if (vzEstado === 'pausado'){
     vzEstado = 'gravando';
-    vzOuvir();
+    if (!vzFalso) vzOuvir();
     $('#iaRec').classList.remove('pausado');
     $('#iaRecPause').innerHTML = '<i class="mdi mdi-pause"></i>';
     $('#iaRecPause').title = 'Pausar';
@@ -17547,6 +17632,13 @@ function vzConcluir(){
     setTimeout(() => vzFechar(true), Math.max(0, 700 - (Date.now() - inicio)));
   };
 
+  if (vzFalso){
+    /* o texto sai da lista; frases curtas para gravações curtas */
+    const fala = IA_DITADOS[vzDitado++ % IA_DITADOS.length];
+    vzFirme = vzNiveis.length < 40 ? fala.split(' ').slice(0, 5).join(' ') : fala;
+    encerra();
+    return;
+  }
   if (parado || !vzRec){ encerra(); return; }
   vzRec.onend = () => { vzFirme += vzSessao; vzSessao = ''; encerra(); };
   try { vzRec.stop(); } catch (x) { encerra(); }
@@ -17670,7 +17762,7 @@ $('#iaChips').addEventListener('click', e => {
 $('#iaApps').addEventListener('click', iaFecharModulo);
 $('#iaLogo').addEventListener('click', iaFecharModulo);
 $('#iaManage').addEventListener('click', () => fgToast('Gerenciar entra na próxima etapa: é onde o administrador monta a base de conhecimento de cada tipo de unidade.'));
-$('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta — em breve'));
+$('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta: em breve'));
 $('#iaShare').addEventListener('click', () => fgToast('Link da conversa copiado'));
 
 $('#iaMore').addEventListener('click', e => {
@@ -17732,7 +17824,6 @@ document.addEventListener('keydown', e => {
 });
 
 $('#tileIA') && $('#tileIA').addEventListener('click', e => { e.preventDefault(); iaAbrirModulo(); });
-$('#navIA') && $('#navIA').addEventListener('click', e => { e.preventDefault(); iaAbrirModulo(); });
 
 iaRenderUsuario();
 iaRenderLista();

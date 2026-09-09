@@ -8,7 +8,9 @@
 /* zoom leve para o rosto encher o circulo; some so a ponta das orelhas e os pes */
 body.demo-crunch .av-rc{background:#e9eaed url("../../uploads/crunch/p-pikachu.webp") center 32%/135% auto no-repeat border-box}
 body.demo-crunch .profile-banner,
-body.demo-crunch .nvf-pcover{background:#23252B}
+body.demo-crunch .nvf-pcover{background:#F47521}
+body.demo-crunch:not(.demo-custom) .profile-banner .profile-logo--crunch,
+body.demo-crunch:not(.demo-custom) .nvf-pcover .profile-logo--crunch{filter:brightness(0) invert(1)}
 /* com dois seletores para ganhar do .profile-banner .profile-logo{display:block} da base */
 .profile-banner .profile-logo--crunch{display:none}
 body.demo-crunch .profile-banner svg{display:none}
@@ -47,3 +49,12 @@ body.demo-crunch #homeComPanel .com-featured{display:none}
 .av-cr-frieren{background-image:url("../../uploads/crunch/p-frieren.webp");background-size:170% auto;background-position:center top}
 .av-cr-gojo   {background-image:url("../../uploads/crunch/p-gojo.webp");background-size:200% auto;background-position:center top}
 
+/* A capa do "Ver meu perfil" segue a marca do cenário: laranja cheio e a logo
+   em branco. Só fora da home customizável, que ali a capa é a foto. */
+body.demo-crunch:not(.demo-custom) .pp-cover{background:#F47521}
+body.demo-crunch:not(.demo-custom) .pp-cover-pat{display:none}
+body.demo-crunch:not(.demo-custom) .pp-cover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:url("../../uploads/crunch/logo.webp") center / auto 30% no-repeat;
+  filter:brightness(0) invert(1);
+}

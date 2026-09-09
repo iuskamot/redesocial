@@ -10,9 +10,6 @@
 
 /* ---------------------------------------------------------------- dados --- */
 
-/* quantos documentos a base tem — vira dado do administrador depois */
-const IA_DOCS = 128;
-
 /* As respostas. `k` é o assunto que a pergunta precisa tocar; `blocos` é o
    corpo da resposta: parágrafo ou lista. */
 const IA_BASE = [
@@ -22,9 +19,9 @@ const IA_BASE = [
       { t:'p', x:'O chamado nasce em <b>Chamados &rarr; Novo chamado</b>. Quem abre escolhe o assunto, e é o assunto que decide para qual fila ele vai e qual prazo passa a valer.' },
       { t:'p', x:'Os prazos em vigor na rede são estes:' },
       { t:'ul', x:[
-        '<b>Crítico</b> &mdash; 4 horas para a primeira resposta e 1 dia útil para a solução.',
-        '<b>Alto</b> &mdash; 8 horas úteis para responder e 3 dias úteis para resolver.',
-        '<b>Normal</b> &mdash; 1 dia útil para responder e 5 dias úteis para resolver.'
+        '<b>Crítico</b>: 4 horas para a primeira resposta e 1 dia útil para a solução.',
+        '<b>Alto</b>: 8 horas úteis para responder e 3 dias úteis para resolver.',
+        '<b>Normal</b>: 1 dia útil para responder e 5 dias úteis para resolver.'
       ]},
       { t:'p', x:'O relógio para enquanto o chamado estiver aguardando a unidade, e volta a correr assim que ela responde. O que estoura o prazo aparece no painel de atrasos da matriz no mesmo dia.' }
     ]
@@ -34,11 +31,11 @@ const IA_BASE = [
     blocos: [
       { t:'p', x:'A auditoria mensal roda o modelo <b>Padrão de Loja</b>, com 48 itens divididos em cinco blocos:' },
       { t:'ul', x:[
-        'Fachada e vitrine &mdash; 6 itens',
-        'Atendimento e experiência &mdash; 12 itens',
-        'Estoque e validade &mdash; 11 itens',
-        'Limpeza e conservação &mdash; 9 itens',
-        'Documentação e alvarás &mdash; 10 itens'
+        'Fachada e vitrine: 6 itens',
+        'Atendimento e experiência: 12 itens',
+        'Estoque e validade: 11 itens',
+        'Limpeza e conservação: 9 itens',
+        'Documentação e alvarás: 10 itens'
       ]},
       { t:'p', x:'A nota de corte é <b>85%</b>. Abaixo disso o sistema abre um plano de ação com prazo de 15 dias, já com o responsável da unidade no topo. Item marcado como crítico reprova a visita sozinho, mesmo que a média feche acima do corte.' }
     ]
@@ -62,9 +59,9 @@ const IA_BASE = [
     blocos: [
       { t:'p', x:'Saíram três comunicados para a sua unidade nesta semana:' },
       { t:'ul', x:[
-        '<b>Convenção SULTS 2026</b> &mdash; encontro geral do time, com trilhas por área e festa de encerramento. Confirmação até 30/09.',
-        '<b>Nova trilha: Atendimento 2.0</b> &mdash; disponível na Universidade Corporativa, com certificado ao concluir.',
-        '<b>Atualização da plataforma v10.4</b> &mdash; melhorias de desempenho no Checklist e novos filtros nos relatórios.'
+        '<b>Convenção SULTS 2026.</b> Encontro geral do time, com trilhas por área e festa de encerramento. Confirmação até 30/09.',
+        '<b>Nova trilha de Atendimento 2.0.</b> Já está na Universidade Corporativa, com certificado ao concluir.',
+        '<b>Atualização da plataforma v10.4.</b> Melhorias de desempenho no Checklist e novos filtros nos relatórios.'
       ]},
       { t:'p', x:'Você ainda não abriu a trilha <b>Atendimento 2.0</b>, e ela é obrigatória para quem atende balcão. O prazo termina em 20/09.' }
     ]
@@ -77,7 +74,7 @@ const IA_BASE = [
       { t:'ul', x:[
         '9 de 12 pessoas concluíram todas as trilhas do cargo',
         '2 estão em andamento, ambas na trilha nova',
-        '1 pessoa ainda não começou &mdash; entrou há duas semanas e o prazo dela conta a partir da admissão'
+        '1 pessoa ainda não começou. Ela entrou há duas semanas, e o prazo dela conta a partir da admissão'
       ]},
       { t:'p', x:'O certificado sai sozinho quando a pessoa fecha a avaliação com 70% ou mais, e vai para o perfil dela na rede.' }
     ]
@@ -100,13 +97,13 @@ const IA_BASE = [
 function iaRespostaPadrao(){
   return {
     blocos: [
-      { t:'p', x:'Procurei nos <b>' + IA_DOCS + ' documentos</b> da base de conhecimento da rede e não achei nada que responda isso com segurança.' },
-      { t:'p', x:'O que dá para fazer agora:' },
+      { t:'p', x:'Procurei na base de conhecimento da rede e não achei nada que responda isso com segurança.' },
+      { t:'p', x:'Isso costuma ter dois motivos:' },
       { t:'ul', x:[
-        'Refazer a pergunta com o nome do módulo ou do documento &mdash; a busca fica bem mais precisa.',
-        'Abrir um chamado para a matriz, que aí a resposta vira documento e passa a valer para a rede toda.'
+        'A pergunta é da rede, mas ficou genérica. Me conte o que você precisa resolver e em que situação, que eu procuro de novo.',
+        'O assunto ainda não foi documentado. Nesse caso vale abrir um chamado para a matriz: a resposta vira documento e passa a valer para todo mundo.'
       ]},
-      { t:'p', x:'Se quiser, me conte o que você precisa resolver e eu indico por onde começar.' }
+      { t:'p', x:'E se for assunto de fora da rede, esse eu não tenho como responder por aqui.' }
     ]
   };
 }
@@ -127,8 +124,23 @@ const IA_CONVERSAS = [
   { id:'c6', g:'Últimos 30 dias', d:18, h:'10:22', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] }
 ];
 
-/* Quem está usando */
-const IA_PESSOA = { nome:'Rodrigo Caetano' };
+/* Quem está usando vem do app, não daqui: o cenário da vez troca a pessoa e
+   a unidade, e o módulo só lê. */
+function iaEu(){
+  let nome = '';
+  const cli = (typeof customCliente === 'function') ? customCliente() : null;
+  if (cli && cli.pessoa && cli.pessoa.nome) nome = cli.pessoa.nome;
+  if (!nome && typeof usuarioAtual === 'function'){ const u = usuarioAtual(); nome = (u && u.nome) || ''; }
+  if (!nome){ const el = document.querySelector('.profile-name'); nome = el ? el.textContent.trim() : ''; }
+  nome = nome || 'Rodrigo Caetano';
+  const unidade = (typeof customUnidadeDe === 'function') ? (customUnidadeDe(nome) || '') : '';
+  return { nome: nome, unidade: unidade };
+}
+
+function iaIniciais(texto){
+  const partes = String(texto).split(/[\s·-]+/).filter(Boolean);
+  return ((partes[0] || '?')[0] + (partes[1] ? partes[1][0] : '')).toUpperCase();
+}
 
 /* As unidades que essa pessoa alcança. A cor e as iniciais saem de STORES,
    a mesma tabela que desenha a unidade nas outras telas, para a bolinha ser
@@ -185,11 +197,11 @@ function iaSaudacao(){
   return h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
 }
 
-/* o primeiro nome de quem está logado — muda junto com o cliente da vez */
+const IA_TRATAMENTOS = ['senhor','senhora','sr','sra','dr','dra','seu','dona'];
 function iaPrimeiroNome(){
-  const el = document.querySelector('#topUserChip .uname');
-  const nome = (el && el.textContent.trim()) || 'por aqui';
-  return nome.split(/\s+/)[0];
+  const p = iaEu().nome.split(/s+/);
+  const um = (p[0] || '').toLowerCase().replace(/.$/, '');
+  return (IA_TRATAMENTOS.indexOf(um) >= 0 && p[1]) ? p[0] + ' ' + p[1] : p[0];
 }
 
 function iaBlocosHTML(blocos){
@@ -217,7 +229,7 @@ function iaAddPergunta(txt){
 function iaAddResposta(){
   const el = document.createElement('div');
   el.className = 'ia-msg ia';
-  el.innerHTML = '<div class="ia-resp"><span class="ia-mark" aria-hidden="true"></span><div class="ia-corpo"></div></div>';
+  el.innerHTML = '<div class="ia-resp"><div class="ia-corpo"></div></div>';
   iaThread.appendChild(el);
   return el;
 }
@@ -242,10 +254,10 @@ function iaQuando(d){
   const hora = dois(d.getHours()) + ':' + dois(d.getMinutes());
   const so = x => new Date(x.getFullYear(), x.getMonth(), x.getDate());
   const dias = Math.round((so(new Date()) - so(d)) / 86400000);
-  if (dias <= 0) return 'hoje ' + hora;
-  if (dias === 1) return 'ontem ' + hora;
-  if (dias < 7)  return IA_DIAS[d.getDay()] + ' ' + hora;
-  return dois(d.getDate()) + '/' + dois(d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2) + ' ' + hora;
+  if (dias <= 0) return 'hoje às ' + hora;
+  if (dias === 1) return 'ontem às ' + hora;
+  if (dias < 7)  return IA_DIAS[d.getDay()] + ' às ' + hora;
+  return dois(d.getDate()) + '/' + dois(d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2) + ' às ' + hora;
 }
 
 function iaCarimbo(d){
@@ -380,14 +392,32 @@ function iaRenderLista(){
 
 /* ---------- perfil e unidade, no pé da coluna ---------- */
 
-function iaUnidadeAtual(){ return IA_UNIDADES.find(u => u.id === iaUnidade) || IA_UNIDADES[0]; }
+/* A lista do drop começa pela unidade de quem está no app. Nos cenários ela
+   não é uma das lojas do SULTS (o Pikachu fala de Kanto), então entra na
+   frente em vez de sumir. */
+function iaUnidades(){
+  const minha = iaEu().unidade;
+  const lista = IA_UNIDADES.slice();
+  if (minha && !lista.some(u => u.nome === minha)){
+    lista.unshift({ id:'eu', nome:minha, cor:'var(--marca, var(--teal))', ini:iaIniciais(minha) });
+  }
+  return lista;
+}
+
+function iaUnidadeAtual(){
+  const lista = iaUnidades();
+  return lista.find(u => u.id === iaUnidade) || lista[0];
+}
 
 function iaRenderUsuario(){
-  $('#iaUserNome').textContent = IA_PESSOA.nome;
+  const eu = iaEu();
+  const lista = iaUnidades();
+  if (!lista.some(u => u.id === iaUnidade)) iaUnidade = lista[0].id;
+  $('#iaUserNome').textContent = eu.nome;
   $('#iaUserSub').textContent = iaUnidadeAtual().nome;
   $('#iaUserMenu').innerHTML =
     '<div class="ia-umlbl">Unidade</div>' +
-    IA_UNIDADES.map(x =>
+    lista.map(x =>
       '<button type="button" data-iaunidade="' + x.id + '"' + (x.id === iaUnidade ? ' class="on"' : '') + '>' +
         '<span class="ia-umav" style="background:' + x.cor + '">' + iaEscapa(x.ini) + '</span>' +
         '<span class="ia-umtx"><b>' + iaEscapa(x.nome) + '</b></span>' +
@@ -601,6 +631,8 @@ function iaAbrirModulo(pergunta){
   iaView.classList.add('open');
   document.body.style.overflow = 'hidden';
   if (typeof setNav === 'function') setNav(null);
+  iaUnidade = 'eu';        /* o cenário manda; se não houver, cai na primeira */
+  iaRenderUsuario();
   iaNovaConversa();
   if (pergunta) setTimeout(() => iaPerguntar(pergunta), 90);
 }
@@ -634,6 +666,39 @@ let vzSessao  = '';      /* o consolidado da sessão em curso */
 let vzFluxo = null, vzAudio = null, vzAnalise = null, vzQuadro = null;
 const vzNiveis = [];
 
+/* Sem microfone — navegador que não transcreve, permissão negada, máquina sem
+   entrada de áudio — a gravação passa a ser simulada, para o fluxo continuar
+   demonstrável. A onda é sintetizada e a fala sai desta lista. */
+let vzFalso = false, vzAvisou = false, vzTique = 0, vzDitado = 0;
+const IA_DITADOS = [
+  'Qual é o prazo de SLA para um chamado crítico?',
+  'Resuma os comunicados desta semana',
+  'O que cai na auditoria mensal da loja?',
+  'Quais documentos preciso para abrir uma unidade nova?',
+  'Como funciona a janela de pedidos para a matriz?'
+];
+
+function vzSimular(){
+  if (vzFalso) return;
+  vzFalso = true;
+  try { vzRec && vzRec.stop(); } catch (x) {}
+  vzRec = null;
+  if (!vzAvisou){
+    vzAvisou = true;
+    fgToast('Sem microfone disponível: a gravação está sendo simulada.');
+  }
+}
+
+/* uma envoltória com ritmo de sílaba e respiros no meio, só para a onda ter
+   a cara de fala e não de ruído constante */
+function vzNivelFalso(){
+  const k = vzTique++;
+  const silaba = Math.abs(Math.sin(k * 0.34));
+  const frase  = 0.35 + 0.55 * Math.abs(Math.sin(k * 0.045));
+  const respiro = Math.sin(k * 0.09) > 0.93 ? 0.12 : 1;
+  return Math.min(1, (silaba * frase * respiro) + Math.random() * 0.06);
+}
+
 /* uma sessão de escuta. O Chrome encerra sozinho depois de um tempo calado,
    então o fim de uma sessão abre a seguinte enquanto o estado for "gravando" */
 function vzOuvir(){
@@ -656,21 +721,15 @@ function vzOuvir(){
   };
 
   vzRec.onerror = e => {
-    if (e.error === 'not-allowed' || e.error === 'service-not-allowed'){
-      fgToast('Permita o microfone no navegador para ditar.');
-      vzFechar(false);
-    } else if (e.error === 'no-speech' || e.error === 'aborted'){
-      /* silêncio ou parada nossa: o onend resolve */
-    } else {
-      fgToast('Não consegui ouvir agora (' + e.error + ').');
-      vzFechar(false);
-    }
+    if (e.error === 'no-speech' || e.error === 'aborted') return;  /* o onend resolve */
+    /* sem permissão, sem entrada de áudio ou sem serviço: simula */
+    vzSimular();
   };
 
   vzRec.onend = () => {
     vzFirme += vzSessao;
     vzSessao = '';
-    if (vzEstado === 'gravando'){ try { vzRec.start(); } catch (x) {} }
+    if (vzEstado === 'gravando' && !vzFalso && vzRec){ try { vzRec.start(); } catch (x) {} }
   };
 
   try { vzRec.start(); } catch (x) {}
@@ -695,6 +754,7 @@ function vzDesenhar(){
   const cx = cv.getContext('2d');
   let dados = null;
   const LARG = 3, VAO = 2;
+  let salto = 0;
 
   function quadro(){
     vzQuadro = requestAnimationFrame(quadro);
@@ -707,12 +767,16 @@ function vzDesenhar(){
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const L = cai.width, A = cai.height, cabem = Math.floor(L / (LARG + VAO));
 
-    if (vzEstado === 'gravando' && vzAnalise){
-      if (!dados || dados.length !== vzAnalise.frequencyBinCount) dados = new Uint8Array(vzAnalise.frequencyBinCount);
-      vzAnalise.getByteTimeDomainData(dados);
-      let soma = 0;
-      for (let i = 0; i < dados.length; i++){ const v = (dados[i] - 128) / 128; soma += v * v; }
-      vzNiveis.push(Math.min(1, Math.sqrt(soma / dados.length) * 3.4));
+    if (vzEstado === 'gravando' && (salto++ % 3 === 0)){
+      if (vzAnalise){
+        if (!dados || dados.length !== vzAnalise.frequencyBinCount) dados = new Uint8Array(vzAnalise.frequencyBinCount);
+        vzAnalise.getByteTimeDomainData(dados);
+        let soma = 0;
+        for (let i = 0; i < dados.length; i++){ const v = (dados[i] - 128) / 128; soma += v * v; }
+        vzNiveis.push(Math.min(1, Math.sqrt(soma / dados.length) * 3.4));
+      } else {
+        vzNiveis.push(vzNivelFalso());
+      }
       while (vzNiveis.length > cabem) vzNiveis.shift();
     }
 
@@ -739,7 +803,8 @@ function vzDesenhar(){
 
 function vzAbrir(){
   if (vzEstado !== 'off') return;
-  if (!IA_FALA){ fgToast('Este navegador não transcreve voz. Use o Chrome ou o Edge.'); return; }
+  vzFalso  = false;
+  vzTique  = 0;
   vzBase   = iaText.value.trim() ? iaText.value.trim() + ' ' : '';
   vzFirme  = '';
   vzSessao = '';
@@ -753,7 +818,7 @@ function vzAbrir(){
   $('#iaRecPause').title = 'Pausar';
   $('#iaRec').classList.remove('carregando');
   $('#iaComp').classList.add('gravando');
-  vzOuvir();
+  if (IA_FALA) vzOuvir(); else vzSimular();
   vzDesenhar();
   vzMedidor();
 }
@@ -767,7 +832,7 @@ function vzPausar(){
     $('#iaRecPause').title = 'Continuar';
   } else if (vzEstado === 'pausado'){
     vzEstado = 'gravando';
-    vzOuvir();
+    if (!vzFalso) vzOuvir();
     $('#iaRec').classList.remove('pausado');
     $('#iaRecPause').innerHTML = '<i class="mdi mdi-pause"></i>';
     $('#iaRecPause').title = 'Pausar';
@@ -791,6 +856,13 @@ function vzConcluir(){
     setTimeout(() => vzFechar(true), Math.max(0, 700 - (Date.now() - inicio)));
   };
 
+  if (vzFalso){
+    /* o texto sai da lista; frases curtas para gravações curtas */
+    const fala = IA_DITADOS[vzDitado++ % IA_DITADOS.length];
+    vzFirme = vzNiveis.length < 40 ? fala.split(' ').slice(0, 5).join(' ') : fala;
+    encerra();
+    return;
+  }
   if (parado || !vzRec){ encerra(); return; }
   vzRec.onend = () => { vzFirme += vzSessao; vzSessao = ''; encerra(); };
   try { vzRec.stop(); } catch (x) { encerra(); }
@@ -914,7 +986,7 @@ $('#iaChips').addEventListener('click', e => {
 $('#iaApps').addEventListener('click', iaFecharModulo);
 $('#iaLogo').addEventListener('click', iaFecharModulo);
 $('#iaManage').addEventListener('click', () => fgToast('Gerenciar entra na próxima etapa: é onde o administrador monta a base de conhecimento de cada tipo de unidade.'));
-$('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta — em breve'));
+$('#iaAttach').addEventListener('click', () => fgToast('Anexar arquivo à pergunta: em breve'));
 $('#iaShare').addEventListener('click', () => fgToast('Link da conversa copiado'));
 
 $('#iaMore').addEventListener('click', e => {
@@ -976,7 +1048,6 @@ document.addEventListener('keydown', e => {
 });
 
 $('#tileIA') && $('#tileIA').addEventListener('click', e => { e.preventDefault(); iaAbrirModulo(); });
-$('#navIA') && $('#navIA').addEventListener('click', e => { e.preventDefault(); iaAbrirModulo(); });
 
 iaRenderUsuario();
 iaRenderLista();

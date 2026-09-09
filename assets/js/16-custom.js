@@ -151,6 +151,11 @@ function customAlternar(){
     'Rodrigo Caetano':  { unidade:'Uberaba · MG',             desde:'2019',     pubs:'48', shorts:'9', reacoes:'1,2 mil', comentarios:'120', unidades:'3 unidades',
                           streak:'12', recorde:'40', semana:[1,1,1,1,1,1,0], hoje:5 }
   };
+  /* o módulo de IA também precisa saber de onde a pessoa fala */
+  window.customUnidadeDe = function(nome){
+    const d = PC_PESSOA[nome] || PC_PESSOA['Rodrigo Caetano'];
+    return d ? d.unidade : '';
+  };
   function pcPreenche(){
     const eu = (typeof usuarioAtual === 'function') ? usuarioAtual() : { nome:'Rodrigo Caetano' };
     const cli = (typeof customCliente === 'function') ? customCliente() : null;
@@ -209,8 +214,11 @@ function customAlternar(){
     const abrirOrig = openPersonProfile;
     window.openPersonProfile = function(name, av){
       abrirOrig(name, av);
-      if (!customLigado() || name !== 'Rodrigo Caetano Silva') return;
-      const c = customCliente(); if (!c) return;
+      if (name !== 'Rodrigo Caetano Silva') return;
+      const noCrunch = document.body.classList.contains('demo-crunch');
+      if (!customLigado() && !noCrunch) return;
+      const c = customCliente() || CUSTOM_CLIENTES.find(function(x){ return x.id === 'crunch'; });
+      if (!c) return;
       const q = function(s){ return document.querySelector(s); };
       const nome = q('.profile-name') ? q('.profile-name').textContent.trim() : name;
       const cargo = q('.profile-role') ? q('.profile-role').textContent.trim() : '';

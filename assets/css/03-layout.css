@@ -247,8 +247,7 @@
 .pp-linkq{font-size:12px !important;color:var(--muted) !important;margin-top:2px !important}
 .pp-top{height:60px;flex-shrink:0;background:var(--sidebar);color:#fff;display:flex;align-items:center;gap:10px;padding:0 20px}
 .pp-toplogo{display:flex;align-items:center;gap:9px;border:0;background:none;color:#fff;padding:0;cursor:pointer;flex-shrink:0}
-.pp-logomark{width:26px;height:26px;color:var(--teal);flex-shrink:0}
-.pp-logoword{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.pp-logo-sults{height:26px;width:auto;display:block;flex-shrink:0}
 /* mesmo botao do cabecalho dos modulos: icone de 20px com o rotulo embaixo */
 .pp-topic{min-width:96px;height:48px;border:0;border-radius:4px;background:none;color:rgba(255,255,255,.72);cursor:pointer;
   display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 12px;
@@ -353,7 +352,7 @@
 }
 @media(max-width:640px){
   .pp-top{padding:0 14px}
-  .pp-logoword{font-size:19px}
+  .pp-logo-sults{height:22px}
   .pp-hero-in,.pp-grid{padding-left:14px;padding-right:14px}
   .pp-stats{flex-wrap:wrap;gap:10px 0}
   .pp-stat{flex:1 1 45%;padding-right:14px;margin-right:14px}

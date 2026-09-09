@@ -69,5 +69,10 @@ function basicoAlternar(){ if (basicoLigado()) basicoDesligar(); else basicoLiga
 
 (function(){
   const ic = document.querySelector('.hm-store--apple');
-  if (ic) ic.addEventListener('click', function(e){ e.preventDefault(); basicoAlternar(); });
+  /* o mesmo aqui: quem estava na home customizável sai dela primeiro */
+  if (ic) ic.addEventListener('click', function(e){
+    e.preventDefault();
+    if (typeof customLigado === 'function' && customLigado()){ customDesligar(); basicoLigar(); return; }
+    basicoAlternar();
+  });
 })();

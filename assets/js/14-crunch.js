@@ -387,7 +387,13 @@ function crunchAlternar(){
 }
 (function(){
   const ic = document.querySelector('.hm-store--googleplay');
-  if (ic) ic.addEventListener('click', function(e){ e.preventDefault(); crunchAlternar(); });
+  /* vindo da home customizável, o clique sai dela e entra no cenário limpo,
+     em vez de misturar os dois estados */
+  if (ic) ic.addEventListener('click', function(e){
+    e.preventDefault();
+    if (typeof customLigado === 'function' && customLigado()){ customDesligar(); crunchLigar(); return; }
+    crunchAlternar();
+  });
   /* no mobile o rodapé do menu não aparece: o Comunicados da barra de baixo
      liga e desliga o cenário, e a rolagem até o painel segue acontecendo */
   /* clique no nome do Pikachu no header alterna o papel; fora do cenario o

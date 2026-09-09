@@ -240,8 +240,7 @@ body.demo-custom[data-cliente="gatitos"] .av-rc{background:#f48fb1 url("../../up
    A capa vem da variavel no body (a mesma do cartao da home). */
 body.demo-custom .nvf-pcover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
 body.demo-custom .pp-top{background:var(--marca-escura)}
-body.demo-custom .pp-toplogo .pp-logomark,
-body.demo-custom .pp-toplogo .pp-logoword{display:none}
+body.demo-custom .pp-toplogo .pp-logo-sults{display:none}
 /* a logo no mesmo bloco da home: 250x60 na cor da marca, 8px em cima e embaixo, logo com 44px */
 /* mesma proporcao e posicao do bloco da home, sem o fundo da marca */
 body.demo-custom .pp-toplogo{width:250px;height:60px;margin-left:-20px;padding:8px 0;justify-content:center;box-sizing:border-box}
