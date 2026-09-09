@@ -1267,9 +1267,11 @@ input,textarea,select{font-size:14px}
 #permStoriesGrid.wide .perm-note{max-width:500px}
 /* Shorts publicados dentro de Configurações (Gerenciar) */
 .reels-view.in-cfg{left:0;top:60px;z-index:126}
-.reels-view.in-cfg .rx-header{margin:10px 10px 0;height:60px;min-height:60px;box-sizing:border-box;padding:0 18px;border-bottom:0;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED}
-.reels-view.in-cfg .rx-main{padding:10px 10px 44px}
-.reels-view.in-cfg .rx-filters{margin:10px 0 10px 10px;height:calc(100vh - 152px);max-height:calc(100vh - 152px);width:400px;display:flex;flex-direction:column}
+.reels-view.in-cfg .rx-header{margin:8px 8px 0;height:60px;min-height:60px;box-sizing:border-box;padding:0 12px;border-bottom:0;border-radius:8px;border:1px solid #D9D9D9}
+.reels-view.in-cfg .rx-main{padding:8px 8px 8px}
+/* Sem height/max-height fixos: align-self:stretch (em vez do flex-start herdado de .rx-filters)
+   faz a altura acompanhar a da tabela ao lado, que é quem manda no tamanho da linha (.rx-body). */
+.reels-view.in-cfg .rx-filters{margin:8px 0 8px 8px;width:400px;display:flex;flex-direction:column;align-self:stretch;max-height:none}
 .reels-view.in-cfg .rx-filters .nv-filters-ft{margin-top:auto}
 @media(max-width:900px){ .reels-view.in-cfg{left:0} }
 /* Shorts dentro do ambiente Social do módulo de Rede Social */
@@ -1303,10 +1305,10 @@ input,textarea,select{font-size:14px}
 .rx-viewtg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
-.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow:hidden}
+.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:8px;overflow:hidden}
 .rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}
-.rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
+.rlist td{padding:12px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
 #nvList table{font-size:13px}
 #nvList th{padding:13px 18px;font-size:11px;color:#98a2ac;font-weight:700}
 #nvList td{padding:14px 18px;vertical-align:middle}
@@ -1322,9 +1324,10 @@ input,textarea,select{font-size:14px}
 .rl-reel{display:flex;align-items:center;gap:11px;min-width:220px}
 .rl-reel img{width:38px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;background:#dfe4ea}
 .rl-reel b{display:block;color:var(--ink);font-size:12px;line-height:1.3}
-.rl-reel span{font-size:11px;color:var(--muted)}
-.rl-dtag .rl-rel{color:#E08A1E}
+.rl-reel span{font-size:14px;color:#2F8EE5;font-weight:700}
+.rl-dtag .rl-rel{color:#999999}
 .rl-procthumb{width:38px;height:60px;border-radius:8px;flex-shrink:0;background:#F4F5F6;box-shadow:inset 0 0 0 1px #E9EAED;display:flex;align-items:center;justify-content:center}
+.rl-proc-ic{width:20px;height:20px;color:#999999;opacity:.5}
 .reel-failnote{display:flex;gap:12px;align-items:flex-start;margin:0 0 16px;padding:14px 16px;border-radius:8px;background:rgba(255,56,60,.12);box-shadow:inset 0 0 0 1px rgba(255,56,60,.32)}
 .reel-procnote{background:#E0F1FF !important;box-shadow:inset 0 0 0 1px rgba(0,136,255,.28) !important}
 .reel-procnote b{color:#0F377A !important}
@@ -1335,9 +1338,9 @@ input,textarea,select{font-size:14px}
 .reel-failnote span{display:block;margin-top:4px;font-size:13px;line-height:18px;color:#48484A}
 .rl-failthumb{background:rgba(255,56,60,.12);box-shadow:inset 0 0 0 1px rgba(255,56,60,.32);color:#B3272A;font-size:14px}
 .pubttl .rl-failpill,.nv-list-title .rl-failpill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;height:20px;padding:0 10px;background:rgba(255,56,60,.12);color:#B3272A;font-size:10px;line-height:14px;font-weight:600;letter-spacing:.3px;border-radius:32px}
-.rl-spin{width:16px;height:16px;border-radius:50%;border:2px solid #D1D1D6;border-top-color:#0088FF;animation:rlspin .8s linear infinite}
+.rl-spin{width:16px;height:16px;border-radius:50%;border:2px solid #D1D1D6;border-top-color:#0088FF;animation:rlspin .9s linear infinite}
 @keyframes rlspin{to{transform:rotate(360deg)}}
-.rl-reel .rl-procpill,.pubttl .rl-procpill,.nv-list-title .rl-procpill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;height:20px;padding:0 10px;background:#E0F1FF;color:#0F377A;font-size:10px;line-height:14px;font-weight:600;letter-spacing:.3px;border-radius:32px}
+.rl-reel .rl-procpill,.pubttl .rl-procpill,.nv-list-title .rl-procpill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;color:#999999;font-size:14px;font-weight:400}
 .rl-author{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .rl-author .avatar{width:24px;height:24px;font-size:0}
 .rl-rec{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#9a6400;background:#fdf3dc;padding:3px 9px;border-radius:999px;white-space:nowrap}
@@ -1369,7 +1372,7 @@ input,textarea,select{font-size:14px}
 .rlist th.active-sort .sort-ic{opacity:1}
 .rx-kpi>div{min-width:0}
 .rl-cat{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#465364}
-.rl-cat-dot{width:22px;height:22px;border-radius:5px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+.rl-cat-dot{width:32px;height:32px;border-radius:5px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
 .rx-catdot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
 .cat-view{position:fixed;top:0;right:0;bottom:0;left:100px;z-index:125;background:#e9eaed;display:none;flex-direction:column}
 .cat-view.open{display:flex}
@@ -1605,7 +1608,7 @@ input,textarea,select{font-size:14px}
 .ni-body .ri-btn.sm{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border:0;border-radius:8px;background:#0088FF;color:#fff;font:inherit;font-size:14px;font-weight:600;letter-spacing:.3px;cursor:pointer}
 .ni-body .ri-btn.sm:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
 @media(max-width:720px){ .ni-body .ri-top{grid-template-columns:1fr} .ni-body .ni-cover{width:100%} }
-.perm-id{color:var(--teal);font-weight:700;font-size:12px;white-space:nowrap;text-align:center}
+.perm-id{color:var(--teal);font-weight:700;font-size:14px;white-space:nowrap;text-align:center}
 .perm-person{display:flex;align-items:center;gap:12px}
 .perm-person .avatar{width:40px;height:40px;font-size:0;flex-shrink:0}
 .perm-person b{font-size:13px;color:var(--ink);display:block}
@@ -2055,13 +2058,17 @@ input,textarea,select{font-size:14px}
 .sb-empty b{font-size:15px;line-height:20px;color:#1C1C1E}
 .sb-empty span{font-size:13px;line-height:18px}
 @media(max-width:1100px){ .sb-side{display:none} }
-.nv-listwrap{display:flex;gap:10px;align-items:stretch;flex:1;min-height:0}
+.nv-listwrap{display:flex;gap:8px;align-items:stretch;flex:1;min-height:0}
 .nv-filters{width:400px;flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 18px 0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;display:flex;flex-direction:column}
 .nv-filters::-webkit-scrollbar{display:none}
 .nv-fsec{padding:16px 0;border-bottom:1px solid var(--line)}
 .nv-fsec:last-of-type{border-bottom:0}
-.nv-fsec-hd{display:flex;align-items:center;justify-content:space-between;font-size: 18px;font-weight:700;color:#0C334A;margin-bottom:14px}
-.nv-fsec-hd i{font-size:12px;color:#9aa5b1}
+/* Em .rx-filters (16px de padding lateral) o divisor sangra até a borda do painel: puxa a
+   largura pelas margens negativas e devolve o respiro lateral ao conteúdo via padding, para o
+   border-bottom encostar nas duas bordas em vez de parar no padding do container. */
+.rx-filters .nv-fsec{ margin-left:-16px; margin-right:-16px; padding-left:16px; padding-right:16px }
+.nv-fsec-hd{display:flex;align-items:center;justify-content:space-between;font-size:18px;font-weight:700;color:#0C334A;margin-bottom:14px}
+.nv-fsec-hd i{font-size:16px;color:#0C334A}
 .nv-sitcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:none;padding:0}
 .nv-sitcards button{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid #D9D9D9;border-radius:10px;padding:12px 4px;font-size:12px;font-weight:700;color:#5b6672;box-shadow:none}
 .nv-sitcards button i{font-size:16px;color:#9aa5b1}
@@ -2075,12 +2082,16 @@ input,textarea,select{font-size:14px}
 .nv-filters .nv-fsel{width:100%}
 .nv-filters-ft{display:flex;gap:10px;padding:12px 0 0;margin-top:auto;background:#F0F0F0}
 .news-view .nv-filters-ft,.rx-nav .nv-filters-ft{position:sticky;bottom:0;z-index:2;background:#F0F0F0;padding:12px;margin-left:-18px;margin-right:-18px;border-radius:0 0 14px 14px}
-.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 16px;border-radius:8px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
+.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{flex:1;height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 16px;border-radius:8px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
 .nv-filters .nv-fsel,.rx-nav .nv-fsel,.nv-filters .nv-finput,.rx-nav .nv-finput{height:42px;padding-top:0;padding-bottom:0}
 .nv-sitcards.nv-sit2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:transparent;padding:0;border-radius:0}
 .nv-sitcards.nv-sit2 .rxs-item2{width:100%;justify-content:center;text-align:center}
-.nv-filters-ft .nv-fclear{background:#D9D9D9;color:#48484A;border:0}
-.nv-filters-ft .nv-fclear:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#D9D9D9;color:#48484A;border:0}
+/* Sem filtro ativo, "Limpar filtros" fica desabilitado (visual e clique); a JS já alterna a classe
+   has-active de acordo com a contagem de filtros (foBuildGerenciarShortsFilters/
+   foBuildGerenciarPublicacoesFilters) — só faltava o CSS que reage a ela */
+.nv-filters-ft .nv-fclear{background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
+.nv-filters-ft .nv-fclear.has-active{background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
+.nv-filters-ft .nv-fclear.has-active:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}
 .nv-filters-ft .nv-fapply{background:#2F8EE5;color:#fff}
 .nv-filters-ft .nv-fapply:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
 .nv-fclear{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;background:#eef2f5;color:#8a94a0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:12px;border-radius:9px}
@@ -2095,7 +2106,7 @@ input,textarea,select{font-size:14px}
 .nv-dtcell{white-space:normal;width:64px;font-size:13px;line-height:1.35;color:var(--muted)}
 #nvList th:first-child{width:64px}
 .nv-listmain{flex:1;min-width:0;overflow-x:auto;display:flex;flex-direction:column}
-.nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:14px}
+.nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:8px}
 #interList.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow-x:scroll;overflow-y:hidden}
 .nv-listmain .rlist table{min-width:1100px}
 #interList.rlist table{min-width:1180px}
@@ -2847,7 +2858,7 @@ input,textarea,select{font-size:14px}
 .rx-title i{font-size:20px;color:var(--teal)}
 #permHeadIc{display:inline-flex;color:var(--teal)}
 #permHeadIc svg{width:26px;height:26px}
-.rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+.rx-title h2{font-size:22px;font-weight:700;color:#0C334A;letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
   border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
 .rx-search:hover{background:#eef2f5}
@@ -4559,8 +4570,8 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .artreview-no:hover{--vermelho:var(--red);background:#fff;color:var(--vermelho);box-shadow:inset 0 0 0 1px var(--vermelho)}
 .itbl tbody tr.is-new td:first-child{position:relative}
 .itbl tbody tr.is-new td:first-child::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#25d366}
-.rx-filters{margin:14px 0 14px 14px;align-self:flex-start;width:280px;flex-shrink:0;overflow-y:auto;max-height:calc(100vh - 162px);
-  background:#fff;border:1px solid var(--line);border-right-width:1px;border-radius:14px;padding:0 18px 16px}
+.rx-filters{margin:8px 0 8px 8px;align-self:flex-start;width:400px;flex-shrink:0;overflow-y:auto;max-height:calc(100vh - 162px);
+  background:#fff;border:1px solid #D9D9D9;border-right-width:1px;border-radius:8px;padding:0 16px 16px}
 .rx-fsearch{max-width:none;width:100%;margin:16px 0 4px;padding:0 12px;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;border-radius:8px}
 .rxh{display:grid;grid-template-columns:300px 1fr;gap:24px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:24px;cursor:pointer;transition:box-shadow .15s,transform .15s}
 .rxh:hover{box-shadow:0 18px 40px -22px rgba(16,32,48,.5);transform:translateY(-2px)}
@@ -6141,7 +6152,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 #mgSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
 #mgSitCards.nv-sit2 button.active{ box-shadow:none }
 #mgSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
-#mgSitCards .rxs-item2[data-rxstatus="agendado"] i{ font-size:16px; line-height:16px }
+#mgSitCards .rxs-item2[data-rxstatus="agendado"] i{ font-size:18px; line-height:18px }
 
 /* Campos compactos da sidebar (Short, Publicado para, Períodos) e dropdown customizado
    (Tipo/Categoria/Autor/Unidade/Publicado para/Períodos) */
@@ -6150,7 +6161,7 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 .nv-ffcol{ flex:1; min-width:0; display:flex; flex-direction:column; gap:8px }
 .nv-ffcol label{ font-size:12px; color:#5f666c; line-height:14px }
 .nv-ffield{ display:flex; align-items:center; gap:6px; height:30px; padding:0 12px; background:#fff; border:1px solid #d9d9d9; border-radius:6px }
-.nv-ffield i.ico-l,.nv-ffield i.ico-r{ font-size:16px; color:#5F666C; flex-shrink:0; cursor:pointer }
+.nv-ffield i.ico-l,.nv-ffield i.ico-r{ font-size:14px; color:#5F666C; flex-shrink:0; cursor:pointer }
 .nv-ffield input{ border:0; outline:0; background:transparent; flex:1; min-width:0; font:inherit; font-size:14px; color:var(--ink); padding:0; cursor:text }
 .nv-ffield input::placeholder{ color:#999 }
 .nv-ffield:focus-within{ border-color:rgba(153,153,153,.8); box-shadow:0 0 0 2px rgba(153,153,153,.16) }
@@ -6170,6 +6181,129 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 .nv-fdatewrap.has-value .nv-fdateph{ display:none }
 .nv-fdatebtn{ width:30px; height:30px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--teal); color:#fff; border:0; border-radius:0 4px 4px 0; cursor:pointer; font-size:14px }
 .nv-fdatebtn:hover{ background:#0c9797 }
+
+/* =====================================================================
+   GERENCIAR > PUBLICAÇÕES (admin) — assets/css/17-gerenciar-publicacoes.css
+
+   Espelha assets/css/16-gerenciar-shorts.css (mesmos seletores, mesmos
+   valores já corrigidos manualmente naquela tela), só trocando #rxGrid por
+   #pubGrid e #mgSitCards por #pubSitCards, e ajustando as larguras de
+   coluna para a tabela de 13 colunas de Publicações (Reações e Comentários
+   entram como colunas próprias em vez de uma única "Curtidas"). Tudo aqui
+   é aditivo/escopado a #pubGrid, #pubFilters, #pubSitCards e #nvListScreen
+   — não toca em nada de #rxGrid/#mgSitCards/16-gerenciar-shorts.css.
+   ===================================================================== */
+
+/* Cabeçalho e coluna da tabela desta tela (#nvListScreen .cat-head ~ .rx-header,
+   #nvListScreen .nv-listmain ~ .rx-main de Shorts) — mesmos valores já corrigidos lá:
+   margem/padding 8px, radius 8px, borda #D9D9D9. Escopado a #nvListScreen porque
+   .cat-head/.cat-body são reaproveitadas por Categorias/Permissões também. */
+#nvListScreen .cat-head{ margin:8px 8px 0; height:60px; min-height:60px; box-sizing:border-box; padding:0 12px; border-radius:8px; border:1px solid #D9D9D9; box-shadow:none }
+/* zera o padding herdado de #nvListScreen .cat-body (07-rede-social.css) — o respiro passa a vir
+   da margem de .rx-filters (16px) e do padding de .nv-listmain abaixo, igual ao .rx-body de Shorts */
+#nvListScreen .cat-body{ padding:0 }
+#nvListScreen .nv-listmain{ padding:8px 8px 8px 0; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
+/* .rx-filters (base, 10-responsivo.css) tem align-self:flex-start e max-height fixo — aqui ela
+   precisa esticar (align-items:stretch já existe em .nv-listwrap) até a mesma altura da tabela */
+#nvListScreen .rx-filters{ align-self:stretch; max-height:none; display:flex; flex-direction:column }
+/* .rx-filters tem 16px de padding embaixo (10-responsivo.css); num elemento sticky isso deixa um
+   respiro visível entre o rodapé e a borda do painel mesmo com margin-bottom negativo (o scroll
+   port já reserva esse espaço). Solução igual à de Shorts (#reelsView .rx-nav.rx-filters, padding-
+   bottom condicional a .rx-advmode): zera o padding embaixo, e quem dá o respiro visual agora é o
+   padding:12px do próprio rodapé. Escopado a #nvListScreen pra não mexer em Shorts. */
+#nvListScreen .rx-filters{ padding-bottom:0 }
+#nvListScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
+#pubGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
+#pubGrid .rl-tblwrap{ height:100%; overflow-y:auto }
+#pubGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
+/* border-collapse:separate porque border-radius não tem efeito em células com border-collapse:collapse */
+#pubGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
+#pubGrid .rl-tblwrap>table{ min-width:2280px }
+#pubGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4 }
+/* Título trunca em 2 linhas com reticências, em vez de continuar quebrando */
+#pubGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis }
+/* Capa da publicação: não é vídeo em pé como em Shorts, é sempre 60x46 — tanto a imagem real quanto
+   o placeholder de "Em processamento"/sem imagem (.rl-procthumb, que em Shorts continua 38x60,
+   escopado só aqui pra não vazar pra #rxGrid) */
+#pubGrid .rl-reel img{ width:60px; height:46px; object-fit:cover; border-radius:8px; flex-shrink:0 }
+#pubGrid .rl-procthumb{ width:60px; height:46px }
+#pubGrid .rl-author .avatar,#pubGrid .rl-author .nv-logo{ width:32px; height:32px }
+#pubGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
+#pubGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
+#pubGrid .rl-dt{ font-size:14px; color:#5F666C; font-weight:400 }
+#pubGrid .rl-cat{ display:inline-flex; align-items:center; gap:8px; font-weight:400; color:#5F666c; font-size:14px }
+#pubGrid .nv-cellbtn{ border:0; background:none; font:inherit; font-size:14px; color:#5F666C; font-weight:400; cursor:pointer; padding:4px 8px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; transition:background .12s }
+/* Reações zeradas: o ícone de "like" (imagem colorida, sem cor via CSS) fica em cinza-padrão via
+   filtro, no mesmo espírito do ícone de Visualizações/Comentários ficando cinza quando é 0 */
+#pubGrid .nv-rxc-zero .rxs{ filter:grayscale(1) opacity(.55) }
+#pubGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
+#pubGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
+#pubGrid .rl-tblwrap th.sortable:hover .sort-ic{ color:#2F8EE5 }
+
+/* Colunas fixas (ID + Publicação) com colapso animado da ID ao rolar horizontalmente (ver
+   pglSyncFrozenCols em renderGerenciarPublicacoesList) */
+#pubGrid .rl-tblwrap th:nth-child(1),#pubGrid .rl-tblwrap td:nth-child(1){ position:sticky; left:0; box-sizing:border-box }
+#pubGrid .rl-tblwrap th:nth-child(2),#pubGrid .rl-tblwrap td:nth-child(2){ position:sticky; box-sizing:border-box; min-width:400px; white-space:normal }
+#pubGrid .rl-tblwrap th:nth-child(1){ width:90px; min-width:90px; max-width:90px; z-index:7; background:#3D4F62; color:#fff; border-right:none }
+#pubGrid .rl-tblwrap th:nth-child(2){ z-index:6; background:#3D4F62; color:#fff; border-top-right-radius:8px }
+#pubGrid .rl-tblwrap th:nth-child(1) .sort-ic,#pubGrid .rl-tblwrap th:nth-child(2) .sort-ic{ color:#fff }
+#pubGrid .rl-tblwrap th.sortable:nth-child(1):hover,#pubGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
+#pubGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
+#pubGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#F0F3F5 }
+#pubGrid .rl-tblwrap tbody tr:nth-child(even){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#F0F3F5 }
+#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
+#pubGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
+/* Sombra na coluna fixa indicando conteúdo por baixo ao rolar horizontalmente */
+#pubGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#pubGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
+
+/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 7 Autor,
+   8 Unidade do autor, 9 Visualizações, 10 Reações, 11 Comentários, 12 Categoria,
+   13 Data de encerramento */
+#pubGrid .rl-tblwrap th:nth-child(3),#pubGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:160px; min-width:160px }
+#pubGrid .rl-tblwrap th:nth-child(4),#pubGrid .rl-tblwrap td:nth-child(4){ width:204px }
+#pubGrid .rl-tblwrap th:nth-child(5),#pubGrid .rl-tblwrap td:nth-child(5){ width:200px }
+#pubGrid .rl-tblwrap th:nth-child(7),#pubGrid .rl-tblwrap td:nth-child(7){ width:240px }
+#pubGrid .rl-tblwrap td:nth-child(7) .rl-author{ min-width:212px }
+#pubGrid .rl-tblwrap td:nth-child(7) .rl-author b,#pubGrid .rl-tblwrap td:nth-child(7) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+#pubGrid .rl-tblwrap th:nth-child(8),#pubGrid .rl-tblwrap td:nth-child(8){ width:240px }
+#pubGrid .rl-tblwrap td:nth-child(8) .rl-unitcell{ min-width:212px }
+#pubGrid .rl-tblwrap th:nth-child(9),#pubGrid .rl-tblwrap td:nth-child(9){ width:140px }
+#pubGrid .rl-tblwrap th:nth-child(10),#pubGrid .rl-tblwrap td:nth-child(10){ width:140px }
+#pubGrid .rl-tblwrap th:nth-child(11),#pubGrid .rl-tblwrap td:nth-child(11){ width:140px }
+#pubGrid .rl-tblwrap th:nth-child(12),#pubGrid .rl-tblwrap td:nth-child(12){ width:240px }
+#pubGrid .rl-tblwrap td:nth-child(12) .rl-cat{ min-width:212px }
+#pubGrid .rl-tblwrap th:nth-child(13),#pubGrid .rl-tblwrap td:nth-child(13){ width:212px; min-width:212px }
+
+/* Coluna "Unidade do autor" — pílula redonda colorida com a sigla de 2 letras */
+#pubGrid .rl-unitcell{ display:flex; align-items:center; gap:8px; min-width:180px }
+#pubGrid .rl-unitcell .rxv-logo{ width:32px; height:32px; border-radius:32px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; flex-shrink:0 }
+#pubGrid .rl-unitcell>div{ min-width:0 }
+#pubGrid .rl-unitcell b{ display:block; font-size:14px; color:#5F666C; font-weight:400 }
+#pubGrid .rl-unitcell span{ display:block; max-width:100%; font-size:11px; color:#999999; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+/* Menu "Ações" dentro da célula Publicação */
+#pubGrid .rl-reel{ position:relative; justify-content:space-between }
+#pubGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
+#pubGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
+#pubGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#pubGrid .rl-actbtn i{ font-size:12px }
+#pubGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
+#pubGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }
+#pubGrid .rl-actmenu button:hover{ background:#f2f5f7 }
+#pubGrid .rl-actmenu button.danger{ color:#e0392c }
+#pubGrid .rl-actmenu button.danger:hover{ background:#fdecea }
+#pubGrid .rl-tblwrap td.rl-actz{ z-index:20 }
+
+/* Cartões de situação "Quais publicações você quer ver?" (#pubSitCards, 2x2 — mesmo padrão de
+   #mgSitCards em 16-gerenciar-shorts.css, valores já corrigidos manualmente naquela tela) */
+#pubSitCards.nv-sit2{ gap:8px }
+#pubSitCards.nv-sit2 button.active{ color:#5b6672; box-shadow:none }
+#pubSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
+#pubSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
+#pubSitCards .rxs-item2[data-pglstatus="agendado"] i{ font-size:18px; line-height:18px }
 </style>
 </head>
 <body>
@@ -7396,7 +7530,11 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
       <span style="flex:1"></span>
     </div>
     <div class="cat-body nv-listwrap">
-      <aside class="nv-filters">
+      <!-- sidebar antiga (selects nativos): mantida oculta e intocada só para os ids que
+           12-wizard.js/11-rede-social.js ainda referenciam sem guarda (#nvSearch) não quebrarem;
+           quem constrói a sidebar de verdade agora é foBuildGerenciarPublicacoesFilters()
+           (assets/js/20-gerenciar-publicacoes.js), em #pubFilters logo abaixo. -->
+      <aside class="nv-filters" style="display:none">
         <div class="rx-search nv-fsearch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="nvSearch" placeholder="Buscar publicação" autocomplete="off"></div>
         <div class="nv-fsec"><div class="nv-fsec-hd">Quais publicações você quer ver? <i class="fa-solid fa-chevron-up"></i></div>
           <div class="cv-seg nv-sitcards" id="nvListSeg">
@@ -7415,7 +7553,11 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
         </div>
         <div class="nv-filters-ft"><button class="nv-fclear" id="nvFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button><button class="nv-fapply" id="nvFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>
       </aside>
-      <div class="nv-listmain" style="flex:1;min-width:0"><div class="rlist" id="nvList"></div></div>
+      <aside class="rx-nav nv-filters rx-filters" id="pubFilters"></aside>
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="rlist" id="nvList" style="display:none"></div>
+        <div id="pubGrid"></div>
+      </div>
     </div>
   </div>
   <!-- COMPOR (Nova publicação) -->
@@ -9158,10 +9300,10 @@ function renderList(list){
     return '<tr data-i="'+idx+'">'+
       '<td class="perm-id">#'+(1000+r.p)+'</td>'+
       '<td><div class="rl-reel">'+
-        (r.proc ? '<span class="rl-procthumb"><span class="rl-spin"></span></span>'
+        (r.proc ? '<span class="rl-procthumb"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
                 : '<img src="'+(post.img||post.poster||'')+'" alt="">')+
         '<div><b>'+(post.title||post.alt)+'</b>'+
-        (r.proc ? '<span class="rl-procpill">Em processamento</span>' : '')+
+        (r.proc ? '<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>' : '')+
         '</div></div></td>'+
       '<td style="white-space:nowrap" class="'+(r.agendado?'rl-dtag':'')+'"><div class="rl-dt">'+(r.agendado?rxSchedDT(r.agendado):rxPubDT(post.time))+'</div><span class="rl-rel">'+(r.agendado?rxSchedIn(r.agendado):post.time)+'</span></td>'+
       '<td>'+(rFormat(r)==='imagem'
@@ -12637,10 +12779,10 @@ function renderReelAppr(){
   const tot=list.length; if($('#reelApprCount')) $('#reelApprCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
   if(!list.length){ el.innerHTML='<div class="mod-empty"><i class="fa-regular fa-circle-check"></i><b>Nenhum short '+(reelFilter==='proc'?'em processamento':(reelFilter==='pend'?'pendente':(reelFilter==='aprovado'?'aprovado':'rejeitado')))+'</b><span>Tudo em dia por aqui.</span></div>'; return; }
   const thumb=r=> r.procFail? '<span class="rl-procthumb rl-failthumb" style="width:44px;height:36px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
-    : r.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><span class="rl-spin"></span></span>'
+    : r.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
     : (r.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-clapperboard"></i></span>');
   const base=r=>'<td><div class="apr-person"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="apr-unit">'+r.unit+'</span></div></div></td>'+
-    '<td><div class="pubttl">'+thumb(r)+'<div><b>'+r.title+'</b>'+(r.procFail?'<span class="rl-failpill">Falha no processamento</span>':(r.proc?'<span class="rl-procpill">Em processamento</span>':''))+'</div></div></td>'+
+    '<td><div class="pubttl">'+thumb(r)+'<div><b>'+r.title+'</b>'+(r.procFail?'<span class="rl-failpill">Falha no processamento</span>':(r.proc?'<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>':''))+'</div></div></td>'+
     '<td class="apr-when">'+r.date+'</td>';
   let head, rows;
   if(reelFilter==='proc'){
@@ -12702,9 +12844,9 @@ function renderPubAppr(){
   const av=n=>n.av?'<span class="avatar '+n.av+'">'+(n.ini||'')+'</span>':'<span class="nv-logo">'+SULTS_LOGO+'</span>';
   const unitOfP=n=>n.unit||((typeof STORES!=='undefined')?STORES[(n.paid||1)%STORES.length].name:'');
   const thumbP=n=> n.procFail? '<span class="rl-procthumb rl-failthumb" style="width:44px;height:36px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
-    : n.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><span class="rl-spin"></span></span>'
+    : n.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
     : (n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>');
-  const base=n=>'<td><div class="apr-person">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="apr-unit">'+unitOfP(n)+'</span></div></div></td><td><div class="pubttl">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill">Em processamento</span>':''))+(n.text?'<span>'+n.text.replace(/<[^>]+>/g,'').replace(/</g,'&lt;').slice(0,80)+'</span>':'')+'</div></div></td><td><span class="apr-type">'+(n.article?'Artigo':'Post')+'</span></td><td class="apr-when">'+(n.date||'agora')+'</td>';
+  const base=n=>'<td><div class="apr-person">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="apr-unit">'+unitOfP(n)+'</span></div></div></td><td><div class="pubttl">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>':''))+(n.text?'<span>'+n.text.replace(/<[^>]+>/g,'').replace(/</g,'&lt;').slice(0,80)+'</span>':'')+'</div></div></td><td><span class="apr-type">'+(n.article?'Artigo':'Post')+'</span></td><td class="apr-when">'+(n.date||'agora')+'</td>';
   if(pubSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=pubCellVal(a,pubSortIdx), kb=pubCellVal(b,pubSortIdx); return ka<kb?-pubSortDir:ka>kb?pubSortDir:0; }); }
   let head, rows;
   if(pubFilter==='proc'||pubFilter==='pend'){
@@ -12994,7 +13136,7 @@ function newsShow(screen){
   else if (screen==='pubappr'){ $('#nvPubApprScreen').classList.add('active'); nmodSetActive('nmodPubAppr'); renderPubAppr(); if(typeof aprSideSync==='function') aprSideSync('pub'); }
   else if (screen==='reelappr'){ $('#nvReelApprScreen').classList.add('active'); nmodSetActive('nmodPubAppr'); renderReelAppr(); if(typeof aprSideSync==='function') aprSideSync('reel'); }
   else if (screen==='article'){ $('#nvArticleScreen').classList.add('active'); nmodSetActive('nmodNew'); }
-  else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); renderNewsList(); }
+  else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); if (typeof pglRefresh==='function') pglRefresh(); else renderNewsList(); }
   else { $('#nvFeedScreen').classList.add('active'); nmodSetActive('nmodNew'); renderNewsFeed(); }
 }
 
@@ -13331,7 +13473,7 @@ function renderNewsList(){
   const thumb = n => n.procFail
     ? '<span class="rl-procthumb rl-failthumb" style="width:60px;height:46px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
     : n.proc
-    ? '<span class="rl-procthumb" style="width:60px;height:46px"><span class="rl-spin"></span></span>'
+    ? '<span class="rl-procthumb" style="width:60px;height:46px"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
     : n.image
     ? '<span class="nv-lt-thumb" style="background-image:url('+n.image+')"></span>'
     : '<span class="nv-lt-thumb ph"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>';
@@ -13361,7 +13503,7 @@ function renderNewsList(){
     rxIcons+='</span> '+rx;
     return '<tr data-id="'+n.id+'">'+
       '<td class="perm-id">#'+n.id+'</td>'+
-      '<td><div class="nv-list-title">'+thumb(n)+'<div><b>'+dispTitle+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill">Em processamento</span>':''))+'</div></div></td>'+
+      '<td><div class="nv-list-title">'+thumb(n)+'<div><b>'+dispTitle+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>':''))+'</div></div></td>'+
       '<td class="nv-dtcell'+(n.agendado?' agendado':'')+'">'+(n.agendado? nvIn(n.agendado) : dt)+'</td>'+
       '<td>'+tipo+'</td>'+
       '<td>'+autorCell+'</td>'+
@@ -18436,10 +18578,10 @@ function renderGerenciarShortsList(list){
     return '<tr data-i="' + idx + '">' +
       '<td class="perm-id">#' + (1000 + r.p) + '</td>' +
       '<td><div class="rl-reel">' +
-        (r.proc ? '<span class="rl-procthumb"><span class="rl-spin"></span></span>'
+        (r.proc ? '<span class="rl-procthumb"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
                 : '<img src="' + (post.img || post.poster || '') + '" alt="">') +
         '<div><b>' + (post.title || post.alt) + '</b>' +
-        (r.proc ? '<span class="rl-procpill">Em processamento</span>' : '') +
+        (r.proc ? '<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>' : '') +
         '</div>' +
         '<div class="rl-actwrap">' +
           '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
@@ -18604,6 +18746,390 @@ $('#rxFilters').addEventListener('change', e => {
   else if (t.id === 'rxFEndDateEnd'){ rxEndDateEnd = t.value; }
   else return;
   foBuildReelFilters(); renderGrid();
+});
+
+/* ===================== assets/js/20-gerenciar-publicacoes.js ===================== */
+/* =====================================================================
+   GERENCIAR > PUBLICAÇÕES (admin) — assets/js/20-gerenciar-publicacoes.js
+
+   Tabela e sidebar de filtro avançado da aba "Publicações" do alternador
+   "Gerenciar" (#nmtPub / newsShow('list')). Espelha a estrutura da tela
+   irmã de Shorts (assets/js/19-gerenciar-shorts.js) — mesma sidebar de
+   filtro avançado, mesmos cartões de situação, mesma tabela com colunas
+   congeladas e menu de Ações — só trocando os dados (NEWS em vez de
+   REELS_DATA/POSTS) e as colunas específicas de publicação (Reações,
+   Comentários, Data de encerramento).
+
+   Isolado num arquivo à parte, no mesmo espírito do de Shorts, para não
+   mexer em assets/js/11-rede-social.js além do único ponto de contato:
+
+     - newsShow('list') chama pglRefresh() em vez de renderNewsList()
+       quando esta tela existe (ver o guard em 11-rede-social.js).
+
+   A sidebar antiga (#nvListScreen aside com <select> nativos, #nvList)
+   continua no DOM, só oculta — não foi apagada porque #nvSearch ainda é
+   referenciado sem guarda em assets/js/12-wizard.js.
+
+   Reaproveita, por referência (sem duplicar), helpers já existentes:
+     - assets/js/01-home.js: $, $$, fgToast, SB_UNIDADES, numVal, rxSchedDT, rxSchedIn
+     - assets/js/19-gerenciar-shorts.js: sbUnitObjFor, RX_REACH_LABEL, rxSchedShort,
+       rxEndInPeriod, rxDDMenu, rxDDWrap, rxDateField (helpers genéricos, não
+       exclusivos de Shorts — só carregam antes por causa da ordem alfabética)
+     - assets/js/11-rede-social.js: NEWS, NEWS_CATS, newsCatByName, nvFmtDateTime,
+       AUTOR_CARGO, SULTS_LOGO, nvEdit, openInterModal
+     - assets/js/13-extras.js: openNewsInfo
+     - assets/js/07-busca.js: openReactions, nvRxIndex
+   ===================================================================== */
+
+/* Dados extras só para as colunas "Situação"/"Data de encerramento" desta tabela — mesmo
+   espírito da seed de REELS_DATA em 01-home.js. Aditivo: quem já lê NEWS sem conhecer esses
+   campos continua funcionando igual. */
+(function seedPglDemoFields(){
+  const agendaPlan = [[1, 2], [4, 5], [8, 9], [11, 14]];
+  agendaPlan.forEach(function(p){ const n = NEWS.find(function(x){ return x.id === p[0]; }); if (n) n.agendado = Date.now() + p[1] * 86400000; });
+  const apr = NEWS.find(function(x){ return x.id === 2; }); if (apr) apr.aprovacao = true;
+  const proc = NEWS.find(function(x){ return x.id === 3; }); if (proc) proc.proc = true;
+  NEWS.forEach(function(n, i){ if (!n.agendado && !n.proc && !n.aprovacao && i % 3 === 0) n.encerra = Date.now() + (((i * 41) % 150) + 7) * 86400000; });
+})();
+
+/* Estado exclusivo desta tela */
+let pglQuery = '', pglStatus = '', pglType = '', pglCat = '', pglAuthor = '', pglUnit = '', pglReach = '';
+let pglPeriod = 'tudo', pglEndPeriod = 'tudo', pglEndDateStart = '', pglEndDateEnd = '';
+let pglColSort = { key: null, dir: 0 };
+
+function pglUnitFor(n){ return sbUnitObjFor({ unit: n.unit, name: n.autorNome || n.author }); }
+function pglViewsNum(n){ return n.views != null ? n.views : ((n.reactions || 0) * 37 + (n.comments || 0) * 112 + 240 + (n.id || 0) * 53); }
+function pglViews(n){ const v = pglViewsNum(n); return typeof v === 'number' ? v.toLocaleString('pt-BR') : v; }
+function pglAgo(n){
+  const s = nvFmtDateTime(n);
+  const m = /^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(s || ''); if (!m) return '';
+  const d = new Date(2000 + +m[3], +m[2] - 1, +m[1], +m[4], +m[5]);
+  const mins = Math.round((Date.now() - d) / 60000);
+  if (mins < 1) return 'agora';
+  if (mins < 60) return 'há ' + mins + ' min';
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return 'há ' + hrs + (hrs === 1 ? ' hora' : ' horas');
+  const days = Math.round(hrs / 24);
+  if (days < 30) return 'há ' + days + (days === 1 ? ' dia' : ' dias');
+  const mo = Math.round(days / 30);
+  return 'há ' + mo + (mo === 1 ? ' mês' : ' meses');
+}
+function pglDateOf(n){
+  const m = /^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(nvFmtDateTime(n) || '');
+  return m ? new Date(2000 + +m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime() : Date.now();
+}
+function pglInPeriod(n, period){
+  if (!period || period === 'tudo') return true;
+  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : period === '90d' ? 90 : null;
+  if (days == null) return true;
+  const diff = (Date.now() - pglDateOf(n)) / 86400000;
+  return diff >= 0 && diff <= days;
+}
+function matchPub(n){
+  if (n.status === 'draft') return false;
+  if (pglStatus === 'pub' && (n.agendado || n.proc || n.procFail || n.aprovacao)) return false;
+  if (pglStatus === 'agendado' && !n.agendado) return false;
+  if (pglStatus === 'aprovacao' && !n.aprovacao) return false;
+  if (pglType === 'post' && n.article) return false;
+  if (pglType === 'article' && !n.article) return false;
+  if (pglCat && (n.sub || '') !== pglCat) return false;
+  const autorNome = n.autorNome || n.author;
+  if (pglAuthor && autorNome !== pglAuthor) return false;
+  if (pglUnit && (n.unit || '') !== pglUnit) return false;
+  if (pglReach && (n.reach || 'rede') !== pglReach) return false;
+  if (!pglInPeriod(n, pglPeriod)) return false;
+  if (pglEndPeriod !== 'tudo' && !rxEndInPeriod(n.encerra, pglEndPeriod, pglEndDateStart, pglEndDateEnd)) return false;
+  if (pglQuery){
+    const q = pglQuery.toLowerCase();
+    const t = (n.title || n.text || '').toLowerCase();
+    if (t.indexOf(q) === -1 && String(n.id).indexOf(q) === -1) return false;
+  }
+  return true;
+}
+function pglActiveFilterCount(){
+  let c = 0;
+  if (pglStatus) c++; if (pglQuery) c++; if (pglType) c++; if (pglCat) c++; if (pglAuthor) c++; if (pglUnit) c++;
+  if (pglReach) c++; if (pglPeriod && pglPeriod !== 'tudo') c++; if (pglEndPeriod && pglEndPeriod !== 'tudo') c++;
+  return c;
+}
+
+/* Sidebar de filtro avançado — mesma estrutura de foBuildGerenciarShortsFilters (19-gerenciar-
+   shorts.js), só trocando os textos/campos para o vocabulário de Publicações. */
+function foBuildGerenciarPublicacoesFilters(){
+  const nav = $('#pubFilters'); if (!nav) return;
+  const activeCats = NEWS_CATS.filter(function(c){ return c.active; });
+  const authors = Array.from(new Set(NEWS.map(function(n){ return n.autorNome || n.author; })));
+  const SVG_ACCOUNT_CLOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.63,14.1C12.23,10.58 16.38,9.03 19.9,10.63C23.42,12.23 24.97,16.38 23.37,19.9C22.24,22.4 19.75,24 17,24C14.3,24 11.83,22.44 10.67,20H1V18C1.06,16.86 1.84,15.93 3.34,15.18C4.84,14.43 6.72,14.04 9,14C9.57,14 10.11,14.05 10.63,14.1V14.1M9,4C10.12,4.03 11.06,4.42 11.81,5.17C12.56,5.92 12.93,6.86 12.93,8C12.93,9.14 12.56,10.08 11.81,10.83C11.06,11.58 10.12,11.95 9,11.95C7.88,11.95 6.94,11.58 6.19,10.83C5.44,10.08 5.07,9.14 5.07,8C5.07,6.86 5.44,5.92 6.19,5.17C6.94,4.42 7.88,4.03 9,4M17,22A5,5 0 0,0 22,17A5,5 0 0,0 17,12A5,5 0 0,0 12,17A5,5 0 0,0 17,22M16,14H17.5V16.82L19.94,18.23L19.19,19.53L16,17.69V14Z"/></svg>';
+  const sit = [['', 'mdi mdi-layers-triple', 'Todos', ''], ['pub', 'mdi mdi-check-circle', 'Publicadas', '#25B865'], ['agendado', 'fa-solid fa-clock', 'Agendadas', '#2F8EE5'], ['aprovacao', SVG_ACCOUNT_CLOCK, 'Em aprovação', '#FFB020']];
+  let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais publicações você quer ver? <i class="fa-solid fa-chevron-up"></i></div><div class="cv-seg nv-sitcards nv-sit2" id="pubSitCards">' +
+    sit.map(function(s){ const isSvg = s[1].charAt(0) === '<'; const colorAttr = s[3] ? ' style="color:' + s[3] + '"' : ''; const icon = isSvg ? s[1].replace('<svg', '<svg' + colorAttr) : '<i class="' + s[1] + '"' + colorAttr + '></i>'; return '<button data-pglstatus="' + s[0] + '" class="rxs-item2 ' + (pglStatus === s[0] ? 'active' : '') + '">' + icon + s[2] + '</button>'; }).join('') + '</div></div>';
+  const units = SB_UNIDADES.map(function(u){ return u.name; });
+  const typeItems = [{ value: '', label: 'Todos', selected: pglType === '' }, { value: 'post', label: 'Post', selected: pglType === 'post' }, { value: 'article', label: 'Artigo', selected: pglType === 'article' }];
+  const typeLabel = (typeItems.filter(function(i){ return i.selected; })[0] || typeItems[0]).label;
+  const curCat = NEWS_CATS.find(function(c){ return c.name === pglCat; });
+  const catItems = [{ value: '', label: 'Todas', selected: !curCat }].concat(activeCats.map(function(c){ return { value: c.name, label: c.name, icon: c.icon, color: c.color, selected: pglCat === c.name }; }));
+  const catLabel = curCat ? curCat.name : 'Todas';
+  const authorItems = [{ value: '', label: 'Todos', selected: !pglAuthor }].concat(authors.map(function(a){ return { value: a, label: a, selected: pglAuthor === a }; }));
+  const authorLabel = pglAuthor || 'Todos';
+  const unitItems = [{ value: '', label: 'Todas', selected: !pglUnit }].concat(units.map(function(u){ return { value: u, label: u, selected: pglUnit === u }; }));
+  const unitLabel = pglUnit || 'Todas';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicação <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Título ou ID</label><div class="nv-ffield"><input type="text" id="pubFTitulo" placeholder="Pesquisar publicação..." value="' + (pglQuery || '') + '" autocomplete="off"></div></div>' +
+    '<div class="nv-ffrow">' +
+      '<div class="nv-ffcol"><label>Tipo</label>' + rxDDWrap('pubFTipo', typeLabel, typeItems) + '</div>' +
+      '<div class="nv-ffcol"><label>Categoria</label>' + rxDDWrap('pubFCat', catLabel, catItems) + '</div>' +
+    '</div>' +
+    '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('pubFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
+      '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('pubFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
+    '</div></div>';
+  const reachDefs = [['rede', 'Toda a rede'], ['unidades', 'Unidades'], ['matriz', 'Sua Marca (Matriz)']];
+  const reachItems = [{ value: '', label: 'Todos', selected: !pglReach }].concat(reachDefs.map(function(v){ return { value: v[0], label: v[1], selected: pglReach === v[0] }; }));
+  const reachLabel = pglReach ? (RX_REACH_LABEL[pglReach] || pglReach) : 'Todos';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicado para <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('pubFReach', reachLabel, reachItems) + '</div>' +
+    '</div>';
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: pglPeriod === p[0] }; });
+  const periodLabel = (periodDefs.filter(function(p){ return p[0] === pglPeriod; })[0] || periodDefs[0])[1];
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de publicação <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Selecione um período</label>' + rxDDWrap('pubFPeriod', periodLabel, periodItems) + '</div>' +
+    '</div>';
+  const endPeriodDefs = [['tudo', 'Qualquer período'], ['hoje', 'Hoje'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado'], ['naoencerra', 'Não se encerra']];
+  const endPeriodItems = endPeriodDefs.map(function(p){ return { value: p[0], label: p[1], selected: pglEndPeriod === p[0] }; });
+  const endPeriodLabel = (endPeriodDefs.filter(function(p){ return p[0] === pglEndPeriod; })[0] || endPeriodDefs[0])[1];
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de encerramento <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"' + (pglEndPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione um período</label>' + rxDDWrap('pubFEndPeriod', endPeriodLabel, endPeriodItems) + '</div>' +
+    (pglEndPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('pubFEndDateStart', pglEndDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('pubFEndDateEnd', pglEndDateEnd) + '</div>' +
+    '</div>' : '') +
+    '</div>';
+  const activeN = pglActiveFilterCount();
+  html += '<div class="nv-filters-ft"><button class="nv-fclear' + (activeN > 0 ? ' has-active' : '') + '" id="pubFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros' + (activeN > 0 ? ' (' + activeN + ')' : '') + '</button><button class="nv-fapply" id="pubFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML = html;
+}
+
+/* Núcleo da tabela de gerenciamento — colunas ID, Publicação (+ menu de Ações), Situação, Data
+   de publicação, Publicado para, Tipo, Autor, Unidade do autor, Visualizações, Reações,
+   Comentários, Categoria e Data de encerramento; ordenação de 3 estados por coluna; colunas
+   ID+Publicação congeladas (com colapso animado) ao rolar horizontalmente — mesmo comportamento
+   de renderGerenciarShortsList (19-gerenciar-shorts.js). */
+function renderGerenciarPublicacoesList(list){
+  const grid = document.getElementById('pubGrid'); if (!grid) return;
+  grid.innerHTML = '';
+  if (!list.length){ grid.innerHTML = '<div class="cat-empty">Nenhuma publicação encontrada.</div>'; return; }
+  if (pglColSort.key && pglColSort.dir){
+    const val = function(n){ switch (pglColSort.key){
+      case 'title': return (n.title || n.text || '').toLowerCase();
+      case 'author': return (n.autorNome || n.author || '').toLowerCase();
+      case 'time': return n.id || 0;
+      case 'views': return pglViewsNum(n);
+      case 'rx': return n.reactions || 0;
+      case 'cm': return n.comments || 0;
+      case 'unit': return pglUnitFor(n).name.toLowerCase();
+      case 'cat': { const c = newsCatByName(n.sub); return c ? c.name.toLowerCase() : ''; }
+      case 'enddate': return n.encerra || Infinity;
+      case 'status': return n.aprovacao ? 'aprovacao' : n.agendado ? 'agendado' : n.proc ? 'proc' : 'publicada';
+      case 'reach': return (RX_REACH_LABEL[n.reach || 'rede'] || '').toLowerCase();
+      default: return 0; } };
+    list = list.slice().sort(function(a, b){ const va = val(a), vb = val(b); return va < vb ? -pglColSort.dir : va > vb ? pglColSort.dir : 0; });
+  }
+  const rows = list.map(function(n, idx){
+    const cat = newsCatByName(n.sub);
+    const unit = pglUnitFor(n);
+    const autorNome = n.autorNome || n.author || 'Rodrigo Caetano';
+    const autorAv = n.autorAv || n.av;
+    const autorSub = AUTOR_CARGO[n.author] || (n.reach === 'unidades' ? 'Unidade' : 'Matriz');
+    const dispTitle = n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').replace(/\n/g, ' ').slice(0, 60) : 'Publicação');
+    const tipo = n.article
+      ? '<span class="nv-tp is-art"><i class="fa-solid fa-newspaper"></i> Artigo</span>'
+      : '<span class="nv-tp is-post"><i class="fa-solid fa-align-left"></i> Post</span>';
+    const rx = n.reactions || 0;
+    let rxIcons = '<span class="nv-rxc' + (rx === 0 ? ' nv-rxc-zero' : '') + '"><span class="rxs" data-rx="like"></span>';
+    if (rx >= 90) rxIcons += '<span class="rxs" data-rx="love"></span>';
+    if (rx >= 120) rxIcons += '<span class="rxs" data-rx="celebrate"></span>';
+    rxIcons += '</span> ' + rx;
+    return '<tr data-i="' + idx + '">' +
+      '<td class="perm-id">#' + n.id + '</td>' +
+      '<td><div class="rl-reel">' +
+        (n.proc ? '<span class="rl-procthumb"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
+          : n.image ? '<img src="' + n.image + '" alt="">'
+          : '<span class="rl-procthumb"><i class="fa-solid ' + (n.article ? 'fa-newspaper' : 'fa-align-left') + '" style="color:#9aa5b1"></i></span>') +
+        '<div><b>' + dispTitle + '</b>' +
+        (n.proc ? '<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>' : '') +
+        '</div>' +
+        '<div class="rl-actwrap">' +
+          '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
+          '<div class="rl-actmenu" hidden>' +
+            '<button type="button" data-pact="tab"><i class="fa-solid fa-up-right-from-square"></i> Abrir em nova guia</button>' +
+            '<button type="button" data-pact="ver"><i class="fa-solid fa-eye"></i> Ver publicação</button>' +
+            '<button type="button" data-pact="edit"><i class="fa-solid fa-pen"></i> Editar</button>' +
+            '<button type="button" data-pact="del" class="danger"><i class="fa-solid fa-trash"></i> Excluir</button>' +
+          '</div>' +
+        '</div>' +
+        '</div></td>' +
+      '<td style="white-space:nowrap">' + (n.proc
+        ? '<span class="rl-dash">—</span>'
+        : n.aprovacao
+        ? '<div class="rl-statrow"><span class="rl-statdot apr"></span><span class="rl-stattxt apr">Em aprovação</span></div>'
+        : n.agendado
+        ? '<div class="rl-statrow"><span class="rl-statdot ag"></span><span class="rl-stattxt ag">Agendado</span></div><span class="rl-rel">' + rxSchedShort(n.agendado) + '</span>'
+        : '<div class="rl-statrow"><span class="rl-statdot pub"></span><span class="rl-stattxt pub">Publicada</span></div>') + '</td>' +
+      '<td style="white-space:nowrap" class="' + (n.agendado ? 'rl-dtag' : '') + '">' + ((n.proc || n.aprovacao)
+        ? '<span class="rl-dash">—</span>'
+        : '<div class="rl-dt">' + (n.agendado ? rxSchedDT(n.agendado) : nvFmtDateTime(n)) + '</div><span class="rl-rel">' + (n.agendado ? rxSchedIn(n.agendado) : pglAgo(n)) + '</span>') + '</td>' +
+      '<td><span class="rl-reach">' + (RX_REACH_LABEL[n.reach || 'rede']) + '</span></td>' +
+      '<td>' + tipo + '</td>' +
+      '<td><div class="rl-author">' + (autorAv ? '<span class="avatar ' + autorAv + '"></span>' : '<span class="nv-logo">' + SULTS_LOGO + '</span>') + '<div><b>' + autorNome + '</b><span class="rl-emp">' + autorSub + '</span></div></div></td>' +
+      '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + unit.color + '">' + unit.ini + '</span><div><b>' + unit.name + '</b><span>' + unit.company + '</span></div></div></td>' +
+      '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="views"><i class="fa-solid fa-play" style="font-size:10px;color:' + (pglViewsNum(n) > 0 ? '#43B3AE' : '#8a94a0') + '"></i> ' + pglViews(n) + '</button></td>' +
+      '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="rx">' + rxIcons + '</button></td>' +
+      '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="cm"><i class="fa-solid fa-comment" style="font-size:10px;color:' + (numVal(String(n.comments || 0)) > 0 ? '#2f6fe4' : '#8a94a0') + '"></i> ' + n.comments + '</button></td>' +
+      '<td>' + (cat ? '<span class="rl-cat"><span class="rl-cat-dot" style="background:' + cat.color + '"><i class="fa-solid ' + (cat.icon || 'fa-tag') + '"></i></span>' + cat.name + '</span>' : '<span style="color:#b8c2cc">,</span>') + '</td>' +
+      '<td style="white-space:nowrap">' + (n.encerra ? '<span class="rl-enddt">' + rxSchedDT(n.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
+      '</tr>';
+  }).join('');
+  const cols = [['id', 'ID'], ['title', 'Publicação (' + list.length + ')']];
+  const colsAfter = [['author', 'Autor'], ['unit', 'Unidade do autor'], ['views', 'Visualizações'], ['rx', 'Reações'], ['cm', 'Comentários'], ['cat', 'Categoria']];
+  const thSort = function(c){
+    const k = c[0], active = pglColSort.key === k && pglColSort.dir !== 0;
+    const icon = !active ? NV_SORT_ICONS.swap : (pglColSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
+    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
+  };
+  const thPlain = function(label){ return '<th>' + label + '</th>'; };
+  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicado para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
+  const wrap = document.createElement('div');
+  wrap.className = 'rlist rl-tblwrap';
+  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';
+  wrap.querySelector('tbody').addEventListener('click', function(e){
+    const tr = e.target.closest('tr'); if (!tr) return;
+    const idx = +tr.dataset.i; const n = list[idx];
+    const ob = e.target.closest('[data-pglopen]');
+    if (ob){ e.stopPropagation(); if (ob.dataset.pglopen === 'rx') openReactions(nvRxIndex(n.id)); else openInterModal(n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').slice(0, 60) : 'Publicação')); return; }
+    const actBtn = e.target.closest('.rl-actbtn');
+    if (actBtn){
+      e.stopPropagation();
+      const td = actBtn.closest('td');
+      const menu = actBtn.nextElementSibling;
+      const willOpen = menu.hidden;
+      wrap.querySelectorAll('.rl-actmenu').forEach(function(m){ m.hidden = true; });
+      wrap.querySelectorAll('td.rl-actz').forEach(function(c){ c.classList.remove('rl-actz'); });
+      menu.hidden = !willOpen;
+      td.classList.toggle('rl-actz', willOpen);
+      return;
+    }
+    const pact = e.target.closest('[data-pact]');
+    if (pact){
+      e.stopPropagation();
+      pact.closest('.rl-actmenu').hidden = true;
+      pact.closest('td').classList.remove('rl-actz');
+      const a = pact.dataset.pact;
+      if (a === 'ver') openNewsInfo(n);
+      else if (a === 'tab') window.open(location.href, '_blank');
+      else if (a === 'edit') nvEdit(n.id);
+      else { NEWS = NEWS.filter(function(x){ return x.id !== n.id; }); pglRefresh(); fgToast('Publicação excluída'); }
+      return;
+    }
+    if (e.target.closest('.rl-actwrap')) return;
+    openNewsInfo(n);
+  });
+  wrap.querySelector('thead').addEventListener('click', function(ev){
+    const th = ev.target.closest('th.sortable'); if (!th) return;
+    const k = th.dataset.sort;
+    if (pglColSort.key !== k){ pglColSort.key = k; pglColSort.dir = 1; }
+    else if (pglColSort.dir === 1){ pglColSort.dir = -1; }
+    else { pglColSort.key = null; pglColSort.dir = 0; }
+    renderGerenciarPublicacoesList(list);
+  });
+  grid.appendChild(wrap);
+  const PGL_COLLAPSE_PX = 90;
+  let pglScrollTicking = false;
+  function pglSyncFrozenCols(){
+    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / PGL_COLLAPSE_PX));
+    const idW = PGL_COLLAPSE_PX * (1 - progress);
+    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
+      el.style.setProperty('width', idW + 'px', 'important');
+      el.style.setProperty('min-width', idW + 'px', 'important');
+      el.style.setProperty('max-width', idW + 'px', 'important');
+      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
+      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
+    });
+    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
+    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
+  }
+  wrap.addEventListener('scroll', function(){
+    if (pglScrollTicking) return; pglScrollTicking = true;
+    requestAnimationFrame(function(){ pglSyncFrozenCols(); pglScrollTicking = false; });
+  });
+  pglSyncFrozenCols();
+}
+
+/* Ponto de entrada único: reconstrói a sidebar e a tabela juntas, a partir do estado atual dos
+   filtros. Chamado por newsShow('list') e por todos os handlers abaixo. */
+function pglRefresh(){
+  foBuildGerenciarPublicacoesFilters();
+  renderGerenciarPublicacoesList(NEWS.filter(matchPub));
+}
+
+/* Fecha o menu "Ações" da tabela e os dropdowns do filtro avançado ao clicar fora deles —
+   listener próprio, escopado a #pubGrid/#pubFilters, não interfere no de #rxGrid/#rxFilters. */
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.rl-actwrap')){
+    $$('#pubGrid .rl-actmenu').forEach(function(m){ m.hidden = true; });
+    $$('#pubGrid td.rl-actz').forEach(function(td){ td.classList.remove('rl-actz'); });
+  }
+  if (!e.target.closest('.rl-ddwrap')){
+    $$('#pubFilters .rl-ddmenu').forEach(function(m){ m.hidden = true; });
+  }
+});
+
+/* Cliques da sidebar de filtro avançado (cartões de situação, dropdowns customizados, botão de
+   calendário, limpar/aplicar filtros). */
+$('#pubFilters') && $('#pubFilters').addEventListener('click', function(e){
+  const st = e.target.closest('#pubSitCards button');
+  if (st){ pglStatus = st.dataset.pglstatus; pglRefresh(); return; }
+  if (e.target.closest('#pubFClear')){
+    pglQuery = ''; pglStatus = ''; pglType = ''; pglCat = ''; pglAuthor = ''; pglUnit = ''; pglReach = '';
+    pglPeriod = 'tudo'; pglEndPeriod = 'tudo'; pglEndDateStart = ''; pglEndDateEnd = '';
+    pglColSort.key = null; pglColSort.dir = 0;
+    pglRefresh();
+    return;
+  }
+  if (e.target.closest('#pubFApply')){ pglRefresh(); fgToast('Filtros aplicados'); return; }
+  const db = e.target.closest('.nv-fdatebtn');
+  if (db){ const inp = $('#' + db.dataset.datefor); if (inp){ if (inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem = e.target.closest('.rl-dditem');
+  if (ddItem){
+    const wrap = ddItem.closest('.rl-ddwrap'); const id = wrap.dataset.dd; const v = ddItem.dataset.value;
+    if (id === 'pubFCat'){ pglCat = v; }
+    else if (id === 'pubFPeriod'){ pglPeriod = v; }
+    else if (id === 'pubFEndPeriod'){ pglEndPeriod = v; }
+    else if (id === 'pubFAutor'){ pglAuthor = v; }
+    else if (id === 'pubFUnit'){ pglUnit = v; }
+    else if (id === 'pubFReach'){ pglReach = v; }
+    else if (id === 'pubFTipo'){ pglType = v; }
+    pglRefresh();
+    return;
+  }
+  const ddBtn = e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if (ddBtn){
+    const wrap = ddBtn.closest('.rl-ddwrap'); const menu = wrap.querySelector('.rl-ddmenu');
+    const willOpen = menu.hidden;
+    $$('#pubFilters .rl-ddmenu').forEach(function(m){ m.hidden = true; });
+    menu.hidden = !willOpen;
+    return;
+  }
+});
+$('#pubFilters') && $('#pubFilters').addEventListener('input', function(e){
+  if (e.target.id === 'pubFTitulo'){ pglQuery = e.target.value.trim().toLowerCase(); renderGerenciarPublicacoesList(NEWS.filter(matchPub)); }
+});
+$('#pubFilters') && $('#pubFilters').addEventListener('change', function(e){
+  const t = e.target;
+  if (t.id === 'pubFEndDateStart'){ pglEndDateStart = t.value; }
+  else if (t.id === 'pubFEndDateEnd'){ pglEndDateEnd = t.value; }
+  else return;
+  pglRefresh();
 });
 </script>
 </body>

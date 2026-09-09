@@ -52,9 +52,11 @@
 #permStoriesGrid.wide .perm-note{max-width:500px}
 /* Shorts publicados dentro de Configurações (Gerenciar) */
 .reels-view.in-cfg{left:0;top:60px;z-index:126}
-.reels-view.in-cfg .rx-header{margin:10px 10px 0;height:60px;min-height:60px;box-sizing:border-box;padding:0 18px;border-bottom:0;border-radius:12px;box-shadow:inset 0 0 0 1px #E9EAED}
-.reels-view.in-cfg .rx-main{padding:10px 10px 44px}
-.reels-view.in-cfg .rx-filters{margin:10px 0 10px 10px;height:calc(100vh - 152px);max-height:calc(100vh - 152px);width:400px;display:flex;flex-direction:column}
+.reels-view.in-cfg .rx-header{margin:8px 8px 0;height:60px;min-height:60px;box-sizing:border-box;padding:0 12px;border-bottom:0;border-radius:8px;border:1px solid #D9D9D9}
+.reels-view.in-cfg .rx-main{padding:8px 8px 8px}
+/* Sem height/max-height fixos: align-self:stretch (em vez do flex-start herdado de .rx-filters)
+   faz a altura acompanhar a da tabela ao lado, que é quem manda no tamanho da linha (.rx-body). */
+.reels-view.in-cfg .rx-filters{margin:8px 0 8px 8px;width:400px;display:flex;flex-direction:column;align-self:stretch;max-height:none}
 .reels-view.in-cfg .rx-filters .nv-filters-ft{margin-top:auto}
 @media(max-width:900px){ .reels-view.in-cfg{left:0} }
 /* Shorts dentro do ambiente Social do módulo de Rede Social */
@@ -88,10 +90,10 @@
 .rx-viewtg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
-.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow:hidden}
+.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:8px;overflow:hidden}
 .rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}
-.rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
+.rlist td{padding:12px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
 #nvList table{font-size:13px}
 #nvList th{padding:13px 18px;font-size:11px;color:#98a2ac;font-weight:700}
 #nvList td{padding:14px 18px;vertical-align:middle}
@@ -107,9 +109,10 @@
 .rl-reel{display:flex;align-items:center;gap:11px;min-width:220px}
 .rl-reel img{width:38px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;background:#dfe4ea}
 .rl-reel b{display:block;color:var(--ink);font-size:12px;line-height:1.3}
-.rl-reel span{font-size:11px;color:var(--muted)}
-.rl-dtag .rl-rel{color:#E08A1E}
+.rl-reel span{font-size:14px;color:#2F8EE5;font-weight:700}
+.rl-dtag .rl-rel{color:#999999}
 .rl-procthumb{width:38px;height:60px;border-radius:8px;flex-shrink:0;background:#F4F5F6;box-shadow:inset 0 0 0 1px #E9EAED;display:flex;align-items:center;justify-content:center}
+.rl-proc-ic{width:20px;height:20px;color:#999999;opacity:.5}
 .reel-failnote{display:flex;gap:12px;align-items:flex-start;margin:0 0 16px;padding:14px 16px;border-radius:8px;background:rgba(255,56,60,.12);box-shadow:inset 0 0 0 1px rgba(255,56,60,.32)}
 .reel-procnote{background:#E0F1FF !important;box-shadow:inset 0 0 0 1px rgba(0,136,255,.28) !important}
 .reel-procnote b{color:#0F377A !important}
@@ -120,9 +123,9 @@
 .reel-failnote span{display:block;margin-top:4px;font-size:13px;line-height:18px;color:#48484A}
 .rl-failthumb{background:rgba(255,56,60,.12);box-shadow:inset 0 0 0 1px rgba(255,56,60,.32);color:#B3272A;font-size:14px}
 .pubttl .rl-failpill,.nv-list-title .rl-failpill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;height:20px;padding:0 10px;background:rgba(255,56,60,.12);color:#B3272A;font-size:10px;line-height:14px;font-weight:600;letter-spacing:.3px;border-radius:32px}
-.rl-spin{width:16px;height:16px;border-radius:50%;border:2px solid #D1D1D6;border-top-color:#0088FF;animation:rlspin .8s linear infinite}
+.rl-spin{width:16px;height:16px;border-radius:50%;border:2px solid #D1D1D6;border-top-color:#0088FF;animation:rlspin .9s linear infinite}
 @keyframes rlspin{to{transform:rotate(360deg)}}
-.rl-reel .rl-procpill,.pubttl .rl-procpill,.nv-list-title .rl-procpill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;height:20px;padding:0 10px;background:#E0F1FF;color:#0F377A;font-size:10px;line-height:14px;font-weight:600;letter-spacing:.3px;border-radius:32px}
+.rl-reel .rl-procpill,.pubttl .rl-procpill,.nv-list-title .rl-procpill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;color:#999999;font-size:14px;font-weight:400}
 .rl-author{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .rl-author .avatar{width:24px;height:24px;font-size:0}
 .rl-rec{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#9a6400;background:#fdf3dc;padding:3px 9px;border-radius:999px;white-space:nowrap}
@@ -154,7 +157,7 @@
 .rlist th.active-sort .sort-ic{opacity:1}
 .rx-kpi>div{min-width:0}
 .rl-cat{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#465364}
-.rl-cat-dot{width:22px;height:22px;border-radius:5px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+.rl-cat-dot{width:32px;height:32px;border-radius:5px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
 .rx-catdot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
 .cat-view{position:fixed;top:0;right:0;bottom:0;left:100px;z-index:125;background:#e9eaed;display:none;flex-direction:column}
 .cat-view.open{display:flex}
@@ -390,7 +393,7 @@
 .ni-body .ri-btn.sm{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border:0;border-radius:8px;background:#0088FF;color:#fff;font:inherit;font-size:14px;font-weight:600;letter-spacing:.3px;cursor:pointer}
 .ni-body .ri-btn.sm:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#0088FF}
 @media(max-width:720px){ .ni-body .ri-top{grid-template-columns:1fr} .ni-body .ni-cover{width:100%} }
-.perm-id{color:var(--teal);font-weight:700;font-size:12px;white-space:nowrap;text-align:center}
+.perm-id{color:var(--teal);font-weight:700;font-size:14px;white-space:nowrap;text-align:center}
 .perm-person{display:flex;align-items:center;gap:12px}
 .perm-person .avatar{width:40px;height:40px;font-size:0;flex-shrink:0}
 .perm-person b{font-size:13px;color:var(--ink);display:block}

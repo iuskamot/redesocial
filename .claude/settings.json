@@ -8,7 +8,17 @@
       "Bash(start \"\" \"index.html\")",
       "Bash(rm -rf \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/node_modules\" \"/c/Users/MARIAL~1/AppData/Local/Temp/claude/c--Users-Maria-Luiza-Documents-GitHub-redesocial/9a76b1b7-38f8-4524-8f14-6fe007e85747/scratchpad/package-lock.json\")",
       "mcp__claude_ai_Figma__get_design_context",
-      "mcp__claude_ai_Figma__get_figma_skill"
+      "mcp__claude_ai_Figma__get_figma_skill",
+      "PowerShell(Get-Process -Id 34696 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 34696 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 14292 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 14292 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 27860 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 27860 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 13164 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 13164 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 32188 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 32188 -ErrorAction SilentlyContinue)"
     ],
     "additionalDirectories": [
       "C:\\Users\\MARIAL~1\\AppData\\Local\\Temp\\claude\\c--Users-Maria-Luiza-Documents-GitHub-redesocial\\9a76b1b7-38f8-4524-8f14-6fe007e85747\\scratchpad",

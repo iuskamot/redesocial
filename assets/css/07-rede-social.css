@@ -416,15 +416,19 @@
 .sb-empty b{font-size:15px;line-height:20px;color:#1C1C1E}
 .sb-empty span{font-size:13px;line-height:18px}
 @media(max-width:1100px){ .sb-side{display:none} }
-.nv-listwrap{display:flex;gap:10px;align-items:stretch;flex:1;min-height:0}
+.nv-listwrap{display:flex;gap:8px;align-items:stretch;flex:1;min-height:0}
 .nv-filters{width:400px;flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 18px 0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;display:flex;flex-direction:column}
 .nv-filters::-webkit-scrollbar{display:none}
 .nv-fsec{padding:16px 0;border-bottom:1px solid var(--line)}
 .nv-fsec:last-of-type{border-bottom:0}
-.nv-fsec-hd{display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px}
-.nv-fsec-hd i{font-size:12px;color:#9aa5b1}
+/* Em .rx-filters (16px de padding lateral) o divisor sangra até a borda do painel: puxa a
+   largura pelas margens negativas e devolve o respiro lateral ao conteúdo via padding, para o
+   border-bottom encostar nas duas bordas em vez de parar no padding do container. */
+.rx-filters .nv-fsec{ margin-left:-16px; margin-right:-16px; padding-left:16px; padding-right:16px }
+.nv-fsec-hd{display:flex;align-items:center;justify-content:space-between;font-size:18px;font-weight:700;color:#0C334A;margin-bottom:14px}
+.nv-fsec-hd i{font-size:16px;color:#0C334A}
 .nv-sitcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:none;padding:0}
-.nv-sitcards button{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 4px;font-size:12px;font-weight:700;color:#5b6672;box-shadow:none}
+.nv-sitcards button{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid #D9D9D9;border-radius:10px;padding:12px 4px;font-size:12px;font-weight:700;color:#5b6672;box-shadow:none}
 .nv-sitcards button i{font-size:16px;color:#9aa5b1}
 .nv-sitcards button.active{border-color:var(--teal);background:rgba(0,172,172,.06);color:var(--teal)}
 .nv-sitcards button.active i{color:var(--teal)}
@@ -436,12 +440,16 @@
 .nv-filters .nv-fsel{width:100%}
 .nv-filters-ft{display:flex;gap:10px;padding:12px 0 0;margin-top:auto;background:#F0F0F0}
 .news-view .nv-filters-ft,.rx-nav .nv-filters-ft{position:sticky;bottom:0;z-index:2;background:#F0F0F0;padding:12px;margin-left:-18px;margin-right:-18px;border-radius:0 0 14px 14px}
-.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 16px;border-radius:8px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
+.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{flex:1;height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 16px;border-radius:8px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
 .nv-filters .nv-fsel,.rx-nav .nv-fsel,.nv-filters .nv-finput,.rx-nav .nv-finput{height:42px;padding-top:0;padding-bottom:0}
 .nv-sitcards.nv-sit2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:transparent;padding:0;border-radius:0}
 .nv-sitcards.nv-sit2 .rxs-item2{width:100%;justify-content:center;text-align:center}
-.nv-filters-ft .nv-fclear{background:#D9D9D9;color:#48484A;border:0}
-.nv-filters-ft .nv-fclear:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#D9D9D9;color:#48484A;border:0}
+/* Sem filtro ativo, "Limpar filtros" fica desabilitado (visual e clique); a JS já alterna a classe
+   has-active de acordo com a contagem de filtros (foBuildGerenciarShortsFilters/
+   foBuildGerenciarPublicacoesFilters) — só faltava o CSS que reage a ela */
+.nv-filters-ft .nv-fclear{background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
+.nv-filters-ft .nv-fclear.has-active{background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
+.nv-filters-ft .nv-fclear.has-active:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}
 .nv-filters-ft .nv-fapply{background:#2F8EE5;color:#fff}
 .nv-filters-ft .nv-fapply:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
 .nv-fclear{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;background:#eef2f5;color:#8a94a0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:12px;border-radius:9px}
@@ -456,7 +464,7 @@
 .nv-dtcell{white-space:normal;width:64px;font-size:13px;line-height:1.35;color:var(--muted)}
 #nvList th:first-child{width:64px}
 .nv-listmain{flex:1;min-width:0;overflow-x:auto;display:flex;flex-direction:column}
-.nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:14px}
+.nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:8px}
 #interList.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow-x:scroll;overflow-y:hidden}
 .nv-listmain .rlist table{min-width:1100px}
 #interList.rlist table{min-width:1180px}
@@ -1208,7 +1216,7 @@
 .rx-title i{font-size:20px;color:var(--teal)}
 #permHeadIc{display:inline-flex;color:var(--teal)}
 #permHeadIc svg{width:26px;height:26px}
-.rx-title h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+.rx-title h2{font-size:22px;font-weight:700;color:#0C334A;letter-spacing:-.3px}
 .rx-search{flex:1;max-width:460px;display:flex;align-items:center;gap:12px;background:#f4f6f8;
   border:1.5px solid #e6eaef;border-radius:999px;padding:12px 20px;transition:border-color .15s,background .15s,box-shadow .15s}
 .rx-search:hover{background:#eef2f5}

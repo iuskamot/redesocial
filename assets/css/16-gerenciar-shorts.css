@@ -119,7 +119,7 @@
 #mgSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
 #mgSitCards.nv-sit2 button.active{ box-shadow:none }
 #mgSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
-#mgSitCards .rxs-item2[data-rxstatus="agendado"] i{ font-size:16px; line-height:16px }
+#mgSitCards .rxs-item2[data-rxstatus="agendado"] i{ font-size:18px; line-height:18px }
 
 /* Campos compactos da sidebar (Short, Publicado para, Períodos) e dropdown customizado
    (Tipo/Categoria/Autor/Unidade/Publicado para/Períodos) */
@@ -128,7 +128,7 @@
 .nv-ffcol{ flex:1; min-width:0; display:flex; flex-direction:column; gap:8px }
 .nv-ffcol label{ font-size:12px; color:#5f666c; line-height:14px }
 .nv-ffield{ display:flex; align-items:center; gap:6px; height:30px; padding:0 12px; background:#fff; border:1px solid #d9d9d9; border-radius:6px }
-.nv-ffield i.ico-l,.nv-ffield i.ico-r{ font-size:16px; color:#5F666C; flex-shrink:0; cursor:pointer }
+.nv-ffield i.ico-l,.nv-ffield i.ico-r{ font-size:14px; color:#5F666C; flex-shrink:0; cursor:pointer }
 .nv-ffield input{ border:0; outline:0; background:transparent; flex:1; min-width:0; font:inherit; font-size:14px; color:var(--ink); padding:0; cursor:text }
 .nv-ffield input::placeholder{ color:#999 }
 .nv-ffield:focus-within{ border-color:rgba(153,153,153,.8); box-shadow:0 0 0 2px rgba(153,153,153,.16) }

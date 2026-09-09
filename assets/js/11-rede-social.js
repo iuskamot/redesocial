@@ -793,10 +793,10 @@ function renderReelAppr(){
   const tot=list.length; if($('#reelApprCount')) $('#reelApprCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
   if(!list.length){ el.innerHTML='<div class="mod-empty"><i class="fa-regular fa-circle-check"></i><b>Nenhum short '+(reelFilter==='proc'?'em processamento':(reelFilter==='pend'?'pendente':(reelFilter==='aprovado'?'aprovado':'rejeitado')))+'</b><span>Tudo em dia por aqui.</span></div>'; return; }
   const thumb=r=> r.procFail? '<span class="rl-procthumb rl-failthumb" style="width:44px;height:36px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
-    : r.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><span class="rl-spin"></span></span>'
+    : r.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
     : (r.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-clapperboard"></i></span>');
   const base=r=>'<td><div class="apr-person"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="apr-unit">'+r.unit+'</span></div></div></td>'+
-    '<td><div class="pubttl">'+thumb(r)+'<div><b>'+r.title+'</b>'+(r.procFail?'<span class="rl-failpill">Falha no processamento</span>':(r.proc?'<span class="rl-procpill">Em processamento</span>':''))+'</div></div></td>'+
+    '<td><div class="pubttl">'+thumb(r)+'<div><b>'+r.title+'</b>'+(r.procFail?'<span class="rl-failpill">Falha no processamento</span>':(r.proc?'<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>':''))+'</div></div></td>'+
     '<td class="apr-when">'+r.date+'</td>';
   let head, rows;
   if(reelFilter==='proc'){
@@ -858,9 +858,9 @@ function renderPubAppr(){
   const av=n=>n.av?'<span class="avatar '+n.av+'">'+(n.ini||'')+'</span>':'<span class="nv-logo">'+SULTS_LOGO+'</span>';
   const unitOfP=n=>n.unit||((typeof STORES!=='undefined')?STORES[(n.paid||1)%STORES.length].name:'');
   const thumbP=n=> n.procFail? '<span class="rl-procthumb rl-failthumb" style="width:44px;height:36px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
-    : n.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><span class="rl-spin"></span></span>'
+    : n.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
     : (n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>');
-  const base=n=>'<td><div class="apr-person">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="apr-unit">'+unitOfP(n)+'</span></div></div></td><td><div class="pubttl">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill">Em processamento</span>':''))+(n.text?'<span>'+n.text.replace(/<[^>]+>/g,'').replace(/</g,'&lt;').slice(0,80)+'</span>':'')+'</div></div></td><td><span class="apr-type">'+(n.article?'Artigo':'Post')+'</span></td><td class="apr-when">'+(n.date||'agora')+'</td>';
+  const base=n=>'<td><div class="apr-person">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="apr-unit">'+unitOfP(n)+'</span></div></div></td><td><div class="pubttl">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>':''))+(n.text?'<span>'+n.text.replace(/<[^>]+>/g,'').replace(/</g,'&lt;').slice(0,80)+'</span>':'')+'</div></div></td><td><span class="apr-type">'+(n.article?'Artigo':'Post')+'</span></td><td class="apr-when">'+(n.date||'agora')+'</td>';
   if(pubSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=pubCellVal(a,pubSortIdx), kb=pubCellVal(b,pubSortIdx); return ka<kb?-pubSortDir:ka>kb?pubSortDir:0; }); }
   let head, rows;
   if(pubFilter==='proc'||pubFilter==='pend'){
@@ -1150,7 +1150,7 @@ function newsShow(screen){
   else if (screen==='pubappr'){ $('#nvPubApprScreen').classList.add('active'); nmodSetActive('nmodPubAppr'); renderPubAppr(); if(typeof aprSideSync==='function') aprSideSync('pub'); }
   else if (screen==='reelappr'){ $('#nvReelApprScreen').classList.add('active'); nmodSetActive('nmodPubAppr'); renderReelAppr(); if(typeof aprSideSync==='function') aprSideSync('reel'); }
   else if (screen==='article'){ $('#nvArticleScreen').classList.add('active'); nmodSetActive('nmodNew'); }
-  else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); renderNewsList(); }
+  else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); if (typeof pglRefresh==='function') pglRefresh(); else renderNewsList(); }
   else { $('#nvFeedScreen').classList.add('active'); nmodSetActive('nmodNew'); renderNewsFeed(); }
 }
 
@@ -1487,7 +1487,7 @@ function renderNewsList(){
   const thumb = n => n.procFail
     ? '<span class="rl-procthumb rl-failthumb" style="width:60px;height:46px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
     : n.proc
-    ? '<span class="rl-procthumb" style="width:60px;height:46px"><span class="rl-spin"></span></span>'
+    ? '<span class="rl-procthumb" style="width:60px;height:46px"><svg class="rl-proc-ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cloud-upload</title><path d="M11 20H6.5Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13V12.85L14.6 14.4L16 13L12 9L8 13L9.4 14.4L11 12.85Z"/></svg></span>'
     : n.image
     ? '<span class="nv-lt-thumb" style="background-image:url('+n.image+')"></span>'
     : '<span class="nv-lt-thumb ph"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>';
@@ -1517,7 +1517,7 @@ function renderNewsList(){
     rxIcons+='</span> '+rx;
     return '<tr data-id="'+n.id+'">'+
       '<td class="perm-id">#'+n.id+'</td>'+
-      '<td><div class="nv-list-title">'+thumb(n)+'<div><b>'+dispTitle+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill">Em processamento</span>':''))+'</div></div></td>'+
+      '<td><div class="nv-list-title">'+thumb(n)+'<div><b>'+dispTitle+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill"><span class="rl-spin"></span>Em processamento</span>':''))+'</div></div></td>'+
       '<td class="nv-dtcell'+(n.agendado?' agendado':'')+'">'+(n.agendado? nvIn(n.agendado) : dt)+'</td>'+
       '<td>'+tipo+'</td>'+
       '<td>'+autorCell+'</td>'+

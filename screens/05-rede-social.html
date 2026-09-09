@@ -293,7 +293,11 @@
       <span style="flex:1"></span>
     </div>
     <div class="cat-body nv-listwrap">
-      <aside class="nv-filters">
+      <!-- sidebar antiga (selects nativos): mantida oculta e intocada só para os ids que
+           12-wizard.js/11-rede-social.js ainda referenciam sem guarda (#nvSearch) não quebrarem;
+           quem constrói a sidebar de verdade agora é foBuildGerenciarPublicacoesFilters()
+           (assets/js/20-gerenciar-publicacoes.js), em #pubFilters logo abaixo. -->
+      <aside class="nv-filters" style="display:none">
         <div class="rx-search nv-fsearch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="nvSearch" placeholder="Buscar publicação" autocomplete="off"></div>
         <div class="nv-fsec"><div class="nv-fsec-hd">Quais publicações você quer ver? <i class="fa-solid fa-chevron-up"></i></div>
           <div class="cv-seg nv-sitcards" id="nvListSeg">
@@ -312,7 +316,11 @@
         </div>
         <div class="nv-filters-ft"><button class="nv-fclear" id="nvFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button><button class="nv-fapply" id="nvFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>
       </aside>
-      <div class="nv-listmain" style="flex:1;min-width:0"><div class="rlist" id="nvList"></div></div>
+      <aside class="rx-nav nv-filters rx-filters" id="pubFilters"></aside>
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="rlist" id="nvList" style="display:none"></div>
+        <div id="pubGrid"></div>
+      </div>
     </div>
   </div>
   <!-- COMPOR (Nova publicação) -->
