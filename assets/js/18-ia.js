@@ -115,13 +115,37 @@ function iaResponder(pergunta){
 
 /* As conversas guardadas. Só as perguntas ficam salvas: a resposta é montada
    pela mesma função da conversa ao vivo, então as duas nunca divergem. */
+/* Cada conversa pertence a uma unidade: de onde se pergunta muda o que se
+   pergunta, e trocar de unidade troca a lista inteira. O campo u casa com o
+   id em IA_UNIDADES. */
 const IA_CONVERSAS = [
-  { id:'c1', g:'Hoje',            d:0,  h:'09:12', t:'Prazo de SLA dos chamados críticos', p:['Qual é o prazo de SLA para um chamado crítico?'] },
-  { id:'c2', g:'Hoje',            d:0,  h:'08:40', t:'Comunicados da semana',              p:['Resuma os comunicados desta semana'] },
-  { id:'c3', g:'Ontem',           d:1,  h:'16:14', t:'Itens da auditoria mensal',          p:['O que cai na auditoria mensal da loja?'] },
-  { id:'c4', g:'Últimos 7 dias',  d:3,  h:'11:05', t:'Documentos para abrir uma unidade',  p:['Quais documentos preciso para abrir uma unidade nova?'] },
-  { id:'c5', g:'Últimos 7 dias',  d:5,  h:'14:37', t:'Trilhas obrigatórias do time',       p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
-  { id:'c6', g:'Últimos 30 dias', d:18, h:'10:22', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] }
+  /* Matriz · Sua Marca: as perguntas da rede */
+  { id:'m1', u:'matriz', g:'Hoje',            d:0,  h:'09:12', t:'Prazo de SLA dos chamados críticos', p:['Qual é o prazo de SLA para um chamado crítico?'] },
+  { id:'m2', u:'matriz', g:'Hoje',            d:0,  h:'08:40', t:'Comunicados da semana',              p:['Resuma os comunicados desta semana'] },
+  { id:'m3', u:'matriz', g:'Ontem',           d:1,  h:'16:14', t:'Itens da auditoria mensal',          p:['O que cai na auditoria mensal da loja?'] },
+  { id:'m4', u:'matriz', g:'Últimos 7 dias',  d:3,  h:'11:05', t:'Documentos para abrir uma unidade',  p:['Quais documentos preciso para abrir uma unidade nova?'] },
+
+  /* A1 - Academia PHD */
+  { id:'a1', u:'873', g:'Hoje',            d:0,  h:'10:05', t:'Trilhas obrigatórias do time',       p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
+  { id:'a2', u:'873', g:'Últimos 7 dias',  d:4,  h:'08:52', t:'Janela de pedidos e estoque mínimo', p:['Como funciona a janela de pedidos para a matriz?'] },
+  { id:'a3', u:'873', g:'Últimos 30 dias', d:19, h:'16:31', t:'Nota de corte da auditoria',         p:['O que cai na auditoria mensal da loja?'] },
+
+  /* Boatlux Marina Sul */
+  { id:'b1', u:'412', g:'Ontem',           d:1,  h:'15:02', t:'Chamado crítico da doca',            p:['Qual é o prazo de SLA para um chamado crítico?'] },
+  { id:'b2', u:'412', g:'Últimos 7 dias',  d:6,  h:'09:48', t:'Itens de fachada na vistoria',       p:['O que cai na auditoria mensal da loja?'] },
+
+  /* Constance - Centro */
+  { id:'c1', u:'205', g:'Hoje',            d:0,  h:'07:40', t:'Comunicados que faltam ler',         p:['Resuma os comunicados desta semana'] },
+  { id:'c2', u:'205', g:'Últimos 7 dias',  d:5,  h:'11:26', t:'Mix aprovado e pedido mínimo',       p:['Como funciona a janela de pedidos para a matriz?'] },
+  { id:'c3', u:'205', g:'Últimos 30 dias', d:22, h:'14:10', t:'Trilhas do time do balcão',          p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
+
+  /* Corpore Fit Barra */
+  { id:'f1', u:'158', g:'Últimos 7 dias',  d:3,  h:'10:40', t:'Certificados do ciclo 2026',         p:['Quem do meu time ainda não fez as trilhas obrigatórias?'] },
+  { id:'f2', u:'158', g:'Últimos 30 dias', d:21, h:'16:55', t:'Plano de ação da última visita',     p:['O que cai na auditoria mensal da loja?'] },
+
+  /* Sabor & Cia Shopping */
+  { id:'s1', u:'061', g:'Ontem',           d:1,  h:'13:20', t:'Prazo para um chamado alto',         p:['Qual é o prazo de SLA para um chamado crítico?'] },
+  { id:'s2', u:'061', g:'Últimos 30 dias', d:26, h:'09:05', t:'Documentos da segunda unidade',      p:['Quais documentos preciso para abrir uma unidade nova?'] }
 ];
 
 /* Quem está usando vem do app, não daqui: o cenário da vez troca a pessoa e
@@ -133,7 +157,11 @@ function iaEu(){
   if (!nome && typeof usuarioAtual === 'function'){ const u = usuarioAtual(); nome = (u && u.nome) || ''; }
   if (!nome){ const el = document.querySelector('.profile-name'); nome = el ? el.textContent.trim() : ''; }
   nome = nome || 'Rodrigo Caetano';
-  const unidade = (typeof customUnidadeDe === 'function') ? (customUnidadeDe(nome) || '') : '';
+  /* Fora dos cenarios a pessoa fala pela rede, e a unidade e a Matriz. A
+     unidade do cartao (Uberaba, Kanto, Queens) so vale dentro deles. */
+  const cenario = document.body.classList.contains('demo-custom') ||
+                  document.body.classList.contains('demo-crunch');
+  const unidade = (cenario && typeof customUnidadeDe === 'function') ? (customUnidadeDe(nome) || '') : '';
   return { nome: nome, unidade: unidade };
 }
 
@@ -146,24 +174,37 @@ function iaIniciais(texto){
    a mesma tabela que desenha a unidade nas outras telas, para a bolinha ser
    a mesma em todo lugar. */
 const IA_UNIDADES = [
+  /* a franqueadora vem primeiro: e de la que se pergunta pela rede inteira */
+  { id:'matriz', nome:'Matriz · Sua Marca', cor:'#00acac', ini:'SM' },
   { id:'873', nome:'A1 - Academia PHD' },
   { id:'412', nome:'Boatlux Marina Sul' },
   { id:'205', nome:'Constance - Centro' },
   { id:'158', nome:'Corpore Fit Barra' },
   { id:'061', nome:'Sabor & Cia Shopping' }
 ].map(u => {
+  if (u.cor) return u;
   const s = (typeof STORES !== 'undefined' ? STORES : []).find(x => x.code === u.id);
   u.cor = (s && s.color) || '#5b6672';
   u.ini = (s && s.ini) || '??';
   return u;
 });
 
-const IA_SUGESTOES = [
-  { ic:'mdi-message-text-outline',    c:'#1d6ede', t:'Qual é o prazo de SLA para um chamado crítico?' },
-  { ic:'mdi-clipboard-check-outline', c:'#219348', t:'O que cai na auditoria mensal da loja?' },
-  { ic:'mdi-bullhorn-outline',        c:'#575fd1', t:'Resuma os comunicados desta semana' },
-  { ic:'mdi-flag-outline',            c:'#2aa17e', t:'Quais documentos preciso para abrir uma unidade?' }
-];
+const IA_SUGESTOES = {
+  /* Matriz: perguntas de quem enxerga a rede inteira */
+  matriz: [
+    { ic:'mdi-clipboard-check-outline', c:'#219348', t:'Quais unidades ficaram abaixo da nota na auditoria?' },
+    { ic:'mdi-message-text-outline',    c:'#1d6ede', t:'Quantos chamados estouraram o SLA esta semana?' },
+    { ic:'mdi-school-outline',          c:'#6d47b5', t:'Como está a adesão das unidades à trilha nova?' },
+    { ic:'mdi-flag-outline',            c:'#2aa17e', t:'Quais unidades estão em implantação e em que etapa?' }
+  ],
+  /* Unidade: perguntas de quem toca a operação no dia */
+  unidade: [
+    { ic:'mdi-message-text-outline',    c:'#1d6ede', t:'Como abrir um chamado para a matriz?' },
+    { ic:'mdi-cart-outline',            c:'#00918a', t:'Como fazer o pedido mensal para a matriz?' },
+    { ic:'mdi-clipboard-check-outline', c:'#219348', t:'Como aplicar o checklist da minha loja?' },
+    { ic:'mdi-school-outline',          c:'#6d47b5', t:'Como concluir as trilhas obrigatórias?' }
+  ]
+};
 
 /* ---------------------------------------------------------------- estado --- */
 
@@ -184,6 +225,16 @@ let iaNovas    = [];         /* conversas criadas nesta sessão */
 let iaEscrevendo = null;     /* controle da resposta que está sendo digitada */
 
 function iaConvs(){ return iaNovas.concat(IA_CONVERSAS); }
+
+/* A unidade dos cenarios (Kanto, Queens) nao tem conversas proprias nas
+   amostras: cai na Matriz, que e a lista da rede. */
+function iaUnidadeChave(){
+  return IA_CONVERSAS.some(c => c.u === iaUnidade) ? iaUnidade : 'matriz';
+}
+function iaConvsDaUnidade(){
+  const chave = iaUnidadeChave();
+  return iaConvs().filter(c => (c.u || 'matriz') === chave);
+}
 function iaConv(id){ return iaConvs().find(c => c.id === id) || null; }
 
 /* --------------------------------------------------------------- montagem --- */
@@ -367,7 +418,7 @@ function iaLinhaHTML(c){
 function iaRenderLista(){
   const q = norm(iaFiltro.trim());
   const casa = c => !q || norm(c.t).includes(q);
-  const lista = iaConvs().filter(c => (iaVerArq ? iaArquivadas.has(c.id) : !iaArquivadas.has(c.id)) && casa(c));
+  const lista = iaConvsDaUnidade().filter(c => (iaVerArq ? iaArquivadas.has(c.id) : !iaArquivadas.has(c.id)) && casa(c));
 
   let out = '', grupo = null;
   lista.forEach(c => {
@@ -511,6 +562,7 @@ function iaNovaConversa(){
   $('#iaHead').hidden = true;
   $('#iaDock').hidden = true;
   $('#iaHello').textContent = iaSaudacao() + ', ' + iaPrimeiroNome();
+  iaRenderSugestoes();
   $('#iaZeroDock').appendChild($('#iaComp'));
   iaRenderLista();
   iaText.value = '';
@@ -560,6 +612,7 @@ function iaPerguntar(txt){
     const dois = n => String(n).padStart(2, '0');
     const c = {
       id: 'n' + Date.now(),
+      u: iaUnidadeChave(),
       g: 'Hoje',
       d: 0,
       h: dois(agora.getHours()) + ':' + dois(agora.getMinutes()),
@@ -631,7 +684,7 @@ function iaAbrirModulo(pergunta){
   iaView.classList.add('open');
   document.body.style.overflow = 'hidden';
   if (typeof setNav === 'function') setNav(null);
-  iaUnidade = 'eu';        /* o cenário manda; se não houver, cai na primeira */
+  iaUnidade = iaEu().unidade ? 'eu' : 'matriz';   /* o cenário manda; fora deles, a Matriz */
   iaRenderUsuario();
   iaNovaConversa();
   if (pergunta) setTimeout(() => iaPerguntar(pergunta), 90);
@@ -904,11 +957,15 @@ window.addEventListener('beforeunload', () => vzFechar(false));
 
 /* --------------------------------------------------------------- eventos --- */
 
-$('#iaChips').innerHTML = IA_SUGESTOES.map(s =>
-  '<button type="button" class="ia-chip" data-iasug="' + iaEscapa(s.t) + '">' +
-  '<span class="ia-chip-ic" style="--c:' + s.c + '"><i class="mdi ' + s.ic + '"></i></span>' +
-  '<span class="ia-chip-tx"><b>' + iaEscapa(s.t) + '</b></span></button>'
-).join('');
+function iaRenderSugestoes(){
+  const quais = iaUnidadeChave() === 'matriz' ? IA_SUGESTOES.matriz : IA_SUGESTOES.unidade;
+  $('#iaChips').innerHTML = quais.map(s =>
+    '<button type="button" class="ia-chip" data-iasug="' + iaEscapa(s.t) + '">' +
+    '<span class="ia-chip-ic" style="--c:' + s.c + '"><i class="mdi ' + s.ic + '"></i></span>' +
+    '<span class="ia-chip-tx"><b>' + iaEscapa(s.t) + '</b></span></button>'
+  ).join('');
+}
+iaRenderSugestoes();
 
 iaText.addEventListener('input', () => { iaAltura(); iaBotao(); });
 iaText.addEventListener('keydown', e => {
@@ -932,9 +989,11 @@ $('#iaUser').addEventListener('click', e => {
 $('#iaUserMenu').addEventListener('click', e => {
   const u = e.target.closest('[data-iaunidade]');
   if (!u) return;
+  if (u.dataset.iaunidade === iaUnidade){ $('#iaUserMenu').hidden = true; return; }
   iaUnidade = u.dataset.iaunidade;
   fgToast('Unidade: ' + iaUnidadeAtual().nome);
   iaRenderUsuario();
+  iaNovaConversa();
   $('#iaUserMenu').hidden = true;
   $('#iaUser').setAttribute('aria-expanded', 'false');
 });
