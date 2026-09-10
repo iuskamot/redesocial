@@ -239,79 +239,62 @@ function renderGerenciarPublicacoesList(list){
       '<td style="white-space:nowrap">' + (n.encerra ? '<span class="rl-enddt">' + rxSchedDT(n.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
       '</tr>';
   }).join('');
-  const cols = [['id', 'ID'], ['title', 'Publicação (' + list.length + ')']];
-  const colsAfter = [['author', 'Autor'], ['unit', 'Unidade do autor'], ['views', 'Visualizações'], ['rx', 'Reações'], ['cm', 'Comentários'], ['cat', 'Categoria']];
-  const thSort = function(c){
-    const k = c[0], active = pglColSort.key === k && pglColSort.dir !== 0;
-    const icon = !active ? NV_SORT_ICONS.swap : (pglColSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
-    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
-  };
-  const thPlain = function(label){ return '<th>' + label + '</th>'; };
-  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicada para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
-  const wrap = document.createElement('div');
-  wrap.className = 'rlist rl-tblwrap';
-  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';
-  wrap.querySelector('tbody').addEventListener('click', function(e){
-    const tr = e.target.closest('tr'); if (!tr) return;
-    const idx = +tr.dataset.i; const n = list[idx];
-    const ob = e.target.closest('[data-pglopen]');
-    if (ob){ e.stopPropagation(); if (ob.dataset.pglopen === 'rx') openReactions(nvRxIndex(n.id)); else openInterModal(n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').slice(0, 60) : 'Publicação')); return; }
-    const actBtn = e.target.closest('.rl-actbtn');
-    if (actBtn){
-      e.stopPropagation();
-      const td = actBtn.closest('td');
-      const menu = actBtn.nextElementSibling;
-      const willOpen = menu.hidden;
-      wrap.querySelectorAll('.rl-actmenu').forEach(function(m){ m.hidden = true; });
-      wrap.querySelectorAll('td.rl-actz').forEach(function(c){ c.classList.remove('rl-actz'); });
-      menu.hidden = !willOpen;
-      td.classList.toggle('rl-actz', willOpen);
-      return;
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'title', label: 'Publicação (' + list.length + ')' },
+    { key: 'status', label: 'Situação' },
+    { key: 'time', label: 'Data de publicação' },
+    { key: 'reach', label: 'Publicada para' },
+    { key: 'tipo', label: 'Tipo', sortable: false },
+    { key: 'author', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor' },
+    { key: 'views', label: 'Visualizações' },
+    { key: 'rx', label: 'Reações' },
+    { key: 'cm', label: 'Comentários' },
+    { key: 'cat', label: 'Categoria' },
+    { key: 'enddate', label: 'Data de encerramento' }
+  ];
+  const wrap = renderGridTable({
+    grid, columns, rowsHTML: rows, sort: pglColSort,
+    onSort: function(k){
+      if (pglColSort.key !== k){ pglColSort.key = k; pglColSort.dir = 1; }
+      else if (pglColSort.dir === 1){ pglColSort.dir = -1; }
+      else { pglColSort.key = null; pglColSort.dir = 0; }
+      renderGerenciarPublicacoesList(list);
+    },
+    onRowClick: function(e){
+      const tr = e.target.closest('tr'); if (!tr) return;
+      const idx = +tr.dataset.i; const n = list[idx];
+      const ob = e.target.closest('[data-pglopen]');
+      if (ob){ e.stopPropagation(); if (ob.dataset.pglopen === 'rx') openReactions(nvRxIndex(n.id)); else openInterModal(n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').slice(0, 60) : 'Publicação')); return; }
+      const actBtn = e.target.closest('.rl-actbtn');
+      if (actBtn){
+        e.stopPropagation();
+        const td = actBtn.closest('td');
+        const menu = actBtn.nextElementSibling;
+        const willOpen = menu.hidden;
+        wrap.querySelectorAll('.rl-actmenu').forEach(function(m){ m.hidden = true; });
+        wrap.querySelectorAll('td.rl-actz').forEach(function(c){ c.classList.remove('rl-actz'); });
+        menu.hidden = !willOpen;
+        td.classList.toggle('rl-actz', willOpen);
+        return;
+      }
+      const pact = e.target.closest('[data-pact]');
+      if (pact){
+        e.stopPropagation();
+        pact.closest('.rl-actmenu').hidden = true;
+        pact.closest('td').classList.remove('rl-actz');
+        const a = pact.dataset.pact;
+        if (a === 'ver') openNewsInfo(n);
+        else if (a === 'tab') window.open(location.href, '_blank');
+        else if (a === 'edit') nvEdit(n.id);
+        else { NEWS = NEWS.filter(function(x){ return x.id !== n.id; }); pglRefresh(); fgToast('Publicação excluída'); }
+        return;
+      }
+      if (e.target.closest('.rl-actwrap')) return;
+      openNewsInfo(n);
     }
-    const pact = e.target.closest('[data-pact]');
-    if (pact){
-      e.stopPropagation();
-      pact.closest('.rl-actmenu').hidden = true;
-      pact.closest('td').classList.remove('rl-actz');
-      const a = pact.dataset.pact;
-      if (a === 'ver') openNewsInfo(n);
-      else if (a === 'tab') window.open(location.href, '_blank');
-      else if (a === 'edit') nvEdit(n.id);
-      else { NEWS = NEWS.filter(function(x){ return x.id !== n.id; }); pglRefresh(); fgToast('Publicação excluída'); }
-      return;
-    }
-    if (e.target.closest('.rl-actwrap')) return;
-    openNewsInfo(n);
   });
-  wrap.querySelector('thead').addEventListener('click', function(ev){
-    const th = ev.target.closest('th.sortable'); if (!th) return;
-    const k = th.dataset.sort;
-    if (pglColSort.key !== k){ pglColSort.key = k; pglColSort.dir = 1; }
-    else if (pglColSort.dir === 1){ pglColSort.dir = -1; }
-    else { pglColSort.key = null; pglColSort.dir = 0; }
-    renderGerenciarPublicacoesList(list);
-  });
-  grid.appendChild(wrap);
-  const PGL_COLLAPSE_PX = 90;
-  let pglScrollTicking = false;
-  function pglSyncFrozenCols(){
-    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / PGL_COLLAPSE_PX));
-    const idW = PGL_COLLAPSE_PX * (1 - progress);
-    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
-      el.style.setProperty('width', idW + 'px', 'important');
-      el.style.setProperty('min-width', idW + 'px', 'important');
-      el.style.setProperty('max-width', idW + 'px', 'important');
-      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
-      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
-    });
-    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
-    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
-  }
-  wrap.addEventListener('scroll', function(){
-    if (pglScrollTicking) return; pglScrollTicking = true;
-    requestAnimationFrame(function(){ pglSyncFrozenCols(); pglScrollTicking = false; });
-  });
-  pglSyncFrozenCols();
 }
 
 /* Ponto de entrada único: reconstrói a sidebar e a tabela juntas, a partir do estado atual dos

@@ -3529,29 +3529,30 @@ input,textarea,select{font-size:14px}
 /* Aprovações > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen) reaproveitam o
    mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão "Limpar filtros"
    desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */
-#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvCmGridScreen .rx-filters{
+#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvCmGridScreen .rx-filters,#nvInterScreen .rx-filters{
   width:400px;border-color:#D9D9D9;border-radius:8px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec{
+#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec,#nvInterScreen .rx-filters .nv-fsec{
   margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
-#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd,#nvInterScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i,#nvInterScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
 #nvListScreen .rx-filters .nv-sitcards button,.reels-view.in-cfg .rx-filters .nv-sitcards button{border-color:#D9D9D9}
 #nvListScreen .rx-filters .nv-filters-ft .nv-fclear,#nvListScreen .rx-filters .nv-filters-ft .nv-fapply,
 .reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fclear,.reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fapply,
 #nvPubApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvPubApprScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvReelApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvReelApprScreen .rx-filters .nv-filters-ft .nv-fapply,
-#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fclear,#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fapply{flex:1}
+#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fclear,#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fapply,
+#nvInterScreen .rx-filters .nv-filters-ft .nv-fclear,#nvInterScreen .rx-filters .nv-filters-ft .nv-fapply{flex:1}
 /* Sem filtro ativo, "Limpar filtros" fica desabilitado; quem alterna has-active
    e a JS dela (foBuildGerenciarShortsFilters / foBuildGerenciarPublicacoesFilters /
    foBuildPubApprFilters / foBuildReelApprFilters).
    Precisa ficar escopado: o ramo social (foBuildSocialFilters) nunca poe essa
    classe, entao no generico o botao do Shorts Explorar ficava desabilitado para
    sempre, sem jeito de limpar filtro nenhum. */
-#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear{
+#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear,#nvInterScreen .rx-filters .nv-fclear{
   background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
-#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active{
+#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active,#nvInterScreen .rx-filters .nv-fclear.has-active{
   background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
-#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover{
+#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover,#nvInterScreen .rx-filters .nv-fclear.has-active:hover{
   background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}
 
 /* feed da home, destaque e coluna direita */
@@ -4505,7 +4506,8 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .il-line b{font-weight:700}
 .il-role{color:var(--muted);font-size:12px;margin-left:8px}
 .il-act-row{display:flex;align-items:center;gap:9px;margin-top:7px;flex-wrap:wrap}
-.il-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px}
+.il-pill{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;padding:8px 12px;border-radius:999px}
+.il-pill .rx-svg{width:24px;height:24px}
 .il-pill i{font-size:11px}
 .il-in{font-size:13px;color:#5b6672}
 .il-in b{color:var(--ink);font-weight:600}
@@ -6935,13 +6937,13 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #cmgGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#cmgGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
 #cmgGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#cmgGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
 
-/* Larguras fixas das colunas: 3 Comentado em, 4 Autor, 5 Unidade, 6 Publicação */
-#cmgGrid .rl-tblwrap th:nth-child(3),#cmgGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:204px }
+/* Larguras fixas das colunas: 3 Autor, 4 Unidade do autor, 5 Comentado em, 6 Publicação */
+#cmgGrid .rl-tblwrap th:nth-child(3),#cmgGrid .rl-tblwrap td:nth-child(3){ width:320px }
+#cmgGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
+#cmgGrid .rl-tblwrap td:nth-child(3) .rl-author b,#cmgGrid .rl-tblwrap td:nth-child(3) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 #cmgGrid .rl-tblwrap th:nth-child(4),#cmgGrid .rl-tblwrap td:nth-child(4){ width:320px }
-#cmgGrid .rl-tblwrap td:nth-child(4) .rl-author{ min-width:212px }
-#cmgGrid .rl-tblwrap td:nth-child(4) .rl-author b,#cmgGrid .rl-tblwrap td:nth-child(4) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-#cmgGrid .rl-tblwrap th:nth-child(5),#cmgGrid .rl-tblwrap td:nth-child(5){ width:320px }
-#cmgGrid .rl-tblwrap td:nth-child(5) .rl-unitcell{ min-width:212px }
+#cmgGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
+#cmgGrid .rl-tblwrap th:nth-child(5),#cmgGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:204px }
 #cmgGrid .rl-tblwrap th:nth-child(6),#cmgGrid .rl-tblwrap td:nth-child(6){ width:280px }
 
 /* Comentário: texto + botão "Acessar comentário", igual ao layout do botão "Ações" das
@@ -6980,6 +6982,88 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 /* Cartão de situação não existe nesta tela (Comentados aqui já são todos publicados —
    a fila de moderação vive em Aprovações), então só o essencial do rodapé/dropdowns
    do filtro é reaproveitado; nenhuma regra extra de #mgSitCards/#pubSitCards se aplica. */
+
+/* =====================================================================
+   GERENCIAR > REAÇÕES (admin) — assets/css/20-gerenciar-reacoes.css
+
+   Espelha assets/css/19-gerenciar-comentarios.css (mesmos seletores, mesmos
+   valores), trocando #cmgGrid por #rcnGrid. Colunas: ID, Reação (2ª, congelada/
+   sticky com a ID, igual Comentários/Shorts/Publicações), Reagiu em, Autor,
+   Unidade do autor e Publicação (flexível, só min-width — table-layout:auto
+   deixa ela absorver o espaço que sobra). Tudo aqui é aditivo/escopado a
+   #rcnGrid, #rcnFilters e #nvInterScreen — não toca em #pubGrid/#rxGrid/#cmgGrid.
+   ===================================================================== */
+
+#nvInterScreen .cat-head{ margin:8px 8px 0; height:60px; min-height:60px; box-sizing:border-box; padding:0 12px; border-radius:8px; border:1px solid #D9D9D9; box-shadow:none }
+#nvInterScreen .cat-body{ padding:0 }
+#nvInterScreen .nv-listmain{ padding:8px 8px 8px 0; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
+#nvInterScreen .rx-filters{ width:400px; align-self:stretch; max-height:none; display:flex; flex-direction:column; padding-bottom:0 }
+#nvInterScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
+
+/* Cartões de atalho "Quais reações você quer ver?" — 2 opções mutuamente exclusivas
+   (Publicações/Shorts, sem "Todas"), grid de 2 colunas, mesmo card usado em Publicações/
+   Shorts (.nv-sitcards base, 07-rede-social.css). Escolhe a origem dos dados (rcnSource) —
+   os campos abaixo (Tipo/Autor/Unidade/Período) filtram dentro dessa origem. */
+#rcnSitCards.nv-sit2{ grid-template-columns:1fr 1fr; gap:8px }
+#rcnSitCards button{ border-color:#D9D9D9 }
+
+#rcnGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
+#rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
+#rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
+#rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
+#rcnGrid .rl-tblwrap>table{ min-width:1472px }
+#rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
+#rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
+#rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
+#rcnGrid .rl-tblwrap th.sortable:hover .sort-ic{ color:#2F8EE5 }
+
+/* Colunas fixas (ID + Reação) com colapso animado da ID ao rolar horizontalmente (ver
+   gridFreezeCols, 20-gerenciar-shorts.js) */
+#rcnGrid .rl-tblwrap th:nth-child(1),#rcnGrid .rl-tblwrap td:nth-child(1){ position:sticky; left:0; box-sizing:border-box }
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ position:sticky; box-sizing:border-box }
+#rcnGrid .rl-tblwrap th:nth-child(1){ width:90px; min-width:90px; max-width:90px; z-index:7; background:#3D4F62; color:#fff; border-right:none }
+#rcnGrid .rl-tblwrap th:nth-child(2){ z-index:6; background:#3D4F62; color:#fff; border-top-right-radius:8px }
+#rcnGrid .rl-tblwrap th:nth-child(1) .sort-ic,#rcnGrid .rl-tblwrap th:nth-child(2) .sort-ic{ color:#fff }
+#rcnGrid .rl-tblwrap th.sortable:nth-child(1):hover,#rcnGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
+#rcnGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
+#rcnGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#fff }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(even){ background:#F0F3F5 }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#fff }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#F0F3F5 }
+#rcnGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
+#rcnGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
+#rcnGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#rcnGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
+
+/* Larguras fixas das colunas: 2 Reação, 3 Autor, 4 Unidade do autor, 5 Reagiu em;
+   6 Publicação/Shorts é a flexível (só min-width). */
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ width:180px }
+#rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ width:320px }
+#rcnGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
+#rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ width:320px }
+#rcnGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
+#rcnGrid .rl-tblwrap th:nth-child(5),#rcnGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:242px }
+#rcnGrid .rl-tblwrap th:nth-child(6),#rcnGrid .rl-tblwrap td:nth-child(6){ min-width:320px }
+
+/* Autor / Unidade do autor — mesmo padrão de #pubGrid (18-gerenciar-publicacoes.css) */
+#rcnGrid .rl-author .avatar,#rcnGrid .rl-author .nv-logo{ width:32px; height:32px }
+#rcnGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
+#rcnGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
+#rcnGrid .rl-dt{ font-size:14px; color:#5F666C; font-weight:400 }
+#rcnGrid .rl-rel{ font-size:11px; color:#999999; font-weight:400 }
+#rcnGrid .rl-unitcell{ display:flex; align-items:center; gap:8px; min-width:180px }
+#rcnGrid .rl-unitcell .rxv-logo{ width:32px; height:32px; border-radius:32px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; flex-shrink:0 }
+#rcnGrid .rl-unitcell>div{ min-width:0 }
+#rcnGrid .rl-unitcell b{ display:block; font-size:14px; color:#5F666C; font-weight:400 }
+#rcnGrid .rl-unitcell span{ display:block; max-width:100%; font-size:11px; color:#999999; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+/* Publicação — thumbnail 44x36 + título (1 linha, trunca) + tipo */
+#rcnGrid .rl-pubcell{ display:flex; align-items:center; gap:10px; min-width:0 }
+#rcnGrid .rl-pubcell img,#rcnGrid .rl-pubcell .rl-procthumb{ width:44px; height:36px; object-fit:cover; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center }
+#rcnGrid .rl-pubcell .rl-procthumb i{ font-size:16px }
+#rcnGrid .rl-pubcell>div{ min-width:0 }
+#rcnGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+#rcnGrid .rl-pubcell span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
 </style>
 </head>
 <body>
@@ -8579,24 +8663,15 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- INTERAÇÕES -->
   <div class="nv-screen" id="nvInterScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-heart"></i><h2>Interações</h2></div><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button><span class="mod-count" id="interCount"></span>
+    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-thumbs-up"></i><h2>Reações</h2></div><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button>
       <span style="flex:1"></span>
     </div>
     <div class="cat-body nv-listwrap">
-      <aside class="nv-filters">
-        <div class="rx-search nv-fsearch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="interSearch" placeholder="Buscar pessoa, unidade ou publicação" autocomplete="off"></div>
-        <div class="nv-fsec"><div class="nv-fsec-hd" id="interFSecHd">Reação</div>
-          <div class="nv-fgrid">
-          <div><label>Colaborador</label><select class="nv-fsel" id="interFPerson"></select></div>
-          <div><label>Loja</label><select class="nv-fsel" id="interFStore"></select></div>
-          <div><label>Período</label><select class="nv-fsel" id="interFPeriod"><option value="">Qualquer período</option><option value="60">Última hora</option><option value="1440">Últimas 24 h</option><option value="10080">Últimos 7 dias</option></select></div>
-          <div id="interFReactWrap"><label>Tipo de reação</label><select class="nv-fsel" id="interFReact"><option value="">Todas as reações</option></select></div>
-          <div><label>Publicação</label><select class="nv-fsel" id="interFPost"></select></div>
-          <div><label>Cargo</label><select class="nv-fsel" id="interFRole"></select></div></div>
-        </div>
-        <div class="nv-filters-ft"><button class="nv-fclear" id="interFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button><button class="nv-fapply" id="interFApply">Aplicar filtros</button></div>
-      </aside>
-      <div class="nv-listmain" style="flex:1;min-width:0"><div class="il-kpis" id="interKpis" hidden></div><div class="rlist" id="interList"></div></div>
+      <aside class="rx-nav nv-filters rx-filters" id="rcnFilters"></aside>
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="il-kpis" id="interKpis" hidden></div>
+        <div id="rcnGrid"></div>
+      </div>
     </div>
   </div>
   <!-- POPUP INTERAÇÕES DA PUBLICAÇÃO -->
@@ -14282,7 +14357,7 @@ function newsShow(screen){
   if(typeof permView!=='undefined'&&permView){ permView.classList.remove('open','in-cfg'); }
   if (screen==='compose'){ $('#nvComposeScreen').classList.add('active'); nmodSetActive('nmodNew'); }
   else if (screen==='perm'){ $('#nvPermScreen').classList.add('active'); nmodSetActive('nmodPerm'); renderNewsPerm(); }
-  else if (screen==='inter'){ $('#nvInterScreen').classList.add('active'); nmodSetActive('nmodInter'); renderInteractions(); }
+  else if (screen==='inter'){ $('#nvInterScreen').classList.add('active'); nmodSetActive('nmodInter'); if (typeof rcnRefresh==='function') rcnRefresh(); else renderInteractions(); }
   else if (screen==='cats'){ $('#nvCatsScreen').classList.add('active'); nmodSetActive('nmodCats'); renderNewsCats(); }
   else if (screen==='team'){ $('#nvTeamScreen').classList.add('active'); nmodSetActive('nmodPerm'); newsView.classList.add('catmode'); if($('#nmtPerm'))$('#nmtPerm').classList.remove('active'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); cfgSetActive('cfgNavTeam'); teamRender(); }
   else if (screen==='params'){ $('#nvParamsScreen').classList.add('active'); nmodSetActive('nmodParams'); }
@@ -20420,6 +20495,80 @@ function rxDateField(id, value){
     '<button type="button" class="nv-fdatebtn" data-datefor="' + id + '"><i class="mdi mdi-calendar-month"></i></button></div>';
 }
 
+/* =====================================================================
+   Componente genérico de tabela "Gerenciar" — usado por Publicações (#pubGrid),
+   Shorts (#rxGrid), Comentários (#cmgGrid) e Reações (#rcnGrid). Cada tela só entra
+   com o que muda de fato: a lista de colunas (chave + rótulo + se é ordenável), o
+   HTML já pronto de cada <tr> (a linha em si varia demais de tela pra tela pra valer
+   a pena genericizar) e o estado de ordenação (a própria tela guarda esse objeto
+   {key,dir} e re-renderiza quando ele muda). O que é sempre igual entra aqui: montar
+   o <thead> com seta de ordenação de 3 estados, o wrapper .rlist.rl-tblwrap, e —
+   quando opts.freeze não é false — o colapso animado da 1ª coluna (ID) ao rolar
+   horizontalmente, com a 2ª grudada (sticky) do lado dela. Uma tela cuja coluna
+   flexível não é a 2ª (caso de Reações, onde é a última) passa freeze:false e usa
+   scroll horizontal simples, sem colunas congeladas.
+
+   opts:
+     grid       - elemento container onde a tabela é anexada (a tela já deve ter
+                  limpado/decidido o estado vazio antes de chamar)
+     columns    - [{key,label,sortable=true,thAttrs?}], na ordem das colunas
+     rowsHTML   - string com todos os <tr>...</tr> já prontos
+     sort       - {key,dir} atual (referência guardada pela tela)
+     onSort(key)- chamado ao clicar num <th> ordenável
+     onRowClick(e) - opcional, listener de clique delegado no <tbody>
+     wrapClass  - classe extra opcional na <div class="rlist rl-tblwrap">
+     gridColumn - opcional, valor de style.gridColumn do wrapper (telas que reaproveitam
+                  um container CSS-grid, como #rxGrid)
+     freeze     - default true; false pula o colapso/sticky das 2 primeiras colunas
+   Devolve o wrapper (<div class="rlist rl-tblwrap">) já anexado a opts.grid. */
+function renderGridTable(opts){
+  const sort = opts.sort;
+  const thCell = function(col){
+    if (col.sortable === false) return '<th' + (col.thAttrs || '') + '>' + col.label + '</th>';
+    const active = sort.key === col.key && sort.dir !== 0;
+    const icon = !active ? NV_SORT_ICONS.swap : (sort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
+    return '<th class="sortable' + (active ? ' active-sort' : '') + '"' + (col.thAttrs || '') + ' data-sort="' + col.key + '">' + col.label + ' <span class="sort-ic">' + icon + '</span></th>';
+  };
+  const ths = opts.columns.map(thCell).join('');
+  const wrap = document.createElement('div');
+  wrap.className = 'rlist rl-tblwrap' + (opts.wrapClass ? ' ' + opts.wrapClass : '');
+  if (opts.gridColumn) wrap.style.gridColumn = opts.gridColumn;
+  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + opts.rowsHTML + '</tbody></table>';
+  if (opts.onRowClick) wrap.querySelector('tbody').addEventListener('click', opts.onRowClick);
+  wrap.querySelector('thead').addEventListener('click', function(ev){
+    const th = ev.target.closest('th.sortable'); if (!th) return;
+    opts.onSort(th.dataset.sort);
+  });
+  opts.grid.appendChild(wrap);
+  if (opts.freeze !== false) gridFreezeCols(wrap);
+  return wrap;
+}
+/* Colapso animado da 1ª coluna (ID) + 2ª coluna (a "principal", sticky) ao rolar a tabela na
+   horizontal — mesmo comportamento nas 3 telas que já usavam isso antes desta função existir
+   (pglSyncFrozenCols/rxSyncFrozenCols/cmgSyncFrozenCols), só que agora numa cópia só. */
+function gridFreezeCols(wrap){
+  const COLLAPSE_PX = 90;
+  let ticking = false;
+  function sync(){
+    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / COLLAPSE_PX));
+    const idW = COLLAPSE_PX * (1 - progress);
+    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
+      el.style.setProperty('width', idW + 'px', 'important');
+      el.style.setProperty('min-width', idW + 'px', 'important');
+      el.style.setProperty('max-width', idW + 'px', 'important');
+      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
+      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
+    });
+    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
+    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
+  }
+  wrap.addEventListener('scroll', function(){
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function(){ sync(); ticking = false; });
+  });
+  sync();
+}
+
 /* GERENCIAR > SHORTS (admin): sidebar de filtro avançado — "Quais shorts você quer ver?" (situação),
    Short (título/ID, Tipo, Categoria, Autor, Unidade do autor), Publicado para, Período de publicação
    e Período de encerramento. Só é montada quando curView==='lista' (ver foBuildReelFilters). */
@@ -20487,8 +20636,6 @@ function foBuildGerenciarShortsFilters(){
    Visualizações, Curtidas, Categoria e Data de encerramento; ordenação de 3 estados por coluna;
    colunas ID+Short congeladas (com colapso animado) ao rolar horizontalmente. */
 function renderGerenciarShortsList(list){
-  const wrap = document.createElement('div');
-  wrap.className = 'rlist rl-tblwrap'; wrap.style.gridColumn = '1/-1';
   if (colSort.key && colSort.dir){
     const val = r => { const p = POSTS[r.p]; switch (colSort.key){
       case 'title': return (p.title || p.alt || '').toLowerCase();
@@ -20547,77 +20694,60 @@ function renderGerenciarShortsList(list){
       '<td style="white-space:nowrap">' + (r.encerra ? '<span class="rl-enddt">' + rxSchedDT(r.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
       '</tr>';
   }).join('');
-  const cols = [['id', 'ID'], ['title', 'Short (' + list.length + ')']];
-  const colsAfter = [['author', 'Autor'], ['unit', 'Unidade do autor'], ['views', 'Visualizações'], ['likes', 'Curtidas'], ['cat', 'Categoria']];
-  const thSort = c => {
-    const k = c[0], active = colSort.key === k && colSort.dir !== 0;
-    const icon = !active ? NV_SORT_ICONS.swap : (colSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
-    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
-  };
-  const thPlain = label => '<th>' + label + '</th>';
-  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicado para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
-  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';
-  wrap.querySelector('tbody').addEventListener('click', e => {
-    const tr = e.target.closest('tr'); if (!tr) return;
-    const idx = +tr.dataset.i; const r = list[idx];
-    const rxb = e.target.closest('[data-rx]');
-    if (rxb){ e.stopPropagation(); openReelAudience(r, rxb.dataset.rx); return; }
-    const actBtn = e.target.closest('.rl-actbtn');
-    if (actBtn){
-      e.stopPropagation();
-      const td = actBtn.closest('td');
-      const menu = actBtn.nextElementSibling;
-      const willOpen = menu.hidden;
-      wrap.querySelectorAll('.rl-actmenu').forEach(m => { m.hidden = true; });
-      wrap.querySelectorAll('td.rl-actz').forEach(c => c.classList.remove('rl-actz'));
-      menu.hidden = !willOpen;
-      td.classList.toggle('rl-actz', willOpen);
-      return;
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'title', label: 'Short (' + list.length + ')' },
+    { key: 'status', label: 'Situação' },
+    { key: 'time', label: 'Data de publicação' },
+    { key: 'reach', label: 'Publicado para' },
+    { key: 'tipo', label: 'Tipo', sortable: false },
+    { key: 'author', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor' },
+    { key: 'views', label: 'Visualizações' },
+    { key: 'likes', label: 'Curtidas' },
+    { key: 'cat', label: 'Categoria' },
+    { key: 'enddate', label: 'Data de encerramento' }
+  ];
+  const wrap = renderGridTable({
+    grid: rxGrid, gridColumn: '1/-1', columns, rowsHTML: rows, sort: colSort,
+    onSort: function(k){
+      if (colSort.key !== k){ colSort.key = k; colSort.dir = 1; }
+      else if (colSort.dir === 1){ colSort.dir = -1; }
+      else { colSort.key = null; colSort.dir = 0; }
+      renderGrid();
+    },
+    onRowClick: e => {
+      const tr = e.target.closest('tr'); if (!tr) return;
+      const idx = +tr.dataset.i; const r = list[idx];
+      const rxb = e.target.closest('[data-rx]');
+      if (rxb){ e.stopPropagation(); openReelAudience(r, rxb.dataset.rx); return; }
+      const actBtn = e.target.closest('.rl-actbtn');
+      if (actBtn){
+        e.stopPropagation();
+        const td = actBtn.closest('td');
+        const menu = actBtn.nextElementSibling;
+        const willOpen = menu.hidden;
+        wrap.querySelectorAll('.rl-actmenu').forEach(m => { m.hidden = true; });
+        wrap.querySelectorAll('td.rl-actz').forEach(c => c.classList.remove('rl-actz'));
+        menu.hidden = !willOpen;
+        td.classList.toggle('rl-actz', willOpen);
+        return;
+      }
+      const ract = e.target.closest('[data-ract]');
+      if (ract){
+        e.stopPropagation();
+        ract.closest('.rl-actmenu').hidden = true;
+        ract.closest('td').classList.remove('rl-actz');
+        const a = ract.dataset.ract;
+        if (a === 'ver') openPlayer(list, idx);
+        else if (a === 'tab') window.open(location.href, '_blank');
+        else { const gi = REELS_DATA.indexOf(r); if (gi > -1) REELS_DATA.splice(gi, 1); buildStories(); renderGrid(); fgToast('Short excluído'); }
+        return;
+      }
+      if (e.target.closest('.rl-actwrap')) return;
+      openReelInfo(r);
     }
-    const ract = e.target.closest('[data-ract]');
-    if (ract){
-      e.stopPropagation();
-      ract.closest('.rl-actmenu').hidden = true;
-      ract.closest('td').classList.remove('rl-actz');
-      const a = ract.dataset.ract;
-      if (a === 'ver') openPlayer(list, idx);
-      else if (a === 'tab') window.open(location.href, '_blank');
-      else { const gi = REELS_DATA.indexOf(r); if (gi > -1) REELS_DATA.splice(gi, 1); buildStories(); renderGrid(); fgToast('Short excluído'); }
-      return;
-    }
-    if (e.target.closest('.rl-actwrap')) return;
-    openReelInfo(r);
   });
-  wrap.querySelector('thead').addEventListener('click', ev => {
-    const th = ev.target.closest('th.sortable'); if (!th) return;
-    const k = th.dataset.sort;
-    /* Ciclo de 3 estados por coluna: sem ordenação -> ascendente -> descendente -> sem ordenação */
-    if (colSort.key !== k){ colSort.key = k; colSort.dir = 1; }
-    else if (colSort.dir === 1){ colSort.dir = -1; }
-    else { colSort.key = null; colSort.dir = 0; }
-    renderGrid();
-  });
-  rxGrid.appendChild(wrap);
-  const RX_COLLAPSE_PX = 90;
-  let rxScrollTicking = false;
-  function rxSyncFrozenCols(){
-    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / RX_COLLAPSE_PX));
-    const idW = RX_COLLAPSE_PX * (1 - progress);
-    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(el => {
-      el.style.setProperty('width', idW + 'px', 'important');
-      el.style.setProperty('min-width', idW + 'px', 'important');
-      el.style.setProperty('max-width', idW + 'px', 'important');
-      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
-      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
-    });
-    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(el => { el.style.left = idW + 'px'; });
-    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
-  }
-  wrap.addEventListener('scroll', () => {
-    if (rxScrollTicking) return; rxScrollTicking = true;
-    requestAnimationFrame(() => { rxSyncFrozenCols(); rxScrollTicking = false; });
-  });
-  rxSyncFrozenCols();
 }
 
 /* Fecha o menu "Ações" da tabela e os dropdowns do filtro avançado ao clicar fora deles.
@@ -20923,79 +21053,62 @@ function renderGerenciarPublicacoesList(list){
       '<td style="white-space:nowrap">' + (n.encerra ? '<span class="rl-enddt">' + rxSchedDT(n.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
       '</tr>';
   }).join('');
-  const cols = [['id', 'ID'], ['title', 'Publicação (' + list.length + ')']];
-  const colsAfter = [['author', 'Autor'], ['unit', 'Unidade do autor'], ['views', 'Visualizações'], ['rx', 'Reações'], ['cm', 'Comentários'], ['cat', 'Categoria']];
-  const thSort = function(c){
-    const k = c[0], active = pglColSort.key === k && pglColSort.dir !== 0;
-    const icon = !active ? NV_SORT_ICONS.swap : (pglColSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
-    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
-  };
-  const thPlain = function(label){ return '<th>' + label + '</th>'; };
-  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicada para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
-  const wrap = document.createElement('div');
-  wrap.className = 'rlist rl-tblwrap';
-  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';
-  wrap.querySelector('tbody').addEventListener('click', function(e){
-    const tr = e.target.closest('tr'); if (!tr) return;
-    const idx = +tr.dataset.i; const n = list[idx];
-    const ob = e.target.closest('[data-pglopen]');
-    if (ob){ e.stopPropagation(); if (ob.dataset.pglopen === 'rx') openReactions(nvRxIndex(n.id)); else openInterModal(n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').slice(0, 60) : 'Publicação')); return; }
-    const actBtn = e.target.closest('.rl-actbtn');
-    if (actBtn){
-      e.stopPropagation();
-      const td = actBtn.closest('td');
-      const menu = actBtn.nextElementSibling;
-      const willOpen = menu.hidden;
-      wrap.querySelectorAll('.rl-actmenu').forEach(function(m){ m.hidden = true; });
-      wrap.querySelectorAll('td.rl-actz').forEach(function(c){ c.classList.remove('rl-actz'); });
-      menu.hidden = !willOpen;
-      td.classList.toggle('rl-actz', willOpen);
-      return;
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'title', label: 'Publicação (' + list.length + ')' },
+    { key: 'status', label: 'Situação' },
+    { key: 'time', label: 'Data de publicação' },
+    { key: 'reach', label: 'Publicada para' },
+    { key: 'tipo', label: 'Tipo', sortable: false },
+    { key: 'author', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor' },
+    { key: 'views', label: 'Visualizações' },
+    { key: 'rx', label: 'Reações' },
+    { key: 'cm', label: 'Comentários' },
+    { key: 'cat', label: 'Categoria' },
+    { key: 'enddate', label: 'Data de encerramento' }
+  ];
+  const wrap = renderGridTable({
+    grid, columns, rowsHTML: rows, sort: pglColSort,
+    onSort: function(k){
+      if (pglColSort.key !== k){ pglColSort.key = k; pglColSort.dir = 1; }
+      else if (pglColSort.dir === 1){ pglColSort.dir = -1; }
+      else { pglColSort.key = null; pglColSort.dir = 0; }
+      renderGerenciarPublicacoesList(list);
+    },
+    onRowClick: function(e){
+      const tr = e.target.closest('tr'); if (!tr) return;
+      const idx = +tr.dataset.i; const n = list[idx];
+      const ob = e.target.closest('[data-pglopen]');
+      if (ob){ e.stopPropagation(); if (ob.dataset.pglopen === 'rx') openReactions(nvRxIndex(n.id)); else openInterModal(n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').slice(0, 60) : 'Publicação')); return; }
+      const actBtn = e.target.closest('.rl-actbtn');
+      if (actBtn){
+        e.stopPropagation();
+        const td = actBtn.closest('td');
+        const menu = actBtn.nextElementSibling;
+        const willOpen = menu.hidden;
+        wrap.querySelectorAll('.rl-actmenu').forEach(function(m){ m.hidden = true; });
+        wrap.querySelectorAll('td.rl-actz').forEach(function(c){ c.classList.remove('rl-actz'); });
+        menu.hidden = !willOpen;
+        td.classList.toggle('rl-actz', willOpen);
+        return;
+      }
+      const pact = e.target.closest('[data-pact]');
+      if (pact){
+        e.stopPropagation();
+        pact.closest('.rl-actmenu').hidden = true;
+        pact.closest('td').classList.remove('rl-actz');
+        const a = pact.dataset.pact;
+        if (a === 'ver') openNewsInfo(n);
+        else if (a === 'tab') window.open(location.href, '_blank');
+        else if (a === 'edit') nvEdit(n.id);
+        else { NEWS = NEWS.filter(function(x){ return x.id !== n.id; }); pglRefresh(); fgToast('Publicação excluída'); }
+        return;
+      }
+      if (e.target.closest('.rl-actwrap')) return;
+      openNewsInfo(n);
     }
-    const pact = e.target.closest('[data-pact]');
-    if (pact){
-      e.stopPropagation();
-      pact.closest('.rl-actmenu').hidden = true;
-      pact.closest('td').classList.remove('rl-actz');
-      const a = pact.dataset.pact;
-      if (a === 'ver') openNewsInfo(n);
-      else if (a === 'tab') window.open(location.href, '_blank');
-      else if (a === 'edit') nvEdit(n.id);
-      else { NEWS = NEWS.filter(function(x){ return x.id !== n.id; }); pglRefresh(); fgToast('Publicação excluída'); }
-      return;
-    }
-    if (e.target.closest('.rl-actwrap')) return;
-    openNewsInfo(n);
   });
-  wrap.querySelector('thead').addEventListener('click', function(ev){
-    const th = ev.target.closest('th.sortable'); if (!th) return;
-    const k = th.dataset.sort;
-    if (pglColSort.key !== k){ pglColSort.key = k; pglColSort.dir = 1; }
-    else if (pglColSort.dir === 1){ pglColSort.dir = -1; }
-    else { pglColSort.key = null; pglColSort.dir = 0; }
-    renderGerenciarPublicacoesList(list);
-  });
-  grid.appendChild(wrap);
-  const PGL_COLLAPSE_PX = 90;
-  let pglScrollTicking = false;
-  function pglSyncFrozenCols(){
-    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / PGL_COLLAPSE_PX));
-    const idW = PGL_COLLAPSE_PX * (1 - progress);
-    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
-      el.style.setProperty('width', idW + 'px', 'important');
-      el.style.setProperty('min-width', idW + 'px', 'important');
-      el.style.setProperty('max-width', idW + 'px', 'important');
-      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
-      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
-    });
-    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
-    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
-  }
-  wrap.addEventListener('scroll', function(){
-    if (pglScrollTicking) return; pglScrollTicking = true;
-    requestAnimationFrame(function(){ pglSyncFrozenCols(); pglScrollTicking = false; });
-  });
-  pglSyncFrozenCols();
 }
 
 /* Ponto de entrada único: reconstrói a sidebar e a tabela juntas, a partir do estado atual dos
@@ -21235,57 +21348,34 @@ function renderGerenciarComentariosList(rows){
         '<button type="button" class="rl-actbtn" data-cmgview="' + idx + '"><span>Acessar</span>' +
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><title>arrow-right</title><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/></svg></button>' +
       '</div></td>' +
-      '<td style="white-space:nowrap"><div class="rl-dt">' + cmgFullDT(c) + '</div><span class="rl-rel">' + cmgAgo(c) + '</span></td>' +
       '<td><div class="rl-author">' + (c.av ? '<span class="avatar ' + c.av + '"></span>' : '<span class="nv-logo">' + SULTS_LOGO + '</span>') + '<div><b>' + autorNome + '</b><span class="rl-emp">' + autorSub + '</span></div></div></td>' +
       '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + unit.color + '">' + unit.ini + '</span><div><b>' + unit.name + '</b><span>' + unit.company + '</span></div></div></td>' +
+      '<td style="white-space:nowrap"><div class="rl-dt">' + cmgFullDT(c) + '</div><span class="rl-rel">' + cmgAgo(c) + '</span></td>' +
       '<td><div class="rl-pubcell">' + thumbCmg(n) + '<div><b>' + dispTitle + '</b><span>' + tipo + '</span></div></div></td>' +
       '</tr>';
   }).join('');
-  const cols = [['id', 'ID'], ['text', 'Comentário (' + rows.length + ')']];
-  const colsAfter = [['time', 'Comentado em'], ['author', 'Autor'], ['unit', 'Unidade'], ['pub', 'Publicação']];
-  const thSort = function(c2){
-    const k = c2[0], active = cmgColSort.key === k && cmgColSort.dir !== 0;
-    const icon = !active ? NV_SORT_ICONS.swap : (cmgColSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
-    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c2[1] + ' <span class="sort-ic">' + icon + '</span></th>';
-  };
-  const ths = cols.map(thSort).join('') + colsAfter.map(thSort).join('');
-  const wrap = document.createElement('div');
-  wrap.className = 'rlist rl-tblwrap';
-  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rowsHTML + '</tbody></table>';
-  wrap.querySelector('thead').addEventListener('click', function(ev){
-    const th = ev.target.closest('th.sortable'); if (!th) return;
-    const k = th.dataset.sort;
-    if (cmgColSort.key !== k){ cmgColSort.key = k; cmgColSort.dir = 1; }
-    else if (cmgColSort.dir === 1){ cmgColSort.dir = -1; }
-    else { cmgColSort.key = null; cmgColSort.dir = 0; }
-    renderGerenciarComentariosList(rows);
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'text', label: 'Comentário (' + rows.length + ')' },
+    { key: 'author', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor' },
+    { key: 'time', label: 'Comentado em' },
+    { key: 'pub', label: 'Publicação' }
+  ];
+  renderGridTable({
+    grid, columns, rowsHTML, sort: cmgColSort,
+    onSort: function(k){
+      if (cmgColSort.key !== k){ cmgColSort.key = k; cmgColSort.dir = 1; }
+      else if (cmgColSort.dir === 1){ cmgColSort.dir = -1; }
+      else { cmgColSort.key = null; cmgColSort.dir = 0; }
+      renderGerenciarComentariosList(rows);
+    },
+    onRowClick: function(e){
+      const btn = e.target.closest('[data-cmgview]'); if (!btn) return;
+      const row = rows[+btn.dataset.cmgview]; if (!row) return;
+      if (typeof openNewsInfo === 'function') openNewsInfo(row.n);
+    }
   });
-  wrap.querySelector('tbody').addEventListener('click', function(e){
-    const btn = e.target.closest('[data-cmgview]'); if (!btn) return;
-    const row = rows[+btn.dataset.cmgview]; if (!row) return;
-    if (typeof openNewsInfo === 'function') openNewsInfo(row.n);
-  });
-  grid.appendChild(wrap);
-  const CMG_COLLAPSE_PX = 90;
-  let cmgScrollTicking = false;
-  function cmgSyncFrozenCols(){
-    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / CMG_COLLAPSE_PX));
-    const idW = CMG_COLLAPSE_PX * (1 - progress);
-    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
-      el.style.setProperty('width', idW + 'px', 'important');
-      el.style.setProperty('min-width', idW + 'px', 'important');
-      el.style.setProperty('max-width', idW + 'px', 'important');
-      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
-      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
-    });
-    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
-    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
-  }
-  wrap.addEventListener('scroll', function(){
-    if (cmgScrollTicking) return; cmgScrollTicking = true;
-    requestAnimationFrame(function(){ cmgSyncFrozenCols(); cmgScrollTicking = false; });
-  });
-  cmgSyncFrozenCols();
 }
 
 /* Ponto de entrada único: reconstrói a sidebar e a tabela juntas, a partir do estado atual dos
@@ -21332,6 +21422,221 @@ $('#cmgFilters') && $('#cmgFilters').addEventListener('click', function(e){
 $('#cmgFilters') && $('#cmgFilters').addEventListener('input', function(e){
   if (e.target.id === 'cmgFTexto'){ cmgQuery = e.target.value.trim().toLowerCase(); renderGerenciarComentariosList(cmgAllComments().filter(matchCmg)); }
   else if (e.target.id === 'cmgFPub'){ cmgPubQuery = e.target.value.trim().toLowerCase(); renderGerenciarComentariosList(cmgAllComments().filter(matchCmg)); }
+});
+
+/* ===================== assets/js/23-gerenciar-reacoes.js ===================== */
+/* =====================================================================
+   GERENCIAR > REAÇÕES (admin) — assets/js/23-gerenciar-reacoes.js
+
+   Tabela e sidebar de filtro avançado da tela "Reações" do alternador "Gerenciar"
+   (#nmtInter / newsShow('inter')). Espelha a estrutura das telas irmãs de
+   Publicações/Shorts/Comentários (21/20/22-gerenciar-*.js) — mesmo componente
+   genérico de tabela (renderGridTable, 20-gerenciar-shorts.js), mesmas colunas
+   ID+Reação congeladas/sticky ao rolar (freeze padrão) e mesmo padrão de sidebar.
+
+   A origem da reação (Publicações ou Shorts) é escolhida por dois cartões de
+   atalho no topo do painel — mutuamente exclusivos, sem opção "Todas" (só um
+   dado por vez, igual pedido). Reaproveita, sem duplicar:
+     - INTERACTIONS/buildInteractions/interDT/interRel (11-rede-social.js) para
+       as reações de Publicações;
+     - REELS_DATA/POSTS (01-home.js) + PEOPLE (03-shorts.js) + STORES
+       (07-busca.js) para sintetizar, no mesmo espírito, reações de Shorts —
+       essa segunda fonte não existia antes (INTERACTIONS só cobria
+       Publicações); rcnShortInteractions() replica localmente a mesma lógica
+       de buildInteractions() para Shorts, sem tocar no array/função
+       compartilhados.
+   Único ponto de contato com 11-rede-social.js: newsShow('inter') chama
+   rcnRefresh() no lugar de renderInteractions() (cujo código continua no
+   lugar, só deixou de ser chamado por esse caminho).
+   ===================================================================== */
+
+let rcnColSort = { key: null, dir: 0 };
+let rcnSource = 'pub';
+
+/* Reações de Shorts — mesma forma de objeto que INTERACTIONS (person/av/role/store/reacao/
+   mins), só que sorteadas sobre REELS_DATA/POSTS em vez de NEWS. Construída uma vez, sob
+   demanda (só quando o cartão "Shorts" é aberto pela 1ª vez). */
+let RCN_SHORT_INTER = null;
+function rcnShortInteractions(){
+  if (RCN_SHORT_INTER) return RCN_SHORT_INTER;
+  const reactIco = REACTIONS.map(function(r){ return [r.key, r.color, r.label]; });
+  RCN_SHORT_INTER = REELS_DATA.map(function(r, i){
+    const p = POSTS[r.p] || {};
+    const person = PEOPLE[i % PEOPLE.length];
+    const st = STORES[i % STORES.length];
+    return {
+      id: 500000 + i, tipo: 'reacao', person: person.name, av: person.av, role: person.role,
+      store: st.name, storeCo: st.company, storeIni: st.ini, storeColor: st.color,
+      post: p.title || p.alt || 'Short', reacao: reactIco[i % reactIco.length], mins: 9 + i * 23,
+      __short: true, __post: p, __reel: r
+    };
+  });
+  return RCN_SHORT_INTER;
+}
+function rcnPool(){
+  if (rcnSource === 'short') return rcnShortInteractions();
+  if (!INTERACTIONS.length) buildInteractions();
+  return INTERACTIONS.filter(function(x){ return x.tipo === 'reacao'; });
+}
+function rcnMatch(x){
+  if (interPerson && x.person !== interPerson) return false;
+  if (interReact && x.reacao[2] !== interReact) return false;
+  if (interPeriod && x.mins > +interPeriod) return false;
+  if (interQuery){ const q = interQuery.toLowerCase(); if ((x.post || '').toLowerCase().indexOf(q) === -1) return false; }
+  return true;
+}
+function rcnActiveFilterCount(){
+  return (interQuery ? 1 : 0) + (interPerson ? 1 : 0) + (interPeriod ? 1 : 0) + (interReact ? 1 : 0);
+}
+
+function foBuildGerenciarReacoesFilters(){
+  const nav = $('#rcnFilters'); if (!nav) return;
+  const pool = rcnPool();
+  const persons = Array.from(new Set(pool.map(function(x){ return x.person; })));
+  const personItems = [{ value: '', label: 'Todas as pessoas', selected: !interPerson }].concat(persons.map(function(p){ return { value: p, label: p, selected: interPerson === p }; }));
+  const personLabel = interPerson || 'Todas as pessoas';
+  const units = Array.from(new Set(pool.map(function(x){ return x.store; })));
+  const unitItems = [{ value: '', label: 'Todas as unidades', selected: !interStore }].concat(units.map(function(u){ return { value: u, label: u, selected: interStore === u }; }));
+  const unitLabel = interStore || 'Todas as unidades';
+  const reactItems = [{ value: '', label: 'Todos os tipos', selected: !interReact }].concat(REACTIONS.map(function(r){ return { value: r.label, label: r.label, selected: interReact === r.label }; }));
+  const reactLabel = interReact || 'Todos os tipos';
+  const periodDefs = [['', 'Qualquer período'], ['60', 'Última hora'], ['1440', 'Últimas 24 h'], ['10080', 'Últimos 7 dias']];
+  const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: interPeriod === p[0] }; });
+  const periodLabel = (periodDefs.filter(function(p){ return p[0] === interPeriod; })[0] || periodDefs[0])[1];
+
+  /* Cartões "Publicações"/"Shorts" — escolhem a origem dos dados (rcnSource), mutuamente
+     exclusivos, sem opção "Todas". */
+  const sourceDefs = [['pub', 'Publicações'], ['short', 'Shorts']];
+  let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais reações você quer ver? <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="cv-seg nv-sitcards nv-sit2" id="rcnSitCards">' +
+    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="' + (rcnSource === s[0] ? 'active' : '') + '">' + s[1] + '</button>'; }).join('') +
+    '</div></div>';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Reação <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Tipo</label>' + rxDDWrap('rcnFReact', reactLabel, reactItems) + '</div>' +
+    '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('rcnFPerson', personLabel, personItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
+      '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('rcnFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
+    '</div></div>';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : 'Postagem') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Título</label><div class="nv-ffield"><input type="text" id="rcnFTitulo" placeholder="' + (rcnSource === 'short' ? 'Pesquisar short...' : 'Pesquisar publicação...') + '" value="' + (interQuery || '') + '" autocomplete="off"></div></div>' +
+    '</div>';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de reação <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Selecione uma opção</label>' + rxDDWrap('rcnFPeriod', periodLabel, periodItems) + '</div>' +
+    '</div>';
+  const activeN = rcnActiveFilterCount();
+  html += '<div class="nv-filters-ft"><button class="nv-fclear' + (activeN > 0 ? ' has-active' : '') + '" id="rcnFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros' + (activeN > 0 ? ' (' + activeN + ')' : '') + '</button><button class="nv-fapply" id="rcnFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML = html;
+}
+
+/* Núcleo da tabela — colunas ID, Reação, Reagiu em, Autor, Unidade do autor e Publicação;
+   ordenação de 3 estados por coluna; ID+Reação congeladas (com colapso animado) ao rolar
+   horizontalmente, igual Comentários/Shorts/Publicações — "Publicação" é a coluna flexível
+   (só min-width), no fim da tabela. */
+function renderGerenciarReacoesList(list){
+  const grid = document.getElementById('rcnGrid'); if (!grid) return;
+  grid.innerHTML = '';
+  if (!list.length){ grid.innerHTML = '<div class="cat-empty">Nenhuma reação encontrada.</div>'; return; }
+  if (rcnColSort.key && rcnColSort.dir){
+    const val = function(x){ switch (rcnColSort.key){
+      case 'id': return x.id;
+      case 'person': return (x.person || '').toLowerCase();
+      case 'time': return -x.mins;
+      case 'pub': return (x.post || '').toLowerCase();
+      default: return 0; } };
+    list = list.slice().sort(function(a, b){ const va = val(a), vb = val(b); return va < vb ? -rcnColSort.dir : va > vb ? rcnColSort.dir : 0; });
+  }
+  const rowsHTML = list.map(function(x, idx){
+    const rDef = REACTIONS.find(function(r){ return r.key === x.reacao[0]; });
+    let thumb, typeLabel;
+    if (x.__short){
+      const p = x.__post || {};
+      const img = p.img || p.poster || '';
+      thumb = img ? '<img src="' + img + '" alt="">' : '<span class="rl-procthumb"><i class="fa-solid fa-clapperboard" style="color:#9aa5b1"></i></span>';
+      typeLabel = 'Short';
+    } else {
+      const n = findNewsByTitle(x.post) || {};
+      thumb = n.image ? '<img src="' + n.image + '" alt="">' : '<span class="rl-procthumb"><i class="fa-solid ' + (n.article ? 'fa-newspaper' : 'fa-align-left') + '" style="color:#9aa5b1"></i></span>';
+      typeLabel = n.article ? 'Artigo' : 'Publicação';
+    }
+    return '<tr data-i="' + idx + '">' +
+      '<td class="perm-id">#' + x.id + '</td>' +
+      '<td><span class="il-pill" style="background:' + x.reacao[1] + '18;color:' + x.reacao[1] + '">' + (rDef ? rDef.emoji : '') + ' ' + x.reacao[2] + '</span></td>' +
+      '<td><div class="rl-author"><span class="avatar ' + x.av + '"></span><div><b>' + x.person + '</b><span class="rl-emp">' + x.role + '</span></div></div></td>' +
+      '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + x.storeColor + '">' + x.storeIni + '</span><div><b>' + x.store + '</b><span>' + x.storeCo + '</span></div></div></td>' +
+      '<td style="white-space:nowrap"><div class="rl-dt">' + interDT(x.mins) + '</div><span class="rl-rel">' + interRel(x.mins) + '</span></td>' +
+      '<td><div class="rl-pubcell">' + thumb + '<div><b>' + x.post + '</b><span>' + typeLabel + '</span></div></div></td>' +
+      '</tr>';
+  }).join('');
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'reacao', label: 'Reação (' + list.length + ')', sortable: false },
+    { key: 'person', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor', sortable: false },
+    { key: 'time', label: 'Reagiu em' },
+    { key: 'pub', label: rcnSource === 'short' ? 'Shorts' : 'Publicações' }
+  ];
+  renderGridTable({
+    grid, columns, rowsHTML, sort: rcnColSort,
+    onSort: function(k){
+      if (rcnColSort.key !== k){ rcnColSort.key = k; rcnColSort.dir = 1; }
+      else if (rcnColSort.dir === 1){ rcnColSort.dir = -1; }
+      else { rcnColSort.key = null; rcnColSort.dir = 0; }
+      renderGerenciarReacoesList(list);
+    },
+    onRowClick: function(e){
+      const tr = e.target.closest('tr'); if (!tr) return;
+      const x = list[+tr.dataset.i]; if (!x) return;
+      if (x.__short){ if (typeof openReelInfo === 'function') openReelInfo(x.__reel); return; }
+      const n = findNewsByTitle(x.post);
+      if (n && typeof openArticle === 'function') openArticle(n);
+    }
+  });
+}
+
+/* Ponto de entrada único: reconstrói a sidebar e a tabela juntas, a partir do estado atual
+   (rcnSource + interPerson/interStore/interPeriod/interReact/interQuery). Chamado por
+   newsShow('inter') no lugar de renderInteractions(). */
+function rcnRefresh(){
+  foBuildGerenciarReacoesFilters();
+  renderGerenciarReacoesList(rcnPool().filter(rcnMatch));
+}
+
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.rl-ddwrap')){
+    $$('#rcnFilters .rl-ddmenu').forEach(function(m){ m.hidden = true; });
+  }
+});
+$('#rcnFilters') && $('#rcnFilters').addEventListener('click', function(e){
+  const src = e.target.closest('#rcnSitCards button');
+  if (src){ rcnSource = src.dataset.rcnsource; interPerson = ''; interStore = ''; rcnRefresh(); return; }
+  if (e.target.closest('#rcnFClear')){
+    rcnSource = 'pub'; interQuery = ''; interPerson = ''; interStore = ''; interPeriod = ''; interReact = '';
+    rcnColSort.key = null; rcnColSort.dir = 0;
+    rcnRefresh();
+    return;
+  }
+  if (e.target.closest('#rcnFApply')){ rcnRefresh(); fgToast('Filtros aplicados'); return; }
+  const ddItem = e.target.closest('.rl-dditem');
+  if (ddItem){
+    const wrap = ddItem.closest('.rl-ddwrap'); const id = wrap.dataset.dd; const v = ddItem.dataset.value;
+    if (id === 'rcnFPerson'){ interPerson = v; }
+    else if (id === 'rcnFUnit'){ interStore = v; }
+    else if (id === 'rcnFPeriod'){ interPeriod = v; }
+    else if (id === 'rcnFReact'){ interReact = v; }
+    rcnRefresh();
+    return;
+  }
+  const ddBtn = e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if (ddBtn){
+    const wrap = ddBtn.closest('.rl-ddwrap'); const menu = wrap.querySelector('.rl-ddmenu');
+    const willOpen = menu.hidden;
+    $$('#rcnFilters .rl-ddmenu').forEach(function(m){ m.hidden = true; });
+    menu.hidden = !willOpen;
+    return;
+  }
+});
+$('#rcnFilters') && $('#rcnFilters').addEventListener('input', function(e){
+  if (e.target.id === 'rcnFTitulo'){ interQuery = e.target.value.trim(); renderGerenciarReacoesList(rcnPool().filter(rcnMatch)); }
 });
 </script>
 </body>
