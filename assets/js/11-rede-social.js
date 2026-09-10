@@ -171,7 +171,7 @@ const BRAND_LOGO = '<svg viewBox="0 0 76.6 76.6" xmlns="http://www.w3.org/2000/s
 const WHITE_LOGO = '<svg class="logo-mark" viewBox="0 0 76.6 76.6" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M59.4 28.2 28.2 59.4c-.4.4-1.2.4-1.6 0L17.2 50c-.4-.4-.4-1.2 0-1.6l31.2-31.2c.4-.4 1.2-.4 1.6 0l9.3 9.3c.4.4.4 1.1 0 1.7z"/><path fill="#fff" d="M32.6.2 5.5 27.4c-3 3-3 7.9 0 10.9l5 5c.2.2.6.2.9 0L53.6 1.1C54 .7 53.8 0 53.2 0H33.1c-.2 0-.3.1-.5.2z"/><path fill="#fff" d="M65.2 33.3 22.9 75.5c-.4.4-.1 1.1.4 1.1h20.1c.2 0 .3-.1.4-.2l27.2-27.2c3-3 3-7.9 0-10.9l-5-5c-.3-.3-.7-.3-.9 0z"/></svg>';
 NEWS.filter(n=>n.status==='pub' && n.id>=7).forEach(n=>addHomePost(n, true));
 function newsAvatarHTML(n){ return n.av ? '<span class="avatar '+n.av+'"></span>' : '<span class="nv-logo">'+SULTS_LOGO+'</span>'; }
-function nmodSetActive(id){ $$('.nmod-tab').forEach(t=>t.classList.remove('active')); const cfg=(id==='nmodCats'||id==='nmodPerm'||id==='nmodParams'); const apr=(id==='nmodMod'||id==='nmodPubAppr'); const inter=(id==='nmodInter'); newsView.classList.toggle('intermode',inter); if(inter&&$('#nmtInter'))$('#nmtInter').classList.add('active'); const aprhome=(id==='nmodApr'); newsView.classList.toggle('aprhome',aprhome); if(aprhome){ if($('#nmtApr'))$('#nmtApr').classList.add('active'); } newsView.classList.toggle('cfg',cfg); newsView.classList.toggle('apr',apr); newsView.classList.toggle('catmode', id==='nmodCats'); if(cfg){ if(id==='nmodCats'){ if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); } else { if($('#nmtPerm'))$('#nmtPerm').classList.add('active'); } } else if(apr){ if($('#nmtApr'))$('#nmtApr').classList.add('active'); } else { if(id==='nmodPub'&&$('#nmtPub'))$('#nmtPub').classList.add('active'); if(id==='nmodNew'&&$('#nmtFeed'))$('#nmtFeed').classList.add('active'); } $$('.nv-cfgitem').forEach(t=>t.classList.remove('active')); if(id==='nmodCats'&&$('#nvcfgCats'))$('#nvcfgCats').classList.add('active'); if(id==='nmodPerm'&&$('#nvcfgPerm'))$('#nvcfgPerm').classList.add('active'); if(id==='nmodParams'&&$('#nvcfgParams'))$('#nvcfgParams').classList.add('active'); if(id==='nmodPerm'&&$('#nvcfgPermPub'))$('#nvcfgPermPub').classList.add('active'); if(id==='nmodParams'&&$('#nvcfgPermCom'))$('#nvcfgPermCom').classList.add('active'); if(id==='nmodMod'&&$('#nvaprCom'))$('#nvaprCom').classList.add('active'); if(id==='nmodPubAppr'&&$('#nvaprPub'))$('#nvaprPub').classList.add('active'); if(id==='nmodStories'&&$('#nmtStories'))$('#nmtStories').classList.add('active'); if(id==='nmodShortsB'&&$('#nmtStories'))$('#nmtStories').classList.add('active'); if(id==='nmodMgShorts'&&$('#nmtMgShorts'))$('#nmtMgShorts').classList.add('active'); if(id==='nmodCm'&&$('#nmtCmts'))$('#nmtCmts').classList.add('active'); }
+function nmodSetActive(id){ $$('.nmod-tab').forEach(t=>t.classList.remove('active')); const cfg=(id==='nmodCats'||id==='nmodPerm'||id==='nmodParams'); const apr=(id==='nmodMod'||id==='nmodPubAppr'); const inter=(id==='nmodInter'); newsView.classList.toggle('intermode',inter); if(inter&&$('#nmtInter'))$('#nmtInter').classList.add('active'); const aprhome=(id==='nmodApr'); newsView.classList.toggle('aprhome',aprhome); if(aprhome){ if($('#nmtApr'))$('#nmtApr').classList.add('active'); } newsView.classList.toggle('cfg',cfg); newsView.classList.toggle('apr',apr); newsView.classList.toggle('export', id==='nmodExport'); newsView.classList.toggle('catmode', id==='nmodCats'); if(cfg){ if(id==='nmodCats'){ if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); } else { if($('#nmtPerm'))$('#nmtPerm').classList.add('active'); } } else if(apr){ if($('#nmtApr'))$('#nmtApr').classList.add('active'); } else { if(id==='nmodPub'&&$('#nmtPub'))$('#nmtPub').classList.add('active'); if(id==='nmodNew'&&$('#nmtFeed'))$('#nmtFeed').classList.add('active'); } $$('.nv-cfgitem').forEach(t=>t.classList.remove('active')); if(id==='nmodCats'&&$('#nvcfgCats'))$('#nvcfgCats').classList.add('active'); if(id==='nmodPerm'&&$('#nvcfgPerm'))$('#nvcfgPerm').classList.add('active'); if(id==='nmodParams'&&$('#nvcfgParams'))$('#nvcfgParams').classList.add('active'); if(id==='nmodPerm'&&$('#nvcfgPermPub'))$('#nvcfgPermPub').classList.add('active'); if(id==='nmodParams'&&$('#nvcfgPermCom'))$('#nvcfgPermCom').classList.add('active'); if(id==='nmodMod'&&$('#nvaprCom'))$('#nvaprCom').classList.add('active'); if(id==='nmodPubAppr'&&$('#nvaprPub'))$('#nvaprPub').classList.add('active'); if(id==='nmodStories'&&$('#nmtStories'))$('#nmtStories').classList.add('active'); if(id==='nmodShortsB'&&$('#nmtStories'))$('#nmtStories').classList.add('active'); if(id==='nmodMgShorts'&&$('#nmtMgShorts'))$('#nmtMgShorts').classList.add('active'); if(id==='nmodCm'&&$('#nmtCmts'))$('#nmtCmts').classList.add('active'); if(id==='nmodExport'){ if($('#nmtExport'))$('#nmtExport').classList.add('active'); if($('#nvcfgExport'))$('#nvcfgExport').classList.add('active'); } }
 function nvSetEnv(env){
   const social = env==='social';
   newsView.classList.toggle('env-social', social);
@@ -500,6 +500,92 @@ $('#nmtPub') && $('#nmtPub').addEventListener('click', ()=>newsShow('list'));
 $('#nmtFeed') && $('#nmtFeed').addEventListener('click', ()=>newsShow('feed'));
 $('#nmtPerm') && $('#nmtPerm').addEventListener('click', ()=>{ newsShow('perm'); const s1=$('#permPubSec'), ac=$('#permApprGrid'); if(s1)s1.style.display=''; permStoriesSecShow(true); if(ac)ac.style.display='none'; $$('#nvCfgSide .nv-cfgitem').forEach(x=>x.classList.remove('active')); const b=$('#nvcfgPubWho'); if(b) b.classList.add('active'); });
 $('#nmtCfg') && $('#nmtCfg').addEventListener('click', ()=>{ cfgGo('who'); });
+$('#nmtExport') && $('#nmtExport').addEventListener('click', ()=>newsShow('export'));
+$('#nvcfgExport') && $('#nvcfgExport').addEventListener('click', ()=>newsShow('export'));
+
+/* =====================================================================
+   Modal "Exportar" (#expModal) — aberto pelos botões .exp-btn da tela de
+   Exportações. Um modal só, com o corpo remontado a cada abertura porque os
+   campos mudam por tipo (Publicações/Shorts têm "Tipo" + Autor/Unidade;
+   Comentários só tem Autor; Reações tem "Tipo da reação" + Autor/Unidade) —
+   ver os prints do Figma (nodes 1719-22628/29571/29652/29733). Reaproveita
+   rxDDWrap/rxDateField (20-gerenciar-shorts.js), o shell fg-backdrop/fg-modal
+   (05-forum.css) e SB_UNIDADES (01-home.js). */
+const EXP_KINDS = {
+  pub:      { title:'Exportar publicações', tipoLabel:'Tipo de publicação', tipoOptions:['Todas','Artigos','Postagens','Publicações coloridas'], autorLabel:'Autor da publicação', unidadeLabel:'Unidade do autor', dateLabel:'Publicado de:' },
+  shorts:   { title:'Exportar shorts', tipoLabel:'Tipo do short', tipoOptions:['Todos','Vídeos','Imagens'], autorLabel:'Autor do short', unidadeLabel:'Unidade do autor', dateLabel:'Publicado de:' },
+  comments: { title:'Exportar comentários', autorLabel:'Autor do comentário', dateLabel:'Publicado de:' },
+  reactions:{ title:'Exportar reações', tipoLabel:'Tipo da reação', tipoOptions:['Todas','Gostei','Amei','Parabéns','Genial','Sensacional'], autorLabel:'Autor da reação', unidadeLabel:'Unidade do autor', dateLabel:'Reagido de:' }
+};
+let expKind = null, expTipo = '', expAutor = '', expUnidade = '', expDateStart = '', expDateEnd = '';
+function expFmtDate(d){ const p=n=>('0'+n).slice(-2); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function expRenderBody(){
+  const cfg = EXP_KINDS[expKind]; if(!cfg) return;
+  const units = SB_UNIDADES.map(function(u){ return u.name; });
+  let html = '';
+  if(cfg.tipoOptions){
+    const tipoItems = cfg.tipoOptions.map(function(t,i){ return { value:t, label:t, selected: expTipo ? expTipo===t : i===0 }; });
+    html += '<div style="margin-bottom:18px"><label class="fg-label">'+cfg.tipoLabel+'</label>'+rxDDWrap('expFTipo', expTipo || cfg.tipoOptions[0], tipoItems)+'</div>';
+  }
+  const autorItems = [{ value:'', label:'Todos', selected:!expAutor }];
+  if(cfg.unidadeLabel){
+    const unidadeItems = [{ value:'', label:'Todas', selected:!expUnidade }].concat(units.map(function(u){ return { value:u, label:u, selected:expUnidade===u }; }));
+    html += '<div class="nv-ffrow nv-ffrow-last" style="margin-bottom:18px">'+
+      '<div class="nv-ffcol"><label class="fg-label">'+cfg.autorLabel+'</label>'+rxDDWrap('expFAutor', expAutor || 'Todos', autorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+      '<div class="nv-ffcol"><label class="fg-label">'+cfg.unidadeLabel+'</label>'+rxDDWrap('expFUnidade', expUnidade || 'Todas', unidadeItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+    '</div>';
+  } else {
+    html += '<div style="margin-bottom:18px"><label class="fg-label">'+cfg.autorLabel+'</label>'+rxDDWrap('expFAutor', expAutor || 'Todos', autorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>';
+  }
+  html += '<label class="fg-label">'+cfg.dateLabel+'</label>'+
+    '<div style="display:flex;align-items:center;gap:10px">'+rxDateField('expFDateStart', expDateStart)+'<span style="color:#5F666C;font-size:14px">até</span>'+rxDateField('expFDateEnd', expDateEnd)+'</div>'+
+    '<div class="exp-warn"><i class="fa-solid fa-triangle-exclamation"></i> Intervalo máximo de: 3 meses</div>'+
+    '<div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">'+
+      '<button class="fo-btn ghost" id="expCancel">Cancelar</button>'+
+      '<button class="fo-btn" id="expSubmit"><i class="fa-solid fa-upload"></i> Exportar</button>'+
+    '</div>';
+  $('#expModalBody').innerHTML = html;
+}
+function expOpen(kind){
+  const cfg = EXP_KINDS[kind]; if(!cfg) return;
+  expKind = kind; expTipo=''; expAutor=''; expUnidade='';
+  const hoje = new Date();
+  expDateStart = expFmtDate(new Date(hoje.getFullYear(), hoje.getMonth()-3, hoje.getDate()));
+  expDateEnd = expFmtDate(hoje);
+  $('#expModalTitle').textContent = cfg.title;
+  expRenderBody();
+  $('#expModal').classList.add('open');
+}
+function expClose(){ $('#expModal').classList.remove('open'); }
+$('#nvExportScreen') && $('#nvExportScreen').addEventListener('click', function(e){ const b=e.target.closest('.exp-btn'); if(b && b.dataset.expkind) expOpen(b.dataset.expkind); });
+$('#expModalClose') && $('#expModalClose').addEventListener('click', expClose);
+$('#expModal') && $('#expModal').addEventListener('click', function(e){
+  if(e.target===$('#expModal')){ expClose(); return; }
+  if(e.target.closest('#expCancel')){ expClose(); return; }
+  if(e.target.closest('#expSubmit')){ expClose(); fgToast('Exportação solicitada'); return; }
+  const db=e.target.closest('.nv-fdatebtn');
+  if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem=e.target.closest('.rl-dditem');
+  if(ddItem){
+    const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
+    if(id==='expFTipo'){ expTipo=v; } else if(id==='expFAutor'){ expAutor=v; } else if(id==='expFUnidade'){ expUnidade=v; }
+    expRenderBody();
+    return;
+  }
+  const ddBtn=e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if(ddBtn){
+    const wrap=ddBtn.closest('.rl-ddwrap'); const menu=wrap.querySelector('.rl-ddmenu');
+    const willOpen=menu.hidden;
+    $$('#expModal .rl-ddmenu').forEach(m=>m.hidden=true);
+    menu.hidden=!willOpen;
+    return;
+  }
+});
+$('#expModal') && $('#expModal').addEventListener('change', function(e){
+  if(e.target.id==='expFDateStart'){ expDateStart=e.target.value; } else if(e.target.id==='expFDateEnd'){ expDateEnd=e.target.value; }
+});
+document.addEventListener('click', function(e){ if(!e.target.closest('#expModal .rl-ddwrap')) $$('#expModal .rl-ddmenu').forEach(m=>m.hidden=true); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape' && $('#expModal').classList.contains('open')) expClose(); });
 const TEAM_ADMINS = [1,56,978,992,12];
 let TEAM = [1,56,978];
 let teamQuery='', teamAddQuery='', teamAddUnitQuery='', teamAddSel=new Set();
@@ -706,8 +792,8 @@ function modRemove(mid,status){ const e=MOD_QUEUE.find(x=>x.mid===mid); if(e&&st
    07-rede-social.css). col-principal fica sem width de propósito: em table-layout:fixed
    ela absorve o espaço que sobra das colunas fixas. */
 const COLG_PUB_PEND='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-acoes"></colgroup>';
-const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
-const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-aprovador"><col class="col-decidido-em"><col class="col-motivo"></colgroup>';
+const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"></colgroup>';
+const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-motivo"></colgroup>';
 const COLG_COM_PEND='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-acoes"></colgroup>';
 const COLG_COM_APR='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
 const COLG_COM_REJ='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"><col class="col-motivo"></colgroup>';
@@ -798,15 +884,11 @@ function pubCellVal(n,i){
   if(i===0) return (n.title||'').toLowerCase();
   if(i===1) return n.article?'artigo':'post';
   if(i===2) return (n.author||'').toLowerCase();
-  if(pubFilter==='pend'){
-    if(i===3) return n.ts||0;
-  } else if(pubFilter==='aprovado'){
-    if(i===3) return n.ts||0;
+  if(i===3) return n.ts||0;
+  if(pubFilter==='aprovado'){
     if(i===4) return (n.decidedBy||'').toLowerCase();
-    if(i===5) return n.decidedAt||'';
-  } else {
-    if(i===3) return (n.decidedBy||'').toLowerCase();
-    if(i===4) return n.decidedAt||'';
+  } else if(pubFilter==='rejeitado'){
+    if(i===4) return (n.decidedBy||'').toLowerCase();
     if(i===5) return (n.motivo||'').toLowerCase();
   }
   return '';
@@ -835,15 +917,23 @@ function aprInPeriod(ts, period){
   const diff=(Date.now()-(ts||0))/86400000;
   return diff>=0 && diff<=days;
 }
+/* Timestamp de decidedAt (formato aprDT "dd/mm/aa hh:mm") pro filtro de período da
+   aprovação/reprovação — mesma ideia de pglDateOf (21-gerenciar-publicacoes.js), sem precisar
+   guardar um campo numérico à parte em cada ponto que aprova/reprova. */
+function aprDecidedTs(n){
+  const m=/^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(n.decidedAt||'');
+  return m ? new Date(2000+ +m[3], +m[2]-1, +m[1], +m[4], +m[5]).getTime() : 0;
+}
 
 /* Filtro avançado da fila "Publicações pendentes" (#pubApprFilters) — Título, Tipo, Autor e
    "Entrou na fila em". Mesmo padrão de campos de foBuildGerenciarPublicacoesFilters
    (21-gerenciar-publicacoes.js), só que aplicado a PUB_APPR/PUB_HIST em vez de NEWS, e com IDs
    próprios (paF...) para não colidir com os campos (pubF...) daquela outra tela. */
-let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo';
+let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo', paDecidedBy='', paDecidedPeriod='tudo';
 function paActiveFilterCount(){
   let c=0; if(paQuery) c++; if(paType) c++; if(paAuthor) c++;
   if(paQueuePeriod && paQueuePeriod!=='tudo') c++;
+  if(pubFilter!=='pend'){ if(paDecidedBy) c++; if(paDecidedPeriod && paDecidedPeriod!=='tudo') c++; }
   return c;
 }
 function paMatch(n){
@@ -851,6 +941,10 @@ function paMatch(n){
   if(paType==='article' && !n.article) return false;
   if(paAuthor && (n.author||'')!==paAuthor) return false;
   if(!aprInPeriod(n.ts, paQueuePeriod)) return false;
+  if(pubFilter!=='pend'){
+    if(paDecidedBy && (n.decidedBy||'')!==paDecidedBy) return false;
+    if(!aprInPeriod(aprDecidedTs(n), paDecidedPeriod)) return false;
+  }
   if(paQuery && (n.title||'').toLowerCase().indexOf(paQuery)===-1) return false;
   return true;
 }
@@ -871,12 +965,24 @@ function foBuildPubApprFilters(){
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:paQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===paQueuePeriod)[0]||periodDefs[0])[1];
   html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  if(pubFilter!=='pend'){
+    const decLabel=pubFilter==='aprovado'?'Aprovação':'Reprovação';
+    const decByLabel=pubFilter==='aprovado'?'Aprovado por':'Reprovado por';
+    const decByOpts=Array.from(new Set(PUB_HIST.map(n=>n.decidedBy).filter(Boolean)));
+    const decByItems=[{value:'',label:'Todos',selected:!paDecidedBy}].concat(decByOpts.map(a=>({value:a,label:a,selected:paDecidedBy===a})));
+    const decByItemLabel=paDecidedBy||'Todos';
+    const decPeriodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:paDecidedPeriod===p[0]}));
+    const decPeriodLabel=(periodDefs.filter(p=>p[0]===paDecidedPeriod)[0]||periodDefs[0])[1];
+    html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
+      '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('paFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+  }
   const activeN=paActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="paFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="paFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; renderPubAppr(); return; }
+  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; paDecidedBy=''; paDecidedPeriod='tudo'; renderPubAppr(); return; }
   if(e.target.closest('#paFApply')){ renderPubAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -884,6 +990,7 @@ $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(
   if(ddItem){
     const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
     if(id==='paFTipo'){ paType=v; } else if(id==='paFAutor'){ paAuthor=v; } else if(id==='paFQueuePeriod'){ paQueuePeriod=v; }
+    else if(id==='paFDecidido'){ paDecidedBy=v; } else if(id==='paFDecididoPeriod'){ paDecidedPeriod=v; }
     renderPubAppr();
     return;
   }
@@ -900,14 +1007,19 @@ $('#pubApprFilters') && $('#pubApprFilters').addEventListener('input', function(
 
 /* Filtro avançado da fila "Shorts pendentes" (#reelApprFilters) — mesma ideia da de Publicações
    acima, só sem o campo Tipo (todo item aqui já é um short) e com IDs próprios (raF...). */
-let raQuery='', raAuthor='', raQueuePeriod='tudo';
+let raQuery='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
 function raActiveFilterCount(){
   let c=0; if(raQuery) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
+  if(reelFilter!=='pend'){ if(raDecidedBy) c++; if(raDecidedPeriod && raDecidedPeriod!=='tudo') c++; }
   return c;
 }
 function raMatch(r){
   if(raAuthor && (r.author||'')!==raAuthor) return false;
   if(!aprInPeriod(r.ts, raQueuePeriod)) return false;
+  if(reelFilter!=='pend'){
+    if(raDecidedBy && (r.decidedBy||'')!==raDecidedBy) return false;
+    if(!aprInPeriod(aprDecidedTs(r), raDecidedPeriod)) return false;
+  }
   if(raQuery && (r.title||'').toLowerCase().indexOf(raQuery)===-1) return false;
   return true;
 }
@@ -923,12 +1035,24 @@ function foBuildReelApprFilters(){
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===raQueuePeriod)[0]||periodDefs[0])[1];
   html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  if(reelFilter!=='pend'){
+    const decLabel=reelFilter==='aprovado'?'Aprovação':'Reprovação';
+    const decByLabel=reelFilter==='aprovado'?'Aprovado por':'Reprovado por';
+    const decByOpts=Array.from(new Set((REEL_HIST||[]).map(r=>r.decidedBy).filter(Boolean)));
+    const decByItems=[{value:'',label:'Todos',selected:!raDecidedBy}].concat(decByOpts.map(a=>({value:a,label:a,selected:raDecidedBy===a})));
+    const decByItemLabel=raDecidedBy||'Todos';
+    const decPeriodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raDecidedPeriod===p[0]}));
+    const decPeriodLabel=(periodDefs.filter(p=>p[0]===raDecidedPeriod)[0]||periodDefs[0])[1];
+    html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
+      '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('raFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+  }
   const activeN=raActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="raFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="raFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#raFClear')){ raQuery=''; raAuthor=''; raQueuePeriod='tudo'; renderReelAppr(); return; }
+  if(e.target.closest('#raFClear')){ raQuery=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
   if(e.target.closest('#raFApply')){ renderReelAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -936,6 +1060,7 @@ $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', functio
   if(ddItem){
     const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
     if(id==='raFAutor'){ raAuthor=v; } else if(id==='raFQueuePeriod'){ raQueuePeriod=v; }
+    else if(id==='raFDecidido'){ raDecidedBy=v; } else if(id==='raFDecididoPeriod'){ raDecidedPeriod=v; }
     renderReelAppr();
     return;
   }
@@ -958,6 +1083,13 @@ document.addEventListener('click', function(e){
 /* Menu "Ações" (Abrir em nova guia / Aprovar / Reprovar) das duas filas pendentes — mesmo
    desenho e mesmos data-pact de #pubGrid (18-gerenciar-publicacoes.css/21-gerenciar-
    publicacoes.js), só que aprovar/reprovar aqui de fato tira o item da fila em vez de editar. */
+/* Célula "Aprovado por"/"Reprovado por" das filas de Publicações e Shorts — nome de quem
+   decidiu com a data logo abaixo, mesmo padrão (rl-author + rl-emp) já usado na coluna
+   "Autor" pra nome+unidade. Substitui as colunas "Aprovado em"/"Reprovado em" que existiam
+   separadas. */
+function aprDecidedCell(name, when){
+  return '<div class="rl-author"><span class="avatar av-rc"></span><div><b>'+(name||',')+'</b><span class="rl-emp">'+(when||',')+'</span></div></div>';
+}
 function aprActsHTML(aprovarLbl, reprovarLbl){
   return '<div class="rl-actwrap">' +
     '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
@@ -1011,12 +1143,12 @@ function renderReelAppr(){
     rows=list.map(r=>'<tr data-rid="'+r.rid+'">'+base2(r)+whenCell(r)+'<td class="rl-acts">'+aprActsHTML('Aprovar short','Reprovar short')+'</td></tr>').join('');
   } else if(reelFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
-    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+r.decidedBy+'</div></td><td class="apr-when">'+r.decidedAt+'</td></tr>').join('');
+    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,r.decidedAt)+'</td></tr>').join('');
   } else {
     tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Reprovado por</th><th>Reprovado em</th><th>Justificativa</th>';
-    rows=list.map(r=>'<tr>'+base2(r)+'<td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+r.decidedBy+'</div></td><td class="apr-when">'+r.decidedAt+'</td><td class="apr-cmt">'+(r.motivo||',')+'</td></tr>').join('');
+    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Motivo</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,r.decidedAt)+'</td><td class="apr-cmt">'+(r.motivo||',')+'</td></tr>').join('');
   }
   const wrap=document.createElement('div');
   wrap.className='rlist';
@@ -1104,12 +1236,12 @@ function renderPubAppr(){
     rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="rl-acts">'+aprActsHTML('Aprovar publicação','Reprovar publicação')+'</td></tr>').join('');
   } else if(pubFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
-    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+(n.decidedBy||',')+'</div></td><td class="apr-when">'+(n.decidedAt||',')+'</td></tr>').join('');
+    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,n.decidedAt)+'</td></tr>').join('');
   } else {
     tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
-    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Reprovado por</th><th>Reprovado em</th><th>Justificativa</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'"><td class="apr-cmt"><b>'+(n.title||'(sem título)')+'</b></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b></div></div></td><td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+(n.decidedBy||',')+'</div></td><td class="apr-when">'+(n.decidedAt||',')+'</td><td class="apr-cmt">'+(n.motivo?n.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Motivo</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'"><td class="apr-cmt"><b>'+(n.title||'(sem título)')+'</b></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b></div></div></td>'+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,n.decidedAt)+'</td><td class="apr-cmt">'+(n.motivo?n.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
   }
   el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
   el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(pubSortIdx===i) th.classList.add('active-sort'); const icon=pubSortIdx===i?(pubSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(pubSortIdx===i) pubSortDir=-pubSortDir; else { pubSortIdx=i; pubSortDir=1; } renderPubAppr(); }); });
@@ -1412,6 +1544,7 @@ function newsShow(screen){
   else if (screen==='article'){ $('#nvArticleScreen').classList.add('active'); nmodSetActive('nmodNew'); }
   else if (screen==='list'){ $('#nvListScreen').classList.add('active'); nmodSetActive('nmodPub'); if (typeof pglRefresh==='function') pglRefresh(); else renderNewsList(); }
   else if (screen==='cmgrid'){ $('#nvCmGridScreen').classList.add('active'); nmodSetActive('nmodCm'); if (typeof cmgRefresh==='function') cmgRefresh(); }
+  else if (screen==='export'){ $('#nvExportScreen').classList.add('active'); nmodSetActive('nmodExport'); }
   else { $('#nvFeedScreen').classList.add('active'); nmodSetActive('nmodNew'); renderNewsFeed(); }
 }
 

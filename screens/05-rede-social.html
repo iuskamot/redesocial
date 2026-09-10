@@ -24,6 +24,7 @@
       <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
       <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
       <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
+      <button class="nmod-tab" id="nmtExport"><i class="mdi mdi-file-excel-outline nmt-ic-off"></i><i class="mdi mdi-file-excel nmt-ic-on"></i> Exportar</button>
       <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
     <div class="nmod-top-tabs nmod-grp on" id="nmodGrpSocial">
@@ -334,6 +335,52 @@
       <aside class="rx-nav nv-filters rx-filters" id="cmgFilters"></aside>
       <div class="nv-listmain" style="flex:1;min-width:0">
         <div id="cmgGrid"></div>
+      </div>
+    </div>
+  </div>
+  <!-- GERENCIAR > EXPORTAÇÕES -->
+  <aside class="nv-cfgside" id="nvExportSide">
+    <div class="apr-grp-hd"><i class="fa-solid fa-file-export"></i> Exportação</div>
+    <button class="nv-cfgitem active" id="nvcfgExport">Exportar</button>
+  </aside>
+  <div class="nv-screen" id="nvExportScreen">
+    <div class="cat-body exp-body">
+      <div class="exp-panel">
+        <div class="exp-title"><i class="fa-solid fa-file-export"></i><h2>Exportar</h2></div>
+        <div class="exp-grid">
+          <div class="exp-item">
+            <div class="exp-item-top">
+              <span class="exp-ic"><i class="fa-solid fa-rectangle-list"></i></span>
+              <div class="exp-item-txt"><b>Exportar publicações</b><span>Gere um arquivo em .xlsx completo com todo o histórico de publicações do sistema.</span></div>
+            </div>
+            <div class="exp-item-div"></div>
+            <button type="button" class="exp-btn" data-expkind="pub"><i class="fa-solid fa-download"></i> Exportar publicações</button>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-top">
+              <span class="exp-ic"><i class="fa-solid fa-clapperboard"></i></span>
+              <div class="exp-item-txt"><b>Exportar shorts</b><span>Gere um arquivo em .xlsx completo com todo o histórico de shorts do sistema.</span></div>
+            </div>
+            <div class="exp-item-div"></div>
+            <button type="button" class="exp-btn" data-expkind="shorts"><i class="fa-solid fa-download"></i> Exportar shorts</button>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-top">
+              <span class="exp-ic"><i class="fa-solid fa-comment"></i></span>
+              <div class="exp-item-txt"><b>Exportar comentários</b><span>Gere um arquivo em .xlsx completo com histórico dos comentários feitos no sistema.</span></div>
+            </div>
+            <div class="exp-item-div"></div>
+            <button type="button" class="exp-btn" data-expkind="comments"><i class="fa-solid fa-download"></i> Exportar comentários</button>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-top">
+              <span class="exp-ic"><i class="fa-solid fa-thumbs-up"></i></span>
+              <div class="exp-item-txt"><b>Exportar reações</b><span>Gere um arquivo em .xlsx completo com histórico das reações feitas no sistema.</span></div>
+            </div>
+            <div class="exp-item-div"></div>
+            <button type="button" class="exp-btn" data-expkind="reactions"><i class="fa-solid fa-download"></i> Exportar reações</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -836,6 +883,16 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal "Exportar" (Publicações/Shorts/Comentários/Reações) — aberto pelos botões
+     .exp-btn da tela de Exportações (#nvExportScreen); o corpo é remontado por JS
+     (expRenderBody, 11-rede-social.js) porque os campos mudam por tipo. -->
+<div class="fg-backdrop" id="expModal">
+  <div class="fg-modal" style="width:460px">
+    <div class="fg-head"><h2 id="expModalTitle">Exportar</h2><span style="flex:1"></span><button class="fg-close" id="expModalClose"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="fg-body" id="expModalBody"></div>
   </div>
 </div>
 

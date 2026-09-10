@@ -32,6 +32,11 @@
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
 .nmod-tab svg{width:20px;height:20px}
+/* Ícone outline/preenchido do item selecionado — mesmo padrão de .ia-ic-off/.ia-ic-on
+   (15-ia.css), aplicado ao tab "Exportar". */
+.nmod-tab .nmt-ic-on{display:none}
+.nmod-tab.active .nmt-ic-off{display:none}
+.nmod-tab.active .nmt-ic-on{display:inline-block}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
 .nmod-tab.active{background:#00ACAC;color:#fff}
@@ -135,6 +140,7 @@
 .news-view.cfg.catmode #nvCatSide{display:block}
 .news-view.cfg #nvCatSide{display:none}
 .news-view.apr #nvAprSide{display:block}
+.news-view.export #nvExportSide{display:block}
 .tab-badge{position:absolute;top:-6px;left:100%;transform:translateX(-45%);background:#FF383C;color:#fff;font-size:10px;font-weight:600;letter-spacing:.3px;min-width:16px;height:16px;border-radius:32px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--sidebar);box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .nmt-ic{position:relative;display:inline-flex}
 .nv-cfgside-hd{display:none}
@@ -143,7 +149,37 @@
 .nv-cfgdiv{height:1px;background:rgba(255,255,255,.1);margin:14px -12px 0}
 .nv-cfgitem:hover{background:rgba(255,255,255,.08);color:#fff}
 .nv-cfgitem.active{background:rgba(0,172,172,.4);color:#fff}
-.news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen{margin-left:250px}
+.news-view.cfg #nvCatsScreen,.news-view.cfg #nvPermScreen,.news-view.cfg #nvParamsScreen,.news-view.apr #nvModScreen,.news-view.apr #nvPubApprScreen,.news-view.apr #nvReelApprScreen,.news-view.cfg.catmode #nvPermScreen,.news-view.cfg.catmode #nvParamsScreen,.news-view.cfg.catmode #nvCatsScreen,.news-view.export #nvExportScreen{margin-left:250px}
+/* =====================================================================
+   GERENCIAR > EXPORTAÇÕES (#nvExportScreen) — Figma node 1695:20263.
+   Medidas do Athena Design System (_ds/.../tokens): borda #D9D9D9,
+   raio 8px (--radius/m) nos cartões e 4px (--radius/s) no selo do ícone,
+   espaçamento 20px (--gap/l) entre título/cartões e 12px (--gap/s) dentro
+   de cada cartão, botão 36px/raio 6px/peso 700/14px igual ao resto do
+   projeto (ver Regra 3 do CLAUDE.md). */
+#nvExportScreen .cat-body{padding:8px}
+.exp-panel{background:#fff;border:1px solid #D9D9D9;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:20px}
+.exp-title{display:flex;align-items:center;gap:8px}
+.exp-title i{font-size:22px;color:var(--teal)}
+.exp-title h2{font-size:18px;font-weight:700;color:#0C334A;margin:0}
+.exp-grid{display:flex;flex-wrap:wrap;gap:20px}
+.exp-item{flex:1 1 300px;display:flex;flex-direction:column;gap:12px;border:1px solid #D9D9D9;border-radius:8px;padding:20px}
+.exp-item-top{display:flex;align-items:flex-start;gap:12px}
+.exp-ic{flex-shrink:0;width:60px;height:60px;border-radius:4px;background:rgba(47,142,229,.12);display:flex;align-items:center;justify-content:center}
+.exp-ic i{font-size:26px;color:#2F8EE5}
+.exp-item-txt{display:flex;flex-direction:column;gap:2px}
+.exp-item-txt b{font-size:16px;font-weight:700;color:#0C334A}
+.exp-item-txt span{font-size:14px;font-weight:400;color:#5F666C}
+.exp-item-div{border-top:1px solid #D9D9D9;margin-top:auto}
+.exp-btn{height:36px;border:0;border-radius:6px;background:#2F8EE5;color:#fff;font:inherit;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.exp-btn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
+/* Modal "Exportar" (#expModal) — mesmo tratamento de título azul de #nvCatModal. */
+#expModal .fg-head{border-bottom:0}
+#expModal .fg-head h2{color:#2F8EE5;font-size:22px}
+#expModal .fg-label{font-size:14px;font-weight:400;color:#5F666C}
+#expModal .fg-input{height:36px;padding:0 12px;border-radius:6px;font-size:14px}
+.exp-warn{margin-top:14px;display:flex;align-items:center;gap:8px;background:#F0F3F5;border-radius:6px;padding:10px 12px;font-size:13px;color:#5F666C}
+.exp-warn i{color:#8a94a0;font-size:13px}
 .np-head{display:flex;align-items:center;gap:13px;margin-bottom:2px}
 .np-head .avatar{width:52px;height:52px;font-size:0;flex-shrink:0}
 .np-name{font-size:16px;font-weight:700;color:var(--ink)}
@@ -303,11 +339,10 @@
 #nvPubApprScreen .modtbl col.col-autor,#nvReelApprScreen .modtbl col.col-autor{width:200px}
 #nvPubApprScreen .modtbl-pend col.col-data,#nvReelApprScreen .modtbl-pend col.col-data{width:180px}
 #nvPubApprScreen .modtbl-pend col.col-acoes,#nvReelApprScreen .modtbl-pend col.col-acoes{width:116px}
-#nvPubApprScreen .modtbl-apr col.col-data,#nvReelApprScreen .modtbl-apr col.col-data{width:164px}
-#nvPubApprScreen .modtbl-apr col.col-aprovador,#nvReelApprScreen .modtbl-apr col.col-aprovador{width:200px}
-#nvPubApprScreen .modtbl-apr col.col-decidido-em,#nvReelApprScreen .modtbl-apr col.col-decidido-em{width:116px}
-#nvPubApprScreen .modtbl-rej col.col-aprovador,#nvReelApprScreen .modtbl-rej col.col-aprovador{width:164px}
-#nvPubApprScreen .modtbl-rej col.col-decidido-em,#nvReelApprScreen .modtbl-rej col.col-decidido-em{width:200px}
+#nvPubApprScreen .modtbl-apr col.col-data,#nvReelApprScreen .modtbl-apr col.col-data,
+#nvPubApprScreen .modtbl-rej col.col-data,#nvReelApprScreen .modtbl-rej col.col-data{width:164px}
+#nvPubApprScreen .modtbl-apr col.col-aprovador,#nvReelApprScreen .modtbl-apr col.col-aprovador,
+#nvPubApprScreen .modtbl-rej col.col-aprovador,#nvReelApprScreen .modtbl-rej col.col-aprovador{width:200px}
 #nvPubApprScreen .modtbl-rej col.col-motivo,#nvReelApprScreen .modtbl-rej col.col-motivo{width:116px}
 #nvModScreen .modtbl-pend col.col-autor{width:240px}
 #nvModScreen .modtbl-pend col.col-publicacao{width:200px}

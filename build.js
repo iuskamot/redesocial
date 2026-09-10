@@ -78,6 +78,7 @@ const PAGINAS = [
   ['categorias.html',    'SULTS | Categorias',     "openNewsModule(); newsShow('cats')"],
   ['administradores.html','SULTS | Equipe administrativa', "openNewsModule(); newsShow('team')"],
   ['permissoes.html',    'SULTS | Permissões',     "openNewsModule(); newsShow('perm')"],
+  ['exportacoes.html',   'SULTS | Exportações',    "openNewsModule(); newsShow('export')"],
   ['forum.html',         'SULTS | Fórum',          'openForum()'],
   ['ia.html',            'SULTS | Inteligência Artificial', 'abrirModuloIA()'],
   ['ia-gerenciar.html',  'SULTS | Gerenciar a IA',          'abrirGerenciarIA()'],
