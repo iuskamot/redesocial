@@ -16,17 +16,21 @@
 #nvInterScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
 
 /* Cartões de atalho "Quais reações você quer ver?" — 2 opções mutuamente exclusivas
-   (Publicações/Shorts, sem "Todas"), grid de 2 colunas, mesmo card usado em Publicações/
-   Shorts (.nv-sitcards base, 07-rede-social.css). Escolhe a origem dos dados (rcnSource) —
-   os campos abaixo (Tipo/Autor/Unidade/Período) filtram dentro dessa origem. */
+   (Publicações/Shorts, sem "Todas"), 1x2 em vez do 2x2 de #pubSitCards/#mgSitCards, mesmo
+   card (.rxs-item2 dentro de .nv-sitcards.nv-sit2 — ícone em cima, rótulo embaixo, borda
+   #D9D9D9, ativo com fundo/borda destacados). Escolhe a origem dos dados (rcnSource) — os
+   campos abaixo (Tipo/Autor/Unidade/Período) filtram dentro dessa origem. */
 #rcnSitCards.nv-sit2{ grid-template-columns:1fr 1fr; gap:8px }
 #rcnSitCards button{ border-color:#D9D9D9 }
+#rcnSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
+#rcnSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
+#rcnSitCards.nv-sit2 button.active{ color:#5b6672; box-shadow:none }
 
 #rcnGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
 #rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
 #rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
 #rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
-#rcnGrid .rl-tblwrap>table{ min-width:1472px }
+#rcnGrid .rl-tblwrap>table{ min-width:1592px }
 #rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
 #rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
@@ -52,13 +56,22 @@
 
 /* Larguras fixas das colunas: 2 Reação, 3 Autor, 4 Unidade do autor, 5 Reagiu em;
    6 Publicação/Shorts é a flexível (só min-width). */
-#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ width:180px }
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ width:300px }
 #rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ width:320px }
 #rcnGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
 #rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ width:320px }
 #rcnGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
 #rcnGrid .rl-tblwrap th:nth-child(5),#rcnGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:242px }
 #rcnGrid .rl-tblwrap th:nth-child(6),#rcnGrid .rl-tblwrap td:nth-child(6){ min-width:320px }
+
+/* Reação: pill + botão "Acessar", igual ao layout do botão "Ações"/"Acessar" das outras
+   tabelas (#pubGrid/#cmgGrid .rl-actbtn) — mesma borda/cor azul, mesmo ícone de seta. */
+#rcnGrid .rl-reel{ justify-content:space-between }
+#rcnGrid .il-pill{ font-size:14px }
+#rcnGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0 }
+#rcnGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rcnGrid .rl-actbtn span{ font-size:14px; font-weight:700; color:#2F8EE5 }
+#rcnGrid .rl-actbtn svg{ width:20px; height:20px; flex-shrink:0 }
 
 /* Autor / Unidade do autor — mesmo padrão de #pubGrid (18-gerenciar-publicacoes.css) */
 #rcnGrid .rl-author .avatar,#rcnGrid .rl-author .nv-logo{ width:32px; height:32px }
@@ -76,6 +89,8 @@
 #rcnGrid .rl-pubcell{ display:flex; align-items:center; gap:10px; min-width:0 }
 #rcnGrid .rl-pubcell img,#rcnGrid .rl-pubcell .rl-procthumb{ width:44px; height:36px; object-fit:cover; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center }
 #rcnGrid .rl-pubcell .rl-procthumb i{ font-size:16px }
+/* Short: capa em pé (38x60), igual à proporção 9:16 usada pra shorts nas outras telas */
+#rcnGrid .rl-pubcell-short img,#rcnGrid .rl-pubcell-short .rl-procthumb{ width:38px; height:60px }
 #rcnGrid .rl-pubcell>div{ min-width:0 }
 #rcnGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 #rcnGrid .rl-pubcell span{ display:block; font-size:11px; color:#999999; white-space:nowrap }

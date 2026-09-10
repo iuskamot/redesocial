@@ -25,6 +25,7 @@
 
 let rcnColSort = { key: null, dir: 0 };
 let rcnSource = 'pub';
+let rcnPeriodDateStart = '', rcnPeriodDateEnd = '';
 
 /* Reações de Shorts — mesma forma de objeto que INTERACTIONS (person/av/role/store/reacao/
    mins), só que sorteadas sobre REELS_DATA/POSTS em vez de NEWS. Construída uma vez, sob
@@ -54,7 +55,11 @@ function rcnPool(){
 function rcnMatch(x){
   if (interPerson && x.person !== interPerson) return false;
   if (interReact && x.reacao[2] !== interReact) return false;
-  if (interPeriod && x.mins > +interPeriod) return false;
+  if (interPeriod === 'custom'){
+    const t = Date.now() - x.mins * 60000;
+    if (rcnPeriodDateStart && t < new Date(rcnPeriodDateStart + 'T00:00:00').getTime()) return false;
+    if (rcnPeriodDateEnd && t > new Date(rcnPeriodDateEnd + 'T23:59:59').getTime()) return false;
+  } else if (interPeriod && x.mins > +interPeriod) return false;
   if (interQuery){ const q = interQuery.toLowerCase(); if ((x.post || '').toLowerCase().indexOf(q) === -1) return false; }
   return true;
 }
@@ -66,23 +71,25 @@ function foBuildGerenciarReacoesFilters(){
   const nav = $('#rcnFilters'); if (!nav) return;
   const pool = rcnPool();
   const persons = Array.from(new Set(pool.map(function(x){ return x.person; })));
-  const personItems = [{ value: '', label: 'Todas as pessoas', selected: !interPerson }].concat(persons.map(function(p){ return { value: p, label: p, selected: interPerson === p }; }));
-  const personLabel = interPerson || 'Todas as pessoas';
+  const personItems = [{ value: '', label: 'Todos', selected: !interPerson }].concat(persons.map(function(p){ return { value: p, label: p, selected: interPerson === p }; }));
+  const personLabel = interPerson || 'Todos';
   const units = Array.from(new Set(pool.map(function(x){ return x.store; })));
-  const unitItems = [{ value: '', label: 'Todas as unidades', selected: !interStore }].concat(units.map(function(u){ return { value: u, label: u, selected: interStore === u }; }));
-  const unitLabel = interStore || 'Todas as unidades';
+  const unitItems = [{ value: '', label: 'Todas', selected: !interStore }].concat(units.map(function(u){ return { value: u, label: u, selected: interStore === u }; }));
+  const unitLabel = interStore || 'Todas';
   const reactItems = [{ value: '', label: 'Todos os tipos', selected: !interReact }].concat(REACTIONS.map(function(r){ return { value: r.label, label: r.label, selected: interReact === r.label }; }));
   const reactLabel = interReact || 'Todos os tipos';
-  const periodDefs = [['', 'Qualquer período'], ['60', 'Última hora'], ['1440', 'Últimas 24 h'], ['10080', 'Últimos 7 dias']];
+  const periodDefs = [['', 'Qualquer período'], ['60', 'Última hora'], ['1440', 'Últimas 24 h'], ['10080', 'Últimos 7 dias'], ['custom', 'Período personalizado']];
   const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: interPeriod === p[0] }; });
   const periodLabel = (periodDefs.filter(function(p){ return p[0] === interPeriod; })[0] || periodDefs[0])[1];
 
-  /* Cartões "Publicações"/"Shorts" — escolhem a origem dos dados (rcnSource), mutuamente
-     exclusivos, sem opção "Todas". */
-  const sourceDefs = [['pub', 'Publicações'], ['short', 'Shorts']];
+  /* Cartões "Publicações"/"Shorts" — mesmo componente das outras telas (.rxs-item2 dentro de
+     .nv-sitcards.nv-sit2, ver #pubSitCards/#mgSitCards), só que 1x2 em vez de 2x2, com os
+     mesmos ícones dos itens de menu "Publicações"/"Shorts". Escolhem a origem dos dados
+     (rcnSource), mutuamente exclusivos, sem opção "Todas". */
+  const sourceDefs = [['pub', 'Publicações', 'fa-solid fa-rectangle-list'], ['short', 'Shorts', 'fa-solid fa-clapperboard']];
   let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais reações você quer ver? <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="cv-seg nv-sitcards nv-sit2" id="rcnSitCards">' +
-    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="' + (rcnSource === s[0] ? 'active' : '') + '">' + s[1] + '</button>'; }).join('') +
+    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="rxs-item2 ' + (rcnSource === s[0] ? 'active' : '') + '"><i class="' + s[2] + '"></i>' + s[1] + '</button>'; }).join('') +
     '</div></div>';
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Reação <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Tipo</label>' + rxDDWrap('rcnFReact', reactLabel, reactItems) + '</div>' +
@@ -90,11 +97,15 @@ function foBuildGerenciarReacoesFilters(){
       '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('rcnFPerson', personLabel, personItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
       '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('rcnFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
     '</div></div>';
-  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : 'Postagem') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : 'Publicação') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Título</label><div class="nv-ffield"><input type="text" id="rcnFTitulo" placeholder="' + (rcnSource === 'short' ? 'Pesquisar short...' : 'Pesquisar publicação...') + '" value="' + (interQuery || '') + '" autocomplete="off"></div></div>' +
     '</div>';
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de reação <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Selecione uma opção</label>' + rxDDWrap('rcnFPeriod', periodLabel, periodItems) + '</div>' +
+    '<div class="nv-ffcol"' + (interPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione uma opção</label>' + rxDDWrap('rcnFPeriod', periodLabel, periodItems) + '</div>' +
+    (interPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('rcnFPeriodDateStart', rcnPeriodDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('rcnFPeriodDateEnd', rcnPeriodDateEnd) + '</div>' +
+    '</div>' : '') +
     '</div>';
   const activeN = rcnActiveFilterCount();
   html += '<div class="nv-filters-ft"><button class="nv-fclear' + (activeN > 0 ? ' has-active' : '') + '" id="rcnFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros' + (activeN > 0 ? ' (' + activeN + ')' : '') + '</button><button class="nv-fapply" id="rcnFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
@@ -112,7 +123,9 @@ function renderGerenciarReacoesList(list){
   if (rcnColSort.key && rcnColSort.dir){
     const val = function(x){ switch (rcnColSort.key){
       case 'id': return x.id;
+      case 'reacao': return (x.reacao[2] || '').toLowerCase();
       case 'person': return (x.person || '').toLowerCase();
+      case 'unit': return (x.store || '').toLowerCase();
       case 'time': return -x.mins;
       case 'pub': return (x.post || '').toLowerCase();
       default: return 0; } };
@@ -133,18 +146,21 @@ function renderGerenciarReacoesList(list){
     }
     return '<tr data-i="' + idx + '">' +
       '<td class="perm-id">#' + x.id + '</td>' +
-      '<td><span class="il-pill" style="background:' + x.reacao[1] + '18;color:' + x.reacao[1] + '">' + (rDef ? rDef.emoji : '') + ' ' + x.reacao[2] + '</span></td>' +
+      '<td><div class="rl-reel"><span class="il-pill" style="background:' + x.reacao[1] + '18;color:' + x.reacao[1] + '">' + (rDef ? rDef.emoji : '') + ' ' + x.reacao[2] + '</span>' +
+        '<button type="button" class="rl-actbtn"><span>Acessar</span>' +
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><title>arrow-right</title><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/></svg></button>' +
+      '</div></td>' +
       '<td><div class="rl-author"><span class="avatar ' + x.av + '"></span><div><b>' + x.person + '</b><span class="rl-emp">' + x.role + '</span></div></div></td>' +
       '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + x.storeColor + '">' + x.storeIni + '</span><div><b>' + x.store + '</b><span>' + x.storeCo + '</span></div></div></td>' +
       '<td style="white-space:nowrap"><div class="rl-dt">' + interDT(x.mins) + '</div><span class="rl-rel">' + interRel(x.mins) + '</span></td>' +
-      '<td><div class="rl-pubcell">' + thumb + '<div><b>' + x.post + '</b><span>' + typeLabel + '</span></div></div></td>' +
+      '<td><div class="rl-pubcell' + (x.__short ? ' rl-pubcell-short' : '') + '">' + thumb + '<div><b>' + x.post + '</b><span>' + typeLabel + '</span></div></div></td>' +
       '</tr>';
   }).join('');
   const columns = [
     { key: 'id', label: 'ID' },
-    { key: 'reacao', label: 'Reação (' + list.length + ')', sortable: false },
+    { key: 'reacao', label: 'Reação (' + list.length + ')' },
     { key: 'person', label: 'Autor' },
-    { key: 'unit', label: 'Unidade do autor', sortable: false },
+    { key: 'unit', label: 'Unidade do autor' },
     { key: 'time', label: 'Reagiu em' },
     { key: 'pub', label: rcnSource === 'short' ? 'Shorts' : 'Publicações' }
   ];
@@ -154,7 +170,10 @@ function renderGerenciarReacoesList(list){
       if (rcnColSort.key !== k){ rcnColSort.key = k; rcnColSort.dir = 1; }
       else if (rcnColSort.dir === 1){ rcnColSort.dir = -1; }
       else { rcnColSort.key = null; rcnColSort.dir = 0; }
-      renderGerenciarReacoesList(list);
+      /* Sempre recomeça de rcnPool()+rcnMatch (ordem natural), nunca da lista já ordenada da
+         renderização anterior — senão, ao voltar pro estado "sem ordenação" (3º clique), a
+         tabela ficava presa na última ordem aplicada em vez de voltar à original. */
+      renderGerenciarReacoesList(rcnPool().filter(rcnMatch));
     },
     onRowClick: function(e){
       const tr = e.target.closest('tr'); if (!tr) return;
@@ -184,11 +203,14 @@ $('#rcnFilters') && $('#rcnFilters').addEventListener('click', function(e){
   if (src){ rcnSource = src.dataset.rcnsource; interPerson = ''; interStore = ''; rcnRefresh(); return; }
   if (e.target.closest('#rcnFClear')){
     rcnSource = 'pub'; interQuery = ''; interPerson = ''; interStore = ''; interPeriod = ''; interReact = '';
+    rcnPeriodDateStart = ''; rcnPeriodDateEnd = '';
     rcnColSort.key = null; rcnColSort.dir = 0;
     rcnRefresh();
     return;
   }
   if (e.target.closest('#rcnFApply')){ rcnRefresh(); fgToast('Filtros aplicados'); return; }
+  const db = e.target.closest('.nv-fdatebtn');
+  if (db){ const inp = $('#' + db.dataset.datefor); if (inp){ if (inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
   const ddItem = e.target.closest('.rl-dditem');
   if (ddItem){
     const wrap = ddItem.closest('.rl-ddwrap'); const id = wrap.dataset.dd; const v = ddItem.dataset.value;
@@ -210,4 +232,11 @@ $('#rcnFilters') && $('#rcnFilters').addEventListener('click', function(e){
 });
 $('#rcnFilters') && $('#rcnFilters').addEventListener('input', function(e){
   if (e.target.id === 'rcnFTitulo'){ interQuery = e.target.value.trim(); renderGerenciarReacoesList(rcnPool().filter(rcnMatch)); }
+});
+$('#rcnFilters') && $('#rcnFilters').addEventListener('change', function(e){
+  const t = e.target;
+  if (t.id === 'rcnFPeriodDateStart'){ rcnPeriodDateStart = t.value; }
+  else if (t.id === 'rcnFPeriodDateEnd'){ rcnPeriodDateEnd = t.value; }
+  else return;
+  rcnRefresh();
 });

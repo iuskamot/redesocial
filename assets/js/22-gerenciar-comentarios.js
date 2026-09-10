@@ -28,6 +28,7 @@
 
 /* Estado exclusivo desta tela */
 let cmgQuery = '', cmgPeriod = 'tudo', cmgAuthor = '', cmgUnit = '', cmgPubQuery = '';
+let cmgPeriodDateStart = '', cmgPeriodDateEnd = '';
 let cmgColSort = { key: null, dir: 0 };
 
 function cmgUnitFor(c){ return sbUnitObjFor({ unit: c.unit, name: c.author || c.name }); }
@@ -64,7 +65,13 @@ function cmgAgo(c){
 }
 function cmgInPeriod(c, period){
   if (!period || period === 'tudo') return true;
-  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : period === '90d' ? 90 : null;
+  if (period === 'custom'){
+    const t = cmgDateOf(c).getTime();
+    if (cmgPeriodDateStart && t < new Date(cmgPeriodDateStart + 'T00:00:00').getTime()) return false;
+    if (cmgPeriodDateEnd && t > new Date(cmgPeriodDateEnd + 'T23:59:59').getTime()) return false;
+    return true;
+  }
+  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : null;
   if (days == null) return true;
   const diff = (Date.now() - cmgDateOf(c).getTime()) / 86400000;
   return diff >= 0 && diff <= days;
@@ -124,11 +131,15 @@ function foBuildGerenciarComentariosFilters(){
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicação <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Título da publicação</label><div class="nv-ffield"><input type="text" id="cmgFPub" placeholder="Pesquisar publicação..." value="' + (cmgPubQuery || '') + '" autocomplete="off"></div></div>' +
     '</div>';
-  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado']];
   const periodLabel = (periodDefs.filter(function(p){ return p[0] === cmgPeriod; })[0] || periodDefs[0])[1];
   const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: cmgPeriod === p[0] }; });
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de comentário <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Selecione uma opção</label>' + rxDDWrap('cmgFPeriod', periodLabel, periodItems) + '</div>' +
+    '<div class="nv-ffcol"' + (cmgPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione uma opção</label>' + rxDDWrap('cmgFPeriod', periodLabel, periodItems) + '</div>' +
+    (cmgPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('cmgFPeriodDateStart', cmgPeriodDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('cmgFPeriodDateEnd', cmgPeriodDateEnd) + '</div>' +
+    '</div>' : '') +
     '</div>';
   const activeN = cmgActiveFilterCount();
   html += '<div class="nv-filters-ft"><button class="nv-fclear' + (activeN > 0 ? ' has-active' : '') + '" id="cmgFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros' + (activeN > 0 ? ' (' + activeN + ')' : '') + '</button><button class="nv-fapply" id="cmgFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
@@ -187,7 +198,11 @@ function renderGerenciarComentariosList(rows){
       if (cmgColSort.key !== k){ cmgColSort.key = k; cmgColSort.dir = 1; }
       else if (cmgColSort.dir === 1){ cmgColSort.dir = -1; }
       else { cmgColSort.key = null; cmgColSort.dir = 0; }
-      renderGerenciarComentariosList(rows);
+      /* Sempre recomeça de cmgAllComments()+matchCmg (ordem natural), nunca da lista já
+         ordenada da renderização anterior — senão, ao voltar pro estado "sem ordenação"
+         (3º clique), a tabela ficava presa na última ordem aplicada em vez de voltar à
+         original. */
+      renderGerenciarComentariosList(cmgAllComments().filter(matchCmg));
     },
     onRowClick: function(e){
       const btn = e.target.closest('[data-cmgview]'); if (!btn) return;
@@ -215,11 +230,14 @@ document.addEventListener('click', function(e){
 $('#cmgFilters') && $('#cmgFilters').addEventListener('click', function(e){
   if (e.target.closest('#cmgFClear')){
     cmgQuery = ''; cmgPeriod = 'tudo'; cmgAuthor = ''; cmgUnit = ''; cmgPubQuery = '';
+    cmgPeriodDateStart = ''; cmgPeriodDateEnd = '';
     cmgColSort.key = null; cmgColSort.dir = 0;
     cmgRefresh();
     return;
   }
   if (e.target.closest('#cmgFApply')){ cmgRefresh(); fgToast('Filtros aplicados'); return; }
+  const db = e.target.closest('.nv-fdatebtn');
+  if (db){ const inp = $('#' + db.dataset.datefor); if (inp){ if (inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
   const ddItem = e.target.closest('.rl-dditem');
   if (ddItem){
     const wrap = ddItem.closest('.rl-ddwrap'); const id = wrap.dataset.dd; const v = ddItem.dataset.value;
@@ -241,4 +259,11 @@ $('#cmgFilters') && $('#cmgFilters').addEventListener('click', function(e){
 $('#cmgFilters') && $('#cmgFilters').addEventListener('input', function(e){
   if (e.target.id === 'cmgFTexto'){ cmgQuery = e.target.value.trim().toLowerCase(); renderGerenciarComentariosList(cmgAllComments().filter(matchCmg)); }
   else if (e.target.id === 'cmgFPub'){ cmgPubQuery = e.target.value.trim().toLowerCase(); renderGerenciarComentariosList(cmgAllComments().filter(matchCmg)); }
+});
+$('#cmgFilters') && $('#cmgFilters').addEventListener('change', function(e){
+  const t = e.target;
+  if (t.id === 'cmgFPeriodDateStart'){ cmgPeriodDateStart = t.value; }
+  else if (t.id === 'cmgFPeriodDateEnd'){ cmgPeriodDateEnd = t.value; }
+  else return;
+  cmgRefresh();
 });
