@@ -708,13 +708,25 @@
   </div>
   <!-- APROVAÇÃO DE PUBLICAÇÕES -->
   <div class="nv-screen" id="nvPubApprScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-newspaper"></i><h2>Publicações pendentes</h2></div><span class="mod-count" id="pubApprCount"></span></div>
-    <div class="perm-body"><div class="apr-seg" id="pubSeg"><button data-f="proc"><i class="fa-solid fa-arrows-rotate"></i> Em processamento <span class="apr-segn" id="pubNProc"></span></button><button class="on" data-f="pend"><i class="fa-regular fa-clock"></i> Pendentes <span class="apr-segn" id="pubNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="pubNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Rejeitados <span class="apr-segn" id="pubNRej"></span></button></div><div id="pubApprQueue"></div></div>
+    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-newspaper"></i><h2>Publicações pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
+    <div class="cat-body nv-listwrap">
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="apr-seg" id="pubSeg"><button class="on" data-f="pend"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>clock-time-four</title><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12S17.5 2 12 2M16.3 15.2L11 12.3V7H12.5V11.4L17 13.9L16.3 15.2Z" /></svg> Pendentes <span class="apr-segn" id="pubNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="pubNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Reprovados <span class="apr-segn" id="pubNRej"></span></button></div>
+        <div id="pubApprQueue"></div>
+      </div>
+      <aside class="rx-nav nv-filters rx-filters" id="pubApprFilters"></aside>
+    </div>
   </div>
   <!-- APROVAÇÃO DE REELS -->
   <div class="nv-screen" id="nvReelApprScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-clapperboard"></i><h2>Shorts pendentes</h2></div><span class="mod-count" id="reelApprCount"></span></div>
-    <div class="perm-body"><div class="apr-seg" id="reelSeg"><button data-f="proc"><i class="fa-solid fa-arrows-rotate"></i> Em processamento <span class="apr-segn" id="reelNProc"></span></button><button class="on" data-f="pend"><i class="fa-regular fa-clock"></i> Pendentes <span class="apr-segn" id="reelNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="reelNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Rejeitados <span class="apr-segn" id="reelNRej"></span></button></div><div id="reelApprQueue"></div></div>
+    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-clapperboard"></i><h2>Shorts pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
+    <div class="cat-body nv-listwrap">
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="apr-seg" id="reelSeg"><button class="on" data-f="pend"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>clock-time-four</title><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12S17.5 2 12 2M16.3 15.2L11 12.3V7H12.5V11.4L17 13.9L16.3 15.2Z" /></svg> Pendentes <span class="apr-segn" id="reelNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="reelNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Reprovados <span class="apr-segn" id="reelNRej"></span></button></div>
+        <div id="reelApprQueue"></div>
+      </div>
+      <aside class="rx-nav nv-filters rx-filters" id="reelApprFilters"></aside>
+    </div>
   </div>
   <div class="fg-backdrop" id="permWhoModal">
     <div class="fg-modal" style="width:720px;height:540px;max-width:none">

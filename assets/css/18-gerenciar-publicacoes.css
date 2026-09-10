@@ -35,7 +35,7 @@
 /* border-collapse:separate porque border-radius não tem efeito em células com border-collapse:collapse */
 #pubGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
 #pubGrid .rl-tblwrap>table{ min-width:2280px }
-#pubGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4 }
+#pubGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 /* Título trunca em 2 linhas com reticências, em vez de continuar quebrando */
 #pubGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis }
 /* Capa da publicação: não é vídeo em pé como em Shorts, é sempre 60x46 — tanto a imagem real quanto
@@ -66,10 +66,10 @@
 #pubGrid .rl-tblwrap th.sortable:nth-child(1):hover,#pubGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
 #pubGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
 #pubGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
-#pubGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#F0F3F5 }
-#pubGrid .rl-tblwrap tbody tr:nth-child(even){ background:#fff }
-#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#F0F3F5 }
-#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(even){ background:#F0F3F5 }
+#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#fff }
+#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#F0F3F5 }
 #pubGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
 #pubGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#pubGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
 /* Sombra na coluna fixa indicando conteúdo por baixo ao rolar horizontalmente */

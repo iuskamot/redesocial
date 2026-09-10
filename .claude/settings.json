@@ -4,7 +4,10 @@
       "Bash(awk '/id=\"nvCatsScreen\"/,/id=\"nvTeamScreen\"/' screens/05-rede-social.html)",
       "Bash(node -e \"console.log\\(require.resolve\\('playwright'\\)\\)\")",
       "Bash(command -v chromium-cli)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(node -e ' *)",
+      "Bash(grep -o \"#nvPubApprScreen \\\\.rx-filters,#nvReelApprScreen \\\\.rx-filters{[^}]*}\" index.html)",
+      "Bash(grep -o \"#nvPubApprScreen #pubApprQueue \\\\.rlist,#nvReelApprScreen #reelApprQueue \\\\.rlist{[^}]*}\" index.html)"
     ]
   }
 }

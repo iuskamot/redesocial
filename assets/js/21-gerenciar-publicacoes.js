@@ -109,7 +109,7 @@ function foBuildGerenciarPublicacoesFilters(){
   const activeCats = NEWS_CATS.filter(function(c){ return c.active; });
   const authors = Array.from(new Set(NEWS.map(function(n){ return n.autorNome || n.author; })));
   const SVG_ACCOUNT_CLOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.63,14.1C12.23,10.58 16.38,9.03 19.9,10.63C23.42,12.23 24.97,16.38 23.37,19.9C22.24,22.4 19.75,24 17,24C14.3,24 11.83,22.44 10.67,20H1V18C1.06,16.86 1.84,15.93 3.34,15.18C4.84,14.43 6.72,14.04 9,14C9.57,14 10.11,14.05 10.63,14.1V14.1M9,4C10.12,4.03 11.06,4.42 11.81,5.17C12.56,5.92 12.93,6.86 12.93,8C12.93,9.14 12.56,10.08 11.81,10.83C11.06,11.58 10.12,11.95 9,11.95C7.88,11.95 6.94,11.58 6.19,10.83C5.44,10.08 5.07,9.14 5.07,8C5.07,6.86 5.44,5.92 6.19,5.17C6.94,4.42 7.88,4.03 9,4M17,22A5,5 0 0,0 22,17A5,5 0 0,0 17,12A5,5 0 0,0 12,17A5,5 0 0,0 17,22M16,14H17.5V16.82L19.94,18.23L19.19,19.53L16,17.69V14Z"/></svg>';
-  const sit = [['', 'mdi mdi-layers-triple', 'Todos', ''], ['pub', 'mdi mdi-check-circle', 'Publicadas', '#25B865'], ['agendado', 'fa-solid fa-clock', 'Agendadas', '#2F8EE5'], ['aprovacao', SVG_ACCOUNT_CLOCK, 'Em aprovação', '#FFB020']];
+  const sit = [['', 'mdi mdi-layers-triple', 'Todas', ''], ['pub', 'mdi mdi-check-circle', 'Publicadas', '#25B865'], ['agendado', 'fa-solid fa-clock', 'Agendadas', '#2F8EE5'], ['aprovacao', SVG_ACCOUNT_CLOCK, 'Em aprovação', '#FFB020']];
   let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais publicações você quer ver? <i class="fa-solid fa-chevron-up"></i></div><div class="cv-seg nv-sitcards nv-sit2" id="pubSitCards">' +
     sit.map(function(s){ const isSvg = s[1].charAt(0) === '<'; const colorAttr = s[3] ? ' style="color:' + s[3] + '"' : ''; const icon = isSvg ? s[1].replace('<svg', '<svg' + colorAttr) : '<i class="' + s[1] + '"' + colorAttr + '></i>'; return '<button data-pglstatus="' + s[0] + '" class="rxs-item2 ' + (pglStatus === s[0] ? 'active' : '') + '">' + icon + s[2] + '</button>'; }).join('') + '</div></div>';
   const units = SB_UNIDADES.map(function(u){ return u.name; });
@@ -133,9 +133,9 @@ function foBuildGerenciarPublicacoesFilters(){
       '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('pubFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
     '</div></div>';
   const reachDefs = [['rede', 'Toda a rede'], ['unidades', 'Unidades'], ['matriz', 'Sua Marca (Matriz)']];
-  const reachItems = [{ value: '', label: 'Todos', selected: !pglReach }].concat(reachDefs.map(function(v){ return { value: v[0], label: v[1], selected: pglReach === v[0] }; }));
-  const reachLabel = pglReach ? (RX_REACH_LABEL[pglReach] || pglReach) : 'Todos';
-  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicado para <i class="fa-solid fa-chevron-up"></i></div>' +
+  const reachItems = [{ value: '', label: 'Todas', selected: !pglReach }].concat(reachDefs.map(function(v){ return { value: v[0], label: v[1], selected: pglReach === v[0] }; }));
+  const reachLabel = pglReach ? (RX_REACH_LABEL[pglReach] || pglReach) : 'Todas';
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicada para <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('pubFReach', reachLabel, reachItems) + '</div>' +
     '</div>';
   const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
@@ -247,7 +247,7 @@ function renderGerenciarPublicacoesList(list){
     return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
   };
   const thPlain = function(label){ return '<th>' + label + '</th>'; };
-  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicado para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
+  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicada para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
   const wrap = document.createElement('div');
   wrap.className = 'rlist rl-tblwrap';
   wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';

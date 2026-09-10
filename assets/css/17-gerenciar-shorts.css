@@ -20,7 +20,7 @@
 /* border-collapse:separate porque border-radius não tem efeito em células com border-collapse:collapse */
 #rxGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
 #rxGrid .rl-tblwrap>table{ min-width:2150px }
-#rxGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4 }
+#rxGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rxGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C }
 #rxGrid .rl-author .avatar{ width:32px; height:32px }
 #rxGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
@@ -46,10 +46,10 @@
 #rxGrid .rl-tblwrap th.sortable:nth-child(1):hover,#rxGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
 #rxGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
 #rxGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
-#rxGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#F0F3F5 }
-#rxGrid .rl-tblwrap tbody tr:nth-child(even){ background:#fff }
-#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#F0F3F5 }
-#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(even){ background:#F0F3F5 }
+#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#fff }
+#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#F0F3F5 }
 #rxGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
 #rxGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#rxGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
 /* Sombra nas colunas fixas indicando conteúdo por baixo ao rolar horizontalmente */

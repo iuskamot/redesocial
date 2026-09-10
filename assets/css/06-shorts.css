@@ -365,7 +365,12 @@
 .perm-members th:not(:last-child),.perm-members td:not(:last-child){border-right:1px solid var(--line)}
 .perm-members tbody tr:nth-child(odd){background:#eef2f6}
 .perm-members tbody tr:hover{background:#e7f1fb}
-#nvList td.perm-id,#nvList th:first-child,.rlist td.perm-id,.rlist th:first-child,#nvList table th:first-child,#nvList table td:first-child{white-space:nowrap;width:84px !important;min-width:84px !important;max-width:84px !important}
+/* .rlist th:first-child é !important pra fixar a coluna "#" em listas como Categorias/
+   Administradores — mas como Publicações/Shorts/Comentários pendentes (07-rede-social.css)
+   reaproveitam a mesma classe .rlist com sua própria 1ª coluna bem mais larga, o :not() abaixo
+   tira essas 3 telas do alcance do !important (nenhum !important nosso do lado de lá, só essa
+   exclusão aqui, que é onde o 84px indevido realmente nasce). */
+#nvList td.perm-id,#nvList th:first-child,.rlist td.perm-id,.rlist th:first-child:not(:where(#nvPubApprScreen, #nvReelApprScreen, #nvModScreen) *),#nvList table th:first-child,#nvList table td:first-child{white-space:nowrap;width:84px !important;min-width:84px !important;max-width:84px !important}
 .rlist td:nth-child(2),.rlist th:nth-child(2){min-width:340px;width:auto;max-width:none}
 #nvList td:nth-child(2),#nvList th:nth-child(2){min-width:450px;width:auto;max-width:none}
 .cr-spin{width:44px;height:44px;border-radius:50%;border:3px solid #E9EAED;border-top-color:#00ACAC;animation:crspin .8s linear infinite}

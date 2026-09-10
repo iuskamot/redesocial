@@ -702,8 +702,20 @@ function aprDT(d){ d=d||new Date(); const p=n=>('0'+n).slice(-2); return p(d.get
 function modBadge(){ aprBadges(); }
 function modAdd(entry){ entry.mid=++modSeq; MOD_QUEUE.push(entry); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue(); }
 function modRemove(mid,status){ const e=MOD_QUEUE.find(x=>x.mid===mid); if(e&&status){ e.status=status; e.decidedBy='Rodrigo Caetano'; e.decidedAt=aprDT(); MOD_HIST.unshift(e); } MOD_QUEUE=MOD_QUEUE.filter(e=>e.mid!==mid); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue(); }
+/* <colgroup> por variante de tabela — larguras exatas do Figma (ver comentário em
+   07-rede-social.css). col-principal fica sem width de propósito: em table-layout:fixed
+   ela absorve o espaço que sobra das colunas fixas. */
+const COLG_PUB_PEND='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-acoes"></colgroup>';
+const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
+const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-aprovador"><col class="col-decidido-em"><col class="col-motivo"></colgroup>';
+const COLG_COM_PEND='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-acoes"></colgroup>';
+const COLG_COM_APR='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
+const COLG_COM_REJ='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"><col class="col-motivo"></colgroup>';
 let modSortIdx=null, modSortDir=1;
-function modCellVal(e,i){ var m=[ (e.author||'').toLowerCase(), (e.text||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||''), (e.decidedBy||'').toLowerCase(), (e.decidedAt||'') ]; return m[i]!==undefined?m[i]:''; }
+function modCellVal(e,i){
+  if(modFilter==='pend'){ var mp=[ (e.text||'').toLowerCase(), (e.author||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||'') ]; return mp[i]!==undefined?mp[i]:''; }
+  var m=[ (e.text||'').toLowerCase(), (e.author||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||''), (e.decidedBy||'').toLowerCase(), (e.decidedAt||'') ]; return m[i]!==undefined?m[i]:'';
+}
 function renderModQueue(){
   const el=$('#modQueue');
   const nPend=MOD_QUEUE.length, nApr=MOD_HIST.filter(e=>e.status==='aprovado').length, nRej=MOD_HIST.filter(e=>e.status==='rejeitado').length;
@@ -711,23 +723,34 @@ function renderModQueue(){
   $$('#modSeg button').forEach(b=>b.classList.toggle('on', b.dataset.f===modFilter));
   let list = modFilter==='pend' ? MOD_QUEUE : MOD_HIST.filter(e=>e.status===modFilter);
   const tot=list.length; $('#modCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
-  if(!list.length){ el.innerHTML='<div class="mod-empty"><i class="fa-regular fa-circle-check"></i><b>Nenhum comentário '+(modFilter==='pend'?'pendente':(modFilter==='aprovado'?'aprovado':'rejeitado'))+'</b><span>Tudo em dia por aqui.</span></div>'; return; }
+  if(!list.length){
+    el.innerHTML = modFilter==='pend'
+      ? aprEmptyHTML('Nenhum comentário pendente','Todos os comentários já foram revisados. Novos itens aparecerão aqui assim que forem enviados para aprovação.')
+      : modFilter==='aprovado'
+      ? aprEmptyHTML('Nenhum comentário aprovado ainda','Comentários aprovados vão aparecer aqui.')
+      : aprEmptyHTML('Nenhum comentário rejeitado','Comentários rejeitados vão aparecer aqui.');
+    return;
+  }
   const unitOf = e => e.unit || (typeof STORES!=='undefined' ? STORES[(e.mid||1)%STORES.length].name : '');
   const thumbM = e => { const n=(typeof findNewsByTitle==='function'? (findNewsByTitle(e.post)||{}) : {}); return n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>'; };
-  const base = e => '<td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
+  const base = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
+  const baseP = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
   if(modSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=modCellVal(a,modSortIdx), kb=modCellVal(b,modSortIdx); return ka<kb?-modSortDir:ka>kb?modSortDir:0; }); }
-  let head, rows;
+  let head, rows, tblClass='modtbl', colg=COLG_COM_PEND;
   if(modFilter==='pend'){
-    head='<th>Autor</th><th>Comentário</th><th>Publicação</th><th style="width:120px">Data/Hora</th><th style="width:170px;text-align:right">Ações</th>';
-    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+'<td class="rl-acts"><button class="apr-view" data-view="'+(e.newsId||'')+'"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
+    tblClass='modtbl modtbl-pend'; colg=COLG_COM_PEND;
+    head='<th>Comentário</th><th>Autor</th><th>Publicação</th><th>Data/Hora</th><th style="text-align:right">Ações</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+baseP(e)+'<td class="rl-acts"><button class="apr-view" data-view="'+(e.newsId||'')+'"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
   } else if(modFilter==='aprovado'){
-    head='<th>Autor</th><th>Comentário</th><th>Publicação</th><th style="width:120px">Data/Hora</th><th style="width:160px">Aprovado por</th><th style="width:130px">Aprovado em</th>';
+    tblClass='modtbl modtbl-apr'; colg=COLG_COM_APR;
+    head='<th>Comentário</th><th>Autor</th><th>Publicação</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
     rows=list.map(e=>'<tr>'+base(e)+'<td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td></tr>').join('');
   } else {
-    head='<th>Autor</th><th>Comentário</th><th style="width:120px">Data/Hora</th><th style="width:150px">Rejeitado por</th><th style="width:120px">Rejeitado em</th><th>Justificativa</th>';
-    rows=list.map(e=>'<tr data-mid="'+e.mid+'"><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td class="apr-when">'+(e.dt||e.time||',')+'</td><td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td><td class="apr-cmt">'+(e.motivo?e.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    tblClass='modtbl modtbl-rej'; colg=COLG_COM_REJ;
+    head='<th>Comentário</th><th>Autor</th><th>Data/Hora</th><th>Rejeitado por</th><th>Rejeitado em</th><th>Justificativa</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'"><td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td class="apr-when">'+(e.dt||e.time||',')+'</td><td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td><td class="apr-cmt">'+(e.motivo?e.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
   }
-  el.innerHTML = '<div class="rlist"><table class="modtbl"><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
+  el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
   var ths=el.querySelectorAll('thead th');
   ths.forEach(function(th,i){ if(!th.textContent.trim()) return; th.classList.add('sortable'); if(modSortIdx===i) th.classList.add('active-sort'); th.innerHTML=th.innerHTML+' <span class="sort-ic"><i class="fa-solid fa-'+(modSortIdx===i?(modSortDir===1?'arrow-up-short-wide':'arrow-down-wide-short'):'sort')+'"></i></span>'; th.addEventListener('click', function(){ if(modSortIdx===i) modSortDir=-modSortDir; else { modSortIdx=i; modSortDir=1; } renderModQueue(); }); });
 }
@@ -769,56 +792,260 @@ $('#reelSeg') && $('#reelSeg').addEventListener('click',e=>{const b=e.target.clo
 $('#pubSeg') && $('#pubSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pubFilter=b.dataset.f;renderPubAppr();});
 function pubApprAdd(n){ n.paid=++pubApprSeq; PUB_APPR.push(n); aprBadges(); if($('#nvPubApprScreen').classList.contains('active')) renderPubAppr(); }
 let pubSortIdx=null, pubSortDir=1;
-function pubCellVal(n,i){ var m=[ (n.author||'').toLowerCase(), (n.title||'').toLowerCase(), (n.article?'artigo':'post'), (n.date||''), (n.decidedBy||'').toLowerCase(), (n.decidedAt||'') ]; return m[i]!==undefined?m[i]:''; }
+/* Colunas 0-2 (Publicação/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, então
+   pubCellVal olha pubFilter pra saber o que cada posição significa em cada uma. */
+function pubCellVal(n,i){
+  if(i===0) return (n.title||'').toLowerCase();
+  if(i===1) return n.article?'artigo':'post';
+  if(i===2) return (n.author||'').toLowerCase();
+  if(pubFilter==='pend'){
+    if(i===3) return n.ts||0;
+  } else if(pubFilter==='aprovado'){
+    if(i===3) return n.ts||0;
+    if(i===4) return (n.decidedBy||'').toLowerCase();
+    if(i===5) return n.decidedAt||'';
+  } else {
+    if(i===3) return (n.decidedBy||'').toLowerCase();
+    if(i===4) return n.decidedAt||'';
+    if(i===5) return (n.motivo||'').toLowerCase();
+  }
+  return '';
+}
 let reelFilter='pend', REEL_APPR=null, REEL_HIST=null;
 function reelApprData(){
   if(REEL_APPR) return;
   const src=(typeof REELS_DATA!=='undefined'?REELS_DATA:[]);
-  const mk=(r,i)=>{ const p=(typeof POSTS!=='undefined'?POSTS[r.p]:{})||{}; return {rid:i, title:p.title||p.alt||'Short', author:p.name||'SULTS', av:p.av||'av-rc', image:p.img||p.poster||'', unit:p.company||p.store||p.label||'SULTS', date:p.time||'agora', cat:r.cat, desc:r.cap||p.caption||''}; };
+  const mk=(r,i)=>{ const p=(typeof POSTS!=='undefined'?POSTS[r.p]:{})||{}; return {rid:i, title:p.title||p.alt||'Short', author:p.name||'SULTS', av:p.av||'av-rc', image:p.img||p.poster||'', unit:p.company||p.store||p.label||'SULTS', date:p.time||'agora', ts:Date.now()-(i+1)*1800000, cat:r.cat, desc:r.cap||p.caption||''}; };
   const all=src.map(mk);
   REEL_APPR=all.slice(0,4);
   if(REEL_APPR[1]) REEL_APPR[1].proc=true;
   if(REEL_APPR[3]) REEL_APPR[3].procFail=true;
   REEL_HIST=all.slice(4,10).map((x,i)=>Object.assign({}, x, {apprStatus: i%2?'rejeitado':'aprovado', decidedBy:'Rodrigo Caetano', decidedAt:x.date, motivo: i%2?'Conteúdo fora das diretrizes da marca.':''}));
 }
+/* Formata um timestamp em "dd/mm/aaaa hh:mm" — usado na coluna "Entrou na fila em" das duas
+   filas de aprovação (Publicações e Shorts), junto com o texto relativo ("há 1 h") que já
+   existia. */
+function paFullDT(ts){ const d=new Date(ts||Date.now()), p=x=>('0'+x).slice(-2); return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+/* Filtro "Entrou na fila em" (Últimas 24h/7d/30d/90d) — mesmo formato de pglInPeriod
+   (21-gerenciar-publicacoes.js), reaproveitado pelas duas filas de aprovação. */
+function aprInPeriod(ts, period){
+  if(!period || period==='tudo') return true;
+  const days = period==='24h'?1:period==='7d'?7:period==='30d'?30:period==='90d'?90:null;
+  if(days==null) return true;
+  const diff=(Date.now()-(ts||0))/86400000;
+  return diff>=0 && diff<=days;
+}
+
+/* Filtro avançado da fila "Publicações pendentes" (#pubApprFilters) — Título, Tipo, Autor e
+   "Entrou na fila em". Mesmo padrão de campos de foBuildGerenciarPublicacoesFilters
+   (21-gerenciar-publicacoes.js), só que aplicado a PUB_APPR/PUB_HIST em vez de NEWS, e com IDs
+   próprios (paF...) para não colidir com os campos (pubF...) daquela outra tela. */
+let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo';
+function paActiveFilterCount(){
+  let c=0; if(paQuery) c++; if(paType) c++; if(paAuthor) c++;
+  if(paQueuePeriod && paQueuePeriod!=='tudo') c++;
+  return c;
+}
+function paMatch(n){
+  if(paType==='post' && n.article) return false;
+  if(paType==='article' && !n.article) return false;
+  if(paAuthor && (n.author||'')!==paAuthor) return false;
+  if(!aprInPeriod(n.ts, paQueuePeriod)) return false;
+  if(paQuery && (n.title||'').toLowerCase().indexOf(paQuery)===-1) return false;
+  return true;
+}
+function foBuildPubApprFilters(){
+  const nav=$('#pubApprFilters'); if(!nav) return;
+  const typeItems=[{value:'',label:'Todos',selected:paType===''},{value:'post',label:'Postagem',selected:paType==='post'},{value:'article',label:'Artigo',selected:paType==='article'}];
+  const typeLabel=(typeItems.filter(i=>i.selected)[0]||typeItems[0]).label;
+  const authors=Array.from(new Set(PUB_APPR.concat(PUB_HIST).map(n=>n.author).filter(Boolean)));
+  const authorItems=[{value:'',label:'Todos',selected:!paAuthor}].concat(authors.map(a=>({value:a,label:a,selected:paAuthor===a})));
+  const authorLabel=paAuthor||'Todos';
+  let html='<div class="nv-fsec"><div class="nv-fsec-hd">Publicação <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Título</label><div class="nv-ffield"><input type="text" id="paFTitulo" placeholder="Pesquisar publicação..." value="'+(paQuery||'')+'" autocomplete="off"></div></div>'+
+    '<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('paFTipo', typeLabel, typeItems)+'</div>'+
+      '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('paFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+    '</div></div>';
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:paQueuePeriod===p[0]}));
+  const periodLabel=(periodDefs.filter(p=>p[0]===paQueuePeriod)[0]||periodDefs[0])[1];
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  const activeN=paActiveFilterCount();
+  html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="paFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="paFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML=html;
+}
+$('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(e){
+  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; renderPubAppr(); return; }
+  if(e.target.closest('#paFApply')){ renderPubAppr(); fgToast('Filtros aplicados'); return; }
+  const db=e.target.closest('.nv-fdatebtn');
+  if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem=e.target.closest('.rl-dditem');
+  if(ddItem){
+    const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
+    if(id==='paFTipo'){ paType=v; } else if(id==='paFAutor'){ paAuthor=v; } else if(id==='paFQueuePeriod'){ paQueuePeriod=v; }
+    renderPubAppr();
+    return;
+  }
+  const ddBtn=e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if(ddBtn){
+    const wrap=ddBtn.closest('.rl-ddwrap'); const menu=wrap.querySelector('.rl-ddmenu');
+    const willOpen=menu.hidden;
+    $$('#pubApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
+    menu.hidden=!willOpen;
+    return;
+  }
+});
+$('#pubApprFilters') && $('#pubApprFilters').addEventListener('input', function(e){ if(e.target.id==='paFTitulo'){ paQuery=e.target.value.trim().toLowerCase(); renderPubAppr(); } });
+
+/* Filtro avançado da fila "Shorts pendentes" (#reelApprFilters) — mesma ideia da de Publicações
+   acima, só sem o campo Tipo (todo item aqui já é um short) e com IDs próprios (raF...). */
+let raQuery='', raAuthor='', raQueuePeriod='tudo';
+function raActiveFilterCount(){
+  let c=0; if(raQuery) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
+  return c;
+}
+function raMatch(r){
+  if(raAuthor && (r.author||'')!==raAuthor) return false;
+  if(!aprInPeriod(r.ts, raQueuePeriod)) return false;
+  if(raQuery && (r.title||'').toLowerCase().indexOf(raQuery)===-1) return false;
+  return true;
+}
+function foBuildReelApprFilters(){
+  const nav=$('#reelApprFilters'); if(!nav) return;
+  const authors=Array.from(new Set((REEL_APPR||[]).concat(REEL_HIST||[]).map(r=>r.author).filter(Boolean)));
+  const authorItems=[{value:'',label:'Todos',selected:!raAuthor}].concat(authors.map(a=>({value:a,label:a,selected:raAuthor===a})));
+  const authorLabel=raAuthor||'Todos';
+  let html='<div class="nv-fsec"><div class="nv-fsec-hd">Short <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Título</label><div class="nv-ffield"><input type="text" id="raFTitulo" placeholder="Pesquisar short..." value="'+(raQuery||'')+'" autocomplete="off"></div></div>'+
+    '<div class="nv-ffcol nv-ffrow-last"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raQueuePeriod===p[0]}));
+  const periodLabel=(periodDefs.filter(p=>p[0]===raQueuePeriod)[0]||periodDefs[0])[1];
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  const activeN=raActiveFilterCount();
+  html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="raFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="raFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML=html;
+}
+$('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', function(e){
+  if(e.target.closest('#raFClear')){ raQuery=''; raAuthor=''; raQueuePeriod='tudo'; renderReelAppr(); return; }
+  if(e.target.closest('#raFApply')){ renderReelAppr(); fgToast('Filtros aplicados'); return; }
+  const db=e.target.closest('.nv-fdatebtn');
+  if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem=e.target.closest('.rl-dditem');
+  if(ddItem){
+    const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
+    if(id==='raFAutor'){ raAuthor=v; } else if(id==='raFQueuePeriod'){ raQueuePeriod=v; }
+    renderReelAppr();
+    return;
+  }
+  const ddBtn=e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if(ddBtn){
+    const wrap=ddBtn.closest('.rl-ddwrap'); const menu=wrap.querySelector('.rl-ddmenu');
+    const willOpen=menu.hidden;
+    $$('#reelApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
+    menu.hidden=!willOpen;
+    return;
+  }
+});
+$('#reelApprFilters') && $('#reelApprFilters').addEventListener('input', function(e){ if(e.target.id==='raFTitulo'){ raQuery=e.target.value.trim().toLowerCase(); renderReelAppr(); } });
+document.addEventListener('click', function(e){
+  if(!e.target.closest('#pubApprFilters .rl-ddwrap')) $$('#pubApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
+  if(!e.target.closest('#reelApprFilters .rl-ddwrap')) $$('#reelApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
+  if(!e.target.closest('#pubApprQueue .rl-actwrap')){ $$('#pubApprQueue .rl-actmenu').forEach(m=>m.hidden=true); $$('#pubApprQueue td.rl-actz').forEach(td=>td.classList.remove('rl-actz')); }
+  if(!e.target.closest('#reelApprQueue .rl-actwrap')){ $$('#reelApprQueue .rl-actmenu').forEach(m=>m.hidden=true); $$('#reelApprQueue td.rl-actz').forEach(td=>td.classList.remove('rl-actz')); }
+});
+/* Menu "Ações" (Abrir em nova guia / Aprovar / Reprovar) das duas filas pendentes — mesmo
+   desenho e mesmos data-pact de #pubGrid (18-gerenciar-publicacoes.css/21-gerenciar-
+   publicacoes.js), só que aprovar/reprovar aqui de fato tira o item da fila em vez de editar. */
+function aprActsHTML(aprovarLbl, reprovarLbl){
+  return '<div class="rl-actwrap">' +
+    '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
+    '<div class="rl-actmenu" hidden>' +
+      '<button type="button" data-pact="tab"><i class="fa-solid fa-up-right-from-square"></i> Abrir em nova guia</button>' +
+      '<button type="button" data-pact="ok"><i class="fa-solid fa-check"></i> '+aprovarLbl+'</button>' +
+      '<button type="button" data-pact="no" class="danger"><i class="fa-solid fa-xmark"></i> '+reprovarLbl+'</button>' +
+    '</div></div>';
+}
+/* Estado vazio das filas de aprovação (Publicações/Shorts/Comentários) — reaproveita o
+   componente .demo-empty-state.de-resultado já usado no Feed (assets/css/08-feed.css, GIF
+   uploads/illustra/nao-encontrado.gif), só trocando título/subtítulo conforme o contexto: sem
+   resultado pra um filtro/busca aplicados, ou a fila genuinamente sem itens naquele estado. */
+function aprEmptyHTML(title, sub){
+  return '<div class="demo-empty-state de-resultado">'+
+    '<img class="de-illu" src="uploads/illustra/nao-encontrado.gif" alt="" width="350" height="250">'+
+    '<div class="de-title">'+title+'</div>'+
+    '<div class="de-sub">'+sub+'</div>'+
+  '</div>';
+}
+
 function renderReelAppr(){
   reelApprData();
+  foBuildReelApprFilters();
   const el=$('#reelApprQueue'); if(!el) return;
-  const procList=REEL_APPR.filter(r=>r.proc||r.procFail), pendList=REEL_APPR.filter(r=>!r.proc&&!r.procFail);
-  const nPend=pendList.length, nProc=procList.length, nApr=REEL_HIST.filter(r=>r.apprStatus==='aprovado').length, nRej=REEL_HIST.filter(r=>r.apprStatus==='rejeitado').length;
+  const pendList=REEL_APPR.filter(r=>!r.proc&&!r.procFail);
+  const nPend=pendList.length, nApr=REEL_HIST.filter(r=>r.apprStatus==='aprovado').length, nRej=REEL_HIST.filter(r=>r.apprStatus==='rejeitado').length;
   if($('#reelNPend')){ $('#reelNPend').textContent=nPend; $('#reelNApr').textContent=nApr; $('#reelNRej').textContent=nRej; }
-  if($('#reelNProc')) $('#reelNProc').textContent=nProc;
   $$('#reelSeg button').forEach(b=>b.classList.toggle('on', b.dataset.f===reelFilter));
-  const list = reelFilter==='proc' ? procList : (reelFilter==='pend' ? pendList : REEL_HIST.filter(r=>r.apprStatus===reelFilter));
-  const tot=list.length; if($('#reelApprCount')) $('#reelApprCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
-  if(!list.length){ el.innerHTML='<div class="mod-empty"><i class="fa-regular fa-circle-check"></i><b>Nenhum short '+(reelFilter==='proc'?'em processamento':(reelFilter==='pend'?'pendente':(reelFilter==='aprovado'?'aprovado':'rejeitado')))+'</b><span>Tudo em dia por aqui.</span></div>'; return; }
-  const thumb=r=> r.procFail? '<span class="rl-procthumb rl-failthumb" style="width:44px;height:36px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
-    : r.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><span class="rl-spin"></span></span>'
-    : (r.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-clapperboard"></i></span>');
-  const base=r=>'<td><div class="apr-person"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="apr-unit">'+r.unit+'</span></div></div></td>'+
-    '<td><div class="pubttl">'+thumb(r)+'<div><b>'+r.title+'</b>'+(r.procFail?'<span class="rl-failpill">Falha no processamento</span>':(r.proc?'<span class="rl-procpill">Em processamento</span>':''))+'</div></div></td>'+
-    '<td class="apr-when">'+r.date+'</td>';
-  let head, rows;
-  if(reelFilter==='proc'){
-    head='<th>Autor</th><th>Short</th><th style="width:120px">Data/Hora</th><th style="width:170px;text-align:right">Ações</th>';
-    rows=list.map(r=>'<tr data-rid="'+r.rid+'" style="cursor:pointer">'+base(r)+'<td class="rl-acts"><button class="apr-view"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
-  } else if(reelFilter==='pend'){
-    head='<th>Autor</th><th>Short</th><th style="width:120px">Data/Hora</th><th style="width:170px;text-align:right">Ações</th>';
-    rows=list.map(r=>'<tr data-rid="'+r.rid+'" style="cursor:pointer">'+base(r)+'<td class="rl-acts"><button class="apr-view"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
-  } else if(reelFilter==='aprovado'){
-    head='<th>Autor</th><th>Short</th><th style="width:120px">Data/Hora</th><th style="width:160px">Aprovado por</th><th style="width:130px">Aprovado em</th>';
-    rows=list.map(r=>'<tr>'+base(r)+'<td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+r.decidedBy+'</div></td><td class="apr-when">'+r.decidedAt+'</td></tr>').join('');
-  } else {
-    head='<th>Autor</th><th>Short</th><th style="width:120px">Data/Hora</th><th style="width:150px">Rejeitado por</th><th>Justificativa</th>';
-    rows=list.map(r=>'<tr>'+base(r)+'<td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+r.decidedBy+'</div></td><td class="apr-cmt">'+(r.motivo||',')+'</td></tr>').join('');
+  const statusList = reelFilter==='pend' ? pendList : REEL_HIST.filter(r=>r.apprStatus===reelFilter);
+  const list = statusList.filter(raMatch);
+  if(!list.length){
+    el.innerHTML = statusList.length
+      ? aprEmptyHTML('Nenhum resultado encontrado','Não encontramos shorts para os filtros aplicados. Tente ajustar sua busca.')
+      : reelFilter==='pend'
+      ? aprEmptyHTML('Nenhum short pendente','Todos os shorts já foram revisados. Novos itens aparecerão aqui assim que forem enviados para aprovação.')
+      : reelFilter==='aprovado'
+      ? aprEmptyHTML('Nenhum short aprovado ainda','Shorts aprovados vão aparecer aqui.')
+      : aprEmptyHTML('Nenhum short reprovado','Shorts reprovados vão aparecer aqui.');
+    return;
   }
-  el.innerHTML='<div class="rlist"><table class="modtbl"><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  el.querySelectorAll('tr[data-rid]').forEach(function(tr){
-    tr.addEventListener('click', function(){
-      const r=REEL_APPR.find(x=>String(x.rid)===tr.dataset.rid); if(!r) return;
-      openReelAppr(r);
-    });
+  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-clapperboard"></i></span>';
+  const base2=r=>'<td><div class="rl-reel">'+thumb(r)+'<div><b>'+r.title+'</b><span>#'+r.rid+' • Short</span></div></div></td>'+
+    '<td style="text-align:center"><span class="apr-type">'+(rFormat(r)==='imagem'?'Imagem':'Vídeo')+'</span></td>'+
+    '<td><div class="rl-author"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="rl-emp">'+r.unit+'</span></div></div></td>';
+  const whenCell=r=>'<td class="apr-when"><div class="rl-dt">'+paFullDT(r.ts)+'</div><span class="rl-rel">'+r.date+'</span></td>';
+  let head, rows, tblClass='modtbl', colg=COLG_PUB_PEND;
+  if(reelFilter==='pend'){
+    tblClass='modtbl modtbl-pend'; colg=COLG_PUB_PEND;
+    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
+    rows=list.map(r=>'<tr data-rid="'+r.rid+'">'+base2(r)+whenCell(r)+'<td class="rl-acts">'+aprActsHTML('Aprovar short','Reprovar short')+'</td></tr>').join('');
+  } else if(reelFilter==='aprovado'){
+    tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
+    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+r.decidedBy+'</div></td><td class="apr-when">'+r.decidedAt+'</td></tr>').join('');
+  } else {
+    tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
+    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Reprovado por</th><th>Reprovado em</th><th>Justificativa</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+'<td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+r.decidedBy+'</div></td><td class="apr-when">'+r.decidedAt+'</td><td class="apr-cmt">'+(r.motivo||',')+'</td></tr>').join('');
+  }
+  const wrap=document.createElement('div');
+  wrap.className='rlist';
+  wrap.innerHTML='<table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table>';
+  wrap.addEventListener('click', function(e){
+    const actBtn=e.target.closest('.rl-actbtn');
+    if(actBtn){
+      const td=actBtn.closest('td'); const menu=actBtn.nextElementSibling; const willOpen=menu.hidden;
+      wrap.querySelectorAll('.rl-actmenu').forEach(m=>m.hidden=true);
+      wrap.querySelectorAll('td.rl-actz').forEach(c=>c.classList.remove('rl-actz'));
+      menu.hidden=!willOpen; td.classList.toggle('rl-actz', willOpen);
+      return;
+    }
+    const pact=e.target.closest('[data-pact]');
+    if(pact){
+      pact.closest('.rl-actmenu').hidden=true; pact.closest('td').classList.remove('rl-actz');
+      const row=pact.closest('[data-rid]'); if(!row) return;
+      const r=REEL_APPR.find(x=>String(x.rid)===row.dataset.rid); if(!r) return;
+      const a=pact.dataset.pact;
+      if(a==='tab'){ window.open(location.href,'_blank'); }
+      else if(a==='ok'){ REEL_APPR=REEL_APPR.filter(x=>x.rid!==r.rid); r.apprStatus='aprovado'; r.decidedBy='Rodrigo Caetano'; r.decidedAt=aprDT(); REEL_HIST.unshift(r); aprBadges(); renderReelAppr(); fgToast('Short aprovado'); }
+      else if(a==='no'){ askReject(function(motivo){ REEL_APPR=REEL_APPR.filter(x=>x.rid!==r.rid); r.apprStatus='rejeitado'; r.decidedBy='Rodrigo Caetano'; r.decidedAt=aprDT(); r.motivo=motivo; REEL_HIST.unshift(r); aprBadges(); renderReelAppr(); fgToast('Short recusado'); }); }
+      return;
+    }
+    const row=e.target.closest('[data-rid]');
+    if(row){ const r=REEL_APPR.find(x=>String(x.rid)===row.dataset.rid); if(r) openReelAppr(r); }
   });
+  el.innerHTML='';
+  el.appendChild(wrap);
 }
 function openReelAppr(r){
   if(typeof openPubAppr!=='function') return;
@@ -846,37 +1073,70 @@ function openReelAppr(r){
   } else if(acts){ acts.style.display='flex'; const ok=document.getElementById('pubApprOk'); if(ok) ok.style.display=''; }
 }
 function renderPubAppr(){
+  foBuildPubApprFilters();
   const el=$('#pubApprQueue');
-  const procP=PUB_APPR.filter(n=>n.proc||n.procFail), pendP=PUB_APPR.filter(n=>!n.proc&&!n.procFail);
+  const pendP=PUB_APPR.filter(n=>!n.proc&&!n.procFail);
   const nPend=pendP.length, nApr=PUB_HIST.filter(n=>n.apprStatus==='aprovado').length, nRej=PUB_HIST.filter(n=>n.apprStatus==='rejeitado').length;
   if($('#pubNPend')){ $('#pubNPend').textContent=nPend; $('#pubNApr').textContent=nApr; $('#pubNRej').textContent=nRej; }
-  if($('#pubNProc')) $('#pubNProc').textContent=procP.length;
   $$('#pubSeg button').forEach(b=>b.classList.toggle('on', b.dataset.f===pubFilter));
-  let list = pubFilter==='proc' ? procP : (pubFilter==='pend' ? pendP : PUB_HIST.filter(n=>n.apprStatus===pubFilter));
-  const tot=list.length; $('#pubApprCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
-  if(!list.length){ el.innerHTML='<div class="mod-empty"><i class="fa-regular fa-circle-check"></i><b>Nenhuma publicação '+(pubFilter==='pend'?'pendente':(pubFilter==='aprovado'?'aprovada':'rejeitada'))+'</b><span>Tudo em dia por aqui.</span></div>'; return; }
+  const statusList = pubFilter==='pend' ? pendP : PUB_HIST.filter(n=>n.apprStatus===pubFilter);
+  let list = statusList.filter(paMatch);
+  if(!list.length){
+    el.innerHTML = statusList.length
+      ? aprEmptyHTML('Nenhum resultado encontrado','Não encontramos publicações para os filtros aplicados. Tente ajustar sua busca.')
+      : pubFilter==='pend'
+      ? aprEmptyHTML('Nenhuma publicação pendente','Todas as publicações já foram revisadas. Novos itens aparecerão aqui assim que forem enviados para aprovação.')
+      : pubFilter==='aprovado'
+      ? aprEmptyHTML('Nenhuma publicação aprovada','Quando aprovadas, publicações irão aparecer aqui.')
+      : aprEmptyHTML('Nenhuma publicação reprovada','Quando reprovadas, as publicações irão aparecer aqui.');
+    return;
+  }
   const av=n=>n.av?'<span class="avatar '+n.av+'">'+(n.ini||'')+'</span>':'<span class="nv-logo">'+SULTS_LOGO+'</span>';
   const unitOfP=n=>n.unit||((typeof STORES!=='undefined')?STORES[(n.paid||1)%STORES.length].name:'');
-  const thumbP=n=> n.procFail? '<span class="rl-procthumb rl-failthumb" style="width:44px;height:36px"><i class="fa-solid fa-triangle-exclamation"></i></span>'
-    : n.proc? '<span class="rl-procthumb" style="width:44px;height:36px"><span class="rl-spin"></span></span>'
-    : (n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>');
-  const base=n=>'<td><div class="apr-person">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="apr-unit">'+unitOfP(n)+'</span></div></div></td><td><div class="pubttl">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b>'+(n.procFail?'<span class="rl-failpill">Falha no processamento</span>':(n.proc?'<span class="rl-procpill">Em processamento</span>':''))+(n.text?'<span>'+n.text.replace(/<[^>]+>/g,'').replace(/</g,'&lt;').slice(0,80)+'</span>':'')+'</div></div></td><td><span class="apr-type">'+(n.article?'Artigo':'Post')+'</span></td><td class="apr-when">'+(n.date||'agora')+'</td>';
+  const thumbP=n=> n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>';
+  const base3=n=>'<td><div class="rl-reel">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b><span>#'+n.paid+' • '+(n.article?'Artigo':'Postagem')+'</span></div></div></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="rl-emp">'+unitOfP(n)+'</span></div></div></td>';
+  const whenCell=n=>'<td class="apr-when"><div class="rl-dt">'+paFullDT(n.ts)+'</div><span class="rl-rel">'+(n.date||'agora')+'</span></td>';
   if(pubSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=pubCellVal(a,pubSortIdx), kb=pubCellVal(b,pubSortIdx); return ka<kb?-pubSortDir:ka>kb?pubSortDir:0; }); }
-  let head, rows;
-  if(pubFilter==='proc'||pubFilter==='pend'){
-    head='<th>Autor</th><th>Título</th><th style="width:80px">Tipo</th><th style="width:100px">Data/Hora</th><th style="width:170px;text-align:right">Ações</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'" style="cursor:pointer">'+base(n)+'<td class="rl-acts"><button class="apr-view"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
+  let head, rows, tblClass='modtbl', colg=COLG_PUB_PEND;
+  if(pubFilter==='pend'){
+    tblClass='modtbl modtbl-pend'; colg=COLG_PUB_PEND;
+    head='<th>Publicação ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="rl-acts">'+aprActsHTML('Aprovar publicação','Reprovar publicação')+'</td></tr>').join('');
   } else if(pubFilter==='aprovado'){
-    head='<th>Autor</th><th>Título</th><th style="width:80px">Tipo</th><th style="width:100px">Data/Hora</th><th style="width:160px">Aprovado por</th><th style="width:130px">Aprovado em</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base(n)+'<td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(n.decidedBy||',')+'</div></td><td class="apr-when">'+(n.decidedAt||',')+'</td></tr>').join('');
+    tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
+    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+(n.decidedBy||',')+'</div></td><td class="apr-when">'+(n.decidedAt||',')+'</td></tr>').join('');
   } else {
-    head='<th>Autor</th><th>Título</th><th style="width:80px">Tipo</th><th style="width:150px">Rejeitado por</th><th style="width:120px">Rejeitado em</th><th>Justificativa</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'"><td><div class="apr-person">'+av(n)+'<b>'+(n.author||'SULTS')+'</b></div></td><td class="apr-cmt"><b>'+(n.title||'(sem título)')+'</b></td><td><span class="apr-type">'+(n.article?'Artigo':'Post')+'</span></td><td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(n.decidedBy||',')+'</div></td><td class="apr-when">'+(n.decidedAt||',')+'</td><td class="apr-cmt">'+(n.motivo?n.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
+    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Reprovado por</th><th>Reprovado em</th><th>Justificativa</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'"><td class="apr-cmt"><b>'+(n.title||'(sem título)')+'</b></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b></div></div></td><td class="apr-when"><div class="rl-author"><span class="avatar av-rc"></span>'+(n.decidedBy||',')+'</div></td><td class="apr-when">'+(n.decidedAt||',')+'</td><td class="apr-cmt">'+(n.motivo?n.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
   }
-  el.innerHTML = '<div class="rlist"><table class="modtbl"><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()) return; th.classList.add('sortable'); if(pubSortIdx===i) th.classList.add('active-sort'); th.innerHTML=th.innerHTML+' <span class="sort-ic"><i class="fa-solid fa-'+(pubSortIdx===i?(pubSortDir===1?'arrow-up-short-wide':'arrow-down-wide-short'):'sort')+'"></i></span>'; th.addEventListener('click', function(){ if(pubSortIdx===i) pubSortDir=-pubSortDir; else { pubSortIdx=i; pubSortDir=1; } renderPubAppr(); }); });
+  el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
+  el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(pubSortIdx===i) th.classList.add('active-sort'); const icon=pubSortIdx===i?(pubSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(pubSortIdx===i) pubSortDir=-pubSortDir; else { pubSortIdx=i; pubSortDir=1; } renderPubAppr(); }); });
 }
-$('#pubApprQueue') && $('#pubApprQueue').addEventListener('click', e=>{ const _r=e.target.closest('[data-paid]'); if(_r && !e.target.closest('[data-act]')){ const _src=(pubFilter==='pend'||pubFilter==='proc')?PUB_APPR:PUB_HIST; const _n=_src.find(x=>x.paid===+_r.dataset.paid); if(_n){ if(_n.proc||_n.procFail){ openPubAppr(_n); } else { reviewPub(_n); } return; } } const b=e.target.closest('[data-act]'); const row=e.target.closest('[data-paid]'); if(!b){ if(row){ const src=((pubFilter==='pend'||pubFilter==='proc')?PUB_APPR:PUB_HIST).find(x=>x.paid===+row.dataset.paid); if(src){ if(src.proc||src.procFail) openPubAppr(src); else reviewPub(src); } } return; } const paid=+b.closest('[data-paid]').dataset.paid; const n=PUB_APPR.find(x=>x.paid===paid); if(!n) return; PUB_APPR=PUB_APPR.filter(x=>x.paid!==paid); if(b.dataset.act==='ok'){ n.apprStatus='aprovado'; n.decidedBy='Rodrigo Caetano'; n.decidedAt=aprDT(); PUB_HIST.unshift(n); n.status='pub'; NEWS.unshift(n); addHomePost(n,true); if(typeof renderNewsList==='function') renderNewsList(); fgToast('Publicação aprovada'); } else { askReject(function(motivo){ n.motivo=motivo; n.apprStatus='rejeitado'; n.decidedBy='Rodrigo Caetano'; n.decidedAt=aprDT(); PUB_HIST.unshift(n); fgToast('Publicação recusada'); aprBadges(); renderPubAppr(); }); return; } aprBadges(); renderPubAppr(); });
+$('#pubApprQueue') && $('#pubApprQueue').addEventListener('click', e=>{
+  const actBtn=e.target.closest('.rl-actbtn');
+  if(actBtn){
+    const td=actBtn.closest('td'); const menu=actBtn.nextElementSibling; const willOpen=menu.hidden;
+    $$('#pubApprQueue .rl-actmenu').forEach(m=>m.hidden=true);
+    $$('#pubApprQueue td.rl-actz').forEach(c=>c.classList.remove('rl-actz'));
+    menu.hidden=!willOpen; td.classList.toggle('rl-actz', willOpen);
+    return;
+  }
+  const pact=e.target.closest('[data-pact]');
+  if(pact){
+    pact.closest('.rl-actmenu').hidden=true; pact.closest('td').classList.remove('rl-actz');
+    const row=pact.closest('[data-paid]'); if(!row) return;
+    const n=PUB_APPR.find(x=>x.paid===+row.dataset.paid); if(!n) return;
+    const a=pact.dataset.pact;
+    if(a==='tab'){ window.open(location.href,'_blank'); }
+    else if(a==='ok'){ PUB_APPR=PUB_APPR.filter(x=>x.paid!==n.paid); n.apprStatus='aprovado'; n.decidedBy='Rodrigo Caetano'; n.decidedAt=aprDT(); PUB_HIST.unshift(n); n.status='pub'; NEWS.unshift(n); addHomePost(n,true); if(typeof renderNewsList==='function') renderNewsList(); fgToast('Publicação aprovada'); aprBadges(); renderPubAppr(); }
+    else if(a==='no'){ askReject(function(motivo){ PUB_APPR=PUB_APPR.filter(x=>x.paid!==n.paid); n.motivo=motivo; n.apprStatus='rejeitado'; n.decidedBy='Rodrigo Caetano'; n.decidedAt=aprDT(); PUB_HIST.unshift(n); fgToast('Publicação recusada'); aprBadges(); renderPubAppr(); }); }
+    return;
+  }
+  const row=e.target.closest('[data-paid]');
+  if(row){ const src=pubFilter==='pend'?PUB_APPR:PUB_HIST; const n=src.find(x=>x.paid===+row.dataset.paid); if(n) reviewPub(n); }
+});
 function reviewPub(n){ reviewingPub=n; openArticle(n); const bar=$('#nvArtReview'); if(bar) bar.hidden=false; const ed=$('#nvArtEdit'); if(ed) ed.hidden=true; }
 function reviewDecide(ok){ const n=reviewingPub; if(!n) return; PUB_APPR=PUB_APPR.filter(x=>x.paid!==n.paid); function finish(){ aprBadges(); reviewingPub=null; const bar=$('#nvArtReview'); if(bar) bar.hidden=true; const ed=$('#nvArtEdit'); if(ed) ed.hidden=false; newsShow('pubappr'); } if(ok){ n.apprStatus='aprovado'; n.decidedBy='Rodrigo Caetano'; n.decidedAt=aprDT(); PUB_HIST.unshift(n); n.status='pub'; NEWS.unshift(n); addHomePost(n,true); if(typeof renderNewsList==='function') renderNewsList(); fgToast('Publicação aprovada'); finish(); } else { askReject(function(motivo){ n.motivo=motivo; n.apprStatus='rejeitado'; n.decidedBy='Rodrigo Caetano'; n.decidedAt=aprDT(); PUB_HIST.unshift(n); fgToast('Publicação recusada'); finish(); }); } }
 /* Seed: 40 comentários na primeira publicação */
@@ -909,13 +1169,13 @@ function reviewDecide(ok){ const n=reviewingPub; if(!n) return; PUB_APPR=PUB_APP
   const cTexts=['Parabéns pelo trabalho, ficou excelente! 👏','Vamos com tudo, time! 🚀','Que orgulho fazer parte disso.','Alguém sabe se vai ter transmissão ao vivo?','Show de bola, muito bom mesmo.','Congratulações a todos os envolvidos! 💙','Isso vai ajudar demais na operação.','Top demais, ansioso pela próxima edição.','Sensacional, parabéns pela conquista!','Muito bom, vamos compartilhar com a equipe.'];
   for(let k=0;k<10;k++){ const nid=[1,2,3,6,4,1,2,3,6,4][k]; const nn=NEWS.find(x=>x.id===nid)||{}; modAdd({author:cAuthors[k][0],av:cAuthors[k][1],text:cTexts[k],post:(nn.title||cPosts[k]),newsId:nid,time:(k+1)+' h',dt:aprDT(new Date(Date.now()-(k+1)*3600000)),approve:()=>{},reject:()=>{}}); }
   const pubs=[
-    {title:'Resultados do 1º semestre superam a meta em 18%',author:'Matheus Scussel',av:'av-ms',ini:'MS',date:'há 20 min',text:'Fechamos o semestre com crescimento acima do esperado em toda a rede.',sub:'Expansão'},
-    {title:'Nova unidade inaugurada em Florianópolis',author:'Lucas Prado',av:'av-pl',ini:'LP',date:'há 40 min',text:'Mais uma loja da rede abre as portas no litoral catarinense.',sub:'Expansão'},
-    {title:'Treinamento de atendimento 2.0 disponível',author:'Carla Mendes',av:'av-cm',ini:'CM',date:'há 1 h',text:'Nova trilha na Universidade Corporativa com certificado.',sub:'Universidade'},
-    {title:'Campanha de inverno começa na próxima semana',author:'Ana Souza',av:'av-as',ini:'AS',date:'há 2 h',text:'Materiais de PDV já disponíveis no Disco Virtual.',sub:'Produto'},
-    {title:'Bella Capri: a história por trás do sucesso',author:'Ellen Rocha',av:'av-gc',ini:'ER',date:'há 3 h',text:'Um mergulho na trajetória de uma das maiores redes de pizzarias.',sub:'Histórias de sucesso',article:true},
-    {title:'Atualização da plataforma v10.5',author:'Willer Matayoshi',av:'av-wm',ini:'WM',date:'há 5 h',text:'Melhorias de performance e novos filtros nos relatórios.',sub:'Produto'},
-    {title:'Vagas internas abertas em Produto e CS',author:'Beatriz Lopes',av:'av-bo',ini:'BL',date:'ontem',text:'Candidate-se pelo RH até sexta-feira.',sub:'Gente & Cultura'}
+    {title:'Resultados do 1º semestre superam a meta em 18%',author:'Matheus Scussel',av:'av-ms',ini:'MS',date:'há 20 min',ts:Date.now()-20*60000,text:'Fechamos o semestre com crescimento acima do esperado em toda a rede.',sub:'Expansão'},
+    {title:'Nova unidade inaugurada em Florianópolis',author:'Lucas Prado',av:'av-pl',ini:'LP',date:'há 40 min',ts:Date.now()-40*60000,text:'Mais uma loja da rede abre as portas no litoral catarinense.',sub:'Expansão'},
+    {title:'Treinamento de atendimento 2.0 disponível',author:'Carla Mendes',av:'av-cm',ini:'CM',date:'há 1 h',ts:Date.now()-60*60000,text:'Nova trilha na Universidade Corporativa com certificado.',sub:'Universidade'},
+    {title:'Campanha de inverno começa na próxima semana',author:'Ana Souza',av:'av-as',ini:'AS',date:'há 2 h',ts:Date.now()-2*3600000,text:'Materiais de PDV já disponíveis no Disco Virtual.',sub:'Produto'},
+    {title:'Bella Capri: a história por trás do sucesso',author:'Ellen Rocha',av:'av-gc',ini:'ER',date:'há 3 h',ts:Date.now()-3*3600000,text:'Um mergulho na trajetória de uma das maiores redes de pizzarias.',sub:'Histórias de sucesso',article:true},
+    {title:'Atualização da plataforma v10.5',author:'Willer Matayoshi',av:'av-wm',ini:'WM',date:'há 5 h',ts:Date.now()-5*3600000,text:'Melhorias de performance e novos filtros nos relatórios.',sub:'Produto'},
+    {title:'Vagas internas abertas em Produto e CS',author:'Beatriz Lopes',av:'av-bo',ini:'BL',date:'ontem',ts:Date.now()-25*3600000,text:'Candidate-se pelo RH até sexta-feira.',sub:'Gente & Cultura'}
   ];
   pubs.forEach(p=>pubApprAdd(Object.assign({status:'draft',reactions:0,comments:0},p)));
 })();
