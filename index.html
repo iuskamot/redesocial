@@ -1288,7 +1288,7 @@ input,textarea,select{font-size:14px}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
 .rlist{background:#fff;border:1px solid #D9D9D9;border-radius:8px;overflow:hidden}
-.reels-view .rlist,#nvEmpList,#nvPeoList{border-color:var(--line)}
+.reels-view .rlist,#nvEmpList,#nvPeoList{border-color:#d9d9d9}
 .rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}
 .rlist td{padding:10px 14px;border-bottom:1px solid #f0f3f6;color:#465364;vertical-align:middle}
@@ -1374,7 +1374,7 @@ input,textarea,select{font-size:14px}
 #nvModScreen .cat-head,
 #nvPubApprScreen .cat-head,
 #nvReelApprScreen .cat-head,
-#nvInterScreen .cat-head{margin:12px 12px 0;padding:8px 12px;border-bottom:0;border-radius:8px;box-shadow:inset 0 0 0 1px #D9D9D9;flex-shrink:0}
+#nvInterScreen .cat-head{margin:8px 8px 0;padding:8px 12px;border-bottom:0;border-radius:8px;box-shadow:inset 0 0 0 1px #D9D9D9;flex-shrink:0}
 #nvPermScreen .cat-head{height:54px;margin:8px 8px 0}
 /* toolbar rola junto: a própria tela é o container de scroll */
 #nvPermScreen,#nvAprHomeScreen,#nvModScreen,#nvPubApprScreen,#nvReelApprScreen{display:none;flex-direction:column;min-height:0;overflow-y:auto}
@@ -1673,7 +1673,7 @@ input,textarea,select{font-size:14px}
 .nmod-top-tabs::-webkit-scrollbar{display:none}
 .nmod-tab{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   height:48px;min-width:96px;border:0;background:none;
-  color:rgba(255,255,255,.72);font:inherit;font-size:14px;line-height:18px;font-weight:600;letter-spacing:.3px;
+  color:rgba(255,255,255,.72);font:inherit;font-size:14px;line-height:18px;font-weight:400;letter-spacing:.3px;
   white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
@@ -1685,8 +1685,8 @@ input,textarea,select{font-size:14px}
 .nmod-tab.active .nmt-ic-on{display:inline-block}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
-.nmod-tab.active{background:#00ACAC;color:#fff}
-.nmod-tab.active:hover{background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),#00ACAC;color:#fff}
+.nmod-tab.active{background:#fff;color:#133158}
+.nmod-tab.active:hover{background:#fff;color:#133158}
 /* mesmo campo do "Buscar acoes na plataforma": a lupa vem primeiro e nao
    ha botao — quem dispara a busca e o Enter, que o listener ja tratava */
 /* Tres estados: parado e so o filete de 1px; no hover entra o cinza; no
@@ -1712,6 +1712,7 @@ input,textarea,select{font-size:14px}
   font:inherit;font-size:13px;line-height:17px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;
   background:#00ACAC;color:#fff;transition:background 120ms cubic-bezier(.4,0,.2,1),box-shadow 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+.nmod-switch svg{width:20px;height:20px}
 /* a foto fecha o lado direito da barra, nos dois ambientes: é onde a pessoa
    procura a própria conta, e ela não deixa de existir dentro do Gerenciar */
 .nmod-topav{display:block;width:40px;height:40px;cursor:pointer}
@@ -1763,8 +1764,8 @@ input,textarea,select{font-size:14px}
      la ele nasce no topo do botao, aqui na base da aba */
   content:'';position:absolute;left:0;right:0;bottom:0;height:5px;border-radius:3px 3px 0 0;background:var(--teal);
 }
-.news-view.env-social .nmod-tab.active{background:#00ACAC;color:#fff}
-.news-view.env-social .nmod-tab.active:hover{background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),#00ACAC;color:#fff}
+.news-view.env-social .nmod-tab.active{background:#fff;color:#133158}
+.news-view.env-social .nmod-tab.active:hover{background:#fff;color:#133158}
 .nv-reelsbanner{display:none;align-items:center;gap:8px;padding:12px 24px;margin:0;background:#E0F1FF;
   color:#0F377A;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.3px;
   box-shadow:inset 0 -1px 0 #E9EAED}
@@ -1807,17 +1808,28 @@ input,textarea,select{font-size:14px}
 .exp-panel{background:#fff;border:1px solid #D9D9D9;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:20px}
 .exp-title{display:flex;align-items:center;gap:8px}
 .exp-title i{font-size:22px;color:var(--teal)}
+.exp-title svg{width:26px;height:26px;color:var(--teal);flex-shrink:0}
 .exp-title h2{font-size:18px;font-weight:700;color:#0C334A;margin:0}
 .exp-grid{display:flex;flex-wrap:wrap;gap:20px}
 .exp-item{flex:1 1 300px;display:flex;flex-direction:column;gap:12px;border:1px solid #D9D9D9;border-radius:8px;padding:20px}
 .exp-item-top{display:flex;align-items:flex-start;gap:12px}
 .exp-ic{flex-shrink:0;width:60px;height:60px;border-radius:4px;background:rgba(47,142,229,.12);display:flex;align-items:center;justify-content:center}
 .exp-ic i{font-size:26px;color:#2F8EE5}
+.exp-ic svg{width:26px;height:26px;color:#2F8EE5}
 .exp-item-txt{display:flex;flex-direction:column;gap:2px}
 .exp-item-txt b{font-size:16px;font-weight:700;color:#0C334A}
 .exp-item-txt span{font-size:14px;font-weight:400;color:#5F666C}
 .exp-item-div{border-top:1px solid #D9D9D9;margin-top:auto}
 .exp-btn{height:36px;border:0;border-radius:6px;background:#2F8EE5;color:#fff;font:inherit;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.exp-btn svg{width:16px;height:16px;flex-shrink:0}
+/* Botões do modal "Exportar" (#expModal) seguem o padrão de botão do projeto (altura 36px,
+   raio 6px, peso 700, 14px) em vez do .fo-btn genérico em pílula usado pelo Fórum — escopado
+   pra não mexer nos outros modais que reaproveitam .fo-btn. */
+#expModal .fo-btn{border-radius:6px;height:36px;padding:0 16px;font-size:14px;font-weight:700;background:#2F8EE5}
+#expModal .fo-btn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
+#expModal .fo-btn.ghost{border-radius:6px;height:36px;padding:0 16px;font-size:14px;font-weight:700;background:#eef2f5;color:#5b6672;border:0}
+#expModal .fo-btn.ghost:hover{background:#e2e8ee;color:var(--ink)}
+#expModal .fo-btn svg{width:16px;height:16px;flex-shrink:0}
 .exp-btn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
 /* Modal "Exportar" (#expModal) — mesmo tratamento de título azul de #nvCatModal. */
 #expModal .fg-head{border-bottom:0}
@@ -1893,6 +1905,7 @@ input,textarea,select{font-size:14px}
 .cfg-badge.apr-cnt{background:rgba(255,255,255,.18)}
 .apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;margin:0 -12px;padding:18px 26px 10px;border-top:1px solid rgba(255,255,255,.1)}
 .apr-grp-hd i{font-size:15px;width:18px;text-align:center}
+.apr-grp-hd svg{width:18px;height:18px;flex-shrink:0}
 .nv-cfgside .apr-grp-hd:first-child{padding-top:16px;border-top:0}
 .apr-sub{height:36px !important;padding:0 14px 0 24px !important;font-size:15px !important;font-weight:400 !important;color:rgba(255,255,255,.82) !important}
 .apr-sub i{font-size:14px}
@@ -1905,7 +1918,11 @@ input,textarea,select{font-size:14px}
 .apr-seg button.on .apr-segn{background:rgba(0,172,172,.16);color:var(--teal)}
 .apr-badge-ok{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#128a3e;background:rgba(37,211,102,.14);padding:5px 12px;border-radius:999px}
 .apr-badge-no{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#c62828;background:#fdecea;padding:5px 12px;border-radius:999px}
-.apr-type{display:inline-block;font-size:11px;font-weight:700;color:#5b6672;background:#eef2f5;border-radius:6px;padding:3px 9px}
+.apr-type{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:400;color:#5b6672;background:#eef2f5;border-radius:32px;padding:4px 12px}
+.apr-type i{font-size:11px}
+.apr-type svg{width:14px;height:14px;flex-shrink:0}
+.apr-type.is-art{color:#905813;background:#e08a1e29}
+.apr-type.is-color{color:#0c7d7d;background:rgba(0,172,172,.12)}
 .apr-when{color:var(--muted);font-size:12px;white-space:nowrap}
 #modQueue .rl-acts,#pubApprQueue .rl-acts{white-space:nowrap;text-align:right}
 /* mesmo desenho dos botoes de aprovar comentario (.comment-mod) */
@@ -1918,12 +1935,10 @@ input,textarea,select{font-size:14px}
 #nvInterScreen .cat-body{padding:10px 10px 10px}
 #nvCatsScreen .cat-body{padding:11px 14px 22px}
 /* =====================================================================
-   APROVAÇÕES > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen)
-   Layout com tabela + painel de filtro à direita (Figma "Pendentes", node 1646:3473).
-   "Em processamento" não existe mais nessas duas telas — só Pendentes/Aprovados/
-   Rejeitados. Comentários pendentes (#nvModScreen) não entra aqui: só a aba
-   Pendentes ganha o mesmo estilo de tabela (.modtbl-pend) mais abaixo; Aprovados/
-   Rejeitados de Comentários continuam com o cabeçalho de abas antigo, intocado.
+   APROVAÇÕES > Publicações/Shorts/Comentários (#nvPubApprScreen, #nvReelApprScreen,
+   #nvModScreen) — as três telas compartilham o mesmo componente de fila (tabela +
+   painel de filtro à direita, Figma "Pendentes", node 1646:3473). Só Pendentes/
+   Aprovados/Rejeitados existem; "Em processamento" não existe em nenhuma delas.
    ===================================================================== */
 /* As duas colunas (tabs+tabela de um lado, filtro do outro) são irmãs num mesmo
    .nv-listwrap flex — a base já usa align-items:stretch, então nenhuma das duas pode
@@ -1932,77 +1947,81 @@ input,textarea,select{font-size:14px}
    coluna mais baixa (normalmente a tabela, com poucos itens) estica até a altura da
    mais alta, e cada uma vira um card bordado próprio (mesma borda/raio do filtro) pra
    o espaço sobrando aparecer dentro do card, não como vazio solto. */
-#nvPubApprScreen .cat-body,#nvReelApprScreen .cat-body{padding:0}
-#nvPubApprScreen .nv-listmain,#nvReelApprScreen .nv-listmain{align-self:stretch;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;padding:12px;gap:8px;background:#fff;border-radius:8px;border:1px solid #D9D9D9;margin:8px 0 8px 8px}
-#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters{align-self:stretch;max-height:none;padding-bottom:0;display:flex;flex-direction:column;margin:8px 8px 8px 0}
-#nvPubApprScreen .rx-filters .nv-filters-ft,#nvReelApprScreen .rx-filters .nv-filters-ft{margin-top:auto;margin-left:-16px;margin-right:-16px;border-radius:0 0 8px 8px}
-#nvPubApprScreen #pubApprQueue,#nvReelApprScreen #reelApprQueue{
+#nvPubApprScreen .cat-body,#nvReelApprScreen .cat-body,#nvModScreen .cat-body{padding:0}
+#nvPubApprScreen .nv-listmain,#nvReelApprScreen .nv-listmain,#nvModScreen .nv-listmain{align-self:stretch;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;padding:12px;gap:8px;background:#fff;border-radius:8px;border:1px solid #D9D9D9;margin:8px 8px 8px 8px}
+#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvModScreen .rx-filters{align-self:stretch;max-height:none;padding-bottom:0;display:flex;flex-direction:column;margin:8px 8px 8px 0}
+#nvPubApprScreen .rx-filters .nv-filters-ft,#nvReelApprScreen .rx-filters .nv-filters-ft,#nvModScreen .rx-filters .nv-filters-ft{margin-top:auto;margin-left:-16px;margin-right:-16px;border-radius:0 0 8px 8px}
+#nvPubApprScreen #pubApprQueue,#nvReelApprScreen #reelApprQueue,#nvModScreen #modQueue{
   flex:1;min-height:0;display:flex;flex-direction:column;
   border-radius:8px;background:#fff;overflow:hidden}
-#nvPubApprScreen #pubApprQueue .rlist,#nvReelApprScreen #reelApprQueue .rlist{flex:1;overflow-y:auto;border-radius:8px}
-#nvPubApprScreen #pubApprQueue .mod-empty,#nvReelApprScreen #reelApprQueue .mod-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0}
-/* Estado vazio de Publicações (Aprovados/Reprovados) usa aprEmptyHTML(), que monta
+#nvPubApprScreen #pubApprQueue .rlist,#nvReelApprScreen #reelApprQueue .rlist,#nvModScreen #modQueue .rlist{flex:1;overflow-y:auto;border-radius:8px}
+#nvPubApprScreen #pubApprQueue .mod-empty,#nvReelApprScreen #reelApprQueue .mod-empty,#nvModScreen #modQueue .mod-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0}
+/* Estado vazio (Aprovados/Reprovados) usa aprEmptyHTML(), que monta
    .demo-empty-state.de-resultado (08-feed.css) — sem isso ele ficava com a caixa/borda
-   cinza padrão daquele componente e sem preencher a altura de #pubApprQueue. */
-#nvPubApprScreen #pubApprQueue .demo-empty-state{flex:1;display:flex;margin:0;border:none;background:#fff}
-/* Pilulas "Pendentes/Aprovados/Rejeitados" — sobrescreve a aba sublinhada genérica de
-   06-shorts.css (que continua valendo, sem mudança, para #nvModScreen). */
-#nvPubApprScreen .apr-seg,#nvReelApprScreen .apr-seg{
+   cinza padrão daquele componente e sem preencher a altura do container da fila. */
+#nvPubApprScreen #pubApprQueue .demo-empty-state,#nvReelApprScreen #reelApprQueue .demo-empty-state,#nvModScreen #modQueue .demo-empty-state{flex:1;display:flex;margin:0;border:none;background:#fff}
+/* Pilulas "Pendentes/Aprovados/Rejeitados" — mesmo desenho nas três filas de Aprovações. */
+#nvPubApprScreen .apr-seg,#nvReelApprScreen .apr-seg,#nvModScreen .apr-seg{
   background:none;border:0;height:auto;padding:0;gap:8px;align-items:center;overflow-x:visible}
-#nvPubApprScreen .apr-seg button,#nvReelApprScreen .apr-seg button{
+#nvPubApprScreen .apr-seg button,#nvReelApprScreen .apr-seg button,#nvModScreen .apr-seg button{
   height:36px;min-width:0;padding:0 12px;border:1px solid #e6eaef;border-radius:6px;
   background:rgb(246 247 248);color:#5F666C}
-#nvPubApprScreen .apr-seg button i,#nvReelApprScreen .apr-seg button i{font-size:16px}
-#nvPubApprScreen .apr-seg button svg,#nvReelApprScreen .apr-seg button svg{width:18px;height:18px;flex-shrink:0}
-#nvPubApprScreen .apr-seg button[data-f="pend"] svg,#nvReelApprScreen .apr-seg button[data-f="pend"] svg{color:#7a5c10}
-#nvPubApprScreen .apr-seg button[data-f="aprovado"] i,#nvReelApprScreen .apr-seg button[data-f="aprovado"] i{color:#1E8E3E}
-#nvPubApprScreen .apr-seg button[data-f="rejeitado"] i,#nvReelApprScreen .apr-seg button[data-f="rejeitado"] i{color:#B3261E}
-#nvPubApprScreen .apr-seg button:hover,#nvReelApprScreen .apr-seg button:hover{background:#e7ebee}
-#nvPubApprScreen .apr-seg button.on,#nvReelApprScreen .apr-seg button.on{
+#nvPubApprScreen .apr-seg button i,#nvReelApprScreen .apr-seg button i,#nvModScreen .apr-seg button i{font-size:16px}
+#nvPubApprScreen .apr-seg button svg,#nvReelApprScreen .apr-seg button svg,#nvModScreen .apr-seg button svg{width:18px;height:18px;flex-shrink:0}
+#nvPubApprScreen .apr-seg button[data-f="pend"] svg,#nvReelApprScreen .apr-seg button[data-f="pend"] svg,#nvModScreen .apr-seg button[data-f="pend"] svg{color:#7a5c10}
+#nvPubApprScreen .apr-seg button[data-f="aprovado"] i,#nvReelApprScreen .apr-seg button[data-f="aprovado"] i,#nvModScreen .apr-seg button[data-f="aprovado"] i{color:#1E8E3E}
+#nvPubApprScreen .apr-seg button[data-f="rejeitado"] i,#nvReelApprScreen .apr-seg button[data-f="rejeitado"] i,#nvModScreen .apr-seg button[data-f="rejeitado"] i{color:#B3261E}
+#nvPubApprScreen .apr-seg button:hover,#nvReelApprScreen .apr-seg button:hover,#nvModScreen .apr-seg button:hover{background:#e7ebee}
+#nvPubApprScreen .apr-seg button.on,#nvReelApprScreen .apr-seg button.on,#nvModScreen .apr-seg button.on{
   background:rgba(47,142,229,.05);border-color:#2F8EE5;color:#2F8EE5}
-#nvPubApprScreen .apr-seg button.on::after,#nvReelApprScreen .apr-seg button.on::after{content:none}
-#nvPubApprScreen .apr-seg .apr-segn,#nvReelApprScreen .apr-seg .apr-segn{
-  background:#E4E7EB;color:#5F666C;border-radius:10px;padding:1px 5px;font-size:11px}
+#nvPubApprScreen .apr-seg button.on::after,#nvReelApprScreen .apr-seg button.on::after,#nvModScreen .apr-seg button.on::after{content:none}
+#nvPubApprScreen .apr-seg .apr-segn,#nvReelApprScreen .apr-seg .apr-segn,#nvModScreen .apr-seg .apr-segn{
+  background:#E4E7EB;color:#5F666C;border-radius:10px;padding:1px 5px;font-size:12px}
+#nvPubApprScreen .apr-seg button.on .apr-segn,#nvReelApprScreen .apr-seg button.on .apr-segn,#nvModScreen .apr-seg button.on .apr-segn{
+  background:rgba(47,142,229,.05);color:#2F8EE5;font-weight:700}
 /* Tabela: mesma letra/cor já usada em #pubGrid (18-gerenciar-publicacoes.css), que segue o
    mesmo sistema de design do Figma desta tela. */
-#nvPubApprScreen .modtbl th,#nvReelApprScreen .modtbl th,#nvModScreen .modtbl th{font-size:14px;font-weight:700;color:#0C334A;text-transform:none;background:#fff;height:46px;box-sizing:border-box;border-bottom:1px solid #D9D9D9;border-right:none}
+#nvPubApprScreen .modtbl th,#nvReelApprScreen .modtbl th,#nvModScreen .modtbl th{font-size:14px;font-weight:700;color:#0C334A;text-transform:none;background:#fff;height:46px;box-sizing:border-box;border-bottom:1px solid #D9D9D9;border-right:none;white-space:nowrap}
 /* Larguras de coluna exatas do Figma (Pendentes: nodes 1685-4356/7035 e 1691-16886/17232;
    Aprovados/Reprovados: nodes 1691-9035/9158/12344/12434 e 1691-17890/18308). Só a coluna
    de título (col-principal) é flexível — cresce/encolhe pra preencher o espaço disponível;
    todas as outras têm largura fixa em px, igual com o filtro aberto ou fechado. As larguras
    vêm de um <colgroup> (montado no JS, uma vez por tabela) em vez de style inline por linha —
    table-layout:fixed faz o <col> sem width (col-principal) absorver o espaço que sobra.
-   min-width em cada .modtbl-XXX é a soma das colunas fixas + um mínimo razoável pro título;
-   quando os fixos + esse mínimo não cabem (comum nas abas com mais colunas, como Aprovados/
-   Reprovados), a tabela trava nesse tamanho e o .rlist (overflow-x:auto, acima) rola na
-   horizontal em vez de espremer qualquer coluna. */
+   min-width em cada .modtbl-XXX é a soma das colunas fixas + o piso de .rl-reel/.apr-cmt
+   (600px em Publicação/Short, 480px em Comentário); quando os fixos + esse piso não cabem
+   (comum nas abas com mais colunas, como Aprovados/Reprovados), a tabela trava nesse tamanho
+   e o .rlist (overflow-x:auto, acima) rola na horizontal em vez de espremer qualquer coluna. */
 #nvPubApprScreen .modtbl,#nvReelApprScreen .modtbl,#nvModScreen .modtbl{table-layout:fixed;width:100%}
-#nvPubApprScreen .modtbl-pend,#nvReelApprScreen .modtbl-pend{min-width:936px}
-#nvPubApprScreen .modtbl-apr,#nvReelApprScreen .modtbl-apr,#nvPubApprScreen .modtbl-rej,#nvReelApprScreen .modtbl-rej{min-width:1120px}
-#nvModScreen .modtbl-pend{min-width:996px}
-#nvModScreen .modtbl-apr,#nvModScreen .modtbl-rej{min-width:1140px}
-#nvPubApprScreen .modtbl col.col-tipo,#nvReelApprScreen .modtbl col.col-tipo{width:180px}
-#nvPubApprScreen .modtbl col.col-autor,#nvReelApprScreen .modtbl col.col-autor{width:200px}
-#nvPubApprScreen .modtbl-pend col.col-data,#nvReelApprScreen .modtbl-pend col.col-data{width:180px}
-#nvPubApprScreen .modtbl-pend col.col-acoes,#nvReelApprScreen .modtbl-pend col.col-acoes{width:116px}
-#nvPubApprScreen .modtbl-apr col.col-data,#nvReelApprScreen .modtbl-apr col.col-data,
-#nvPubApprScreen .modtbl-rej col.col-data,#nvReelApprScreen .modtbl-rej col.col-data{width:164px}
+#nvPubApprScreen .modtbl-pend{min-width:1356px}
+#nvReelApprScreen .modtbl-pend{min-width:1296px}
+#nvPubApprScreen .modtbl-apr,#nvPubApprScreen .modtbl-rej{min-width:1680px}
+#nvReelApprScreen .modtbl-apr,#nvReelApprScreen .modtbl-rej{min-width:1620px}
+#nvModScreen .modtbl-pend{min-width:1236px}
+#nvModScreen .modtbl-apr,#nvModScreen .modtbl-rej{min-width:1560px}
+#nvPubApprScreen .modtbl col.col-tipo{width:200px}
+#nvReelApprScreen .modtbl col.col-tipo{width:140px}
+#nvPubApprScreen .modtbl col.col-autor,#nvReelApprScreen .modtbl col.col-autor,#nvModScreen .modtbl col.col-autor{width:240px}
+#nvPubApprScreen .modtbl col.col-data,#nvReelApprScreen .modtbl col.col-data,#nvModScreen .modtbl col.col-data{width:200px}
+#nvPubApprScreen .modtbl-pend col.col-acoes,#nvReelApprScreen .modtbl-pend col.col-acoes,#nvModScreen .modtbl-pend col.col-acoes{width:116px}
 #nvPubApprScreen .modtbl-apr col.col-aprovador,#nvReelApprScreen .modtbl-apr col.col-aprovador,
-#nvPubApprScreen .modtbl-rej col.col-aprovador,#nvReelApprScreen .modtbl-rej col.col-aprovador{width:200px}
-#nvPubApprScreen .modtbl-rej col.col-motivo,#nvReelApprScreen .modtbl-rej col.col-motivo{width:116px}
-#nvModScreen .modtbl-pend col.col-autor{width:240px}
-#nvModScreen .modtbl-pend col.col-publicacao{width:200px}
-#nvModScreen .modtbl-pend col.col-data{width:180px}
-#nvModScreen .modtbl-pend col.col-acoes{width:116px}
-#nvModScreen .modtbl-apr col.col-autor,#nvModScreen .modtbl-rej col.col-autor{width:200px}
-#nvModScreen .modtbl-apr col.col-publicacao{width:200px}
-#nvModScreen .modtbl-apr col.col-data{width:164px}
-#nvModScreen .modtbl-rej col.col-data{width:200px}
-#nvModScreen .modtbl-apr col.col-aprovador{width:200px}
-#nvModScreen .modtbl-rej col.col-aprovador{width:164px}
-#nvModScreen .modtbl-apr col.col-decidido-em{width:116px}
-#nvModScreen .modtbl-rej col.col-decidido-em{width:200px}
-#nvModScreen .modtbl-rej col.col-motivo{width:116px}
+#nvPubApprScreen .modtbl-rej col.col-aprovador,#nvReelApprScreen .modtbl-rej col.col-aprovador,
+#nvModScreen .modtbl-apr col.col-aprovador,#nvModScreen .modtbl-rej col.col-aprovador{width:240px}
+#nvPubApprScreen .modtbl-apr col.col-decidido-em,#nvReelApprScreen .modtbl-apr col.col-decidido-em,
+#nvPubApprScreen .modtbl-rej col.col-decidido-em,#nvReelApprScreen .modtbl-rej col.col-decidido-em,
+#nvModScreen .modtbl-apr col.col-decidido-em,#nvModScreen .modtbl-rej col.col-decidido-em{width:200px}
+#nvPubApprScreen .rl-reel,#nvReelApprScreen .rl-reel{min-width:600px}
+/* .rl-reel>div (título+meta) é filho flex sem min-width:0 — por padrão um item flex não
+   encolhe abaixo do tamanho do seu conteúdo, então o título comprido empurrava a célula e
+   "passava" a coluna em vez de quebrar; com min-width:0 ele volta a respeitar o espaço
+   disponível e o line-clamp:2 do <b> (abaixo) passa a truncar com "..." de verdade. */
+#nvPubApprScreen .rl-reel>div,#nvReelApprScreen .rl-reel>div{min-width:0}
+#nvModScreen .modtbl-pend col.col-publicacao,#nvModScreen .modtbl-apr col.col-publicacao,#nvModScreen .modtbl-rej col.col-publicacao{width:200px}
+/* Comentário (1ª coluna, sem thumbnail — .apr-cmt sozinho, sem wrapper .rl-reel) precisa do
+   mesmo piso de largura que Publicação/Short já têm via .rl-reel; :first-child distingue da
+   célula de Motivo, que também usa .apr-cmt mas é sempre a última coluna. Trunca em 3 linhas
+   (não 2, como Publicação/Short) porque é o texto do comentário, não um título curto. */
+#nvModScreen .modtbl td.apr-cmt:first-child{min-width:480px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
 /* .rlist genérico (06-shorts.css) tem th:nth-child(2)/td:nth-child(2){min-width:340px}, pensado
    pra listas como Categorias — sem essa exceção ele vazava pra cá e travava a 2ª coluna acima
    da % dela, impedindo o encolhimento proporcional (th:first-child, o outro vazamento antigo,
@@ -2024,46 +2043,46 @@ input,textarea,select{font-size:14px}
 #nvModScreen .modtbl .pubttl>div{min-width:0}
 #nvModScreen .modtbl .pubttl b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Botão "Ações" preenche 100% da célula (coluna de 118px) */
-#nvPubApprScreen .modtbl-pend .rl-actwrap,#nvReelApprScreen .modtbl-pend .rl-actwrap{display:block;width:100%}
-#nvPubApprScreen .modtbl-pend .rl-actbtn,#nvReelApprScreen .modtbl-pend .rl-actbtn{width:100%;justify-content:center}
+#nvPubApprScreen .modtbl-pend .rl-actwrap,#nvReelApprScreen .modtbl-pend .rl-actwrap,#nvModScreen .modtbl-pend .rl-actwrap{display:block;width:100%}
+#nvPubApprScreen .modtbl-pend .rl-actbtn,#nvReelApprScreen .modtbl-pend .rl-actbtn,#nvModScreen .modtbl-pend .rl-actbtn{width:100%;justify-content:center}
 /* Setinhas de ordenação iguais às de Categorias (mesmos NV_SORT_ICONS, mesma cor/hover). */
 #nvPubApprScreen .modtbl th.sortable,#nvReelApprScreen .modtbl th.sortable{cursor:pointer}
 #nvPubApprScreen .modtbl th .sort-ic,#nvReelApprScreen .modtbl th .sort-ic{display:inline-flex;align-items:center;vertical-align:middle;color:#0C334A;opacity:1}
-#nvPubApprScreen .modtbl th .sort-ic svg,#nvReelApprScreen .modtbl th .sort-ic svg{width:24px;height:24px;display:block}
+#nvPubApprScreen .modtbl th .sort-ic svg,#nvReelApprScreen .modtbl th .sort-ic svg,#nvModScreen .modtbl th .sort-ic svg{width:24px;height:24px;display:block}
 #nvPubApprScreen .modtbl th.sortable:hover .sort-ic,#nvReelApprScreen .modtbl th.sortable:hover .sort-ic{color:#2F8EE5}
 #nvPubApprScreen .modtbl tbody tr:nth-child(odd),#nvReelApprScreen .modtbl tbody tr:nth-child(odd){background:#fff}
 #nvPubApprScreen .modtbl tbody tr:nth-child(even),#nvReelApprScreen .modtbl tbody tr:nth-child(even){background:#F0F3F5}
 #nvPubApprScreen .modtbl tbody tr:hover,#nvReelApprScreen .modtbl tbody tr:hover{background:#e7f1fb}
 /* Scrollbar das tabelas de Aprovações removida a pedido — nas outras telas que reaproveitam o
    mesmo .rlist (06-shorts.css) a barra fina continua visível de propósito. */
-#nvPubApprScreen .rlist,#nvReelApprScreen .rlist{scrollbar-width:none}
-#nvPubApprScreen .rlist::-webkit-scrollbar,#nvReelApprScreen .rlist::-webkit-scrollbar{display:none}
+#nvPubApprScreen .rlist,#nvReelApprScreen .rlist,#nvModScreen .rlist{scrollbar-width:none}
+#nvPubApprScreen .rlist::-webkit-scrollbar,#nvReelApprScreen .rlist::-webkit-scrollbar,#nvModScreen .rlist::-webkit-scrollbar{display:none}
 #nvPubApprScreen .modtbl td,#nvReelApprScreen .modtbl td{height:58px;box-sizing:border-box}
 #nvPubApprScreen .rl-author .avatar,#nvPubApprScreen .rl-author .nv-logo,
-#nvReelApprScreen .rl-author .avatar,#nvReelApprScreen .rl-author .nv-logo{width:32px;height:32px}
-#nvPubApprScreen .rl-author b,#nvReelApprScreen .rl-author b{font-size:14px;font-weight:400;color:#5F666C}
-#nvPubApprScreen .rl-emp,#nvReelApprScreen .rl-emp{font-size:11px;font-weight:400;color:#999999}
+#nvReelApprScreen .rl-author .avatar,#nvReelApprScreen .rl-author .nv-logo,
+#nvModScreen .rl-author .avatar,#nvModScreen .rl-author .nv-logo{width:32px;height:32px}
+#nvPubApprScreen .rl-author b,#nvReelApprScreen .rl-author b,#nvModScreen .rl-author b{font-size:14px;font-weight:400;color:#5F666C}
+#nvPubApprScreen .rl-emp,#nvReelApprScreen .rl-emp,#nvModScreen .rl-emp{font-size:11px;font-weight:400;color:#999999}
 #nvPubApprScreen .rl-reel b,#nvReelApprScreen .rl-reel b{font-size:14px;font-weight:700;color:#5F666C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
 #nvPubApprScreen .rl-reel>div>span,#nvReelApprScreen .rl-reel>div>span{display:block;font-size:11px;color:#999999;font-weight:400}
-#nvPubApprScreen .rl-dt,#nvReelApprScreen .rl-dt{font-size:14px;color:#5F666C;font-weight:400}
-#nvPubApprScreen .rl-rel,#nvReelApprScreen .rl-rel{font-size:11px;color:#999999;font-weight:400}
-#nvPubApprScreen .apr-type,#nvReelApprScreen .apr-type{font-size:11px}
-#nvPubApprScreen .rl-actbtn,#nvReelApprScreen .rl-actbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1.5px solid #2F8EE5;border-radius:6px;background:#fff;color:#2F8EE5;font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
-#nvPubApprScreen .rl-actbtn:hover,#nvReelApprScreen .rl-actbtn:hover{background:rgba(47,142,229,.08)}
-#nvPubApprScreen .rl-actbtn i,#nvReelApprScreen .rl-actbtn i{font-size:12px}
-#nvPubApprScreen .rl-acts,#nvReelApprScreen .rl-acts{text-align:center}
+#nvPubApprScreen .rl-dt,#nvReelApprScreen .rl-dt,#nvModScreen .rl-dt{font-size:14px;color:#5F666C;font-weight:400}
+#nvPubApprScreen .rl-rel,#nvReelApprScreen .rl-rel,#nvModScreen .rl-rel{font-size:11px;color:#999999;font-weight:400}
+#nvPubApprScreen .rl-actbtn,#nvReelApprScreen .rl-actbtn,#nvModScreen .rl-actbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1.5px solid #2F8EE5;border-radius:6px;background:#fff;color:#2F8EE5;font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+#nvPubApprScreen .rl-actbtn:hover,#nvReelApprScreen .rl-actbtn:hover,#nvModScreen .rl-actbtn:hover{background:#2F8EE5;color:#fff}
+#nvPubApprScreen .rl-actbtn i,#nvReelApprScreen .rl-actbtn i,#nvModScreen .rl-actbtn i{font-size:12px}
+#nvPubApprScreen .rl-acts,#nvReelApprScreen .rl-acts,#nvModScreen .rl-acts{text-align:center}
 /* Botão "Ações" (mesmo padrão de #pubGrid/#rxGrid — 18-gerenciar-publicacoes.css /
    17-gerenciar-shorts.css): dropdown com Abrir em nova guia / Aprovar / Reprovar. */
-#nvPubApprScreen .rl-actwrap,#nvReelApprScreen .rl-actwrap{position:relative;display:inline-block}
-#nvPubApprScreen .rl-actmenu,#nvReelApprScreen .rl-actmenu{position:absolute;top:calc(100% + 6px);right:0;z-index:6;background:#fff;border:1px solid #D9D9D9;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14);min-width:220px;padding:6px;display:flex;flex-direction:column;gap:4px}
-#nvPubApprScreen .rl-actmenu button,#nvReelApprScreen .rl-actmenu button{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 14px;border:0;border-radius:8px;background:none;font:inherit;font-size:14px;color:#5F666C;text-align:left;cursor:pointer;white-space:nowrap}
-#nvPubApprScreen .rl-actmenu button:hover,#nvReelApprScreen .rl-actmenu button:hover{background:#f2f5f7}
-#nvPubApprScreen .rl-actmenu button.danger,#nvReelApprScreen .rl-actmenu button.danger{color:#e0392c}
-#nvPubApprScreen .rl-actmenu button.danger:hover,#nvReelApprScreen .rl-actmenu button.danger:hover{background:#fdecea}
-#nvPubApprScreen td.rl-actz,#nvReelApprScreen td.rl-actz{position:relative;z-index:20}
+#nvPubApprScreen .rl-actwrap,#nvReelApprScreen .rl-actwrap,#nvModScreen .rl-actwrap{position:relative;display:inline-block}
+#nvPubApprScreen .rl-actmenu,#nvReelApprScreen .rl-actmenu,#nvModScreen .rl-actmenu{position:absolute;top:calc(100% + 6px);right:0;z-index:6;background:#fff;border:1px solid #D9D9D9;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14);min-width:220px;padding:6px;display:flex;flex-direction:column;gap:4px}
+#nvPubApprScreen .rl-actmenu button,#nvReelApprScreen .rl-actmenu button,#nvModScreen .rl-actmenu button{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 14px;border:0;border-radius:8px;background:none;font:inherit;font-size:14px;color:#5F666C;text-align:left;cursor:pointer;white-space:nowrap}
+#nvPubApprScreen .rl-actmenu button:hover,#nvReelApprScreen .rl-actmenu button:hover,#nvModScreen .rl-actmenu button:hover{background:#f2f5f7}
+#nvPubApprScreen .rl-actmenu button.danger,#nvReelApprScreen .rl-actmenu button.danger,#nvModScreen .rl-actmenu button.danger{color:#e0392c}
+#nvPubApprScreen .rl-actmenu button.danger:hover,#nvReelApprScreen .rl-actmenu button.danger:hover,#nvModScreen .rl-actmenu button.danger:hover{background:#fdecea}
+#nvPubApprScreen td.rl-actz,#nvReelApprScreen td.rl-actz,#nvModScreen td.rl-actz{position:relative;z-index:20}
 /* Botão de mostrar/esconder filtros (.fl-toggle é reaproveitado de outras telas —
    aqui só o gap e o raio mudam, escopados pra não afetar Publicações/Shorts Explorar). */
-#nvPubApprScreen .fl-toggle,#nvReelApprScreen .fl-toggle{gap:8px;border-radius:6px}
+#nvPubApprScreen .fl-toggle,#nvReelApprScreen .fl-toggle,#nvModScreen .fl-toggle{gap:8px;border-radius:6px}
 #nvAprHomeScreen .perm-body{padding:12px}
 #nvPermScreen .perm-body{padding:8px}
 .nv-filters .nv-fsearch{margin:16px 0 0;width:100%;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0 12px;border-radius:8px}
@@ -2088,7 +2107,7 @@ input,textarea,select{font-size:14px}
 .itbl .itbl-cmtcell .itbl-cmt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
 .rl-recpill i{font-size:9px}
 .news-view.mod-mode{background:#E9EAED !important}
-.fl-toggle{display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 16px;border:0;border-radius:8px;background:#1667B8;color:#fff;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.fl-toggle{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:6px;background:#1667B8;color:#fff;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .fl-toggle i{font-size:14px}
 .fl-toggle .fl-carat{font-size:11px;opacity:.9}
 .fl-toggle:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#1667B8}
@@ -2260,7 +2279,7 @@ input,textarea,select{font-size:14px}
 .nv-filters .nv-fsel{width:100%}
 .nv-filters-ft{display:flex;gap:10px;padding:12px 0 0;margin-top:auto;background:#F0F0F0}
 .news-view .nv-filters-ft,.rx-nav .nv-filters-ft{position:sticky;bottom:0;z-index:2;background:#F0F0F0;padding:12px;margin-left:-18px;margin-right:-18px;border-radius:0 0 14px 14px}
-.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 16px;border-radius:8px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
+.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 12px;border-radius:6px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
 .nv-filters .nv-fsel,.rx-nav .nv-fsel,.nv-filters .nv-finput,.rx-nav .nv-finput{height:42px;padding-top:0;padding-bottom:0}
 .nv-sitcards.nv-sit2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:transparent;padding:0;border-radius:0}
 .nv-sitcards.nv-sit2 .rxs-item2{width:100%;justify-content:center;text-align:center}
@@ -2413,13 +2432,14 @@ input,textarea,select{font-size:14px}
 .nv-lt-thumb.ph{display:flex;align-items:center;justify-content:center;color:#9aa7b3;font-size:14px}
 .nv-lt-type{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
 .nv-lt-type i{font-size:9px;margin-right:3px}
-.nv-tp{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.3px;padding:5px 14px;border-radius:32px;white-space:nowrap;line-height:16px;vertical-align:middle;width:auto;min-width:86px;max-width:none;vertical-align:middle;box-sizing:border-box}
+.nv-tp{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:400;letter-spacing:.3px;padding:4px 12px;border-radius:32px;white-space:nowrap;line-height:20px;vertical-align:middle;width:auto;min-width:86px;max-width:none;vertical-align:middle;box-sizing:border-box}
 .nv-tp i{font-size:11px;line-height:16px;display:block}
 #nvList td:nth-child(3){text-align:center}
 #nvList td:nth-child(3),#nvList th:nth-child(3){width:110px;min-width:110px;white-space:nowrap}
 #nvList td:nth-child(2),#nvList th:nth-child(2){white-space:nowrap;min-width:110px}
-.nv-tp.is-art{color:#0c7d7d;background:rgba(0,172,172,.12)}
+.nv-tp.is-art{color:#905813;background:#e08a1e29}
 .nv-tp.is-post{color:#5b6672;background:#eef2f5}
+.nv-tp.is-color{color:#0c7d7d;background:rgba(0,172,172,.12)}
 .nv-reach{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#465364;white-space:nowrap}
 .nv-reach i{font-size:11px;color:#8a94a0}
 .nv-author-cell{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#465364;white-space:nowrap}
@@ -3293,7 +3313,7 @@ input,textarea,select{font-size:14px}
    ficarem identicas visualmente. */
 #nvCatsScreen,#nvTeamScreen{margin:8px;gap:8px}
 .news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
-.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
+.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:258px}
 #nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
 #nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:8px 12px;gap:8px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:none;flex-shrink:0}
 #nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
@@ -3348,7 +3368,9 @@ input,textarea,select{font-size:14px}
 #nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
 #nvTeamScreen .rlist tbody td .perm-person span{font-size:11px;color:#999}
 #nvTeamScreen .rlist tbody td .perm-person .avatar{width:32px;height:32px}
-#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
+#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg,
+#nvModScreen .rx-title svg,#nvPubApprScreen .rx-title svg,#nvReelApprScreen .rx-title svg,
+#reelsView .rx-title svg,#nvCmGridScreen .rx-title svg,#nvInterScreen .rx-title svg{color:var(--teal)}
 /* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
    toda a largura disponivel da celula, sem bloco de largura fixa.
    Editar: outline azul, preenche de azul (texto/icone branco) no hover.
@@ -3560,20 +3582,21 @@ input,textarea,select{font-size:14px}
    O painel dela: 400px, borda #D9D9D9, raio 8px e 16px de padding lateral — e
    esse 16 que as margens negativas das secoes e do rodape usam de medida.
    ========================================================================== */
-/* Aprovações > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen) reaproveitam o
-   mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão "Limpar filtros"
-   desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */
-#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvCmGridScreen .rx-filters,#nvInterScreen .rx-filters{
+/* Aprovações > Publicações/Shorts/Comentários (#nvPubApprScreen, #nvReelApprScreen, #nvModScreen)
+   reaproveitam o mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão
+   "Limpar filtros" desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */
+#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvModScreen .rx-filters,#nvCmGridScreen .rx-filters,#nvInterScreen .rx-filters{
   width:400px;border-color:#D9D9D9;border-radius:8px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec,#nvInterScreen .rx-filters .nv-fsec{
+#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvModScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec,#nvInterScreen .rx-filters .nv-fsec{
   margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd,#nvInterScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
-#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i,#nvInterScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvModScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd,#nvInterScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvModScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i,#nvInterScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
 #nvListScreen .rx-filters .nv-sitcards button,.reels-view.in-cfg .rx-filters .nv-sitcards button{border-color:#D9D9D9}
 #nvListScreen .rx-filters .nv-filters-ft .nv-fclear,#nvListScreen .rx-filters .nv-filters-ft .nv-fapply,
 .reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fclear,.reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fapply,
 #nvPubApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvPubApprScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvReelApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvReelApprScreen .rx-filters .nv-filters-ft .nv-fapply,
+#nvModScreen .rx-filters .nv-filters-ft .nv-fclear,#nvModScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvCmGridScreen .rx-filters .nv-filters-ft .nv-fclear,#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvInterScreen .rx-filters .nv-filters-ft .nv-fclear,#nvInterScreen .rx-filters .nv-filters-ft .nv-fapply{flex:1}
 /* Sem filtro ativo, "Limpar filtros" fica desabilitado; quem alterna has-active
@@ -3582,11 +3605,11 @@ input,textarea,select{font-size:14px}
    Precisa ficar escopado: o ramo social (foBuildSocialFilters) nunca poe essa
    classe, entao no generico o botao do Shorts Explorar ficava desabilitado para
    sempre, sem jeito de limpar filtro nenhum. */
-#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear,#nvInterScreen .rx-filters .nv-fclear{
+#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvModScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear,#nvInterScreen .rx-filters .nv-fclear{
   background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
-#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active,#nvInterScreen .rx-filters .nv-fclear.has-active{
+#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvModScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active,#nvInterScreen .rx-filters .nv-fclear.has-active{
   background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
-#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover,#nvInterScreen .rx-filters .nv-fclear.has-active:hover{
+#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvModScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover,#nvInterScreen .rx-filters .nv-fclear.has-active:hover{
   background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}
 
 /* feed da home, destaque e coluna direita */
@@ -6748,7 +6771,8 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 #rxGrid .rl-reel{ position:relative; justify-content:space-between }
 #rxGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
 #rxGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
-#rxGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rxGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#rxGrid .rl-actbtn:hover span{ color:#fff }
 #rxGrid .rl-actbtn i{ font-size:12px }
 #rxGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
 #rxGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }
@@ -6880,12 +6904,13 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 /* Sombra na coluna fixa indicando conteúdo por baixo ao rolar horizontalmente */
 #pubGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#pubGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
 
-/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 7 Autor,
-   8 Unidade do autor, 9 Visualizações, 10 Reações, 11 Comentários, 12 Categoria,
+/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 6 Tipo,
+   7 Autor, 8 Unidade do autor, 9 Visualizações, 10 Reações, 11 Comentários, 12 Categoria,
    13 Data de encerramento */
 #pubGrid .rl-tblwrap th:nth-child(3),#pubGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:160px; min-width:160px }
 #pubGrid .rl-tblwrap th:nth-child(4),#pubGrid .rl-tblwrap td:nth-child(4){ width:204px }
 #pubGrid .rl-tblwrap th:nth-child(5),#pubGrid .rl-tblwrap td:nth-child(5){ width:200px }
+#pubGrid .rl-tblwrap th:nth-child(6),#pubGrid .rl-tblwrap td:nth-child(6){ width:200px }
 #pubGrid .rl-tblwrap th:nth-child(7),#pubGrid .rl-tblwrap td:nth-child(7){ width:240px }
 #pubGrid .rl-tblwrap td:nth-child(7) .rl-author{ min-width:212px }
 #pubGrid .rl-tblwrap td:nth-child(7) .rl-author b,#pubGrid .rl-tblwrap td:nth-child(7) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
@@ -6909,7 +6934,8 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #pubGrid .rl-reel{ position:relative; justify-content:space-between }
 #pubGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
 #pubGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
-#pubGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#pubGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#pubGrid .rl-actbtn:hover span{ color:#fff }
 #pubGrid .rl-actbtn i{ font-size:12px }
 #pubGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
 #pubGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }
@@ -6994,7 +7020,8 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #cmgGrid .rl-reel{ justify-content:space-between }
 #cmgGrid .apr-cmt{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 #cmgGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0 }
-#cmgGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#cmgGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#cmgGrid .rl-actbtn:hover span{ color:#fff }
 #cmgGrid .rl-actbtn span{ font-size:14px; font-weight:700; color:#2F8EE5 }
 #cmgGrid .rl-actbtn svg{ width:20px; height:20px; flex-shrink:0 }
 
@@ -7061,7 +7088,7 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
 #rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
 #rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
-#rcnGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1672px }
+#rcnGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1736px }
 #rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
 #rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
@@ -7089,7 +7116,7 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
    igualmente entre si qualquer espaço que sobrar na tabela — a 6 (Publicação/Shorts) é a
    única com "width" travado (width=min-width=max-width), então nunca cresce pelo conteúdo
    e nunca fica menor que 400px; o excedente vai sempre para as colunas 2-5. */
-#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ min-width:300px }
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ min-width:364px }
 #rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ min-width:320px }
 #rcnGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
 #rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ min-width:320px }
@@ -7102,7 +7129,8 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #rcnGrid .rl-reel{ justify-content:space-between }
 #rcnGrid .il-pill{ font-size:14px }
 #rcnGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0 }
-#rcnGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rcnGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#rcnGrid .rl-actbtn:hover span{ color:#fff }
 #rcnGrid .rl-actbtn span{ font-size:14px; font-weight:700; color:#2F8EE5 }
 #rcnGrid .rl-actbtn svg{ width:20px; height:20px; flex-shrink:0 }
 
@@ -8073,12 +8101,12 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     </div>
     <div class="nmod-top-tabs nmod-grp" id="nmodGrpManage">
       <button class="nmod-tab" id="nmtPub"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
-      <button class="nmod-tab" id="nmtMgShorts"><i class="fa-solid fa-clapperboard"></i> Shorts</button>
-      <button class="nmod-tab" id="nmtCmts"><i class="fa-solid fa-comment"></i> Comentários</button>
-      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><i class="fa-solid fa-thumbs-up"></i><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
-      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
+      <button class="nmod-tab" id="nmtMgShorts"><svg class="nmt-ic-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>movie-outline</title><path d="M5.76,10H20V18H4V6.47M22,4H18L20,8H17L15,4H13L15,8H12L10,4H8L10,8H7L5,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4Z" /></svg><svg class="nmt-ic-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>movie</title><path d="M18,4L20,8H17L15,4H13L15,8H12L10,4H8L10,8H7L5,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4H18Z" /></svg> Shorts</button>
+      <button class="nmod-tab" id="nmtCmts"><svg class="nmt-ic-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>message-text-outline</title><path d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2 4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z" /></svg><svg class="nmt-ic-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>message-text</title><path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18" /></svg> Comentários</button>
+      <button class="nmod-tab" id="nmtInter"><span class="nmt-ic"><svg class="nmt-ic-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>thumb-up-outline</title><path d="M5,9V21H1V9H5M9,21A2,2 0 0,1 7,19V9C7,8.45 7.22,7.95 7.59,7.59L14.17,1L15.23,2.06C15.5,2.33 15.67,2.7 15.67,3.11L15.64,3.43L14.69,8H21C22.11,8 23,8.9 23,10V12C23,12.26 22.95,12.5 22.86,12.73L19.84,19.78C19.54,20.5 18.83,21 18,21H9M9,19H18.03L21,12V10H12.21L13.34,4.68L9,9.03V19Z" /></svg><svg class="nmt-ic-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>thumb-up</title><path d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z" /></svg><span class="tab-badge" id="interTabBadge" hidden></span></span> Reações</button>
+      <button class="nmod-tab" id="nmtApr"><span class="nmt-ic"><svg class="nmt-ic-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>check-decagram-outline</title><path d="M23 12L20.6 9.2L20.9 5.5L17.3 4.7L15.4 1.5L12 3L8.6 1.5L6.7 4.7L3.1 5.5L3.4 9.2L1 12L3.4 14.8L3.1 18.5L6.7 19.3L8.6 22.5L12 21L15.4 22.5L17.3 19.3L20.9 18.5L20.6 14.8L23 12M18.7 16.9L16 17.5L14.6 19.9L12 18.8L9.4 19.9L8 17.5L5.3 16.9L5.5 14.1L3.7 12L5.5 9.9L5.3 7.1L8 6.5L9.4 4.1L12 5.2L14.6 4.1L16 6.5L18.7 7.1L18.5 9.9L20.3 12L18.5 14.1L18.7 16.9M16.6 7.6L18 9L10 17L6 13L7.4 11.6L10 14.2L16.6 7.6Z" /></svg><svg class="nmt-ic-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>check-decagram</title><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg><span class="tab-badge" id="aprTabBadge" hidden></span></span> Aprovações</button>
       <button class="nmod-tab" id="nmtExport"><i class="mdi mdi-file-excel-outline nmt-ic-off"></i><i class="mdi mdi-file-excel nmt-ic-on"></i> Exportar</button>
-      <button class="nmod-tab" id="nmtCfg"><i class="fa-solid fa-gear"></i> Configurações</button>
+      <button class="nmod-tab" id="nmtCfg"><svg class="nmt-ic-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cog-outline</title><path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M10,22C9.75,22 9.54,21.82 9.5,21.58L9.13,18.93C8.5,18.68 7.96,18.34 7.44,17.94L4.95,18.95C4.73,19.03 4.46,18.95 4.34,18.73L2.34,15.27C2.21,15.05 2.27,14.78 2.46,14.63L4.57,12.97L4.5,12L4.57,11L2.46,9.37C2.27,9.22 2.21,8.95 2.34,8.73L4.34,5.27C4.46,5.05 4.73,4.96 4.95,5.05L7.44,6.05C7.96,5.66 8.5,5.32 9.13,5.07L9.5,2.42C9.54,2.18 9.75,2 10,2H14C14.25,2 14.46,2.18 14.5,2.42L14.87,5.07C15.5,5.32 16.04,5.66 16.56,6.05L19.05,5.05C19.27,4.96 19.54,5.05 19.66,5.27L21.66,8.73C21.79,8.95 21.73,9.22 21.54,9.37L19.43,11L19.5,12L19.43,13L21.54,14.63C21.73,14.78 21.79,15.05 21.66,15.27L19.66,18.73C19.54,18.95 19.27,19.04 19.05,18.95L16.56,17.95C16.04,18.34 15.5,18.68 14.87,18.93L14.5,21.58C14.46,21.82 14.25,22 14,22H10M11.25,4L10.88,6.61C9.68,6.86 8.62,7.5 7.85,8.39L5.44,7.35L4.69,8.65L6.8,10.2C6.4,11.37 6.4,12.64 6.8,13.8L4.68,15.36L5.43,16.66L7.86,15.62C8.63,16.5 9.68,17.14 10.87,17.38L11.24,20H12.76L13.13,17.39C14.32,17.14 15.37,16.5 16.14,15.62L18.57,16.66L19.32,15.36L17.2,13.81C17.6,12.64 17.6,11.37 17.2,10.2L19.31,8.65L18.56,7.35L16.15,8.39C15.38,7.5 14.32,6.86 13.12,6.62L12.75,4H11.25Z" /></svg><svg class="nmt-ic-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>cog</title><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg> Configurações</button>
     </div>
     <div class="nmod-top-tabs nmod-grp on" id="nmodGrpSocial">
       <button class="nmod-tab active" id="nmtFeed"><i class="fa-solid fa-rectangle-list"></i> Publicações</button>
@@ -8111,7 +8139,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
     <div class="apr-grp-hd"><i class="fa-solid fa-newspaper"></i> Publicações</div>
     <button class="nv-cfgitem apr-sub" data-scope="pub">Postagens <span class="cfg-badge" id="aprPubBadge" hidden></span></button>
     <button class="nv-cfgitem apr-sub" data-scope="com">Comentário <span class="cfg-badge" id="aprComBadge" hidden></span></button>
-    <div class="apr-grp-hd" style="margin-top:14px"><i class="fa-solid fa-clapperboard"></i> Shorts</div>
+    <div class="apr-grp-hd" style="margin-top:14px"><svg viewBox="0 0 24 24" fill="currentColor"><title>movie</title><path d="M18,4L20,8H17L15,4H13L15,8H12L10,4H8L10,8H7L5,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4H18Z" /></svg> Shorts</div>
     <button class="nv-cfgitem apr-sub" data-scope="reel">Postagens <span class="cfg-badge" id="aprReelBadge" hidden></span></button>
     <button class="nv-cfgitem" id="nvaprCom" hidden></button><button class="nv-cfgitem" id="nvaprPub" hidden></button>
   </aside>
@@ -8380,7 +8408,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   <!-- GERENCIAR > COMENTÁRIOS -->
   <div class="nv-screen" id="nvCmGridScreen">
     <div class="cat-head">
-      <div class="rx-title"><i class="fa-solid fa-comment"></i><h2>Comentários</h2></div>
+      <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><title>message-text</title><path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18" /></svg><h2>Comentários</h2></div>
       <button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button>
       <span style="flex:1"></span>
     </div>
@@ -8393,13 +8421,13 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- GERENCIAR > EXPORTAÇÕES -->
   <aside class="nv-cfgside" id="nvExportSide">
-    <div class="apr-grp-hd"><i class="fa-solid fa-file-export"></i> Exportação</div>
+    <div class="apr-grp-hd"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><title>file-export</title><path d="M6,2C4.89,2 4,2.9 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13,3.5L18.5,9H13M8.93,12.22H16V19.29L13.88,17.17L11.05,20L8.22,17.17L11.05,14.35" /></svg> Exportação</div>
     <button class="nv-cfgitem active" id="nvcfgExport">Exportar</button>
   </aside>
   <div class="nv-screen" id="nvExportScreen">
     <div class="cat-body exp-body">
       <div class="exp-panel">
-        <div class="exp-title"><i class="fa-solid fa-file-export"></i><h2>Exportar</h2></div>
+        <div class="exp-title"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><title>file-export</title><path d="M6,2C4.89,2 4,2.9 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13,3.5L18.5,9H13M8.93,12.22H16V19.29L13.88,17.17L11.05,20L8.22,17.17L11.05,14.35" /></svg><h2>Exportar</h2></div>
         <div class="exp-grid">
           <div class="exp-item">
             <div class="exp-item-top">
@@ -8407,31 +8435,31 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
               <div class="exp-item-txt"><b>Exportar publicações</b><span>Gere um arquivo em .xlsx completo com todo o histórico de publicações do sistema.</span></div>
             </div>
             <div class="exp-item-div"></div>
-            <button type="button" class="exp-btn" data-expkind="pub"><i class="fa-solid fa-download"></i> Exportar publicações</button>
+            <button type="button" class="exp-btn" data-expkind="pub"><svg viewBox="0 0 24 24" fill="currentColor"><title>tray-arrow-up</title><path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 2L6.46 7.46L7.88 8.88L11 5.75V15H13V5.75L16.13 8.88L17.55 7.45L12 2Z" /></svg> Exportar publicações</button>
           </div>
           <div class="exp-item">
             <div class="exp-item-top">
-              <span class="exp-ic"><i class="fa-solid fa-clapperboard"></i></span>
+              <span class="exp-ic"><svg viewBox="0 0 24 24" fill="currentColor"><title>movie</title><path d="M18,4L20,8H17L15,4H13L15,8H12L10,4H8L10,8H7L5,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4H18Z" /></svg></span>
               <div class="exp-item-txt"><b>Exportar shorts</b><span>Gere um arquivo em .xlsx completo com todo o histórico de shorts do sistema.</span></div>
             </div>
             <div class="exp-item-div"></div>
-            <button type="button" class="exp-btn" data-expkind="shorts"><i class="fa-solid fa-download"></i> Exportar shorts</button>
+            <button type="button" class="exp-btn" data-expkind="shorts"><svg viewBox="0 0 24 24" fill="currentColor"><title>tray-arrow-up</title><path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 2L6.46 7.46L7.88 8.88L11 5.75V15H13V5.75L16.13 8.88L17.55 7.45L12 2Z" /></svg> Exportar shorts</button>
           </div>
           <div class="exp-item">
             <div class="exp-item-top">
-              <span class="exp-ic"><i class="fa-solid fa-comment"></i></span>
+              <span class="exp-ic"><svg viewBox="0 0 24 24" fill="currentColor"><title>message-text</title><path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18" /></svg></span>
               <div class="exp-item-txt"><b>Exportar comentários</b><span>Gere um arquivo em .xlsx completo com histórico dos comentários feitos no sistema.</span></div>
             </div>
             <div class="exp-item-div"></div>
-            <button type="button" class="exp-btn" data-expkind="comments"><i class="fa-solid fa-download"></i> Exportar comentários</button>
+            <button type="button" class="exp-btn" data-expkind="comments"><svg viewBox="0 0 24 24" fill="currentColor"><title>tray-arrow-up</title><path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 2L6.46 7.46L7.88 8.88L11 5.75V15H13V5.75L16.13 8.88L17.55 7.45L12 2Z" /></svg> Exportar comentários</button>
           </div>
           <div class="exp-item">
             <div class="exp-item-top">
-              <span class="exp-ic"><i class="fa-solid fa-thumbs-up"></i></span>
+              <span class="exp-ic"><svg viewBox="0 0 24 24" fill="currentColor"><title>thumb-up</title><path d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z" /></svg></span>
               <div class="exp-item-txt"><b>Exportar reações</b><span>Gere um arquivo em .xlsx completo com histórico das reações feitas no sistema.</span></div>
             </div>
             <div class="exp-item-div"></div>
-            <button type="button" class="exp-btn" data-expkind="reactions"><i class="fa-solid fa-download"></i> Exportar reações</button>
+            <button type="button" class="exp-btn" data-expkind="reactions"><svg viewBox="0 0 24 24" fill="currentColor"><title>tray-arrow-up</title><path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 2L6.46 7.46L7.88 8.88L11 5.75V15H13V5.75L16.13 8.88L17.55 7.45L12 2Z" /></svg> Exportar reações</button>
           </div>
         </div>
       </div>
@@ -8773,7 +8801,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- INTERAÇÕES -->
   <div class="nv-screen" id="nvInterScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-thumbs-up"></i><h2>Reações</h2></div><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button>
+    <div class="cat-head"><div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><title>thumb-up</title><path d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z" /></svg><h2>Reações</h2></div><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button>
       <span style="flex:1"></span>
     </div>
     <div class="cat-body nv-listwrap">
@@ -8808,15 +8836,21 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- MODERAÇÃO -->
   <div class="nv-screen" id="nvModScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-comment-dots"></i><h2>Comentários pendentes</h2></div><span class="mod-count" id="modCount"></span></div>
-    <div class="perm-body"><div class="apr-seg" id="modSeg"><button class="on" data-f="pend"><i class="fa-regular fa-clock"></i> Pendentes <span class="apr-segn" id="modNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="modNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Rejeitados <span class="apr-segn" id="modNRej"></span></button></div><div id="modQueue"></div></div>
+    <div class="cat-head"><div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><title>message-check</title><path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.11 18 22 17.11 22 16V4C22 2.89 21.1 2 20 2M10.47 14L7 10.5L8.4 9.09L10.47 11.17L15.6 6L17 7.41L10.47 14Z" /></svg><h2 id="modApprScreenTitle">Comentários pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
+    <div class="cat-body nv-listwrap">
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="apr-seg" id="modSeg"><button class="on" data-f="pend"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>clock-time-four</title><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12S17.5 2 12 2M16.3 15.2L11 12.3V7H12.5V11.4L17 13.9L16.3 15.2Z" /></svg> Pendentes <span class="apr-segn" id="modNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="modNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Reprovados <span class="apr-segn" id="modNRej"></span></button></div>
+        <div id="modQueue"></div>
+      </div>
+      <aside class="rx-nav nv-filters rx-filters" id="modFilters"></aside>
+    </div>
   </div>
   <!-- APROVAÇÃO DE PUBLICAÇÕES -->
   <div class="nv-screen" id="nvPubApprScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-newspaper"></i><h2>Publicações pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
+    <div class="cat-head"><div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><title>text-box-check</title><path d="M17,21L14.25,18L15.41,16.84L17,18.43L20.59,14.84L21.75,16.25M12.8,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19A2,2 0 0,1 21,5V12.8C20.12,12.29 19.09,12 18,12L17,12.08V11H7V13H14.69C13.07,14.07 12,15.91 12,18C12,19.09 12.29,20.12 12.8,21M12,15H7V17H12M17,7H7V9H17" /></svg><h2 id="pubApprScreenTitle">Publicações pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
     <div class="cat-body nv-listwrap">
       <div class="nv-listmain" style="flex:1;min-width:0">
-        <div class="apr-seg" id="pubSeg"><button class="on" data-f="pend"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>clock-time-four</title><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12S17.5 2 12 2M16.3 15.2L11 12.3V7H12.5V11.4L17 13.9L16.3 15.2Z" /></svg> Pendentes <span class="apr-segn" id="pubNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="pubNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Reprovados <span class="apr-segn" id="pubNRej"></span></button></div>
+        <div class="apr-seg" id="pubSeg"><button class="on" data-f="pend"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>clock-time-four</title><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12S17.5 2 12 2M16.3 15.2L11 12.3V7H12.5V11.4L17 13.9L16.3 15.2Z" /></svg> Pendentes <span class="apr-segn" id="pubNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovadas <span class="apr-segn" id="pubNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Reprovadas <span class="apr-segn" id="pubNRej"></span></button></div>
         <div id="pubApprQueue"></div>
       </div>
       <aside class="rx-nav nv-filters rx-filters" id="pubApprFilters"></aside>
@@ -8824,7 +8858,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
   </div>
   <!-- APROVAÇÃO DE REELS -->
   <div class="nv-screen" id="nvReelApprScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-clapperboard"></i><h2>Shorts pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
+    <div class="cat-head"><div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><title>movie-open-check</title><path d="M19.65 6.5L16.91 2.96L20.84 2.18L21.62 6.1L19.65 6.5M16.71 7.07L13.97 3.54L12 3.93L14.75 7.46L16.71 7.07M19 13C20.1 13 21.12 13.3 22 13.81V10H2V20C2 21.11 2.9 22 4 22H13.81C13.3 21.12 13 20.1 13 19C13 15.69 15.69 13 19 13M11.81 8.05L9.07 4.5L7.1 4.91L9.85 8.44L11.81 8.05M4.16 5.5L3.18 5.69C2.1 5.91 1.4 6.96 1.61 8.04L2 10L6.9 9.03L4.16 5.5M21.34 15.84L17.75 19.43L16.16 17.84L15 19L17.75 22L22.5 17.25L21.34 15.84Z" /></svg><h2 id="reelApprScreenTitle">Shorts pendentes</h2></div><span style="flex:1"></span><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button></div>
     <div class="cat-body nv-listwrap">
       <div class="nv-listmain" style="flex:1;min-width:0">
         <div class="apr-seg" id="reelSeg"><button class="on" data-f="pend"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>clock-time-four</title><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12S17.5 2 12 2M16.3 15.2L11 12.3V7H12.5V11.4L17 13.9L16.3 15.2Z" /></svg> Pendentes <span class="apr-segn" id="reelNPend"></span></button><button data-f="aprovado"><i class="fa-solid fa-circle-check"></i> Aprovados <span class="apr-segn" id="reelNApr"></span></button><button data-f="rejeitado"><i class="fa-solid fa-circle-xmark"></i> Reprovados <span class="apr-segn" id="reelNRej"></span></button></div>
@@ -9077,7 +9111,7 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
 <!-- ==================== TELA DE REELS · EXPLORAR ==================== -->
 <div class="reels-view" id="reelsView">
   <div class="rx-header">
-    <div class="rx-title"><i class="fa-solid fa-clapperboard"></i><h2>Shorts</h2></div>
+    <div class="rx-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><title>movie</title><path d="M18,4L20,8H17L15,4H13L15,8H12L10,4H8L10,8H7L5,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4H18Z" /></svg><h2>Shorts</h2></div>
     <button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button>
     <span style="flex:1"></span>
   </div>
@@ -13258,7 +13292,7 @@ function nvSetEnv(env){
   const sw=$('#nmodEnvSwitch');
   if(sw) sw.innerHTML = social
     ? '<i class="fa-solid fa-gear"></i><span class="lbl">Gerenciar</span>'
-    : '<i class="fa-solid fa-users-rectangle"></i><span class="lbl">Acessar Social</span>';
+    : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>account-group</title><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg><span class="lbl">Acessar Social</span>';
 }
 $('#nmodEnvSwitch') && $('#nmodEnvSwitch').addEventListener('click', ()=>{
   if(newsView.classList.contains('env-social')) newsShow('list');
@@ -13618,7 +13652,7 @@ function expRenderBody(){
     '<div class="exp-warn"><i class="fa-solid fa-triangle-exclamation"></i> Intervalo máximo de: 3 meses</div>'+
     '<div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">'+
       '<button class="fo-btn ghost" id="expCancel">Cancelar</button>'+
-      '<button class="fo-btn" id="expSubmit"><i class="fa-solid fa-upload"></i> Exportar</button>'+
+      '<button class="fo-btn" id="expSubmit"><svg viewBox="0 0 24 24" fill="currentColor"><title>tray-arrow-up</title><path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 2L6.46 7.46L7.88 8.88L11 5.75V15H13V5.75L16.13 8.88L17.55 7.45L12 2Z" /></svg> Exportar</button>'+
     '</div>';
   $('#expModalBody').innerHTML = html;
 }
@@ -13861,62 +13895,191 @@ function aprBadges(){
   [['#aprComBadge',c],['#aprPubBadge',p],['#aprReelBadge',rq],['#aprTabBadge',c+p]].forEach(([sel,n])=>{ const b=$(sel); if(b){ b.hidden=!n; b.textContent=n; } });
 }
 function aprDT(d){ d=d||new Date(); const p=n=>('0'+n).slice(-2); return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+String(d.getFullYear()).slice(-2)+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+/* Ícone da pílula "Postagem colorida" — paleta, sem equivalente direto no Font Awesome já
+   usado nas outras (fa-newspaper/fa-align-left), então vai inline igual aos ícones do
+   cabeçalho das telas de Aprovações (26x26 lá; aqui 14x14, do tamanho dos <i> das outras). */
+const TIPO_ICON_COLORIDA='<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="flex-shrink:0"><title>palette</title><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z" /></svg>';
+/* Tipo de uma publicação — Artigo, Postagem colorida (cartão com cor de fundo em vez de foto:
+   n.banner nos posts mais antigos como o de aniversário, n.colorBg no editor de cor do wizard)
+   ou Postagem — reaproveitado por #pubGrid (21-gerenciar-publicacoes.js) e pela fila de
+   Aprovações (abaixo), pra manter a mesma classificação/rótulo/ícone nas duas tabelas. */
+function pubTipo(n){
+  if(n.article) return {label:'Artigo', cls:'is-art', icon:'<i class="fa-solid fa-newspaper"></i>'};
+  if(n.colorBg || n.banner) return {label:'Postagem colorida', cls:'is-color', icon:TIPO_ICON_COLORIDA};
+  return {label:'Postagem', cls:'is-post', icon:'<i class="fa-solid fa-align-left"></i>'};
+}
 function modBadge(){ aprBadges(); }
-function modAdd(entry){ entry.mid=++modSeq; MOD_QUEUE.push(entry); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue(); }
+function modAdd(entry){
+  entry.mid=++modSeq;
+  if(entry.ts==null){
+    const m=/^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(entry.dt||'');
+    entry.ts = m ? new Date(2000+ +m[3], +m[2]-1, +m[1], +m[4], +m[5]).getTime() : Date.now();
+  }
+  MOD_QUEUE.push(entry); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue();
+}
 function modRemove(mid,status){ const e=MOD_QUEUE.find(x=>x.mid===mid); if(e&&status){ e.status=status; e.decidedBy='Rodrigo Caetano'; e.decidedAt=aprDT(); MOD_HIST.unshift(e); } MOD_QUEUE=MOD_QUEUE.filter(e=>e.mid!==mid); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue(); }
 /* <colgroup> por variante de tabela — larguras exatas do Figma (ver comentário em
    07-rede-social.css). col-principal fica sem width de propósito: em table-layout:fixed
    ela absorve o espaço que sobra das colunas fixas. */
 const COLG_PUB_PEND='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-acoes"></colgroup>';
-const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"></colgroup>';
-const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-motivo"></colgroup>';
+const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
+const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
+const COLG_REEL_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
 const COLG_COM_PEND='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-acoes"></colgroup>';
 const COLG_COM_APR='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
-const COLG_COM_REJ='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"><col class="col-motivo"></colgroup>';
+const COLG_COM_REJ='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
 let modSortIdx=null, modSortDir=1;
+/* Colunas 0-3 (Comentário/Autor/Publicação/Entrou na fila em) são iguais nas 3 abas; Aprovados
+   e Rejeitados têm a mesma forma dali em diante (Aprovado/Reprovado por + em). */
 function modCellVal(e,i){
-  if(modFilter==='pend'){ var mp=[ (e.text||'').toLowerCase(), (e.author||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||'') ]; return mp[i]!==undefined?mp[i]:''; }
-  var m=[ (e.text||'').toLowerCase(), (e.author||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||''), (e.decidedBy||'').toLowerCase(), (e.decidedAt||'') ]; return m[i]!==undefined?m[i]:'';
+  if(i===0) return (e.text||'').toLowerCase();
+  if(i===1) return (e.author||'').toLowerCase();
+  if(i===2) return (e.post||'').toLowerCase();
+  if(i===3) return e.ts||0;
+  if(modFilter!=='pend'){
+    if(i===4) return (e.decidedBy||'').toLowerCase();
+    if(i===5) return e.decidedAt||'';
+  }
+  return '';
 }
+/* Filtro avançado da fila "Comentários pendentes" (#modFilters) — mesmo padrão de
+   foBuildPubApprFilters (acima), só que aplicado a MOD_QUEUE/MOD_HIST, sem "Tipo" (comentário
+   não tem) e buscando por texto do comentário ou ID em vez de título. */
+let cmQuery='', cmAuthor='', cmQueuePeriod='tudo', cmDecidedBy='', cmDecidedPeriod='tudo';
+function cmActiveFilterCount(){
+  let c=0; if(cmQuery) c++; if(cmAuthor) c++;
+  if(cmQueuePeriod && cmQueuePeriod!=='tudo') c++;
+  if(modFilter!=='pend'){ if(cmDecidedBy) c++; if(cmDecidedPeriod && cmDecidedPeriod!=='tudo') c++; }
+  return c;
+}
+function cmMatch(e){
+  if(cmAuthor && (e.author||'')!==cmAuthor) return false;
+  if(!aprInPeriod(e.ts, cmQueuePeriod)) return false;
+  if(modFilter!=='pend'){
+    if(cmDecidedBy && (e.decidedBy||'')!==cmDecidedBy) return false;
+    if(!aprInPeriod(aprDecidedTs(e), cmDecidedPeriod)) return false;
+  }
+  if(cmQuery && (e.text||'').toLowerCase().indexOf(cmQuery)===-1 && String(e.mid)!==cmQuery) return false;
+  return true;
+}
+function foBuildModFilters(){
+  const nav=$('#modFilters'); if(!nav) return;
+  const authors=Array.from(new Set(MOD_QUEUE.concat(MOD_HIST).map(e=>e.author).filter(Boolean)));
+  const authorItems=[{value:'',label:'Todos',selected:!cmAuthor}].concat(authors.map(a=>({value:a,label:a,selected:cmAuthor===a})));
+  const authorLabel=cmAuthor||'Todos';
+  let html='<div class="nv-fsec"><div class="nv-fsec-hd">Comentário <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário ou ID</label><div class="nv-ffield"><input type="text" id="cmFTexto" placeholder="Pesquisar comentário..." value="'+(cmQuery||'')+'" autocomplete="off"></div></div>'+
+    '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('cmFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmQueuePeriod===p[0]}));
+  const periodLabel=(periodDefs.filter(p=>p[0]===cmQueuePeriod)[0]||periodDefs[0])[1];
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  if(modFilter!=='pend'){
+    const decLabel=modFilter==='aprovado'?'Aprovação':'Reprovação';
+    const decByLabel=modFilter==='aprovado'?'Aprovado por':'Reprovado por';
+    const decByOpts=Array.from(new Set(MOD_HIST.map(e=>e.decidedBy).filter(Boolean)));
+    const decByItems=[{value:'',label:'Todos',selected:!cmDecidedBy}].concat(decByOpts.map(a=>({value:a,label:a,selected:cmDecidedBy===a})));
+    const decByItemLabel=cmDecidedBy||'Todos';
+    const decPeriodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmDecidedPeriod===p[0]}));
+    const decPeriodLabel=(periodDefs.filter(p=>p[0]===cmDecidedPeriod)[0]||periodDefs[0])[1];
+    html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
+      '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('cmFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+  }
+  const activeN=cmActiveFilterCount();
+  html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="cmFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="cmFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML=html;
+}
+$('#modFilters') && $('#modFilters').addEventListener('click', function(e){
+  if(e.target.closest('#cmFClear')){ cmQuery=''; cmAuthor=''; cmQueuePeriod='tudo'; cmDecidedBy=''; cmDecidedPeriod='tudo'; renderModQueue(); return; }
+  if(e.target.closest('#cmFApply')){ renderModQueue(); fgToast('Filtros aplicados'); return; }
+  const db=e.target.closest('.nv-fdatebtn');
+  if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem=e.target.closest('.rl-dditem');
+  if(ddItem){
+    const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
+    if(id==='cmFAutor'){ cmAuthor=v; } else if(id==='cmFQueuePeriod'){ cmQueuePeriod=v; }
+    else if(id==='cmFDecidido'){ cmDecidedBy=v; } else if(id==='cmFDecididoPeriod'){ cmDecidedPeriod=v; }
+    renderModQueue();
+    return;
+  }
+  const ddBtn=e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if(ddBtn){
+    const wrap=ddBtn.closest('.rl-ddwrap'); const menu=wrap.querySelector('.rl-ddmenu');
+    const willOpen=menu.hidden;
+    $$('#modFilters .rl-ddmenu').forEach(m=>m.hidden=true);
+    menu.hidden=!willOpen;
+    return;
+  }
+});
+$('#modFilters') && $('#modFilters').addEventListener('input', function(e){ if(e.target.id==='cmFTexto'){ cmQuery=e.target.value.trim().toLowerCase(); renderModQueue(); } });
+const MOD_APPR_TITLES={pend:'Comentários pendentes',aprovado:'Comentários aprovados',rejeitado:'Comentários reprovados'};
 function renderModQueue(){
+  foBuildModFilters();
+  const mth=$('#modApprScreenTitle'); if(mth) mth.textContent=MOD_APPR_TITLES[modFilter];
   const el=$('#modQueue');
   const nPend=MOD_QUEUE.length, nApr=MOD_HIST.filter(e=>e.status==='aprovado').length, nRej=MOD_HIST.filter(e=>e.status==='rejeitado').length;
   if($('#modNPend')){ $('#modNPend').textContent=nPend; $('#modNApr').textContent=nApr; $('#modNRej').textContent=nRej; }
   $$('#modSeg button').forEach(b=>b.classList.toggle('on', b.dataset.f===modFilter));
-  let list = modFilter==='pend' ? MOD_QUEUE : MOD_HIST.filter(e=>e.status===modFilter);
-  const tot=list.length; $('#modCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
+  const statusList = modFilter==='pend' ? MOD_QUEUE : MOD_HIST.filter(e=>e.status===modFilter);
+  let list = statusList.filter(cmMatch);
   if(!list.length){
-    el.innerHTML = modFilter==='pend'
+    el.innerHTML = statusList.length
+      ? aprEmptyHTML('Nenhum resultado encontrado','Não encontramos comentários para os filtros aplicados. Tente ajustar sua busca.')
+      : modFilter==='pend'
       ? aprEmptyHTML('Nenhum comentário pendente','Todos os comentários já foram revisados. Novos itens aparecerão aqui assim que forem enviados para aprovação.')
       : modFilter==='aprovado'
       ? aprEmptyHTML('Nenhum comentário aprovado ainda','Comentários aprovados vão aparecer aqui.')
-      : aprEmptyHTML('Nenhum comentário rejeitado','Comentários rejeitados vão aparecer aqui.');
+      : aprEmptyHTML('Nenhum comentário reprovado','Comentários reprovados vão aparecer aqui.');
     return;
   }
   const unitOf = e => e.unit || (typeof STORES!=='undefined' ? STORES[(e.mid||1)%STORES.length].name : '');
   const thumbM = e => { const n=(typeof findNewsByTitle==='function'? (findNewsByTitle(e.post)||{}) : {}); return n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>'; };
-  const base = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
-  const baseP = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
+  const base = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="rl-author"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="rl-emp">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td>';
+  const whenCell = e => '<td class="apr-when"><div class="rl-dt">'+paFullDT(e.ts)+'</div><span class="rl-rel">'+aprAgo(e.ts)+'</span></td>';
   if(modSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=modCellVal(a,modSortIdx), kb=modCellVal(b,modSortIdx); return ka<kb?-modSortDir:ka>kb?modSortDir:0; }); }
   let head, rows, tblClass='modtbl', colg=COLG_COM_PEND;
   if(modFilter==='pend'){
     tblClass='modtbl modtbl-pend'; colg=COLG_COM_PEND;
-    head='<th>Comentário</th><th>Autor</th><th>Publicação</th><th>Data/Hora</th><th style="text-align:right">Ações</th>';
-    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+baseP(e)+'<td class="rl-acts"><button class="apr-view" data-view="'+(e.newsId||'')+'"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
+    head='<th>Comentário ('+list.length+')</th><th>Autor</th><th>Publicação</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+whenCell(e)+'<td class="rl-acts">'+aprActsHTML('Aprovar comentário','Reprovar comentário')+'</td></tr>').join('');
   } else if(modFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_COM_APR;
-    head='<th>Comentário</th><th>Autor</th><th>Publicação</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
-    rows=list.map(e=>'<tr>'+base(e)+'<td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td></tr>').join('');
+    head='<th>Comentário ('+list.length+')</th><th>Autor</th><th>Publicação</th><th>Entrou na fila em</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+whenCell(e)+'<td class="apr-when">'+aprDecidedCell(e.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(e)+'</tr>').join('');
   } else {
     tblClass='modtbl modtbl-rej'; colg=COLG_COM_REJ;
-    head='<th>Comentário</th><th>Autor</th><th>Data/Hora</th><th>Rejeitado por</th><th>Rejeitado em</th><th>Justificativa</th>';
-    rows=list.map(e=>'<tr data-mid="'+e.mid+'"><td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td class="apr-when">'+(e.dt||e.time||',')+'</td><td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td><td class="apr-cmt">'+(e.motivo?e.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    head='<th>Comentário ('+list.length+')</th><th>Autor</th><th>Publicação</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Reprovado em</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+whenCell(e)+'<td class="apr-when">'+aprDecidedCell(e.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(e)+'</tr>').join('');
   }
   el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  var ths=el.querySelectorAll('thead th');
-  ths.forEach(function(th,i){ if(!th.textContent.trim()) return; th.classList.add('sortable'); if(modSortIdx===i) th.classList.add('active-sort'); th.innerHTML=th.innerHTML+' <span class="sort-ic"><i class="fa-solid fa-'+(modSortIdx===i?(modSortDir===1?'arrow-up-short-wide':'arrow-down-wide-short'):'sort')+'"></i></span>'; th.addEventListener('click', function(){ if(modSortIdx===i) modSortDir=-modSortDir; else { modSortIdx=i; modSortDir=1; } renderModQueue(); }); });
+  el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(modSortIdx===i) th.classList.add('active-sort'); const icon=modSortIdx===i?(modSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(modSortIdx===i) modSortDir=-modSortDir; else { modSortIdx=i; modSortDir=1; } renderModQueue(); }); });
 }
-$('#modQueue') && $('#modQueue').addEventListener('click', e=>{ const vw=e.target.closest('[data-view]'); if(vw){ const rr=vw.closest('[data-mid]'); const en=rr?MOD_QUEUE.concat(MOD_HIST).find(x=>x.mid===+rr.dataset.mid):null; if(en){ openCmAppr(en); return; } if(vw.dataset.view) focusPublication(+vw.dataset.view); return; } const rowc=e.target.closest('tbody tr[data-mid]'); if(rowc && !e.target.closest('[data-act]')){ const ent=MOD_QUEUE.concat(MOD_HIST).find(x=>x.mid===+rowc.dataset.mid); if(ent){ openCmAppr(ent); return; } } const nav=e.target.closest('[data-nav]'); if(nav){ focusPublication(+nav.dataset.nav); return; } const b=e.target.closest('[data-act]'); if(!b) return; const mid=+b.closest('[data-mid]').dataset.mid; const entry=MOD_QUEUE.find(x=>x.mid===mid); if(!entry) return; if(b.dataset.act==='ok'){ entry.approve(); modRemove(mid,'aprovado'); } else { askReject(function(motivo){ entry.motivo=motivo; entry.reject(); modRemove(mid,'rejeitado'); fgToast('Comentário recusado'); }); } });
+$('#modQueue') && $('#modQueue').addEventListener('click', e=>{
+  const actBtn=e.target.closest('.rl-actbtn');
+  if(actBtn){
+    const td=actBtn.closest('td'); const menu=actBtn.nextElementSibling; const willOpen=menu.hidden;
+    $$('#modQueue .rl-actmenu').forEach(m=>m.hidden=true);
+    $$('#modQueue td.rl-actz').forEach(c=>c.classList.remove('rl-actz'));
+    menu.hidden=!willOpen; td.classList.toggle('rl-actz', willOpen);
+    return;
+  }
+  const pact=e.target.closest('[data-pact]');
+  if(pact){
+    pact.closest('.rl-actmenu').hidden=true; pact.closest('td').classList.remove('rl-actz');
+    const row=pact.closest('[data-mid]'); if(!row) return;
+    const mid=+row.dataset.mid;
+    const a=pact.dataset.pact;
+    if(a==='tab'){ window.open(location.href,'_blank'); }
+    else if(a==='ok'){ const en=MOD_QUEUE.find(x=>x.mid===mid); if(en&&en.approve) en.approve(); modRemove(mid,'aprovado'); fgToast('Comentário aprovado'); }
+    else if(a==='no'){ askReject(function(motivo){ const en=MOD_QUEUE.find(x=>x.mid===mid); if(en){ en.motivo=motivo; if(en.reject) en.reject(); } modRemove(mid,'rejeitado'); fgToast('Comentário recusado'); }); }
+    return;
+  }
+  const nav=e.target.closest('[data-nav]');
+  if(nav){ focusPublication(+nav.dataset.nav); return; }
+  const row=e.target.closest('[data-mid]');
+  if(row){ const en=MOD_QUEUE.concat(MOD_HIST).find(x=>x.mid===+row.dataset.mid); if(en) openCmAppr(en); }
+});
 let rejCb=null;
 function askReject(cb){ if(window.__skipReject){ cb(''); return; } return askRejectDlg(cb); }
 function askRejectDlg(cb){ rejCb=cb; $('#rejText').value=''; $('#rejConfirm').disabled=false; $('#rejModal').classList.add('open'); setTimeout(()=>$('#rejText').focus(),30); }
@@ -13954,31 +14117,43 @@ $('#reelSeg') && $('#reelSeg').addEventListener('click',e=>{const b=e.target.clo
 $('#pubSeg') && $('#pubSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pubFilter=b.dataset.f;renderPubAppr();});
 function pubApprAdd(n){ n.paid=++pubApprSeq; PUB_APPR.push(n); aprBadges(); if($('#nvPubApprScreen').classList.contains('active')) renderPubAppr(); }
 let pubSortIdx=null, pubSortDir=1;
-/* Colunas 0-2 (Publicação/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, então
-   pubCellVal olha pubFilter pra saber o que cada posição significa em cada uma. */
+/* Colunas 0-2 (Publicação/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, mas Aprovados
+   e Rejeitados têm a mesma forma (sem "Motivo" em Publicações). */
 function pubCellVal(n,i){
   if(i===0) return (n.title||'').toLowerCase();
-  if(i===1) return n.article?'artigo':'post';
+  if(i===1) return pubTipo(n).label.toLowerCase();
   if(i===2) return (n.author||'').toLowerCase();
   if(i===3) return n.ts||0;
-  if(pubFilter==='aprovado'){
+  if(pubFilter!=='pend'){
     if(i===4) return (n.decidedBy||'').toLowerCase();
-  } else if(pubFilter==='rejeitado'){
-    if(i===4) return (n.decidedBy||'').toLowerCase();
-    if(i===5) return (n.motivo||'').toLowerCase();
+    if(i===5) return n.decidedAt||'';
   }
   return '';
 }
 let reelFilter='pend', REEL_APPR=null, REEL_HIST=null;
+let reelSortIdx=null, reelSortDir=1;
+/* Colunas 0-2 (Short/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, mesmo esquema de
+   pubCellVal (acima). Aprovados e Rejeitados têm a mesma forma (sem "Motivo" em Shorts). */
+function reelCellVal(r,i){
+  if(i===0) return (r.title||'').toLowerCase();
+  if(i===1) return rFormat(r)==='imagem'?'imagem':'video';
+  if(i===2) return (r.author||'').toLowerCase();
+  if(i===3) return r.ts||0;
+  if(reelFilter!=='pend'){
+    if(i===4) return (r.decidedBy||'').toLowerCase();
+    if(i===5) return aprDecidedTs(r);
+  }
+  return '';
+}
 function reelApprData(){
   if(REEL_APPR) return;
   const src=(typeof REELS_DATA!=='undefined'?REELS_DATA:[]);
-  const mk=(r,i)=>{ const p=(typeof POSTS!=='undefined'?POSTS[r.p]:{})||{}; return {rid:i, title:p.title||p.alt||'Short', author:p.name||'SULTS', av:p.av||'av-rc', image:p.img||p.poster||'', unit:p.company||p.store||p.label||'SULTS', date:p.time||'agora', ts:Date.now()-(i+1)*1800000, cat:r.cat, desc:r.cap||p.caption||''}; };
+  const mk=(r,i)=>{ const p=(typeof POSTS!=='undefined'?POSTS[r.p]:{})||{}; return {rid:i, title:p.title||p.alt||'Short', author:p.name||'SULTS', av:p.av||'av-rc', image:p.img||p.poster||'', unit:p.company||p.store||(typeof STORES!=='undefined'?STORES[i%STORES.length].name:'SULTS'), date:p.time||'agora', ts:Date.now()-(i+1)*1800000, cat:r.cat, format:r.format, desc:r.cap||p.caption||''}; };
   const all=src.map(mk);
   REEL_APPR=all.slice(0,4);
   if(REEL_APPR[1]) REEL_APPR[1].proc=true;
   if(REEL_APPR[3]) REEL_APPR[3].procFail=true;
-  REEL_HIST=all.slice(4,10).map((x,i)=>Object.assign({}, x, {apprStatus: i%2?'rejeitado':'aprovado', decidedBy:'Rodrigo Caetano', decidedAt:x.date, motivo: i%2?'Conteúdo fora das diretrizes da marca.':''}));
+  REEL_HIST=all.slice(4,10).map((x,i)=>Object.assign({}, x, {apprStatus: i%2?'rejeitado':'aprovado', decidedBy:'Rodrigo Caetano', decidedAt:aprDT(new Date(x.ts)), motivo: i%2?'Conteúdo fora das diretrizes da marca.':''}));
 }
 /* Formata um timestamp em "dd/mm/aaaa hh:mm" — usado na coluna "Entrou na fila em" das duas
    filas de aprovação (Publicações e Shorts), junto com o texto relativo ("há 1 h") que já
@@ -14000,6 +14175,27 @@ function aprDecidedTs(n){
   const m=/^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(n.decidedAt||'');
   return m ? new Date(2000+ +m[3], +m[2]-1, +m[1], +m[4], +m[5]).getTime() : 0;
 }
+/* Texto relativo ("há 1 h") a partir de um timestamp — mesma escala de pglAgo
+   (21-gerenciar-publicacoes.js), só que recebendo o ts já calculado em vez de reconstruí-lo
+   de uma data formatada. */
+function aprAgo(ts){
+  if(!ts) return '';
+  const mins=Math.round((Date.now()-ts)/60000);
+  if(mins<1) return 'agora';
+  if(mins<60) return 'há '+mins+' min';
+  const hrs=Math.round(mins/60);
+  if(hrs<24) return 'há '+hrs+(hrs===1?' hora':' horas');
+  const days=Math.round(hrs/24);
+  if(days<30) return 'há '+days+(days===1?' dia':' dias');
+  const mo=Math.round(days/30);
+  return 'há '+mo+(mo===1?' mês':' meses');
+}
+/* Célula "Aprovado em"/"Reprovado em" — mesma estrutura da célula "Entrou na fila em"
+   (data completa + texto relativo abaixo). */
+function aprDecidedWhenCell(n){
+  const ts=aprDecidedTs(n);
+  return '<td class="apr-when"><div class="rl-dt">'+paFullDT(ts)+'</div><span class="rl-rel">'+aprAgo(ts)+'</span></td>';
+}
 
 /* Filtro avançado da fila "Publicações pendentes" (#pubApprFilters) — Título, Tipo, Autor e
    "Entrou na fila em". Mesmo padrão de campos de foBuildGerenciarPublicacoesFilters
@@ -14013,8 +14209,9 @@ function paActiveFilterCount(){
   return c;
 }
 function paMatch(n){
-  if(paType==='post' && n.article) return false;
-  if(paType==='article' && !n.article) return false;
+  if(paType==='post' && pubTipo(n).cls!=='is-post') return false;
+  if(paType==='article' && pubTipo(n).cls!=='is-art') return false;
+  if(paType==='colorida' && pubTipo(n).cls!=='is-color') return false;
   if(paAuthor && (n.author||'')!==paAuthor) return false;
   if(!aprInPeriod(n.ts, paQueuePeriod)) return false;
   if(pubFilter!=='pend'){
@@ -14026,7 +14223,7 @@ function paMatch(n){
 }
 function foBuildPubApprFilters(){
   const nav=$('#pubApprFilters'); if(!nav) return;
-  const typeItems=[{value:'',label:'Todos',selected:paType===''},{value:'post',label:'Postagem',selected:paType==='post'},{value:'article',label:'Artigo',selected:paType==='article'}];
+  const typeItems=[{value:'',label:'Todos',selected:paType===''},{value:'post',label:'Postagem',selected:paType==='post'},{value:'article',label:'Artigo',selected:paType==='article'},{value:'colorida',label:'Postagem colorida',selected:paType==='colorida'}];
   const typeLabel=(typeItems.filter(i=>i.selected)[0]||typeItems[0]).label;
   const authors=Array.from(new Set(PUB_APPR.concat(PUB_HIST).map(n=>n.author).filter(Boolean)));
   const authorItems=[{value:'',label:'Todos',selected:!paAuthor}].concat(authors.map(a=>({value:a,label:a,selected:paAuthor===a})));
@@ -14082,14 +14279,16 @@ $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('input', function(e){ if(e.target.id==='paFTitulo'){ paQuery=e.target.value.trim().toLowerCase(); renderPubAppr(); } });
 
 /* Filtro avançado da fila "Shorts pendentes" (#reelApprFilters) — mesma ideia da de Publicações
-   acima, só sem o campo Tipo (todo item aqui já é um short) e com IDs próprios (raF...). */
-let raQuery='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
+   acima, com Tipo (Imagem/Vídeo, em vez de Postagem/Artigo/Postagem colorida) e IDs próprios
+   (raF...). */
+let raQuery='', raType='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
 function raActiveFilterCount(){
-  let c=0; if(raQuery) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
+  let c=0; if(raQuery) c++; if(raType) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
   if(reelFilter!=='pend'){ if(raDecidedBy) c++; if(raDecidedPeriod && raDecidedPeriod!=='tudo') c++; }
   return c;
 }
 function raMatch(r){
+  if(raType && rFormat(r)!==raType) return false;
   if(raAuthor && (r.author||'')!==raAuthor) return false;
   if(!aprInPeriod(r.ts, raQueuePeriod)) return false;
   if(reelFilter!=='pend'){
@@ -14101,12 +14300,17 @@ function raMatch(r){
 }
 function foBuildReelApprFilters(){
   const nav=$('#reelApprFilters'); if(!nav) return;
+  const typeItems=[{value:'',label:'Todos',selected:raType===''},{value:'imagem',label:'Imagem',selected:raType==='imagem'},{value:'video',label:'Vídeo',selected:raType==='video'}];
+  const typeLabel=(typeItems.filter(i=>i.selected)[0]||typeItems[0]).label;
   const authors=Array.from(new Set((REEL_APPR||[]).concat(REEL_HIST||[]).map(r=>r.author).filter(Boolean)));
   const authorItems=[{value:'',label:'Todos',selected:!raAuthor}].concat(authors.map(a=>({value:a,label:a,selected:raAuthor===a})));
   const authorLabel=raAuthor||'Todos';
   let html='<div class="nv-fsec"><div class="nv-fsec-hd">Short <i class="fa-solid fa-chevron-up"></i></div>'+
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Título</label><div class="nv-ffield"><input type="text" id="raFTitulo" placeholder="Pesquisar short..." value="'+(raQuery||'')+'" autocomplete="off"></div></div>'+
-    '<div class="nv-ffcol nv-ffrow-last"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
+    '<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('raFTipo', typeLabel, typeItems)+'</div>'+
+      '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+    '</div></div>';
   const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===raQueuePeriod)[0]||periodDefs[0])[1];
@@ -14128,14 +14332,14 @@ function foBuildReelApprFilters(){
   nav.innerHTML=html;
 }
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#raFClear')){ raQuery=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
+  if(e.target.closest('#raFClear')){ raQuery=''; raType=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
   if(e.target.closest('#raFApply')){ renderReelAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
   const ddItem=e.target.closest('.rl-dditem');
   if(ddItem){
     const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
-    if(id==='raFAutor'){ raAuthor=v; } else if(id==='raFQueuePeriod'){ raQueuePeriod=v; }
+    if(id==='raFTipo'){ raType=v; } else if(id==='raFAutor'){ raAuthor=v; } else if(id==='raFQueuePeriod'){ raQueuePeriod=v; }
     else if(id==='raFDecidido'){ raDecidedBy=v; } else if(id==='raFDecididoPeriod'){ raDecidedPeriod=v; }
     renderReelAppr();
     return;
@@ -14160,11 +14364,11 @@ document.addEventListener('click', function(e){
    desenho e mesmos data-pact de #pubGrid (18-gerenciar-publicacoes.css/21-gerenciar-
    publicacoes.js), só que aprovar/reprovar aqui de fato tira o item da fila em vez de editar. */
 /* Célula "Aprovado por"/"Reprovado por" das filas de Publicações e Shorts — nome de quem
-   decidiu com a data logo abaixo, mesmo padrão (rl-author + rl-emp) já usado na coluna
-   "Autor" pra nome+unidade. Substitui as colunas "Aprovado em"/"Reprovado em" que existiam
-   separadas. */
-function aprDecidedCell(name, when){
-  return '<div class="rl-author"><span class="avatar av-rc"></span><div><b>'+(name||',')+'</b><span class="rl-emp">'+(when||',')+'</span></div></div>';
+   decidiu com o cargo logo abaixo, mesmo padrão (rl-author + rl-emp) já usado na coluna
+   "Autor" pra nome+unidade. A data de quando decidiu vai na coluna separada "Aprovado em"/
+   "Reprovado em", ao lado. */
+function aprDecidedCell(name, role){
+  return '<div class="rl-author"><span class="avatar av-rc"></span><div><b>'+(name||',')+'</b><span class="rl-emp">'+(role||',')+'</span></div></div>';
 }
 function aprActsHTML(aprovarLbl, reprovarLbl){
   return '<div class="rl-actwrap">' +
@@ -14187,10 +14391,12 @@ function aprEmptyHTML(title, sub){
   '</div>';
 }
 
+const REEL_APPR_TITLES={pend:'Shorts pendentes',aprovado:'Shorts aprovados',rejeitado:'Shorts reprovados'};
 function renderReelAppr(){
   reelApprData();
   foBuildReelApprFilters();
   const el=$('#reelApprQueue'); if(!el) return;
+  const rth=$('#reelApprScreenTitle'); if(rth) rth.textContent=REEL_APPR_TITLES[reelFilter];
   const pendList=REEL_APPR.filter(r=>!r.proc&&!r.procFail);
   const nPend=pendList.length, nApr=REEL_HIST.filter(r=>r.apprStatus==='aprovado').length, nRej=REEL_HIST.filter(r=>r.apprStatus==='rejeitado').length;
   if($('#reelNPend')){ $('#reelNPend').textContent=nPend; $('#reelNApr').textContent=nApr; $('#reelNRej').textContent=nRej; }
@@ -14207,28 +14413,30 @@ function renderReelAppr(){
       : aprEmptyHTML('Nenhum short reprovado','Shorts reprovados vão aparecer aqui.');
     return;
   }
-  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-clapperboard"></i></span>';
+  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:38px;height:60px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:38px;height:60px"><i class="fa-solid fa-clapperboard"></i></span>';
   const base2=r=>'<td><div class="rl-reel">'+thumb(r)+'<div><b>'+r.title+'</b><span>#'+r.rid+' • Short</span></div></div></td>'+
-    '<td style="text-align:center"><span class="apr-type">'+(rFormat(r)==='imagem'?'Imagem':'Vídeo')+'</span></td>'+
+    '<td><span class="apr-type">'+(rFormat(r)==='imagem'?'<i class="fa-solid fa-image"></i> Imagem':'<i class="fa-solid fa-video"></i> Vídeo')+'</span></td>'+
     '<td><div class="rl-author"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="rl-emp">'+r.unit+'</span></div></div></td>';
   const whenCell=r=>'<td class="apr-when"><div class="rl-dt">'+paFullDT(r.ts)+'</div><span class="rl-rel">'+r.date+'</span></td>';
+  if(reelSortIdx!=null){ list.sort(function(a,b){ var ka=reelCellVal(a,reelSortIdx), kb=reelCellVal(b,reelSortIdx); return ka<kb?-reelSortDir:ka>kb?reelSortDir:0; }); }
   let head, rows, tblClass='modtbl', colg=COLG_PUB_PEND;
   if(reelFilter==='pend'){
     tblClass='modtbl modtbl-pend'; colg=COLG_PUB_PEND;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
+    head='<th>Short ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
     rows=list.map(r=>'<tr data-rid="'+r.rid+'">'+base2(r)+whenCell(r)+'<td class="rl-acts">'+aprActsHTML('Aprovar short','Reprovar short')+'</td></tr>').join('');
   } else if(reelFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th>';
-    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,r.decidedAt)+'</td></tr>').join('');
+    head='<th>Short ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(r)+'</tr>').join('');
   } else {
-    tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Motivo</th>';
-    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,r.decidedAt)+'</td><td class="apr-cmt">'+(r.motivo||',')+'</td></tr>').join('');
+    tblClass='modtbl modtbl-rej'; colg=COLG_REEL_REJ;
+    head='<th>Short ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Reprovado em</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(r)+'</tr>').join('');
   }
   const wrap=document.createElement('div');
   wrap.className='rlist';
   wrap.innerHTML='<table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table>';
+  wrap.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(reelSortIdx===i) th.classList.add('active-sort'); const icon=reelSortIdx===i?(reelSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(reelSortIdx===i) reelSortDir=-reelSortDir; else { reelSortIdx=i; reelSortDir=1; } renderReelAppr(); }); });
   wrap.addEventListener('click', function(e){
     const actBtn=e.target.closest('.rl-actbtn');
     if(actBtn){
@@ -14280,8 +14488,10 @@ function openReelAppr(r){
       '</div>');
   } else if(acts){ acts.style.display='flex'; const ok=document.getElementById('pubApprOk'); if(ok) ok.style.display=''; }
 }
+const PUB_APPR_TITLES={pend:'Publicações pendentes',aprovado:'Publicações aprovadas',rejeitado:'Publicações reprovadas'};
 function renderPubAppr(){
   foBuildPubApprFilters();
+  const pth=$('#pubApprScreenTitle'); if(pth) pth.textContent=PUB_APPR_TITLES[pubFilter];
   const el=$('#pubApprQueue');
   const pendP=PUB_APPR.filter(n=>!n.proc&&!n.procFail);
   const nPend=pendP.length, nApr=PUB_HIST.filter(n=>n.apprStatus==='aprovado').length, nRej=PUB_HIST.filter(n=>n.apprStatus==='rejeitado').length;
@@ -14302,7 +14512,7 @@ function renderPubAppr(){
   const av=n=>n.av?'<span class="avatar '+n.av+'">'+(n.ini||'')+'</span>':'<span class="nv-logo">'+SULTS_LOGO+'</span>';
   const unitOfP=n=>n.unit||((typeof STORES!=='undefined')?STORES[(n.paid||1)%STORES.length].name:'');
   const thumbP=n=> n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>';
-  const base3=n=>'<td><div class="rl-reel">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b><span>#'+n.paid+' • '+(n.article?'Artigo':'Postagem')+'</span></div></div></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="rl-emp">'+unitOfP(n)+'</span></div></div></td>';
+  const base3=n=>{ const tp=pubTipo(n); return '<td><div class="rl-reel">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b><span>#'+n.paid+' • '+tp.label+'</span></div></div></td><td><span class="apr-type '+tp.cls+'">'+tp.icon+' '+tp.label+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="rl-emp">'+unitOfP(n)+'</span></div></div></td>'; };
   const whenCell=n=>'<td class="apr-when"><div class="rl-dt">'+paFullDT(n.ts)+'</div><span class="rl-rel">'+(n.date||'agora')+'</span></td>';
   if(pubSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=pubCellVal(a,pubSortIdx), kb=pubCellVal(b,pubSortIdx); return ka<kb?-pubSortDir:ka>kb?pubSortDir:0; }); }
   let head, rows, tblClass='modtbl', colg=COLG_PUB_PEND;
@@ -14312,12 +14522,12 @@ function renderPubAppr(){
     rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="rl-acts">'+aprActsHTML('Aprovar publicação','Reprovar publicação')+'</td></tr>').join('');
   } else if(pubFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
-    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,n.decidedAt)+'</td></tr>').join('');
+    head='<th>Publicação ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(n)+'</tr>').join('');
   } else {
     tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
-    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Motivo</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'"><td class="apr-cmt"><b>'+(n.title||'(sem título)')+'</b></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b></div></div></td>'+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,n.decidedAt)+'</td><td class="apr-cmt">'+(n.motivo?n.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    head='<th>Publicação ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Reprovado em</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(n)+'</tr>').join('');
   }
   el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
   el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(pubSortIdx===i) th.classList.add('active-sort'); const icon=pubSortIdx===i?(pubSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(pubSortIdx===i) pubSortDir=-pubSortDir; else { pubSortIdx=i; pubSortDir=1; } renderPubAppr(); }); });
@@ -14380,10 +14590,10 @@ function reviewDecide(ok){ const n=reviewingPub; if(!n) return; PUB_APPR=PUB_APP
     {title:'Resultados do 1º semestre superam a meta em 18%',author:'Matheus Scussel',av:'av-ms',ini:'MS',date:'há 20 min',ts:Date.now()-20*60000,text:'Fechamos o semestre com crescimento acima do esperado em toda a rede.',sub:'Expansão'},
     {title:'Nova unidade inaugurada em Florianópolis',author:'Lucas Prado',av:'av-pl',ini:'LP',date:'há 40 min',ts:Date.now()-40*60000,text:'Mais uma loja da rede abre as portas no litoral catarinense.',sub:'Expansão'},
     {title:'Treinamento de atendimento 2.0 disponível',author:'Carla Mendes',av:'av-cm',ini:'CM',date:'há 1 h',ts:Date.now()-60*60000,text:'Nova trilha na Universidade Corporativa com certificado.',sub:'Universidade'},
-    {title:'Campanha de inverno começa na próxima semana',author:'Ana Souza',av:'av-as',ini:'AS',date:'há 2 h',ts:Date.now()-2*3600000,text:'Materiais de PDV já disponíveis no Disco Virtual.',sub:'Produto'},
+    {title:'Campanha de inverno começa na próxima semana',author:'Ana Souza',av:'av-as',ini:'AS',date:'há 2 h',ts:Date.now()-2*3600000,text:'Campanha de inverno chegando!',sub:'Produto',colorBg:'#2F8EE5',colorEmoji:'❄️',colorSub:'Materiais de PDV já disponíveis no Disco Virtual.'},
     {title:'Bella Capri: a história por trás do sucesso',author:'Ellen Rocha',av:'av-gc',ini:'ER',date:'há 3 h',ts:Date.now()-3*3600000,text:'Um mergulho na trajetória de uma das maiores redes de pizzarias.',sub:'Histórias de sucesso',article:true},
     {title:'Atualização da plataforma v10.5',author:'Willer Matayoshi',av:'av-wm',ini:'WM',date:'há 5 h',ts:Date.now()-5*3600000,text:'Melhorias de performance e novos filtros nos relatórios.',sub:'Produto'},
-    {title:'Vagas internas abertas em Produto e CS',author:'Beatriz Lopes',av:'av-bo',ini:'BL',date:'ontem',ts:Date.now()-25*3600000,text:'Candidate-se pelo RH até sexta-feira.',sub:'Gente & Cultura'}
+    {title:'Vagas internas abertas em Produto e CS',author:'Beatriz Lopes',av:'av-bo',ini:'BL',date:'ontem',ts:Date.now()-25*3600000,text:'Vagas internas abertas!',sub:'Gente & Cultura',colorBg:'#00A193',colorEmoji:'💼',colorSub:'Candidate-se pelo RH até sexta-feira.'}
   ];
   pubs.forEach(p=>pubApprAdd(Object.assign({status:'draft',reactions:0,comments:0},p)));
 })();
@@ -14967,7 +15177,8 @@ function renderNewsList(){
       ? '<span class="nv-lt-cat"><span class="nv-lt-catic" style="background:'+cat.color+'"><i class="fa-solid '+(cat.icon||'fa-tag')+'"></i></span>'+cat.name+'</span>'
       : '<span style="color:#b8c2cc">,</span>';
     const dispTitle = n.title || (n.text ? n.text.replace(/<[^>]+>/g,'').replace(/\n/g,' ').slice(0,60) : 'Publicação');
-    const tipo = n.article ? '<span class="nv-tp is-art"><i class="fa-solid fa-newspaper"></i> Artigo</span>' : '<span class="nv-tp is-post"><i class="fa-solid fa-align-left"></i> Post</span>';
+    const nlTp = pubTipo(n);
+    const tipo = '<span class="nv-tp '+nlTp.cls+'">'+nlTp.icon+' '+nlTp.label+'</span>';
     const reachMap = { rede:['fa-earth-americas','Toda a rede'], unidades:['fa-store','Unidades'], matriz:['fa-building','Sua Marca (Matriz)'] };
     const rc = reachMap[n.reach||'rede'];
     const reachCell = '<span class="nv-reach"><i class="fa-solid '+rc[0]+'"></i> '+rc[1]+'</span>';
@@ -21146,8 +21357,9 @@ function matchPub(n){
   if (pglStatus === 'pub' && (n.agendado || n.proc || n.procFail || n.aprovacao)) return false;
   if (pglStatus === 'agendado' && !n.agendado) return false;
   if (pglStatus === 'aprovacao' && !n.aprovacao) return false;
-  if (pglType === 'post' && n.article) return false;
-  if (pglType === 'article' && !n.article) return false;
+  if (pglType === 'post' && pubTipo(n).cls !== 'is-post') return false;
+  if (pglType === 'article' && pubTipo(n).cls !== 'is-art') return false;
+  if (pglType === 'colorida' && pubTipo(n).cls !== 'is-color') return false;
   if (pglCat && (n.sub || '') !== pglCat) return false;
   const autorNome = n.autorNome || n.author;
   if (pglAuthor && autorNome !== pglAuthor) return false;
@@ -21180,7 +21392,7 @@ function foBuildGerenciarPublicacoesFilters(){
   let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais publicações você quer ver? <i class="fa-solid fa-chevron-up"></i></div><div class="cv-seg nv-sitcards nv-sit2" id="pubSitCards">' +
     sit.map(function(s){ const isSvg = s[1].charAt(0) === '<'; const colorAttr = s[3] ? ' style="color:' + s[3] + '"' : ''; const icon = isSvg ? s[1].replace('<svg', '<svg' + colorAttr) : '<i class="' + s[1] + '"' + colorAttr + '></i>'; return '<button data-pglstatus="' + s[0] + '" class="rxs-item2 ' + (pglStatus === s[0] ? 'active' : '') + '">' + icon + s[2] + '</button>'; }).join('') + '</div></div>';
   const units = SB_UNIDADES.map(function(u){ return u.name; });
-  const typeItems = [{ value: '', label: 'Todos', selected: pglType === '' }, { value: 'post', label: 'Post', selected: pglType === 'post' }, { value: 'article', label: 'Artigo', selected: pglType === 'article' }];
+  const typeItems = [{ value: '', label: 'Todos', selected: pglType === '' }, { value: 'post', label: 'Postagem', selected: pglType === 'post' }, { value: 'article', label: 'Artigo', selected: pglType === 'article' }, { value: 'colorida', label: 'Postagem colorida', selected: pglType === 'colorida' }];
   const typeLabel = (typeItems.filter(function(i){ return i.selected; })[0] || typeItems[0]).label;
   const curCat = NEWS_CATS.find(function(c){ return c.name === pglCat; });
   const catItems = [{ value: '', label: 'Todas', selected: !curCat }].concat(activeCats.map(function(c){ return { value: c.name, label: c.name, icon: c.icon, color: c.color, selected: pglCat === c.name }; }));
@@ -21258,9 +21470,8 @@ function renderGerenciarPublicacoesList(list){
     const autorAv = n.autorAv || n.av;
     const autorSub = AUTOR_CARGO[n.author] || (n.reach === 'unidades' ? 'Unidade' : 'Matriz');
     const dispTitle = n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').replace(/\n/g, ' ').slice(0, 60) : 'Publicação');
-    const tipo = n.article
-      ? '<span class="nv-tp is-art"><i class="fa-solid fa-newspaper"></i> Artigo</span>'
-      : '<span class="nv-tp is-post"><i class="fa-solid fa-align-left"></i> Post</span>';
+    const tp = pubTipo(n);
+    const tipo = '<span class="nv-tp ' + tp.cls + '">' + tp.icon + ' ' + tp.label + '</span>';
     const rx = n.reactions || 0;
     let rxIcons = '<span class="nv-rxc' + (rx === 0 ? ' nv-rxc-zero' : '') + '"><span class="rxs" data-rx="like"></span>';
     if (rx >= 90) rxIcons += '<span class="rxs" data-rx="love"></span>';
@@ -21302,7 +21513,7 @@ function renderGerenciarPublicacoesList(list){
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="views"><i class="fa-solid fa-play" style="font-size:10px;color:' + (pglViewsNum(n) > 0 ? '#43B3AE' : '#8a94a0') + '"></i> ' + pglViews(n) + '</button></td>' +
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="rx">' + rxIcons + '</button></td>' +
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="cm"><i class="fa-solid fa-comment" style="font-size:10px;color:' + (numVal(String(n.comments || 0)) > 0 ? '#2f6fe4' : '#8a94a0') + '"></i> ' + n.comments + '</button></td>' +
-      '<td>' + (cat ? '<span class="rl-cat"><span class="rl-cat-dot" style="background:' + cat.color + '"><i class="fa-solid ' + (cat.icon || 'fa-tag') + '"></i></span>' + cat.name + '</span>' : '<span style="color:#b8c2cc">,</span>') + '</td>' +
+      '<td>' + (cat ? '<span class="rl-cat"><span class="rl-cat-dot" style="background:' + cat.color + '"><i class="fa-solid ' + (cat.icon || 'fa-tag') + '"></i></span>' + cat.name + '</span>' : '<span class="rl-dash">—</span>') + '</td>' +
       '<td style="white-space:nowrap">' + (n.encerra ? '<span class="rl-enddt">' + rxSchedDT(n.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
       '</tr>';
   }).join('');

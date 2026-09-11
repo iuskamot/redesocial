@@ -79,8 +79,9 @@ function matchPub(n){
   if (pglStatus === 'pub' && (n.agendado || n.proc || n.procFail || n.aprovacao)) return false;
   if (pglStatus === 'agendado' && !n.agendado) return false;
   if (pglStatus === 'aprovacao' && !n.aprovacao) return false;
-  if (pglType === 'post' && n.article) return false;
-  if (pglType === 'article' && !n.article) return false;
+  if (pglType === 'post' && pubTipo(n).cls !== 'is-post') return false;
+  if (pglType === 'article' && pubTipo(n).cls !== 'is-art') return false;
+  if (pglType === 'colorida' && pubTipo(n).cls !== 'is-color') return false;
   if (pglCat && (n.sub || '') !== pglCat) return false;
   const autorNome = n.autorNome || n.author;
   if (pglAuthor && autorNome !== pglAuthor) return false;
@@ -113,7 +114,7 @@ function foBuildGerenciarPublicacoesFilters(){
   let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais publicações você quer ver? <i class="fa-solid fa-chevron-up"></i></div><div class="cv-seg nv-sitcards nv-sit2" id="pubSitCards">' +
     sit.map(function(s){ const isSvg = s[1].charAt(0) === '<'; const colorAttr = s[3] ? ' style="color:' + s[3] + '"' : ''; const icon = isSvg ? s[1].replace('<svg', '<svg' + colorAttr) : '<i class="' + s[1] + '"' + colorAttr + '></i>'; return '<button data-pglstatus="' + s[0] + '" class="rxs-item2 ' + (pglStatus === s[0] ? 'active' : '') + '">' + icon + s[2] + '</button>'; }).join('') + '</div></div>';
   const units = SB_UNIDADES.map(function(u){ return u.name; });
-  const typeItems = [{ value: '', label: 'Todos', selected: pglType === '' }, { value: 'post', label: 'Post', selected: pglType === 'post' }, { value: 'article', label: 'Artigo', selected: pglType === 'article' }];
+  const typeItems = [{ value: '', label: 'Todos', selected: pglType === '' }, { value: 'post', label: 'Postagem', selected: pglType === 'post' }, { value: 'article', label: 'Artigo', selected: pglType === 'article' }, { value: 'colorida', label: 'Postagem colorida', selected: pglType === 'colorida' }];
   const typeLabel = (typeItems.filter(function(i){ return i.selected; })[0] || typeItems[0]).label;
   const curCat = NEWS_CATS.find(function(c){ return c.name === pglCat; });
   const catItems = [{ value: '', label: 'Todas', selected: !curCat }].concat(activeCats.map(function(c){ return { value: c.name, label: c.name, icon: c.icon, color: c.color, selected: pglCat === c.name }; }));
@@ -191,9 +192,8 @@ function renderGerenciarPublicacoesList(list){
     const autorAv = n.autorAv || n.av;
     const autorSub = AUTOR_CARGO[n.author] || (n.reach === 'unidades' ? 'Unidade' : 'Matriz');
     const dispTitle = n.title || (n.text ? n.text.replace(/<[^>]+>/g, '').replace(/\n/g, ' ').slice(0, 60) : 'Publicação');
-    const tipo = n.article
-      ? '<span class="nv-tp is-art"><i class="fa-solid fa-newspaper"></i> Artigo</span>'
-      : '<span class="nv-tp is-post"><i class="fa-solid fa-align-left"></i> Post</span>';
+    const tp = pubTipo(n);
+    const tipo = '<span class="nv-tp ' + tp.cls + '">' + tp.icon + ' ' + tp.label + '</span>';
     const rx = n.reactions || 0;
     let rxIcons = '<span class="nv-rxc' + (rx === 0 ? ' nv-rxc-zero' : '') + '"><span class="rxs" data-rx="like"></span>';
     if (rx >= 90) rxIcons += '<span class="rxs" data-rx="love"></span>';
@@ -235,7 +235,7 @@ function renderGerenciarPublicacoesList(list){
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="views"><i class="fa-solid fa-play" style="font-size:10px;color:' + (pglViewsNum(n) > 0 ? '#43B3AE' : '#8a94a0') + '"></i> ' + pglViews(n) + '</button></td>' +
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="rx">' + rxIcons + '</button></td>' +
       '<td style="white-space:nowrap"><button class="nv-cellbtn" data-pglopen="cm"><i class="fa-solid fa-comment" style="font-size:10px;color:' + (numVal(String(n.comments || 0)) > 0 ? '#2f6fe4' : '#8a94a0') + '"></i> ' + n.comments + '</button></td>' +
-      '<td>' + (cat ? '<span class="rl-cat"><span class="rl-cat-dot" style="background:' + cat.color + '"><i class="fa-solid ' + (cat.icon || 'fa-tag') + '"></i></span>' + cat.name + '</span>' : '<span style="color:#b8c2cc">,</span>') + '</td>' +
+      '<td>' + (cat ? '<span class="rl-cat"><span class="rl-cat-dot" style="background:' + cat.color + '"><i class="fa-solid ' + (cat.icon || 'fa-tag') + '"></i></span>' + cat.name + '</span>' : '<span class="rl-dash">—</span>') + '</td>' +
       '<td style="white-space:nowrap">' + (n.encerra ? '<span class="rl-enddt">' + rxSchedDT(n.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
       '</tr>';
   }).join('');

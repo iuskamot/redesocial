@@ -75,12 +75,13 @@
 /* Sombra na coluna fixa indicando conteúdo por baixo ao rolar horizontalmente */
 #pubGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#pubGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
 
-/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 7 Autor,
-   8 Unidade do autor, 9 Visualizações, 10 Reações, 11 Comentários, 12 Categoria,
+/* Larguras fixas das colunas: 3 Situação, 4 Data de publicação, 5 Publicado para, 6 Tipo,
+   7 Autor, 8 Unidade do autor, 9 Visualizações, 10 Reações, 11 Comentários, 12 Categoria,
    13 Data de encerramento */
 #pubGrid .rl-tblwrap th:nth-child(3),#pubGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:160px; min-width:160px }
 #pubGrid .rl-tblwrap th:nth-child(4),#pubGrid .rl-tblwrap td:nth-child(4){ width:204px }
 #pubGrid .rl-tblwrap th:nth-child(5),#pubGrid .rl-tblwrap td:nth-child(5){ width:200px }
+#pubGrid .rl-tblwrap th:nth-child(6),#pubGrid .rl-tblwrap td:nth-child(6){ width:200px }
 #pubGrid .rl-tblwrap th:nth-child(7),#pubGrid .rl-tblwrap td:nth-child(7){ width:240px }
 #pubGrid .rl-tblwrap td:nth-child(7) .rl-author{ min-width:212px }
 #pubGrid .rl-tblwrap td:nth-child(7) .rl-author b,#pubGrid .rl-tblwrap td:nth-child(7) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
@@ -104,7 +105,8 @@
 #pubGrid .rl-reel{ position:relative; justify-content:space-between }
 #pubGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
 #pubGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
-#pubGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#pubGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#pubGrid .rl-actbtn:hover span{ color:#fff }
 #pubGrid .rl-actbtn i{ font-size:12px }
 #pubGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
 #pubGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }

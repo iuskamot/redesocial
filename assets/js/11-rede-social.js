@@ -182,7 +182,7 @@ function nvSetEnv(env){
   const sw=$('#nmodEnvSwitch');
   if(sw) sw.innerHTML = social
     ? '<i class="fa-solid fa-gear"></i><span class="lbl">Gerenciar</span>'
-    : '<i class="fa-solid fa-users-rectangle"></i><span class="lbl">Acessar Social</span>';
+    : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>account-group</title><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg><span class="lbl">Acessar Social</span>';
 }
 $('#nmodEnvSwitch') && $('#nmodEnvSwitch').addEventListener('click', ()=>{
   if(newsView.classList.contains('env-social')) newsShow('list');
@@ -542,7 +542,7 @@ function expRenderBody(){
     '<div class="exp-warn"><i class="fa-solid fa-triangle-exclamation"></i> Intervalo máximo de: 3 meses</div>'+
     '<div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">'+
       '<button class="fo-btn ghost" id="expCancel">Cancelar</button>'+
-      '<button class="fo-btn" id="expSubmit"><i class="fa-solid fa-upload"></i> Exportar</button>'+
+      '<button class="fo-btn" id="expSubmit"><svg viewBox="0 0 24 24" fill="currentColor"><title>tray-arrow-up</title><path d="M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 2L6.46 7.46L7.88 8.88L11 5.75V15H13V5.75L16.13 8.88L17.55 7.45L12 2Z" /></svg> Exportar</button>'+
     '</div>';
   $('#expModalBody').innerHTML = html;
 }
@@ -785,62 +785,191 @@ function aprBadges(){
   [['#aprComBadge',c],['#aprPubBadge',p],['#aprReelBadge',rq],['#aprTabBadge',c+p]].forEach(([sel,n])=>{ const b=$(sel); if(b){ b.hidden=!n; b.textContent=n; } });
 }
 function aprDT(d){ d=d||new Date(); const p=n=>('0'+n).slice(-2); return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+String(d.getFullYear()).slice(-2)+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+/* Ícone da pílula "Postagem colorida" — paleta, sem equivalente direto no Font Awesome já
+   usado nas outras (fa-newspaper/fa-align-left), então vai inline igual aos ícones do
+   cabeçalho das telas de Aprovações (26x26 lá; aqui 14x14, do tamanho dos <i> das outras). */
+const TIPO_ICON_COLORIDA='<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="flex-shrink:0"><title>palette</title><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z" /></svg>';
+/* Tipo de uma publicação — Artigo, Postagem colorida (cartão com cor de fundo em vez de foto:
+   n.banner nos posts mais antigos como o de aniversário, n.colorBg no editor de cor do wizard)
+   ou Postagem — reaproveitado por #pubGrid (21-gerenciar-publicacoes.js) e pela fila de
+   Aprovações (abaixo), pra manter a mesma classificação/rótulo/ícone nas duas tabelas. */
+function pubTipo(n){
+  if(n.article) return {label:'Artigo', cls:'is-art', icon:'<i class="fa-solid fa-newspaper"></i>'};
+  if(n.colorBg || n.banner) return {label:'Postagem colorida', cls:'is-color', icon:TIPO_ICON_COLORIDA};
+  return {label:'Postagem', cls:'is-post', icon:'<i class="fa-solid fa-align-left"></i>'};
+}
 function modBadge(){ aprBadges(); }
-function modAdd(entry){ entry.mid=++modSeq; MOD_QUEUE.push(entry); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue(); }
+function modAdd(entry){
+  entry.mid=++modSeq;
+  if(entry.ts==null){
+    const m=/^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(entry.dt||'');
+    entry.ts = m ? new Date(2000+ +m[3], +m[2]-1, +m[1], +m[4], +m[5]).getTime() : Date.now();
+  }
+  MOD_QUEUE.push(entry); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue();
+}
 function modRemove(mid,status){ const e=MOD_QUEUE.find(x=>x.mid===mid); if(e&&status){ e.status=status; e.decidedBy='Rodrigo Caetano'; e.decidedAt=aprDT(); MOD_HIST.unshift(e); } MOD_QUEUE=MOD_QUEUE.filter(e=>e.mid!==mid); modBadge(); if($('#nvModScreen').classList.contains('active')) renderModQueue(); }
 /* <colgroup> por variante de tabela — larguras exatas do Figma (ver comentário em
    07-rede-social.css). col-principal fica sem width de propósito: em table-layout:fixed
    ela absorve o espaço que sobra das colunas fixas. */
 const COLG_PUB_PEND='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-acoes"></colgroup>';
-const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"></colgroup>';
-const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-motivo"></colgroup>';
+const COLG_PUB_APR='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
+const COLG_PUB_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
+const COLG_REEL_REJ='<colgroup><col class="col-principal"><col class="col-tipo"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
 const COLG_COM_PEND='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-acoes"></colgroup>';
 const COLG_COM_APR='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
-const COLG_COM_REJ='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"><col class="col-motivo"></colgroup>';
+const COLG_COM_REJ='<colgroup><col class="col-principal"><col class="col-autor"><col class="col-publicacao"><col class="col-data"><col class="col-aprovador"><col class="col-decidido-em"></colgroup>';
 let modSortIdx=null, modSortDir=1;
+/* Colunas 0-3 (Comentário/Autor/Publicação/Entrou na fila em) são iguais nas 3 abas; Aprovados
+   e Rejeitados têm a mesma forma dali em diante (Aprovado/Reprovado por + em). */
 function modCellVal(e,i){
-  if(modFilter==='pend'){ var mp=[ (e.text||'').toLowerCase(), (e.author||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||'') ]; return mp[i]!==undefined?mp[i]:''; }
-  var m=[ (e.text||'').toLowerCase(), (e.author||'').toLowerCase(), (e.post||'').toLowerCase(), (e.dt||e.time||''), (e.decidedBy||'').toLowerCase(), (e.decidedAt||'') ]; return m[i]!==undefined?m[i]:'';
+  if(i===0) return (e.text||'').toLowerCase();
+  if(i===1) return (e.author||'').toLowerCase();
+  if(i===2) return (e.post||'').toLowerCase();
+  if(i===3) return e.ts||0;
+  if(modFilter!=='pend'){
+    if(i===4) return (e.decidedBy||'').toLowerCase();
+    if(i===5) return e.decidedAt||'';
+  }
+  return '';
 }
+/* Filtro avançado da fila "Comentários pendentes" (#modFilters) — mesmo padrão de
+   foBuildPubApprFilters (acima), só que aplicado a MOD_QUEUE/MOD_HIST, sem "Tipo" (comentário
+   não tem) e buscando por texto do comentário ou ID em vez de título. */
+let cmQuery='', cmAuthor='', cmQueuePeriod='tudo', cmDecidedBy='', cmDecidedPeriod='tudo';
+function cmActiveFilterCount(){
+  let c=0; if(cmQuery) c++; if(cmAuthor) c++;
+  if(cmQueuePeriod && cmQueuePeriod!=='tudo') c++;
+  if(modFilter!=='pend'){ if(cmDecidedBy) c++; if(cmDecidedPeriod && cmDecidedPeriod!=='tudo') c++; }
+  return c;
+}
+function cmMatch(e){
+  if(cmAuthor && (e.author||'')!==cmAuthor) return false;
+  if(!aprInPeriod(e.ts, cmQueuePeriod)) return false;
+  if(modFilter!=='pend'){
+    if(cmDecidedBy && (e.decidedBy||'')!==cmDecidedBy) return false;
+    if(!aprInPeriod(aprDecidedTs(e), cmDecidedPeriod)) return false;
+  }
+  if(cmQuery && (e.text||'').toLowerCase().indexOf(cmQuery)===-1 && String(e.mid)!==cmQuery) return false;
+  return true;
+}
+function foBuildModFilters(){
+  const nav=$('#modFilters'); if(!nav) return;
+  const authors=Array.from(new Set(MOD_QUEUE.concat(MOD_HIST).map(e=>e.author).filter(Boolean)));
+  const authorItems=[{value:'',label:'Todos',selected:!cmAuthor}].concat(authors.map(a=>({value:a,label:a,selected:cmAuthor===a})));
+  const authorLabel=cmAuthor||'Todos';
+  let html='<div class="nv-fsec"><div class="nv-fsec-hd">Comentário <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário ou ID</label><div class="nv-ffield"><input type="text" id="cmFTexto" placeholder="Pesquisar comentário..." value="'+(cmQuery||'')+'" autocomplete="off"></div></div>'+
+    '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('cmFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmQueuePeriod===p[0]}));
+  const periodLabel=(periodDefs.filter(p=>p[0]===cmQueuePeriod)[0]||periodDefs[0])[1];
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  if(modFilter!=='pend'){
+    const decLabel=modFilter==='aprovado'?'Aprovação':'Reprovação';
+    const decByLabel=modFilter==='aprovado'?'Aprovado por':'Reprovado por';
+    const decByOpts=Array.from(new Set(MOD_HIST.map(e=>e.decidedBy).filter(Boolean)));
+    const decByItems=[{value:'',label:'Todos',selected:!cmDecidedBy}].concat(decByOpts.map(a=>({value:a,label:a,selected:cmDecidedBy===a})));
+    const decByItemLabel=cmDecidedBy||'Todos';
+    const decPeriodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmDecidedPeriod===p[0]}));
+    const decPeriodLabel=(periodDefs.filter(p=>p[0]===cmDecidedPeriod)[0]||periodDefs[0])[1];
+    html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
+      '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('cmFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+  }
+  const activeN=cmActiveFilterCount();
+  html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="cmFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="cmFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
+  nav.innerHTML=html;
+}
+$('#modFilters') && $('#modFilters').addEventListener('click', function(e){
+  if(e.target.closest('#cmFClear')){ cmQuery=''; cmAuthor=''; cmQueuePeriod='tudo'; cmDecidedBy=''; cmDecidedPeriod='tudo'; renderModQueue(); return; }
+  if(e.target.closest('#cmFApply')){ renderModQueue(); fgToast('Filtros aplicados'); return; }
+  const db=e.target.closest('.nv-fdatebtn');
+  if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
+  const ddItem=e.target.closest('.rl-dditem');
+  if(ddItem){
+    const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
+    if(id==='cmFAutor'){ cmAuthor=v; } else if(id==='cmFQueuePeriod'){ cmQueuePeriod=v; }
+    else if(id==='cmFDecidido'){ cmDecidedBy=v; } else if(id==='cmFDecididoPeriod'){ cmDecidedPeriod=v; }
+    renderModQueue();
+    return;
+  }
+  const ddBtn=e.target.closest('.rl-ddwrap > button.nv-ffield');
+  if(ddBtn){
+    const wrap=ddBtn.closest('.rl-ddwrap'); const menu=wrap.querySelector('.rl-ddmenu');
+    const willOpen=menu.hidden;
+    $$('#modFilters .rl-ddmenu').forEach(m=>m.hidden=true);
+    menu.hidden=!willOpen;
+    return;
+  }
+});
+$('#modFilters') && $('#modFilters').addEventListener('input', function(e){ if(e.target.id==='cmFTexto'){ cmQuery=e.target.value.trim().toLowerCase(); renderModQueue(); } });
+const MOD_APPR_TITLES={pend:'Comentários pendentes',aprovado:'Comentários aprovados',rejeitado:'Comentários reprovados'};
 function renderModQueue(){
+  foBuildModFilters();
+  const mth=$('#modApprScreenTitle'); if(mth) mth.textContent=MOD_APPR_TITLES[modFilter];
   const el=$('#modQueue');
   const nPend=MOD_QUEUE.length, nApr=MOD_HIST.filter(e=>e.status==='aprovado').length, nRej=MOD_HIST.filter(e=>e.status==='rejeitado').length;
   if($('#modNPend')){ $('#modNPend').textContent=nPend; $('#modNApr').textContent=nApr; $('#modNRej').textContent=nRej; }
   $$('#modSeg button').forEach(b=>b.classList.toggle('on', b.dataset.f===modFilter));
-  let list = modFilter==='pend' ? MOD_QUEUE : MOD_HIST.filter(e=>e.status===modFilter);
-  const tot=list.length; $('#modCount').textContent = tot? tot+(tot===1?' item':' itens'):'';
+  const statusList = modFilter==='pend' ? MOD_QUEUE : MOD_HIST.filter(e=>e.status===modFilter);
+  let list = statusList.filter(cmMatch);
   if(!list.length){
-    el.innerHTML = modFilter==='pend'
+    el.innerHTML = statusList.length
+      ? aprEmptyHTML('Nenhum resultado encontrado','Não encontramos comentários para os filtros aplicados. Tente ajustar sua busca.')
+      : modFilter==='pend'
       ? aprEmptyHTML('Nenhum comentário pendente','Todos os comentários já foram revisados. Novos itens aparecerão aqui assim que forem enviados para aprovação.')
       : modFilter==='aprovado'
       ? aprEmptyHTML('Nenhum comentário aprovado ainda','Comentários aprovados vão aparecer aqui.')
-      : aprEmptyHTML('Nenhum comentário rejeitado','Comentários rejeitados vão aparecer aqui.');
+      : aprEmptyHTML('Nenhum comentário reprovado','Comentários reprovados vão aparecer aqui.');
     return;
   }
   const unitOf = e => e.unit || (typeof STORES!=='undefined' ? STORES[(e.mid||1)%STORES.length].name : '');
   const thumbM = e => { const n=(typeof findNewsByTitle==='function'? (findNewsByTitle(e.post)||{}) : {}); return n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>'; };
-  const base = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
-  const baseP = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td><td class="apr-when">'+(e.dt||e.time||'agora')+'</td>';
+  const base = e => '<td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="rl-author"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="rl-emp">'+unitOf(e)+'</span></div></div></td><td><div class="pubttl">'+thumbM(e)+'<div><b'+(e.newsId?' class="apr-post" data-nav="'+e.newsId+'"':'')+'>'+e.post+'</b></div></div></td>';
+  const whenCell = e => '<td class="apr-when"><div class="rl-dt">'+paFullDT(e.ts)+'</div><span class="rl-rel">'+aprAgo(e.ts)+'</span></td>';
   if(modSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=modCellVal(a,modSortIdx), kb=modCellVal(b,modSortIdx); return ka<kb?-modSortDir:ka>kb?modSortDir:0; }); }
   let head, rows, tblClass='modtbl', colg=COLG_COM_PEND;
   if(modFilter==='pend'){
     tblClass='modtbl modtbl-pend'; colg=COLG_COM_PEND;
-    head='<th>Comentário</th><th>Autor</th><th>Publicação</th><th>Data/Hora</th><th style="text-align:right">Ações</th>';
-    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+baseP(e)+'<td class="rl-acts"><button class="apr-view" data-view="'+(e.newsId||'')+'"><i class="fa-solid fa-eye"></i> Visualizar</button></td></tr>').join('');
+    head='<th>Comentário ('+list.length+')</th><th>Autor</th><th>Publicação</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+whenCell(e)+'<td class="rl-acts">'+aprActsHTML('Aprovar comentário','Reprovar comentário')+'</td></tr>').join('');
   } else if(modFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_COM_APR;
-    head='<th>Comentário</th><th>Autor</th><th>Publicação</th><th>Data/Hora</th><th>Aprovado por</th><th>Aprovado em</th>';
-    rows=list.map(e=>'<tr>'+base(e)+'<td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td></tr>').join('');
+    head='<th>Comentário ('+list.length+')</th><th>Autor</th><th>Publicação</th><th>Entrou na fila em</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+whenCell(e)+'<td class="apr-when">'+aprDecidedCell(e.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(e)+'</tr>').join('');
   } else {
     tblClass='modtbl modtbl-rej'; colg=COLG_COM_REJ;
-    head='<th>Comentário</th><th>Autor</th><th>Data/Hora</th><th>Rejeitado por</th><th>Rejeitado em</th><th>Justificativa</th>';
-    rows=list.map(e=>'<tr data-mid="'+e.mid+'"><td class="apr-cmt">'+e.text.replace(/</g,'&lt;')+'</td><td><div class="apr-person"><span class="avatar '+(e.av||'av-rc')+'"></span><div><b>'+e.author+'</b><span class="apr-unit">'+unitOf(e)+'</span></div></div></td><td class="apr-when">'+(e.dt||e.time||',')+'</td><td class="apr-when"><div class="apr-person"><span class="avatar av-rc"></span>'+(e.decidedBy||',')+'</div></td><td class="apr-when">'+(e.decidedAt||',')+'</td><td class="apr-cmt">'+(e.motivo?e.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    head='<th>Comentário ('+list.length+')</th><th>Autor</th><th>Publicação</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Reprovado em</th>';
+    rows=list.map(e=>'<tr data-mid="'+e.mid+'">'+base(e)+whenCell(e)+'<td class="apr-when">'+aprDecidedCell(e.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(e)+'</tr>').join('');
   }
   el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  var ths=el.querySelectorAll('thead th');
-  ths.forEach(function(th,i){ if(!th.textContent.trim()) return; th.classList.add('sortable'); if(modSortIdx===i) th.classList.add('active-sort'); th.innerHTML=th.innerHTML+' <span class="sort-ic"><i class="fa-solid fa-'+(modSortIdx===i?(modSortDir===1?'arrow-up-short-wide':'arrow-down-wide-short'):'sort')+'"></i></span>'; th.addEventListener('click', function(){ if(modSortIdx===i) modSortDir=-modSortDir; else { modSortIdx=i; modSortDir=1; } renderModQueue(); }); });
+  el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(modSortIdx===i) th.classList.add('active-sort'); const icon=modSortIdx===i?(modSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(modSortIdx===i) modSortDir=-modSortDir; else { modSortIdx=i; modSortDir=1; } renderModQueue(); }); });
 }
-$('#modQueue') && $('#modQueue').addEventListener('click', e=>{ const vw=e.target.closest('[data-view]'); if(vw){ const rr=vw.closest('[data-mid]'); const en=rr?MOD_QUEUE.concat(MOD_HIST).find(x=>x.mid===+rr.dataset.mid):null; if(en){ openCmAppr(en); return; } if(vw.dataset.view) focusPublication(+vw.dataset.view); return; } const rowc=e.target.closest('tbody tr[data-mid]'); if(rowc && !e.target.closest('[data-act]')){ const ent=MOD_QUEUE.concat(MOD_HIST).find(x=>x.mid===+rowc.dataset.mid); if(ent){ openCmAppr(ent); return; } } const nav=e.target.closest('[data-nav]'); if(nav){ focusPublication(+nav.dataset.nav); return; } const b=e.target.closest('[data-act]'); if(!b) return; const mid=+b.closest('[data-mid]').dataset.mid; const entry=MOD_QUEUE.find(x=>x.mid===mid); if(!entry) return; if(b.dataset.act==='ok'){ entry.approve(); modRemove(mid,'aprovado'); } else { askReject(function(motivo){ entry.motivo=motivo; entry.reject(); modRemove(mid,'rejeitado'); fgToast('Comentário recusado'); }); } });
+$('#modQueue') && $('#modQueue').addEventListener('click', e=>{
+  const actBtn=e.target.closest('.rl-actbtn');
+  if(actBtn){
+    const td=actBtn.closest('td'); const menu=actBtn.nextElementSibling; const willOpen=menu.hidden;
+    $$('#modQueue .rl-actmenu').forEach(m=>m.hidden=true);
+    $$('#modQueue td.rl-actz').forEach(c=>c.classList.remove('rl-actz'));
+    menu.hidden=!willOpen; td.classList.toggle('rl-actz', willOpen);
+    return;
+  }
+  const pact=e.target.closest('[data-pact]');
+  if(pact){
+    pact.closest('.rl-actmenu').hidden=true; pact.closest('td').classList.remove('rl-actz');
+    const row=pact.closest('[data-mid]'); if(!row) return;
+    const mid=+row.dataset.mid;
+    const a=pact.dataset.pact;
+    if(a==='tab'){ window.open(location.href,'_blank'); }
+    else if(a==='ok'){ const en=MOD_QUEUE.find(x=>x.mid===mid); if(en&&en.approve) en.approve(); modRemove(mid,'aprovado'); fgToast('Comentário aprovado'); }
+    else if(a==='no'){ askReject(function(motivo){ const en=MOD_QUEUE.find(x=>x.mid===mid); if(en){ en.motivo=motivo; if(en.reject) en.reject(); } modRemove(mid,'rejeitado'); fgToast('Comentário recusado'); }); }
+    return;
+  }
+  const nav=e.target.closest('[data-nav]');
+  if(nav){ focusPublication(+nav.dataset.nav); return; }
+  const row=e.target.closest('[data-mid]');
+  if(row){ const en=MOD_QUEUE.concat(MOD_HIST).find(x=>x.mid===+row.dataset.mid); if(en) openCmAppr(en); }
+});
 let rejCb=null;
 function askReject(cb){ if(window.__skipReject){ cb(''); return; } return askRejectDlg(cb); }
 function askRejectDlg(cb){ rejCb=cb; $('#rejText').value=''; $('#rejConfirm').disabled=false; $('#rejModal').classList.add('open'); setTimeout(()=>$('#rejText').focus(),30); }
@@ -878,31 +1007,43 @@ $('#reelSeg') && $('#reelSeg').addEventListener('click',e=>{const b=e.target.clo
 $('#pubSeg') && $('#pubSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pubFilter=b.dataset.f;renderPubAppr();});
 function pubApprAdd(n){ n.paid=++pubApprSeq; PUB_APPR.push(n); aprBadges(); if($('#nvPubApprScreen').classList.contains('active')) renderPubAppr(); }
 let pubSortIdx=null, pubSortDir=1;
-/* Colunas 0-2 (Publicação/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, então
-   pubCellVal olha pubFilter pra saber o que cada posição significa em cada uma. */
+/* Colunas 0-2 (Publicação/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, mas Aprovados
+   e Rejeitados têm a mesma forma (sem "Motivo" em Publicações). */
 function pubCellVal(n,i){
   if(i===0) return (n.title||'').toLowerCase();
-  if(i===1) return n.article?'artigo':'post';
+  if(i===1) return pubTipo(n).label.toLowerCase();
   if(i===2) return (n.author||'').toLowerCase();
   if(i===3) return n.ts||0;
-  if(pubFilter==='aprovado'){
+  if(pubFilter!=='pend'){
     if(i===4) return (n.decidedBy||'').toLowerCase();
-  } else if(pubFilter==='rejeitado'){
-    if(i===4) return (n.decidedBy||'').toLowerCase();
-    if(i===5) return (n.motivo||'').toLowerCase();
+    if(i===5) return n.decidedAt||'';
   }
   return '';
 }
 let reelFilter='pend', REEL_APPR=null, REEL_HIST=null;
+let reelSortIdx=null, reelSortDir=1;
+/* Colunas 0-2 (Short/Tipo/Autor) são iguais nas 3 abas; 3+ variam por aba, mesmo esquema de
+   pubCellVal (acima). Aprovados e Rejeitados têm a mesma forma (sem "Motivo" em Shorts). */
+function reelCellVal(r,i){
+  if(i===0) return (r.title||'').toLowerCase();
+  if(i===1) return rFormat(r)==='imagem'?'imagem':'video';
+  if(i===2) return (r.author||'').toLowerCase();
+  if(i===3) return r.ts||0;
+  if(reelFilter!=='pend'){
+    if(i===4) return (r.decidedBy||'').toLowerCase();
+    if(i===5) return aprDecidedTs(r);
+  }
+  return '';
+}
 function reelApprData(){
   if(REEL_APPR) return;
   const src=(typeof REELS_DATA!=='undefined'?REELS_DATA:[]);
-  const mk=(r,i)=>{ const p=(typeof POSTS!=='undefined'?POSTS[r.p]:{})||{}; return {rid:i, title:p.title||p.alt||'Short', author:p.name||'SULTS', av:p.av||'av-rc', image:p.img||p.poster||'', unit:p.company||p.store||p.label||'SULTS', date:p.time||'agora', ts:Date.now()-(i+1)*1800000, cat:r.cat, desc:r.cap||p.caption||''}; };
+  const mk=(r,i)=>{ const p=(typeof POSTS!=='undefined'?POSTS[r.p]:{})||{}; return {rid:i, title:p.title||p.alt||'Short', author:p.name||'SULTS', av:p.av||'av-rc', image:p.img||p.poster||'', unit:p.company||p.store||(typeof STORES!=='undefined'?STORES[i%STORES.length].name:'SULTS'), date:p.time||'agora', ts:Date.now()-(i+1)*1800000, cat:r.cat, format:r.format, desc:r.cap||p.caption||''}; };
   const all=src.map(mk);
   REEL_APPR=all.slice(0,4);
   if(REEL_APPR[1]) REEL_APPR[1].proc=true;
   if(REEL_APPR[3]) REEL_APPR[3].procFail=true;
-  REEL_HIST=all.slice(4,10).map((x,i)=>Object.assign({}, x, {apprStatus: i%2?'rejeitado':'aprovado', decidedBy:'Rodrigo Caetano', decidedAt:x.date, motivo: i%2?'Conteúdo fora das diretrizes da marca.':''}));
+  REEL_HIST=all.slice(4,10).map((x,i)=>Object.assign({}, x, {apprStatus: i%2?'rejeitado':'aprovado', decidedBy:'Rodrigo Caetano', decidedAt:aprDT(new Date(x.ts)), motivo: i%2?'Conteúdo fora das diretrizes da marca.':''}));
 }
 /* Formata um timestamp em "dd/mm/aaaa hh:mm" — usado na coluna "Entrou na fila em" das duas
    filas de aprovação (Publicações e Shorts), junto com o texto relativo ("há 1 h") que já
@@ -924,6 +1065,27 @@ function aprDecidedTs(n){
   const m=/^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(n.decidedAt||'');
   return m ? new Date(2000+ +m[3], +m[2]-1, +m[1], +m[4], +m[5]).getTime() : 0;
 }
+/* Texto relativo ("há 1 h") a partir de um timestamp — mesma escala de pglAgo
+   (21-gerenciar-publicacoes.js), só que recebendo o ts já calculado em vez de reconstruí-lo
+   de uma data formatada. */
+function aprAgo(ts){
+  if(!ts) return '';
+  const mins=Math.round((Date.now()-ts)/60000);
+  if(mins<1) return 'agora';
+  if(mins<60) return 'há '+mins+' min';
+  const hrs=Math.round(mins/60);
+  if(hrs<24) return 'há '+hrs+(hrs===1?' hora':' horas');
+  const days=Math.round(hrs/24);
+  if(days<30) return 'há '+days+(days===1?' dia':' dias');
+  const mo=Math.round(days/30);
+  return 'há '+mo+(mo===1?' mês':' meses');
+}
+/* Célula "Aprovado em"/"Reprovado em" — mesma estrutura da célula "Entrou na fila em"
+   (data completa + texto relativo abaixo). */
+function aprDecidedWhenCell(n){
+  const ts=aprDecidedTs(n);
+  return '<td class="apr-when"><div class="rl-dt">'+paFullDT(ts)+'</div><span class="rl-rel">'+aprAgo(ts)+'</span></td>';
+}
 
 /* Filtro avançado da fila "Publicações pendentes" (#pubApprFilters) — Título, Tipo, Autor e
    "Entrou na fila em". Mesmo padrão de campos de foBuildGerenciarPublicacoesFilters
@@ -937,8 +1099,9 @@ function paActiveFilterCount(){
   return c;
 }
 function paMatch(n){
-  if(paType==='post' && n.article) return false;
-  if(paType==='article' && !n.article) return false;
+  if(paType==='post' && pubTipo(n).cls!=='is-post') return false;
+  if(paType==='article' && pubTipo(n).cls!=='is-art') return false;
+  if(paType==='colorida' && pubTipo(n).cls!=='is-color') return false;
   if(paAuthor && (n.author||'')!==paAuthor) return false;
   if(!aprInPeriod(n.ts, paQueuePeriod)) return false;
   if(pubFilter!=='pend'){
@@ -950,7 +1113,7 @@ function paMatch(n){
 }
 function foBuildPubApprFilters(){
   const nav=$('#pubApprFilters'); if(!nav) return;
-  const typeItems=[{value:'',label:'Todos',selected:paType===''},{value:'post',label:'Postagem',selected:paType==='post'},{value:'article',label:'Artigo',selected:paType==='article'}];
+  const typeItems=[{value:'',label:'Todos',selected:paType===''},{value:'post',label:'Postagem',selected:paType==='post'},{value:'article',label:'Artigo',selected:paType==='article'},{value:'colorida',label:'Postagem colorida',selected:paType==='colorida'}];
   const typeLabel=(typeItems.filter(i=>i.selected)[0]||typeItems[0]).label;
   const authors=Array.from(new Set(PUB_APPR.concat(PUB_HIST).map(n=>n.author).filter(Boolean)));
   const authorItems=[{value:'',label:'Todos',selected:!paAuthor}].concat(authors.map(a=>({value:a,label:a,selected:paAuthor===a})));
@@ -1006,14 +1169,16 @@ $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('input', function(e){ if(e.target.id==='paFTitulo'){ paQuery=e.target.value.trim().toLowerCase(); renderPubAppr(); } });
 
 /* Filtro avançado da fila "Shorts pendentes" (#reelApprFilters) — mesma ideia da de Publicações
-   acima, só sem o campo Tipo (todo item aqui já é um short) e com IDs próprios (raF...). */
-let raQuery='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
+   acima, com Tipo (Imagem/Vídeo, em vez de Postagem/Artigo/Postagem colorida) e IDs próprios
+   (raF...). */
+let raQuery='', raType='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
 function raActiveFilterCount(){
-  let c=0; if(raQuery) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
+  let c=0; if(raQuery) c++; if(raType) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
   if(reelFilter!=='pend'){ if(raDecidedBy) c++; if(raDecidedPeriod && raDecidedPeriod!=='tudo') c++; }
   return c;
 }
 function raMatch(r){
+  if(raType && rFormat(r)!==raType) return false;
   if(raAuthor && (r.author||'')!==raAuthor) return false;
   if(!aprInPeriod(r.ts, raQueuePeriod)) return false;
   if(reelFilter!=='pend'){
@@ -1025,12 +1190,17 @@ function raMatch(r){
 }
 function foBuildReelApprFilters(){
   const nav=$('#reelApprFilters'); if(!nav) return;
+  const typeItems=[{value:'',label:'Todos',selected:raType===''},{value:'imagem',label:'Imagem',selected:raType==='imagem'},{value:'video',label:'Vídeo',selected:raType==='video'}];
+  const typeLabel=(typeItems.filter(i=>i.selected)[0]||typeItems[0]).label;
   const authors=Array.from(new Set((REEL_APPR||[]).concat(REEL_HIST||[]).map(r=>r.author).filter(Boolean)));
   const authorItems=[{value:'',label:'Todos',selected:!raAuthor}].concat(authors.map(a=>({value:a,label:a,selected:raAuthor===a})));
   const authorLabel=raAuthor||'Todos';
   let html='<div class="nv-fsec"><div class="nv-fsec-hd">Short <i class="fa-solid fa-chevron-up"></i></div>'+
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Título</label><div class="nv-ffield"><input type="text" id="raFTitulo" placeholder="Pesquisar short..." value="'+(raQuery||'')+'" autocomplete="off"></div></div>'+
-    '<div class="nv-ffcol nv-ffrow-last"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
+    '<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('raFTipo', typeLabel, typeItems)+'</div>'+
+      '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
+    '</div></div>';
   const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===raQueuePeriod)[0]||periodDefs[0])[1];
@@ -1052,14 +1222,14 @@ function foBuildReelApprFilters(){
   nav.innerHTML=html;
 }
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#raFClear')){ raQuery=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
+  if(e.target.closest('#raFClear')){ raQuery=''; raType=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
   if(e.target.closest('#raFApply')){ renderReelAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
   const ddItem=e.target.closest('.rl-dditem');
   if(ddItem){
     const wrap=ddItem.closest('.rl-ddwrap'); const id=wrap.dataset.dd; const v=ddItem.dataset.value;
-    if(id==='raFAutor'){ raAuthor=v; } else if(id==='raFQueuePeriod'){ raQueuePeriod=v; }
+    if(id==='raFTipo'){ raType=v; } else if(id==='raFAutor'){ raAuthor=v; } else if(id==='raFQueuePeriod'){ raQueuePeriod=v; }
     else if(id==='raFDecidido'){ raDecidedBy=v; } else if(id==='raFDecididoPeriod'){ raDecidedPeriod=v; }
     renderReelAppr();
     return;
@@ -1084,11 +1254,11 @@ document.addEventListener('click', function(e){
    desenho e mesmos data-pact de #pubGrid (18-gerenciar-publicacoes.css/21-gerenciar-
    publicacoes.js), só que aprovar/reprovar aqui de fato tira o item da fila em vez de editar. */
 /* Célula "Aprovado por"/"Reprovado por" das filas de Publicações e Shorts — nome de quem
-   decidiu com a data logo abaixo, mesmo padrão (rl-author + rl-emp) já usado na coluna
-   "Autor" pra nome+unidade. Substitui as colunas "Aprovado em"/"Reprovado em" que existiam
-   separadas. */
-function aprDecidedCell(name, when){
-  return '<div class="rl-author"><span class="avatar av-rc"></span><div><b>'+(name||',')+'</b><span class="rl-emp">'+(when||',')+'</span></div></div>';
+   decidiu com o cargo logo abaixo, mesmo padrão (rl-author + rl-emp) já usado na coluna
+   "Autor" pra nome+unidade. A data de quando decidiu vai na coluna separada "Aprovado em"/
+   "Reprovado em", ao lado. */
+function aprDecidedCell(name, role){
+  return '<div class="rl-author"><span class="avatar av-rc"></span><div><b>'+(name||',')+'</b><span class="rl-emp">'+(role||',')+'</span></div></div>';
 }
 function aprActsHTML(aprovarLbl, reprovarLbl){
   return '<div class="rl-actwrap">' +
@@ -1111,10 +1281,12 @@ function aprEmptyHTML(title, sub){
   '</div>';
 }
 
+const REEL_APPR_TITLES={pend:'Shorts pendentes',aprovado:'Shorts aprovados',rejeitado:'Shorts reprovados'};
 function renderReelAppr(){
   reelApprData();
   foBuildReelApprFilters();
   const el=$('#reelApprQueue'); if(!el) return;
+  const rth=$('#reelApprScreenTitle'); if(rth) rth.textContent=REEL_APPR_TITLES[reelFilter];
   const pendList=REEL_APPR.filter(r=>!r.proc&&!r.procFail);
   const nPend=pendList.length, nApr=REEL_HIST.filter(r=>r.apprStatus==='aprovado').length, nRej=REEL_HIST.filter(r=>r.apprStatus==='rejeitado').length;
   if($('#reelNPend')){ $('#reelNPend').textContent=nPend; $('#reelNApr').textContent=nApr; $('#reelNRej').textContent=nRej; }
@@ -1131,28 +1303,30 @@ function renderReelAppr(){
       : aprEmptyHTML('Nenhum short reprovado','Shorts reprovados vão aparecer aqui.');
     return;
   }
-  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-clapperboard"></i></span>';
+  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:38px;height:60px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:38px;height:60px"><i class="fa-solid fa-clapperboard"></i></span>';
   const base2=r=>'<td><div class="rl-reel">'+thumb(r)+'<div><b>'+r.title+'</b><span>#'+r.rid+' • Short</span></div></div></td>'+
-    '<td style="text-align:center"><span class="apr-type">'+(rFormat(r)==='imagem'?'Imagem':'Vídeo')+'</span></td>'+
+    '<td><span class="apr-type">'+(rFormat(r)==='imagem'?'<i class="fa-solid fa-image"></i> Imagem':'<i class="fa-solid fa-video"></i> Vídeo')+'</span></td>'+
     '<td><div class="rl-author"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="rl-emp">'+r.unit+'</span></div></div></td>';
   const whenCell=r=>'<td class="apr-when"><div class="rl-dt">'+paFullDT(r.ts)+'</div><span class="rl-rel">'+r.date+'</span></td>';
+  if(reelSortIdx!=null){ list.sort(function(a,b){ var ka=reelCellVal(a,reelSortIdx), kb=reelCellVal(b,reelSortIdx); return ka<kb?-reelSortDir:ka>kb?reelSortDir:0; }); }
   let head, rows, tblClass='modtbl', colg=COLG_PUB_PEND;
   if(reelFilter==='pend'){
     tblClass='modtbl modtbl-pend'; colg=COLG_PUB_PEND;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
+    head='<th>Short ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th style="text-align:center" data-nosort="1">Ações</th>';
     rows=list.map(r=>'<tr data-rid="'+r.rid+'">'+base2(r)+whenCell(r)+'<td class="rl-acts">'+aprActsHTML('Aprovar short','Reprovar short')+'</td></tr>').join('');
   } else if(reelFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th>';
-    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,r.decidedAt)+'</td></tr>').join('');
+    head='<th>Short ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(r)+'</tr>').join('');
   } else {
-    tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
-    head='<th>Short ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Motivo</th>';
-    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,r.decidedAt)+'</td><td class="apr-cmt">'+(r.motivo||',')+'</td></tr>').join('');
+    tblClass='modtbl modtbl-rej'; colg=COLG_REEL_REJ;
+    head='<th>Short ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Reprovado em</th>';
+    rows=list.map(r=>'<tr>'+base2(r)+whenCell(r)+'<td class="apr-when">'+aprDecidedCell(r.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(r)+'</tr>').join('');
   }
   const wrap=document.createElement('div');
   wrap.className='rlist';
   wrap.innerHTML='<table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table>';
+  wrap.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(reelSortIdx===i) th.classList.add('active-sort'); const icon=reelSortIdx===i?(reelSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(reelSortIdx===i) reelSortDir=-reelSortDir; else { reelSortIdx=i; reelSortDir=1; } renderReelAppr(); }); });
   wrap.addEventListener('click', function(e){
     const actBtn=e.target.closest('.rl-actbtn');
     if(actBtn){
@@ -1204,8 +1378,10 @@ function openReelAppr(r){
       '</div>');
   } else if(acts){ acts.style.display='flex'; const ok=document.getElementById('pubApprOk'); if(ok) ok.style.display=''; }
 }
+const PUB_APPR_TITLES={pend:'Publicações pendentes',aprovado:'Publicações aprovadas',rejeitado:'Publicações reprovadas'};
 function renderPubAppr(){
   foBuildPubApprFilters();
+  const pth=$('#pubApprScreenTitle'); if(pth) pth.textContent=PUB_APPR_TITLES[pubFilter];
   const el=$('#pubApprQueue');
   const pendP=PUB_APPR.filter(n=>!n.proc&&!n.procFail);
   const nPend=pendP.length, nApr=PUB_HIST.filter(n=>n.apprStatus==='aprovado').length, nRej=PUB_HIST.filter(n=>n.apprStatus==='rejeitado').length;
@@ -1226,7 +1402,7 @@ function renderPubAppr(){
   const av=n=>n.av?'<span class="avatar '+n.av+'">'+(n.ini||'')+'</span>':'<span class="nv-logo">'+SULTS_LOGO+'</span>';
   const unitOfP=n=>n.unit||((typeof STORES!=='undefined')?STORES[(n.paid||1)%STORES.length].name:'');
   const thumbP=n=> n.image? '<span class="cmappr-thumb" style="width:44px;height:36px;background-image:url('+n.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:44px;height:36px"><i class="fa-solid fa-'+(n.article?'newspaper':'align-left')+'"></i></span>';
-  const base3=n=>'<td><div class="rl-reel">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b><span>#'+n.paid+' • '+(n.article?'Artigo':'Postagem')+'</span></div></div></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="rl-emp">'+unitOfP(n)+'</span></div></div></td>';
+  const base3=n=>{ const tp=pubTipo(n); return '<td><div class="rl-reel">'+thumbP(n)+'<div><b>'+(n.title||'(sem título)')+'</b><span>#'+n.paid+' • '+tp.label+'</span></div></div></td><td><span class="apr-type '+tp.cls+'">'+tp.icon+' '+tp.label+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b><span class="rl-emp">'+unitOfP(n)+'</span></div></div></td>'; };
   const whenCell=n=>'<td class="apr-when"><div class="rl-dt">'+paFullDT(n.ts)+'</div><span class="rl-rel">'+(n.date||'agora')+'</span></td>';
   if(pubSortIdx!=null){ list=list.slice().sort(function(a,b){ var ka=pubCellVal(a,pubSortIdx), kb=pubCellVal(b,pubSortIdx); return ka<kb?-pubSortDir:ka>kb?pubSortDir:0; }); }
   let head, rows, tblClass='modtbl', colg=COLG_PUB_PEND;
@@ -1236,12 +1412,12 @@ function renderPubAppr(){
     rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="rl-acts">'+aprActsHTML('Aprovar publicação','Reprovar publicação')+'</td></tr>').join('');
   } else if(pubFilter==='aprovado'){
     tblClass='modtbl modtbl-apr'; colg=COLG_PUB_APR;
-    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,n.decidedAt)+'</td></tr>').join('');
+    head='<th>Publicação ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Aprovado por</th><th>Aprovado em</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(n)+'</tr>').join('');
   } else {
     tblClass='modtbl modtbl-rej'; colg=COLG_PUB_REJ;
-    head='<th>Publicação ('+list.length+')</th><th style="text-align:center">Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Motivo</th>';
-    rows=list.map(n=>'<tr data-paid="'+n.paid+'"><td class="apr-cmt"><b>'+(n.title||'(sem título)')+'</b></td><td style="text-align:center"><span class="apr-type">'+(n.article?'Artigo':'Postagem')+'</span></td><td><div class="rl-author">'+av(n)+'<div><b>'+(n.author||'SULTS')+'</b></div></div></td>'+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,n.decidedAt)+'</td><td class="apr-cmt">'+(n.motivo?n.motivo.replace(/</g,'&lt;'):',')+'</td></tr>').join('');
+    head='<th>Publicação ('+list.length+')</th><th>Tipo</th><th>Autor</th><th>Entrou na fila em</th><th>Reprovado por</th><th>Reprovado em</th>';
+    rows=list.map(n=>'<tr data-paid="'+n.paid+'">'+base3(n)+whenCell(n)+'<td class="apr-when">'+aprDecidedCell(n.decidedBy,'CEO')+'</td>'+aprDecidedWhenCell(n)+'</tr>').join('');
   }
   el.innerHTML = '<div class="rlist"><table class="'+tblClass+'">'+colg+'<thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
   el.querySelectorAll('thead th').forEach(function(th,i){ if(!th.textContent.trim()||th.dataset.nosort) return; th.classList.add('sortable'); if(pubSortIdx===i) th.classList.add('active-sort'); const icon=pubSortIdx===i?(pubSortDir===1?NV_SORT_ICONS.up:NV_SORT_ICONS.down):NV_SORT_ICONS.swap; th.innerHTML=th.innerHTML+' <span class="sort-ic">'+icon+'</span>'; th.addEventListener('click', function(){ if(pubSortIdx===i) pubSortDir=-pubSortDir; else { pubSortIdx=i; pubSortDir=1; } renderPubAppr(); }); });
@@ -1304,10 +1480,10 @@ function reviewDecide(ok){ const n=reviewingPub; if(!n) return; PUB_APPR=PUB_APP
     {title:'Resultados do 1º semestre superam a meta em 18%',author:'Matheus Scussel',av:'av-ms',ini:'MS',date:'há 20 min',ts:Date.now()-20*60000,text:'Fechamos o semestre com crescimento acima do esperado em toda a rede.',sub:'Expansão'},
     {title:'Nova unidade inaugurada em Florianópolis',author:'Lucas Prado',av:'av-pl',ini:'LP',date:'há 40 min',ts:Date.now()-40*60000,text:'Mais uma loja da rede abre as portas no litoral catarinense.',sub:'Expansão'},
     {title:'Treinamento de atendimento 2.0 disponível',author:'Carla Mendes',av:'av-cm',ini:'CM',date:'há 1 h',ts:Date.now()-60*60000,text:'Nova trilha na Universidade Corporativa com certificado.',sub:'Universidade'},
-    {title:'Campanha de inverno começa na próxima semana',author:'Ana Souza',av:'av-as',ini:'AS',date:'há 2 h',ts:Date.now()-2*3600000,text:'Materiais de PDV já disponíveis no Disco Virtual.',sub:'Produto'},
+    {title:'Campanha de inverno começa na próxima semana',author:'Ana Souza',av:'av-as',ini:'AS',date:'há 2 h',ts:Date.now()-2*3600000,text:'Campanha de inverno chegando!',sub:'Produto',colorBg:'#2F8EE5',colorEmoji:'❄️',colorSub:'Materiais de PDV já disponíveis no Disco Virtual.'},
     {title:'Bella Capri: a história por trás do sucesso',author:'Ellen Rocha',av:'av-gc',ini:'ER',date:'há 3 h',ts:Date.now()-3*3600000,text:'Um mergulho na trajetória de uma das maiores redes de pizzarias.',sub:'Histórias de sucesso',article:true},
     {title:'Atualização da plataforma v10.5',author:'Willer Matayoshi',av:'av-wm',ini:'WM',date:'há 5 h',ts:Date.now()-5*3600000,text:'Melhorias de performance e novos filtros nos relatórios.',sub:'Produto'},
-    {title:'Vagas internas abertas em Produto e CS',author:'Beatriz Lopes',av:'av-bo',ini:'BL',date:'ontem',ts:Date.now()-25*3600000,text:'Candidate-se pelo RH até sexta-feira.',sub:'Gente & Cultura'}
+    {title:'Vagas internas abertas em Produto e CS',author:'Beatriz Lopes',av:'av-bo',ini:'BL',date:'ontem',ts:Date.now()-25*3600000,text:'Vagas internas abertas!',sub:'Gente & Cultura',colorBg:'#00A193',colorEmoji:'💼',colorSub:'Candidate-se pelo RH até sexta-feira.'}
   ];
   pubs.forEach(p=>pubApprAdd(Object.assign({status:'draft',reactions:0,comments:0},p)));
 })();
@@ -1891,7 +2067,8 @@ function renderNewsList(){
       ? '<span class="nv-lt-cat"><span class="nv-lt-catic" style="background:'+cat.color+'"><i class="fa-solid '+(cat.icon||'fa-tag')+'"></i></span>'+cat.name+'</span>'
       : '<span style="color:#b8c2cc">,</span>';
     const dispTitle = n.title || (n.text ? n.text.replace(/<[^>]+>/g,'').replace(/\n/g,' ').slice(0,60) : 'Publicação');
-    const tipo = n.article ? '<span class="nv-tp is-art"><i class="fa-solid fa-newspaper"></i> Artigo</span>' : '<span class="nv-tp is-post"><i class="fa-solid fa-align-left"></i> Post</span>';
+    const nlTp = pubTipo(n);
+    const tipo = '<span class="nv-tp '+nlTp.cls+'">'+nlTp.icon+' '+nlTp.label+'</span>';
     const reachMap = { rede:['fa-earth-americas','Toda a rede'], unidades:['fa-store','Unidades'], matriz:['fa-building','Sua Marca (Matriz)'] };
     const rc = reachMap[n.reach||'rede'];
     const reachCell = '<span class="nv-reach"><i class="fa-solid '+rc[0]+'"></i> '+rc[1]+'</span>';

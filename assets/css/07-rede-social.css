@@ -27,7 +27,7 @@
 .nmod-top-tabs::-webkit-scrollbar{display:none}
 .nmod-tab{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   height:48px;min-width:96px;border:0;background:none;
-  color:rgba(255,255,255,.72);font:inherit;font-size:14px;line-height:18px;font-weight:600;letter-spacing:.3px;
+  color:rgba(255,255,255,.72);font:inherit;font-size:14px;line-height:18px;font-weight:400;letter-spacing:.3px;
   white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
@@ -39,8 +39,8 @@
 .nmod-tab.active .nmt-ic-on{display:inline-block}
 .nmod-tab:hover{background:rgba(255,255,255,.08);color:#fff}
 .nmod-tab:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(0,136,255,.16)}
-.nmod-tab.active{background:#00ACAC;color:#fff}
-.nmod-tab.active:hover{background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),#00ACAC;color:#fff}
+.nmod-tab.active{background:#fff;color:#133158}
+.nmod-tab.active:hover{background:#fff;color:#133158}
 /* mesmo campo do "Buscar acoes na plataforma": a lupa vem primeiro e nao
    ha botao — quem dispara a busca e o Enter, que o listener ja tratava */
 /* Tres estados: parado e so o filete de 1px; no hover entra o cinza; no
@@ -66,6 +66,7 @@
   font:inherit;font-size:13px;line-height:17px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;
   background:#00ACAC;color:#fff;transition:background 120ms cubic-bezier(.4,0,.2,1),box-shadow 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-switch i{font-size:20px;line-height:20px;height:20px}
+.nmod-switch svg{width:20px;height:20px}
 /* a foto fecha o lado direito da barra, nos dois ambientes: é onde a pessoa
    procura a própria conta, e ela não deixa de existir dentro do Gerenciar */
 .nmod-topav{display:block;width:40px;height:40px;cursor:pointer}
@@ -117,8 +118,8 @@
      la ele nasce no topo do botao, aqui na base da aba */
   content:'';position:absolute;left:0;right:0;bottom:0;height:5px;border-radius:3px 3px 0 0;background:var(--teal);
 }
-.news-view.env-social .nmod-tab.active{background:#00ACAC;color:#fff}
-.news-view.env-social .nmod-tab.active:hover{background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),#00ACAC;color:#fff}
+.news-view.env-social .nmod-tab.active{background:#fff;color:#133158}
+.news-view.env-social .nmod-tab.active:hover{background:#fff;color:#133158}
 .nv-reelsbanner{display:none;align-items:center;gap:8px;padding:12px 24px;margin:0;background:#E0F1FF;
   color:#0F377A;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.3px;
   box-shadow:inset 0 -1px 0 #E9EAED}
@@ -161,17 +162,28 @@
 .exp-panel{background:#fff;border:1px solid #D9D9D9;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:20px}
 .exp-title{display:flex;align-items:center;gap:8px}
 .exp-title i{font-size:22px;color:var(--teal)}
+.exp-title svg{width:26px;height:26px;color:var(--teal);flex-shrink:0}
 .exp-title h2{font-size:18px;font-weight:700;color:#0C334A;margin:0}
 .exp-grid{display:flex;flex-wrap:wrap;gap:20px}
 .exp-item{flex:1 1 300px;display:flex;flex-direction:column;gap:12px;border:1px solid #D9D9D9;border-radius:8px;padding:20px}
 .exp-item-top{display:flex;align-items:flex-start;gap:12px}
 .exp-ic{flex-shrink:0;width:60px;height:60px;border-radius:4px;background:rgba(47,142,229,.12);display:flex;align-items:center;justify-content:center}
 .exp-ic i{font-size:26px;color:#2F8EE5}
+.exp-ic svg{width:26px;height:26px;color:#2F8EE5}
 .exp-item-txt{display:flex;flex-direction:column;gap:2px}
 .exp-item-txt b{font-size:16px;font-weight:700;color:#0C334A}
 .exp-item-txt span{font-size:14px;font-weight:400;color:#5F666C}
 .exp-item-div{border-top:1px solid #D9D9D9;margin-top:auto}
 .exp-btn{height:36px;border:0;border-radius:6px;background:#2F8EE5;color:#fff;font:inherit;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.exp-btn svg{width:16px;height:16px;flex-shrink:0}
+/* Botões do modal "Exportar" (#expModal) seguem o padrão de botão do projeto (altura 36px,
+   raio 6px, peso 700, 14px) em vez do .fo-btn genérico em pílula usado pelo Fórum — escopado
+   pra não mexer nos outros modais que reaproveitam .fo-btn. */
+#expModal .fo-btn{border-radius:6px;height:36px;padding:0 16px;font-size:14px;font-weight:700;background:#2F8EE5}
+#expModal .fo-btn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
+#expModal .fo-btn.ghost{border-radius:6px;height:36px;padding:0 16px;font-size:14px;font-weight:700;background:#eef2f5;color:#5b6672;border:0}
+#expModal .fo-btn.ghost:hover{background:#e2e8ee;color:var(--ink)}
+#expModal .fo-btn svg{width:16px;height:16px;flex-shrink:0}
 .exp-btn:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#2F8EE5}
 /* Modal "Exportar" (#expModal) — mesmo tratamento de título azul de #nvCatModal. */
 #expModal .fg-head{border-bottom:0}
@@ -247,6 +259,7 @@
 .cfg-badge.apr-cnt{background:rgba(255,255,255,.18)}
 .apr-grp-hd{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:700;letter-spacing:0;text-transform:none;color:#fff;margin:0 -12px;padding:18px 26px 10px;border-top:1px solid rgba(255,255,255,.1)}
 .apr-grp-hd i{font-size:15px;width:18px;text-align:center}
+.apr-grp-hd svg{width:18px;height:18px;flex-shrink:0}
 .nv-cfgside .apr-grp-hd:first-child{padding-top:16px;border-top:0}
 .apr-sub{height:36px !important;padding:0 14px 0 24px !important;font-size:15px !important;font-weight:400 !important;color:rgba(255,255,255,.82) !important}
 .apr-sub i{font-size:14px}
@@ -259,7 +272,11 @@
 .apr-seg button.on .apr-segn{background:rgba(0,172,172,.16);color:var(--teal)}
 .apr-badge-ok{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#128a3e;background:rgba(37,211,102,.14);padding:5px 12px;border-radius:999px}
 .apr-badge-no{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#c62828;background:#fdecea;padding:5px 12px;border-radius:999px}
-.apr-type{display:inline-block;font-size:11px;font-weight:700;color:#5b6672;background:#eef2f5;border-radius:6px;padding:3px 9px}
+.apr-type{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:400;color:#5b6672;background:#eef2f5;border-radius:32px;padding:4px 12px}
+.apr-type i{font-size:11px}
+.apr-type svg{width:14px;height:14px;flex-shrink:0}
+.apr-type.is-art{color:#905813;background:#e08a1e29}
+.apr-type.is-color{color:#0c7d7d;background:rgba(0,172,172,.12)}
 .apr-when{color:var(--muted);font-size:12px;white-space:nowrap}
 #modQueue .rl-acts,#pubApprQueue .rl-acts{white-space:nowrap;text-align:right}
 /* mesmo desenho dos botoes de aprovar comentario (.comment-mod) */
@@ -272,12 +289,10 @@
 #nvInterScreen .cat-body{padding:10px 10px 10px}
 #nvCatsScreen .cat-body{padding:11px 14px 22px}
 /* =====================================================================
-   APROVAÇÕES > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen)
-   Layout com tabela + painel de filtro à direita (Figma "Pendentes", node 1646:3473).
-   "Em processamento" não existe mais nessas duas telas — só Pendentes/Aprovados/
-   Rejeitados. Comentários pendentes (#nvModScreen) não entra aqui: só a aba
-   Pendentes ganha o mesmo estilo de tabela (.modtbl-pend) mais abaixo; Aprovados/
-   Rejeitados de Comentários continuam com o cabeçalho de abas antigo, intocado.
+   APROVAÇÕES > Publicações/Shorts/Comentários (#nvPubApprScreen, #nvReelApprScreen,
+   #nvModScreen) — as três telas compartilham o mesmo componente de fila (tabela +
+   painel de filtro à direita, Figma "Pendentes", node 1646:3473). Só Pendentes/
+   Aprovados/Rejeitados existem; "Em processamento" não existe em nenhuma delas.
    ===================================================================== */
 /* As duas colunas (tabs+tabela de um lado, filtro do outro) são irmãs num mesmo
    .nv-listwrap flex — a base já usa align-items:stretch, então nenhuma das duas pode
@@ -286,77 +301,81 @@
    coluna mais baixa (normalmente a tabela, com poucos itens) estica até a altura da
    mais alta, e cada uma vira um card bordado próprio (mesma borda/raio do filtro) pra
    o espaço sobrando aparecer dentro do card, não como vazio solto. */
-#nvPubApprScreen .cat-body,#nvReelApprScreen .cat-body{padding:0}
-#nvPubApprScreen .nv-listmain,#nvReelApprScreen .nv-listmain{align-self:stretch;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;padding:12px;gap:8px;background:#fff;border-radius:8px;border:1px solid #D9D9D9;margin:8px 0 8px 8px}
-#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters{align-self:stretch;max-height:none;padding-bottom:0;display:flex;flex-direction:column;margin:8px 8px 8px 0}
-#nvPubApprScreen .rx-filters .nv-filters-ft,#nvReelApprScreen .rx-filters .nv-filters-ft{margin-top:auto;margin-left:-16px;margin-right:-16px;border-radius:0 0 8px 8px}
-#nvPubApprScreen #pubApprQueue,#nvReelApprScreen #reelApprQueue{
+#nvPubApprScreen .cat-body,#nvReelApprScreen .cat-body,#nvModScreen .cat-body{padding:0}
+#nvPubApprScreen .nv-listmain,#nvReelApprScreen .nv-listmain,#nvModScreen .nv-listmain{align-self:stretch;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;padding:12px;gap:8px;background:#fff;border-radius:8px;border:1px solid #D9D9D9;margin:8px 8px 8px 8px}
+#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvModScreen .rx-filters{align-self:stretch;max-height:none;padding-bottom:0;display:flex;flex-direction:column;margin:8px 8px 8px 0}
+#nvPubApprScreen .rx-filters .nv-filters-ft,#nvReelApprScreen .rx-filters .nv-filters-ft,#nvModScreen .rx-filters .nv-filters-ft{margin-top:auto;margin-left:-16px;margin-right:-16px;border-radius:0 0 8px 8px}
+#nvPubApprScreen #pubApprQueue,#nvReelApprScreen #reelApprQueue,#nvModScreen #modQueue{
   flex:1;min-height:0;display:flex;flex-direction:column;
   border-radius:8px;background:#fff;overflow:hidden}
-#nvPubApprScreen #pubApprQueue .rlist,#nvReelApprScreen #reelApprQueue .rlist{flex:1;overflow-y:auto;border-radius:8px}
-#nvPubApprScreen #pubApprQueue .mod-empty,#nvReelApprScreen #reelApprQueue .mod-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0}
-/* Estado vazio de Publicações (Aprovados/Reprovados) usa aprEmptyHTML(), que monta
+#nvPubApprScreen #pubApprQueue .rlist,#nvReelApprScreen #reelApprQueue .rlist,#nvModScreen #modQueue .rlist{flex:1;overflow-y:auto;border-radius:8px}
+#nvPubApprScreen #pubApprQueue .mod-empty,#nvReelApprScreen #reelApprQueue .mod-empty,#nvModScreen #modQueue .mod-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0}
+/* Estado vazio (Aprovados/Reprovados) usa aprEmptyHTML(), que monta
    .demo-empty-state.de-resultado (08-feed.css) — sem isso ele ficava com a caixa/borda
-   cinza padrão daquele componente e sem preencher a altura de #pubApprQueue. */
-#nvPubApprScreen #pubApprQueue .demo-empty-state{flex:1;display:flex;margin:0;border:none;background:#fff}
-/* Pilulas "Pendentes/Aprovados/Rejeitados" — sobrescreve a aba sublinhada genérica de
-   06-shorts.css (que continua valendo, sem mudança, para #nvModScreen). */
-#nvPubApprScreen .apr-seg,#nvReelApprScreen .apr-seg{
+   cinza padrão daquele componente e sem preencher a altura do container da fila. */
+#nvPubApprScreen #pubApprQueue .demo-empty-state,#nvReelApprScreen #reelApprQueue .demo-empty-state,#nvModScreen #modQueue .demo-empty-state{flex:1;display:flex;margin:0;border:none;background:#fff}
+/* Pilulas "Pendentes/Aprovados/Rejeitados" — mesmo desenho nas três filas de Aprovações. */
+#nvPubApprScreen .apr-seg,#nvReelApprScreen .apr-seg,#nvModScreen .apr-seg{
   background:none;border:0;height:auto;padding:0;gap:8px;align-items:center;overflow-x:visible}
-#nvPubApprScreen .apr-seg button,#nvReelApprScreen .apr-seg button{
+#nvPubApprScreen .apr-seg button,#nvReelApprScreen .apr-seg button,#nvModScreen .apr-seg button{
   height:36px;min-width:0;padding:0 12px;border:1px solid #e6eaef;border-radius:6px;
   background:rgb(246 247 248);color:#5F666C}
-#nvPubApprScreen .apr-seg button i,#nvReelApprScreen .apr-seg button i{font-size:16px}
-#nvPubApprScreen .apr-seg button svg,#nvReelApprScreen .apr-seg button svg{width:18px;height:18px;flex-shrink:0}
-#nvPubApprScreen .apr-seg button[data-f="pend"] svg,#nvReelApprScreen .apr-seg button[data-f="pend"] svg{color:#7a5c10}
-#nvPubApprScreen .apr-seg button[data-f="aprovado"] i,#nvReelApprScreen .apr-seg button[data-f="aprovado"] i{color:#1E8E3E}
-#nvPubApprScreen .apr-seg button[data-f="rejeitado"] i,#nvReelApprScreen .apr-seg button[data-f="rejeitado"] i{color:#B3261E}
-#nvPubApprScreen .apr-seg button:hover,#nvReelApprScreen .apr-seg button:hover{background:#e7ebee}
-#nvPubApprScreen .apr-seg button.on,#nvReelApprScreen .apr-seg button.on{
+#nvPubApprScreen .apr-seg button i,#nvReelApprScreen .apr-seg button i,#nvModScreen .apr-seg button i{font-size:16px}
+#nvPubApprScreen .apr-seg button svg,#nvReelApprScreen .apr-seg button svg,#nvModScreen .apr-seg button svg{width:18px;height:18px;flex-shrink:0}
+#nvPubApprScreen .apr-seg button[data-f="pend"] svg,#nvReelApprScreen .apr-seg button[data-f="pend"] svg,#nvModScreen .apr-seg button[data-f="pend"] svg{color:#7a5c10}
+#nvPubApprScreen .apr-seg button[data-f="aprovado"] i,#nvReelApprScreen .apr-seg button[data-f="aprovado"] i,#nvModScreen .apr-seg button[data-f="aprovado"] i{color:#1E8E3E}
+#nvPubApprScreen .apr-seg button[data-f="rejeitado"] i,#nvReelApprScreen .apr-seg button[data-f="rejeitado"] i,#nvModScreen .apr-seg button[data-f="rejeitado"] i{color:#B3261E}
+#nvPubApprScreen .apr-seg button:hover,#nvReelApprScreen .apr-seg button:hover,#nvModScreen .apr-seg button:hover{background:#e7ebee}
+#nvPubApprScreen .apr-seg button.on,#nvReelApprScreen .apr-seg button.on,#nvModScreen .apr-seg button.on{
   background:rgba(47,142,229,.05);border-color:#2F8EE5;color:#2F8EE5}
-#nvPubApprScreen .apr-seg button.on::after,#nvReelApprScreen .apr-seg button.on::after{content:none}
-#nvPubApprScreen .apr-seg .apr-segn,#nvReelApprScreen .apr-seg .apr-segn{
-  background:#E4E7EB;color:#5F666C;border-radius:10px;padding:1px 5px;font-size:11px}
+#nvPubApprScreen .apr-seg button.on::after,#nvReelApprScreen .apr-seg button.on::after,#nvModScreen .apr-seg button.on::after{content:none}
+#nvPubApprScreen .apr-seg .apr-segn,#nvReelApprScreen .apr-seg .apr-segn,#nvModScreen .apr-seg .apr-segn{
+  background:#E4E7EB;color:#5F666C;border-radius:10px;padding:1px 5px;font-size:12px}
+#nvPubApprScreen .apr-seg button.on .apr-segn,#nvReelApprScreen .apr-seg button.on .apr-segn,#nvModScreen .apr-seg button.on .apr-segn{
+  background:rgba(47,142,229,.05);color:#2F8EE5;font-weight:700}
 /* Tabela: mesma letra/cor já usada em #pubGrid (18-gerenciar-publicacoes.css), que segue o
    mesmo sistema de design do Figma desta tela. */
-#nvPubApprScreen .modtbl th,#nvReelApprScreen .modtbl th,#nvModScreen .modtbl th{font-size:14px;font-weight:700;color:#0C334A;text-transform:none;background:#fff;height:46px;box-sizing:border-box;border-bottom:1px solid #D9D9D9;border-right:none}
+#nvPubApprScreen .modtbl th,#nvReelApprScreen .modtbl th,#nvModScreen .modtbl th{font-size:14px;font-weight:700;color:#0C334A;text-transform:none;background:#fff;height:46px;box-sizing:border-box;border-bottom:1px solid #D9D9D9;border-right:none;white-space:nowrap}
 /* Larguras de coluna exatas do Figma (Pendentes: nodes 1685-4356/7035 e 1691-16886/17232;
    Aprovados/Reprovados: nodes 1691-9035/9158/12344/12434 e 1691-17890/18308). Só a coluna
    de título (col-principal) é flexível — cresce/encolhe pra preencher o espaço disponível;
    todas as outras têm largura fixa em px, igual com o filtro aberto ou fechado. As larguras
    vêm de um <colgroup> (montado no JS, uma vez por tabela) em vez de style inline por linha —
    table-layout:fixed faz o <col> sem width (col-principal) absorver o espaço que sobra.
-   min-width em cada .modtbl-XXX é a soma das colunas fixas + um mínimo razoável pro título;
-   quando os fixos + esse mínimo não cabem (comum nas abas com mais colunas, como Aprovados/
-   Reprovados), a tabela trava nesse tamanho e o .rlist (overflow-x:auto, acima) rola na
-   horizontal em vez de espremer qualquer coluna. */
+   min-width em cada .modtbl-XXX é a soma das colunas fixas + o piso de .rl-reel/.apr-cmt
+   (600px em Publicação/Short, 480px em Comentário); quando os fixos + esse piso não cabem
+   (comum nas abas com mais colunas, como Aprovados/Reprovados), a tabela trava nesse tamanho
+   e o .rlist (overflow-x:auto, acima) rola na horizontal em vez de espremer qualquer coluna. */
 #nvPubApprScreen .modtbl,#nvReelApprScreen .modtbl,#nvModScreen .modtbl{table-layout:fixed;width:100%}
-#nvPubApprScreen .modtbl-pend,#nvReelApprScreen .modtbl-pend{min-width:936px}
-#nvPubApprScreen .modtbl-apr,#nvReelApprScreen .modtbl-apr,#nvPubApprScreen .modtbl-rej,#nvReelApprScreen .modtbl-rej{min-width:1120px}
-#nvModScreen .modtbl-pend{min-width:996px}
-#nvModScreen .modtbl-apr,#nvModScreen .modtbl-rej{min-width:1140px}
-#nvPubApprScreen .modtbl col.col-tipo,#nvReelApprScreen .modtbl col.col-tipo{width:180px}
-#nvPubApprScreen .modtbl col.col-autor,#nvReelApprScreen .modtbl col.col-autor{width:200px}
-#nvPubApprScreen .modtbl-pend col.col-data,#nvReelApprScreen .modtbl-pend col.col-data{width:180px}
-#nvPubApprScreen .modtbl-pend col.col-acoes,#nvReelApprScreen .modtbl-pend col.col-acoes{width:116px}
-#nvPubApprScreen .modtbl-apr col.col-data,#nvReelApprScreen .modtbl-apr col.col-data,
-#nvPubApprScreen .modtbl-rej col.col-data,#nvReelApprScreen .modtbl-rej col.col-data{width:164px}
+#nvPubApprScreen .modtbl-pend{min-width:1356px}
+#nvReelApprScreen .modtbl-pend{min-width:1296px}
+#nvPubApprScreen .modtbl-apr,#nvPubApprScreen .modtbl-rej{min-width:1680px}
+#nvReelApprScreen .modtbl-apr,#nvReelApprScreen .modtbl-rej{min-width:1620px}
+#nvModScreen .modtbl-pend{min-width:1236px}
+#nvModScreen .modtbl-apr,#nvModScreen .modtbl-rej{min-width:1560px}
+#nvPubApprScreen .modtbl col.col-tipo{width:200px}
+#nvReelApprScreen .modtbl col.col-tipo{width:140px}
+#nvPubApprScreen .modtbl col.col-autor,#nvReelApprScreen .modtbl col.col-autor,#nvModScreen .modtbl col.col-autor{width:240px}
+#nvPubApprScreen .modtbl col.col-data,#nvReelApprScreen .modtbl col.col-data,#nvModScreen .modtbl col.col-data{width:200px}
+#nvPubApprScreen .modtbl-pend col.col-acoes,#nvReelApprScreen .modtbl-pend col.col-acoes,#nvModScreen .modtbl-pend col.col-acoes{width:116px}
 #nvPubApprScreen .modtbl-apr col.col-aprovador,#nvReelApprScreen .modtbl-apr col.col-aprovador,
-#nvPubApprScreen .modtbl-rej col.col-aprovador,#nvReelApprScreen .modtbl-rej col.col-aprovador{width:200px}
-#nvPubApprScreen .modtbl-rej col.col-motivo,#nvReelApprScreen .modtbl-rej col.col-motivo{width:116px}
-#nvModScreen .modtbl-pend col.col-autor{width:240px}
-#nvModScreen .modtbl-pend col.col-publicacao{width:200px}
-#nvModScreen .modtbl-pend col.col-data{width:180px}
-#nvModScreen .modtbl-pend col.col-acoes{width:116px}
-#nvModScreen .modtbl-apr col.col-autor,#nvModScreen .modtbl-rej col.col-autor{width:200px}
-#nvModScreen .modtbl-apr col.col-publicacao{width:200px}
-#nvModScreen .modtbl-apr col.col-data{width:164px}
-#nvModScreen .modtbl-rej col.col-data{width:200px}
-#nvModScreen .modtbl-apr col.col-aprovador{width:200px}
-#nvModScreen .modtbl-rej col.col-aprovador{width:164px}
-#nvModScreen .modtbl-apr col.col-decidido-em{width:116px}
-#nvModScreen .modtbl-rej col.col-decidido-em{width:200px}
-#nvModScreen .modtbl-rej col.col-motivo{width:116px}
+#nvPubApprScreen .modtbl-rej col.col-aprovador,#nvReelApprScreen .modtbl-rej col.col-aprovador,
+#nvModScreen .modtbl-apr col.col-aprovador,#nvModScreen .modtbl-rej col.col-aprovador{width:240px}
+#nvPubApprScreen .modtbl-apr col.col-decidido-em,#nvReelApprScreen .modtbl-apr col.col-decidido-em,
+#nvPubApprScreen .modtbl-rej col.col-decidido-em,#nvReelApprScreen .modtbl-rej col.col-decidido-em,
+#nvModScreen .modtbl-apr col.col-decidido-em,#nvModScreen .modtbl-rej col.col-decidido-em{width:200px}
+#nvPubApprScreen .rl-reel,#nvReelApprScreen .rl-reel{min-width:600px}
+/* .rl-reel>div (título+meta) é filho flex sem min-width:0 — por padrão um item flex não
+   encolhe abaixo do tamanho do seu conteúdo, então o título comprido empurrava a célula e
+   "passava" a coluna em vez de quebrar; com min-width:0 ele volta a respeitar o espaço
+   disponível e o line-clamp:2 do <b> (abaixo) passa a truncar com "..." de verdade. */
+#nvPubApprScreen .rl-reel>div,#nvReelApprScreen .rl-reel>div{min-width:0}
+#nvModScreen .modtbl-pend col.col-publicacao,#nvModScreen .modtbl-apr col.col-publicacao,#nvModScreen .modtbl-rej col.col-publicacao{width:200px}
+/* Comentário (1ª coluna, sem thumbnail — .apr-cmt sozinho, sem wrapper .rl-reel) precisa do
+   mesmo piso de largura que Publicação/Short já têm via .rl-reel; :first-child distingue da
+   célula de Motivo, que também usa .apr-cmt mas é sempre a última coluna. Trunca em 3 linhas
+   (não 2, como Publicação/Short) porque é o texto do comentário, não um título curto. */
+#nvModScreen .modtbl td.apr-cmt:first-child{min-width:480px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
 /* .rlist genérico (06-shorts.css) tem th:nth-child(2)/td:nth-child(2){min-width:340px}, pensado
    pra listas como Categorias — sem essa exceção ele vazava pra cá e travava a 2ª coluna acima
    da % dela, impedindo o encolhimento proporcional (th:first-child, o outro vazamento antigo,
@@ -378,46 +397,46 @@
 #nvModScreen .modtbl .pubttl>div{min-width:0}
 #nvModScreen .modtbl .pubttl b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Botão "Ações" preenche 100% da célula (coluna de 118px) */
-#nvPubApprScreen .modtbl-pend .rl-actwrap,#nvReelApprScreen .modtbl-pend .rl-actwrap{display:block;width:100%}
-#nvPubApprScreen .modtbl-pend .rl-actbtn,#nvReelApprScreen .modtbl-pend .rl-actbtn{width:100%;justify-content:center}
+#nvPubApprScreen .modtbl-pend .rl-actwrap,#nvReelApprScreen .modtbl-pend .rl-actwrap,#nvModScreen .modtbl-pend .rl-actwrap{display:block;width:100%}
+#nvPubApprScreen .modtbl-pend .rl-actbtn,#nvReelApprScreen .modtbl-pend .rl-actbtn,#nvModScreen .modtbl-pend .rl-actbtn{width:100%;justify-content:center}
 /* Setinhas de ordenação iguais às de Categorias (mesmos NV_SORT_ICONS, mesma cor/hover). */
 #nvPubApprScreen .modtbl th.sortable,#nvReelApprScreen .modtbl th.sortable{cursor:pointer}
 #nvPubApprScreen .modtbl th .sort-ic,#nvReelApprScreen .modtbl th .sort-ic{display:inline-flex;align-items:center;vertical-align:middle;color:#0C334A;opacity:1}
-#nvPubApprScreen .modtbl th .sort-ic svg,#nvReelApprScreen .modtbl th .sort-ic svg{width:24px;height:24px;display:block}
+#nvPubApprScreen .modtbl th .sort-ic svg,#nvReelApprScreen .modtbl th .sort-ic svg,#nvModScreen .modtbl th .sort-ic svg{width:24px;height:24px;display:block}
 #nvPubApprScreen .modtbl th.sortable:hover .sort-ic,#nvReelApprScreen .modtbl th.sortable:hover .sort-ic{color:#2F8EE5}
 #nvPubApprScreen .modtbl tbody tr:nth-child(odd),#nvReelApprScreen .modtbl tbody tr:nth-child(odd){background:#fff}
 #nvPubApprScreen .modtbl tbody tr:nth-child(even),#nvReelApprScreen .modtbl tbody tr:nth-child(even){background:#F0F3F5}
 #nvPubApprScreen .modtbl tbody tr:hover,#nvReelApprScreen .modtbl tbody tr:hover{background:#e7f1fb}
 /* Scrollbar das tabelas de Aprovações removida a pedido — nas outras telas que reaproveitam o
    mesmo .rlist (06-shorts.css) a barra fina continua visível de propósito. */
-#nvPubApprScreen .rlist,#nvReelApprScreen .rlist{scrollbar-width:none}
-#nvPubApprScreen .rlist::-webkit-scrollbar,#nvReelApprScreen .rlist::-webkit-scrollbar{display:none}
+#nvPubApprScreen .rlist,#nvReelApprScreen .rlist,#nvModScreen .rlist{scrollbar-width:none}
+#nvPubApprScreen .rlist::-webkit-scrollbar,#nvReelApprScreen .rlist::-webkit-scrollbar,#nvModScreen .rlist::-webkit-scrollbar{display:none}
 #nvPubApprScreen .modtbl td,#nvReelApprScreen .modtbl td{height:58px;box-sizing:border-box}
 #nvPubApprScreen .rl-author .avatar,#nvPubApprScreen .rl-author .nv-logo,
-#nvReelApprScreen .rl-author .avatar,#nvReelApprScreen .rl-author .nv-logo{width:32px;height:32px}
-#nvPubApprScreen .rl-author b,#nvReelApprScreen .rl-author b{font-size:14px;font-weight:400;color:#5F666C}
-#nvPubApprScreen .rl-emp,#nvReelApprScreen .rl-emp{font-size:11px;font-weight:400;color:#999999}
+#nvReelApprScreen .rl-author .avatar,#nvReelApprScreen .rl-author .nv-logo,
+#nvModScreen .rl-author .avatar,#nvModScreen .rl-author .nv-logo{width:32px;height:32px}
+#nvPubApprScreen .rl-author b,#nvReelApprScreen .rl-author b,#nvModScreen .rl-author b{font-size:14px;font-weight:400;color:#5F666C}
+#nvPubApprScreen .rl-emp,#nvReelApprScreen .rl-emp,#nvModScreen .rl-emp{font-size:11px;font-weight:400;color:#999999}
 #nvPubApprScreen .rl-reel b,#nvReelApprScreen .rl-reel b{font-size:14px;font-weight:700;color:#5F666C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
 #nvPubApprScreen .rl-reel>div>span,#nvReelApprScreen .rl-reel>div>span{display:block;font-size:11px;color:#999999;font-weight:400}
-#nvPubApprScreen .rl-dt,#nvReelApprScreen .rl-dt{font-size:14px;color:#5F666C;font-weight:400}
-#nvPubApprScreen .rl-rel,#nvReelApprScreen .rl-rel{font-size:11px;color:#999999;font-weight:400}
-#nvPubApprScreen .apr-type,#nvReelApprScreen .apr-type{font-size:11px}
-#nvPubApprScreen .rl-actbtn,#nvReelApprScreen .rl-actbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1.5px solid #2F8EE5;border-radius:6px;background:#fff;color:#2F8EE5;font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
-#nvPubApprScreen .rl-actbtn:hover,#nvReelApprScreen .rl-actbtn:hover{background:rgba(47,142,229,.08)}
-#nvPubApprScreen .rl-actbtn i,#nvReelApprScreen .rl-actbtn i{font-size:12px}
-#nvPubApprScreen .rl-acts,#nvReelApprScreen .rl-acts{text-align:center}
+#nvPubApprScreen .rl-dt,#nvReelApprScreen .rl-dt,#nvModScreen .rl-dt{font-size:14px;color:#5F666C;font-weight:400}
+#nvPubApprScreen .rl-rel,#nvReelApprScreen .rl-rel,#nvModScreen .rl-rel{font-size:11px;color:#999999;font-weight:400}
+#nvPubApprScreen .rl-actbtn,#nvReelApprScreen .rl-actbtn,#nvModScreen .rl-actbtn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1.5px solid #2F8EE5;border-radius:6px;background:#fff;color:#2F8EE5;font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+#nvPubApprScreen .rl-actbtn:hover,#nvReelApprScreen .rl-actbtn:hover,#nvModScreen .rl-actbtn:hover{background:#2F8EE5;color:#fff}
+#nvPubApprScreen .rl-actbtn i,#nvReelApprScreen .rl-actbtn i,#nvModScreen .rl-actbtn i{font-size:12px}
+#nvPubApprScreen .rl-acts,#nvReelApprScreen .rl-acts,#nvModScreen .rl-acts{text-align:center}
 /* Botão "Ações" (mesmo padrão de #pubGrid/#rxGrid — 18-gerenciar-publicacoes.css /
    17-gerenciar-shorts.css): dropdown com Abrir em nova guia / Aprovar / Reprovar. */
-#nvPubApprScreen .rl-actwrap,#nvReelApprScreen .rl-actwrap{position:relative;display:inline-block}
-#nvPubApprScreen .rl-actmenu,#nvReelApprScreen .rl-actmenu{position:absolute;top:calc(100% + 6px);right:0;z-index:6;background:#fff;border:1px solid #D9D9D9;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14);min-width:220px;padding:6px;display:flex;flex-direction:column;gap:4px}
-#nvPubApprScreen .rl-actmenu button,#nvReelApprScreen .rl-actmenu button{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 14px;border:0;border-radius:8px;background:none;font:inherit;font-size:14px;color:#5F666C;text-align:left;cursor:pointer;white-space:nowrap}
-#nvPubApprScreen .rl-actmenu button:hover,#nvReelApprScreen .rl-actmenu button:hover{background:#f2f5f7}
-#nvPubApprScreen .rl-actmenu button.danger,#nvReelApprScreen .rl-actmenu button.danger{color:#e0392c}
-#nvPubApprScreen .rl-actmenu button.danger:hover,#nvReelApprScreen .rl-actmenu button.danger:hover{background:#fdecea}
-#nvPubApprScreen td.rl-actz,#nvReelApprScreen td.rl-actz{position:relative;z-index:20}
+#nvPubApprScreen .rl-actwrap,#nvReelApprScreen .rl-actwrap,#nvModScreen .rl-actwrap{position:relative;display:inline-block}
+#nvPubApprScreen .rl-actmenu,#nvReelApprScreen .rl-actmenu,#nvModScreen .rl-actmenu{position:absolute;top:calc(100% + 6px);right:0;z-index:6;background:#fff;border:1px solid #D9D9D9;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14);min-width:220px;padding:6px;display:flex;flex-direction:column;gap:4px}
+#nvPubApprScreen .rl-actmenu button,#nvReelApprScreen .rl-actmenu button,#nvModScreen .rl-actmenu button{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 14px;border:0;border-radius:8px;background:none;font:inherit;font-size:14px;color:#5F666C;text-align:left;cursor:pointer;white-space:nowrap}
+#nvPubApprScreen .rl-actmenu button:hover,#nvReelApprScreen .rl-actmenu button:hover,#nvModScreen .rl-actmenu button:hover{background:#f2f5f7}
+#nvPubApprScreen .rl-actmenu button.danger,#nvReelApprScreen .rl-actmenu button.danger,#nvModScreen .rl-actmenu button.danger{color:#e0392c}
+#nvPubApprScreen .rl-actmenu button.danger:hover,#nvReelApprScreen .rl-actmenu button.danger:hover,#nvModScreen .rl-actmenu button.danger:hover{background:#fdecea}
+#nvPubApprScreen td.rl-actz,#nvReelApprScreen td.rl-actz,#nvModScreen td.rl-actz{position:relative;z-index:20}
 /* Botão de mostrar/esconder filtros (.fl-toggle é reaproveitado de outras telas —
    aqui só o gap e o raio mudam, escopados pra não afetar Publicações/Shorts Explorar). */
-#nvPubApprScreen .fl-toggle,#nvReelApprScreen .fl-toggle{gap:8px;border-radius:6px}
+#nvPubApprScreen .fl-toggle,#nvReelApprScreen .fl-toggle,#nvModScreen .fl-toggle{gap:8px;border-radius:6px}
 #nvAprHomeScreen .perm-body{padding:12px}
 #nvPermScreen .perm-body{padding:8px}
 .nv-filters .nv-fsearch{margin:16px 0 0;width:100%;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0 12px;border-radius:8px}
@@ -442,7 +461,7 @@
 .itbl .itbl-cmtcell .itbl-cmt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
 .rl-recpill i{font-size:9px}
 .news-view.mod-mode{background:#E9EAED !important}
-.fl-toggle{display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 16px;border:0;border-radius:8px;background:#1667B8;color:#fff;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;transition:background 120ms cubic-bezier(.4,0,.2,1)}
+.fl-toggle{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:6px;background:#1667B8;color:#fff;font:inherit;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px;cursor:pointer;flex-shrink:0;transition:background 120ms cubic-bezier(.4,0,.2,1)}
 .fl-toggle i{font-size:14px}
 .fl-toggle .fl-carat{font-size:11px;opacity:.9}
 .fl-toggle:hover{background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#1667B8}
@@ -614,7 +633,7 @@
 .nv-filters .nv-fsel{width:100%}
 .nv-filters-ft{display:flex;gap:10px;padding:12px 0 0;margin-top:auto;background:#F0F0F0}
 .news-view .nv-filters-ft,.rx-nav .nv-filters-ft{position:sticky;bottom:0;z-index:2;background:#F0F0F0;padding:12px;margin-left:-18px;margin-right:-18px;border-radius:0 0 14px 14px}
-.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 16px;border-radius:8px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
+.nv-filters-ft .nv-fclear,.nv-filters-ft .nv-fapply{height:42px;min-height:42px;max-height:42px;box-sizing:border-box;padding:0 12px;border-radius:6px;font-size:14px;line-height:20px;font-weight:600;letter-spacing:.3px}
 .nv-filters .nv-fsel,.rx-nav .nv-fsel,.nv-filters .nv-finput,.rx-nav .nv-finput{height:42px;padding-top:0;padding-bottom:0}
 .nv-sitcards.nv-sit2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:transparent;padding:0;border-radius:0}
 .nv-sitcards.nv-sit2 .rxs-item2{width:100%;justify-content:center;text-align:center}
@@ -767,13 +786,14 @@
 .nv-lt-thumb.ph{display:flex;align-items:center;justify-content:center;color:#9aa7b3;font-size:14px}
 .nv-lt-type{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
 .nv-lt-type i{font-size:9px;margin-right:3px}
-.nv-tp{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.3px;padding:5px 14px;border-radius:32px;white-space:nowrap;line-height:16px;vertical-align:middle;width:auto;min-width:86px;max-width:none;vertical-align:middle;box-sizing:border-box}
+.nv-tp{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:400;letter-spacing:.3px;padding:4px 12px;border-radius:32px;white-space:nowrap;line-height:20px;vertical-align:middle;width:auto;min-width:86px;max-width:none;vertical-align:middle;box-sizing:border-box}
 .nv-tp i{font-size:11px;line-height:16px;display:block}
 #nvList td:nth-child(3){text-align:center}
 #nvList td:nth-child(3),#nvList th:nth-child(3){width:110px;min-width:110px;white-space:nowrap}
 #nvList td:nth-child(2),#nvList th:nth-child(2){white-space:nowrap;min-width:110px}
-.nv-tp.is-art{color:#0c7d7d;background:rgba(0,172,172,.12)}
+.nv-tp.is-art{color:#905813;background:#e08a1e29}
 .nv-tp.is-post{color:#5b6672;background:#eef2f5}
+.nv-tp.is-color{color:#0c7d7d;background:rgba(0,172,172,.12)}
 .nv-reach{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#465364;white-space:nowrap}
 .nv-reach i{font-size:11px;color:#8a94a0}
 .nv-author-cell{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#465364;white-space:nowrap}
@@ -1647,7 +1667,7 @@
    ficarem identicas visualmente. */
 #nvCatsScreen,#nvTeamScreen{margin:8px;gap:8px}
 .news-view.cfg #nvCatsScreen,.news-view.cfg.catmode #nvCatsScreen,
-.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:262px}
+.news-view.cfg #nvTeamScreen,.news-view.cfg.catmode #nvTeamScreen{margin-left:258px}
 #nvCatsScreen .cat-toprow,#nvCatsScreen .cat-head,
 #nvTeamScreen .cat-toprow,#nvTeamScreen .cat-head{margin:0;padding:8px 12px;gap:8px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:none;flex-shrink:0}
 #nvCatsScreen .cat-toprow,#nvTeamScreen .cat-toprow{height:54px;display:flex;align-items:center}
@@ -1702,7 +1722,9 @@
 #nvTeamScreen .rlist tbody td .perm-person b{font-size:14px;font-weight:400;color:#5F666C}
 #nvTeamScreen .rlist tbody td .perm-person span{font-size:11px;color:#999}
 #nvTeamScreen .rlist tbody td .perm-person .avatar{width:32px;height:32px}
-#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg{color:var(--teal)}
+#nvCatsScreen .rx-title svg,#nvTeamScreen .rx-title svg,
+#nvModScreen .rx-title svg,#nvPubApprScreen .rx-title svg,#nvReelApprScreen .rx-title svg,
+#reelsView .rx-title svg,#nvCmGridScreen .rx-title svg,#nvInterScreen .rx-title svg{color:var(--teal)}
 /* Acoes: cabecalho centralizado; os botoes dividem igualmente (flex:1)
    toda a largura disponivel da celula, sem bloco de largura fixa.
    Editar: outline azul, preenche de azul (texto/icone branco) no hover.
@@ -1914,20 +1936,21 @@
    O painel dela: 400px, borda #D9D9D9, raio 8px e 16px de padding lateral — e
    esse 16 que as margens negativas das secoes e do rodape usam de medida.
    ========================================================================== */
-/* Aprovações > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen) reaproveitam o
-   mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão "Limpar filtros"
-   desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */
-#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvCmGridScreen .rx-filters,#nvInterScreen .rx-filters{
+/* Aprovações > Publicações/Shorts/Comentários (#nvPubApprScreen, #nvReelApprScreen, #nvModScreen)
+   reaproveitam o mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão
+   "Limpar filtros" desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */
+#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvModScreen .rx-filters,#nvCmGridScreen .rx-filters,#nvInterScreen .rx-filters{
   width:400px;border-color:#D9D9D9;border-radius:8px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec,#nvInterScreen .rx-filters .nv-fsec{
+#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvModScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec,#nvInterScreen .rx-filters .nv-fsec{
   margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd,#nvInterScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
-#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i,#nvInterScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvModScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd,#nvInterScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvModScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i,#nvInterScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
 #nvListScreen .rx-filters .nv-sitcards button,.reels-view.in-cfg .rx-filters .nv-sitcards button{border-color:#D9D9D9}
 #nvListScreen .rx-filters .nv-filters-ft .nv-fclear,#nvListScreen .rx-filters .nv-filters-ft .nv-fapply,
 .reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fclear,.reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fapply,
 #nvPubApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvPubApprScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvReelApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvReelApprScreen .rx-filters .nv-filters-ft .nv-fapply,
+#nvModScreen .rx-filters .nv-filters-ft .nv-fclear,#nvModScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvCmGridScreen .rx-filters .nv-filters-ft .nv-fclear,#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvInterScreen .rx-filters .nv-filters-ft .nv-fclear,#nvInterScreen .rx-filters .nv-filters-ft .nv-fapply{flex:1}
 /* Sem filtro ativo, "Limpar filtros" fica desabilitado; quem alterna has-active
@@ -1936,9 +1959,9 @@
    Precisa ficar escopado: o ramo social (foBuildSocialFilters) nunca poe essa
    classe, entao no generico o botao do Shorts Explorar ficava desabilitado para
    sempre, sem jeito de limpar filtro nenhum. */
-#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear,#nvInterScreen .rx-filters .nv-fclear{
+#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvModScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear,#nvInterScreen .rx-filters .nv-fclear{
   background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
-#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active,#nvInterScreen .rx-filters .nv-fclear.has-active{
+#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvModScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active,#nvInterScreen .rx-filters .nv-fclear.has-active{
   background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
-#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover,#nvInterScreen .rx-filters .nv-fclear.has-active:hover{
+#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvModScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover,#nvInterScreen .rx-filters .nv-fclear.has-active:hover{
   background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}

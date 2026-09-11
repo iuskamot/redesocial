@@ -94,7 +94,8 @@
 #rxGrid .rl-reel{ position:relative; justify-content:space-between }
 #rxGrid .rl-actwrap{ position:relative; margin-left:auto; flex-shrink:0 }
 #rxGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; white-space:nowrap }
-#rxGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rxGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#rxGrid .rl-actbtn:hover span{ color:#fff }
 #rxGrid .rl-actbtn i{ font-size:12px }
 #rxGrid .rl-actmenu{ position:absolute; top:calc(100% + 6px); right:0; z-index:6; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); min-width:220px; padding:6px; display:flex; flex-direction:column; gap:4px }
 #rxGrid .rl-actmenu button{ display:flex; align-items:center; gap:10px; width:100%; height:40px; padding:0 14px; border:0; border-radius:8px; background:none; font:inherit; font-size:14px; color:#5F666C; text-align:left; cursor:pointer; white-space:nowrap }

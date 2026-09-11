@@ -34,7 +34,7 @@
 #rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
 #rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
 #rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
-#rcnGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1672px }
+#rcnGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1736px }
 #rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
 #rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
@@ -62,7 +62,7 @@
    igualmente entre si qualquer espaço que sobrar na tabela — a 6 (Publicação/Shorts) é a
    única com "width" travado (width=min-width=max-width), então nunca cresce pelo conteúdo
    e nunca fica menor que 400px; o excedente vai sempre para as colunas 2-5. */
-#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ min-width:300px }
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ min-width:364px }
 #rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ min-width:320px }
 #rcnGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
 #rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ min-width:320px }
@@ -75,7 +75,8 @@
 #rcnGrid .rl-reel{ justify-content:space-between }
 #rcnGrid .il-pill{ font-size:14px }
 #rcnGrid .rl-actbtn{ display:inline-flex; align-items:center; gap:8px; height:36px; box-sizing:border-box; padding:0 12px; border:1.5px solid #2F8EE5; border-radius:6px; background:#fff; color:#2F8EE5; font:inherit; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0 }
-#rcnGrid .rl-actbtn:hover{ background:rgba(47,142,229,.08) }
+#rcnGrid .rl-actbtn:hover{ background:#2F8EE5; color:#fff }
+#rcnGrid .rl-actbtn:hover span{ color:#fff }
 #rcnGrid .rl-actbtn span{ font-size:14px; font-weight:700; color:#2F8EE5 }
 #rcnGrid .rl-actbtn svg{ width:20px; height:20px; flex-shrink:0 }
 
