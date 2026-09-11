@@ -372,35 +372,51 @@ body .pc-avedit:focus-visible{opacity:1;pointer-events:auto}
 body .pc-avedit:hover{background:var(--marca-forte)}
 
 /* ---- O cartao de perfil simples ----
-   Vale na visao de Enquetes e na home sem cliente ligado: faixa azul com a
-   logo do SULTS em cima, foto centrada, nome e cargo embaixo, e o miolo fora
-   de cena. Com um cliente ligado (icone da Play Store, versao personalizavel)
-   o cartao completo continua valendo: e nele que vivem a capa da empresa, o
-   bloco da marca e o atalho do perfil.
+   Vale na visao normal inteira, com cliente ou sem: faixa de cor com a logo
+   em cima no lugar da capa, foto centrada, nome e cargo embaixo, e o miolo
+   fora de cena. So a home personalizavel (demo-custom) mantem o cartao
+   completo, com a capa da empresa, o bloco da marca e o atalho do perfil.
    Mora aqui, e nao no 08-feed.css, porque desfaz regras deste arquivo: la o
    bloco carregava antes e empatava em especificidade com elas, entao o cartao
    continuava sendo grid e o margin:auto da foto nao tinha efeito. Sao as
    regras do cartao completo desfeitas uma a uma; o elemento no markup continua
    sendo o mesmo, nao ha um segundo cartao escondido. A fileira de Shorts, essa
    sim, muda de lugar de verdade em Enquetes, e quem faz isso e o 13-extras.js. */
-body:is(.home-enquetes, :not([data-cliente])) .profile-card{display:block;text-align:center;padding-bottom:24px}
-body:is(.home-enquetes, :not([data-cliente])) .pc-extra{display:none}
+body:not(.demo-custom) .profile-card{display:block;text-align:center;padding-bottom:24px}
+body:not(.demo-custom) .pc-extra{display:none}
 /* a faixa larga da capa da lugar a do desenho antigo: azul, 120px e a logo */
-body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-banner{
-  background:var(--navy);aspect-ratio:auto;height:120px;padding-bottom:39px}
-body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-banner svg.profile-logo{display:block}
+body:not(.demo-custom) .profile-card .profile-banner{
+  background:var(--navy);aspect-ratio:auto;height:110px;padding-bottom:39px}
+/* max-height:100%: a faixa encolhe junto com o painel de modulos, e com ela
+   o espaco livre acima da foto. Nos 50px cravados a logo passava a invadir a
+   foto quando esse espaco ficava menor que isso. */
+body:not(.demo-custom) .profile-card .profile-banner svg.profile-logo{display:block;max-height:100%}
 /* o wrapper da foto volta a nao criar caixa: com ele em width:max-content o
    margin:auto do avatar nao tinha folga para distribuir e a foto ficava presa
    a esquerda. Sem caixa, quem centra e o proprio cartao. */
-body:is(.home-enquetes, :not([data-cliente])) .pc-avwrap{display:contents}
+body:not(.demo-custom) .pc-avwrap{display:contents}
 /* cartao simples nao tem o botao de trocar foto */
-body:is(.home-enquetes, :not([data-cliente])) .pc-avedit{display:none}
-body:is(.home-enquetes, :not([data-cliente])) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
-body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-name,
-body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-role{
+body:not(.demo-custom) .pc-avedit{display:none}
+body:not(.demo-custom) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
+body:not(.demo-custom) .profile-card .profile-name,
+body:not(.demo-custom) .profile-card .profile-role{
   grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
-/* a altura passa a ser a do conteudo: sem seguir o painel de modulos */
-body:is(.home-enquetes, :not([data-cliente])) .profile-card{min-height:0 !important}
+/* so em Enquetes a altura e a do conteudo; na home o cartao volta a
+   acompanhar a altura do painel de modulos, pelo 16-custom.js */
+body.home-enquetes .profile-card{min-height:0 !important}
+
+/* A faixa do topo volta a ter os 120px de sempre: quando ela acompanhava a
+   altura do cartao, encolhia junto com o painel de modulos e o desenho do
+   topo mudava de tamanho a cada ajuste do painel. */
+/* O cartao mostra so o nome: o cargo sai de cena. */
+body:not(.demo-custom) .profile-card .profile-role{display:none}
+
+/* Altura fixa de 201px, medida pedida. O min-height:0 !important desfaz o
+   minimo que o 16-custom.js escreve no style do elemento a cada medida do
+   painel de modulos — inline so cede a isso — senao ele venceria os 201.
+   O cartao tem 215px de conteudo, entao os 14px que sobram saem da folga do
+   pe: o nome fica a 10px da borda de baixo em vez dos 24. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card{height:201px;min-height:0 !important}
 /* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
    o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
    ser so o gap de 24px da propria coluna. */
@@ -432,3 +448,16 @@ body.home-enquetes #homeFeedTitle{display:none}
 /* Sem o titulo do Feed, o compositor encostava no painel de modulos: os 24px
    do ritmo da coluna passam a vir dele. */
 body.home-enquetes .col-main > .nvf-composer{margin-top:24px}
+
+/* Com um cliente ligado a faixa do cartao simples troca de cor e de logo: o
+   fundo vai para a marca e a logo do SULTS da lugar a dele, em branco, no
+   mesmo lugar. Ela entra como camada da propria faixa (background da
+   ::after) porque nao ha <img> de cliente ali no markup — a variavel
+   --marca-logo, que o 16-custom.js publica no body, serve a todos eles.
+   Os 20px de folga de cada lado e os 39px que a foto ocupa embaixo repetem
+   a conta da faixa do SULTS, para a logo ficar centrada no espaco livre. */
+body[data-cliente]:not(.demo-custom) .profile-card .profile-banner{background:var(--marca, var(--navy))}
+body[data-cliente]:not(.demo-custom) .profile-card .profile-banner svg.profile-logo{display:none}
+body[data-cliente]:not(.demo-custom) .profile-card .profile-banner::after{
+  content:"";height:50px;max-height:100%;width:calc(100% - 40px);
+  background:var(--marca-logo) center/contain no-repeat;filter:brightness(0) invert(1)}

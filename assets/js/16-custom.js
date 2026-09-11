@@ -246,9 +246,13 @@ function customAlternar(){
      deixava o cartao esticado, com um vazio enorme entre os blocos: a altura
      entao fica a ultima medida com a grade fechada. */
   let pcAlturaFixa = 0;
+  /* Enquanto a grade esta aberta ou a busca esta filtrando, o painel muda de
+     altura a cada passo e o cartao ao lado ficava subindo e descendo junto.
+     Nesses dois momentos vale a ultima medida tirada com a grade fechada. */
   function pcGradeAberta(){
     const b = document.getElementById('appsToggle');
-    return !!(b && b.classList.contains('open'));
+    const g = document.getElementById('appsGrid');
+    return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
   /* A altura do cartao acompanha a do painel de modulos ao lado, para os dois
      terminarem na mesma linha mesmo quando o nome da pessoa quebra em duas.
@@ -258,14 +262,16 @@ function customAlternar(){
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
-    /* o cartao simples (Enquetes, e a home sem cliente ligado) tem a altura do
-       proprio conteudo: nao ha miolo para esticar ate o painel de modulos */
-    if (document.body.classList.contains("home-enquetes") || !document.body.dataset.cliente){
-      card.style.minHeight = ""; return; }
+    /* na variante de Enquetes o cartao tem a altura do proprio conteudo */
+    if (document.body.classList.contains("home-enquetes")){ card.style.minHeight = ""; return; }
     /* no celular as colunas empilham e nao ha o que acompanhar */
     if (window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
     if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
-    if (pcAlturaFixa) card.style.minHeight = pcAlturaFixa + 'px';
+    if (!pcAlturaFixa) return;
+    /* so o minimo, nunca a altura cravada: com o painel mais baixo que o
+       cartao, cravar cortava o pe dele e o nome encostava na borda. */
+    card.style.minHeight = pcAlturaFixa + 'px';
+    card.style.height = '';
   }
   window.pcSincronizaAltura = pcSincronizaAltura;
   /* fora de qualquer cenario o cartao tambem mostra o miolo, entao os campos

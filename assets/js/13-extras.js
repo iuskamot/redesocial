@@ -420,8 +420,9 @@ document.addEventListener('click', function(e){
   posicionar();
 })();
 
-/* No celular o "Ver +N módulos" mora dentro do cartão dos aplicativos; no
-   desktop ele volta para baixo dele. Só o DOM muda — o comportamento é o mesmo. */
+/* No celular o "Ver N módulos" desce para o fim do cartão dos aplicativos,
+   abaixo da grade; no desktop ele volta para a linha do "Organizar", que é
+   onde nasce no markup. Só o DOM muda — o comportamento é o mesmo. */
 (() => {
   const painel = document.getElementById('appsPanel');
   const expand = document.querySelector('.apps-expand');

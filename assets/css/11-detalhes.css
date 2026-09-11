@@ -291,7 +291,9 @@
   /* nomes longos de módulo viram a versão curta na coluna de ~78px */
   .tl-full{display:none}
   .tl-curto{display:inline}
-  /* o "Ver +N módulos" mantém a pílula do desktop também no celular */
+  /* no celular a pílula desce para baixo da grade (quem a move é o
+     13-extras.js), e ali ela precisa da folga que a linha do Organizar dá
+     para ela no desktop */
   .apps-panel .apps-expand{margin:20px 0 0}
   /* as 4 ações do compositor não cabem lado a lado com rótulo na horizontal:
      empilha ícone e texto, como o resto do mobile */

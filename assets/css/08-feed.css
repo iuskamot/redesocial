@@ -680,48 +680,66 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
    "Ver todos os shorts". */
 #homeShorts .section-title-row{display:none}
 
-/* As publicacoes na largura do LinkedIn, 555px. E padding lateral, como pedido,
-   mas calculado em vez de fixo: assim o resultado e sempre 555, e nao uma
-   largura que muda junto com a coluna. O max(0px, ...) evita padding negativo
-   quando a coluna e mais estreita que isso, no mobile. */
-.col-main > .feed{padding-inline:max(0px, calc((100% - 555px) / 2))}
-
-/* Sem o cabecalho, quem dava a folga entre o painel de modulos e a fileira de
-   Shorts saiu junto. O respiro volta como 24px visiveis: a fita ja carrega
-   12px de padding no topo (o espaco da sombra do card), entao a margem
-   completa os outros 12. Da fileira para as publicacoes os 24px ja vinham do
-   padding-top do titulo do Feed. */
+/* A folga da fileira de Shorts ate o painel de modulos: 24px visiveis. A fita
+   ja carrega 12px de padding no topo (o espaco da sombra do card), entao a
+   margem completa os outros 12 — e e o mesmo 12 que alinha o primeiro card
+   com o topo do campo de publicar, que desce 24 ao lado dele. */
 .col-main > #homeShorts{margin-top:12px}
 
-/* ---- As publicacoes dentro do bloco de criar publicacao ----
-   Com 555px num corredor de 879 elas ficavam soltas no meio do cinza da
-   pagina. Agora o compositor e a lista sao uma caixa so: a cabeca branca em
-   cima e as publicacoes embaixo, sobre um fundo mais claro que o da pagina —
-   o proprio #E9EAED no meio do caminho para o branco. Os cartoes continuam
-   brancos, entao seguem se destacando dentro dela.
-   Vale so no desktop: no celular o feed sangra de ponta a ponta, sem caixa.
-   O !important alcanca o style="margin-bottom:8px" que o compositor carrega
-   no markup — inline so cede a isso. */
 /* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
    Os 24px de padding no topo faziam sentido quando ele era uma secao solta na
    coluna; aqui quem da o respiro e o padding do proprio bloco. A folga de
    12px ate o campo de publicar continua vindo do margin dele. */
 .nvf-composer > #homeFeedTitle{padding-top:0}
 
+/* ---- A coluna do meio vira duas faixas ----
+   O campo de publicar e as publicacoes ficam na largura do LinkedIn, 552px,
+   encostados a esquerda, todos do mesmo tamanho; no vao que sobra a direita
+   entra a fileira de Shorts. O painel de modulos atravessa as duas.
+   As posicoes sao explicitas porque no markup os Shorts vem antes do campo de
+   publicar: no encaixe automatico eles empurrariam o campo para a linha de
+   baixo. O vao de 24px e o mesmo ritmo do resto da home.
+   minmax(0,552px) e nao 552px cravado: a coluna do meio nem sempre tem esses
+   552 para dar, e assim as publicacoes encolhem em vez de estourar. Do outro
+   lado o piso de 248px protege a faixa dos Shorts: e o que dois cartoes de
+   120px mais os 8px de vao ocupam, e abaixo disso eles viravam tirinhas.
+   Vale so no desktop: no celular a coluna e uma so e o feed sangra de ponta a
+   ponta, como sempre foi. */
 @media(min-width:641px){
-  .col-main > .nvf-composer{margin-bottom:0 !important;border-bottom:0;border-radius:14px 14px 0 0}
-  /* os 24px ate a fileira de Shorts vinham daquele padding do titulo: agora
-     sao do bloco, que passou a ser o primeiro elemento depois dela */
-  .col-main > .nvf-composer{margin-top:24px}
-  .col-main > .feed{
-    padding-block:16px;background:#F4F5F6;
-    border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;
-    /* o padding lateral vem de uma porcentagem, que mede a coluna inteira e
-       nao enxerga a borda nova: sem descontar os 2px a publicacao saia 553 */
-    padding-inline:max(0px, calc((100% - 557px) / 2));
-  }
-  /* quem nao pode publicar nao tem compositor: a caixa fecha em cima sozinha */
-  body.demo-crunch:not(.crunch-admin) .col-main > .feed{border-top:1px solid var(--line);border-radius:14px}
+  .col-main{display:grid;grid-template-columns:minmax(0,552px) minmax(248px,1fr);
+    column-gap:24px;align-content:start}
+  .col-main > .apps-panel{grid-area:1 / 1 / 2 / 3}
+  .col-main > .nvf-composer{grid-area:2 / 1 / 3 / 2;margin-top:24px}
+  .col-main > .feed,
+  .col-main > .demo-empty-state{grid-area:3 / 1 / 4 / 2}
+  /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
+     vazia: sem isso as publicacoes encostavam no painel de modulos. Os mesmos
+     24px que o campo daria, e que a fileira de Shorts tem ao lado. */
+  body.demo-crunch:not(.crunch-admin) .col-main > .feed{margin-top:24px}
+  /* a fileira ocupa a faixa da direita ao lado das duas linhas; align-self
+     start para ficar no topo dela, e nao esticada na altura do feed */
+  .col-main > #homeShorts{grid-area:2 / 2 / 4 / 3;align-self:start}
+
+  /* Na faixa da direita a fileira deixa de rolar e vira grade: dois cartoes
+     por linha, dividindo a largura que sobrou com 8px de vao, o mesmo que
+     separa as publicacoes. Sem
+     rolagem horizontal as setas nao tem mais o que fazer, e o arrastar da
+     fita perde o sentido. */
+  .col-main > #homeShorts .shorts{flex-wrap:wrap;overflow-x:visible;cursor:default;gap:8px}
+  .col-main > #homeShorts .shorts > .reel{width:calc((100% - 8px) / 2)}
+  .col-main > #homeShorts .st-arrow{display:none}
+  /* o "Criar short" atravessa a linha inteira e copia o botao da tela de
+     Shorts: deitado, o mais de 32px a esquerda do rotulo de 14px e a altura
+     do proprio conteudo */
+  .col-main > #homeShorts .shorts > .reel-create{width:100%;aspect-ratio:auto;height:auto;
+    padding:14px 16px;border-radius:14px}
+  .col-main > #homeShorts .reel-create .rc-bg{flex-direction:row;gap:10px}
+  .col-main > #homeShorts .reel-create .rc-plus2{width:32px;height:32px;font-size:14px;box-shadow:none}
+  .col-main > #homeShorts .reel-create .rc-label{font-size:14px}
+  /* foto, titulo e nome nas medidas dos cartoes da tela de Shorts */
+  .col-main > #homeShorts .reel-av .avatar{width:28px;height:28px}
+  .col-main > #homeShorts .reel-title{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.3px}
+  .col-main > #homeShorts .reel-meta{font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 }
 
 /* O cabecalho do Feed sai de cena: o titulo e o "Ver todas as publicacoes".

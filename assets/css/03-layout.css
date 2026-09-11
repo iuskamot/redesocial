@@ -473,7 +473,7 @@
 .nf-close{width:36px;height:36px;border-radius:50%;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center}
 .nf-close:hover{background:#f0f3f6}
 .content{
-  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:36px;
+  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;
   padding:20px 40px;align-items:start;
   /* Laterais de 40px, um pouco mais folgadas que os 30px do .topbar: o feed
      comeca 10px depois do campo de busca la de cima. O maximo em 1600 e para

@@ -43,7 +43,7 @@ function applyFold(){
   const limit = colunas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
-  if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver +'+Math.max(0, elig.length-limit)+' módulos';
+  if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver '+Math.max(0, elig.length-limit)+' módulos';
   if (!searching) appsExpand.hidden = elig.length <= limit;
   if (expanded || searching) return;
   elig.forEach((t, i) => { if (i >= limit) t.classList.add('over-fold'); });
@@ -103,8 +103,16 @@ function animaModulos(aplica){
   esta.finished.then(limpa, limpa);
 }
 
+/* A altura que o painel tinha quando a busca comecou. Enquanto se pesquisa
+   ela vira o piso do bloco: sem isso ele encolhia a cada tecla e despencava
+   quando a busca nao achava nada, e o cartao do usuario ao lado ia junto.
+   E piso, e nao altura cravada: quando a busca acha mais modulos do que cabia
+   na linha fechada o bloco ainda cresce, senao os resultados ficariam de fora. */
+let appsAlturaBusca = 0;
 function filterApps(){
   const q = norm(appSearch.value.trim());
+  if (!q){ appsPanel.style.minHeight = ''; appsAlturaBusca = 0; }
+  else if (!appsAlturaBusca) appsAlturaBusca = Math.round(appsPanel.getBoundingClientRect().height);
   let visiveis = 0;
   appTiles.forEach(t => {
     const nome = norm(t.querySelector('.tl').textContent);
@@ -116,6 +124,7 @@ function filterApps(){
   appsEmpty.hidden = visiveis > 0;
   appsExpand.hidden = !!q;
   applyFold();
+  if (appsAlturaBusca) appsPanel.style.minHeight = appsAlturaBusca + 'px';
 }
 appSearch.addEventListener('input', filterApps);
 
