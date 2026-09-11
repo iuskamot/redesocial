@@ -693,12 +693,12 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .nvf-composer > #homeFeedTitle{padding-top:0}
 
 /* ---- A coluna do meio vira duas faixas ----
-   O campo de publicar e as publicacoes ficam na largura do LinkedIn, 552px,
-   encostados a esquerda, todos do mesmo tamanho; no vao que sobra a direita
-   entra a fileira de Shorts. O painel de modulos atravessa as duas.
-   As posicoes sao explicitas porque no markup os Shorts vem antes do campo de
-   publicar: no encaixe automatico eles empurrariam o campo para a linha de
-   baixo. O vao de 24px e o mesmo ritmo do resto da home.
+   A fileira de Shorts fica na faixa da esquerda e o campo de publicar com as
+   publicacoes na da direita, na largura do LinkedIn, 552px, todos do mesmo
+   tamanho. O painel de modulos atravessa as duas.
+   As posicoes sao explicitas: no encaixe automatico a ordem do markup mandaria,
+   e as faixas nao teriam como trocar de lado. O vao de 24px e o mesmo ritmo do
+   resto da home.
    minmax(0,552px) e nao 552px cravado: a coluna do meio nem sempre tem esses
    552 para dar, e assim as publicacoes encolhem em vez de estourar. Do outro
    lado o piso de 248px protege a faixa dos Shorts: e o que dois cartoes de
@@ -706,21 +706,21 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
    Vale so no desktop: no celular a coluna e uma so e o feed sangra de ponta a
    ponta, como sempre foi. */
 @media(min-width:641px){
-  .col-main{display:grid;grid-template-columns:minmax(0,552px) minmax(248px,1fr);
+  .col-main{display:grid;grid-template-columns:minmax(248px,1fr) minmax(0,552px);
     column-gap:24px;align-content:start}
   .col-main > .apps-panel{grid-area:1 / 1 / 2 / 3}
-  .col-main > .nvf-composer{grid-area:2 / 1 / 3 / 2;margin-top:24px}
+  .col-main > .nvf-composer{grid-area:2 / 2 / 3 / 3;margin-top:24px}
   .col-main > .feed,
-  .col-main > .demo-empty-state{grid-area:3 / 1 / 4 / 2}
+  .col-main > .demo-empty-state{grid-area:3 / 2 / 4 / 3}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
      vazia: sem isso as publicacoes encostavam no painel de modulos. Os mesmos
      24px que o campo daria, e que a fileira de Shorts tem ao lado. */
   body.demo-crunch:not(.crunch-admin) .col-main > .feed{margin-top:24px}
   /* a fileira ocupa a faixa da direita ao lado das duas linhas; align-self
      start para ficar no topo dela, e nao esticada na altura do feed */
-  .col-main > #homeShorts{grid-area:2 / 2 / 4 / 3;align-self:start}
+  .col-main > #homeShorts{grid-area:2 / 1 / 4 / 2;align-self:start}
 
-  /* Na faixa da direita a fileira deixa de rolar e vira grade: dois cartoes
+  /* Na faixa da esquerda a fileira deixa de rolar e vira grade: dois cartoes
      por linha, dividindo a largura que sobrou com 8px de vao, o mesmo que
      separa as publicacoes. Sem
      rolagem horizontal as setas nao tem mais o que fazer, e o arrastar da
