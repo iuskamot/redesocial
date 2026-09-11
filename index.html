@@ -676,12 +676,12 @@ input,textarea,select{font-size:14px}
 .nf-close:hover{background:#f0f3f6}
 .content{
   display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;
-  padding:20px 40px;align-items:start;
-  /* Laterais de 40px, um pouco mais folgadas que os 30px do .topbar: o feed
-     comeca 10px depois do campo de busca la de cima. O maximo em 1600 e para
-     o conteudo encher a area util nas telas comuns; batendo antes, a grade
-     voltaria a centrar. A direita segue com largura fixa. */
-  max-width:1600px;margin:0 auto;width:100%;
+  padding:20px 30px;align-items:start;
+  /* Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
+     campo de busca la de cima. O maximo trava a largura nas telas grandes —
+     dali para cima nada cresce e o bloco so centra, como no LinkedIn. A
+     coluna da direita segue com largura fixa. */
+  max-width:1362px;margin:0 auto;width:100%;
 }
 
 
@@ -734,6 +734,16 @@ input,textarea,select{font-size:14px}
   padding:20px 16px;
   box-shadow:0 1px 2px rgba(16,32,48,.05);
 }
+/* O painel tem a altura do cartao do usuario ao lado (16-custom.js), que e
+   maior que a de uma linha de modulos: a coluna deixa a grade tomar a sobra
+   (flex:1) e os cartoes ficam centrados nela, em vez de a folga ficar toda
+   num vazio embaixo. Com a grade aberta nao ha sobra, e tudo volta ao normal
+   sem precisar de regra propria.
+   flex:1 1 auto, e nao 1 1 0: a animacao de abrir e fechar anima a altura da
+   grade, e com base 0 ela perderia a medida de partida. */
+.apps-panel{display:flex;flex-direction:column}
+.apps-panel > .apps{flex:1 1 auto}
+.tile{justify-content:center}
 .apps-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 .apps-search{
   flex:1;max-width:380px;display:flex;align-items:center;gap:10px;height:40px;box-sizing:border-box;
@@ -4269,8 +4279,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 
 /* A folga da fileira de Shorts ate o painel de modulos: 24px visiveis. A fita
    ja carrega 12px de padding no topo (o espaco da sombra do card), entao a
-   margem completa os outros 12 — e e o mesmo 12 que alinha o primeiro card
-   com o topo do campo de publicar, que desce 24 ao lado dele. */
+   margem completa os outros 12. */
 .col-main > #homeShorts{margin-top:12px}
 
 /* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
@@ -4280,59 +4289,87 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .nvf-composer > #homeFeedTitle{padding-top:0}
 
 /* ---- A coluna do meio vira duas faixas ----
-   A fileira de Shorts fica na faixa da esquerda e o campo de publicar com as
+   Os filtros ficam na faixa da esquerda e o campo de publicar com as
    publicacoes na da direita, na largura do LinkedIn, 552px, todos do mesmo
    tamanho. O painel de modulos atravessa as duas.
    As posicoes sao explicitas: no encaixe automatico a ordem do markup mandaria,
    e as faixas nao teriam como trocar de lado. O vao de 24px e o mesmo ritmo do
-   resto da home.
-   minmax(0,552px) e nao 552px cravado: a coluna do meio nem sempre tem esses
-   552 para dar, e assim as publicacoes encolhem em vez de estourar. Do outro
-   lado o piso de 248px protege a faixa dos Shorts: e o que dois cartoes de
-   120px mais os 8px de vao ocupam, e abaixo disso eles viravam tirinhas.
+   resto da home; entre as duas faixas o vao e menor, 12px.
+   A faixa das publicacoes e cravada em 552px e a dos filtros e a conta que
+   poe essas 552 no meio do conteudo — do .content, sem contar o menu lateral.
+   De onde vem o 106: para a publicacao ficar centrada na largura do conteudo,
+   a faixa dos filtros precisa medir metade dele menos meia publicacao (276) e
+   menos os 12px de vao. Como a largura do conteudo e a desta coluna mais os
+   24px de vao e os 340px da coluna do perfil, a conta se resolve so com a
+   largura daqui: 50% - (276 + 12 - 182), ou seja 50% - 106. Sem vw, entao a
+   barra de rolagem nao entra na conta e o centro nao sai torto.
+   O min(..., 100% - 564px) e o limite de caber: em telas em que o conteudo e
+   estreito demais para centrar 552 com a coluna do perfil ao lado, a faixa
+   dos filtros para de crescer no ponto em que as publicacoes encostariam na
+   coluna vizinha, em vez de vazar por cima dela. O max(0px, ...) cobre o
+   extremo: a faixa some e as publicacoes encostam na esquerda.
+   A sobra fica a direita das publicacoes, entre elas e a coluna do perfil.
    Vale so no desktop: no celular a coluna e uma so e o feed sangra de ponta a
    ponta, como sempre foi. */
 @media(min-width:641px){
-  .col-main{display:grid;grid-template-columns:minmax(248px,1fr) minmax(0,552px);
-    column-gap:24px;align-content:start}
+  /* As linhas do campo de publicar e das publicacoes sao min-content: elas
+     ficam do tamanho do proprio conteudo e nao crescem. A faixa dos filtros
+     atravessa as tres ultimas, e quando ela e a mais alta a sobra precisa ir
+     para algum lugar — vai para a quinta linha, que e vazia e so existe para
+     isso. Sem ela a sobra era repartida entre as duas de cima e abria um vao
+     de 188px entre o campo de publicar e as publicacoes no cenario sem
+     conteudo. */
+  .col-main{display:grid;
+    grid-template-columns:max(0px, min(calc(50% - 106px), calc(100% - 564px))) 552px;
+    grid-template-rows:auto auto min-content min-content auto;
+    column-gap:12px;align-content:start}
   .col-main > .apps-panel{grid-area:1 / 1 / 2 / 3}
-  .col-main > .nvf-composer{grid-area:2 / 2 / 3 / 3;margin-top:24px}
+  /* a fita atravessa as duas faixas, logo abaixo dos modulos */
+  .col-main > #homeShorts{grid-area:2 / 1 / 3 / 3}
+  /* align-self:start nos tres: a faixa dos filtros atravessa as duas linhas
+     e costuma ser a mais alta das duas colunas. A altura dela vira altura das
+     linhas, e sem isso o campo de publicar esticava junto — bem visivel no
+     cenario sem publicacao nenhuma, onde ele ia de 131 para 307px. */
+  .col-main > .nvf-composer{grid-area:3 / 2 / 4 / 3;margin-top:24px;align-self:start}
   .col-main > .feed,
-  .col-main > .demo-empty-state{grid-area:3 / 2 / 4 / 3}
+  .col-main > .demo-empty-state{grid-area:4 / 2 / 5 / 3;align-self:start}
+  /* uma publicacao para a outra no mesmo vao dos filtros */
+  .col-main > .feed{gap:12px}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
      vazia: sem isso as publicacoes encostavam no painel de modulos. Os mesmos
      24px que o campo daria, e que a fileira de Shorts tem ao lado. */
   body.demo-crunch:not(.crunch-admin) .col-main > .feed{margin-top:24px}
-  /* a fileira ocupa a faixa da direita ao lado das duas linhas; align-self
-     start para ficar no topo dela, e nao esticada na altura do feed */
-  .col-main > #homeShorts{grid-area:2 / 1 / 4 / 2;align-self:start}
+  /* os filtros ocupam a faixa da esquerda ao lado das duas linhas; align-self
+     start para ficarem no topo dela, e nao esticados na altura do feed. Os
+     24px sao os mesmos que o campo de publicar desce do lado de la. */
+  .col-main > #homeFiltros{grid-area:3 / 1 / 6 / 2;align-self:start;margin-top:24px}
 
-  /* Na faixa da esquerda a fileira deixa de rolar e vira grade: dois cartoes
-     por linha, dividindo a largura que sobrou com 8px de vao, o mesmo que
-     separa as publicacoes. Sem
-     rolagem horizontal as setas nao tem mais o que fazer, e o arrastar da
-     fita perde o sentido. */
-  .col-main > #homeShorts .shorts{flex-wrap:wrap;overflow-x:visible;cursor:default;gap:8px}
-  .col-main > #homeShorts .shorts > .reel{width:calc((100% - 8px) / 2)}
-  .col-main > #homeShorts .st-arrow{display:none}
-  /* o "Criar short" atravessa a linha inteira e copia o botao da tela de
-     Shorts: deitado, o mais de 32px a esquerda do rotulo de 14px e a altura
-     do proprio conteudo */
-  .col-main > #homeShorts .shorts > .reel-create{width:100%;aspect-ratio:auto;height:auto;
-    padding:14px 16px;border-radius:14px}
-  .col-main > #homeShorts .reel-create .rc-bg{flex-direction:row;gap:10px}
-  .col-main > #homeShorts .reel-create .rc-plus2{width:32px;height:32px;font-size:14px;box-shadow:none}
-  .col-main > #homeShorts .reel-create .rc-label{font-size:14px}
-  /* foto, titulo e nome nas medidas dos cartoes da tela de Shorts */
-  .col-main > #homeShorts .reel-av .avatar{width:28px;height:28px}
-  .col-main > #homeShorts .reel-title{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.3px}
-  .col-main > #homeShorts .reel-meta{font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 }
+
+/* ---- A copia dos filtros da Rede Social, na faixa da esquerda ----
+   Mesma coluna da Rede Social: cartoes empilhados com 12px entre eles. */
+.home-filtros{display:flex;flex-direction:column;gap:12px}
+/* o fio entre os grupos do cartao unico: sangra ate as bordas, descontando os
+   16px de padding do .nvf-side-card */
+.home-filtros .hf-div{height:1px;background:var(--line);margin:14px -16px}
+.home-filtros:empty{display:none}
+/* no celular a lateral da Rede Social some (10-responsivo.css); a copia da
+   home segue a mesma regra, senao os filtros viravam uma pilha no meio do
+   caminho entre os modulos e as publicacoes. */
+@media(max-width:640px){ .home-filtros{display:none} }
 
 /* O cabecalho do Feed sai de cena: o titulo e o "Ver todas as publicacoes".
    Oculto, nao removido — o markup fica inteiro dentro do bloco de criar
    publicacao para poder voltar so tirando esta regra. */
 #homeFeedTitle{display:none}
+
+/* ---- A imagem da publicacao na mesma proporcao do modulo ----
+   La e aqui a regra e a mesma, max-height:560px, mas ela corta pela altura e
+   nao pela proporcao: na coluna de 780px do modulo a imagem sai em 780x560,
+   e na de 552 da home saia 552x560 — quase quadrada, bem mais alta em relacao
+   a largura. Aqui a proporcao e que e fixa, 780 por 560, e a altura sai dela:
+   552 de largura viram 396 de altura, o mesmo enquadramento de la. */
+.col-main > .feed .post-img img{aspect-ratio:39 / 28;height:auto;max-height:none;object-fit:cover}
 
 /* comentarios */
 /* ============ Comentários (estilo LinkedIn) ============ */
@@ -6242,7 +6279,7 @@ body .pc-avedit:hover{background:var(--marca-forte)}
    regras do cartao completo desfeitas uma a uma; o elemento no markup continua
    sendo o mesmo, nao ha um segundo cartao escondido. A fileira de Shorts, essa
    sim, muda de lugar de verdade em Enquetes, e quem faz isso e o 13-extras.js. */
-body:not(.demo-custom) .profile-card{display:block;text-align:center;padding-bottom:24px}
+body:not(.demo-custom) .profile-card{display:block;text-align:center;padding-bottom:16px}
 body:not(.demo-custom) .pc-extra{display:none}
 /* a faixa larga da capa da lugar a do desenho antigo: azul, 120px e a logo */
 body:not(.demo-custom) .profile-card .profile-banner{
@@ -6261,6 +6298,9 @@ body:not(.demo-custom) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto
 body:not(.demo-custom) .profile-card .profile-name,
 body:not(.demo-custom) .profile-card .profile-role{
   grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
+/* o nome ganha folga da foto: 8px; o cargo, 2px do nome */
+body:not(.demo-custom) .profile-card .profile-name{margin-top:8px}
+body:not(.demo-custom) .profile-card .profile-role{margin-top:2px}
 /* so em Enquetes a altura e a do conteudo; na home o cartao volta a
    acompanhar a altura do painel de modulos, pelo 16-custom.js */
 body.home-enquetes .profile-card{min-height:0 !important}
@@ -6268,15 +6308,14 @@ body.home-enquetes .profile-card{min-height:0 !important}
 /* A faixa do topo volta a ter os 120px de sempre: quando ela acompanhava a
    altura do cartao, encolhia junto com o painel de modulos e o desenho do
    topo mudava de tamanho a cada ajuste do painel. */
-/* O cartao mostra so o nome: o cargo sai de cena. */
-body:not(.demo-custom) .profile-card .profile-role{display:none}
+/* O cartao mostra nome e cargo, um debaixo do outro. O miolo inteiro fica de
+   fora: a cidade, o na-rede-desde, as unidades, o bloco da marca e o atalho
+   do perfil. */
+body:not(.demo-custom) .pc-extra{display:none}
 
-/* Altura fixa de 201px, medida pedida. O min-height:0 !important desfaz o
-   minimo que o 16-custom.js escreve no style do elemento a cada medida do
-   painel de modulos — inline so cede a isso — senao ele venceria os 201.
-   O cartao tem 215px de conteudo, entao os 14px que sobram saem da folga do
-   pe: o nome fica a 10px da borda de baixo em vez dos 24. */
-body:not(.demo-custom):not(.home-enquetes) .profile-card{height:201px;min-height:0 !important}
+/* O cartao tem a altura do proprio conteudo. Quem acompanha agora e o painel
+   de modulos, do outro lado — o 16-custom.js poe nele o minimo medido daqui. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card{height:auto;min-height:0 !important}
 /* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
    o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
    ser so o gap de 24px da propria coluna. */
@@ -7955,6 +7994,11 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
           <button class="st-arrow right" id="stRight" hidden><i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </section>
+
+      <!-- ========== FILTROS (copia da coluna da esquerda da Rede Social) ==========
+           O conteudo entra pelo 13-extras.js, clonado de la depois que o
+           11-rede-social.js termina de montar categorias e contadores. -->
+      <aside class="home-filtros" id="homeFiltros"></aside>
 
       <!-- ========== FEED (estilo LinkedIn) ========== -->
       <div class="nvf-composer" style="margin-bottom:8px">
@@ -12268,7 +12312,8 @@ function applyFold(){
   const limit = colunas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
-  if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver '+Math.max(0, elig.length-limit)+' módulos';
+  /* o numero e o total de modulos, nao o que ficou de fora da linha */
+  if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver '+elig.length+' módulos';
   if (!searching) appsExpand.hidden = elig.length <= limit;
   if (expanded || searching) return;
   elig.forEach((t, i) => { if (i >= limit) t.classList.add('over-fold'); });
@@ -12336,7 +12381,10 @@ function animaModulos(aplica){
 let appsAlturaBusca = 0;
 function filterApps(){
   const q = norm(appSearch.value.trim());
-  if (!q){ appsPanel.style.minHeight = ''; appsAlturaBusca = 0; }
+  if (!q){ appsAlturaBusca = 0;
+    /* ao limpar a busca o piso volta a ser o do cartao do usuario */
+    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+    else appsPanel.style.minHeight = ''; }
   else if (!appsAlturaBusca) appsAlturaBusca = Math.round(appsPanel.getBoundingClientRect().height);
   let visiveis = 0;
   appTiles.forEach(t => {
@@ -17535,6 +17583,68 @@ function rvShareCopiar(){
   });
 })();
 
+/* ---- Os filtros da Rede Social tambem na home ----
+   A faixa da esquerda da home recebe uma copia da coluna de filtros da Rede
+   Social — as duas colunas dela. E copia, e
+   nao o elemento de la, por dois motivos: a tela da Rede Social continua
+   precisando dele inteiro, e o clique dos filtros e delegado no .nvf-layout
+   — tirar o bloco de dentro desse pai o deixaria mudo.
+   Os id saem da copia: eles sao unicos por documento, e a home vem antes no
+   markup, entao um #nvfCats duplicado roubaria do original tudo o que o
+   11-rede-social.js escreve la. A copia e tirada depois que ele ja montou
+   categorias e contadores, entao vem com o conteudo pronto.
+   O cartao de perfil da coluna nao vem junto: a home ja tem o dela. */
+(() => {
+  const destino = document.getElementById('homeFiltros');
+  /* as duas colunas de filtros da Rede Social, na ordem em que aparecem la:
+     a da esquerda (atividade, feed, categorias) e a da direita (ordenar,
+     autor, periodo) */
+  const origens = ['#nvFeedScreen .nvf-profile', '#nvFeedScreen .nvf-side']
+    .map(function(s){ return document.querySelector(s); }).filter(Boolean);
+  if (!destino || !origens.length) return;
+  /* categorias e contadores so sao montados quando a Rede Social abre. Como a
+     copia sai daqui na carga, o bloco de Categorias viria vazio: uma passada
+     no renderizador de la resolve, e ele e idempotente. */
+  if (typeof renderNvfFilters === 'function') { try { renderNvfFilters(); } catch (e) {} }
+  /* Tudo num cartao so, os grupos separados por um fio. La sao cartoes
+     soltos porque a coluna tem outras coisas entre eles; aqui so ha filtros,
+     e tres caixas empilhadas viravam tres molduras seguidas. O Localizar fica
+     de fora: a home ja tem a busca da plataforma no topo. */
+  const cartao = document.createElement('div');
+  cartao.className = 'nvf-side-card';
+  origens.forEach(function(origem){
+  Array.prototype.forEach.call(origem.children, function(bloco){
+    if (bloco.classList.contains('nvf-pclick')) return;   /* o cartao de perfil */
+    if (bloco.hidden) return;                              /* os que nascem ocultos */
+    if (bloco.querySelector('.nvf-busca')) return;         /* o Localizar */
+    if (cartao.children.length){
+      const fio = document.createElement('div');
+      fio.className = 'hf-div';
+      cartao.appendChild(fio);
+    }
+    /* cada grupo mantem a sua caixa propria: e ela que delimita ate onde vai
+       o realce de um item escolhido */
+    const grupo = document.createElement('div');
+    grupo.className = 'hf-grupo';
+    const copia = bloco.cloneNode(true);
+    while (copia.firstChild) grupo.appendChild(copia.firstChild);
+    cartao.appendChild(grupo);
+  });
+  });
+  cartao.querySelectorAll('[id]').forEach(function(el){ el.removeAttribute('id'); });
+  destino.appendChild(cartao);
+  /* o clique de la e delegado no .nvf-layout, que nao alcanca esta copia:
+     aqui o realce do item escolhido fica por conta deste bloco, cada grupo
+     do cartao unico respondendo por si. */
+  destino.addEventListener('click', function(e){
+    const item = e.target.closest('.nvf-fitem, .nvf-cat');
+    if (!item || !destino.contains(item)) return;
+    const grupo = item.closest('.hf-grupo') || destino;
+    grupo.querySelectorAll('.nvf-fitem, .nvf-cat').forEach(function(o){ o.classList.remove('active'); });
+    item.classList.add('active');
+  });
+})();
+
 /* ===================== assets/js/14-crunch.js ===================== */
 /* cenario: funcionario Crunchyroll */
 /* ============ Cenário: funcionário da Crunchyroll (só consome) ============
@@ -18307,39 +18417,29 @@ function customAlternar(){
   /* o cenario Crunchyroll usa o mesmo miolo de cartao e precisa preencher os
      mesmos campos, com a pessoa de la (o Pikachu). Ver 14-crunch.js. */
   window.pcPreenche = pcPreenche;
-  /* a mesma altura do painel de modulos, a esquerda: o cartao cresce ate la e
-     a linha de atalhos vai para o pe */
-  /* O cartao acompanha a altura do painel de modulos, mas so com a grade
-     fechada. Abrir "Ver +N modulos" faz o painel triplicar de altura, e segui-lo
-     deixava o cartao esticado, com um vazio enorme entre os blocos: a altura
-     entao fica a ultima medida com a grade fechada. */
-  let pcAlturaFixa = 0;
-  /* Enquanto a grade esta aberta ou a busca esta filtrando, o painel muda de
-     altura a cada passo e o cartao ao lado ficava subindo e descendo junto.
-     Nesses dois momentos vale a ultima medida tirada com a grade fechada. */
+  /* ---- As duas colunas terminam na mesma linha ----
+     Quem manda na altura agora e o cartao do usuario: ele fica do tamanho do
+     proprio conteudo (nome, cargo e unidade, que podem quebrar em mais de uma
+     linha) e o painel de modulos, do outro lado, recebe essa altura como
+     minimo. Era o contrario ate aqui, e com o painel mais baixo que o cartao
+     nao havia como igualar sem cortar o pe dele.
+     Com a grade de modulos aberta o painel triplica de altura: nao ha minimo
+     que valha, e o cartao nao deve segui-lo. */
   function pcGradeAberta(){
     const b = document.getElementById('appsToggle');
     const g = document.getElementById('appsGrid');
     return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
-  /* A altura do cartao acompanha a do painel de modulos ao lado, para os dois
-     terminarem na mesma linha mesmo quando o nome da pessoa quebra em duas.
-     Com a grade aberta ela nao acompanha: o painel triplica de altura e o
-     cartao ficaria esticado, com um vazio enorme entre os blocos. Vale entao a
-     ultima medida tirada com a grade fechada. */
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
-    /* na variante de Enquetes o cartao tem a altura do proprio conteudo */
-    if (document.body.classList.contains("home-enquetes")){ card.style.minHeight = ""; return; }
-    /* no celular as colunas empilham e nao ha o que acompanhar */
-    if (window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
-    if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
-    if (!pcAlturaFixa) return;
-    /* so o minimo, nunca a altura cravada: com o painel mais baixo que o
-       cartao, cravar cortava o pe dele e o nome encostava na borda. */
-    card.style.minHeight = pcAlturaFixa + 'px';
-    card.style.height = '';
+    card.style.minHeight = ''; card.style.height = '';
+    /* no celular as colunas empilham, e em Enquetes o painel nao esta ao lado */
+    if (document.body.classList.contains('home-enquetes') ||
+        window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
+    if (pcGradeAberta()) return;
+    const h = Math.round(card.getBoundingClientRect().height);
+    if (h) painel.style.minHeight = h + 'px';
   }
   window.pcSincronizaAltura = pcSincronizaAltura;
   /* fora de qualquer cenario o cartao tambem mostra o miolo, entao os campos
@@ -18348,8 +18448,11 @@ function customAlternar(){
   window.addEventListener('resize', pcSincronizaAltura);
   /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
      a grade fechada, a medida nova vale */
-  const _painel = document.getElementById('appsPanel');
-  if (_painel && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_painel);
+  /* o cartao muda de altura sozinho (fonte carregada, nome mais longo de um
+     cenario): observar ele, e nao o painel — o painel e quem recebe a medida,
+     e observa-lo realimentaria a propria mudanca. */
+  const _cartao = document.getElementById('homeProfileCard');
+  if (_cartao && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_cartao);
   const mostrar = function(sim){
     soDaVersao.forEach(function(s){ document.querySelectorAll(s).forEach(function(el){ el.hidden = !sim; }); });
   };

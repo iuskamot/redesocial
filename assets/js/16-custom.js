@@ -239,39 +239,29 @@ function customAlternar(){
   /* o cenario Crunchyroll usa o mesmo miolo de cartao e precisa preencher os
      mesmos campos, com a pessoa de la (o Pikachu). Ver 14-crunch.js. */
   window.pcPreenche = pcPreenche;
-  /* a mesma altura do painel de modulos, a esquerda: o cartao cresce ate la e
-     a linha de atalhos vai para o pe */
-  /* O cartao acompanha a altura do painel de modulos, mas so com a grade
-     fechada. Abrir "Ver +N modulos" faz o painel triplicar de altura, e segui-lo
-     deixava o cartao esticado, com um vazio enorme entre os blocos: a altura
-     entao fica a ultima medida com a grade fechada. */
-  let pcAlturaFixa = 0;
-  /* Enquanto a grade esta aberta ou a busca esta filtrando, o painel muda de
-     altura a cada passo e o cartao ao lado ficava subindo e descendo junto.
-     Nesses dois momentos vale a ultima medida tirada com a grade fechada. */
+  /* ---- As duas colunas terminam na mesma linha ----
+     Quem manda na altura agora e o cartao do usuario: ele fica do tamanho do
+     proprio conteudo (nome, cargo e unidade, que podem quebrar em mais de uma
+     linha) e o painel de modulos, do outro lado, recebe essa altura como
+     minimo. Era o contrario ate aqui, e com o painel mais baixo que o cartao
+     nao havia como igualar sem cortar o pe dele.
+     Com a grade de modulos aberta o painel triplica de altura: nao ha minimo
+     que valha, e o cartao nao deve segui-lo. */
   function pcGradeAberta(){
     const b = document.getElementById('appsToggle');
     const g = document.getElementById('appsGrid');
     return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
-  /* A altura do cartao acompanha a do painel de modulos ao lado, para os dois
-     terminarem na mesma linha mesmo quando o nome da pessoa quebra em duas.
-     Com a grade aberta ela nao acompanha: o painel triplica de altura e o
-     cartao ficaria esticado, com um vazio enorme entre os blocos. Vale entao a
-     ultima medida tirada com a grade fechada. */
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
-    /* na variante de Enquetes o cartao tem a altura do proprio conteudo */
-    if (document.body.classList.contains("home-enquetes")){ card.style.minHeight = ""; return; }
-    /* no celular as colunas empilham e nao ha o que acompanhar */
-    if (window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
-    if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
-    if (!pcAlturaFixa) return;
-    /* so o minimo, nunca a altura cravada: com o painel mais baixo que o
-       cartao, cravar cortava o pe dele e o nome encostava na borda. */
-    card.style.minHeight = pcAlturaFixa + 'px';
-    card.style.height = '';
+    card.style.minHeight = ''; card.style.height = '';
+    /* no celular as colunas empilham, e em Enquetes o painel nao esta ao lado */
+    if (document.body.classList.contains('home-enquetes') ||
+        window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
+    if (pcGradeAberta()) return;
+    const h = Math.round(card.getBoundingClientRect().height);
+    if (h) painel.style.minHeight = h + 'px';
   }
   window.pcSincronizaAltura = pcSincronizaAltura;
   /* fora de qualquer cenario o cartao tambem mostra o miolo, entao os campos
@@ -280,8 +270,11 @@ function customAlternar(){
   window.addEventListener('resize', pcSincronizaAltura);
   /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
      a grade fechada, a medida nova vale */
-  const _painel = document.getElementById('appsPanel');
-  if (_painel && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_painel);
+  /* o cartao muda de altura sozinho (fonte carregada, nome mais longo de um
+     cenario): observar ele, e nao o painel — o painel e quem recebe a medida,
+     e observa-lo realimentaria a propria mudanca. */
+  const _cartao = document.getElementById('homeProfileCard');
+  if (_cartao && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_cartao);
   const mostrar = function(sim){
     soDaVersao.forEach(function(s){ document.querySelectorAll(s).forEach(function(el){ el.hidden = !sim; }); });
   };

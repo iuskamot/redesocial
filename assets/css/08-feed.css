@@ -682,8 +682,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 
 /* A folga da fileira de Shorts ate o painel de modulos: 24px visiveis. A fita
    ja carrega 12px de padding no topo (o espaco da sombra do card), entao a
-   margem completa os outros 12 — e e o mesmo 12 que alinha o primeiro card
-   com o topo do campo de publicar, que desce 24 ao lado dele. */
+   margem completa os outros 12. */
 .col-main > #homeShorts{margin-top:12px}
 
 /* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
@@ -693,56 +692,84 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .nvf-composer > #homeFeedTitle{padding-top:0}
 
 /* ---- A coluna do meio vira duas faixas ----
-   A fileira de Shorts fica na faixa da esquerda e o campo de publicar com as
+   Os filtros ficam na faixa da esquerda e o campo de publicar com as
    publicacoes na da direita, na largura do LinkedIn, 552px, todos do mesmo
    tamanho. O painel de modulos atravessa as duas.
    As posicoes sao explicitas: no encaixe automatico a ordem do markup mandaria,
    e as faixas nao teriam como trocar de lado. O vao de 24px e o mesmo ritmo do
-   resto da home.
-   minmax(0,552px) e nao 552px cravado: a coluna do meio nem sempre tem esses
-   552 para dar, e assim as publicacoes encolhem em vez de estourar. Do outro
-   lado o piso de 248px protege a faixa dos Shorts: e o que dois cartoes de
-   120px mais os 8px de vao ocupam, e abaixo disso eles viravam tirinhas.
+   resto da home; entre as duas faixas o vao e menor, 12px.
+   A faixa das publicacoes e cravada em 552px e a dos filtros e a conta que
+   poe essas 552 no meio do conteudo — do .content, sem contar o menu lateral.
+   De onde vem o 106: para a publicacao ficar centrada na largura do conteudo,
+   a faixa dos filtros precisa medir metade dele menos meia publicacao (276) e
+   menos os 12px de vao. Como a largura do conteudo e a desta coluna mais os
+   24px de vao e os 340px da coluna do perfil, a conta se resolve so com a
+   largura daqui: 50% - (276 + 12 - 182), ou seja 50% - 106. Sem vw, entao a
+   barra de rolagem nao entra na conta e o centro nao sai torto.
+   O min(..., 100% - 564px) e o limite de caber: em telas em que o conteudo e
+   estreito demais para centrar 552 com a coluna do perfil ao lado, a faixa
+   dos filtros para de crescer no ponto em que as publicacoes encostariam na
+   coluna vizinha, em vez de vazar por cima dela. O max(0px, ...) cobre o
+   extremo: a faixa some e as publicacoes encostam na esquerda.
+   A sobra fica a direita das publicacoes, entre elas e a coluna do perfil.
    Vale so no desktop: no celular a coluna e uma so e o feed sangra de ponta a
    ponta, como sempre foi. */
 @media(min-width:641px){
-  .col-main{display:grid;grid-template-columns:minmax(248px,1fr) minmax(0,552px);
-    column-gap:24px;align-content:start}
+  /* As linhas do campo de publicar e das publicacoes sao min-content: elas
+     ficam do tamanho do proprio conteudo e nao crescem. A faixa dos filtros
+     atravessa as tres ultimas, e quando ela e a mais alta a sobra precisa ir
+     para algum lugar — vai para a quinta linha, que e vazia e so existe para
+     isso. Sem ela a sobra era repartida entre as duas de cima e abria um vao
+     de 188px entre o campo de publicar e as publicacoes no cenario sem
+     conteudo. */
+  .col-main{display:grid;
+    grid-template-columns:max(0px, min(calc(50% - 106px), calc(100% - 564px))) 552px;
+    grid-template-rows:auto auto min-content min-content auto;
+    column-gap:12px;align-content:start}
   .col-main > .apps-panel{grid-area:1 / 1 / 2 / 3}
-  .col-main > .nvf-composer{grid-area:2 / 2 / 3 / 3;margin-top:24px}
+  /* a fita atravessa as duas faixas, logo abaixo dos modulos */
+  .col-main > #homeShorts{grid-area:2 / 1 / 3 / 3}
+  /* align-self:start nos tres: a faixa dos filtros atravessa as duas linhas
+     e costuma ser a mais alta das duas colunas. A altura dela vira altura das
+     linhas, e sem isso o campo de publicar esticava junto — bem visivel no
+     cenario sem publicacao nenhuma, onde ele ia de 131 para 307px. */
+  .col-main > .nvf-composer{grid-area:3 / 2 / 4 / 3;margin-top:24px;align-self:start}
   .col-main > .feed,
-  .col-main > .demo-empty-state{grid-area:3 / 2 / 4 / 3}
+  .col-main > .demo-empty-state{grid-area:4 / 2 / 5 / 3;align-self:start}
+  /* uma publicacao para a outra no mesmo vao dos filtros */
+  .col-main > .feed{gap:12px}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
      vazia: sem isso as publicacoes encostavam no painel de modulos. Os mesmos
      24px que o campo daria, e que a fileira de Shorts tem ao lado. */
   body.demo-crunch:not(.crunch-admin) .col-main > .feed{margin-top:24px}
-  /* a fileira ocupa a faixa da direita ao lado das duas linhas; align-self
-     start para ficar no topo dela, e nao esticada na altura do feed */
-  .col-main > #homeShorts{grid-area:2 / 1 / 4 / 2;align-self:start}
+  /* os filtros ocupam a faixa da esquerda ao lado das duas linhas; align-self
+     start para ficarem no topo dela, e nao esticados na altura do feed. Os
+     24px sao os mesmos que o campo de publicar desce do lado de la. */
+  .col-main > #homeFiltros{grid-area:3 / 1 / 6 / 2;align-self:start;margin-top:24px}
 
-  /* Na faixa da esquerda a fileira deixa de rolar e vira grade: dois cartoes
-     por linha, dividindo a largura que sobrou com 8px de vao, o mesmo que
-     separa as publicacoes. Sem
-     rolagem horizontal as setas nao tem mais o que fazer, e o arrastar da
-     fita perde o sentido. */
-  .col-main > #homeShorts .shorts{flex-wrap:wrap;overflow-x:visible;cursor:default;gap:8px}
-  .col-main > #homeShorts .shorts > .reel{width:calc((100% - 8px) / 2)}
-  .col-main > #homeShorts .st-arrow{display:none}
-  /* o "Criar short" atravessa a linha inteira e copia o botao da tela de
-     Shorts: deitado, o mais de 32px a esquerda do rotulo de 14px e a altura
-     do proprio conteudo */
-  .col-main > #homeShorts .shorts > .reel-create{width:100%;aspect-ratio:auto;height:auto;
-    padding:14px 16px;border-radius:14px}
-  .col-main > #homeShorts .reel-create .rc-bg{flex-direction:row;gap:10px}
-  .col-main > #homeShorts .reel-create .rc-plus2{width:32px;height:32px;font-size:14px;box-shadow:none}
-  .col-main > #homeShorts .reel-create .rc-label{font-size:14px}
-  /* foto, titulo e nome nas medidas dos cartoes da tela de Shorts */
-  .col-main > #homeShorts .reel-av .avatar{width:28px;height:28px}
-  .col-main > #homeShorts .reel-title{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.3px}
-  .col-main > #homeShorts .reel-meta{font-size:13px;line-height:18px;font-weight:600;letter-spacing:.3px}
 }
+
+/* ---- A copia dos filtros da Rede Social, na faixa da esquerda ----
+   Mesma coluna da Rede Social: cartoes empilhados com 12px entre eles. */
+.home-filtros{display:flex;flex-direction:column;gap:12px}
+/* o fio entre os grupos do cartao unico: sangra ate as bordas, descontando os
+   16px de padding do .nvf-side-card */
+.home-filtros .hf-div{height:1px;background:var(--line);margin:14px -16px}
+.home-filtros:empty{display:none}
+/* no celular a lateral da Rede Social some (10-responsivo.css); a copia da
+   home segue a mesma regra, senao os filtros viravam uma pilha no meio do
+   caminho entre os modulos e as publicacoes. */
+@media(max-width:640px){ .home-filtros{display:none} }
 
 /* O cabecalho do Feed sai de cena: o titulo e o "Ver todas as publicacoes".
    Oculto, nao removido — o markup fica inteiro dentro do bloco de criar
    publicacao para poder voltar so tirando esta regra. */
 #homeFeedTitle{display:none}
+
+/* ---- A imagem da publicacao na mesma proporcao do modulo ----
+   La e aqui a regra e a mesma, max-height:560px, mas ela corta pela altura e
+   nao pela proporcao: na coluna de 780px do modulo a imagem sai em 780x560,
+   e na de 552 da home saia 552x560 — quase quadrada, bem mais alta em relacao
+   a largura. Aqui a proporcao e que e fixa, 780 por 560, e a altura sai dela:
+   552 de largura viram 396 de altura, o mesmo enquadramento de la. */
+.col-main > .feed .post-img img{aspect-ratio:39 / 28;height:auto;max-height:none;object-fit:cover}

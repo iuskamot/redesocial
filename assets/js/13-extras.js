@@ -1018,3 +1018,65 @@ function rvShareCopiar(){
     n.addEventListener('click', sair);
   });
 })();
+
+/* ---- Os filtros da Rede Social tambem na home ----
+   A faixa da esquerda da home recebe uma copia da coluna de filtros da Rede
+   Social — as duas colunas dela. E copia, e
+   nao o elemento de la, por dois motivos: a tela da Rede Social continua
+   precisando dele inteiro, e o clique dos filtros e delegado no .nvf-layout
+   — tirar o bloco de dentro desse pai o deixaria mudo.
+   Os id saem da copia: eles sao unicos por documento, e a home vem antes no
+   markup, entao um #nvfCats duplicado roubaria do original tudo o que o
+   11-rede-social.js escreve la. A copia e tirada depois que ele ja montou
+   categorias e contadores, entao vem com o conteudo pronto.
+   O cartao de perfil da coluna nao vem junto: a home ja tem o dela. */
+(() => {
+  const destino = document.getElementById('homeFiltros');
+  /* as duas colunas de filtros da Rede Social, na ordem em que aparecem la:
+     a da esquerda (atividade, feed, categorias) e a da direita (ordenar,
+     autor, periodo) */
+  const origens = ['#nvFeedScreen .nvf-profile', '#nvFeedScreen .nvf-side']
+    .map(function(s){ return document.querySelector(s); }).filter(Boolean);
+  if (!destino || !origens.length) return;
+  /* categorias e contadores so sao montados quando a Rede Social abre. Como a
+     copia sai daqui na carga, o bloco de Categorias viria vazio: uma passada
+     no renderizador de la resolve, e ele e idempotente. */
+  if (typeof renderNvfFilters === 'function') { try { renderNvfFilters(); } catch (e) {} }
+  /* Tudo num cartao so, os grupos separados por um fio. La sao cartoes
+     soltos porque a coluna tem outras coisas entre eles; aqui so ha filtros,
+     e tres caixas empilhadas viravam tres molduras seguidas. O Localizar fica
+     de fora: a home ja tem a busca da plataforma no topo. */
+  const cartao = document.createElement('div');
+  cartao.className = 'nvf-side-card';
+  origens.forEach(function(origem){
+  Array.prototype.forEach.call(origem.children, function(bloco){
+    if (bloco.classList.contains('nvf-pclick')) return;   /* o cartao de perfil */
+    if (bloco.hidden) return;                              /* os que nascem ocultos */
+    if (bloco.querySelector('.nvf-busca')) return;         /* o Localizar */
+    if (cartao.children.length){
+      const fio = document.createElement('div');
+      fio.className = 'hf-div';
+      cartao.appendChild(fio);
+    }
+    /* cada grupo mantem a sua caixa propria: e ela que delimita ate onde vai
+       o realce de um item escolhido */
+    const grupo = document.createElement('div');
+    grupo.className = 'hf-grupo';
+    const copia = bloco.cloneNode(true);
+    while (copia.firstChild) grupo.appendChild(copia.firstChild);
+    cartao.appendChild(grupo);
+  });
+  });
+  cartao.querySelectorAll('[id]').forEach(function(el){ el.removeAttribute('id'); });
+  destino.appendChild(cartao);
+  /* o clique de la e delegado no .nvf-layout, que nao alcanca esta copia:
+     aqui o realce do item escolhido fica por conta deste bloco, cada grupo
+     do cartao unico respondendo por si. */
+  destino.addEventListener('click', function(e){
+    const item = e.target.closest('.nvf-fitem, .nvf-cat');
+    if (!item || !destino.contains(item)) return;
+    const grupo = item.closest('.hf-grupo') || destino;
+    grupo.querySelectorAll('.nvf-fitem, .nvf-cat').forEach(function(o){ o.classList.remove('active'); });
+    item.classList.add('active');
+  });
+})();

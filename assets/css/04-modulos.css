@@ -7,6 +7,16 @@
   padding:20px 16px;
   box-shadow:0 1px 2px rgba(16,32,48,.05);
 }
+/* O painel tem a altura do cartao do usuario ao lado (16-custom.js), que e
+   maior que a de uma linha de modulos: a coluna deixa a grade tomar a sobra
+   (flex:1) e os cartoes ficam centrados nela, em vez de a folga ficar toda
+   num vazio embaixo. Com a grade aberta nao ha sobra, e tudo volta ao normal
+   sem precisar de regra propria.
+   flex:1 1 auto, e nao 1 1 0: a animacao de abrir e fechar anima a altura da
+   grade, e com base 0 ela perderia a medida de partida. */
+.apps-panel{display:flex;flex-direction:column}
+.apps-panel > .apps{flex:1 1 auto}
+.tile{justify-content:center}
 .apps-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 .apps-search{
   flex:1;max-width:380px;display:flex;align-items:center;gap:10px;height:40px;box-sizing:border-box;

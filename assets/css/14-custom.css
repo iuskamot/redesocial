@@ -382,7 +382,7 @@ body .pc-avedit:hover{background:var(--marca-forte)}
    regras do cartao completo desfeitas uma a uma; o elemento no markup continua
    sendo o mesmo, nao ha um segundo cartao escondido. A fileira de Shorts, essa
    sim, muda de lugar de verdade em Enquetes, e quem faz isso e o 13-extras.js. */
-body:not(.demo-custom) .profile-card{display:block;text-align:center;padding-bottom:24px}
+body:not(.demo-custom) .profile-card{display:block;text-align:center;padding-bottom:16px}
 body:not(.demo-custom) .pc-extra{display:none}
 /* a faixa larga da capa da lugar a do desenho antigo: azul, 120px e a logo */
 body:not(.demo-custom) .profile-card .profile-banner{
@@ -401,6 +401,9 @@ body:not(.demo-custom) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto
 body:not(.demo-custom) .profile-card .profile-name,
 body:not(.demo-custom) .profile-card .profile-role{
   grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
+/* o nome ganha folga da foto: 8px; o cargo, 2px do nome */
+body:not(.demo-custom) .profile-card .profile-name{margin-top:8px}
+body:not(.demo-custom) .profile-card .profile-role{margin-top:2px}
 /* so em Enquetes a altura e a do conteudo; na home o cartao volta a
    acompanhar a altura do painel de modulos, pelo 16-custom.js */
 body.home-enquetes .profile-card{min-height:0 !important}
@@ -408,15 +411,14 @@ body.home-enquetes .profile-card{min-height:0 !important}
 /* A faixa do topo volta a ter os 120px de sempre: quando ela acompanhava a
    altura do cartao, encolhia junto com o painel de modulos e o desenho do
    topo mudava de tamanho a cada ajuste do painel. */
-/* O cartao mostra so o nome: o cargo sai de cena. */
-body:not(.demo-custom) .profile-card .profile-role{display:none}
+/* O cartao mostra nome e cargo, um debaixo do outro. O miolo inteiro fica de
+   fora: a cidade, o na-rede-desde, as unidades, o bloco da marca e o atalho
+   do perfil. */
+body:not(.demo-custom) .pc-extra{display:none}
 
-/* Altura fixa de 201px, medida pedida. O min-height:0 !important desfaz o
-   minimo que o 16-custom.js escreve no style do elemento a cada medida do
-   painel de modulos — inline so cede a isso — senao ele venceria os 201.
-   O cartao tem 215px de conteudo, entao os 14px que sobram saem da folga do
-   pe: o nome fica a 10px da borda de baixo em vez dos 24. */
-body:not(.demo-custom):not(.home-enquetes) .profile-card{height:201px;min-height:0 !important}
+/* O cartao tem a altura do proprio conteudo. Quem acompanha agora e o painel
+   de modulos, do outro lado — o 16-custom.js poe nele o minimo medido daqui. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card{height:auto;min-height:0 !important}
 /* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
    o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
    ser so o gap de 24px da propria coluna. */

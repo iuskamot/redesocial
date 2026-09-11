@@ -43,7 +43,8 @@ function applyFold(){
   const limit = colunas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
-  if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver '+Math.max(0, elig.length-limit)+' módulos';
+  /* o numero e o total de modulos, nao o que ficou de fora da linha */
+  if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver '+elig.length+' módulos';
   if (!searching) appsExpand.hidden = elig.length <= limit;
   if (expanded || searching) return;
   elig.forEach((t, i) => { if (i >= limit) t.classList.add('over-fold'); });
@@ -111,7 +112,10 @@ function animaModulos(aplica){
 let appsAlturaBusca = 0;
 function filterApps(){
   const q = norm(appSearch.value.trim());
-  if (!q){ appsPanel.style.minHeight = ''; appsAlturaBusca = 0; }
+  if (!q){ appsAlturaBusca = 0;
+    /* ao limpar a busca o piso volta a ser o do cartao do usuario */
+    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+    else appsPanel.style.minHeight = ''; }
   else if (!appsAlturaBusca) appsAlturaBusca = Math.round(appsPanel.getBoundingClientRect().height);
   let visiveis = 0;
   appTiles.forEach(t => {

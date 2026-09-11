@@ -474,12 +474,12 @@
 .nf-close:hover{background:#f0f3f6}
 .content{
   display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;
-  padding:20px 40px;align-items:start;
-  /* Laterais de 40px, um pouco mais folgadas que os 30px do .topbar: o feed
-     comeca 10px depois do campo de busca la de cima. O maximo em 1600 e para
-     o conteudo encher a area util nas telas comuns; batendo antes, a grade
-     voltaria a centrar. A direita segue com largura fixa. */
-  max-width:1600px;margin:0 auto;width:100%;
+  padding:20px 30px;align-items:start;
+  /* Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
+     campo de busca la de cima. O maximo trava a largura nas telas grandes —
+     dali para cima nada cresce e o bloco so centra, como no LinkedIn. A
+     coluna da direita segue com largura fixa. */
+  max-width:1362px;margin:0 auto;width:100%;
 }
 
 
