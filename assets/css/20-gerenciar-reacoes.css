@@ -1,0 +1,81 @@
+/* =====================================================================
+   GERENCIAR > REAÇÕES (admin) — assets/css/20-gerenciar-reacoes.css
+
+   Espelha assets/css/19-gerenciar-comentarios.css (mesmos seletores, mesmos
+   valores), trocando #cmgGrid por #rcnGrid. Colunas: ID, Reação (2ª, congelada/
+   sticky com a ID, igual Comentários/Shorts/Publicações), Reagiu em, Autor,
+   Unidade do autor e Publicação (flexível, só min-width — table-layout:auto
+   deixa ela absorver o espaço que sobra). Tudo aqui é aditivo/escopado a
+   #rcnGrid, #rcnFilters e #nvInterScreen — não toca em #pubGrid/#rxGrid/#cmgGrid.
+   ===================================================================== */
+
+#nvInterScreen .cat-head{ margin:8px 8px 0; height:60px; min-height:60px; box-sizing:border-box; padding:0 12px; border-radius:8px; border:1px solid #D9D9D9; box-shadow:none }
+#nvInterScreen .cat-body{ padding:0 }
+#nvInterScreen .nv-listmain{ padding:8px 8px 8px 0; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
+#nvInterScreen .rx-filters{ width:400px; align-self:stretch; max-height:none; display:flex; flex-direction:column; padding-bottom:0 }
+#nvInterScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
+
+/* Cartões de atalho "Quais reações você quer ver?" — 2 opções mutuamente exclusivas
+   (Publicações/Shorts, sem "Todas"), grid de 2 colunas, mesmo card usado em Publicações/
+   Shorts (.nv-sitcards base, 07-rede-social.css). Escolhe a origem dos dados (rcnSource) —
+   os campos abaixo (Tipo/Autor/Unidade/Período) filtram dentro dessa origem. */
+#rcnSitCards.nv-sit2{ grid-template-columns:1fr 1fr; gap:8px }
+#rcnSitCards button{ border-color:#D9D9D9 }
+
+#rcnGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
+#rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
+#rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
+#rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
+#rcnGrid .rl-tblwrap>table{ min-width:1472px }
+#rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
+#rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
+#rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
+#rcnGrid .rl-tblwrap th.sortable:hover .sort-ic{ color:#2F8EE5 }
+
+/* Colunas fixas (ID + Reação) com colapso animado da ID ao rolar horizontalmente (ver
+   gridFreezeCols, 20-gerenciar-shorts.js) */
+#rcnGrid .rl-tblwrap th:nth-child(1),#rcnGrid .rl-tblwrap td:nth-child(1){ position:sticky; left:0; box-sizing:border-box }
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ position:sticky; box-sizing:border-box }
+#rcnGrid .rl-tblwrap th:nth-child(1){ width:90px; min-width:90px; max-width:90px; z-index:7; background:#3D4F62; color:#fff; border-right:none }
+#rcnGrid .rl-tblwrap th:nth-child(2){ z-index:6; background:#3D4F62; color:#fff; border-top-right-radius:8px }
+#rcnGrid .rl-tblwrap th:nth-child(1) .sort-ic,#rcnGrid .rl-tblwrap th:nth-child(2) .sort-ic{ color:#fff }
+#rcnGrid .rl-tblwrap th.sortable:nth-child(1):hover,#rcnGrid .rl-tblwrap th.sortable:nth-child(2):hover{ color:#fff; background:#48607a }
+#rcnGrid .rl-tblwrap td:nth-child(1){ z-index:3; background:#fff; width:90px; min-width:90px; max-width:90px }
+#rcnGrid .rl-tblwrap td:nth-child(2){ z-index:2; background:#fff }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(odd){ background:#fff }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(even){ background:#F0F3F5 }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:nth-child(odd) td:nth-child(2){ background:#fff }
+#rcnGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:nth-child(even) td:nth-child(2){ background:#F0F3F5 }
+#rcnGrid .rl-tblwrap tbody tr:hover{ background:#e7f1fb }
+#rcnGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
+#rcnGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#rcnGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
+
+/* Larguras fixas das colunas: 2 Reação, 3 Autor, 4 Unidade do autor, 5 Reagiu em;
+   6 Publicação/Shorts é a flexível (só min-width). */
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ width:180px }
+#rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ width:320px }
+#rcnGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
+#rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ width:320px }
+#rcnGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
+#rcnGrid .rl-tblwrap th:nth-child(5),#rcnGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:242px }
+#rcnGrid .rl-tblwrap th:nth-child(6),#rcnGrid .rl-tblwrap td:nth-child(6){ min-width:320px }
+
+/* Autor / Unidade do autor — mesmo padrão de #pubGrid (18-gerenciar-publicacoes.css) */
+#rcnGrid .rl-author .avatar,#rcnGrid .rl-author .nv-logo{ width:32px; height:32px }
+#rcnGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
+#rcnGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
+#rcnGrid .rl-dt{ font-size:14px; color:#5F666C; font-weight:400 }
+#rcnGrid .rl-rel{ font-size:11px; color:#999999; font-weight:400 }
+#rcnGrid .rl-unitcell{ display:flex; align-items:center; gap:8px; min-width:180px }
+#rcnGrid .rl-unitcell .rxv-logo{ width:32px; height:32px; border-radius:32px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; flex-shrink:0 }
+#rcnGrid .rl-unitcell>div{ min-width:0 }
+#rcnGrid .rl-unitcell b{ display:block; font-size:14px; color:#5F666C; font-weight:400 }
+#rcnGrid .rl-unitcell span{ display:block; max-width:100%; font-size:11px; color:#999999; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+/* Publicação — thumbnail 44x36 + título (1 linha, trunca) + tipo */
+#rcnGrid .rl-pubcell{ display:flex; align-items:center; gap:10px; min-width:0 }
+#rcnGrid .rl-pubcell img,#rcnGrid .rl-pubcell .rl-procthumb{ width:44px; height:36px; object-fit:cover; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center }
+#rcnGrid .rl-pubcell .rl-procthumb i{ font-size:16px }
+#rcnGrid .rl-pubcell>div{ min-width:0 }
+#rcnGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+#rcnGrid .rl-pubcell span{ display:block; font-size:11px; color:#999999; white-space:nowrap }

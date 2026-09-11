@@ -1887,27 +1887,28 @@
 /* Aprovações > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen) reaproveitam o
    mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão "Limpar filtros"
    desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */
-#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvCmGridScreen .rx-filters{
+#nvListScreen .rx-filters,.reels-view.in-cfg .rx-filters,#nvPubApprScreen .rx-filters,#nvReelApprScreen .rx-filters,#nvCmGridScreen .rx-filters,#nvInterScreen .rx-filters{
   width:400px;border-color:#D9D9D9;border-radius:8px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec{
+#nvListScreen .rx-filters .nv-fsec,.reels-view.in-cfg .rx-filters .nv-fsec,#nvPubApprScreen .rx-filters .nv-fsec,#nvReelApprScreen .rx-filters .nv-fsec,#nvCmGridScreen .rx-filters .nv-fsec,#nvInterScreen .rx-filters .nv-fsec{
   margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
-#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
-#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd,.reels-view.in-cfg .rx-filters .nv-fsec-hd,#nvPubApprScreen .rx-filters .nv-fsec-hd,#nvReelApprScreen .rx-filters .nv-fsec-hd,#nvCmGridScreen .rx-filters .nv-fsec-hd,#nvInterScreen .rx-filters .nv-fsec-hd{font-size:16px;color:#0C334A}
+#nvListScreen .rx-filters .nv-fsec-hd i,.reels-view.in-cfg .rx-filters .nv-fsec-hd i,#nvPubApprScreen .rx-filters .nv-fsec-hd i,#nvReelApprScreen .rx-filters .nv-fsec-hd i,#nvCmGridScreen .rx-filters .nv-fsec-hd i,#nvInterScreen .rx-filters .nv-fsec-hd i{font-size:16px;color:#0C334A}
 #nvListScreen .rx-filters .nv-sitcards button,.reels-view.in-cfg .rx-filters .nv-sitcards button{border-color:#D9D9D9}
 #nvListScreen .rx-filters .nv-filters-ft .nv-fclear,#nvListScreen .rx-filters .nv-filters-ft .nv-fapply,
 .reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fclear,.reels-view.in-cfg .rx-filters .nv-filters-ft .nv-fapply,
 #nvPubApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvPubApprScreen .rx-filters .nv-filters-ft .nv-fapply,
 #nvReelApprScreen .rx-filters .nv-filters-ft .nv-fclear,#nvReelApprScreen .rx-filters .nv-filters-ft .nv-fapply,
-#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fclear,#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fapply{flex:1}
+#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fclear,#nvCmGridScreen .rx-filters .nv-filters-ft .nv-fapply,
+#nvInterScreen .rx-filters .nv-filters-ft .nv-fclear,#nvInterScreen .rx-filters .nv-filters-ft .nv-fapply{flex:1}
 /* Sem filtro ativo, "Limpar filtros" fica desabilitado; quem alterna has-active
    e a JS dela (foBuildGerenciarShortsFilters / foBuildGerenciarPublicacoesFilters /
    foBuildPubApprFilters / foBuildReelApprFilters).
    Precisa ficar escopado: o ramo social (foBuildSocialFilters) nunca poe essa
    classe, entao no generico o botao do Shorts Explorar ficava desabilitado para
    sempre, sem jeito de limpar filtro nenhum. */
-#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear{
+#nvListScreen .rx-filters .nv-fclear,.reels-view.in-cfg .rx-filters .nv-fclear,#nvPubApprScreen .rx-filters .nv-fclear,#nvReelApprScreen .rx-filters .nv-fclear,#nvCmGridScreen .rx-filters .nv-fclear,#nvInterScreen .rx-filters .nv-fclear{
   background:#eef2f5;color:#9aa5b1;border:0;cursor:not-allowed;pointer-events:none}
-#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active{
+#nvListScreen .rx-filters .nv-fclear.has-active,.reels-view.in-cfg .rx-filters .nv-fclear.has-active,#nvPubApprScreen .rx-filters .nv-fclear.has-active,#nvReelApprScreen .rx-filters .nv-fclear.has-active,#nvCmGridScreen .rx-filters .nv-fclear.has-active,#nvInterScreen .rx-filters .nv-fclear.has-active{
   background:#FB9151;color:#fff;cursor:pointer;pointer-events:auto}
-#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover{
+#nvListScreen .rx-filters .nv-fclear.has-active:hover,.reels-view.in-cfg .rx-filters .nv-fclear.has-active:hover,#nvPubApprScreen .rx-filters .nv-fclear.has-active:hover,#nvReelApprScreen .rx-filters .nv-fclear.has-active:hover,#nvCmGridScreen .rx-filters .nv-fclear.has-active:hover,#nvInterScreen .rx-filters .nv-fclear.has-active:hover{
   background:linear-gradient(rgba(28,28,30,.08),rgba(28,28,30,.08)),#FB9151}

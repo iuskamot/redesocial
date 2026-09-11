@@ -43,13 +43,13 @@
 #cmgGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#cmgGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
 #cmgGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#cmgGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
 
-/* Larguras fixas das colunas: 3 Comentado em, 4 Autor, 5 Unidade, 6 Publicação */
-#cmgGrid .rl-tblwrap th:nth-child(3),#cmgGrid .rl-tblwrap td:nth-child(3){ white-space:nowrap; width:204px }
+/* Larguras fixas das colunas: 3 Autor, 4 Unidade do autor, 5 Comentado em, 6 Publicação */
+#cmgGrid .rl-tblwrap th:nth-child(3),#cmgGrid .rl-tblwrap td:nth-child(3){ width:320px }
+#cmgGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
+#cmgGrid .rl-tblwrap td:nth-child(3) .rl-author b,#cmgGrid .rl-tblwrap td:nth-child(3) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 #cmgGrid .rl-tblwrap th:nth-child(4),#cmgGrid .rl-tblwrap td:nth-child(4){ width:320px }
-#cmgGrid .rl-tblwrap td:nth-child(4) .rl-author{ min-width:212px }
-#cmgGrid .rl-tblwrap td:nth-child(4) .rl-author b,#cmgGrid .rl-tblwrap td:nth-child(4) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-#cmgGrid .rl-tblwrap th:nth-child(5),#cmgGrid .rl-tblwrap td:nth-child(5){ width:320px }
-#cmgGrid .rl-tblwrap td:nth-child(5) .rl-unitcell{ min-width:212px }
+#cmgGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
+#cmgGrid .rl-tblwrap th:nth-child(5),#cmgGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:204px }
 #cmgGrid .rl-tblwrap th:nth-child(6),#cmgGrid .rl-tblwrap td:nth-child(6){ width:280px }
 
 /* Comentário: texto + botão "Acessar comentário", igual ao layout do botão "Ações" das

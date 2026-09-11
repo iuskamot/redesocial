@@ -103,6 +103,80 @@ function rxDateField(id, value){
     '<button type="button" class="nv-fdatebtn" data-datefor="' + id + '"><i class="mdi mdi-calendar-month"></i></button></div>';
 }
 
+/* =====================================================================
+   Componente genérico de tabela "Gerenciar" — usado por Publicações (#pubGrid),
+   Shorts (#rxGrid), Comentários (#cmgGrid) e Reações (#rcnGrid). Cada tela só entra
+   com o que muda de fato: a lista de colunas (chave + rótulo + se é ordenável), o
+   HTML já pronto de cada <tr> (a linha em si varia demais de tela pra tela pra valer
+   a pena genericizar) e o estado de ordenação (a própria tela guarda esse objeto
+   {key,dir} e re-renderiza quando ele muda). O que é sempre igual entra aqui: montar
+   o <thead> com seta de ordenação de 3 estados, o wrapper .rlist.rl-tblwrap, e —
+   quando opts.freeze não é false — o colapso animado da 1ª coluna (ID) ao rolar
+   horizontalmente, com a 2ª grudada (sticky) do lado dela. Uma tela cuja coluna
+   flexível não é a 2ª (caso de Reações, onde é a última) passa freeze:false e usa
+   scroll horizontal simples, sem colunas congeladas.
+
+   opts:
+     grid       - elemento container onde a tabela é anexada (a tela já deve ter
+                  limpado/decidido o estado vazio antes de chamar)
+     columns    - [{key,label,sortable=true,thAttrs?}], na ordem das colunas
+     rowsHTML   - string com todos os <tr>...</tr> já prontos
+     sort       - {key,dir} atual (referência guardada pela tela)
+     onSort(key)- chamado ao clicar num <th> ordenável
+     onRowClick(e) - opcional, listener de clique delegado no <tbody>
+     wrapClass  - classe extra opcional na <div class="rlist rl-tblwrap">
+     gridColumn - opcional, valor de style.gridColumn do wrapper (telas que reaproveitam
+                  um container CSS-grid, como #rxGrid)
+     freeze     - default true; false pula o colapso/sticky das 2 primeiras colunas
+   Devolve o wrapper (<div class="rlist rl-tblwrap">) já anexado a opts.grid. */
+function renderGridTable(opts){
+  const sort = opts.sort;
+  const thCell = function(col){
+    if (col.sortable === false) return '<th' + (col.thAttrs || '') + '>' + col.label + '</th>';
+    const active = sort.key === col.key && sort.dir !== 0;
+    const icon = !active ? NV_SORT_ICONS.swap : (sort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
+    return '<th class="sortable' + (active ? ' active-sort' : '') + '"' + (col.thAttrs || '') + ' data-sort="' + col.key + '">' + col.label + ' <span class="sort-ic">' + icon + '</span></th>';
+  };
+  const ths = opts.columns.map(thCell).join('');
+  const wrap = document.createElement('div');
+  wrap.className = 'rlist rl-tblwrap' + (opts.wrapClass ? ' ' + opts.wrapClass : '');
+  if (opts.gridColumn) wrap.style.gridColumn = opts.gridColumn;
+  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + opts.rowsHTML + '</tbody></table>';
+  if (opts.onRowClick) wrap.querySelector('tbody').addEventListener('click', opts.onRowClick);
+  wrap.querySelector('thead').addEventListener('click', function(ev){
+    const th = ev.target.closest('th.sortable'); if (!th) return;
+    opts.onSort(th.dataset.sort);
+  });
+  opts.grid.appendChild(wrap);
+  if (opts.freeze !== false) gridFreezeCols(wrap);
+  return wrap;
+}
+/* Colapso animado da 1ª coluna (ID) + 2ª coluna (a "principal", sticky) ao rolar a tabela na
+   horizontal — mesmo comportamento nas 3 telas que já usavam isso antes desta função existir
+   (pglSyncFrozenCols/rxSyncFrozenCols/cmgSyncFrozenCols), só que agora numa cópia só. */
+function gridFreezeCols(wrap){
+  const COLLAPSE_PX = 90;
+  let ticking = false;
+  function sync(){
+    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / COLLAPSE_PX));
+    const idW = COLLAPSE_PX * (1 - progress);
+    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
+      el.style.setProperty('width', idW + 'px', 'important');
+      el.style.setProperty('min-width', idW + 'px', 'important');
+      el.style.setProperty('max-width', idW + 'px', 'important');
+      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
+      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
+    });
+    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
+    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
+  }
+  wrap.addEventListener('scroll', function(){
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function(){ sync(); ticking = false; });
+  });
+  sync();
+}
+
 /* GERENCIAR > SHORTS (admin): sidebar de filtro avançado — "Quais shorts você quer ver?" (situação),
    Short (título/ID, Tipo, Categoria, Autor, Unidade do autor), Publicado para, Período de publicação
    e Período de encerramento. Só é montada quando curView==='lista' (ver foBuildReelFilters). */
@@ -170,8 +244,6 @@ function foBuildGerenciarShortsFilters(){
    Visualizações, Curtidas, Categoria e Data de encerramento; ordenação de 3 estados por coluna;
    colunas ID+Short congeladas (com colapso animado) ao rolar horizontalmente. */
 function renderGerenciarShortsList(list){
-  const wrap = document.createElement('div');
-  wrap.className = 'rlist rl-tblwrap'; wrap.style.gridColumn = '1/-1';
   if (colSort.key && colSort.dir){
     const val = r => { const p = POSTS[r.p]; switch (colSort.key){
       case 'title': return (p.title || p.alt || '').toLowerCase();
@@ -230,77 +302,60 @@ function renderGerenciarShortsList(list){
       '<td style="white-space:nowrap">' + (r.encerra ? '<span class="rl-enddt">' + rxSchedDT(r.encerra) + '</span>' : '<span class="rl-noend">Não se encerra</span>') + '</td>' +
       '</tr>';
   }).join('');
-  const cols = [['id', 'ID'], ['title', 'Short (' + list.length + ')']];
-  const colsAfter = [['author', 'Autor'], ['unit', 'Unidade do autor'], ['views', 'Visualizações'], ['likes', 'Curtidas'], ['cat', 'Categoria']];
-  const thSort = c => {
-    const k = c[0], active = colSort.key === k && colSort.dir !== 0;
-    const icon = !active ? NV_SORT_ICONS.swap : (colSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
-    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c[1] + ' <span class="sort-ic">' + icon + '</span></th>';
-  };
-  const thPlain = label => '<th>' + label + '</th>';
-  const ths = cols.map(thSort).join('') + thSort(['status', 'Situação']) + thSort(['time', 'Data de publicação']) + thSort(['reach', 'Publicado para']) + thPlain('Tipo') + colsAfter.map(thSort).join('') + thSort(['enddate', 'Data de encerramento']);
-  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rows + '</tbody></table>';
-  wrap.querySelector('tbody').addEventListener('click', e => {
-    const tr = e.target.closest('tr'); if (!tr) return;
-    const idx = +tr.dataset.i; const r = list[idx];
-    const rxb = e.target.closest('[data-rx]');
-    if (rxb){ e.stopPropagation(); openReelAudience(r, rxb.dataset.rx); return; }
-    const actBtn = e.target.closest('.rl-actbtn');
-    if (actBtn){
-      e.stopPropagation();
-      const td = actBtn.closest('td');
-      const menu = actBtn.nextElementSibling;
-      const willOpen = menu.hidden;
-      wrap.querySelectorAll('.rl-actmenu').forEach(m => { m.hidden = true; });
-      wrap.querySelectorAll('td.rl-actz').forEach(c => c.classList.remove('rl-actz'));
-      menu.hidden = !willOpen;
-      td.classList.toggle('rl-actz', willOpen);
-      return;
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'title', label: 'Short (' + list.length + ')' },
+    { key: 'status', label: 'Situação' },
+    { key: 'time', label: 'Data de publicação' },
+    { key: 'reach', label: 'Publicado para' },
+    { key: 'tipo', label: 'Tipo', sortable: false },
+    { key: 'author', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor' },
+    { key: 'views', label: 'Visualizações' },
+    { key: 'likes', label: 'Curtidas' },
+    { key: 'cat', label: 'Categoria' },
+    { key: 'enddate', label: 'Data de encerramento' }
+  ];
+  const wrap = renderGridTable({
+    grid: rxGrid, gridColumn: '1/-1', columns, rowsHTML: rows, sort: colSort,
+    onSort: function(k){
+      if (colSort.key !== k){ colSort.key = k; colSort.dir = 1; }
+      else if (colSort.dir === 1){ colSort.dir = -1; }
+      else { colSort.key = null; colSort.dir = 0; }
+      renderGrid();
+    },
+    onRowClick: e => {
+      const tr = e.target.closest('tr'); if (!tr) return;
+      const idx = +tr.dataset.i; const r = list[idx];
+      const rxb = e.target.closest('[data-rx]');
+      if (rxb){ e.stopPropagation(); openReelAudience(r, rxb.dataset.rx); return; }
+      const actBtn = e.target.closest('.rl-actbtn');
+      if (actBtn){
+        e.stopPropagation();
+        const td = actBtn.closest('td');
+        const menu = actBtn.nextElementSibling;
+        const willOpen = menu.hidden;
+        wrap.querySelectorAll('.rl-actmenu').forEach(m => { m.hidden = true; });
+        wrap.querySelectorAll('td.rl-actz').forEach(c => c.classList.remove('rl-actz'));
+        menu.hidden = !willOpen;
+        td.classList.toggle('rl-actz', willOpen);
+        return;
+      }
+      const ract = e.target.closest('[data-ract]');
+      if (ract){
+        e.stopPropagation();
+        ract.closest('.rl-actmenu').hidden = true;
+        ract.closest('td').classList.remove('rl-actz');
+        const a = ract.dataset.ract;
+        if (a === 'ver') openPlayer(list, idx);
+        else if (a === 'tab') window.open(location.href, '_blank');
+        else { const gi = REELS_DATA.indexOf(r); if (gi > -1) REELS_DATA.splice(gi, 1); buildStories(); renderGrid(); fgToast('Short excluído'); }
+        return;
+      }
+      if (e.target.closest('.rl-actwrap')) return;
+      openReelInfo(r);
     }
-    const ract = e.target.closest('[data-ract]');
-    if (ract){
-      e.stopPropagation();
-      ract.closest('.rl-actmenu').hidden = true;
-      ract.closest('td').classList.remove('rl-actz');
-      const a = ract.dataset.ract;
-      if (a === 'ver') openPlayer(list, idx);
-      else if (a === 'tab') window.open(location.href, '_blank');
-      else { const gi = REELS_DATA.indexOf(r); if (gi > -1) REELS_DATA.splice(gi, 1); buildStories(); renderGrid(); fgToast('Short excluído'); }
-      return;
-    }
-    if (e.target.closest('.rl-actwrap')) return;
-    openReelInfo(r);
   });
-  wrap.querySelector('thead').addEventListener('click', ev => {
-    const th = ev.target.closest('th.sortable'); if (!th) return;
-    const k = th.dataset.sort;
-    /* Ciclo de 3 estados por coluna: sem ordenação -> ascendente -> descendente -> sem ordenação */
-    if (colSort.key !== k){ colSort.key = k; colSort.dir = 1; }
-    else if (colSort.dir === 1){ colSort.dir = -1; }
-    else { colSort.key = null; colSort.dir = 0; }
-    renderGrid();
-  });
-  rxGrid.appendChild(wrap);
-  const RX_COLLAPSE_PX = 90;
-  let rxScrollTicking = false;
-  function rxSyncFrozenCols(){
-    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / RX_COLLAPSE_PX));
-    const idW = RX_COLLAPSE_PX * (1 - progress);
-    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(el => {
-      el.style.setProperty('width', idW + 'px', 'important');
-      el.style.setProperty('min-width', idW + 'px', 'important');
-      el.style.setProperty('max-width', idW + 'px', 'important');
-      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
-      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
-    });
-    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(el => { el.style.left = idW + 'px'; });
-    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
-  }
-  wrap.addEventListener('scroll', () => {
-    if (rxScrollTicking) return; rxScrollTicking = true;
-    requestAnimationFrame(() => { rxSyncFrozenCols(); rxScrollTicking = false; });
-  });
-  rxSyncFrozenCols();
 }
 
 /* Fecha o menu "Ações" da tabela e os dropdowns do filtro avançado ao clicar fora deles.

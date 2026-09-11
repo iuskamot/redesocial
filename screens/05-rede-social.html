@@ -673,24 +673,15 @@
   </div>
   <!-- INTERAÇÕES -->
   <div class="nv-screen" id="nvInterScreen">
-    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-heart"></i><h2>Interações</h2></div><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button><span class="mod-count" id="interCount"></span>
+    <div class="cat-head"><div class="rx-title"><i class="fa-solid fa-thumbs-up"></i><h2>Reações</h2></div><button class="fl-toggle" data-fltoggle><i class="fa-solid fa-filter"></i> <span>Esconder filtros</span> <i class="fa-solid fa-chevron-up fl-carat"></i></button>
       <span style="flex:1"></span>
     </div>
     <div class="cat-body nv-listwrap">
-      <aside class="nv-filters">
-        <div class="rx-search nv-fsearch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="interSearch" placeholder="Buscar pessoa, unidade ou publicação" autocomplete="off"></div>
-        <div class="nv-fsec"><div class="nv-fsec-hd" id="interFSecHd">Reação</div>
-          <div class="nv-fgrid">
-          <div><label>Colaborador</label><select class="nv-fsel" id="interFPerson"></select></div>
-          <div><label>Loja</label><select class="nv-fsel" id="interFStore"></select></div>
-          <div><label>Período</label><select class="nv-fsel" id="interFPeriod"><option value="">Qualquer período</option><option value="60">Última hora</option><option value="1440">Últimas 24 h</option><option value="10080">Últimos 7 dias</option></select></div>
-          <div id="interFReactWrap"><label>Tipo de reação</label><select class="nv-fsel" id="interFReact"><option value="">Todas as reações</option></select></div>
-          <div><label>Publicação</label><select class="nv-fsel" id="interFPost"></select></div>
-          <div><label>Cargo</label><select class="nv-fsel" id="interFRole"></select></div></div>
-        </div>
-        <div class="nv-filters-ft"><button class="nv-fclear" id="interFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button><button class="nv-fapply" id="interFApply">Aplicar filtros</button></div>
-      </aside>
-      <div class="nv-listmain" style="flex:1;min-width:0"><div class="il-kpis" id="interKpis" hidden></div><div class="rlist" id="interList"></div></div>
+      <aside class="rx-nav nv-filters rx-filters" id="rcnFilters"></aside>
+      <div class="nv-listmain" style="flex:1;min-width:0">
+        <div class="il-kpis" id="interKpis" hidden></div>
+        <div id="rcnGrid"></div>
+      </div>
     </div>
   </div>
   <!-- POPUP INTERAÇÕES DA PUBLICAÇÃO -->

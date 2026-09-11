@@ -167,57 +167,34 @@ function renderGerenciarComentariosList(rows){
         '<button type="button" class="rl-actbtn" data-cmgview="' + idx + '"><span>Acessar</span>' +
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><title>arrow-right</title><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/></svg></button>' +
       '</div></td>' +
-      '<td style="white-space:nowrap"><div class="rl-dt">' + cmgFullDT(c) + '</div><span class="rl-rel">' + cmgAgo(c) + '</span></td>' +
       '<td><div class="rl-author">' + (c.av ? '<span class="avatar ' + c.av + '"></span>' : '<span class="nv-logo">' + SULTS_LOGO + '</span>') + '<div><b>' + autorNome + '</b><span class="rl-emp">' + autorSub + '</span></div></div></td>' +
       '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + unit.color + '">' + unit.ini + '</span><div><b>' + unit.name + '</b><span>' + unit.company + '</span></div></div></td>' +
+      '<td style="white-space:nowrap"><div class="rl-dt">' + cmgFullDT(c) + '</div><span class="rl-rel">' + cmgAgo(c) + '</span></td>' +
       '<td><div class="rl-pubcell">' + thumbCmg(n) + '<div><b>' + dispTitle + '</b><span>' + tipo + '</span></div></div></td>' +
       '</tr>';
   }).join('');
-  const cols = [['id', 'ID'], ['text', 'Comentário (' + rows.length + ')']];
-  const colsAfter = [['time', 'Comentado em'], ['author', 'Autor'], ['unit', 'Unidade'], ['pub', 'Publicação']];
-  const thSort = function(c2){
-    const k = c2[0], active = cmgColSort.key === k && cmgColSort.dir !== 0;
-    const icon = !active ? NV_SORT_ICONS.swap : (cmgColSort.dir === 1 ? NV_SORT_ICONS.up : NV_SORT_ICONS.down);
-    return '<th class="sortable' + (active ? ' active-sort' : '') + '" data-sort="' + k + '">' + c2[1] + ' <span class="sort-ic">' + icon + '</span></th>';
-  };
-  const ths = cols.map(thSort).join('') + colsAfter.map(thSort).join('');
-  const wrap = document.createElement('div');
-  wrap.className = 'rlist rl-tblwrap';
-  wrap.innerHTML = '<table><thead><tr>' + ths + '</tr></thead><tbody>' + rowsHTML + '</tbody></table>';
-  wrap.querySelector('thead').addEventListener('click', function(ev){
-    const th = ev.target.closest('th.sortable'); if (!th) return;
-    const k = th.dataset.sort;
-    if (cmgColSort.key !== k){ cmgColSort.key = k; cmgColSort.dir = 1; }
-    else if (cmgColSort.dir === 1){ cmgColSort.dir = -1; }
-    else { cmgColSort.key = null; cmgColSort.dir = 0; }
-    renderGerenciarComentariosList(rows);
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'text', label: 'Comentário (' + rows.length + ')' },
+    { key: 'author', label: 'Autor' },
+    { key: 'unit', label: 'Unidade do autor' },
+    { key: 'time', label: 'Comentado em' },
+    { key: 'pub', label: 'Publicação' }
+  ];
+  renderGridTable({
+    grid, columns, rowsHTML, sort: cmgColSort,
+    onSort: function(k){
+      if (cmgColSort.key !== k){ cmgColSort.key = k; cmgColSort.dir = 1; }
+      else if (cmgColSort.dir === 1){ cmgColSort.dir = -1; }
+      else { cmgColSort.key = null; cmgColSort.dir = 0; }
+      renderGerenciarComentariosList(rows);
+    },
+    onRowClick: function(e){
+      const btn = e.target.closest('[data-cmgview]'); if (!btn) return;
+      const row = rows[+btn.dataset.cmgview]; if (!row) return;
+      if (typeof openNewsInfo === 'function') openNewsInfo(row.n);
+    }
   });
-  wrap.querySelector('tbody').addEventListener('click', function(e){
-    const btn = e.target.closest('[data-cmgview]'); if (!btn) return;
-    const row = rows[+btn.dataset.cmgview]; if (!row) return;
-    if (typeof openNewsInfo === 'function') openNewsInfo(row.n);
-  });
-  grid.appendChild(wrap);
-  const CMG_COLLAPSE_PX = 90;
-  let cmgScrollTicking = false;
-  function cmgSyncFrozenCols(){
-    const progress = Math.max(0, Math.min(1, wrap.scrollLeft / CMG_COLLAPSE_PX));
-    const idW = CMG_COLLAPSE_PX * (1 - progress);
-    wrap.querySelectorAll('th:nth-child(1),td:nth-child(1)').forEach(function(el){
-      el.style.setProperty('width', idW + 'px', 'important');
-      el.style.setProperty('min-width', idW + 'px', 'important');
-      el.style.setProperty('max-width', idW + 'px', 'important');
-      el.style.paddingLeft = (9 * (1 - progress)) + 'px'; el.style.paddingRight = (9 * (1 - progress)) + 'px';
-      el.style.opacity = String(1 - progress); el.style.overflow = 'hidden';
-    });
-    wrap.querySelectorAll('th:nth-child(2),td:nth-child(2)').forEach(function(el){ el.style.left = idW + 'px'; });
-    wrap.classList.toggle('rx-scrolled', wrap.scrollLeft > 0);
-  }
-  wrap.addEventListener('scroll', function(){
-    if (cmgScrollTicking) return; cmgScrollTicking = true;
-    requestAnimationFrame(function(){ cmgSyncFrozenCols(); cmgScrollTicking = false; });
-  });
-  cmgSyncFrozenCols();
 }
 
 /* Ponto de entrada único: reconstrói a sidebar e a tabela juntas, a partir do estado atual dos

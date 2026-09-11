@@ -216,7 +216,8 @@
 .il-line b{font-weight:700}
 .il-role{color:var(--muted);font-size:12px;margin-left:8px}
 .il-act-row{display:flex;align-items:center;gap:9px;margin-top:7px;flex-wrap:wrap}
-.il-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px}
+.il-pill{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;padding:8px 12px;border-radius:999px}
+.il-pill .rx-svg{width:24px;height:24px}
 .il-pill i{font-size:11px}
 .il-in{font-size:13px;color:#5b6672}
 .il-in b{color:var(--ink);font-weight:600}

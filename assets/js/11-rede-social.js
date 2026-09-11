@@ -1401,7 +1401,7 @@ function newsShow(screen){
   if(typeof permView!=='undefined'&&permView){ permView.classList.remove('open','in-cfg'); }
   if (screen==='compose'){ $('#nvComposeScreen').classList.add('active'); nmodSetActive('nmodNew'); }
   else if (screen==='perm'){ $('#nvPermScreen').classList.add('active'); nmodSetActive('nmodPerm'); renderNewsPerm(); }
-  else if (screen==='inter'){ $('#nvInterScreen').classList.add('active'); nmodSetActive('nmodInter'); renderInteractions(); }
+  else if (screen==='inter'){ $('#nvInterScreen').classList.add('active'); nmodSetActive('nmodInter'); if (typeof rcnRefresh==='function') rcnRefresh(); else renderInteractions(); }
   else if (screen==='cats'){ $('#nvCatsScreen').classList.add('active'); nmodSetActive('nmodCats'); renderNewsCats(); }
   else if (screen==='team'){ $('#nvTeamScreen').classList.add('active'); nmodSetActive('nmodPerm'); newsView.classList.add('catmode'); if($('#nmtPerm'))$('#nmtPerm').classList.remove('active'); if($('#nmtCfg'))$('#nmtCfg').classList.add('active'); cfgSetActive('cfgNavTeam'); teamRender(); }
   else if (screen==='params'){ $('#nvParamsScreen').classList.add('active'); nmodSetActive('nmodParams'); }
