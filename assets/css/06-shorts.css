@@ -90,7 +90,7 @@
 .rx-viewtg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
 .rx-viewtg button{border:0;background:none;padding:8px 13px;cursor:pointer;color:var(--muted);font-size:13px}
 .rx-viewtg button.active{background:var(--teal);color:#fff}
-.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow:hidden}
+.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:8px;overflow:hidden}
 .reels-view .rlist,#nvEmpList,#nvPeoList{border-color:var(--line)}
 .rlist table{width:100%;border-collapse:collapse;font-size:12px}
 .rlist th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:#fafbfc}

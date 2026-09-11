@@ -594,7 +594,7 @@
 .sb-empty b{font-size:15px;line-height:20px;color:#1C1C1E}
 .sb-empty span{font-size:13px;line-height:18px}
 @media(max-width:1100px){ .sb-side{display:none} }
-.nv-listwrap{display:flex;gap:10px;align-items:stretch;flex:1;min-height:0}
+.nv-listwrap{display:flex;align-items:stretch;flex:1;min-height:0}
 .nv-filters{width:400px;flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 18px 0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;display:flex;flex-direction:column}
 .nv-filters::-webkit-scrollbar{display:none}
 .nv-fsec{padding:16px 0;border-bottom:1px solid var(--line)}
@@ -634,7 +634,7 @@
 .nv-dtcell{white-space:normal;width:64px;font-size:13px;line-height:1.35;color:var(--muted)}
 #nvList th:first-child{width:64px}
 .nv-listmain{flex:1;min-width:0;overflow-x:auto;display:flex;flex-direction:column}
-.nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:14px}
+.nv-listmain .rlist{overflow-x:scroll;overflow-y:hidden;flex:1;display:block;background:#fff;border-radius:8px;border:1px solid #D9D9D9}
 #interList.rlist{background:#fff;border:1px solid #D9D9D9;border-radius:14px;overflow-x:scroll;overflow-y:hidden}
 .nv-listmain .rlist table{min-width:1100px}
 #interList.rlist table{min-width:1180px}
@@ -1914,7 +1914,6 @@
    O painel dela: 400px, borda #D9D9D9, raio 8px e 16px de padding lateral — e
    esse 16 que as margens negativas das secoes e do rodape usam de medida.
    ========================================================================== */
-#nvListScreen .nv-listwrap{gap:8px}
 /* Aprovações > Publicações/Shorts pendentes (#nvPubApprScreen, #nvReelApprScreen) reaproveitam o
    mesmo painel de filtro de 400px — mesma borda, raio e comportamento do botão "Limpar filtros"
    desabilitado sem filtro ativo — pedido no Figma da tela de Pendentes. */

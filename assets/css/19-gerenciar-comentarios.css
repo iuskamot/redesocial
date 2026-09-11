@@ -5,20 +5,24 @@
    valores já corrigidos manualmente naquela tela), só trocando #pubGrid por
    #cmgGrid e ajustando as larguras de coluna para a tabela de 6 colunas de
    Comentários (ID, Comentário, Comentado em, Autor, Unidade, Publicação).
-   Tudo aqui é aditivo/escopado a #cmgGrid, #cmgFilters e #nvCmGridScreen —
-   não toca em nada de #pubGrid/#rxGrid/18-gerenciar-publicacoes.css.
+   A tabela usa table-layout:fixed + width:100% (mesma abordagem de #rcnGrid,
+   20-gerenciar-reacoes.css): a coluna 6 (Publicação) tem width=min-width=
+   max-width travados em 400px e as colunas 3-5 (sem "width", só min-width)
+   dividem igualmente o espaço restante. Tudo aqui é aditivo/escopado a
+   #cmgGrid, #cmgFilters e #nvCmGridScreen — não toca em nada de #pubGrid/
+   #rxGrid/18-gerenciar-publicacoes.css.
    ===================================================================== */
 
 #nvCmGridScreen .cat-head{ margin:8px 8px 0; height:60px; min-height:60px; box-sizing:border-box; padding:0 12px; border-radius:8px; border:1px solid #D9D9D9; box-shadow:none }
 #nvCmGridScreen .cat-body{ padding:0 }
-#nvCmGridScreen .nv-listmain{ padding:8px 8px 8px 0; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
+#nvCmGridScreen .nv-listmain{ padding:8px; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
 #nvCmGridScreen .rx-filters{ width:400px; align-self:stretch; max-height:none; display:flex; flex-direction:column; padding-bottom:0 }
 #nvCmGridScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
 #cmgGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
 #cmgGrid .rl-tblwrap{ height:100%; overflow-y:auto }
 #cmgGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
 #cmgGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
-#cmgGrid .rl-tblwrap>table{ min-width:1694px }
+#cmgGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1814px }
 #cmgGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #cmgGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
 #cmgGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
@@ -43,14 +47,18 @@
 #cmgGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#cmgGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
 #cmgGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#cmgGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
 
-/* Larguras fixas das colunas: 3 Autor, 4 Unidade do autor, 5 Comentado em, 6 Publicação */
-#cmgGrid .rl-tblwrap th:nth-child(3),#cmgGrid .rl-tblwrap td:nth-child(3){ width:320px }
+/* table-layout:fixed (acima) faz as colunas 3-5 (sem "width", só min-width) dividirem
+   igualmente entre si qualquer espaço que sobrar na tabela — a 6 (Publicação) é a única
+   com "width" travado (width=min-width=max-width), então nunca cresce pelo conteúdo e
+   nunca fica menor que 400px; o excedente vai sempre para as colunas 3-5. Mesma abordagem
+   de #rcnGrid (20-gerenciar-reacoes.css). */
+#cmgGrid .rl-tblwrap th:nth-child(3),#cmgGrid .rl-tblwrap td:nth-child(3){ min-width:320px }
 #cmgGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
 #cmgGrid .rl-tblwrap td:nth-child(3) .rl-author b,#cmgGrid .rl-tblwrap td:nth-child(3) .rl-emp{ display:block; max-width:172px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-#cmgGrid .rl-tblwrap th:nth-child(4),#cmgGrid .rl-tblwrap td:nth-child(4){ width:320px }
+#cmgGrid .rl-tblwrap th:nth-child(4),#cmgGrid .rl-tblwrap td:nth-child(4){ min-width:320px }
 #cmgGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
-#cmgGrid .rl-tblwrap th:nth-child(5),#cmgGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:204px }
-#cmgGrid .rl-tblwrap th:nth-child(6),#cmgGrid .rl-tblwrap td:nth-child(6){ width:280px }
+#cmgGrid .rl-tblwrap th:nth-child(5),#cmgGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; min-width:204px }
+#cmgGrid .rl-tblwrap th:nth-child(6),#cmgGrid .rl-tblwrap td:nth-child(6){ width:400px; min-width:400px; max-width:400px }
 
 /* Comentário: texto + botão "Acessar comentário", igual ao layout do botão "Ações" das
    outras tabelas (#pubGrid/#nvPubApprScreen .rl-actbtn) — mesma borda/cor azul, só troca o
@@ -83,7 +91,7 @@
 #cmgGrid .rl-pubcell .rl-procthumb i{ font-size:18px }
 #cmgGrid .rl-pubcell>div{ min-width:0 }
 #cmgGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-#cmgGrid .rl-pubcell span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
+#cmgGrid .rl-pubcell>div>span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
 
 /* Cartão de situação não existe nesta tela (Comentados aqui já são todos publicados —
    a fila de moderação vive em Aprovações), então só o essencial do rodapé/dropdowns

@@ -496,7 +496,7 @@
 .artreview-no:hover{--vermelho:var(--red);background:#fff;color:var(--vermelho);box-shadow:inset 0 0 0 1px var(--vermelho)}
 .itbl tbody tr.is-new td:first-child{position:relative}
 .itbl tbody tr.is-new td:first-child::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#25d366}
-.rx-filters{margin:14px 0 14px 14px;align-self:flex-start;width:280px;flex-shrink:0;overflow-y:auto;max-height:calc(100vh - 162px);
+.rx-filters{margin:8px 0 8px 8px;align-self:flex-start;width:280px;flex-shrink:0;overflow-y:auto;max-height:calc(100vh - 162px);
   background:#fff;border:1px solid var(--line);border-right-width:1px;border-radius:14px;padding:0 18px 16px}
 .rx-fsearch{max-width:none;width:100%;margin:16px 0 4px;padding:0 12px;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;border-radius:8px}
 .rxh{display:grid;grid-template-columns:300px 1fr;gap:24px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:24px;cursor:pointer;transition:box-shadow .15s,transform .15s}

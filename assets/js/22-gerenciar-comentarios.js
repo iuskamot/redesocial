@@ -122,7 +122,7 @@ function foBuildGerenciarComentariosFilters(){
   const authorLabel = cmgAuthor || 'Todos';
   const unitItems = [{ value: '', label: 'Todas', selected: !cmgUnit }].concat(units.map(function(u){ return { value: u, label: u, selected: cmgUnit === u }; }));
   const unitLabel = cmgUnit || 'Todas';
-  let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Comentário <i class="fa-solid fa-chevron-up"></i></div>' +
+  let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Qual comentário você quer ver? <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário ou ID</label><div class="nv-ffield"><input type="text" id="cmgFTexto" placeholder="Pesquisar comentário..." value="' + (cmgQuery || '') + '" autocomplete="off"></div></div>' +
     '<div class="nv-ffrow nv-ffrow-last">' +
       '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('cmgFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +

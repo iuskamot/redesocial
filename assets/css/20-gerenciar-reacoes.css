@@ -3,15 +3,19 @@
 
    Espelha assets/css/19-gerenciar-comentarios.css (mesmos seletores, mesmos
    valores), trocando #cmgGrid por #rcnGrid. Colunas: ID, Reação (2ª, congelada/
-   sticky com a ID, igual Comentários/Shorts/Publicações), Reagiu em, Autor,
-   Unidade do autor e Publicação (flexível, só min-width — table-layout:auto
-   deixa ela absorver o espaço que sobra). Tudo aqui é aditivo/escopado a
-   #rcnGrid, #rcnFilters e #nvInterScreen — não toca em #pubGrid/#rxGrid/#cmgGrid.
+   sticky com a ID, igual Comentários/Shorts/Publicações), Autor, Unidade do
+   autor, Reagiu em e Publicação/Short (última, com width=min-width=max-width
+   travados em 400px pra não crescer pelo conteúdo). A tabela usa table-layout:
+   fixed + width:100%, então as colunas 2-5 (sem "width", só min-width) dividem
+   igualmente qualquer espaço sobrando — é isso que evita vazios em telas
+   largas sem deixar a última coluna esticar com textos longos. Tudo aqui é
+   aditivo/escopado a #rcnGrid, #rcnFilters e #nvInterScreen — não toca em
+   #pubGrid/#rxGrid/#cmgGrid.
    ===================================================================== */
 
 #nvInterScreen .cat-head{ margin:8px 8px 0; height:60px; min-height:60px; box-sizing:border-box; padding:0 12px; border-radius:8px; border:1px solid #D9D9D9; box-shadow:none }
 #nvInterScreen .cat-body{ padding:0 }
-#nvInterScreen .nv-listmain{ padding:8px 8px 8px 0; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
+#nvInterScreen .nv-listmain{ padding:8px; box-sizing:border-box; display:flex; flex-direction:column; min-height:0 }
 #nvInterScreen .rx-filters{ width:400px; align-self:stretch; max-height:none; display:flex; flex-direction:column; padding-bottom:0 }
 #nvInterScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
 
@@ -30,7 +34,7 @@
 #rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
 #rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
 #rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
-#rcnGrid .rl-tblwrap>table{ min-width:1592px }
+#rcnGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1672px }
 #rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
 #rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
@@ -54,15 +58,17 @@
 #rcnGrid .rl-tblwrap tbody tr:hover td:nth-child(1),#rcnGrid .rl-tblwrap tbody tr:hover td:nth-child(2){ background:#e7f1fb }
 #rcnGrid .rl-tblwrap.rx-scrolled th:nth-child(2),#rcnGrid .rl-tblwrap.rx-scrolled td:nth-child(2){ box-shadow:8px 0 16px -6px rgba(16,32,48,.25) }
 
-/* Larguras fixas das colunas: 2 Reação, 3 Autor, 4 Unidade do autor, 5 Reagiu em;
-   6 Publicação/Shorts é a flexível (só min-width). */
-#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ width:300px }
-#rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ width:320px }
+/* table-layout:fixed (acima) faz as colunas 2-5 (sem "width", só min-width) dividirem
+   igualmente entre si qualquer espaço que sobrar na tabela — a 6 (Publicação/Shorts) é a
+   única com "width" travado (width=min-width=max-width), então nunca cresce pelo conteúdo
+   e nunca fica menor que 400px; o excedente vai sempre para as colunas 2-5. */
+#rcnGrid .rl-tblwrap th:nth-child(2),#rcnGrid .rl-tblwrap td:nth-child(2){ min-width:300px }
+#rcnGrid .rl-tblwrap th:nth-child(3),#rcnGrid .rl-tblwrap td:nth-child(3){ min-width:320px }
 #rcnGrid .rl-tblwrap td:nth-child(3) .rl-author{ min-width:212px }
-#rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ width:320px }
+#rcnGrid .rl-tblwrap th:nth-child(4),#rcnGrid .rl-tblwrap td:nth-child(4){ min-width:320px }
 #rcnGrid .rl-tblwrap td:nth-child(4) .rl-unitcell{ min-width:212px }
-#rcnGrid .rl-tblwrap th:nth-child(5),#rcnGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; width:242px }
-#rcnGrid .rl-tblwrap th:nth-child(6),#rcnGrid .rl-tblwrap td:nth-child(6){ min-width:320px }
+#rcnGrid .rl-tblwrap th:nth-child(5),#rcnGrid .rl-tblwrap td:nth-child(5){ white-space:nowrap; min-width:242px }
+#rcnGrid .rl-tblwrap th:nth-child(6),#rcnGrid .rl-tblwrap td:nth-child(6){ width:400px; min-width:400px; max-width:400px }
 
 /* Reação: pill + botão "Acessar", igual ao layout do botão "Ações"/"Acessar" das outras
    tabelas (#pubGrid/#cmgGrid .rl-actbtn) — mesma borda/cor azul, mesmo ícone de seta. */
@@ -93,4 +99,4 @@
 #rcnGrid .rl-pubcell-short img,#rcnGrid .rl-pubcell-short .rl-procthumb{ width:38px; height:60px }
 #rcnGrid .rl-pubcell>div{ min-width:0 }
 #rcnGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-#rcnGrid .rl-pubcell span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
+#rcnGrid .rl-pubcell>div>span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
