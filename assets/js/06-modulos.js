@@ -10,6 +10,11 @@ appsToggle.addEventListener('click', () => {
   });
 });
 
+/* o "Ver menos" do pe do painel e um atalho para o mesmo botao: assim a
+   animacao, o rotulo e o estado continuam com um dono so */
+const appsToggleFim = $('#appsToggleFim');
+if (appsToggleFim) appsToggleFim.addEventListener('click', () => appsToggle.click());
+
 /* ---------- Busca de módulos ---------- */
 const appSearch  = $('#appSearch');
 const appsPanel  = $('#appsPanel');

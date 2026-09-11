@@ -478,11 +478,15 @@
   /* A coluna da direita tem largura fixa: ela chegou a ceder para manter as
      publicacoes centradas na coluna do meio, mas agora elas ocupam a largura
      inteira e nao ha mais centro para segurar.
+     O teto de 1335 e a medida exata de hoje numa tela de 1600: 911 da coluna
+     do meio, 24 de vao, 340 da coluna do perfil e os 30 de cada lateral. Dali
+     para cima nada cresce — o bloco so centra, e a proporcao entre as duas
+     colunas fica a mesma em qualquer tela maior.
      Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
      campo de busca la de cima. O maximo trava a largura nas telas grandes —
      dali para cima nada cresce e o bloco so centra, como no LinkedIn. A
      coluna da direita segue com largura fixa. */
-  max-width:1362px;margin:0 auto;width:100%;
+  max-width:1335px;margin:0 auto;width:100%;
 }
 
 

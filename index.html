@@ -680,11 +680,15 @@ input,textarea,select{font-size:14px}
   /* A coluna da direita tem largura fixa: ela chegou a ceder para manter as
      publicacoes centradas na coluna do meio, mas agora elas ocupam a largura
      inteira e nao ha mais centro para segurar.
+     O teto de 1335 e a medida exata de hoje numa tela de 1600: 911 da coluna
+     do meio, 24 de vao, 340 da coluna do perfil e os 30 de cada lateral. Dali
+     para cima nada cresce — o bloco so centra, e a proporcao entre as duas
+     colunas fica a mesma em qualquer tela maior.
      Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
      campo de busca la de cima. O maximo trava a largura nas telas grandes —
      dali para cima nada cresce e o bloco so centra, como no LinkedIn. A
      coluna da direita segue com largura fixa. */
-  max-width:1362px;margin:0 auto;width:100%;
+  max-width:1335px;margin:0 auto;width:100%;
 }
 
 
@@ -821,7 +825,11 @@ input,textarea,select{font-size:14px}
     /* a luz entra pelo topo numa mancha larga e macia */
     radial-gradient(125% 62% at 50% -20%, rgba(255,255,255,.34) 0%, rgba(255,255,255,.07) 46%, rgba(255,255,255,0) 70%),
     /* corpo */
-    linear-gradient(165deg,color-mix(in srgb,var(--c1) 4%,var(--c2)) 0%,var(--c2) 100%);
+    /* O degrade e o do desenho original: comeca numa mistura de 45% da cor
+       clara com a escura e termina na escura. Com os 4% de antes o corpo saia
+       praticamente chapado na cor de baixo, e era isso que fazia o mesmo par
+       de cores parecer outro. */
+    linear-gradient(165deg,color-mix(in srgb,var(--c1) 45%,var(--c2)) 0%,var(--c2) 100%);
   -webkit-mask:var(--squircle) center / 100% 100% no-repeat;
   mask:var(--squircle) center / 100% 100% no-repeat;
   /* box-shadow seria recortado pela mascara e border seguiria o retangulo;
@@ -1006,6 +1014,10 @@ input,textarea,select{font-size:14px}
    ao lado, senao as duas pilulas ficam desencontradas. */
 .apps-expand{display:flex;justify-content:center;margin:0}
 .apps-expand[hidden]{display:none}
+/* o "Ver menos" do pe so existe com a grade aberta; fechada, quem aparece e o
+   "Ver N modulos" la no cabecalho */
+.apps-expand--pe{display:none;margin:16px 0 0}
+#appsGrid.expanded ~ .apps-expand--pe{display:flex}
 .apps-expand button{
   height:40px;padding:0 18px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d;
   font:inherit;font-size:13px;font-weight:700;letter-spacing:.3px;
@@ -1015,9 +1027,12 @@ input,textarea,select{font-size:14px}
 .apps-expand button i{font-size:12px}
 .apps-expand button:hover{background:rgba(0,172,172,.2);color:#0a6b6b}
 .apps-expand i{transition:transform .38s cubic-bezier(.22,1,.36,1)}
-/* aberto o rotulo vira "Ver menos": o mais gira 45 graus e le como um fechar,
-   reaproveitando a mesma transicao que o chevron usava */
-.apps-expand button.open i{transform:rotate(45deg)}
+/* Aberto, o rotulo vira "Ver menos" e o sinal de mais vira um menos — o mesmo
+   do botao no pe do painel. A troca e no glifo (o ::before do FontAwesome, que
+   aqui e fonte e nao SVG) e nao na classe do <i>: assim vale para qualquer
+   caminho que ligue o .open, inclusive o cenario basico, que abre a grade
+   sozinho sem passar pelo clique. f068 e o fa-minus. */
+.apps-expand button.open i::before{content:"\f068"}
 .apps-expand button:disabled{opacity:.35;pointer-events:none}
 
 /* ============ Títulos de seção ============ */
@@ -8098,6 +8113,12 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
 
         </div>
 
+        <!-- o mesmo fechar do cabecalho, repetido no pe: com a grade aberta a
+             pessoa esta olhando para baixo, e voltar la em cima so para fechar
+             e caminho a toa. Quem responde pelo clique e o botao de cima. -->
+        <div class="apps-expand apps-expand--pe">
+          <button type="button" id="appsToggleFim"><i class="fa-solid fa-minus"></i> <span>Ver menos</span></button>
+        </div>
         <div class="apps-empty" id="appsEmpty" hidden>
           <i class="fa-regular fa-face-frown"></i> Nenhum módulo encontrado
         </div>
@@ -12419,6 +12440,11 @@ appsToggle.addEventListener('click', () => {
     applyFold();
   });
 });
+
+/* o "Ver menos" do pe do painel e um atalho para o mesmo botao: assim a
+   animacao, o rotulo e o estado continuam com um dono so */
+const appsToggleFim = $('#appsToggleFim');
+if (appsToggleFim) appsToggleFim.addEventListener('click', () => appsToggle.click());
 
 /* ---------- Busca de módulos ---------- */
 const appSearch  = $('#appSearch');

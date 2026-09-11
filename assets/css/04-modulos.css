@@ -91,7 +91,11 @@
     /* a luz entra pelo topo numa mancha larga e macia */
     radial-gradient(125% 62% at 50% -20%, rgba(255,255,255,.34) 0%, rgba(255,255,255,.07) 46%, rgba(255,255,255,0) 70%),
     /* corpo */
-    linear-gradient(165deg,color-mix(in srgb,var(--c1) 4%,var(--c2)) 0%,var(--c2) 100%);
+    /* O degrade e o do desenho original: comeca numa mistura de 45% da cor
+       clara com a escura e termina na escura. Com os 4% de antes o corpo saia
+       praticamente chapado na cor de baixo, e era isso que fazia o mesmo par
+       de cores parecer outro. */
+    linear-gradient(165deg,color-mix(in srgb,var(--c1) 45%,var(--c2)) 0%,var(--c2) 100%);
   -webkit-mask:var(--squircle) center / 100% 100% no-repeat;
   mask:var(--squircle) center / 100% 100% no-repeat;
   /* box-shadow seria recortado pela mascara e border seguiria o retangulo;
@@ -276,6 +280,10 @@
    ao lado, senao as duas pilulas ficam desencontradas. */
 .apps-expand{display:flex;justify-content:center;margin:0}
 .apps-expand[hidden]{display:none}
+/* o "Ver menos" do pe so existe com a grade aberta; fechada, quem aparece e o
+   "Ver N modulos" la no cabecalho */
+.apps-expand--pe{display:none;margin:16px 0 0}
+#appsGrid.expanded ~ .apps-expand--pe{display:flex}
 .apps-expand button{
   height:40px;padding:0 18px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d;
   font:inherit;font-size:13px;font-weight:700;letter-spacing:.3px;
@@ -285,9 +293,12 @@
 .apps-expand button i{font-size:12px}
 .apps-expand button:hover{background:rgba(0,172,172,.2);color:#0a6b6b}
 .apps-expand i{transition:transform .38s cubic-bezier(.22,1,.36,1)}
-/* aberto o rotulo vira "Ver menos": o mais gira 45 graus e le como um fechar,
-   reaproveitando a mesma transicao que o chevron usava */
-.apps-expand button.open i{transform:rotate(45deg)}
+/* Aberto, o rotulo vira "Ver menos" e o sinal de mais vira um menos — o mesmo
+   do botao no pe do painel. A troca e no glifo (o ::before do FontAwesome, que
+   aqui e fonte e nao SVG) e nao na classe do <i>: assim vale para qualquer
+   caminho que ligue o .open, inclusive o cenario basico, que abre a grade
+   sozinho sem passar pelo clique. f068 e o fa-minus. */
+.apps-expand button.open i::before{content:"\f068"}
 .apps-expand button:disabled{opacity:.35;pointer-events:none}
 
 /* ============ Títulos de seção ============ */
