@@ -398,7 +398,34 @@ body.home-enquetes .profile-card .profile-role{
   grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
 /* a altura passa a ser a do conteudo: sem seguir o painel de modulos */
 body.home-enquetes .profile-card{min-height:0 !important}
-/* Na coluna da direita quem da a folga entre o cartao e os Shorts e o gap de
-   24px da propria coluna. O padding de 24 do titulo de secao somava por cima e
-   o intervalo visivel ia a 48 — aqui ele sai. */
-body.home-enquetes .col-right #homeShorts .section-title-row{padding-top:0}
+/* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
+   o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
+   ser so o gap de 24px da propria coluna. */
+body.home-enquetes .col-right #homeShorts .section-title-row{display:none}
+/* A fileira entra sem padding proprio: quem orquestra o espaco nesta coluna e
+   so o gap de 24px dela. O preco e que a sombra do hover, que os 12px de cima
+   e os 32px de baixo protegiam, passa a ser cortada pelo recorte do scroll.
+   E o cartao encolhe para caber 3 e meio: 3 inteiros ocupam 3c + 36 de vao, e
+   a metade do quarto pede mais c/2 — dai (100% - 36) / 3,5. Em fracao, e nao
+   em pixel, para valer em qualquer largura que a coluna venha a ter. */
+/* O recorte da rolagem vale nos dois eixos, entao sem padding a sombra do
+   cartao era cortada rente embaixo e a esquerda. A folga volta so onde ela
+   precisa e a margem negativa a devolve ao layout: a caixa cresce 16px para
+   fora, o conteudo fica no mesmo lugar e o espaco visivel continua sendo so o
+   gap de 24px da coluna. */
+body.home-enquetes .col-right #homeShorts .shorts{padding:0 0 16px 16px;margin:0 0 -16px -16px}
+body.home-enquetes .col-right #homeShorts .shorts{gap:8px}
+body.home-enquetes .col-right #homeShorts .shorts > .reel{width:calc((100% - 24px) / 3.5)}
+/* A seta usa uma conta feita para a fileira da home: 12px de padding no topo
+   mais meia altura do cartao de 213px. Aqui nao ha padding e o cartao e bem
+   menor, entao ela descia. Como a .stories-wrap agora abraca a fileira exata,
+   basta centrar por ela — e a conta se corrige sozinha se o cartao mudar. */
+body.home-enquetes .col-right #homeShorts .st-arrow{top:calc(50% - 20px)}
+/* o cartao aqui tem um terco da largura do da home: o texto acompanha */
+body.home-enquetes .col-right #homeShorts .reel-title{font-size:10px;line-height:13px}
+body.home-enquetes .col-right #homeShorts .reel-meta{font-size:9px}
+/* o Feed entra sem cabecalho nesta visao: saem o titulo e o "Ver todas" */
+body.home-enquetes #homeFeedTitle{display:none}
+/* Sem o titulo do Feed, o compositor encostava no painel de modulos: os 24px
+   do ritmo da coluna passam a vir dele. */
+body.home-enquetes .col-main > .nvf-composer{margin-top:24px}

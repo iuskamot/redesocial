@@ -997,12 +997,14 @@ function rvShareCopiar(){
     colDir.insertBefore(shorts, card.nextElementSibling);
     document.body.classList.add('home-enquetes');
     if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+    if (typeof applyFold === 'function') applyFold();
   }
   function sair(){
     if (!document.body.classList.contains('home-enquetes')) return;
     colMain.insertBefore(shorts, vizinho);
     document.body.classList.remove('home-enquetes');
     if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+    if (typeof applyFold === 'function') applyFold();
   }
   item.addEventListener('click', function(e){
     e.preventDefault();
