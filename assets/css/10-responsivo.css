@@ -18,7 +18,8 @@
   .hm-store{flex:1 1 40%}
   .sv-nav{display:none}
   /* 7 colunas não cabem aqui sem espremer o cartão de 80px */
-  .apps{grid-template-columns:repeat(5,minmax(0,1fr))}
+  /* estreito demais para seis cartoes dividirem: volta a medida fixa e rola */
+  .shorts:has(.reel-sugestao) > .reel{width:120px}
   /* o header precisa encolher junto com o rail: com o rótulo do "+ Novo" e o
      nome do usuário inteiros ele estourava a largura da tela no tablet */
   .top-search{min-width:0}
@@ -127,13 +128,13 @@
   /* arrastar para reordenar é um gesto de mouse: fora do celular */
   .apps-edit,.apps-cancel,.apps-head-right{display:none !important}
   .apps-search{flex:1 1 100%;min-width:0}
-  .apps{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 6px}
+  .apps{gap:22px 6px}
   .tile-ic{width:64px;height:64px}
   .tile-ic i{font-size:29px}
   .smi{width:29px;height:29px;background-size:29px}
   .tl{font-size:11px}
   /* no celular home e modulo usam o mesmo card: 106px de largura, 9:16 (188px) */
-  .reel{width:106px}
+  /* a largura fixa de 106px saiu: quem manda agora e a divisao em 4 acima */
   .post-img{margin:12px -16px 0}
 
   /* ---- shell mobile: o rail sai e a navegação vira a barra de baixo ---- */

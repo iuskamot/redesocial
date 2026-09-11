@@ -50,18 +50,19 @@ body.demo-custom .hm-side__foot{margin-top:0}
 }
 
 /* ---- Cartao de perfil: a faixa vira a capa da empresa ---- */
-body.demo-custom .profile-banner{
-  background:var(--marca-escura) var(--capa-src, url("uploads/crunch/capa.jpg")) var(--capa-pos, center)/cover no-repeat;
+body .profile-banner{
+  /* sem cliente ligado a capa e a do SULTS, e a cor de tras cai no verdigris */
+  background:var(--marca-escura, var(--teal)) var(--capa-src, url("../../uploads/sults/loginbg.jpg")) var(--capa-pos, center)/cover no-repeat;
   position:relative;
 }
-body.demo-custom .profile-banner .profile-logo{display:none}
-body.demo-custom .capa-trocar{
+body .profile-banner .profile-logo{display:none}
+body .capa-trocar{
   position:absolute;right:10px;top:10px;display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 12px;
   border:1px solid var(--line);border-radius:999px;background:#fff;color:#5b6672;
   font:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:.15s;
 }
-body.demo-custom .capa-trocar i{font-size:12px;color:inherit}
-body.demo-custom .capa-trocar:hover,
+body .capa-trocar i{font-size:12px;color:inherit}
+body .capa-trocar:hover,
 body.demo-custom .apps-edit:hover{border-color:var(--marca);color:var(--marca)}
 
 /* ---- Cores da marca ----
@@ -69,7 +70,12 @@ body.demo-custom .apps-edit:hover{border-color:var(--marca);color:var(--marca)}
    do item ativo, icones, Acoes Rapidas, foco da busca, badge) passam para ela,
    e o fundo do menu e do header e a propria cor da marca com preto puro por
    cima em 80% — um escuro que ainda tem o calor do laranja. */
-body.demo-custom{
+/* Os tokens derivam da marca e valem sempre que ha um cliente ligado — com ou
+   sem a versao customizavel. O data-cliente e escrito pelo customAplicaCliente
+   e apagado pelo customLimpaCliente, entao serve de sinal para os dois modos.
+   Sem isso, no modo sem layout personalizado o --marca-escura ficava indefinido
+   e invalidava a declaracao inteira da capa, que caia para a cor chapada. */
+body[data-cliente]{
   /* --marca e escrita pelo JS conforme o cliente ligado (Crunchyroll,
      Casa do Construtor...); tudo abaixo deriva dela */
   --marca:#F47521;
@@ -95,7 +101,9 @@ body.demo-custom{
   --marca-viva:oklch(from var(--marca) calc(max(l, 0.62)) c h);
   --marca-selecao:color-mix(in srgb, var(--marca-viva) 24%, transparent);
   --marca-hover:color-mix(in srgb, var(--marca-viva) 14%, transparent);
-  --sidebar:var(--marca-escura);
+}
+/* so a versao customizavel leva a marca para o menu e o cabecalho */
+body.demo-custom{--sidebar:var(--marca-escura)
 }
 body.demo-custom .hm-side{background:var(--marca-escura)}
 body.demo-custom .topbar{background:var(--marca-escura)}
@@ -126,7 +134,11 @@ body.demo-custom .gs-title mark{color:var(--marca)}
    — a foto precisa subir de camada. O cartao vira uma grade: a capa ocupa a
    linha de cima, a foto desce sobre ela pela direita, e o nome fica na linha
    da foto, a esquerda, com cargo e empresa logo abaixo. */
-body.demo-custom .profile-card{
+/* Este e o cartao de perfil da home, para todo mundo: o miolo com contexto,
+   marca e atalho deixou de ser exclusivo dos cenarios. O que muda de um para
+   outro — quem mostra o streak, qual logo, qual capa — fica escopado: a home
+   personalizavel aqui embaixo, o cenario Crunchyroll no 12-crunch.css. */
+body .profile-card{
   display:grid;grid-template-columns:minmax(0,1fr) auto;
   grid-template-areas:"capa capa" "nome foto" "cargo cargo" "extra extra";
   grid-template-rows:auto auto auto 1fr;
@@ -138,51 +150,56 @@ body.demo-custom .profile-card{
    os numeros e ela. */
 /* align-self:stretch: o cartao e align-items:start, e sem isso o bloco nao
    ocupava a linha 1fr — os atalhos ficavam soltos no meio, nao no pe */
-body.demo-custom .pc-extra{grid-area:extra;align-self:stretch;display:flex;flex-direction:column;min-height:0;padding:0 16px 0}
-body.demo-custom #homeProfileCard{cursor:default !important}
-body.demo-custom .pc-ctx{display:flex;flex-direction:column;gap:6px;margin:auto 0 12px;padding-top:12px;font-size:12px;line-height:16px;color:var(--muted)}
-body.demo-custom .pc-ctx-item{display:flex;align-items:center;gap:8px;white-space:nowrap}
-body.demo-custom .pc-ctx-linha{display:flex;flex-wrap:wrap;gap:6px 16px}
-body.demo-custom .pc-ctx i{font-size:13px;color:#8a94a0;width:16px;text-align:center;flex:none}
+body .pc-extra{grid-area:extra;align-self:stretch;display:flex;flex-direction:column;min-height:0;padding:0 16px 0}
+body #homeProfileCard{cursor:default !important}
+/* padding igual em cima e embaixo. Os 12px de baixo eram margem, nao padding,
+   e somados ao novo padding dariam 24 de folga de um lado contra 12 do outro:
+   a margem sai e quem da o respiro dos dois lados passa a ser o padding. O
+   margin-top:auto fica, que e ele quem empurra o bloco para baixo na versao
+   personalizavel. */
+body .pc-ctx{display:flex;flex-direction:column;gap:6px;margin:auto 0 0;padding:12px 0;font-size:12px;line-height:16px;color:var(--muted)}
+body .pc-ctx-item{display:flex;align-items:center;gap:8px;white-space:nowrap}
+body .pc-ctx-linha{display:flex;flex-wrap:wrap;gap:6px 16px}
+body .pc-ctx i{font-size:13px;color:#8a94a0;width:16px;text-align:center;flex:none}
 /* ---- Sequencia de dias ativos ----
    O bloco tem a cor da marca bem diluida; a chama e o numero carregam a
    marca. A semana e uma fileira de sete bolinhas: cheias nos dias ativos,
    a de hoje com um anel, vazias nas que faltam. */
-body.demo-custom .pc-streak{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"chama texto" "semana semana";
+body .pc-streak{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"chama texto" "semana semana";
   gap:10px 12px;align-items:center;margin:auto 0;padding:12px;border-radius:12px;
   background:color-mix(in srgb, var(--marca) 8%, transparent)}
-body.demo-custom .pc-flame{grid-area:chama;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+body .pc-flame{grid-area:chama;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   background:var(--marca);color:#fff;font-size:18px;box-shadow:0 6px 14px -8px var(--marca)}
-body.demo-custom .pc-streak-tx{grid-area:texto;display:flex;flex-direction:column;gap:1px;min-width:0}
+body .pc-streak-tx{grid-area:texto;display:flex;flex-direction:column;gap:1px;min-width:0}
 /* numero e rotulo no mesmo corpo e na mesma cor da marca: dois tamanhos ali
    davam informacao demais para uma linha so */
-body.demo-custom .pc-streak-tx b{display:flex;align-items:baseline;gap:5px;font-size:15px;line-height:20px;font-weight:700;color:var(--marca-meio)}
-body.demo-custom .pc-num{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit}
-body.demo-custom .pc-streak-tx > span{font-size:12px;line-height:16px;color:var(--muted)}
-body.demo-custom .pc-week{grid-area:semana;display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-body.demo-custom .pc-day{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;line-height:12px;font-weight:700;color:var(--muted)}
-body.demo-custom .pc-day i{width:18px;height:18px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
+body .pc-streak-tx b{display:flex;align-items:baseline;gap:5px;font-size:15px;line-height:20px;font-weight:700;color:var(--marca-meio)}
+body .pc-num{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit}
+body .pc-streak-tx > span{font-size:12px;line-height:16px;color:var(--muted)}
+body .pc-week{grid-area:semana;display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+body .pc-day{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;line-height:12px;font-weight:700;color:var(--muted)}
+body .pc-day i{width:18px;height:18px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
 /* o check exatamente no centro da bolinha */
-body.demo-custom .pc-day i{line-height:1;font-style:normal}
-body.demo-custom .pc-day i svg{display:block;width:10px;height:10px}
-body.demo-custom .pc-day.on i{background:var(--marca)}
-body.demo-custom .pc-day.hoje i{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--marca)}
-body.demo-custom .pc-day.hoje{color:var(--marca-meio)}
-body.demo-custom .pc-links{margin-top:12px;width:calc(100% + 32px);margin-left:-16px;margin-right:-16px;border-top:1px solid var(--line)}
-body.demo-custom .pc-link{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:14px;
+body .pc-day i{line-height:1;font-style:normal}
+body .pc-day i svg{display:block;width:10px;height:10px}
+body .pc-day.on i{background:var(--marca)}
+body .pc-day.hoje i{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--marca)}
+body .pc-day.hoje{color:var(--marca-meio)}
+body .pc-links{margin-top:12px;width:calc(100% + 32px);margin-left:-16px;margin-right:-16px;border-top:1px solid var(--line)}
+body .pc-link{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:14px;
   border:0;background:none;font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:var(--marca-meio)}
-body.demo-custom .pc-link i{font-size:11px;transition:transform .15s}
-body.demo-custom .pc-link:hover i{transform:translateX(3px)}
-body.demo-custom .profile-card .profile-banner{grid-area:capa;padding-bottom:0}
-body.demo-custom .profile-card .avatar.lg{grid-area:foto;position:relative;z-index:1;margin:-39px 16px 0 0}
-body.demo-custom .profile-card .profile-name{grid-area:nome;margin:14px 12px 0 16px;align-self:end;line-height:22px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-body.demo-custom .profile-card .profile-role{grid-area:cargo;margin:2px 16px 0 16px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body .pc-link i{font-size:11px;transition:transform .15s}
+body .pc-link:hover i{transform:translateX(3px)}
+body .profile-card .profile-banner{grid-area:capa;padding-bottom:0}
+body .profile-card .avatar.lg{grid-area:foto;position:relative;z-index:1;margin:-39px 16px 0 0}
+body .profile-card .profile-name{grid-area:nome;margin:14px 12px 0 16px;align-self:end;line-height:22px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body .profile-card .profile-role{grid-area:cargo;margin:2px 16px 0 16px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* ---- Links e botao de "ver mais" na cor do cliente, 50% mais escura ----
    "Ver todos os shorts", "Ver todas as publicacoes" e "Ver +N modulos": o
    laranja puro e claro demais para texto sobre fundo claro; misturado meio a
    meio com preto vira um tom que le bem e ainda e da marca. */
-body.demo-custom{--marca-meio:color-mix(in srgb, #000 50%, var(--marca))}
+body[data-cliente]{--marca-meio:color-mix(in srgb, #000 50%, var(--marca))}
 body.demo-custom .see-all,
 body.demo-custom .com-more{color:var(--marca-meio)}
 /* no hover, os "Ver..." (shorts, publicacoes, comunicados, modulos, perfil)
@@ -240,7 +257,13 @@ body.demo-custom[data-cliente="gatitos"] .av-rc{background:#f48fb1 url("../../up
    A capa vem da variavel no body (a mesma do cartao da home). */
 body.demo-custom .nvf-pcover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
 body.demo-custom .pp-top{background:var(--marca-escura)}
+/* So a versao customizavel troca a logo do cabecalho do perfil. Fora dela a
+   marca do produto continua sendo o SULTS — a do cliente aparece no bloco da
+   direita do perfil e no cartao da home, nao aqui. */
 body.demo-custom .pp-toplogo .pp-logo-sults{display:none}
+/* a JS tira o [hidden] da logo do cliente ao ligar um; sem esta linha ela
+   apareceria sem estilo ao lado da do SULTS fora da versao customizavel */
+body:not(.demo-custom) .pp-logo-cliente{display:none}
 /* a logo no mesmo bloco da home: 250x60 na cor da marca, 8px em cima e embaixo, logo com 44px */
 /* mesma proporcao e posicao do bloco da home, sem o fundo da marca */
 body.demo-custom .pp-toplogo{width:250px;height:60px;margin-left:-20px;padding:8px 0;justify-content:center;box-sizing:border-box}
@@ -252,7 +275,7 @@ body.demo-custom .pp-logo-cliente{display:block;height:44px;width:auto;max-width
   body.demo-custom .pp-logo-cliente{height:40px;max-width:140px}
 }
 body.demo-custom[data-logo-cor] .pp-logo-cliente{filter:none}
-body.demo-custom .pp-cover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
+body .pp-cover{background:var(--marca-escura) var(--capa-src, none) var(--capa-pos, center)/cover no-repeat}
 body.demo-custom .pp-cover-pat{display:none}
 body.demo-custom .pp-btn.primary{background:var(--marca)}
 body.demo-custom .pp-btn.primary:hover{background:var(--marca-forte)}
@@ -306,13 +329,76 @@ body.demo-custom[data-cliente="marvel"] .pp-logo-cliente{filter:none}
 .rv-card iframe{pointer-events:none;transform:scale(1.32);transform-origin:center}
 
 /* capa removida: a faixa fica na cor cheia da marca */
-body.demo-custom .profile-banner,
-body.demo-custom .pp-cover,
+body .profile-banner,
+body .pp-cover,
 body.demo-custom .nvf-pcover{background-color:var(--marca)}
 
 /* A capa e recortada em 3:1; as faixas seguem essa proporcao para mostrar
    exatamente o que foi enquadrado, em qualquer largura de tela. */
-body.demo-custom .profile-banner,
+body .profile-banner,
 body.demo-custom .nvf-pcover{aspect-ratio:3 / 1;height:auto}
 /* no perfil a faixa e larga demais para caber em 3:1 sem virar um paredao */
 body.demo-custom .pp-cover{aspect-ratio:auto}
+
+/* ---- Os botoes de editar aparecem no hover, nao o tempo todo ----
+   Antes o "Trocar capa" ficava aceso sempre, competindo com a capa. Agora ele
+   e a foto so se anunciam quando o ponteiro chega. Opacidade em vez de
+   display: a caixa nao muda de tamanho na hora que aparece, e o foco pelo
+   teclado tambem acende (focus-visible), senao o botao ficava inalcancavel
+   sem mouse. */
+body .capa-trocar{opacity:0;pointer-events:none;transition:opacity .15s}
+/* o mesmo botao vive em duas capas: a faixa do cartao (.profile-banner) e a
+   capa da tela de perfil (.pp-cover). Sem a segunda, o Trocar capa de la
+   ficava invisivel e sem clique, porque a opacidade zero nunca era desfeita. */
+body .profile-banner:hover .capa-trocar,
+body .pp-cover:hover .capa-trocar,
+body .capa-trocar:focus-visible{opacity:1;pointer-events:auto}
+
+/* ---- A foto do cartao ganha o botao de trocar que ja existe no perfil ----
+   display:contents no wrapper: fora da home customizavel ele nao cria caixa
+   nenhuma, entao o cartao normal e a grade do cenario Crunchyroll continuam
+   exatamente como estavam — quem e item do grid segue sendo o proprio avatar.
+   So na customizavel o wrapper vira caixa, para ancorar o botao absoluto. */
+.pc-avwrap{display:contents}
+.pc-avedit{display:none}
+body .pc-avwrap{display:block;position:relative;grid-area:foto;width:max-content;margin:-39px 16px 0 0}
+body .pc-avwrap .avatar.lg{grid-area:auto;margin:0}
+body .pc-avedit{position:absolute;right:2px;bottom:2px;z-index:3;
+  display:flex;align-items:center;justify-content:center;width:28px;height:28px;
+  border:0;border-radius:50%;background:var(--marca);color:#fff;font-size:12px;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity .15s,background .15s}
+body .pc-avwrap:hover .pc-avedit,
+body .pc-avedit:focus-visible{opacity:1;pointer-events:auto}
+body .pc-avedit:hover{background:var(--marca-forte)}
+
+/* ---- Enquetes: a variante com o cartao de perfil simples ----
+   Mora aqui, e nao no 08-feed.css, porque desfaz regras deste arquivo: la o
+   bloco carregava antes e empatava em especificidade com elas, entao o cartao
+   continuava sendo grid e o margin:auto da foto nao tinha efeito.
+   O cartao volta ao formato antigo — faixa com a logo do SULTS, foto centrada,
+   nome e cargo embaixo — e o miolo sai de cena. Sao as regras do cartao
+   completo desfeitas uma a uma; o elemento no markup continua sendo o mesmo,
+   nao ha um segundo cartao escondido. A fileira de Shorts, essa sim, muda de
+   lugar de verdade, e quem faz isso e o 13-extras.js. */
+body.home-enquetes .profile-card{display:block;text-align:center;padding-bottom:24px}
+body.home-enquetes .pc-extra{display:none}
+/* a faixa larga da capa da lugar a do desenho antigo: azul, 120px e a logo */
+body.home-enquetes .profile-card .profile-banner{
+  background:var(--navy);aspect-ratio:auto;height:120px;padding-bottom:39px}
+body.home-enquetes .profile-card .profile-banner svg.profile-logo{display:block}
+/* o wrapper da foto volta a nao criar caixa: com ele em width:max-content o
+   margin:auto do avatar nao tinha folga para distribuir e a foto ficava presa
+   a esquerda. Sem caixa, quem centra e o proprio cartao. */
+body.home-enquetes .pc-avwrap{display:contents}
+/* cartao simples nao tem o botao de trocar foto */
+body.home-enquetes .pc-avedit{display:none}
+body.home-enquetes .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
+body.home-enquetes .profile-card .profile-name,
+body.home-enquetes .profile-card .profile-role{
+  grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
+/* a altura passa a ser a do conteudo: sem seguir o painel de modulos */
+body.home-enquetes .profile-card{min-height:0 !important}
+/* Na coluna da direita quem da a folga entre o cartao e os Shorts e o gap de
+   24px da propria coluna. O padding de 24 do titulo de secao somava por cima e
+   o intervalo visivel ia a 48 — aqui ele sai. */
+body.home-enquetes .col-right #homeShorts .section-title-row{padding-top:0}

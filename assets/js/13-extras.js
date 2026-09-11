@@ -754,6 +754,31 @@ function rvShareCopiar(){
     capa: { classe:'capa', titulo:'Foto de capa',   prop:3,    saida:[1200, 400] }
   };
   let tipo = 'foto', img = null, escala = 1, base = 1, x = 0, y = 0, janela = null;
+  /* PNG sem fundo: guardamos se a imagem tem pixel transparente para pintar
+     o vazio com a cor da marca, no lugar do preto que o JPEG produz. */
+  let temAlfa = false;
+
+  function corDaMarca(){
+    const cs = getComputedStyle(document.body);
+    return cs.getPropertyValue('--marca').trim()
+        || cs.getPropertyValue('--teal').trim()
+        || '#00acac';
+  }
+  /* uma amostra de 64x64 basta: se algum pixel nao for opaco, a imagem tem
+     fundo transparente. O try existe porque um arquivo de outra origem
+     contamina o canvas e o getImageData passa a lancar; nesse caso seguimos
+     tratando como opaca, que e o comportamento de antes. */
+  function temFundoTransparente(im){
+    try {
+      const n = 64, c = document.createElement('canvas');
+      c.width = n; c.height = n;
+      const g = c.getContext('2d');
+      g.drawImage(im, 0, 0, n, n);
+      const d = g.getImageData(0, 0, n, n).data;
+      for (let i = 3; i < d.length; i += 4) if (d[i] < 250) return true;
+      return false;
+    } catch (e) { return false; }
+  }
 
   function medeJanela(){
     const j = palco.querySelector('.ppav-janela');
@@ -791,6 +816,8 @@ function rvShareCopiar(){
         el.style.width = (el.naturalWidth * base) + 'px';
         el.style.height = (el.naturalHeight * base) + 'px';
         escala = 1; x = 0; y = 0; zoom.value = 100;
+        temAlfa = temFundoTransparente(el);
+        palco.classList.toggle('sem-fundo', temAlfa);
         aplica();
       })();
     };
@@ -804,6 +831,8 @@ function rvShareCopiar(){
   function vazio(){
     palco.innerHTML = '<span class="ppav-empty"><i class="fa-solid fa-image"></i> Nenhuma imagem selecionada</span>';
     palco.classList.remove('tem-imagem');
+    palco.classList.remove('sem-fundo');
+    temAlfa = false;
     zoomBx.hidden = true;
     img = null;
   }
@@ -832,6 +861,9 @@ function rvShareCopiar(){
     const c = document.createElement('canvas');
     c.width = lw; c.height = lh;
     const ctx = c.getContext('2d');
+    /* o vazio de um PNG sem fundo sai na cor da marca; sem isto o JPEG,
+       que nao tem canal alfa, entregaria preto */
+    if (temAlfa){ ctx.fillStyle = corDaMarca(); ctx.fillRect(0, 0, lw, lh); }
     const fator = lw / janela.w;                    /* da tela para o arquivo */
     const dw = img.naturalWidth * base * escala * fator;
     const dh = img.naturalHeight * base * escala * fator;
@@ -846,12 +878,34 @@ function rvShareCopiar(){
       const v = getComputedStyle(document.body).getPropertyValue('--capa-src').trim();
       if (v && v !== 'none'){ const m = v.match(/url\(["']?(.*?)["']?\)/); if (m) return m[1]; }
       const c = (typeof customCliente === 'function') ? customCliente() : null;
-      return c ? c.capa : '';
+      if (c && c.capa) return c.capa;
+      /* Fora dos cenarios a capa nao vem da variavel do corpo: ela esta na folha,
+         como valor padrao da faixa. Entao vale ler do proprio elemento — o mesmo
+         que ja se faz com a foto. Vence o primeiro que de fato tem imagem: a
+         faixa do cartao da home ou a capa da tela de perfil. */
+      const faixas = [document.querySelector('.profile-card .profile-banner'), document.querySelector('.pp-cover')];
+      for (let k = 0; k < faixas.length; k++){
+        if (!faixas[k]) continue;
+        const mm = getComputedStyle(faixas[k]).backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+        if (mm) return mm[1];
+      }
+      return '';
     }
-    const av = document.getElementById('ppAvatar') || document.querySelector('.profile-card .avatar.lg');
-    if (!av) return '';
-    const m = getComputedStyle(av).backgroundImage.match(/url\(["']?(.*?)["']?\)/);
-    return m ? m[1] : '';
+    /* O #ppAvatar existe no documento mesmo com a tela de perfil fechada, e
+       ali ele esta sem retrato — so o gradiente padrao. Com um '||' ele ganhava
+       sempre, e abrir o reposicionador pelo cartao da home caia no estado
+       'nenhuma imagem' mesmo havendo foto. Agora os dois sao candidatos, na
+       mesma ordem de preferencia, e vale o primeiro que de fato tem imagem;
+       ao salvar os dois ficam em sincronia, entao quando ambos tem retrato e
+       o mesmo. */
+    const candidatos = [document.getElementById('ppAvatar'), document.querySelector('.profile-card .avatar.lg')];
+    for (let k = 0; k < candidatos.length; k++){
+      const av = candidatos[k];
+      if (!av) continue;
+      const m = getComputedStyle(av).backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+      if (m) return m[1];
+    }
+    return '';
   }
   window.ppAvAbrir = function(qual){
     tipo = TIPOS[qual] ? qual : 'foto';
@@ -918,5 +972,46 @@ function rvShareCopiar(){
       if (typeof fgToast === 'function') fgToast('Capa atualizada');
     }
     modal.classList.remove('open');
+  });
+})();
+
+/* ---- Enquetes: a mesma home, com o cartao de perfil simples ----
+   Uma variante para comparar os dois formatos sem duplicar o markup da home:
+   duplicar significaria manter duas copias de ~400 linhas que divergiriam na
+   primeira mudanca. Aqui o que muda e uma classe no body (o cartao volta ao
+   formato antigo, de foto centrada) e um unico no que troca de lugar de
+   verdade: a fileira de Shorts sai da coluna do meio e vai para baixo do
+   cartao, na coluna da direita. Sair do item desfaz as duas coisas. */
+(function(){
+  const item = document.getElementById('navEnquetes');
+  const shorts = document.getElementById('homeShorts');
+  const colDir = document.querySelector('.col-right');
+  const colMain = document.querySelector('.col-main');
+  const card = document.getElementById('homeProfileCard');
+  if (!item || !shorts || !colDir || !colMain || !card) return;
+  /* de onde o Shorts saiu, para devolver no mesmo lugar */
+  let vizinho = null;
+  function entrar(){
+    if (document.body.classList.contains('home-enquetes')) return;
+    vizinho = shorts.nextElementSibling;
+    colDir.insertBefore(shorts, card.nextElementSibling);
+    document.body.classList.add('home-enquetes');
+    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+  }
+  function sair(){
+    if (!document.body.classList.contains('home-enquetes')) return;
+    colMain.insertBefore(shorts, vizinho);
+    document.body.classList.remove('home-enquetes');
+    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+  }
+  item.addEventListener('click', function(e){
+    e.preventDefault();
+    if (typeof setNav === 'function') setNav(item);
+    entrar();
+  });
+  /* qualquer outro item do menu volta para a home normal */
+  document.querySelectorAll('.hm-side .hm-navitem').forEach(function(n){
+    if (n === item) return;
+    n.addEventListener('click', sair);
   });
 })();

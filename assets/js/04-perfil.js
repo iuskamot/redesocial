@@ -427,6 +427,9 @@ const SHORT_SUGESTOES = [
   { ic:'fa-trophy',   txt:'Clique para compartilhar conquistas' },
   { ic:'fa-box-open', txt:'Clique para anunciar um lançamento' },
   { ic:'fa-star',     txt:'Clique para compartilhar um momento' },
+  /* uma sugestao a mais: com o "Criar short" na frente, sao seis cartoes,
+     que o space-between do .shorts espalha ate a borda sem rolagem */
+  { ic:'fa-lightbulb',    txt:'Clique para mostrar uma novidade' },
 ];
 function renderShortsInto(row){
   row.innerHTML = '';

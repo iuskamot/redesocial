@@ -4,25 +4,34 @@
    curte e comenta, mas não cria publicação nem short — e não tem Gerenciar. */
 .av-crunch{background:#fff url("../../uploads/crunch/icone.png") center/72% no-repeat border-box;
   color:transparent;text-shadow:none;box-shadow:inset 0 0 0 1px var(--line)}
-/* a arte oficial tem fundo transparente: o cinza claro fica por baixo */
-/* zoom leve para o rosto encher o circulo; some so a ponta das orelhas e os pes */
-body.demo-crunch .av-rc{background:#e9eaed url("../../uploads/crunch/p-pikachu.webp") center 32%/135% auto no-repeat border-box}
-body.demo-crunch .profile-banner,
+/* A arte oficial do Pikachu tem fundo transparente, entao o que aparece por
+   baixo dela e a cor da marca — nao mais o cinza claro, que fazia o retrato
+   parecer recortado sobre um vazio.
+   Zoom leve para o rosto encher o circulo; some so a ponta das orelhas e os pes. */
+body.demo-crunch .av-rc{background:var(--marca) url("../../uploads/crunch/p-pikachu.webp") center 32%/135% auto no-repeat border-box}
+/* so o bloco de perfil dos modulos segue no laranja liso; a faixa do cartao
+   da home virou a capa da empresa e nao pode levar este background por cima */
 body.demo-crunch .nvf-pcover{background:#F47521}
-body.demo-crunch:not(.demo-custom) .profile-banner .profile-logo--crunch,
 body.demo-crunch:not(.demo-custom) .nvf-pcover .profile-logo--crunch{filter:brightness(0) invert(1)}
-/* com dois seletores para ganhar do .profile-banner .profile-logo{display:block} da base */
+/* Nenhuma logo sobre a faixa do cartao da home: ela virou a capa da empresa, e
+   a marca passou a viver no bloco proprio, dentro do cartao. Antes esta regra
+   punha a logo do cliente por cima da capa — o que sobrava na home
+   personalizavel como uma marca solta em cima da foto. */
 .profile-banner .profile-logo--crunch{display:none}
 body.demo-crunch .profile-banner svg{display:none}
-body.demo-crunch .profile-banner .profile-logo--crunch{display:block}
 /* sem permissão de criar: somem o compositor, o "Criar short" e o Gerenciar.
    Quando o Pikachu vira administrador (clique no nome dele no header), tudo volta. */
 body.demo-crunch:not(.crunch-admin) .nvf-composer,
 body.demo-crunch:not(.crunch-admin) .reel-create,
+body.demo-crunch:not(.crunch-admin) .reel-sugestao,
 body.demo-crunch:not(.crunch-admin) #sbNew,
 body.demo-crunch:not(.crunch-admin) #nmodEnvSwitch,
 body.demo-crunch:not(.crunch-admin) #nvManageBtn{display:none !important}
 /* os posts do SULTS ficam no lugar, só escondidos, para voltarem intactos */
+/* As sugestoes sairam junto porque sao todas convites para gravar um short.
+   E sem short publicado nenhum, sobrando so o titulo, a secao inteira sai: um
+   cabecalho sobre uma fileira vazia nao diz nada a quem nem pode criar. */
+body.demo-crunch:not(.crunch-admin) #homeShorts:not(:has(.shorts > .reel:not(.reel-create):not(.reel-sugestao))){display:none}
 body.demo-crunch .col-main > .feed > .post[data-sults]{display:none}
 /* short vindo do YouTube: o embed ocupa o card inteiro */
 .rv-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
@@ -32,7 +41,10 @@ body.demo-crunch .col-main > .feed > .post[data-sults]{display:none}
 .rv-reel.embed-ok .rv-capa{opacity:0;pointer-events:none}
 
 /* comunicados: só a lista corrida, sem o bloco em destaque */
-body.demo-crunch #homeComPanel .com-featured{display:none}
+/* o destaque e um comunicado do SULTS: sai em qualquer cenario de cliente,
+   senao ele fica no alto de uma lista que ja e toda da marca */
+body.demo-crunch #homeComPanel .com-featured,
+body.demo-marca #homeComPanel .com-featured{display:none}
 
 /* Avatares dos personagens. As artes de corpo inteiro (Fandom) precisam de
    zoom na cabeça: tamanho maior que a caixa e ancoradas no topo; as de rosto
@@ -49,12 +61,122 @@ body.demo-crunch #homeComPanel .com-featured{display:none}
 .av-cr-frieren{background-image:url("../../uploads/crunch/p-frieren.webp");background-size:170% auto;background-position:center top}
 .av-cr-gojo   {background-image:url("../../uploads/crunch/p-gojo.webp");background-size:200% auto;background-position:center top}
 
-/* A capa do "Ver meu perfil" segue a marca do cenário: laranja cheio e a logo
-   em branco. Só fora da home customizável, que ali a capa é a foto. */
-body.demo-crunch:not(.demo-custom) .pp-cover{background:#F47521}
-body.demo-crunch:not(.demo-custom) .pp-cover-pat{display:none}
-body.demo-crunch:not(.demo-custom) .pp-cover::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:url("../../uploads/crunch/logo.webp") center / auto 30% no-repeat;
-  filter:brightness(0) invert(1);
+/* A capa do "Ver meu perfil" e a mesma da home personalizavel: a foto da
+   empresa, desenhada pela regra compartilhada do 14-custom.css. O que sobra
+   aqui e so o que este cenario tira de cima dela. */
+body:not(.demo-custom) .pp-cover-pat{display:none}
+/* A logo saiu do fundo da capa: com a capa virando a foto da empresa, a marca
+   por cima competia com a imagem. Ela continua no cabecalho e no cartao. */
+
+/* ---- O cartao do perfil ganha o miolo da home personalizavel ----
+   A grade e a tipografia vem do 14-custom.css, cujos seletores do cartao
+   passaram a valer tambem para .demo-crunch. Aqui ficam so as duas diferencas
+   deste cenario: sai a quantidade de unidades, que e informacao de franqueado
+   e nao cabe em quem apenas trabalha na rede; e, no lugar do bloco de dias
+   seguidos, entra a marca do cliente em cheio — fundo na cor dela e a logo
+   grande no meio. */
+/* Os tokens de marca que o cartao usa, com as mesmas formulas do
+   14-custom.css e o mesmo #F47521 que o cliente Crunchyroll ja usa la. So
+   estes tres: o bloco de la termina em --sidebar, e trazer o bloco inteiro
+   pintaria o menu e o cabecalho deste cenario de laranja escuro. */
+body.demo-crunch{
+  --marca:#F47521;
+  --marca-forte:color-mix(in srgb, #000 12%, var(--marca));
+  --marca-escura-base:color-mix(in srgb, #000 80%, var(--marca));
+  --marca-escura:var(--marca-escura-base);
+  --marca-escura:oklch(from var(--marca-escura-base) max(l, 0.26) c h);
 }
+/* o bloco da marca so aparece neste cenario: fora dele o .pc-extra da home
+   personalizavel mostraria ele junto com o streak */
+.pc-marca{display:none}
+body:not(.demo-custom) .pc-ctx-linha .pc-ctx-item:has([data-pc="unidades"]){display:none}
+body:not(.demo-custom) .pc-streak{display:none}
+/* Sem margem: quem da a altura e o flex:1, e o bloco encosta nos vizinhos.
+   O padding de 20px e igual nos quatro lados de proposito — com padding so no
+   topo, o centro da caixa de conteudo nao e o centro do bloco e a logo descia.
+   Simetrico, o align-items:center deixa ela sempre no meio. */
+body:not(.demo-custom) .pc-marca{display:flex;align-items:center;justify-content:center;
+  margin:0;padding:20px;border-radius:8px;background:var(--marca, var(--teal));position:relative}
+/* a logo do arquivo e preta: o mesmo brightness(0) invert(1) da faixa deixa
+   ela branca sobre o laranja */
+/* A logo cresce ate onde o padding deixa: 16px nas laterais e no topo. O
+   max-height segura ela dentro do bloco quando a largura daria uma altura
+   maior do que a sobra, em vez de deixar vazar. */
+/* A logo se ajusta ao bloco, nunca o contrario. Ela fica fora do fluxo de
+   proposito: enquanto participava dele era a altura dela que mandava, e uma
+   logo mais quadrada (Fini, Marvel) empurrava o cartao para fora da altura do
+   painel de modulos — a Fini estourava 75px. Nem max-height:100% nem
+   height:100% resolviam, porque a altura do pai vinha do proprio conteudo e a
+   porcentagem nao tinha contra o que medir. Absoluta, ela para de contar para
+   a altura: o bloco fica com a medida do flex:1 e o object-fit encolhe a arte
+   dentro dos 20px de padding. */
+body:not(.demo-custom) .pc-marca img{position:absolute;top:20px;right:20px;bottom:20px;left:20px;
+  width:calc(100% - 40px);height:calc(100% - 40px);object-fit:contain;
+  filter:brightness(0) invert(1)}
+/* cada cenario mostra a sua logo: a do cliente no Crunchyroll, a do SULTS no
+   resto. As duas ficam no markup e o CSS escolhe qual aparece. */
+/* logos com cor propria (Fini, Petlove, Marvel) nao levam o filtro que
+   embranquece as demais — o mesmo criterio do resto do projeto */
+body[data-logo-cor] .pc-marca img{filter:none}
+
+/* A logo sai da faixa: agora ela vive grande no bloco da marca, logo abaixo.
+   A capa em si (imagem, recorte 3:1, botao de trocar) vem da mesma regra que
+   desenha a home personalizavel, no 14-custom.css — e o mesmo componente. */
+body.demo-crunch:not(.demo-custom) .profile-banner .profile-logo--crunch{display:none}
+
+/* O bloco da marca ocupa a sobra do cartao (flex:1) e centra a logo dentro:
+   assim o espaco em cima e embaixo dela e o mesmo, em qualquer altura que o
+   cartao acabe tendo. */
+/* o bloco absorve a sobra do cartao: e ele que faz o cartao fechar exatamente
+   na altura do painel de modulos, e a logo se ajusta dentro pelo max-height */
+body:not(.demo-custom) .pc-marca{flex:1;min-height:96px}
+body:not(.demo-custom) .pc-ctx{margin-top:0}
+
+/* "Ver meu perfil" na mesma linha do "Ver todos" dos Comunicados: verdigris
+   escuro e 14px. Fora daqui ele segue a cor da marca do cliente. */
+body:not(.demo-custom) .pc-link{color:#0c7d7d;font-size:14px}
+body:not(.demo-custom) .pc-link:hover{color:#0c7d7d}
+
+/* ---- Cabecalho do perfil: dois blocos em cima, a linha cheia embaixo ----
+   Bloco 1: a foto com o nome, o cargo e a cidade. Bloco 2: a logo do cliente,
+   ocupando o vazio que sobrava a direita. Os numeros e os botoes descem para
+   uma linha propria, das duas colunas, como eram antes.
+   O .pp-heroend saiu de dentro do .pp-hero-main no markup para poder ocupar
+   essa linha inteira; fora deste cenario os dois seguem empilhados igual. */
+.pp-marca{display:none}
+body:not(.demo-custom) .pp-hero-in{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"foto marca" "main marca" "fim fim";
+  align-items:start;column-gap:28px}
+body:not(.demo-custom) .pp-avwrap{grid-area:foto}
+body:not(.demo-custom) .pp-hero-main{grid-area:main}
+body:not(.demo-custom) .pp-heroend{grid-area:fim}
+body:not(.demo-custom) .pp-marca{grid-area:marca;align-self:center;
+  display:flex;align-items:center;justify-content:flex-end}
+/* Logo sem fundo, na cor da marca: a arte entra como mascara e quem pinta e o
+   background-color. E o mesmo recurso dos icones do menu lateral — com filtro
+   nao daria, porque a arte e preta e filtro nao vira laranja. */
+body:not(.demo-custom) .pp-marca-ic{display:block;width:300px;height:78px;
+  background-color:var(--marca, var(--teal));
+  -webkit-mask:var(--marca-logo, url("../../uploads/pacote_logotipos_sults/svg/sults-logo-horizontal-branco.svg")) center/contain no-repeat;
+  mask:var(--marca-logo, url("../../uploads/pacote_logotipos_sults/svg/sults-logo-horizontal-branco.svg")) center/contain no-repeat}
+/* estreitou: uma coluna so, com a logo abaixo do nome */
+@media(max-width:900px){
+  body:not(.demo-custom) .pp-hero-in{
+    grid-template-columns:minmax(0,1fr);grid-template-areas:"foto" "main" "marca" "fim"}
+  body.demo-crunch:not(.demo-custom) .pp-marca{justify-content:flex-start;margin-top:14px}
+  body.demo-crunch:not(.demo-custom) .pp-marca-ic{width:220px;height:58px}
+}
+
+/* o wrapper da foto e item do grid e sem isso esticava pela coluna inteira,
+   levando o botao de camera junto para longe do avatar */
+body:not(.demo-custom) .pp-avwrap{justify-self:start;width:max-content}
+
+/* ---- Trocar capa e trocar foto ficam em verdigris neste cenario ----
+   O componente veio da home personalizavel, onde esses botoes acendem na cor
+   do cliente. Aqui a cor da marca ja esta na capa, no bloco do perfil e no
+   fundo da foto; os controles voltam ao verdigris do produto para nao somar
+   mais laranja em cima de laranja. */
+body:not(.demo-custom) .pc-avedit{background:var(--teal)}
+body:not(.demo-custom) .pc-avedit:hover{background:var(--teal-dark)}
+body:not(.demo-custom) .capa-trocar:hover{border-color:var(--teal);color:var(--teal)}

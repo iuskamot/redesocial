@@ -902,7 +902,11 @@
 .nv-advover .cr-advbody{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 20px}
 .nv-advover .nv-def-wrap{max-width:none;margin:0}
 .nvf-body{flex:1;overflow-y:auto;scrollbar-gutter:stable both-edges;padding:20px 40px}
-.nvf-wrap .section-title-row{margin:0}
+/* O titulo de secao generico ganhou 24px de padding em cima para dar o ritmo
+   da home. Aqui dentro de Publicacoes ele nao vale: o unico .section-title-row
+   do .nvf-wrap e o dos Shorts, e ele ja tem o cabecalho da tela logo acima.
+   Zerado so aqui, entao nenhum outro componente que usa a classe sente. */
+.nvf-wrap .section-title-row{margin:0;padding-top:0}
 /* shorts -> comecar publicacao: 20px; dali para as publicacoes: 8px, o
    mesmo valor que separa uma publicacao da outra */
 .nvf-wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:0}

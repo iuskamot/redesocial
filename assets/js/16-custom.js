@@ -50,6 +50,12 @@ function customAplicaCliente(c){
   if (c.logoCor) document.body.dataset.logoCor = ''; else delete document.body.dataset.logoCor;
   if (c.logoFundoPreto) document.body.dataset.logoFundoPreto = ''; else delete document.body.dataset.logoFundoPreto;
   document.querySelectorAll('.hm-logo-cliente, .top-logo-cliente img').forEach(function(img){ img.src = c.logo; img.alt = c.nome; });
+  /* a logo dentro do cartao de perfil segue o cliente da vez */
+  var pcLogo = document.getElementById("pcMarcaLogo");
+  if (pcLogo){ pcLogo.src = c.logo; pcLogo.alt = c.nome; }
+  /* a mesma logo pinta o bloco da direita no "Ver meu perfil", que a usa como
+     mascara para sair na cor da marca */
+  document.body.style.setProperty("--marca-logo", 'url("' + customEndereco(c.logo) + '")');
   /* a capa fica no body: o cartao da home, o bloco de perfil dos modulos e a
      tela "Ver meu perfil" leem a mesma variavel */
   document.body.style.setProperty('--capa-src', 'url("' + customEndereco(c.capa) + '")');
@@ -71,6 +77,9 @@ function customAplicaCliente(c){
   });
 }
 function customLimpaCliente(){
+  var pcLogo = document.getElementById("pcMarcaLogo");
+  if (pcLogo){ pcLogo.src = 'uploads/pacote_logotipos_sults/svg/sults-logo-horizontal-branco.svg'; pcLogo.alt = 'SULTS'; }
+  document.body.style.removeProperty("--marca-logo");
   document.body.style.removeProperty('--marca');
   delete document.body.dataset.cliente;
   delete document.body.dataset.logoCor;
@@ -119,6 +128,47 @@ function customDesligar(){
   if (typeof fgToast === 'function') fgToast('Home customizável desligada');
 }
 
+/* ---- Os mesmos clientes, mas na home normal ----
+   O icone da Play Store roda a lista inteira sem ligar a versao customizavel:
+   troca a marca, a capa, a logo do cartao, a pessoa e o conteudo, e a home
+   segue sendo a do SULTS — menu claro, cabecalho claro. A Crunchyroll e a
+   primeira e traz junto o cenario do Pikachu, que e a base dela; as demais
+   rodam sobre a home do SULTS, que ja e a base declarada na ficha.
+   Quem aplica o cliente e o mesmo customAplicaCliente da versao customizavel:
+   a unica coisa que ela faz a mais e acrescentar a classe demo-custom. */
+let marcaSoltaAtual = null;
+function marcaSoltaLigar(id){
+  const c = CUSTOM_CLIENTES.find(x => x.id === id) || CUSTOM_CLIENTES[0];
+  customSemAvisos(function(){
+    const noCrunch = document.body.classList.contains('demo-crunch');
+    if (c.base === 'crunch' && !noCrunch && typeof crunchLigar === 'function') crunchLigar();
+    if (c.base === 'sults' && noCrunch && typeof crunchDesligar === 'function') crunchDesligar();
+  });
+  marcaSoltaAtual = c.id;
+  customClienteAtual = c.id;   /* para customCliente() achar a ficha */
+  customAplicaCliente(c);
+  if (typeof window.pcPreenche === 'function') window.pcPreenche();
+  if (typeof fgToast === 'function') fgToast('Cenário: ' + c.nome);
+}
+function marcaSoltaDesligar(){
+  marcaSoltaAtual = null;
+  customClienteAtual = null;
+  customLimpaCliente();
+  customSemAvisos(function(){
+    if (document.body.classList.contains('demo-crunch') && typeof crunchDesligar === 'function') crunchDesligar();
+  });
+  if (typeof window.pcPreenche === 'function') window.pcPreenche();
+  if (typeof fgToast === 'function') fgToast('Cenário: de volta ao SULTS');
+}
+function marcaSoltaAlternar(){
+  /* vindo da versao customizavel, sai dela e recomeca a volta */
+  if (customLigado()){ customDesligar(); marcaSoltaAtual = null; }
+  if (!marcaSoltaAtual){ marcaSoltaLigar(CUSTOM_CLIENTES[0].id); return; }
+  const i = CUSTOM_CLIENTES.findIndex(c => c.id === marcaSoltaAtual);
+  if (i < 0 || i === CUSTOM_CLIENTES.length - 1) marcaSoltaDesligar();
+  else marcaSoltaLigar(CUSTOM_CLIENTES[i + 1].id);
+}
+
 /* o icone roda: desligado -> 1o cliente -> 2o cliente -> ... -> desligado */
 function customAlternar(){
   if (!customLigado()){ customLigar(CUSTOM_CLIENTES[0].id); return; }
@@ -142,7 +192,10 @@ function customAlternar(){
   /* os pedacos que so existem nesta versao ficam com [hidden] fora dela; o
      CSS de body.demo-custom os mostra, e o hidden e retirado ao ligar para o
      display do CSS valer */
-  const soDaVersao = ['.top-logo-cliente', '.hm-logo-cliente', '.hm-sults-mark', '#capaTrocar', '#ppCapaTrocar', '.pc-extra'];
+  /* o miolo do cartao e os botoes de capa deixaram de ser exclusivos desta
+     versao: agora valem em toda home, entao saem desta lista. Sobra o que e
+     mesmo so daqui, a logo do cliente. */
+  const soDaVersao = ['.top-logo-cliente', '.hm-logo-cliente', '.hm-sults-mark'];
 
   /* Os numeros e o contexto da pessoa. Sao dados de demonstracao, como as
      curtidas e os comentarios do resto do prototipo. */
@@ -183,6 +236,9 @@ function customAlternar(){
       }).join('');
     });
   }
+  /* o cenario Crunchyroll usa o mesmo miolo de cartao e precisa preencher os
+     mesmos campos, com a pessoa de la (o Pikachu). Ver 14-crunch.js. */
+  window.pcPreenche = pcPreenche;
   /* a mesma altura do painel de modulos, a esquerda: o cartao cresce ate la e
      a linha de atalhos vai para o pe */
   /* O cartao acompanha a altura do painel de modulos, mas so com a grade
@@ -194,13 +250,25 @@ function customAlternar(){
     const b = document.getElementById('appsToggle');
     return !!(b && b.classList.contains('open'));
   }
+  /* A altura do cartao acompanha a do painel de modulos ao lado, para os dois
+     terminarem na mesma linha mesmo quando o nome da pessoa quebra em duas.
+     Com a grade aberta ela nao acompanha: o painel triplica de altura e o
+     cartao ficaria esticado, com um vazio enorme entre os blocos. Vale entao a
+     ultima medida tirada com a grade fechada. */
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
-    if (!customLigado() || window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
+    /* na variante de Enquetes o cartao tem a altura do proprio conteudo */
+    if (document.body.classList.contains("home-enquetes")){ card.style.minHeight = ""; return; }
+    /* no celular as colunas empilham e nao ha o que acompanhar */
+    if (window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
     if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
     if (pcAlturaFixa) card.style.minHeight = pcAlturaFixa + 'px';
   }
+  window.pcSincronizaAltura = pcSincronizaAltura;
+  /* fora de qualquer cenario o cartao tambem mostra o miolo, entao os campos
+     precisam nascer preenchidos com a pessoa da vez */
+  pcPreenche();
   window.addEventListener('resize', pcSincronizaAltura);
   /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
      a grade fechada, a medida nova vale */
@@ -263,7 +331,7 @@ function customAlternar(){
     const card = e.target.closest('#homeProfileCard'); if (!card) return;
     if (pcAbrindoPerfil) return;
     const b = e.target.closest('.pc-extra [data-pcgo]');
-    if (e.target.closest('#capaTrocar, #capaFile')) return;   /* o Trocar capa cuida de si */
+    if (e.target.closest('#capaTrocar, #capaFile, #pcAvEdit')) return;   /* Trocar capa e trocar foto cuidam de si */
     if (!b){ e.stopPropagation(); e.preventDefault(); return; }
     e.preventDefault(); e.stopPropagation();
     const go = b.dataset.pcgo;
@@ -273,6 +341,15 @@ function customAlternar(){
     abrirModuloSocial('feed');
     if (go === 'atividade' && typeof nvFeedMine !== 'undefined'){ nvFeedMine = 'curti'; if (typeof renderNewsFeed === 'function') renderNewsFeed(); }
   }, true);
+
+  /* Trocar foto: o botao do cartao abre o mesmo modal de recorte do perfil,
+     igual ao #ppAvEdit de la. O stopPropagation e porque o cartao inteiro
+     abre o perfil no clique. */
+  const btFoto = document.getElementById("pcAvEdit");
+  if (btFoto) btFoto.addEventListener("click", function(e){
+    e.preventDefault(); e.stopPropagation();
+    if (typeof ppAvAbrir === "function") ppAvAbrir("foto");
+  });
 
   /* Trocar capa: a imagem escolhida vira o fundo da faixa do cartao */
   const bt = document.getElementById('capaTrocar'), arq = document.getElementById('capaFile');

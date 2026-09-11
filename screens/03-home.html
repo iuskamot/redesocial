@@ -77,14 +77,14 @@
           <span class="tl"><span class="tl-full">Disco Virtual</span><span class="tl-curto">Disco</span></span>
         </a>
 
-        <a class="tile extra" style="--c1:#5cc0a0;--c2:#2aa17e" href="#">
-          <span class="tile-ic"><span class="smi smi-implantacao-de-unidades" aria-hidden="true"></span><span class="tile-badges"><span class="tbadge">19343</span></span></span>
-          <span class="tl"><span class="tl-full">Implantação de Unidades</span><span class="tl-curto">Implantações</span></span>
+        <a class="tile extra" style="--c1:#6fe08f;--c2:#2ea44f" href="#">
+          <span class="tile-ic"><span class="smi smi-nps" aria-hidden="true"></span></span>
+          <span class="tl">NPS</span>
         </a>
 
-        <a class="tile extra" style="--c1:#b18ae6;--c2:#6d47b5" href="#">
-          <span class="tile-ic"><span class="smi smi-universidade" aria-hidden="true"></span></span>
-          <span class="tl"><span class="tl-full">Universidade Corporativa</span><span class="tl-curto">Universidade</span></span>
+        <a class="tile extra" style="--c1:#a1887f;--c2:#5d4037" href="#">
+          <span class="tile-ic"><span class="smi smi-termos-lgpd" aria-hidden="true"></span></span>
+          <span class="tl"><span class="tl-full">Termos LGPD</span><span class="tl-curto">LGPD</span></span>
         </a>
 
         <a class="tile" style="--c1:#a9d97a;--c2:#6ba838;display:none" href="#" id="tileNews" hidden>
@@ -127,14 +127,14 @@
           <span class="tl">Jornada</span>
         </a>
 
-        <a class="tile extra" style="--c1:#6fe08f;--c2:#2ea44f" href="#">
-          <span class="tile-ic"><span class="smi smi-nps" aria-hidden="true"></span></span>
-          <span class="tl">NPS</span>
+        <a class="tile extra" style="--c1:#5cc0a0;--c2:#2aa17e" href="#">
+          <span class="tile-ic"><span class="smi smi-implantacao-de-unidades" aria-hidden="true"></span><span class="tile-badges"><span class="tbadge">19343</span></span></span>
+          <span class="tl"><span class="tl-full">Implantação de Unidades</span><span class="tl-curto">Implantações</span></span>
         </a>
 
-        <a class="tile extra" style="--c1:#a1887f;--c2:#5d4037" href="#">
-          <span class="tile-ic"><span class="smi smi-termos-lgpd" aria-hidden="true"></span></span>
-          <span class="tl"><span class="tl-full">Termos LGPD</span><span class="tl-curto">LGPD</span></span>
+        <a class="tile extra" style="--c1:#b18ae6;--c2:#6d47b5" href="#">
+          <span class="tile-ic"><span class="smi smi-universidade" aria-hidden="true"></span></span>
+          <span class="tl"><span class="tl-full">Universidade Corporativa</span><span class="tl-curto">Universidade</span></span>
         </a>
 
         <a class="tile extra" style="--c1:#ffcf4d;--c2:#d99e00" href="#">
@@ -384,14 +384,19 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           </svg>
           <img class="profile-logo profile-logo--crunch" src="uploads/crunch/logo.webp" alt="Crunchyroll">
           <!-- so na home customizavel: a faixa vira capa e ganha o botao de trocar -->
-          <button type="button" class="capa-trocar" id="capaTrocar" hidden><i class="fa-solid fa-camera"></i> Trocar capa</button>
+          <button type="button" class="capa-trocar" id="capaTrocar"><i class="fa-solid fa-camera"></i> Trocar capa</button>
           <input type="file" id="capaFile" accept="image/*" hidden>
         </div>
-        <span class="avatar av-rc lg">RC</span>
+        <!-- so na home customizavel: a foto ganha o mesmo botao de trocar do perfil.
+             O wrapper e display:contents fora dela, entao o cartao normal nao sente. -->
+        <div class="pc-avwrap">
+          <span class="avatar av-rc lg">RC</span>
+          <button type="button" class="pc-avedit" id="pcAvEdit" title="Alterar foto do perfil"><i class="fa-solid fa-camera"></i></button>
+        </div>
         <div class="profile-name">Rodrigo Caetano</div>
         <div class="profile-role">CEO · SULTS</div>
-        <!-- so na home customizavel: contexto, numeros da pessoa e atalhos -->
-        <div class="pc-extra" hidden>
+        <!-- o miolo do cartao: contexto da pessoa, marca e atalho para o perfil -->
+        <div class="pc-extra">
           <div class="pc-ctx">
             <span class="pc-ctx-item"><i class="fa-solid fa-location-dot"></i> <span data-pc="unidade">Uberaba · MG</span></span>
             <!-- desde quando e quantas unidades, lado a lado -->
@@ -400,6 +405,9 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
               <span class="pc-ctx-item"><i class="fa-solid fa-store"></i> <span data-pc="unidades">3 unidades</span></span>
             </span>
           </div>
+          <!-- no lugar do streak, a marca em cheio: a do cliente no cenario
+               Crunchyroll, a do SULTS no resto -->
+          <div class="pc-marca"><img id="pcMarcaLogo" src="uploads/pacote_logotipos_sults/svg/sults-logo-horizontal-branco.svg" alt="SULTS"></div>
           <!-- gamificado: dias seguidos ativo na rede, como no Duolingo -->
           <div class="pc-streak">
             <span class="pc-flame"><i class="fa-solid fa-fire"></i></span>

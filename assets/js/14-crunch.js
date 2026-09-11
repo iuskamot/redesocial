@@ -317,6 +317,32 @@ function crunchRedesenha(){
   if (typeof renderNewsFeed === 'function') renderNewsFeed();
   if (typeof renderShortsB === 'function') renderShortsB();
 }
+/* O cartao de perfil ja vem completo em toda home. O que este cenario faz e
+   trocar a capa e a pessoa: a capa vem da mesma ficha do cliente Crunchyroll
+   usada pela home personalizavel, e os campos passam a ser os do Pikachu. */
+function pcExtraCrunch(ligar){
+  /* com a home personalizavel ligada quem manda e ela: nao mexer */
+  if (typeof customLigado === 'function' && customLigado()) return;
+  /* os mesmos pedacos que a home personalizavel acende (o soDaVersao dela),
+     menos os da logo do cliente, que aqui o proprio cenario ja cuida */
+  /* o miolo do cartao e os botoes de capa agora sao padrao da home; aqui so
+     resta trocar a capa e os dados pela pessoa deste cenario */
+  /* a capa vem da mesma ficha do cliente Crunchyroll na home personalizavel:
+     mesma imagem e mesmo enquadramento, para as duas nao divergirem */
+  const c = (typeof CUSTOM_CLIENTES !== 'undefined')
+    ? CUSTOM_CLIENTES.find(function(x){ return x.id === 'crunch'; }) : null;
+  if (ligar && c){
+    const src = (typeof customEndereco === 'function') ? customEndereco(c.capa) : c.capa;
+    document.body.style.setProperty('--capa-src', 'url("' + src + '")');
+    if (c.capaPos) document.body.style.setProperty('--capa-pos', c.capaPos);
+  } else {
+    document.body.style.removeProperty('--capa-src');
+    document.body.style.removeProperty('--capa-pos');
+  }
+  if (ligar && typeof window.pcPreenche === 'function') window.pcPreenche();
+  /* a altura do cartao acompanha o painel de modulos, como na personalizavel */
+  if (typeof window.pcSincronizaAltura === 'function') requestAnimationFrame(window.pcSincronizaAltura);
+}
 function crunchLigar(){
   if (document.body.classList.contains('demo-crunch')) return;
   /* os cenários não se somam */
@@ -333,6 +359,7 @@ function crunchLigar(){
   crunchTextos(true);
   crunchComunicados(true);
   crunchInjetaHome();
+  pcExtraCrunch(true);
   crunchRedesenha();
   if (typeof fgToast === 'function') fgToast('Cenário: funcionário da Crunchyroll (só consome)');
 }
@@ -379,6 +406,7 @@ function crunchDesligar(){
   crunchComunicados(false);
   document.querySelectorAll('.col-main > .feed > .post[data-crunch]').forEach(function(p){ p.remove(); });
   document.querySelectorAll('.col-main > .feed > .post[data-sults]').forEach(function(p){ p.removeAttribute('data-sults'); });
+  pcExtraCrunch(false);
   crunchRedesenha();
   if (typeof fgToast === 'function') fgToast('Cenário: de volta ao SULTS');
 }
@@ -389,10 +417,13 @@ function crunchAlternar(){
   const ic = document.querySelector('.hm-store--googleplay');
   /* vindo da home customizável, o clique sai dela e entra no cenário limpo,
      em vez de misturar os dois estados */
+  /* roda a lista de clientes na home normal: Crunchyroll, Casa do Construtor,
+     Fini... e de volta ao SULTS. Quem cuida da volta e o 16-custom.js, que e
+     onde as fichas dos clientes vivem. */
   if (ic) ic.addEventListener('click', function(e){
     e.preventDefault();
-    if (typeof customLigado === 'function' && customLigado()){ customDesligar(); crunchLigar(); return; }
-    crunchAlternar();
+    if (typeof marcaSoltaAlternar === 'function') marcaSoltaAlternar();
+    else crunchAlternar();
   });
   /* no mobile o rodapé do menu não aparece: o Comunicados da barra de baixo
      liga e desliga o cenário, e a rolagem até o painel segue acontecendo */

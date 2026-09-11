@@ -473,12 +473,13 @@
 .nf-close{width:36px;height:36px;border-radius:50%;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center}
 .nf-close:hover{background:#f0f3f6}
 .content{
-  display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;
+  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:36px;
   padding:20px 40px;align-items:start;
-  /* feed e comunicados: 1172 - 80 (padding) - 40 (gap) - 320 (direita)
-     = 732 no feed. As laterais nao batem mais com as do .topbar, que
-     tem 30px. */
-  max-width:1172px;margin:0 auto;width:100%;
+  /* Laterais de 40px, um pouco mais folgadas que os 30px do .topbar: o feed
+     comeca 10px depois do campo de busca la de cima. O maximo em 1600 e para
+     o conteudo encher a area util nas telas comuns; batendo antes, a grade
+     voltaria a centrar. A direita segue com largura fixa. */
+  max-width:1600px;margin:0 auto;width:100%;
 }
 
 
@@ -499,6 +500,9 @@
 .ppav-stage{position:relative;overflow:hidden;background:#F4F5F6;touch-action:none;user-select:none;
   transition:background 160ms cubic-bezier(.4,0,.2,1)}
 .ppav-stage.tem-imagem{background:#1c1c1e}
+/* PNG sem fundo: a previa mostra a cor da marca por tras, que e o que o
+   recorte vai gravar. Sem isto a previa dava preto e o resultado, laranja. */
+.ppav-stage.tem-imagem.sem-fundo{background:var(--marca,var(--teal))}
 .ppav-img{position:absolute;left:50%;top:50%;transform-origin:center;max-width:none;max-height:none;
   will-change:transform;pointer-events:none;-webkit-user-drag:none}
 .ppav-janela{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;

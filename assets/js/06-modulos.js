@@ -32,11 +32,15 @@ function applyFold(){
   const searching = appsGrid.classList.contains('searching');
   const expanded  = appsGrid.classList.contains('expanded');
   appTiles.forEach(t => t.classList.remove('over-fold'));
+  /* a ordem que vale e a do DOM agora, nao a da carga: depois de arrastar no
+     Organizar os nos mudam de lugar, e a lista appTiles continua na ordem
+     original. Lendo de novo aqui, a dobra passa a respeitar a ordem nova. */
+  const atuais = Array.prototype.slice.call(appsGrid.querySelectorAll('.tile'));
   /* duas linhas cheias: o nº de colunas vem do próprio grid, então o limite
      acompanha os breakpoints (7 no desktop, 5 e 4 nas telas menores) */
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
   const limit = colunas * 2;
-  const elig = appTiles.filter(t => t.style.display !== 'none');
+  const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
   if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver +'+Math.max(0, elig.length-limit)+' módulos';
   if (!searching) appsExpand.hidden = elig.length <= limit;

@@ -99,14 +99,15 @@
   /* o overflow-x obriga o eixo vertical a recortar junto. Os 12px de cima
      cobrem os ~6px que o hover levanta; embaixo sao 32px porque a sombra do
      hover (0 16px 30px -12px, ainda ampliada pelo scale) chega a ~20px, e com
-     os 20px antigos ela raspava no corte. A margem negativa devolve 12px ao
-     layout, entao a folga visivel continua a mesma de antes. */
-  padding:12px 0 32px;margin:0 0 -12px;
+     os 20px antigos ela raspava no corte. A margem negativa devolve os 32px
+     inteiros ao layout: a sombra continua com espaco para desenhar, mas quem
+     mede a folga ate o Feed passa a ser o padding do titulo dele. */
+  padding:12px 0 32px;margin:0 0 -32px;
   scroll-behavior:smooth;scrollbar-width:none;
 }
 .shorts::-webkit-scrollbar{display:none}
 .reel{
-  position:relative;z-index:0;flex-shrink:0;width:120px;height:auto;aspect-ratio:9/16;border-radius:14px;
+  position:relative;z-index:0;flex-shrink:0;width:120px;height:auto;aspect-ratio:3/5;border-radius:14px;
   overflow:hidden;text-align:left;color:#fff;background:#dfe4ea;
   box-shadow:0 8px 18px -8px rgba(16,32,48,.35);
   transition:transform .18s ease,box-shadow .18s ease;
@@ -122,6 +123,13 @@
 .reel.tem-fundo .reel-fundo{display:block}
 .reel:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 30px -12px rgba(16,32,48,.45)}
 .reel:active{transform:scale(.97);transition-duration:.08s}
+/* O cartao tem medida propria: 120 de largura por 200 de altura (3/5). Nao
+   divide a largura da fileira — ela rola, e cabem quantos couberem. */
+/* Excecao: a fileira de sugestoes, que aparece quando nao ha short nenhum.
+   Ali os seis cartoes (o Criar short mais cinco sugestoes) dividem a largura
+   mantendo os mesmos 12px de vao de quando ha conteudo — o que cresce e a
+   largura deles, nao o espaco entre eles. O 60 e a soma dos cinco vaos. */
+.shorts:has(.reel-sugestao) > .reel{width:calc((100% - 60px) / 6)}
 .reel-create{
   background:radial-gradient(120% 90% at 50% -10%, rgba(0,172,172,.18), transparent 60%), linear-gradient(180deg,#f4fbfb,#e3f4f3);
   border:1.5px dashed rgba(0,172,172,.45);
@@ -240,9 +248,15 @@ body.demo-suporte #homeComPanel .demo-filled{display:none !important}
 body.demo-suporte #homeComPanel .com-empty{display:flex !important}
 
 /* Cada cenário mostra o seu par de textos no estado vazio do feed. */
+/* O convite "Seja o primeiro a publicar" so faz sentido para quem pode
+   publicar. Sem permissao vale o outro texto, que ja estava escrito no
+   markup: alem do cenario do suporte, o funcionario da Crunchyroll — que so
+   consome e nunca vai ter o campo de publicar. */
 .de-quando-sem-permissao{display:none}
-body.demo-suporte .de-quando-vazio{display:none}
-body.demo-suporte .de-quando-sem-permissao{display:block}
+body.demo-suporte .de-quando-vazio,
+body.demo-crunch:not(.crunch-admin) .de-quando-vazio{display:none}
+body.demo-suporte .de-quando-sem-permissao,
+body.demo-crunch:not(.crunch-admin) .de-quando-sem-permissao{display:block}
 body.demo-empty .demo-filled{display:none}
 body.demo-empty .demo-empty-state{display:flex}
 /* ilustração no lugar do ícone: largura limitada e o título logo abaixo */
@@ -536,9 +550,9 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .rxv-tdate{white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ============ Coluna direita ============ */
-.col-right{display:flex;flex-direction:column;gap:20px}
+.col-right{display:flex;flex-direction:column;gap:24px}
 
-.profile-card{overflow:hidden;text-align:center;padding-bottom:20px}
+.profile-card{overflow:hidden;text-align:center;padding-bottom:24px}
 .profile-banner{
   height:120px;background:var(--navy);color:#fff;
   display:flex;align-items:center;justify-content:center;
@@ -591,6 +605,12 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .ds-cta:hover i{transform:translateX(3px)}
 /* Painel de Comunicados */
 .com-panel{overflow:hidden;padding:16px}
+/* Raio aninhado: o de dentro e o de fora menos a distancia ate ele. Aqui o
+   painel tem 14 e o destaque fica a 16px da borda — a distancia ja passou do
+   raio, entao as curvas nao se enxergam e a conta nao prende mais. Nesse caso
+   o valor e escolha: 8px, menor que os 14 de fora, para o de dentro nao
+   competir com o cartao. */
+#homeComPanel .com-featured{border-radius:8px}
 .com-head{display:flex;align-items:center;gap:10px;padding:0;margin-bottom:16px}
 .com-head h2{font-size:18px;font-weight:700;color:var(--ink)}
 .com-count{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d}
@@ -646,4 +666,12 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 }
 .com-more i{font-size:11px;transition:transform .15s}
 .com-more:hover i{transform:translateX(3px)}
+
+
+/* Shorts e Feed sao dois titulos do mesmo nivel na coluna do meio, entao
+   dividem a medida: 20px, a mesma do titulo do painel de Comunicados, e nao os
+   21px do titulo de secao generico, que
+   continua valendo nas outras telas. */
+#homeShorts .section-title,
+#homeFeedTitle .section-title{font-size:20px}
 
