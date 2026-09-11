@@ -636,9 +636,9 @@ const TEAM_UNIT_INFO = {
   'Matriz': { company:'Sua Marca Franquias LTDA', color:'#2e7ed4', ini:'MT' },
   'Pit Stop Barra': { company:'Pit Stop Barra Comércio LTDA', color:'#2aa17e', ini:'PS' }
 };
-function teamAddCountText(){
+function teamAddCountText(total){
   const n=teamAddSel.size;
-  return n===0 ? 'Nenhum selecionado' : 'Selecionados: '+n;
+  return n===0 ? 'Nenhum selecionado' : '<span>Selecionados: <b>'+n+'</b> de <b>'+total+'</b></span>';
 }
 function teamAddSortIcon(col){
   const dir=(teamAddSortCol===col)?teamAddSortDir:0;
@@ -661,7 +661,7 @@ function teamAddRender(){
     const u=TEAM_UNIT_INFO[p.unidade]||{company:'',color:'#8e8e93',ini:(p.unidade||'?').slice(0,2).toUpperCase()};
     return '<div class="tadd-row'+(teamAddSel.has(p.id)?' on':'')+'" data-teamadd="'+p.id+'"><input type="checkbox" class="tadd-chk"'+(teamAddSel.has(p.id)?' checked':'')+'><span class="tadd-person"><span class="avatar '+p.av+'"></span><span class="tadd-info"><b>'+p.name+'</b><span>#'+p.id+' - '+p.role+'</span></span></span><span class="tadd-unit"><span class="tadd-unit-badge" style="background:'+u.color+'">'+u.ini+'</span><span class="tadd-unit-info"><b>'+(p.unidade||'')+'</b><span>'+u.company+'</span></span></span></div>';
   }).join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
-  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.textContent=teamAddCountText();
+  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.innerHTML=teamAddCountText(list.length);
   const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
   const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
   const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
@@ -719,7 +719,7 @@ const PERM_HELP = {
     btn: 'Como usar?',
     art: 'uploads/tutorial/image-aprovals.svg',
     title: 'Como usar aprovações?',
-    body: 'Ative a aprovação para publicações, shorts e comentários. Assim, cada conteúdo criado fica pendente até a análise de um administrador e só é disponibilizado após sua <b>aprovação</b>. O autor é notificado sobre a decisão e, em caso de <b>reprovação</b>, também recebe o motivo.'
+    body: 'Ative a aprovação para publicações, shorts e comentários. O conteúdo fica pendente até ser <b>aprovado</b> ou <b>reprovado</b> por um administrador, ficando visível somente após a aprovação.'
   }
 };
 function permHelpFill(which){
@@ -835,7 +835,7 @@ function modCellVal(e,i){
 /* Filtro avançado da fila "Comentários pendentes" (#modFilters) — mesmo padrão de
    foBuildPubApprFilters (acima), só que aplicado a MOD_QUEUE/MOD_HIST, sem "Tipo" (comentário
    não tem) e buscando por texto do comentário ou ID em vez de título. */
-let cmQuery='', cmAuthor='', cmQueuePeriod='tudo', cmDecidedBy='', cmDecidedPeriod='tudo';
+let cmQuery='', cmAuthor='', cmQueuePeriod='tudo', cmQueuePeriodDateStart='', cmQueuePeriodDateEnd='', cmDecidedBy='', cmDecidedPeriod='tudo', cmDecidedPeriodDateStart='', cmDecidedPeriodDateEnd='';
 function cmActiveFilterCount(){
   let c=0; if(cmQuery) c++; if(cmAuthor) c++;
   if(cmQueuePeriod && cmQueuePeriod!=='tudo') c++;
@@ -844,10 +844,10 @@ function cmActiveFilterCount(){
 }
 function cmMatch(e){
   if(cmAuthor && (e.author||'')!==cmAuthor) return false;
-  if(!aprInPeriod(e.ts, cmQueuePeriod)) return false;
+  if(!aprInPeriod(e.ts, cmQueuePeriod, cmQueuePeriodDateStart, cmQueuePeriodDateEnd)) return false;
   if(modFilter!=='pend'){
     if(cmDecidedBy && (e.decidedBy||'')!==cmDecidedBy) return false;
-    if(!aprInPeriod(aprDecidedTs(e), cmDecidedPeriod)) return false;
+    if(!aprInPeriod(aprDecidedTs(e), cmDecidedPeriod, cmDecidedPeriodDateStart, cmDecidedPeriodDateEnd)) return false;
   }
   if(cmQuery && (e.text||'').toLowerCase().indexOf(cmQuery)===-1 && String(e.mid)!==cmQuery) return false;
   return true;
@@ -860,10 +860,16 @@ function foBuildModFilters(){
   let html='<div class="nv-fsec"><div class="nv-fsec-hd">Comentário <i class="fa-solid fa-chevron-up"></i></div>'+
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário ou ID</label><div class="nv-ffield"><input type="text" id="cmFTexto" placeholder="Pesquisar comentário..." value="'+(cmQuery||'')+'" autocomplete="off"></div></div>'+
     '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('cmFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
-  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===cmQueuePeriod)[0]||periodDefs[0])[1];
-  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol"'+(cmQueuePeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('cmFQueuePeriod', periodLabel, periodItems)+'</div>'+
+    (cmQueuePeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('cmFQueuePeriodDateStart', cmQueuePeriodDateStart)+'</div>'+
+      '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('cmFQueuePeriodDateEnd', cmQueuePeriodDateEnd)+'</div>'+
+    '</div>':'')+
+    '</div>';
   if(modFilter!=='pend'){
     const decLabel=modFilter==='aprovado'?'Aprovação':'Reprovação';
     const decByLabel=modFilter==='aprovado'?'Aprovado por':'Reprovado por';
@@ -874,14 +880,19 @@ function foBuildModFilters(){
     const decPeriodLabel=(periodDefs.filter(p=>p[0]===cmDecidedPeriod)[0]||periodDefs[0])[1];
     html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
       '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('cmFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
-      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+      '<div class="nv-ffcol"'+(cmDecidedPeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('cmFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div>'+
+      (cmDecidedPeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+        '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('cmFDecididoPeriodDateStart', cmDecidedPeriodDateStart)+'</div>'+
+        '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('cmFDecididoPeriodDateEnd', cmDecidedPeriodDateEnd)+'</div>'+
+      '</div>':'')+
+      '</div>';
   }
   const activeN=cmActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="cmFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="cmFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#modFilters') && $('#modFilters').addEventListener('click', function(e){
-  if(e.target.closest('#cmFClear')){ cmQuery=''; cmAuthor=''; cmQueuePeriod='tudo'; cmDecidedBy=''; cmDecidedPeriod='tudo'; renderModQueue(); return; }
+  if(e.target.closest('#cmFClear')){ cmQuery=''; cmAuthor=''; cmQueuePeriod='tudo'; cmQueuePeriodDateStart=''; cmQueuePeriodDateEnd=''; cmDecidedBy=''; cmDecidedPeriod='tudo'; cmDecidedPeriodDateStart=''; cmDecidedPeriodDateEnd=''; renderModQueue(); return; }
   if(e.target.closest('#cmFApply')){ renderModQueue(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -903,6 +914,15 @@ $('#modFilters') && $('#modFilters').addEventListener('click', function(e){
   }
 });
 $('#modFilters') && $('#modFilters').addEventListener('input', function(e){ if(e.target.id==='cmFTexto'){ cmQuery=e.target.value.trim().toLowerCase(); renderModQueue(); } });
+$('#modFilters') && $('#modFilters').addEventListener('change', function(e){
+  const t=e.target;
+  if(t.id==='cmFQueuePeriodDateStart'){ cmQueuePeriodDateStart=t.value; }
+  else if(t.id==='cmFQueuePeriodDateEnd'){ cmQueuePeriodDateEnd=t.value; }
+  else if(t.id==='cmFDecididoPeriodDateStart'){ cmDecidedPeriodDateStart=t.value; }
+  else if(t.id==='cmFDecididoPeriodDateEnd'){ cmDecidedPeriodDateEnd=t.value; }
+  else return;
+  renderModQueue();
+});
 const MOD_APPR_TITLES={pend:'Comentários pendentes',aprovado:'Comentários aprovados',rejeitado:'Comentários reprovados'};
 function renderModQueue(){
   foBuildModFilters();
@@ -1049,11 +1069,16 @@ function reelApprData(){
    filas de aprovação (Publicações e Shorts), junto com o texto relativo ("há 1 h") que já
    existia. */
 function paFullDT(ts){ const d=new Date(ts||Date.now()), p=x=>('0'+x).slice(-2); return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes()); }
-/* Filtro "Entrou na fila em" (Últimas 24h/7d/30d/90d) — mesmo formato de pglInPeriod
-   (21-gerenciar-publicacoes.js), reaproveitado pelas duas filas de aprovação. */
-function aprInPeriod(ts, period){
+/* Filtro "Entrou na fila em" (Últimas 24h/7d/30d/período personalizado) — mesmo formato de
+   cmgInPeriod (22-gerenciar-comentarios.js), reaproveitado pelas duas filas de aprovação. */
+function aprInPeriod(ts, period, ds, de){
   if(!period || period==='tudo') return true;
-  const days = period==='24h'?1:period==='7d'?7:period==='30d'?30:period==='90d'?90:null;
+  if(period==='custom'){
+    if(ds && (ts||0) < new Date(ds+'T00:00:00').getTime()) return false;
+    if(de && (ts||0) > new Date(de+'T23:59:59').getTime()) return false;
+    return true;
+  }
+  const days = period==='24h'?1:period==='7d'?7:period==='30d'?30:null;
   if(days==null) return true;
   const diff=(Date.now()-(ts||0))/86400000;
   return diff>=0 && diff<=days;
@@ -1091,7 +1116,7 @@ function aprDecidedWhenCell(n){
    "Entrou na fila em". Mesmo padrão de campos de foBuildGerenciarPublicacoesFilters
    (21-gerenciar-publicacoes.js), só que aplicado a PUB_APPR/PUB_HIST em vez de NEWS, e com IDs
    próprios (paF...) para não colidir com os campos (pubF...) daquela outra tela. */
-let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo', paDecidedBy='', paDecidedPeriod='tudo';
+let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo', paQueuePeriodDateStart='', paQueuePeriodDateEnd='', paDecidedBy='', paDecidedPeriod='tudo', paDecidedPeriodDateStart='', paDecidedPeriodDateEnd='';
 function paActiveFilterCount(){
   let c=0; if(paQuery) c++; if(paType) c++; if(paAuthor) c++;
   if(paQueuePeriod && paQueuePeriod!=='tudo') c++;
@@ -1103,10 +1128,10 @@ function paMatch(n){
   if(paType==='article' && pubTipo(n).cls!=='is-art') return false;
   if(paType==='colorida' && pubTipo(n).cls!=='is-color') return false;
   if(paAuthor && (n.author||'')!==paAuthor) return false;
-  if(!aprInPeriod(n.ts, paQueuePeriod)) return false;
+  if(!aprInPeriod(n.ts, paQueuePeriod, paQueuePeriodDateStart, paQueuePeriodDateEnd)) return false;
   if(pubFilter!=='pend'){
     if(paDecidedBy && (n.decidedBy||'')!==paDecidedBy) return false;
-    if(!aprInPeriod(aprDecidedTs(n), paDecidedPeriod)) return false;
+    if(!aprInPeriod(aprDecidedTs(n), paDecidedPeriod, paDecidedPeriodDateStart, paDecidedPeriodDateEnd)) return false;
   }
   if(paQuery && (n.title||'').toLowerCase().indexOf(paQuery)===-1) return false;
   return true;
@@ -1124,10 +1149,16 @@ function foBuildPubApprFilters(){
       '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('paFTipo', typeLabel, typeItems)+'</div>'+
       '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('paFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
     '</div></div>';
-  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:paQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===paQueuePeriod)[0]||periodDefs[0])[1];
-  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol"'+(paQueuePeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('paFQueuePeriod', periodLabel, periodItems)+'</div>'+
+    (paQueuePeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('paFQueuePeriodDateStart', paQueuePeriodDateStart)+'</div>'+
+      '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('paFQueuePeriodDateEnd', paQueuePeriodDateEnd)+'</div>'+
+    '</div>':'')+
+    '</div>';
   if(pubFilter!=='pend'){
     const decLabel=pubFilter==='aprovado'?'Aprovação':'Reprovação';
     const decByLabel=pubFilter==='aprovado'?'Aprovado por':'Reprovado por';
@@ -1138,14 +1169,19 @@ function foBuildPubApprFilters(){
     const decPeriodLabel=(periodDefs.filter(p=>p[0]===paDecidedPeriod)[0]||periodDefs[0])[1];
     html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
       '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('paFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
-      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+      '<div class="nv-ffcol"'+(paDecidedPeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('paFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div>'+
+      (paDecidedPeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+        '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('paFDecididoPeriodDateStart', paDecidedPeriodDateStart)+'</div>'+
+        '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('paFDecididoPeriodDateEnd', paDecidedPeriodDateEnd)+'</div>'+
+      '</div>':'')+
+      '</div>';
   }
   const activeN=paActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="paFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="paFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; paDecidedBy=''; paDecidedPeriod='tudo'; renderPubAppr(); return; }
+  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; paQueuePeriodDateStart=''; paQueuePeriodDateEnd=''; paDecidedBy=''; paDecidedPeriod='tudo'; paDecidedPeriodDateStart=''; paDecidedPeriodDateEnd=''; renderPubAppr(); return; }
   if(e.target.closest('#paFApply')){ renderPubAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -1167,11 +1203,20 @@ $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(
   }
 });
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('input', function(e){ if(e.target.id==='paFTitulo'){ paQuery=e.target.value.trim().toLowerCase(); renderPubAppr(); } });
+$('#pubApprFilters') && $('#pubApprFilters').addEventListener('change', function(e){
+  const t=e.target;
+  if(t.id==='paFQueuePeriodDateStart'){ paQueuePeriodDateStart=t.value; }
+  else if(t.id==='paFQueuePeriodDateEnd'){ paQueuePeriodDateEnd=t.value; }
+  else if(t.id==='paFDecididoPeriodDateStart'){ paDecidedPeriodDateStart=t.value; }
+  else if(t.id==='paFDecididoPeriodDateEnd'){ paDecidedPeriodDateEnd=t.value; }
+  else return;
+  renderPubAppr();
+});
 
 /* Filtro avançado da fila "Shorts pendentes" (#reelApprFilters) — mesma ideia da de Publicações
    acima, com Tipo (Imagem/Vídeo, em vez de Postagem/Artigo/Postagem colorida) e IDs próprios
    (raF...). */
-let raQuery='', raType='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
+let raQuery='', raType='', raAuthor='', raQueuePeriod='tudo', raQueuePeriodDateStart='', raQueuePeriodDateEnd='', raDecidedBy='', raDecidedPeriod='tudo', raDecidedPeriodDateStart='', raDecidedPeriodDateEnd='';
 function raActiveFilterCount(){
   let c=0; if(raQuery) c++; if(raType) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
   if(reelFilter!=='pend'){ if(raDecidedBy) c++; if(raDecidedPeriod && raDecidedPeriod!=='tudo') c++; }
@@ -1180,10 +1225,10 @@ function raActiveFilterCount(){
 function raMatch(r){
   if(raType && rFormat(r)!==raType) return false;
   if(raAuthor && (r.author||'')!==raAuthor) return false;
-  if(!aprInPeriod(r.ts, raQueuePeriod)) return false;
+  if(!aprInPeriod(r.ts, raQueuePeriod, raQueuePeriodDateStart, raQueuePeriodDateEnd)) return false;
   if(reelFilter!=='pend'){
     if(raDecidedBy && (r.decidedBy||'')!==raDecidedBy) return false;
-    if(!aprInPeriod(aprDecidedTs(r), raDecidedPeriod)) return false;
+    if(!aprInPeriod(aprDecidedTs(r), raDecidedPeriod, raDecidedPeriodDateStart, raDecidedPeriodDateEnd)) return false;
   }
   if(raQuery && (r.title||'').toLowerCase().indexOf(raQuery)===-1) return false;
   return true;
@@ -1201,10 +1246,16 @@ function foBuildReelApprFilters(){
       '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('raFTipo', typeLabel, typeItems)+'</div>'+
       '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
     '</div></div>';
-  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===raQueuePeriod)[0]||periodDefs[0])[1];
-  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol"'+(raQueuePeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('raFQueuePeriod', periodLabel, periodItems)+'</div>'+
+    (raQueuePeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('raFQueuePeriodDateStart', raQueuePeriodDateStart)+'</div>'+
+      '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('raFQueuePeriodDateEnd', raQueuePeriodDateEnd)+'</div>'+
+    '</div>':'')+
+    '</div>';
   if(reelFilter!=='pend'){
     const decLabel=reelFilter==='aprovado'?'Aprovação':'Reprovação';
     const decByLabel=reelFilter==='aprovado'?'Aprovado por':'Reprovado por';
@@ -1215,14 +1266,19 @@ function foBuildReelApprFilters(){
     const decPeriodLabel=(periodDefs.filter(p=>p[0]===raDecidedPeriod)[0]||periodDefs[0])[1];
     html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
       '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('raFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
-      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+      '<div class="nv-ffcol"'+(raDecidedPeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('raFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div>'+
+      (raDecidedPeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+        '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('raFDecididoPeriodDateStart', raDecidedPeriodDateStart)+'</div>'+
+        '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('raFDecididoPeriodDateEnd', raDecidedPeriodDateEnd)+'</div>'+
+      '</div>':'')+
+      '</div>';
   }
   const activeN=raActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="raFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="raFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#raFClear')){ raQuery=''; raType=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
+  if(e.target.closest('#raFClear')){ raQuery=''; raType=''; raAuthor=''; raQueuePeriod='tudo'; raQueuePeriodDateStart=''; raQueuePeriodDateEnd=''; raDecidedBy=''; raDecidedPeriod='tudo'; raDecidedPeriodDateStart=''; raDecidedPeriodDateEnd=''; renderReelAppr(); return; }
   if(e.target.closest('#raFApply')){ renderReelAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -1244,6 +1300,15 @@ $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', functio
   }
 });
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('input', function(e){ if(e.target.id==='raFTitulo'){ raQuery=e.target.value.trim().toLowerCase(); renderReelAppr(); } });
+$('#reelApprFilters') && $('#reelApprFilters').addEventListener('change', function(e){
+  const t=e.target;
+  if(t.id==='raFQueuePeriodDateStart'){ raQueuePeriodDateStart=t.value; }
+  else if(t.id==='raFQueuePeriodDateEnd'){ raQueuePeriodDateEnd=t.value; }
+  else if(t.id==='raFDecididoPeriodDateStart'){ raDecidedPeriodDateStart=t.value; }
+  else if(t.id==='raFDecididoPeriodDateEnd'){ raDecidedPeriodDateEnd=t.value; }
+  else return;
+  renderReelAppr();
+});
 document.addEventListener('click', function(e){
   if(!e.target.closest('#pubApprFilters .rl-ddwrap')) $$('#pubApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
   if(!e.target.closest('#reelApprFilters .rl-ddwrap')) $$('#reelApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
@@ -1303,7 +1368,7 @@ function renderReelAppr(){
       : aprEmptyHTML('Nenhum short reprovado','Shorts reprovados vão aparecer aqui.');
     return;
   }
-  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:38px;height:60px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:38px;height:60px"><i class="fa-solid fa-clapperboard"></i></span>';
+  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:38px;height:70px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:38px;height:70px"><i class="fa-solid fa-clapperboard"></i></span>';
   const base2=r=>'<td><div class="rl-reel">'+thumb(r)+'<div><b>'+r.title+'</b><span>#'+r.rid+' • Short</span></div></div></td>'+
     '<td><span class="apr-type">'+(rFormat(r)==='imagem'?'<i class="fa-solid fa-image"></i> Imagem':'<i class="fa-solid fa-video"></i> Vídeo')+'</span></td>'+
     '<td><div class="rl-author"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="rl-emp">'+r.unit+'</span></div></div></td>';
@@ -2190,7 +2255,7 @@ function renderNewsCats(){
 }
 function nvCatSwatches(){ $('#nvCatSw').innerHTML=CAT_COLORS.map(c=>'<span class="cat-sw'+(c===nvCatColor?' sel':'')+'" data-col="'+c+'" style="background:'+c+'">'+(c===nvCatColor?'<i class="fa-solid fa-check"></i>':'')+'</span>').join(''); }
 function nvCatIcons(){ $('#nvCatIcons').innerHTML=NEWS_CAT_ICONS.map(ic=>'<span class="cat-icpick'+(ic===nvCatIcon?' sel':'')+'" data-ic="'+ic+'"><i class="fa-solid '+ic+'"></i></span>').join(''); }
-function nvCatOpenModal(id){ nvCatEditId=id||null; const c=id?NEWS_CATS.find(x=>x.id===id):null; $('#nvCatModalTitle').textContent=c?'Editar categoria':'Nova categoria'; $('#nvCatName').value=c?c.name:''; nvCatColor=c?c.color:CAT_COLORS[0]; nvCatIcon=c?(c.icon||NEWS_CAT_ICONS[0]):NEWS_CAT_ICONS[0]; nvCatSwatches(); nvCatIcons(); $('#nvCatModal').classList.add('open'); setTimeout(()=>$('#nvCatName').focus(),30); }
+function nvCatOpenModal(id){ nvCatEditId=id||null; const c=id?NEWS_CATS.find(x=>x.id===id):null; $('#nvCatModalTitle').textContent=c?'Editar categoria':'Nova categoria'; $('#nvCatName').value=c?c.name:''; nvCatColor=c?c.color:CAT_COLORS[0]; nvCatIcon=c?(c.icon||NEWS_CAT_ICONS[0]):NEWS_CAT_ICONS[0]; nvCatSwatches(); nvCatIcons(); $('#nvCatSave').innerHTML=c?'<svg viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg> Salvar':'<svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar'; $('#nvCatSave').classList.toggle('editing',!!c); $('#nvCatModal').classList.add('open'); setTimeout(()=>$('#nvCatName').focus(),30); }
 $('#nvCatAdd').addEventListener('click', ()=>nvCatOpenModal());
 let nvCatStatus='ativos';
 $('#nvCatSeg') && $('#nvCatSeg').addEventListener('change', e=>{ nvCatStatus=e.target.value; renderNewsCats(); });

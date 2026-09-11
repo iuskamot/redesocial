@@ -44,6 +44,7 @@
 /* Estado exclusivo desta tela */
 let pglQuery = '', pglStatus = '', pglType = '', pglCat = '', pglAuthor = '', pglUnit = '', pglReach = '';
 let pglPeriod = 'tudo', pglEndPeriod = 'tudo', pglEndDateStart = '', pglEndDateEnd = '';
+let pglPeriodDateStart = '', pglPeriodDateEnd = '';
 let pglColSort = { key: null, dir: 0 };
 
 function pglUnitFor(n){ return sbUnitObjFor({ unit: n.unit, name: n.autorNome || n.author }); }
@@ -67,9 +68,15 @@ function pglDateOf(n){
   const m = /^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(nvFmtDateTime(n) || '');
   return m ? new Date(2000 + +m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime() : Date.now();
 }
-function pglInPeriod(n, period){
+function pglInPeriod(n, period, ds, de){
   if (!period || period === 'tudo') return true;
-  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : period === '90d' ? 90 : null;
+  if (period === 'custom'){
+    const t = pglDateOf(n);
+    if (ds && t < new Date(ds + 'T00:00:00').getTime()) return false;
+    if (de && t > new Date(de + 'T23:59:59').getTime()) return false;
+    return true;
+  }
+  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : null;
   if (days == null) return true;
   const diff = (Date.now() - pglDateOf(n)) / 86400000;
   return diff >= 0 && diff <= days;
@@ -87,7 +94,7 @@ function matchPub(n){
   if (pglAuthor && autorNome !== pglAuthor) return false;
   if (pglUnit && (n.unit || '') !== pglUnit) return false;
   if (pglReach && (n.reach || 'rede') !== pglReach) return false;
-  if (!pglInPeriod(n, pglPeriod)) return false;
+  if (!pglInPeriod(n, pglPeriod, pglPeriodDateStart, pglPeriodDateEnd)) return false;
   if (pglEndPeriod !== 'tudo' && !rxEndInPeriod(n.encerra, pglEndPeriod, pglEndDateStart, pglEndDateEnd)) return false;
   if (pglQuery){
     const q = pglQuery.toLowerCase();
@@ -139,11 +146,15 @@ function foBuildGerenciarPublicacoesFilters(){
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicada para <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('pubFReach', reachLabel, reachItems) + '</div>' +
     '</div>';
-  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado']];
   const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: pglPeriod === p[0] }; });
   const periodLabel = (periodDefs.filter(function(p){ return p[0] === pglPeriod; })[0] || periodDefs[0])[1];
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de publicação <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Selecione um período</label>' + rxDDWrap('pubFPeriod', periodLabel, periodItems) + '</div>' +
+    '<div class="nv-ffcol"' + (pglPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione um período</label>' + rxDDWrap('pubFPeriod', periodLabel, periodItems) + '</div>' +
+    (pglPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('pubFPeriodDateStart', pglPeriodDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('pubFPeriodDateEnd', pglPeriodDateEnd) + '</div>' +
+    '</div>' : '') +
     '</div>';
   const endPeriodDefs = [['tudo', 'Qualquer período'], ['hoje', 'Hoje'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado'], ['naoencerra', 'Não se encerra']];
   const endPeriodItems = endPeriodDefs.map(function(p){ return { value: p[0], label: p[1], selected: pglEndPeriod === p[0] }; });
@@ -323,7 +334,7 @@ $('#pubFilters') && $('#pubFilters').addEventListener('click', function(e){
   if (st){ pglStatus = st.dataset.pglstatus; pglRefresh(); return; }
   if (e.target.closest('#pubFClear')){
     pglQuery = ''; pglStatus = ''; pglType = ''; pglCat = ''; pglAuthor = ''; pglUnit = ''; pglReach = '';
-    pglPeriod = 'tudo'; pglEndPeriod = 'tudo'; pglEndDateStart = ''; pglEndDateEnd = '';
+    pglPeriod = 'tudo'; pglPeriodDateStart = ''; pglPeriodDateEnd = ''; pglEndPeriod = 'tudo'; pglEndDateStart = ''; pglEndDateEnd = '';
     pglColSort.key = null; pglColSort.dir = 0;
     pglRefresh();
     return;
@@ -358,7 +369,9 @@ $('#pubFilters') && $('#pubFilters').addEventListener('input', function(e){
 });
 $('#pubFilters') && $('#pubFilters').addEventListener('change', function(e){
   const t = e.target;
-  if (t.id === 'pubFEndDateStart'){ pglEndDateStart = t.value; }
+  if (t.id === 'pubFPeriodDateStart'){ pglPeriodDateStart = t.value; }
+  else if (t.id === 'pubFPeriodDateEnd'){ pglPeriodDateEnd = t.value; }
+  else if (t.id === 'pubFEndDateStart'){ pglEndDateStart = t.value; }
   else if (t.id === 'pubFEndDateEnd'){ pglEndDateEnd = t.value; }
   else return;
   pglRefresh();

@@ -22,6 +22,9 @@
 #rxGrid .rl-tblwrap>table{ min-width:2150px }
 #rxGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rxGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C }
+/* Capa 38x70 (era 38x60 herdado de .rl-reel img/.rl-procthumb, 06-shorts.css) — só aqui,
+   pra não mexer no tamanho usado na grade/feed de Shorts. */
+#rxGrid .rl-reel img,#rxGrid .rl-procthumb{ height:70px }
 #rxGrid .rl-author .avatar{ width:32px; height:32px }
 #rxGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
 #rxGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }

@@ -7,9 +7,9 @@
    genérico de tabela (renderGridTable, 20-gerenciar-shorts.js), mesmas colunas
    ID+Reação congeladas/sticky ao rolar (freeze padrão) e mesmo padrão de sidebar.
 
-   A origem da reação (Publicações ou Shorts) é escolhida por dois cartões de
-   atalho no topo do painel — mutuamente exclusivos, sem opção "Todas" (só um
-   dado por vez, igual pedido). Reaproveita, sem duplicar:
+   A origem da reação (Todas/Publicações/Shorts) é escolhida por três cartões
+   de atalho no topo do painel — mutuamente exclusivos, "Todas" selecionada por
+   padrão (mescla os dois). Reaproveita, sem duplicar:
      - INTERACTIONS/buildInteractions/interDT/interRel (11-rede-social.js) para
        as reações de Publicações;
      - REELS_DATA/POSTS (01-home.js) + PEOPLE (03-shorts.js) + STORES
@@ -24,7 +24,7 @@
    ===================================================================== */
 
 let rcnColSort = { key: null, dir: 0 };
-let rcnSource = 'pub';
+let rcnSource = 'all';
 let rcnPeriodDateStart = '', rcnPeriodDateEnd = '';
 
 /* Reações de Shorts — mesma forma de objeto que INTERACTIONS (person/av/role/store/reacao/
@@ -50,7 +50,8 @@ function rcnShortInteractions(){
 function rcnPool(){
   if (rcnSource === 'short') return rcnShortInteractions();
   if (!INTERACTIONS.length) buildInteractions();
-  return INTERACTIONS.filter(function(x){ return x.tipo === 'reacao'; });
+  const pubs = INTERACTIONS.filter(function(x){ return x.tipo === 'reacao'; });
+  return rcnSource === 'all' ? pubs.concat(rcnShortInteractions()) : pubs;
 }
 function rcnMatch(x){
   if (interPerson && x.person !== interPerson) return false;
@@ -82,14 +83,23 @@ function foBuildGerenciarReacoesFilters(){
   const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: interPeriod === p[0] }; });
   const periodLabel = (periodDefs.filter(function(p){ return p[0] === interPeriod; })[0] || periodDefs[0])[1];
 
-  /* Cartões "Publicações"/"Shorts" — mesmo componente das outras telas (.rxs-item2 dentro de
-     .nv-sitcards.nv-sit2, ver #pubSitCards/#mgSitCards), só que 1x2 em vez de 2x2, com os
-     mesmos ícones dos itens de menu "Publicações"/"Shorts". Escolhem a origem dos dados
-     (rcnSource), mutuamente exclusivos, sem opção "Todas". */
-  const sourceDefs = [['pub', 'Publicações', 'fa-solid fa-rectangle-list'], ['short', 'Shorts', 'fa-solid fa-clapperboard']];
+  /* Cartões "Todas"/"Publicações"/"Shorts" — mesmo componente das outras telas (.rxs-item2
+     dentro de .nv-sitcards, ver #pubSitCards/#mgSitCards), 1x3 (grid base de 3 colunas, sem o
+     modificador .nv-sit2 usado pelos pares 2 a 2), com os mesmos ícones dos itens de menu
+     "Publicações"/"Shorts" e o ícone padrão do projeto pra "Todos/Todas" (fa-layer-group).
+     "Publicações" usa o par de ícones list-box preenchido/contornado (troca conforme
+     selecionado, igual ao restante do projeto). Escolhem a origem dos dados (rcnSource),
+     mutuamente exclusivos, "Todas" mescla as duas. */
+  const RCN_ICO_PUB_ON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>list-box</title><path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M7 7H9V9H7V7M7 11H9V13H7V11M7 15H9V17H7V15M17 17H11V15H17V17M17 13H11V11H17V13M17 9H11V7H17V9Z" /></svg>';
+  const RCN_ICO_PUB_OFF = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>list-box-outline</title><path d="M11 15H17V17H11V15M9 7H7V9H9V7M11 13H17V11H11V13M11 9H17V7H11V9M9 11H7V13H9V11M21 5V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5M19 5H5V19H19V5M9 15H7V17H9V15Z" /></svg>';
+  const sourceDefs = [
+    ['all', 'Todas', '<i class="fa-solid fa-layer-group"></i>'],
+    ['pub', 'Publicações', rcnSource === 'pub' ? RCN_ICO_PUB_ON : RCN_ICO_PUB_OFF],
+    ['short', 'Shorts', '<i class="fa-solid fa-clapperboard"></i>']
+  ];
   let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais reações você quer ver? <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="cv-seg nv-sitcards nv-sit2" id="rcnSitCards">' +
-    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="rxs-item2 ' + (rcnSource === s[0] ? 'active' : '') + '"><i class="' + s[2] + '"></i>' + s[1] + '</button>'; }).join('') +
+    '<div class="cv-seg nv-sitcards" id="rcnSitCards">' +
+    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="rxs-item2 ' + (rcnSource === s[0] ? 'active' : '') + '">' + s[2] + s[1] + '</button>'; }).join('') +
     '</div></div>';
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Reação <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Tipo</label>' + rxDDWrap('rcnFReact', reactLabel, reactItems) + '</div>' +
@@ -97,8 +107,8 @@ function foBuildGerenciarReacoesFilters(){
       '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('rcnFPerson', personLabel, personItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
       '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('rcnFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
     '</div></div>';
-  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : 'Publicação') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Título</label><div class="nv-ffield"><input type="text" id="rcnFTitulo" placeholder="' + (rcnSource === 'short' ? 'Pesquisar short...' : 'Pesquisar publicação...') + '" value="' + (interQuery || '') + '" autocomplete="off"></div></div>' +
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : rcnSource === 'all' ? 'Publicação e Short' : 'Publicação') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Título</label><div class="nv-ffield"><input type="text" id="rcnFTitulo" placeholder="' + (rcnSource === 'short' ? 'Pesquisar short...' : rcnSource === 'all' ? 'Pesquisar publicação ou short...' : 'Pesquisar publicação...') + '" value="' + (interQuery || '') + '" autocomplete="off"></div></div>' +
     '</div>';
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de reação <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"' + (interPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione uma opção</label>' + rxDDWrap('rcnFPeriod', periodLabel, periodItems) + '</div>' +
@@ -162,7 +172,7 @@ function renderGerenciarReacoesList(list){
     { key: 'person', label: 'Autor' },
     { key: 'unit', label: 'Unidade do autor' },
     { key: 'time', label: 'Reagiu em' },
-    { key: 'pub', label: rcnSource === 'short' ? 'Shorts' : 'Publicações' }
+    { key: 'pub', label: rcnSource === 'short' ? 'Shorts' : rcnSource === 'all' ? 'Publicações e Shorts' : 'Publicações' }
   ];
   renderGridTable({
     grid, columns, rowsHTML, sort: rcnColSort,
@@ -202,7 +212,7 @@ $('#rcnFilters') && $('#rcnFilters').addEventListener('click', function(e){
   const src = e.target.closest('#rcnSitCards button');
   if (src){ rcnSource = src.dataset.rcnsource; interPerson = ''; interStore = ''; rcnRefresh(); return; }
   if (e.target.closest('#rcnFClear')){
-    rcnSource = 'pub'; interQuery = ''; interPerson = ''; interStore = ''; interPeriod = ''; interReact = '';
+    rcnSource = 'all'; interQuery = ''; interPerson = ''; interStore = ''; interPeriod = ''; interReact = '';
     rcnPeriodDateStart = ''; rcnPeriodDateEnd = '';
     rcnColSort.key = null; rcnColSort.dir = 0;
     rcnRefresh();

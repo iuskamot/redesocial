@@ -1213,7 +1213,7 @@ input,textarea,select{font-size:14px}
 .rmod-sp{flex:1}
 .reels-view.in-module{left:0;top:60px;z-index:125}
 /* Permissões de Shorts: seção dentro de "Quem pode postar" */
-.nv-secttl{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;line-height:20px;font-weight:700;letter-spacing:.3px;color:#999999;text-transform:uppercase}
+.nv-secttl{display:flex;align-items:center;gap:8px;margin-left:8px;font-size:14px;line-height:20px;font-weight:700;letter-spacing:.3px;color:#999999;text-transform:uppercase}
 .nv-secttl i{font-size:16px}
 #permStoriesSec{margin-top:26px}
 .perm-picktbl{max-height:360px;overflow-y:auto}
@@ -1455,7 +1455,7 @@ input,textarea,select{font-size:14px}
 .perm-tabs .perm-tab i{font-size:13px}
 #aprHome{display:grid;grid-template-columns:repeat(2,minmax(0,500px));gap:18px;margin:18px 0 0}
 #permApprGrid{display:grid;grid-template-columns:repeat(2,500px);gap:16px;margin:8px 0 0;align-items:start}
-#permApprGrid .apr-secttl{grid-column:1/-1;margin:0}
+#permApprGrid .apr-secttl{grid-column:1/-1}
 #permApprGrid .apr-secttl+.apr-rulecard{margin-top:0}
 .apr-rulecard{width:500px;height:auto;min-height:0;position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:32px;background:#fff;border:1px solid #D9D9D9;border-radius:8px;box-shadow:0 1px 2px rgba(16,32,48,.04),0 14px 34px -22px rgba(16,32,48,.28);box-sizing:border-box}
 .apr-rulecard .perm2-ic{width:56px;height:56px;border-radius:8px;font-size:23px;margin-bottom:12px;opacity:1;overflow:visible}
@@ -1464,7 +1464,7 @@ input,textarea,select{font-size:14px}
 .apr-rulecard>.perm-tog .nv-tk{width:58px;height:32px}
 .apr-rulecard>.perm-tog .nv-tk::after{width:26px;height:26px;top:3px;left:3px}
 .apr-rulecard>.perm-tog input:checked+.nv-tk::after{transform:translateX(26px)}
-.apr-subtog{margin-top:20px;padding-top:18px;border-top:1px solid #eceef0;width:100%;display:flex;flex-direction:column;gap:16px}
+.apr-subtog{margin-top:16px;padding-top:16px;border-top:1px solid #eceef0;width:100%;display:flex;flex-direction:column;gap:16px}
 .apr-subrow2{display:flex;align-items:center;gap:16px}
 .apr-sublbl{flex:1;min-width:0}
 .apr-sublbl b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
@@ -1671,10 +1671,10 @@ input,textarea,select{font-size:14px}
 .nmod-top-tabs.nmod-grp{display:none}
 .nmod-top-tabs.nmod-grp.on{display:flex}
 .nmod-top-tabs::-webkit-scrollbar{display:none}
-.nmod-tab{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+.nmod-tab{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:0px;
   height:48px;min-width:96px;border:0;background:none;
   color:rgba(255,255,255,.72);font:inherit;font-size:14px;line-height:18px;font-weight:400;letter-spacing:.3px;
-  white-space:nowrap;padding:0 12px;border-radius:4px;cursor:pointer;
+  white-space:nowrap;padding:0 8px;border-radius:4px;cursor:pointer;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1)}
 .nmod-tab i{font-size:20px}
 .nmod-tab svg{width:20px;height:20px}
@@ -1821,7 +1821,7 @@ input,textarea,select{font-size:14px}
 .exp-item-txt span{font-size:14px;font-weight:400;color:#5F666C}
 .exp-item-div{border-top:1px solid #D9D9D9;margin-top:auto}
 .exp-btn{height:36px;border:0;border-radius:6px;background:#2F8EE5;color:#fff;font:inherit;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
-.exp-btn svg{width:16px;height:16px;flex-shrink:0}
+.exp-btn svg{width:20px;height:20px;flex-shrink:0}
 /* Botões do modal "Exportar" (#expModal) seguem o padrão de botão do projeto (altura 36px,
    raio 6px, peso 700, 14px) em vez do .fo-btn genérico em pílula usado pelo Fórum — escopado
    pra não mexer nos outros modais que reaproveitam .fo-btn. */
@@ -3461,12 +3461,14 @@ input,textarea,select{font-size:14px}
 #nvCatModal .cat-sw:hover{transform:scale(1.02)}
 #nvCatModal .cat-sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
 #nvCatModal .cat-icpick{border-radius:6px;border-width:1px}
-#nvCatModal .cat-icpick:hover{transform:scale(1.02);color:var(--teal)}
+#nvCatModal .cat-icpick:hover{background:rgba(153,153,153,.05)}
 #nvCatModal .cat-icpick.sel{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--ink)}
-#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{min-width:120px;border-radius:6px;justify-content:center;font-size:14px}
+#nvCatModal #nvCatCancel,#nvCatModal #nvCatSave{width:120px;border-radius:6px;justify-content:center;font-size:14px}
 #nvCatModal #nvCatCancel{border:0}
 #nvCatModal #nvCatSave{background:#57C279}
 #nvCatModal #nvCatSave:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#57C279}
+#nvCatModal #nvCatSave.editing{background:#2F8EE5}
+#nvCatModal #nvCatSave.editing:hover{background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),#2F8EE5}
 #nvCatModal #nvCatSave svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
 /* Novo administrador (teamAddModal): tabela com checkbox + busca + rodape de confirmacao */
@@ -3481,8 +3483,8 @@ input,textarea,select{font-size:14px}
 #teamAddModal .tadd-th-label{white-space:nowrap}
 #teamAddModal .tadd-body{max-height:320px;overflow-y:auto}
 #teamAddModal .tadd-row{display:flex;align-items:center;gap:12px;height:60px;padding:0 12px;box-sizing:border-box;cursor:pointer;transition:background .12s}
-#teamAddModal .tadd-row:nth-child(odd){background:#F0F3F5}
-#teamAddModal .tadd-row:nth-child(even){background:#fff}
+#teamAddModal .tadd-row:nth-child(odd){background:#fff}
+#teamAddModal .tadd-row:nth-child(even){background:#F0F3F5}
 #teamAddModal .tadd-row:hover{background:#e6eaec}
 #teamAddModal .tadd-row.on{background:#dcecf3}
 #teamAddModal .tadd-chk{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex-shrink:0;margin:0;border-radius:4px;border:1.5px solid #c7ccd1;background:#fff;position:relative;pointer-events:none}
@@ -3498,7 +3500,8 @@ input,textarea,select{font-size:14px}
 #teamAddModal .tadd-unit-info{min-width:0}
 #teamAddModal .tadd-unit-info b{font-size:14px;font-weight:400;color:#5F666C;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #teamAddModal .tadd-unit-info span{font-size:11px;color:#999;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#teamAddModal .tadd-count{font-size:13px;color:var(--muted);display:flex;align-items:center}
+#teamAddModal .tadd-count{font-size:14px;color:var(--muted);display:flex;align-items:center}
+#teamAddModal .tadd-count b{font-weight:700}
 #teamAddModal .fg-foot{border-top:0}
 #teamAddModal #teamAddCancel,#teamAddModal #teamAddConfirm{width:140px;height:36px;padding:0;border-radius:6px;justify-content:center;font-size:14px}
 #teamAddModal #teamAddCancel{border:0}
@@ -3508,7 +3511,7 @@ input,textarea,select{font-size:14px}
 #teamAddModal .tadd-sortbtn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;background:none;color:#0c334a;cursor:pointer;flex-shrink:0}
 #teamAddModal .tadd-sortbtn:hover{color:#2F8EE5}
 #teamAddModal .tadd-sortbtn svg{width:24px;height:24px;display:block}
-#teamAddModal .tadd-toprow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#teamAddModal .tadd-toprow{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 #teamAddModal .nv-catsearch{display:flex;align-items:center}
 #teamAddModal .nv-catsearch .rx-search{flex:1;max-width:none;height:36px;box-sizing:border-box;padding:12px;border-radius:6px 0 0 6px;background:#fff;border:1px solid #C3C9D5;border-right:0}
 #teamAddModal .nv-catsearch-btn{border-radius:0 6px 6px 0}
@@ -6699,6 +6702,9 @@ body.demo-custom .pp-cover{aspect-ratio:auto}
 #rxGrid .rl-tblwrap>table{ min-width:2150px }
 #rxGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rxGrid .rl-reel b{ font-size:14px; font-weight:700; color:#5F666C }
+/* Capa 38x70 (era 38x60 herdado de .rl-reel img/.rl-procthumb, 06-shorts.css) — só aqui,
+   pra não mexer no tamanho usado na grade/feed de Shorts. */
+#rxGrid .rl-reel img,#rxGrid .rl-procthumb{ height:70px }
 #rxGrid .rl-author .avatar{ width:32px; height:32px }
 #rxGrid .rl-author b{ font-size:14px; font-weight:400; color:#5F666C }
 #rxGrid .rl-emp{ font-size:11px; font-weight:400; color:#999999 }
@@ -7073,22 +7079,24 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #nvInterScreen .rx-filters{ width:400px; align-self:stretch; max-height:none; display:flex; flex-direction:column; padding-bottom:0 }
 #nvInterScreen .rx-filters .nv-filters-ft{ margin-top:auto; margin-left:-16px; margin-right:-16px; border-radius:0 0 8px 8px }
 
-/* Cartões de atalho "Quais reações você quer ver?" — 2 opções mutuamente exclusivas
-   (Publicações/Shorts, sem "Todas"), 1x2 em vez do 2x2 de #pubSitCards/#mgSitCards, mesmo
-   card (.rxs-item2 dentro de .nv-sitcards.nv-sit2 — ícone em cima, rótulo embaixo, borda
-   #D9D9D9, ativo com fundo/borda destacados). Escolhe a origem dos dados (rcnSource) — os
-   campos abaixo (Tipo/Autor/Unidade/Período) filtram dentro dessa origem. */
-#rcnSitCards.nv-sit2{ grid-template-columns:1fr 1fr; gap:8px }
+/* Cartões de atalho "Quais reações você quer ver?" — 3 opções mutuamente exclusivas
+   (Todas/Publicações/Shorts), 1x3 (grid base de 3 colunas, sem o modificador .nv-sit2 usado
+   pelos pares 2 a 2 de #pubSitCards/#mgSitCards), mesmo card (.rxs-item2 dentro de
+   .nv-sitcards — ícone em cima, rótulo embaixo, borda #D9D9D9, ativo com fundo/borda
+   destacados). Escolhe a origem dos dados (rcnSource) — os campos abaixo (Tipo/Autor/
+   Unidade/Período) filtram dentro dessa origem. */
+#rcnSitCards{ gap:8px }
 #rcnSitCards button{ border-color:#D9D9D9 }
-#rcnSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672 }
+#rcnSitCards .rxs-item2{ border-radius:4px; gap:4px; font-size:14px; font-weight:500; color:#5b6672; padding:8px 6px }
 #rcnSitCards .rxs-item2 i{ font-size:20px; line-height:20px }
-#rcnSitCards.nv-sit2 button.active{ color:#5b6672; box-shadow:none }
+#rcnSitCards button.active{ color:#5b6672; box-shadow:none }
 
 #rcnGrid:has(> .rl-tblwrap){ flex:1; min-height:0 }
 #rcnGrid .rl-tblwrap{ height:100%; overflow-y:auto }
 #rcnGrid .rl-tblwrap::-webkit-scrollbar{ width:10px }
 #rcnGrid .rl-tblwrap table{ border-collapse:separate; border-spacing:0 }
 #rcnGrid .rl-tblwrap>table{ table-layout:fixed; width:100%; min-width:1736px }
+#rcnGrid .rl-tblwrap td{ height:91px; box-sizing:border-box }
 #rcnGrid .rl-tblwrap th{ font-size:14px; color:var(--ink); text-transform:none; position:sticky; top:0; z-index:4; border-right:none; background:#fff }
 #rcnGrid .rl-tblwrap th.active-sort{ color:var(--ink) }
 #rcnGrid .rl-tblwrap th .sort-ic{ width:20px; height:20px; font-size:20px; line-height:20px; opacity:1; color:inherit; display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; transition:color .15s }
@@ -7150,8 +7158,8 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #rcnGrid .rl-pubcell{ display:flex; align-items:center; gap:10px; min-width:0 }
 #rcnGrid .rl-pubcell img,#rcnGrid .rl-pubcell .rl-procthumb{ width:44px; height:36px; object-fit:cover; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center }
 #rcnGrid .rl-pubcell .rl-procthumb i{ font-size:16px }
-/* Short: capa em pé (38x60), igual à proporção 9:16 usada pra shorts nas outras telas */
-#rcnGrid .rl-pubcell-short img,#rcnGrid .rl-pubcell-short .rl-procthumb{ width:38px; height:60px }
+/* Short: capa em pé (38x70), mesmo tamanho usado em Gerenciar->Shorts e Aprovações->Shorts */
+#rcnGrid .rl-pubcell-short img,#rcnGrid .rl-pubcell-short .rl-procthumb{ width:38px; height:70px }
 #rcnGrid .rl-pubcell>div{ min-width:0 }
 #rcnGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 #rcnGrid .rl-pubcell>div>span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
@@ -10171,13 +10179,15 @@ function matchReel(r){
   if (rxMinViews && numVal(r.views) < +rxMinViews) return false;
   if (rxMinLikes && numVal(r.likes) < +rxMinLikes) return false;
   /* GERENCIAR > SHORTS (admin, ver assets/js/20-gerenciar-shorts.js): filtros extras da tela de
-     gerenciamento (Tipo/Unidade do autor/Publicado para/Período de encerramento). Presos atrás de
-     curView==='lista' de propósito, para não vazar para a grade/feed social de Shorts — mesmo que
-     rxFormat/rxReach fiquem com um valor selecionado de uma visita anterior à tela de gerenciamento. */
+     gerenciamento (Tipo/Unidade do autor/Publicado para/Período de publicação personalizado/
+     Período de encerramento). Presos atrás de curView==='lista' de propósito, para não vazar para
+     a grade/feed social de Shorts — mesmo que rxFormat/rxReach fiquem com um valor selecionado de
+     uma visita anterior à tela de gerenciamento. */
   if (curView === 'lista'){
     if (rxFormat && rFormat(r)!==rxFormat) return false;
     if (typeof rxUnitFilter!=='undefined' && rxUnitFilter && sbUnidade(post) !== rxUnitFilter) return false;
     if (rxReach && typeof rxReachFor==='function' && rxReachFor(r.p) !== rxReach) return false;
+    if (curPeriod === 'custom' && typeof rxPubInPeriod==='function' && !rxPubInPeriod(post.time, rxPeriodDateStart, rxPeriodDateEnd)) return false;
     if (typeof rxEndPeriod!=='undefined' && rxEndPeriod && rxEndPeriod!=='tudo' && typeof rxEndInPeriod==='function' && !rxEndInPeriod(r.encerra, rxEndPeriod, rxEndDateStart, rxEndDateEnd)) return false;
   }
   if (catById(curFilter) && r.cat !== curFilter) return false;
@@ -10274,6 +10284,12 @@ function renderGrid(){
   rxGrid.innerHTML = '';
   rxGrid.hidden = list.length === 0;
   $('#rxEmpty').hidden = list.length > 0;
+  /* GERENCIAR > SHORTS (admin): tabela de gerenciamento, implementada à parte em
+     assets/js/20-gerenciar-shorts.js (renderGerenciarShortsList) para não misturar com a grade/feed
+     social de shorts abaixo, que continua sendo o resto desta função — sai antes da barra
+     "rx-current"/"Limpar filtro" (abaixo), que é só da grade/feed social; a tela de gerenciamento
+     já tem seu próprio "Limpar filtros" na sidebar. */
+  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderGerenciarShortsList(list); return; }
   const head = document.createElement('div');
   head.className = 'rx-current'; head.style.gridColumn = '1/-1';
   const showClear = curFilter !== 'todos' || curQuery || curPeriod !== 'tudo';
@@ -10296,10 +10312,6 @@ function renderGrid(){
     bn.addEventListener('click', () => { curFilter='naovistos'; foBuildReelFilters(); renderGrid(); });
     rxGrid.appendChild(bn);
   }
-  /* GERENCIAR > SHORTS (admin): tabela de gerenciamento, implementada à parte em
-     assets/js/20-gerenciar-shorts.js (renderGerenciarShortsList) para não misturar com a grade/feed
-     social de shorts abaixo, que continua sendo o resto desta função. */
-  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderGerenciarShortsList(list); return; }
   const plain = (curFilter!=='todos') || curQuery || curPeriod!=='tudo' || rxMinViews || rxMinLikes;
   if (plain){
     rxGrid.style.display='';
@@ -13746,9 +13758,9 @@ const TEAM_UNIT_INFO = {
   'Matriz': { company:'Sua Marca Franquias LTDA', color:'#2e7ed4', ini:'MT' },
   'Pit Stop Barra': { company:'Pit Stop Barra Comércio LTDA', color:'#2aa17e', ini:'PS' }
 };
-function teamAddCountText(){
+function teamAddCountText(total){
   const n=teamAddSel.size;
-  return n===0 ? 'Nenhum selecionado' : 'Selecionados: '+n;
+  return n===0 ? 'Nenhum selecionado' : '<span>Selecionados: <b>'+n+'</b> de <b>'+total+'</b></span>';
 }
 function teamAddSortIcon(col){
   const dir=(teamAddSortCol===col)?teamAddSortDir:0;
@@ -13771,7 +13783,7 @@ function teamAddRender(){
     const u=TEAM_UNIT_INFO[p.unidade]||{company:'',color:'#8e8e93',ini:(p.unidade||'?').slice(0,2).toUpperCase()};
     return '<div class="tadd-row'+(teamAddSel.has(p.id)?' on':'')+'" data-teamadd="'+p.id+'"><input type="checkbox" class="tadd-chk"'+(teamAddSel.has(p.id)?' checked':'')+'><span class="tadd-person"><span class="avatar '+p.av+'"></span><span class="tadd-info"><b>'+p.name+'</b><span>#'+p.id+' - '+p.role+'</span></span></span><span class="tadd-unit"><span class="tadd-unit-badge" style="background:'+u.color+'">'+u.ini+'</span><span class="tadd-unit-info"><b>'+(p.unidade||'')+'</b><span>'+u.company+'</span></span></span></div>';
   }).join('') : '<div class="perm-empty">Nenhum administrador disponível.</div>';
-  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.textContent=teamAddCountText();
+  const cnt=document.getElementById('teamAddCount'); if(cnt) cnt.innerHTML=teamAddCountText(list.length);
   const hc=document.getElementById('teamAddHeadCount'); if(hc) hc.textContent='('+list.length+')';
   const sb=document.getElementById('teamAddSortBtn'); if(sb) sb.innerHTML=teamAddSortIcon('name');
   const sbu=document.getElementById('teamAddSortBtnUnit'); if(sbu) sbu.innerHTML=teamAddSortIcon('unit');
@@ -13829,7 +13841,7 @@ const PERM_HELP = {
     btn: 'Como usar?',
     art: 'uploads/tutorial/image-aprovals.svg',
     title: 'Como usar aprovações?',
-    body: 'Ative a aprovação para publicações, shorts e comentários. Assim, cada conteúdo criado fica pendente até a análise de um administrador e só é disponibilizado após sua <b>aprovação</b>. O autor é notificado sobre a decisão e, em caso de <b>reprovação</b>, também recebe o motivo.'
+    body: 'Ative a aprovação para publicações, shorts e comentários. O conteúdo fica pendente até ser <b>aprovado</b> ou <b>reprovado</b> por um administrador, ficando visível somente após a aprovação.'
   }
 };
 function permHelpFill(which){
@@ -13945,7 +13957,7 @@ function modCellVal(e,i){
 /* Filtro avançado da fila "Comentários pendentes" (#modFilters) — mesmo padrão de
    foBuildPubApprFilters (acima), só que aplicado a MOD_QUEUE/MOD_HIST, sem "Tipo" (comentário
    não tem) e buscando por texto do comentário ou ID em vez de título. */
-let cmQuery='', cmAuthor='', cmQueuePeriod='tudo', cmDecidedBy='', cmDecidedPeriod='tudo';
+let cmQuery='', cmAuthor='', cmQueuePeriod='tudo', cmQueuePeriodDateStart='', cmQueuePeriodDateEnd='', cmDecidedBy='', cmDecidedPeriod='tudo', cmDecidedPeriodDateStart='', cmDecidedPeriodDateEnd='';
 function cmActiveFilterCount(){
   let c=0; if(cmQuery) c++; if(cmAuthor) c++;
   if(cmQueuePeriod && cmQueuePeriod!=='tudo') c++;
@@ -13954,10 +13966,10 @@ function cmActiveFilterCount(){
 }
 function cmMatch(e){
   if(cmAuthor && (e.author||'')!==cmAuthor) return false;
-  if(!aprInPeriod(e.ts, cmQueuePeriod)) return false;
+  if(!aprInPeriod(e.ts, cmQueuePeriod, cmQueuePeriodDateStart, cmQueuePeriodDateEnd)) return false;
   if(modFilter!=='pend'){
     if(cmDecidedBy && (e.decidedBy||'')!==cmDecidedBy) return false;
-    if(!aprInPeriod(aprDecidedTs(e), cmDecidedPeriod)) return false;
+    if(!aprInPeriod(aprDecidedTs(e), cmDecidedPeriod, cmDecidedPeriodDateStart, cmDecidedPeriodDateEnd)) return false;
   }
   if(cmQuery && (e.text||'').toLowerCase().indexOf(cmQuery)===-1 && String(e.mid)!==cmQuery) return false;
   return true;
@@ -13970,10 +13982,16 @@ function foBuildModFilters(){
   let html='<div class="nv-fsec"><div class="nv-fsec-hd">Comentário <i class="fa-solid fa-chevron-up"></i></div>'+
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário ou ID</label><div class="nv-ffield"><input type="text" id="cmFTexto" placeholder="Pesquisar comentário..." value="'+(cmQuery||'')+'" autocomplete="off"></div></div>'+
     '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('cmFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
-  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===cmQueuePeriod)[0]||periodDefs[0])[1];
-  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol"'+(cmQueuePeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('cmFQueuePeriod', periodLabel, periodItems)+'</div>'+
+    (cmQueuePeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('cmFQueuePeriodDateStart', cmQueuePeriodDateStart)+'</div>'+
+      '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('cmFQueuePeriodDateEnd', cmQueuePeriodDateEnd)+'</div>'+
+    '</div>':'')+
+    '</div>';
   if(modFilter!=='pend'){
     const decLabel=modFilter==='aprovado'?'Aprovação':'Reprovação';
     const decByLabel=modFilter==='aprovado'?'Aprovado por':'Reprovado por';
@@ -13984,14 +14002,19 @@ function foBuildModFilters(){
     const decPeriodLabel=(periodDefs.filter(p=>p[0]===cmDecidedPeriod)[0]||periodDefs[0])[1];
     html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
       '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('cmFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
-      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('cmFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+      '<div class="nv-ffcol"'+(cmDecidedPeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('cmFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div>'+
+      (cmDecidedPeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+        '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('cmFDecididoPeriodDateStart', cmDecidedPeriodDateStart)+'</div>'+
+        '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('cmFDecididoPeriodDateEnd', cmDecidedPeriodDateEnd)+'</div>'+
+      '</div>':'')+
+      '</div>';
   }
   const activeN=cmActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="cmFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="cmFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#modFilters') && $('#modFilters').addEventListener('click', function(e){
-  if(e.target.closest('#cmFClear')){ cmQuery=''; cmAuthor=''; cmQueuePeriod='tudo'; cmDecidedBy=''; cmDecidedPeriod='tudo'; renderModQueue(); return; }
+  if(e.target.closest('#cmFClear')){ cmQuery=''; cmAuthor=''; cmQueuePeriod='tudo'; cmQueuePeriodDateStart=''; cmQueuePeriodDateEnd=''; cmDecidedBy=''; cmDecidedPeriod='tudo'; cmDecidedPeriodDateStart=''; cmDecidedPeriodDateEnd=''; renderModQueue(); return; }
   if(e.target.closest('#cmFApply')){ renderModQueue(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -14013,6 +14036,15 @@ $('#modFilters') && $('#modFilters').addEventListener('click', function(e){
   }
 });
 $('#modFilters') && $('#modFilters').addEventListener('input', function(e){ if(e.target.id==='cmFTexto'){ cmQuery=e.target.value.trim().toLowerCase(); renderModQueue(); } });
+$('#modFilters') && $('#modFilters').addEventListener('change', function(e){
+  const t=e.target;
+  if(t.id==='cmFQueuePeriodDateStart'){ cmQueuePeriodDateStart=t.value; }
+  else if(t.id==='cmFQueuePeriodDateEnd'){ cmQueuePeriodDateEnd=t.value; }
+  else if(t.id==='cmFDecididoPeriodDateStart'){ cmDecidedPeriodDateStart=t.value; }
+  else if(t.id==='cmFDecididoPeriodDateEnd'){ cmDecidedPeriodDateEnd=t.value; }
+  else return;
+  renderModQueue();
+});
 const MOD_APPR_TITLES={pend:'Comentários pendentes',aprovado:'Comentários aprovados',rejeitado:'Comentários reprovados'};
 function renderModQueue(){
   foBuildModFilters();
@@ -14159,11 +14191,16 @@ function reelApprData(){
    filas de aprovação (Publicações e Shorts), junto com o texto relativo ("há 1 h") que já
    existia. */
 function paFullDT(ts){ const d=new Date(ts||Date.now()), p=x=>('0'+x).slice(-2); return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes()); }
-/* Filtro "Entrou na fila em" (Últimas 24h/7d/30d/90d) — mesmo formato de pglInPeriod
-   (21-gerenciar-publicacoes.js), reaproveitado pelas duas filas de aprovação. */
-function aprInPeriod(ts, period){
+/* Filtro "Entrou na fila em" (Últimas 24h/7d/30d/período personalizado) — mesmo formato de
+   cmgInPeriod (22-gerenciar-comentarios.js), reaproveitado pelas duas filas de aprovação. */
+function aprInPeriod(ts, period, ds, de){
   if(!period || period==='tudo') return true;
-  const days = period==='24h'?1:period==='7d'?7:period==='30d'?30:period==='90d'?90:null;
+  if(period==='custom'){
+    if(ds && (ts||0) < new Date(ds+'T00:00:00').getTime()) return false;
+    if(de && (ts||0) > new Date(de+'T23:59:59').getTime()) return false;
+    return true;
+  }
+  const days = period==='24h'?1:period==='7d'?7:period==='30d'?30:null;
   if(days==null) return true;
   const diff=(Date.now()-(ts||0))/86400000;
   return diff>=0 && diff<=days;
@@ -14201,7 +14238,7 @@ function aprDecidedWhenCell(n){
    "Entrou na fila em". Mesmo padrão de campos de foBuildGerenciarPublicacoesFilters
    (21-gerenciar-publicacoes.js), só que aplicado a PUB_APPR/PUB_HIST em vez de NEWS, e com IDs
    próprios (paF...) para não colidir com os campos (pubF...) daquela outra tela. */
-let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo', paDecidedBy='', paDecidedPeriod='tudo';
+let paQuery='', paType='', paAuthor='', paQueuePeriod='tudo', paQueuePeriodDateStart='', paQueuePeriodDateEnd='', paDecidedBy='', paDecidedPeriod='tudo', paDecidedPeriodDateStart='', paDecidedPeriodDateEnd='';
 function paActiveFilterCount(){
   let c=0; if(paQuery) c++; if(paType) c++; if(paAuthor) c++;
   if(paQueuePeriod && paQueuePeriod!=='tudo') c++;
@@ -14213,10 +14250,10 @@ function paMatch(n){
   if(paType==='article' && pubTipo(n).cls!=='is-art') return false;
   if(paType==='colorida' && pubTipo(n).cls!=='is-color') return false;
   if(paAuthor && (n.author||'')!==paAuthor) return false;
-  if(!aprInPeriod(n.ts, paQueuePeriod)) return false;
+  if(!aprInPeriod(n.ts, paQueuePeriod, paQueuePeriodDateStart, paQueuePeriodDateEnd)) return false;
   if(pubFilter!=='pend'){
     if(paDecidedBy && (n.decidedBy||'')!==paDecidedBy) return false;
-    if(!aprInPeriod(aprDecidedTs(n), paDecidedPeriod)) return false;
+    if(!aprInPeriod(aprDecidedTs(n), paDecidedPeriod, paDecidedPeriodDateStart, paDecidedPeriodDateEnd)) return false;
   }
   if(paQuery && (n.title||'').toLowerCase().indexOf(paQuery)===-1) return false;
   return true;
@@ -14234,10 +14271,16 @@ function foBuildPubApprFilters(){
       '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('paFTipo', typeLabel, typeItems)+'</div>'+
       '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('paFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
     '</div></div>';
-  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:paQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===paQueuePeriod)[0]||periodDefs[0])[1];
-  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol"'+(paQueuePeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('paFQueuePeriod', periodLabel, periodItems)+'</div>'+
+    (paQueuePeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('paFQueuePeriodDateStart', paQueuePeriodDateStart)+'</div>'+
+      '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('paFQueuePeriodDateEnd', paQueuePeriodDateEnd)+'</div>'+
+    '</div>':'')+
+    '</div>';
   if(pubFilter!=='pend'){
     const decLabel=pubFilter==='aprovado'?'Aprovação':'Reprovação';
     const decByLabel=pubFilter==='aprovado'?'Aprovado por':'Reprovado por';
@@ -14248,14 +14291,19 @@ function foBuildPubApprFilters(){
     const decPeriodLabel=(periodDefs.filter(p=>p[0]===paDecidedPeriod)[0]||periodDefs[0])[1];
     html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
       '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('paFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
-      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('paFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+      '<div class="nv-ffcol"'+(paDecidedPeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('paFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div>'+
+      (paDecidedPeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+        '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('paFDecididoPeriodDateStart', paDecidedPeriodDateStart)+'</div>'+
+        '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('paFDecididoPeriodDateEnd', paDecidedPeriodDateEnd)+'</div>'+
+      '</div>':'')+
+      '</div>';
   }
   const activeN=paActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="paFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="paFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; paDecidedBy=''; paDecidedPeriod='tudo'; renderPubAppr(); return; }
+  if(e.target.closest('#paFClear')){ paQuery=''; paType=''; paAuthor=''; paQueuePeriod='tudo'; paQueuePeriodDateStart=''; paQueuePeriodDateEnd=''; paDecidedBy=''; paDecidedPeriod='tudo'; paDecidedPeriodDateStart=''; paDecidedPeriodDateEnd=''; renderPubAppr(); return; }
   if(e.target.closest('#paFApply')){ renderPubAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -14277,11 +14325,20 @@ $('#pubApprFilters') && $('#pubApprFilters').addEventListener('click', function(
   }
 });
 $('#pubApprFilters') && $('#pubApprFilters').addEventListener('input', function(e){ if(e.target.id==='paFTitulo'){ paQuery=e.target.value.trim().toLowerCase(); renderPubAppr(); } });
+$('#pubApprFilters') && $('#pubApprFilters').addEventListener('change', function(e){
+  const t=e.target;
+  if(t.id==='paFQueuePeriodDateStart'){ paQueuePeriodDateStart=t.value; }
+  else if(t.id==='paFQueuePeriodDateEnd'){ paQueuePeriodDateEnd=t.value; }
+  else if(t.id==='paFDecididoPeriodDateStart'){ paDecidedPeriodDateStart=t.value; }
+  else if(t.id==='paFDecididoPeriodDateEnd'){ paDecidedPeriodDateEnd=t.value; }
+  else return;
+  renderPubAppr();
+});
 
 /* Filtro avançado da fila "Shorts pendentes" (#reelApprFilters) — mesma ideia da de Publicações
    acima, com Tipo (Imagem/Vídeo, em vez de Postagem/Artigo/Postagem colorida) e IDs próprios
    (raF...). */
-let raQuery='', raType='', raAuthor='', raQueuePeriod='tudo', raDecidedBy='', raDecidedPeriod='tudo';
+let raQuery='', raType='', raAuthor='', raQueuePeriod='tudo', raQueuePeriodDateStart='', raQueuePeriodDateEnd='', raDecidedBy='', raDecidedPeriod='tudo', raDecidedPeriodDateStart='', raDecidedPeriodDateEnd='';
 function raActiveFilterCount(){
   let c=0; if(raQuery) c++; if(raType) c++; if(raAuthor) c++; if(raQueuePeriod && raQueuePeriod!=='tudo') c++;
   if(reelFilter!=='pend'){ if(raDecidedBy) c++; if(raDecidedPeriod && raDecidedPeriod!=='tudo') c++; }
@@ -14290,10 +14347,10 @@ function raActiveFilterCount(){
 function raMatch(r){
   if(raType && rFormat(r)!==raType) return false;
   if(raAuthor && (r.author||'')!==raAuthor) return false;
-  if(!aprInPeriod(r.ts, raQueuePeriod)) return false;
+  if(!aprInPeriod(r.ts, raQueuePeriod, raQueuePeriodDateStart, raQueuePeriodDateEnd)) return false;
   if(reelFilter!=='pend'){
     if(raDecidedBy && (r.decidedBy||'')!==raDecidedBy) return false;
-    if(!aprInPeriod(aprDecidedTs(r), raDecidedPeriod)) return false;
+    if(!aprInPeriod(aprDecidedTs(r), raDecidedPeriod, raDecidedPeriodDateStart, raDecidedPeriodDateEnd)) return false;
   }
   if(raQuery && (r.title||'').toLowerCase().indexOf(raQuery)===-1) return false;
   return true;
@@ -14311,10 +14368,16 @@ function foBuildReelApprFilters(){
       '<div class="nv-ffcol"><label>Tipo</label>'+rxDDWrap('raFTipo', typeLabel, typeItems)+'</div>'+
       '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('raFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
     '</div></div>';
-  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['90d','Últimos 90 dias']];
+  const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:raQueuePeriod===p[0]}));
   const periodLabel=(periodDefs.filter(p=>p[0]===raQueuePeriod)[0]||periodDefs[0])[1];
-  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div><div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFQueuePeriod', periodLabel, periodItems)+'</div></div>';
+  html+='<div class="nv-fsec"><div class="nv-fsec-hd">Entrou na fila em <i class="fa-solid fa-chevron-up"></i></div>'+
+    '<div class="nv-ffcol"'+(raQueuePeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('raFQueuePeriod', periodLabel, periodItems)+'</div>'+
+    (raQueuePeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+      '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('raFQueuePeriodDateStart', raQueuePeriodDateStart)+'</div>'+
+      '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('raFQueuePeriodDateEnd', raQueuePeriodDateEnd)+'</div>'+
+    '</div>':'')+
+    '</div>';
   if(reelFilter!=='pend'){
     const decLabel=reelFilter==='aprovado'?'Aprovação':'Reprovação';
     const decByLabel=reelFilter==='aprovado'?'Aprovado por':'Reprovado por';
@@ -14325,14 +14388,19 @@ function foBuildReelApprFilters(){
     const decPeriodLabel=(periodDefs.filter(p=>p[0]===raDecidedPeriod)[0]||periodDefs[0])[1];
     html+='<div class="nv-fsec"><div class="nv-fsec-hd">'+decLabel+' <i class="fa-solid fa-chevron-up"></i></div>'+
       '<div class="nv-ffcol" style="margin-bottom:12px"><label>'+decByLabel+'</label>'+rxDDWrap('raFDecidido', decByItemLabel, decByItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div>'+
-      '<div class="nv-ffcol"><label>Selecione um período</label>'+rxDDWrap('raFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div></div>';
+      '<div class="nv-ffcol"'+(raDecidedPeriod==='custom'?' style="margin-bottom:12px"':'')+'><label>Selecione um período</label>'+rxDDWrap('raFDecididoPeriod', decPeriodLabel, decPeriodItems)+'</div>'+
+      (raDecidedPeriod==='custom'?'<div class="nv-ffrow nv-ffrow-last">'+
+        '<div class="nv-ffcol"><label>A partir de</label>'+rxDateField('raFDecididoPeriodDateStart', raDecidedPeriodDateStart)+'</div>'+
+        '<div class="nv-ffcol"><label>Até quando</label>'+rxDateField('raFDecididoPeriodDateEnd', raDecidedPeriodDateEnd)+'</div>'+
+      '</div>':'')+
+      '</div>';
   }
   const activeN=raActiveFilterCount();
   html+='<div class="nv-filters-ft"><button class="nv-fclear'+(activeN>0?' has-active':'')+'" id="raFClear"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros'+(activeN>0?' ('+activeN+')':'')+'</button><button class="nv-fapply" id="raFApply">Aplicar filtros <i class="fa-solid fa-chevron-right"></i></button></div>';
   nav.innerHTML=html;
 }
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', function(e){
-  if(e.target.closest('#raFClear')){ raQuery=''; raType=''; raAuthor=''; raQueuePeriod='tudo'; raDecidedBy=''; raDecidedPeriod='tudo'; renderReelAppr(); return; }
+  if(e.target.closest('#raFClear')){ raQuery=''; raType=''; raAuthor=''; raQueuePeriod='tudo'; raQueuePeriodDateStart=''; raQueuePeriodDateEnd=''; raDecidedBy=''; raDecidedPeriod='tudo'; raDecidedPeriodDateStart=''; raDecidedPeriodDateEnd=''; renderReelAppr(); return; }
   if(e.target.closest('#raFApply')){ renderReelAppr(); fgToast('Filtros aplicados'); return; }
   const db=e.target.closest('.nv-fdatebtn');
   if(db){ const inp=$('#'+db.dataset.datefor); if(inp){ if(inp.showPicker) inp.showPicker(); else inp.focus(); } return; }
@@ -14354,6 +14422,15 @@ $('#reelApprFilters') && $('#reelApprFilters').addEventListener('click', functio
   }
 });
 $('#reelApprFilters') && $('#reelApprFilters').addEventListener('input', function(e){ if(e.target.id==='raFTitulo'){ raQuery=e.target.value.trim().toLowerCase(); renderReelAppr(); } });
+$('#reelApprFilters') && $('#reelApprFilters').addEventListener('change', function(e){
+  const t=e.target;
+  if(t.id==='raFQueuePeriodDateStart'){ raQueuePeriodDateStart=t.value; }
+  else if(t.id==='raFQueuePeriodDateEnd'){ raQueuePeriodDateEnd=t.value; }
+  else if(t.id==='raFDecididoPeriodDateStart'){ raDecidedPeriodDateStart=t.value; }
+  else if(t.id==='raFDecididoPeriodDateEnd'){ raDecidedPeriodDateEnd=t.value; }
+  else return;
+  renderReelAppr();
+});
 document.addEventListener('click', function(e){
   if(!e.target.closest('#pubApprFilters .rl-ddwrap')) $$('#pubApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
   if(!e.target.closest('#reelApprFilters .rl-ddwrap')) $$('#reelApprFilters .rl-ddmenu').forEach(m=>m.hidden=true);
@@ -14413,7 +14490,7 @@ function renderReelAppr(){
       : aprEmptyHTML('Nenhum short reprovado','Shorts reprovados vão aparecer aqui.');
     return;
   }
-  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:38px;height:60px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:38px;height:60px"><i class="fa-solid fa-clapperboard"></i></span>';
+  const thumb=r=> r.image? '<span class="cmappr-thumb" style="width:38px;height:70px;background-image:url('+r.image+')"></span>' : '<span class="cmappr-thumb ph" style="width:38px;height:70px"><i class="fa-solid fa-clapperboard"></i></span>';
   const base2=r=>'<td><div class="rl-reel">'+thumb(r)+'<div><b>'+r.title+'</b><span>#'+r.rid+' • Short</span></div></div></td>'+
     '<td><span class="apr-type">'+(rFormat(r)==='imagem'?'<i class="fa-solid fa-image"></i> Imagem':'<i class="fa-solid fa-video"></i> Vídeo')+'</span></td>'+
     '<td><div class="rl-author"><span class="avatar '+r.av+'"></span><div><b>'+r.author+'</b><span class="rl-emp">'+r.unit+'</span></div></div></td>';
@@ -15300,7 +15377,7 @@ function renderNewsCats(){
 }
 function nvCatSwatches(){ $('#nvCatSw').innerHTML=CAT_COLORS.map(c=>'<span class="cat-sw'+(c===nvCatColor?' sel':'')+'" data-col="'+c+'" style="background:'+c+'">'+(c===nvCatColor?'<i class="fa-solid fa-check"></i>':'')+'</span>').join(''); }
 function nvCatIcons(){ $('#nvCatIcons').innerHTML=NEWS_CAT_ICONS.map(ic=>'<span class="cat-icpick'+(ic===nvCatIcon?' sel':'')+'" data-ic="'+ic+'"><i class="fa-solid '+ic+'"></i></span>').join(''); }
-function nvCatOpenModal(id){ nvCatEditId=id||null; const c=id?NEWS_CATS.find(x=>x.id===id):null; $('#nvCatModalTitle').textContent=c?'Editar categoria':'Nova categoria'; $('#nvCatName').value=c?c.name:''; nvCatColor=c?c.color:CAT_COLORS[0]; nvCatIcon=c?(c.icon||NEWS_CAT_ICONS[0]):NEWS_CAT_ICONS[0]; nvCatSwatches(); nvCatIcons(); $('#nvCatModal').classList.add('open'); setTimeout(()=>$('#nvCatName').focus(),30); }
+function nvCatOpenModal(id){ nvCatEditId=id||null; const c=id?NEWS_CATS.find(x=>x.id===id):null; $('#nvCatModalTitle').textContent=c?'Editar categoria':'Nova categoria'; $('#nvCatName').value=c?c.name:''; nvCatColor=c?c.color:CAT_COLORS[0]; nvCatIcon=c?(c.icon||NEWS_CAT_ICONS[0]):NEWS_CAT_ICONS[0]; nvCatSwatches(); nvCatIcons(); $('#nvCatSave').innerHTML=c?'<svg viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg> Salvar':'<svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Adicionar'; $('#nvCatSave').classList.toggle('editing',!!c); $('#nvCatModal').classList.add('open'); setTimeout(()=>$('#nvCatName').focus(),30); }
 $('#nvCatAdd').addEventListener('click', ()=>nvCatOpenModal());
 let nvCatStatus='ativos';
 $('#nvCatSeg') && $('#nvCatSeg').addEventListener('change', e=>{ nvCatStatus=e.target.value; renderNewsCats(); });
@@ -20880,6 +20957,7 @@ window.abrirGerenciarIA = function(){
    colSort — já existem em 01-home.js e são reaproveitados). */
 let rxUnitFilter = '';
 let rxEndPeriod = 'tudo', rxEndDateStart = '', rxEndDateEnd = '';
+let rxPeriodDateStart = '', rxPeriodDateEnd = '';
 
 /* GERENCIAR > SHORTS (admin): mesma unidade de sbUnidade(post)/SB_UNIDADES (01-home.js), só que
    devolvendo o objeto inteiro {name,company,color,ini} em vez do nome — usado pela pílula colorida
@@ -20912,6 +20990,12 @@ function rxFullRel(t){
 }
 
 /* Filtro "Período de encerramento" — r.encerra é um timestamp futuro (ms) */
+function rxPubInPeriod(timeStr, ds, de){
+  const t = Date.now() - hoursVal(timeStr) * 3600000;
+  if (ds && t < new Date(ds + 'T00:00:00').getTime()) return false;
+  if (de && t > new Date(de + 'T23:59:59').getTime()) return false;
+  return true;
+}
 function rxEndInPeriod(encerra, period, ds, de){
   if (period === 'naoencerra') return !encerra;
   if (!encerra) return false;
@@ -21070,15 +21154,19 @@ function foBuildGerenciarShortsFilters(){
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicado para <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('rxFReach', reachLabel, reachItems) + '</div>' +
     '</div>';
-  /* "Período de publicação" fica com as mesmas opções de PERIOD_H (24h/7d/30d/90d) já usadas em
-     todo o app — sem "hoje"/"personalizado" (que a referência tem, mas sem um filtro que as
-     avalie de fato); assim o campo continua totalmente funcional, só que com um menu customizado
-     em vez do <select> nativo, para o mesmo visual dos demais campos desta sidebar. */
-  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  /* "Período de publicação" usa as opções de PERIOD_H (24h/7d/30d) já usadas em todo o app, mais
+     "Período personalizado" (rxPeriodDateStart/rxPeriodDateEnd, avaliado só dentro de
+     curView==='lista' — mesma mecânica/gate de "Período de encerramento" logo abaixo), num menu
+     customizado em vez do <select> nativo, para o mesmo visual dos demais campos desta sidebar. */
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado']];
   const periodItems = periodDefs.map(p => ({ value: p[0], label: p[1], selected: curPeriod === p[0] }));
   const periodLabel = (periodDefs.find(p => p[0] === curPeriod) || periodDefs[0])[1];
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de publicação <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Selecione um período</label>' + rxDDWrap('rxFPeriod', periodLabel, periodItems) + '</div>' +
+    '<div class="nv-ffcol"' + (curPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione um período</label>' + rxDDWrap('rxFPeriod', periodLabel, periodItems) + '</div>' +
+    (curPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('rxFPeriodDateStart', rxPeriodDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('rxFPeriodDateEnd', rxPeriodDateEnd) + '</div>' +
+    '</div>' : '') +
     '</div>';
   const endPeriodDefs = [['tudo', 'Qualquer período'], ['hoje', 'Hoje'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado'], ['naoencerra', 'Não se encerra']];
   const endPeriodItems = endPeriodDefs.map(p => ({ value: p[0], label: p[1], selected: rxEndPeriod === p[0] }));
@@ -21235,7 +21323,7 @@ $('#rxFilters').addEventListener('click', e => {
   if (e.target.closest('#rxFClear')){
     /* o handler de #rxFClear em 01-home.js já limpa curFilter/curQuery/curPeriod/rxFormat/rxStatus/
        etc. e re-renderiza; aqui só falta zerar o que é exclusivo desta tela. */
-    rxUnitFilter = ''; rxEndPeriod = 'tudo'; rxEndDateStart = ''; rxEndDateEnd = '';
+    rxUnitFilter = ''; rxPeriodDateStart = ''; rxPeriodDateEnd = ''; rxEndPeriod = 'tudo'; rxEndDateStart = ''; rxEndDateEnd = '';
     colSort.key = null; colSort.dir = 0;
     foBuildReelFilters(); renderGrid();
     return;
@@ -21269,7 +21357,9 @@ $('#rxFilters').addEventListener('input', e => {
 });
 $('#rxFilters').addEventListener('change', e => {
   const t = e.target;
-  if (t.id === 'rxFEndDateStart'){ rxEndDateStart = t.value; }
+  if (t.id === 'rxFPeriodDateStart'){ rxPeriodDateStart = t.value; }
+  else if (t.id === 'rxFPeriodDateEnd'){ rxPeriodDateEnd = t.value; }
+  else if (t.id === 'rxFEndDateStart'){ rxEndDateStart = t.value; }
   else if (t.id === 'rxFEndDateEnd'){ rxEndDateEnd = t.value; }
   else return;
   foBuildReelFilters(); renderGrid();
@@ -21322,6 +21412,7 @@ $('#rxFilters').addEventListener('change', e => {
 /* Estado exclusivo desta tela */
 let pglQuery = '', pglStatus = '', pglType = '', pglCat = '', pglAuthor = '', pglUnit = '', pglReach = '';
 let pglPeriod = 'tudo', pglEndPeriod = 'tudo', pglEndDateStart = '', pglEndDateEnd = '';
+let pglPeriodDateStart = '', pglPeriodDateEnd = '';
 let pglColSort = { key: null, dir: 0 };
 
 function pglUnitFor(n){ return sbUnitObjFor({ unit: n.unit, name: n.autorNome || n.author }); }
@@ -21345,9 +21436,15 @@ function pglDateOf(n){
   const m = /^(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}):(\d{2})$/.exec(nvFmtDateTime(n) || '');
   return m ? new Date(2000 + +m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime() : Date.now();
 }
-function pglInPeriod(n, period){
+function pglInPeriod(n, period, ds, de){
   if (!period || period === 'tudo') return true;
-  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : period === '90d' ? 90 : null;
+  if (period === 'custom'){
+    const t = pglDateOf(n);
+    if (ds && t < new Date(ds + 'T00:00:00').getTime()) return false;
+    if (de && t > new Date(de + 'T23:59:59').getTime()) return false;
+    return true;
+  }
+  const days = period === '24h' ? 1 : period === '7d' ? 7 : period === '30d' ? 30 : null;
   if (days == null) return true;
   const diff = (Date.now() - pglDateOf(n)) / 86400000;
   return diff >= 0 && diff <= days;
@@ -21365,7 +21462,7 @@ function matchPub(n){
   if (pglAuthor && autorNome !== pglAuthor) return false;
   if (pglUnit && (n.unit || '') !== pglUnit) return false;
   if (pglReach && (n.reach || 'rede') !== pglReach) return false;
-  if (!pglInPeriod(n, pglPeriod)) return false;
+  if (!pglInPeriod(n, pglPeriod, pglPeriodDateStart, pglPeriodDateEnd)) return false;
   if (pglEndPeriod !== 'tudo' && !rxEndInPeriod(n.encerra, pglEndPeriod, pglEndDateStart, pglEndDateEnd)) return false;
   if (pglQuery){
     const q = pglQuery.toLowerCase();
@@ -21417,11 +21514,15 @@ function foBuildGerenciarPublicacoesFilters(){
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicada para <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('pubFReach', reachLabel, reachItems) + '</div>' +
     '</div>';
-  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado']];
   const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: pglPeriod === p[0] }; });
   const periodLabel = (periodDefs.filter(function(p){ return p[0] === pglPeriod; })[0] || periodDefs[0])[1];
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de publicação <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Selecione um período</label>' + rxDDWrap('pubFPeriod', periodLabel, periodItems) + '</div>' +
+    '<div class="nv-ffcol"' + (pglPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione um período</label>' + rxDDWrap('pubFPeriod', periodLabel, periodItems) + '</div>' +
+    (pglPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('pubFPeriodDateStart', pglPeriodDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('pubFPeriodDateEnd', pglPeriodDateEnd) + '</div>' +
+    '</div>' : '') +
     '</div>';
   const endPeriodDefs = [['tudo', 'Qualquer período'], ['hoje', 'Hoje'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado'], ['naoencerra', 'Não se encerra']];
   const endPeriodItems = endPeriodDefs.map(function(p){ return { value: p[0], label: p[1], selected: pglEndPeriod === p[0] }; });
@@ -21601,7 +21702,7 @@ $('#pubFilters') && $('#pubFilters').addEventListener('click', function(e){
   if (st){ pglStatus = st.dataset.pglstatus; pglRefresh(); return; }
   if (e.target.closest('#pubFClear')){
     pglQuery = ''; pglStatus = ''; pglType = ''; pglCat = ''; pglAuthor = ''; pglUnit = ''; pglReach = '';
-    pglPeriod = 'tudo'; pglEndPeriod = 'tudo'; pglEndDateStart = ''; pglEndDateEnd = '';
+    pglPeriod = 'tudo'; pglPeriodDateStart = ''; pglPeriodDateEnd = ''; pglEndPeriod = 'tudo'; pglEndDateStart = ''; pglEndDateEnd = '';
     pglColSort.key = null; pglColSort.dir = 0;
     pglRefresh();
     return;
@@ -21636,7 +21737,9 @@ $('#pubFilters') && $('#pubFilters').addEventListener('input', function(e){
 });
 $('#pubFilters') && $('#pubFilters').addEventListener('change', function(e){
   const t = e.target;
-  if (t.id === 'pubFEndDateStart'){ pglEndDateStart = t.value; }
+  if (t.id === 'pubFPeriodDateStart'){ pglPeriodDateStart = t.value; }
+  else if (t.id === 'pubFPeriodDateEnd'){ pglPeriodDateEnd = t.value; }
+  else if (t.id === 'pubFEndDateStart'){ pglEndDateStart = t.value; }
   else if (t.id === 'pubFEndDateEnd'){ pglEndDateEnd = t.value; }
   else return;
   pglRefresh();
@@ -21923,9 +22026,9 @@ $('#cmgFilters') && $('#cmgFilters').addEventListener('change', function(e){
    genérico de tabela (renderGridTable, 20-gerenciar-shorts.js), mesmas colunas
    ID+Reação congeladas/sticky ao rolar (freeze padrão) e mesmo padrão de sidebar.
 
-   A origem da reação (Publicações ou Shorts) é escolhida por dois cartões de
-   atalho no topo do painel — mutuamente exclusivos, sem opção "Todas" (só um
-   dado por vez, igual pedido). Reaproveita, sem duplicar:
+   A origem da reação (Todas/Publicações/Shorts) é escolhida por três cartões
+   de atalho no topo do painel — mutuamente exclusivos, "Todas" selecionada por
+   padrão (mescla os dois). Reaproveita, sem duplicar:
      - INTERACTIONS/buildInteractions/interDT/interRel (11-rede-social.js) para
        as reações de Publicações;
      - REELS_DATA/POSTS (01-home.js) + PEOPLE (03-shorts.js) + STORES
@@ -21940,7 +22043,7 @@ $('#cmgFilters') && $('#cmgFilters').addEventListener('change', function(e){
    ===================================================================== */
 
 let rcnColSort = { key: null, dir: 0 };
-let rcnSource = 'pub';
+let rcnSource = 'all';
 let rcnPeriodDateStart = '', rcnPeriodDateEnd = '';
 
 /* Reações de Shorts — mesma forma de objeto que INTERACTIONS (person/av/role/store/reacao/
@@ -21966,7 +22069,8 @@ function rcnShortInteractions(){
 function rcnPool(){
   if (rcnSource === 'short') return rcnShortInteractions();
   if (!INTERACTIONS.length) buildInteractions();
-  return INTERACTIONS.filter(function(x){ return x.tipo === 'reacao'; });
+  const pubs = INTERACTIONS.filter(function(x){ return x.tipo === 'reacao'; });
+  return rcnSource === 'all' ? pubs.concat(rcnShortInteractions()) : pubs;
 }
 function rcnMatch(x){
   if (interPerson && x.person !== interPerson) return false;
@@ -21998,14 +22102,23 @@ function foBuildGerenciarReacoesFilters(){
   const periodItems = periodDefs.map(function(p){ return { value: p[0], label: p[1], selected: interPeriod === p[0] }; });
   const periodLabel = (periodDefs.filter(function(p){ return p[0] === interPeriod; })[0] || periodDefs[0])[1];
 
-  /* Cartões "Publicações"/"Shorts" — mesmo componente das outras telas (.rxs-item2 dentro de
-     .nv-sitcards.nv-sit2, ver #pubSitCards/#mgSitCards), só que 1x2 em vez de 2x2, com os
-     mesmos ícones dos itens de menu "Publicações"/"Shorts". Escolhem a origem dos dados
-     (rcnSource), mutuamente exclusivos, sem opção "Todas". */
-  const sourceDefs = [['pub', 'Publicações', 'fa-solid fa-rectangle-list'], ['short', 'Shorts', 'fa-solid fa-clapperboard']];
+  /* Cartões "Todas"/"Publicações"/"Shorts" — mesmo componente das outras telas (.rxs-item2
+     dentro de .nv-sitcards, ver #pubSitCards/#mgSitCards), 1x3 (grid base de 3 colunas, sem o
+     modificador .nv-sit2 usado pelos pares 2 a 2), com os mesmos ícones dos itens de menu
+     "Publicações"/"Shorts" e o ícone padrão do projeto pra "Todos/Todas" (fa-layer-group).
+     "Publicações" usa o par de ícones list-box preenchido/contornado (troca conforme
+     selecionado, igual ao restante do projeto). Escolhem a origem dos dados (rcnSource),
+     mutuamente exclusivos, "Todas" mescla as duas. */
+  const RCN_ICO_PUB_ON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>list-box</title><path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M7 7H9V9H7V7M7 11H9V13H7V11M7 15H9V17H7V15M17 17H11V15H17V17M17 13H11V11H17V13M17 9H11V7H17V9Z" /></svg>';
+  const RCN_ICO_PUB_OFF = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>list-box-outline</title><path d="M11 15H17V17H11V15M9 7H7V9H9V7M11 13H17V11H11V13M11 9H17V7H11V9M9 11H7V13H9V11M21 5V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5M19 5H5V19H19V5M9 15H7V17H9V15Z" /></svg>';
+  const sourceDefs = [
+    ['all', 'Todas', '<i class="fa-solid fa-layer-group"></i>'],
+    ['pub', 'Publicações', rcnSource === 'pub' ? RCN_ICO_PUB_ON : RCN_ICO_PUB_OFF],
+    ['short', 'Shorts', '<i class="fa-solid fa-clapperboard"></i>']
+  ];
   let html = '<div class="nv-fsec"><div class="nv-fsec-hd">Quais reações você quer ver? <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="cv-seg nv-sitcards nv-sit2" id="rcnSitCards">' +
-    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="rxs-item2 ' + (rcnSource === s[0] ? 'active' : '') + '"><i class="' + s[2] + '"></i>' + s[1] + '</button>'; }).join('') +
+    '<div class="cv-seg nv-sitcards" id="rcnSitCards">' +
+    sourceDefs.map(function(s){ return '<button data-rcnsource="' + s[0] + '" class="rxs-item2 ' + (rcnSource === s[0] ? 'active' : '') + '">' + s[2] + s[1] + '</button>'; }).join('') +
     '</div></div>';
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Reação <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol" style="margin-bottom:12px"><label>Tipo</label>' + rxDDWrap('rcnFReact', reactLabel, reactItems) + '</div>' +
@@ -22013,8 +22126,8 @@ function foBuildGerenciarReacoesFilters(){
       '<div class="nv-ffcol"><label>Autor</label>' + rxDDWrap('rcnFPerson', personLabel, personItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
       '<div class="nv-ffcol"><label>Unidade do autor</label>' + rxDDWrap('rcnFUnit', unitLabel, unitItems, 'fa-earth-americas', 'fa-magnifying-glass') + '</div>' +
     '</div></div>';
-  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : 'Publicação') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Título</label><div class="nv-ffield"><input type="text" id="rcnFTitulo" placeholder="' + (rcnSource === 'short' ? 'Pesquisar short...' : 'Pesquisar publicação...') + '" value="' + (interQuery || '') + '" autocomplete="off"></div></div>' +
+  html += '<div class="nv-fsec"><div class="nv-fsec-hd">' + (rcnSource === 'short' ? 'Short' : rcnSource === 'all' ? 'Publicação e Short' : 'Publicação') + ' <i class="fa-solid fa-chevron-up"></i></div>' +
+    '<div class="nv-ffcol"><label>Título</label><div class="nv-ffield"><input type="text" id="rcnFTitulo" placeholder="' + (rcnSource === 'short' ? 'Pesquisar short...' : rcnSource === 'all' ? 'Pesquisar publicação ou short...' : 'Pesquisar publicação...') + '" value="' + (interQuery || '') + '" autocomplete="off"></div></div>' +
     '</div>';
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de reação <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"' + (interPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione uma opção</label>' + rxDDWrap('rcnFPeriod', periodLabel, periodItems) + '</div>' +
@@ -22078,7 +22191,7 @@ function renderGerenciarReacoesList(list){
     { key: 'person', label: 'Autor' },
     { key: 'unit', label: 'Unidade do autor' },
     { key: 'time', label: 'Reagiu em' },
-    { key: 'pub', label: rcnSource === 'short' ? 'Shorts' : 'Publicações' }
+    { key: 'pub', label: rcnSource === 'short' ? 'Shorts' : rcnSource === 'all' ? 'Publicações e Shorts' : 'Publicações' }
   ];
   renderGridTable({
     grid, columns, rowsHTML, sort: rcnColSort,
@@ -22118,7 +22231,7 @@ $('#rcnFilters') && $('#rcnFilters').addEventListener('click', function(e){
   const src = e.target.closest('#rcnSitCards button');
   if (src){ rcnSource = src.dataset.rcnsource; interPerson = ''; interStore = ''; rcnRefresh(); return; }
   if (e.target.closest('#rcnFClear')){
-    rcnSource = 'pub'; interQuery = ''; interPerson = ''; interStore = ''; interPeriod = ''; interReact = '';
+    rcnSource = 'all'; interQuery = ''; interPerson = ''; interStore = ''; interPeriod = ''; interReact = '';
     rcnPeriodDateStart = ''; rcnPeriodDateEnd = '';
     rcnColSort.key = null; rcnColSort.dir = 0;
     rcnRefresh();

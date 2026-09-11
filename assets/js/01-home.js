@@ -346,13 +346,15 @@ function matchReel(r){
   if (rxMinViews && numVal(r.views) < +rxMinViews) return false;
   if (rxMinLikes && numVal(r.likes) < +rxMinLikes) return false;
   /* GERENCIAR > SHORTS (admin, ver assets/js/20-gerenciar-shorts.js): filtros extras da tela de
-     gerenciamento (Tipo/Unidade do autor/Publicado para/Período de encerramento). Presos atrás de
-     curView==='lista' de propósito, para não vazar para a grade/feed social de Shorts — mesmo que
-     rxFormat/rxReach fiquem com um valor selecionado de uma visita anterior à tela de gerenciamento. */
+     gerenciamento (Tipo/Unidade do autor/Publicado para/Período de publicação personalizado/
+     Período de encerramento). Presos atrás de curView==='lista' de propósito, para não vazar para
+     a grade/feed social de Shorts — mesmo que rxFormat/rxReach fiquem com um valor selecionado de
+     uma visita anterior à tela de gerenciamento. */
   if (curView === 'lista'){
     if (rxFormat && rFormat(r)!==rxFormat) return false;
     if (typeof rxUnitFilter!=='undefined' && rxUnitFilter && sbUnidade(post) !== rxUnitFilter) return false;
     if (rxReach && typeof rxReachFor==='function' && rxReachFor(r.p) !== rxReach) return false;
+    if (curPeriod === 'custom' && typeof rxPubInPeriod==='function' && !rxPubInPeriod(post.time, rxPeriodDateStart, rxPeriodDateEnd)) return false;
     if (typeof rxEndPeriod!=='undefined' && rxEndPeriod && rxEndPeriod!=='tudo' && typeof rxEndInPeriod==='function' && !rxEndInPeriod(r.encerra, rxEndPeriod, rxEndDateStart, rxEndDateEnd)) return false;
   }
   if (catById(curFilter) && r.cat !== curFilter) return false;
@@ -449,6 +451,12 @@ function renderGrid(){
   rxGrid.innerHTML = '';
   rxGrid.hidden = list.length === 0;
   $('#rxEmpty').hidden = list.length > 0;
+  /* GERENCIAR > SHORTS (admin): tabela de gerenciamento, implementada à parte em
+     assets/js/20-gerenciar-shorts.js (renderGerenciarShortsList) para não misturar com a grade/feed
+     social de shorts abaixo, que continua sendo o resto desta função — sai antes da barra
+     "rx-current"/"Limpar filtro" (abaixo), que é só da grade/feed social; a tela de gerenciamento
+     já tem seu próprio "Limpar filtros" na sidebar. */
+  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderGerenciarShortsList(list); return; }
   const head = document.createElement('div');
   head.className = 'rx-current'; head.style.gridColumn = '1/-1';
   const showClear = curFilter !== 'todos' || curQuery || curPeriod !== 'tudo';
@@ -471,10 +479,6 @@ function renderGrid(){
     bn.addEventListener('click', () => { curFilter='naovistos'; foBuildReelFilters(); renderGrid(); });
     rxGrid.appendChild(bn);
   }
-  /* GERENCIAR > SHORTS (admin): tabela de gerenciamento, implementada à parte em
-     assets/js/20-gerenciar-shorts.js (renderGerenciarShortsList) para não misturar com a grade/feed
-     social de shorts abaixo, que continua sendo o resto desta função. */
-  if (managed && curView === 'lista'){ rxGrid.style.display='block'; renderGerenciarShortsList(list); return; }
   const plain = (curFilter!=='todos') || curQuery || curPeriod!=='tudo' || rxMinViews || rxMinLikes;
   if (plain){
     rxGrid.style.display='';

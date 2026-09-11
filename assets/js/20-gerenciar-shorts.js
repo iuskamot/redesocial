@@ -24,6 +24,7 @@
    colSort — já existem em 01-home.js e são reaproveitados). */
 let rxUnitFilter = '';
 let rxEndPeriod = 'tudo', rxEndDateStart = '', rxEndDateEnd = '';
+let rxPeriodDateStart = '', rxPeriodDateEnd = '';
 
 /* GERENCIAR > SHORTS (admin): mesma unidade de sbUnidade(post)/SB_UNIDADES (01-home.js), só que
    devolvendo o objeto inteiro {name,company,color,ini} em vez do nome — usado pela pílula colorida
@@ -56,6 +57,12 @@ function rxFullRel(t){
 }
 
 /* Filtro "Período de encerramento" — r.encerra é um timestamp futuro (ms) */
+function rxPubInPeriod(timeStr, ds, de){
+  const t = Date.now() - hoursVal(timeStr) * 3600000;
+  if (ds && t < new Date(ds + 'T00:00:00').getTime()) return false;
+  if (de && t > new Date(de + 'T23:59:59').getTime()) return false;
+  return true;
+}
 function rxEndInPeriod(encerra, period, ds, de){
   if (period === 'naoencerra') return !encerra;
   if (!encerra) return false;
@@ -214,15 +221,19 @@ function foBuildGerenciarShortsFilters(){
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Publicado para <i class="fa-solid fa-chevron-up"></i></div>' +
     '<div class="nv-ffcol"><label>Selecione um destino</label>' + rxDDWrap('rxFReach', reachLabel, reachItems) + '</div>' +
     '</div>';
-  /* "Período de publicação" fica com as mesmas opções de PERIOD_H (24h/7d/30d/90d) já usadas em
-     todo o app — sem "hoje"/"personalizado" (que a referência tem, mas sem um filtro que as
-     avalie de fato); assim o campo continua totalmente funcional, só que com um menu customizado
-     em vez do <select> nativo, para o mesmo visual dos demais campos desta sidebar. */
-  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['90d', 'Últimos 90 dias']];
+  /* "Período de publicação" usa as opções de PERIOD_H (24h/7d/30d) já usadas em todo o app, mais
+     "Período personalizado" (rxPeriodDateStart/rxPeriodDateEnd, avaliado só dentro de
+     curView==='lista' — mesma mecânica/gate de "Período de encerramento" logo abaixo), num menu
+     customizado em vez do <select> nativo, para o mesmo visual dos demais campos desta sidebar. */
+  const periodDefs = [['tudo', 'Qualquer período'], ['24h', 'Últimas 24 h'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado']];
   const periodItems = periodDefs.map(p => ({ value: p[0], label: p[1], selected: curPeriod === p[0] }));
   const periodLabel = (periodDefs.find(p => p[0] === curPeriod) || periodDefs[0])[1];
   html += '<div class="nv-fsec"><div class="nv-fsec-hd">Período de publicação <i class="fa-solid fa-chevron-up"></i></div>' +
-    '<div class="nv-ffcol"><label>Selecione um período</label>' + rxDDWrap('rxFPeriod', periodLabel, periodItems) + '</div>' +
+    '<div class="nv-ffcol"' + (curPeriod === 'custom' ? ' style="margin-bottom:12px"' : '') + '><label>Selecione um período</label>' + rxDDWrap('rxFPeriod', periodLabel, periodItems) + '</div>' +
+    (curPeriod === 'custom' ? '<div class="nv-ffrow nv-ffrow-last">' +
+      '<div class="nv-ffcol"><label>A partir de</label>' + rxDateField('rxFPeriodDateStart', rxPeriodDateStart) + '</div>' +
+      '<div class="nv-ffcol"><label>Até quando</label>' + rxDateField('rxFPeriodDateEnd', rxPeriodDateEnd) + '</div>' +
+    '</div>' : '') +
     '</div>';
   const endPeriodDefs = [['tudo', 'Qualquer período'], ['hoje', 'Hoje'], ['7d', 'Últimos 7 dias'], ['30d', 'Últimos 30 dias'], ['custom', 'Período personalizado'], ['naoencerra', 'Não se encerra']];
   const endPeriodItems = endPeriodDefs.map(p => ({ value: p[0], label: p[1], selected: rxEndPeriod === p[0] }));
@@ -379,7 +390,7 @@ $('#rxFilters').addEventListener('click', e => {
   if (e.target.closest('#rxFClear')){
     /* o handler de #rxFClear em 01-home.js já limpa curFilter/curQuery/curPeriod/rxFormat/rxStatus/
        etc. e re-renderiza; aqui só falta zerar o que é exclusivo desta tela. */
-    rxUnitFilter = ''; rxEndPeriod = 'tudo'; rxEndDateStart = ''; rxEndDateEnd = '';
+    rxUnitFilter = ''; rxPeriodDateStart = ''; rxPeriodDateEnd = ''; rxEndPeriod = 'tudo'; rxEndDateStart = ''; rxEndDateEnd = '';
     colSort.key = null; colSort.dir = 0;
     foBuildReelFilters(); renderGrid();
     return;
@@ -413,7 +424,9 @@ $('#rxFilters').addEventListener('input', e => {
 });
 $('#rxFilters').addEventListener('change', e => {
   const t = e.target;
-  if (t.id === 'rxFEndDateStart'){ rxEndDateStart = t.value; }
+  if (t.id === 'rxFPeriodDateStart'){ rxPeriodDateStart = t.value; }
+  else if (t.id === 'rxFPeriodDateEnd'){ rxPeriodDateEnd = t.value; }
+  else if (t.id === 'rxFEndDateStart'){ rxEndDateStart = t.value; }
   else if (t.id === 'rxFEndDateEnd'){ rxEndDateEnd = t.value; }
   else return;
   foBuildReelFilters(); renderGrid();
