@@ -39,9 +39,8 @@ function applyFold(){
   /* duas linhas cheias: o nº de colunas vem do próprio grid, então o limite
      acompanha os breakpoints (7 no desktop, 5 e 4 nas telas menores) */
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
-  /* duas linhas na home; na visao de Enquetes, uma so */
-  const linhas = document.body.classList.contains('home-enquetes') ? 1 : 2;
-  const limit = colunas * linhas;
+  /* uma linha fechada, na home e em Enquetes: o resto vem no "Ver +N modulos" */
+  const limit = colunas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
   if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver +'+Math.max(0, elig.length-limit)+' módulos';

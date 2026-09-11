@@ -675,3 +675,56 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 #homeShorts .section-title,
 #homeFeedTitle .section-title{font-size:20px}
 
+
+/* A fileira de Shorts da home entra sem cabecalho: saem o titulo e o
+   "Ver todos os shorts". */
+#homeShorts .section-title-row{display:none}
+
+/* As publicacoes na largura do LinkedIn, 555px. E padding lateral, como pedido,
+   mas calculado em vez de fixo: assim o resultado e sempre 555, e nao uma
+   largura que muda junto com a coluna. O max(0px, ...) evita padding negativo
+   quando a coluna e mais estreita que isso, no mobile. */
+.col-main > .feed{padding-inline:max(0px, calc((100% - 555px) / 2))}
+
+/* Sem o cabecalho, quem dava a folga entre o painel de modulos e a fileira de
+   Shorts saiu junto. O respiro volta como 24px visiveis: a fita ja carrega
+   12px de padding no topo (o espaco da sombra do card), entao a margem
+   completa os outros 12. Da fileira para as publicacoes os 24px ja vinham do
+   padding-top do titulo do Feed. */
+.col-main > #homeShorts{margin-top:12px}
+
+/* ---- As publicacoes dentro do bloco de criar publicacao ----
+   Com 555px num corredor de 879 elas ficavam soltas no meio do cinza da
+   pagina. Agora o compositor e a lista sao uma caixa so: a cabeca branca em
+   cima e as publicacoes embaixo, sobre um fundo mais claro que o da pagina —
+   o proprio #E9EAED no meio do caminho para o branco. Os cartoes continuam
+   brancos, entao seguem se destacando dentro dela.
+   Vale so no desktop: no celular o feed sangra de ponta a ponta, sem caixa.
+   O !important alcanca o style="margin-bottom:8px" que o compositor carrega
+   no markup — inline so cede a isso. */
+/* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
+   Os 24px de padding no topo faziam sentido quando ele era uma secao solta na
+   coluna; aqui quem da o respiro e o padding do proprio bloco. A folga de
+   12px ate o campo de publicar continua vindo do margin dele. */
+.nvf-composer > #homeFeedTitle{padding-top:0}
+
+@media(min-width:641px){
+  .col-main > .nvf-composer{margin-bottom:0 !important;border-bottom:0;border-radius:14px 14px 0 0}
+  /* os 24px ate a fileira de Shorts vinham daquele padding do titulo: agora
+     sao do bloco, que passou a ser o primeiro elemento depois dela */
+  .col-main > .nvf-composer{margin-top:24px}
+  .col-main > .feed{
+    padding-block:16px;background:#F4F5F6;
+    border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;
+    /* o padding lateral vem de uma porcentagem, que mede a coluna inteira e
+       nao enxerga a borda nova: sem descontar os 2px a publicacao saia 553 */
+    padding-inline:max(0px, calc((100% - 557px) / 2));
+  }
+  /* quem nao pode publicar nao tem compositor: a caixa fecha em cima sozinha */
+  body.demo-crunch:not(.crunch-admin) .col-main > .feed{border-top:1px solid var(--line);border-radius:14px}
+}
+
+/* O cabecalho do Feed sai de cena: o titulo e o "Ver todas as publicacoes".
+   Oculto, nao removido — o markup fica inteiro dentro do bloco de criar
+   publicacao para poder voltar so tirando esta regra. */
+#homeFeedTitle{display:none}

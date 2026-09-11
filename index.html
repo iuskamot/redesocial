@@ -4257,6 +4257,59 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 #homeFeedTitle .section-title{font-size:20px}
 
 
+/* A fileira de Shorts da home entra sem cabecalho: saem o titulo e o
+   "Ver todos os shorts". */
+#homeShorts .section-title-row{display:none}
+
+/* As publicacoes na largura do LinkedIn, 555px. E padding lateral, como pedido,
+   mas calculado em vez de fixo: assim o resultado e sempre 555, e nao uma
+   largura que muda junto com a coluna. O max(0px, ...) evita padding negativo
+   quando a coluna e mais estreita que isso, no mobile. */
+.col-main > .feed{padding-inline:max(0px, calc((100% - 555px) / 2))}
+
+/* Sem o cabecalho, quem dava a folga entre o painel de modulos e a fileira de
+   Shorts saiu junto. O respiro volta como 24px visiveis: a fita ja carrega
+   12px de padding no topo (o espaco da sombra do card), entao a margem
+   completa os outros 12. Da fileira para as publicacoes os 24px ja vinham do
+   padding-top do titulo do Feed. */
+.col-main > #homeShorts{margin-top:12px}
+
+/* ---- As publicacoes dentro do bloco de criar publicacao ----
+   Com 555px num corredor de 879 elas ficavam soltas no meio do cinza da
+   pagina. Agora o compositor e a lista sao uma caixa so: a cabeca branca em
+   cima e as publicacoes embaixo, sobre um fundo mais claro que o da pagina —
+   o proprio #E9EAED no meio do caminho para o branco. Os cartoes continuam
+   brancos, entao seguem se destacando dentro dela.
+   Vale so no desktop: no celular o feed sangra de ponta a ponta, sem caixa.
+   O !important alcanca o style="margin-bottom:8px" que o compositor carrega
+   no markup — inline so cede a isso. */
+/* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
+   Os 24px de padding no topo faziam sentido quando ele era uma secao solta na
+   coluna; aqui quem da o respiro e o padding do proprio bloco. A folga de
+   12px ate o campo de publicar continua vindo do margin dele. */
+.nvf-composer > #homeFeedTitle{padding-top:0}
+
+@media(min-width:641px){
+  .col-main > .nvf-composer{margin-bottom:0 !important;border-bottom:0;border-radius:14px 14px 0 0}
+  /* os 24px ate a fileira de Shorts vinham daquele padding do titulo: agora
+     sao do bloco, que passou a ser o primeiro elemento depois dela */
+  .col-main > .nvf-composer{margin-top:24px}
+  .col-main > .feed{
+    padding-block:16px;background:#F4F5F6;
+    border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;
+    /* o padding lateral vem de uma porcentagem, que mede a coluna inteira e
+       nao enxerga a borda nova: sem descontar os 2px a publicacao saia 553 */
+    padding-inline:max(0px, calc((100% - 557px) / 2));
+  }
+  /* quem nao pode publicar nao tem compositor: a caixa fecha em cima sozinha */
+  body.demo-crunch:not(.crunch-admin) .col-main > .feed{border-top:1px solid var(--line);border-radius:14px}
+}
+
+/* O cabecalho do Feed sai de cena: o titulo e o "Ver todas as publicacoes".
+   Oculto, nao removido — o markup fica inteiro dentro do bloco de criar
+   publicacao para poder voltar so tirando esta regra. */
+#homeFeedTitle{display:none}
+
 /* comentarios */
 /* ============ Comentários (estilo LinkedIn) ============ */
 .post-actions{display:flex;border-top:1px solid var(--line);margin-top:0;padding:10px 0 0}
@@ -6152,33 +6205,36 @@ body .pc-avwrap:hover .pc-avedit,
 body .pc-avedit:focus-visible{opacity:1;pointer-events:auto}
 body .pc-avedit:hover{background:var(--marca-forte)}
 
-/* ---- Enquetes: a variante com o cartao de perfil simples ----
+/* ---- O cartao de perfil simples ----
+   Vale na visao de Enquetes e na home sem cliente ligado: faixa azul com a
+   logo do SULTS em cima, foto centrada, nome e cargo embaixo, e o miolo fora
+   de cena. Com um cliente ligado (icone da Play Store, versao personalizavel)
+   o cartao completo continua valendo: e nele que vivem a capa da empresa, o
+   bloco da marca e o atalho do perfil.
    Mora aqui, e nao no 08-feed.css, porque desfaz regras deste arquivo: la o
    bloco carregava antes e empatava em especificidade com elas, entao o cartao
-   continuava sendo grid e o margin:auto da foto nao tinha efeito.
-   O cartao volta ao formato antigo — faixa com a logo do SULTS, foto centrada,
-   nome e cargo embaixo — e o miolo sai de cena. Sao as regras do cartao
-   completo desfeitas uma a uma; o elemento no markup continua sendo o mesmo,
-   nao ha um segundo cartao escondido. A fileira de Shorts, essa sim, muda de
-   lugar de verdade, e quem faz isso e o 13-extras.js. */
-body.home-enquetes .profile-card{display:block;text-align:center;padding-bottom:24px}
-body.home-enquetes .pc-extra{display:none}
+   continuava sendo grid e o margin:auto da foto nao tinha efeito. Sao as
+   regras do cartao completo desfeitas uma a uma; o elemento no markup continua
+   sendo o mesmo, nao ha um segundo cartao escondido. A fileira de Shorts, essa
+   sim, muda de lugar de verdade em Enquetes, e quem faz isso e o 13-extras.js. */
+body:is(.home-enquetes, :not([data-cliente])) .profile-card{display:block;text-align:center;padding-bottom:24px}
+body:is(.home-enquetes, :not([data-cliente])) .pc-extra{display:none}
 /* a faixa larga da capa da lugar a do desenho antigo: azul, 120px e a logo */
-body.home-enquetes .profile-card .profile-banner{
+body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-banner{
   background:var(--navy);aspect-ratio:auto;height:120px;padding-bottom:39px}
-body.home-enquetes .profile-card .profile-banner svg.profile-logo{display:block}
+body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-banner svg.profile-logo{display:block}
 /* o wrapper da foto volta a nao criar caixa: com ele em width:max-content o
    margin:auto do avatar nao tinha folga para distribuir e a foto ficava presa
    a esquerda. Sem caixa, quem centra e o proprio cartao. */
-body.home-enquetes .pc-avwrap{display:contents}
+body:is(.home-enquetes, :not([data-cliente])) .pc-avwrap{display:contents}
 /* cartao simples nao tem o botao de trocar foto */
-body.home-enquetes .pc-avedit{display:none}
-body.home-enquetes .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
-body.home-enquetes .profile-card .profile-name,
-body.home-enquetes .profile-card .profile-role{
+body:is(.home-enquetes, :not([data-cliente])) .pc-avedit{display:none}
+body:is(.home-enquetes, :not([data-cliente])) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
+body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-name,
+body:is(.home-enquetes, :not([data-cliente])) .profile-card .profile-role{
   grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
 /* a altura passa a ser a do conteudo: sem seguir o painel de modulos */
-body.home-enquetes .profile-card{min-height:0 !important}
+body:is(.home-enquetes, :not([data-cliente])) .profile-card{min-height:0 !important}
 /* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
    o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
    ser so o gap de 24px da propria coluna. */
@@ -7846,11 +7902,11 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
       </section>
 
       <!-- ========== FEED (estilo LinkedIn) ========== -->
-      <div class="section-title-row" id="homeFeedTitle">
-        <h2 class="section-title">Feed</h2>
-        <a href="#" class="see-all demo-filled" id="homeSeeAllPubs">Ver todas as publicações <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
       <div class="nvf-composer" style="margin-bottom:8px">
+        <div class="section-title-row" id="homeFeedTitle">
+          <h2 class="section-title">Feed</h2>
+          <a href="#" class="see-all demo-filled" id="homeSeeAllPubs">Ver todas as publicações <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
         <div class="nvf-composer-top">
           <span class="avatar av-rc"></span>
           <button class="nvf-start" id="homeStart">Comece uma publicação</button>
@@ -12153,9 +12209,8 @@ function applyFold(){
   /* duas linhas cheias: o nº de colunas vem do próprio grid, então o limite
      acompanha os breakpoints (7 no desktop, 5 e 4 nas telas menores) */
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
-  /* duas linhas na home; na visao de Enquetes, uma so */
-  const linhas = document.body.classList.contains('home-enquetes') ? 1 : 2;
-  const limit = colunas * linhas;
+  /* uma linha fechada, na home e em Enquetes: o resto vem no "Ver +N modulos" */
+  const limit = colunas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
   if(_l && !appsToggle.classList.contains('open')) _l.textContent = 'Ver +'+Math.max(0, elig.length-limit)+' módulos';
@@ -18206,8 +18261,10 @@ function customAlternar(){
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
-    /* na variante de Enquetes o cartao tem a altura do proprio conteudo */
-    if (document.body.classList.contains("home-enquetes")){ card.style.minHeight = ""; return; }
+    /* o cartao simples (Enquetes, e a home sem cliente ligado) tem a altura do
+       proprio conteudo: nao ha miolo para esticar ate o painel de modulos */
+    if (document.body.classList.contains("home-enquetes") || !document.body.dataset.cliente){
+      card.style.minHeight = ""; return; }
     /* no celular as colunas empilham e nao ha o que acompanhar */
     if (window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
     if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);

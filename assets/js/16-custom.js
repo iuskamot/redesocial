@@ -258,8 +258,10 @@ function customAlternar(){
   function pcSincronizaAltura(){
     const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
-    /* na variante de Enquetes o cartao tem a altura do proprio conteudo */
-    if (document.body.classList.contains("home-enquetes")){ card.style.minHeight = ""; return; }
+    /* o cartao simples (Enquetes, e a home sem cliente ligado) tem a altura do
+       proprio conteudo: nao ha miolo para esticar ate o painel de modulos */
+    if (document.body.classList.contains("home-enquetes") || !document.body.dataset.cliente){
+      card.style.minHeight = ""; return; }
     /* no celular as colunas empilham e nao ha o que acompanhar */
     if (window.matchMedia('(max-width: 640px)').matches){ card.style.minHeight = ''; return; }
     if (!pcGradeAberta()) pcAlturaFixa = Math.round(painel.getBoundingClientRect().height);
