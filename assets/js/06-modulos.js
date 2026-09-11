@@ -39,8 +39,10 @@ function applyFold(){
   /* duas linhas cheias: o nº de colunas vem do próprio grid, então o limite
      acompanha os breakpoints (7 no desktop, 5 e 4 nas telas menores) */
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
-  /* uma linha fechada, na home e em Enquetes: o resto vem no "Ver +N modulos" */
-  const limit = colunas;
+  /* uma linha fechada; na variante Powerups a grade vive na coluna estreita
+     da direita, onde cabem menos por linha, entao ali sao duas */
+  const linhas = document.body.classList.contains('home-powerups') ? 2 : 1;
+  const limit = colunas * linhas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
   /* o numero e o total de modulos, nao o que ficou de fora da linha */

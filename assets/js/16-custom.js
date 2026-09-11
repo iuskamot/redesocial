@@ -253,11 +253,16 @@ function customAlternar(){
     return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
   function pcSincronizaAltura(){
-    const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
+    /* o cartao que interessa e o que esta ao lado do painel, na coluna da
+       direita: na home e a copia de vitrine, e o de verdade mora na esquerda */
+    const card = document.querySelector('.col-right .profile-card') || document.getElementById('homeProfileCard'),
+          painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
     card.style.minHeight = ''; card.style.height = '';
-    /* no celular as colunas empilham, e em Enquetes o painel nao esta ao lado */
+    /* em Enquetes e em Powerups o painel nao esta ao lado do cartao (na
+       segunda ele nem esta na mesma coluna), e no celular as colunas empilham */
     if (document.body.classList.contains('home-enquetes') ||
+        document.body.classList.contains('home-powerups') ||
         window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
     if (pcGradeAberta()) return;
     const h = Math.round(card.getBoundingClientRect().height);

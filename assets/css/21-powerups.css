@@ -1,0 +1,89 @@
+/* ============ Powerups: a mesma home, com o feed em primeiro ============
+   O problema desta home era vertical. Painel de modulos, fileira de Shorts e
+   campo de publicar empilhados antes do feed empurravam a primeira publicacao
+   para 685px do topo: numa janela de 950 sobrava so o cabecalho dela, e so
+   dava para saber que havia publicacoes rolando a pagina.
+
+   Aqui o arranjo e o do LinkedIn — tres faixas, a do meio comecando no campo
+   de publicar. O que estava empilhado antes dele passa a ser cartao da coluna
+   da direita: o painel de modulos primeiro, a fileira de Shorts abaixo dele.
+   Quem troca os dois de coluna e o 13-extras.js; o resto e so arranjo.
+
+   Nada aqui vale fora desta variante: tudo esta escopado em body.home-powerups
+   e a classe so existe enquanto o item Powerups esta aberto. */
+
+/* ---- A coluna do meio: filtros a esquerda, publicacoes a direita ----
+   Sem o painel e sem os Shorts, sobram duas linhas: o campo de publicar e o
+   feed. Os filtros continuam atravessando a faixa da esquerda inteira. */
+body.home-powerups .col-main{grid-template-rows:min-content min-content auto}
+body.home-powerups .col-main > #homeFiltros{grid-area:1 / 1 / 4 / 2;margin-top:0}
+body.home-powerups .col-main > .nvf-composer{grid-area:1 / 2 / 2 / 3;margin-top:0}
+body.home-powerups .col-main > .feed,
+body.home-powerups .col-main > .demo-empty-state{grid-area:2 / 2 / 3 / 3;margin-top:0}
+
+/* ---- O painel de modulos vira um cartao da coluna da direita ----
+   Na faixa de 340px o proprio container query da grade ja desce para quatro
+   por linha; o que falta e o cartao caber nessa largura. O canto acompanha os
+   vizinhos da coluna (14px, o mesmo do perfil e dos comunicados). */
+body.home-powerups .col-right #appsPanel{padding:16px;border-radius:14px}
+/* a busca de modulo sai: com Organizar e "Ver N modulos" ao lado ela nao cabe
+   em 308px uteis, e a busca da plataforma no topo da tela ja acha modulo */
+body.home-powerups .col-right .apps-search{display:none}
+body.home-powerups .col-right .apps-head{margin-bottom:14px;gap:8px}
+body.home-powerups .col-right .apps-head-right{margin-left:0;width:100%;justify-content:space-between;gap:8px}
+body.home-powerups .col-right .apps-edit,
+body.home-powerups .col-right .apps-expand button{height:34px;padding:0 12px;font-size:13px}
+/* os cartoes encolhem junto: 80px de icone em quatro colunas de 71 nao cabem */
+body.home-powerups .col-right .tile-ic{width:58px;height:58px}
+body.home-powerups .col-right .smi{width:30px;height:30px;background-size:30px}
+body.home-powerups .col-right .tile{gap:6px}
+body.home-powerups .col-right .tl{font-size:11px;line-height:14px}
+body.home-powerups .col-right .apps{row-gap:14px}
+/* na coluna estreita a linha fechada tem altura de sobra nenhuma: o fill que
+   centra os cartoes na home normal nao tem o que distribuir aqui */
+body.home-powerups .col-right #appsPanel{display:block}
+
+/* ---- A fileira de Shorts vira grade de tres, uma linha ----
+   Na home ela rola; aqui rolagem horizontal dentro de uma faixa estreita e
+   ruim de usar, entao sao tres cartoes visiveis e o "Ver todos os shorts"
+   leva ao resto. O cabecalho, que na home fica oculto, volta: solto na coluna
+   da direita o bloco precisa se apresentar. */
+body.home-powerups .col-right #homeShorts .section-title-row{display:flex;margin:0 0 10px;padding-top:0}
+body.home-powerups .col-right #homeShorts .section-title{font-size:16px}
+body.home-powerups .col-right #homeShorts .see-all{font-size:12px}
+body.home-powerups .col-right #homeShorts .shorts{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+  overflow-x:visible;cursor:default;padding:0 0 20px;margin:0 0 -20px}
+body.home-powerups .col-right #homeShorts .shorts > .reel{width:auto}
+/* o "Criar short" atravessa a linha e os tres cartoes vem abaixo dele; o que
+   passa disso fica de fora, que a coluna e estreita e a lista inteira
+   empurraria os comunicados para longe */
+body.home-powerups .col-right #homeShorts .shorts > .reel-create{
+  grid-column:1 / -1;aspect-ratio:auto;height:auto;padding:12px 14px;border-radius:14px}
+body.home-powerups .col-right #homeShorts .shorts > :nth-child(n+5){display:none}
+body.home-powerups .col-right #homeShorts .st-arrow{display:none}
+body.home-powerups .col-right #homeShorts .reel-create .rc-bg{flex-direction:row;gap:10px}
+body.home-powerups .col-right #homeShorts .reel-create .rc-plus2{width:28px;height:28px;font-size:13px;box-shadow:none}
+body.home-powerups .col-right #homeShorts .reel-create .rc-label{font-size:13px}
+/* cartao de ~98px: o texto acompanha */
+body.home-powerups .col-right #homeShorts .reel-av .avatar{width:20px;height:20px}
+body.home-powerups .col-right #homeShorts .reel-title{font-size:10px;line-height:13px;font-weight:600}
+body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:12px}
+
+/* ---- No celular a coluna e uma so ----
+   Empilhado nao ha faixa lateral, e o painel e os Shorts, que aqui moram na
+   coluna da direita, cairiam depois do feed inteiro. A coluna da direita sobe
+   para a frente (order:-1) e a leitura volta a ser a da home: modulos, Shorts,
+   campo de publicar e feed. Os dois tambem voltam ao tamanho de celular. */
+@media(max-width:640px){
+  body.home-powerups .col-right{order:-1}
+  body.home-powerups .col-right > #appsPanel{margin-left:0;margin-right:0}
+  body.home-powerups .col-right #appsPanel{padding:14px 14px 22px;border-radius:0 0 22px 22px}
+  body.home-powerups .col-right .apps-search{display:flex}
+  body.home-powerups .col-right .tile-ic{width:80px;height:80px}
+  body.home-powerups .col-right .smi{width:42px;height:42px;background-size:42px}
+  body.home-powerups .col-right .tl{font-size:13px;line-height:17px}
+  body.home-powerups .col-right #homeShorts .shorts{display:flex;overflow-x:auto;gap:8px}
+  body.home-powerups .col-right #homeShorts .shorts > .reel{width:120px}
+  body.home-powerups .col-right #homeShorts .shorts > :nth-child(n+5){display:flex}
+}

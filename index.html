@@ -675,9 +675,16 @@ input,textarea,select{font-size:14px}
 .nf-close{width:36px;height:36px;border-radius:50%;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center}
 .nf-close:hover{background:#f0f3f6}
 .content{
-  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(280px, calc(50% - 300px), 340px);gap:24px;
   padding:20px 30px;align-items:start;
-  /* Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
+  /* A coluna da direita cede um pouco quando o conteudo aperta, e e isso que
+     mantem as publicacoes no meio: para 552px ficarem centradas, o que esta a
+     direita delas (24 de vao mais a coluna) tem de igualar o que esta a
+     esquerda (a faixa do cartao mais 12 de vao) — dai 50% - 300px. Acima de
+     1280px de conteudo a conta passa dos 340 e ela para de crescer; abaixo de
+     1160 o piso de 280 assume e o centro cede, que mais estreito que isso a
+     coluna dos comunicados ficaria ilegivel.
+     Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
      campo de busca la de cima. O maximo trava a largura nas telas grandes —
      dali para cima nada cresce e o bloco so centra, como no LinkedIn. A
      coluna da direita segue com largura fixa. */
@@ -3768,6 +3775,27 @@ input,textarea,select{font-size:14px}
 .pend-borda{position:absolute;inset:0;z-index:6;pointer-events:none;border:2px solid #f4d98a;border-radius:inherit}
 /* o avatar desce a altura da faixa */
 .reel.is-pend .reel-av{top:32px}
+/* ---- O selo de novo no cartao do short ----
+   Na mesma linha da foto de quem publicou, do outro lado do cartao, e com o
+   mesmo criterio do anel verde em volta dela: so aparece em short que ainda
+   nao foi visto. Quem escreve o selo no markup e o 04-perfil.js, so nesses.
+   Vale na fileira da home — onde quer que ela esteja, que nas variantes do
+   menu ela troca de coluna. Fora dali (a fileira da Rede Social, por exemplo)
+   o selo fica oculto. */
+.reel-novo{display:none}
+/* O selo fica no topo do cartao, na linha em que a foto comeca — os dois a
+   9px da borda, um de cada lado. O verde e o mesmo do anel que marca a foto
+   de quem publicou um short ainda nao visto (#25d366, o do .reel-av): os dois
+   sinais dizem a mesma coisa e falam a mesma lingua. */
+#homeShorts .reel-novo{
+  display:block;position:absolute;top:9px;right:9px;z-index:4;
+  border-radius:999px;background:#25d366;color:#fff;
+  font-size:8px;line-height:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;box-shadow:0 2px 6px rgba(16,32,48,.35);
+  padding:2.5px 6px 2px 6px}
+/* no cartao pendente a faixa de aviso ocupa o topo: a foto desce para 32px e o
+   selo desce junto */
+#homeShorts .reel.is-pend .reel-novo{top:32px}
 .reel-body{position:absolute;left:10px;right:10px;bottom:10px;z-index:3;display:flex;flex-direction:column;gap:3px}
 .reel-title{
   font-size:12px;font-weight:700;line-height:1.3;text-shadow:0 1px 6px rgba(0,0,0,.5);
@@ -4335,6 +4363,13 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   .col-main > .demo-empty-state{grid-area:4 / 2 / 5 / 3;align-self:start}
   /* uma publicacao para a outra no mesmo vao dos filtros */
   .col-main > .feed{gap:12px}
+  /* Na home a faixa da esquerda esta vazia — os filtros so aparecem nas
+     variantes do menu —, entao tudo na coluna do meio atravessa as duas: o
+     painel de modulos, a fileira de Shorts, o campo de publicar e as
+     publicacoes, todos de ponta a ponta. */
+  body:not(.home-powerups):not(.home-enquetes) .col-main > .nvf-composer,
+  body:not(.home-powerups):not(.home-enquetes) .col-main > .feed,
+  body:not(.home-powerups):not(.home-enquetes) .col-main > .demo-empty-state{grid-column:1 / -1}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
      vazia: sem isso as publicacoes encostavam no painel de modulos. Os mesmos
      24px que o campo daria, e que a fileira de Shorts tem ao lado. */
@@ -4347,8 +4382,12 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 }
 
 /* ---- A copia dos filtros da Rede Social, na faixa da esquerda ----
-   Mesma coluna da Rede Social: cartoes empilhados com 12px entre eles. */
+   Mesma coluna da Rede Social: cartoes empilhados com 12px entre eles.
+   Na home ela fica oculta: quem a mostra sao as variantes do menu. A faixa
+   em si — a coluna do grid — continua existindo, porque e ela que segura as
+   publicacoes no meio do conteudo. */
 .home-filtros{display:flex;flex-direction:column;gap:12px}
+body:not(.home-powerups):not(.home-enquetes) #homeFiltros{display:none}
 /* o fio entre os grupos do cartao unico: sangra ate as bordas, descontando os
    16px de padding do .nvf-side-card */
 .home-filtros .hf-div{height:1px;background:var(--line);margin:14px -16px}
@@ -6361,6 +6400,12 @@ body[data-cliente]:not(.demo-custom) .profile-card .profile-banner::after{
   content:"";height:50px;max-height:100%;width:calc(100% - 40px);
   background:var(--marca-logo) center/contain no-repeat;filter:brightness(0) invert(1)}
 
+/* O markup do cartao traz os tres numeros da rede social (publicacoes,
+   curtidas, comentarios), mas eles ficam fora: na home o miolo inteiro esta
+   oculto e na versao personalizavel o lugar deles e da sequencia de dias.
+   Ficam aqui, prontos, para quando houver um cartao que os mostre. */
+.pc-nums{display:none}
+
 /* ============ Módulo Inteligência Artificial ============
    Versão clara da conversa: fundo branco, coluna de leitura estreita e um
    único acento — o teal da marca no compositor e na marca da IA. Todo o resto
@@ -7502,6 +7547,96 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
 #rcnGrid .rl-pubcell>div{ min-width:0 }
 #rcnGrid .rl-pubcell b{ display:block; font-size:14px; font-weight:700; color:#5F666C; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 #rcnGrid .rl-pubcell span{ display:block; font-size:11px; color:#999999; white-space:nowrap }
+
+/* ============ Powerups: a mesma home, com o feed em primeiro ============
+   O problema desta home era vertical. Painel de modulos, fileira de Shorts e
+   campo de publicar empilhados antes do feed empurravam a primeira publicacao
+   para 685px do topo: numa janela de 950 sobrava so o cabecalho dela, e so
+   dava para saber que havia publicacoes rolando a pagina.
+
+   Aqui o arranjo e o do LinkedIn — tres faixas, a do meio comecando no campo
+   de publicar. O que estava empilhado antes dele passa a ser cartao da coluna
+   da direita: o painel de modulos primeiro, a fileira de Shorts abaixo dele.
+   Quem troca os dois de coluna e o 13-extras.js; o resto e so arranjo.
+
+   Nada aqui vale fora desta variante: tudo esta escopado em body.home-powerups
+   e a classe so existe enquanto o item Powerups esta aberto. */
+
+/* ---- A coluna do meio: filtros a esquerda, publicacoes a direita ----
+   Sem o painel e sem os Shorts, sobram duas linhas: o campo de publicar e o
+   feed. Os filtros continuam atravessando a faixa da esquerda inteira. */
+body.home-powerups .col-main{grid-template-rows:min-content min-content auto}
+body.home-powerups .col-main > #homeFiltros{grid-area:1 / 1 / 4 / 2;margin-top:0}
+body.home-powerups .col-main > .nvf-composer{grid-area:1 / 2 / 2 / 3;margin-top:0}
+body.home-powerups .col-main > .feed,
+body.home-powerups .col-main > .demo-empty-state{grid-area:2 / 2 / 3 / 3;margin-top:0}
+
+/* ---- O painel de modulos vira um cartao da coluna da direita ----
+   Na faixa de 340px o proprio container query da grade ja desce para quatro
+   por linha; o que falta e o cartao caber nessa largura. O canto acompanha os
+   vizinhos da coluna (14px, o mesmo do perfil e dos comunicados). */
+body.home-powerups .col-right #appsPanel{padding:16px;border-radius:14px}
+/* a busca de modulo sai: com Organizar e "Ver N modulos" ao lado ela nao cabe
+   em 308px uteis, e a busca da plataforma no topo da tela ja acha modulo */
+body.home-powerups .col-right .apps-search{display:none}
+body.home-powerups .col-right .apps-head{margin-bottom:14px;gap:8px}
+body.home-powerups .col-right .apps-head-right{margin-left:0;width:100%;justify-content:space-between;gap:8px}
+body.home-powerups .col-right .apps-edit,
+body.home-powerups .col-right .apps-expand button{height:34px;padding:0 12px;font-size:13px}
+/* os cartoes encolhem junto: 80px de icone em quatro colunas de 71 nao cabem */
+body.home-powerups .col-right .tile-ic{width:58px;height:58px}
+body.home-powerups .col-right .smi{width:30px;height:30px;background-size:30px}
+body.home-powerups .col-right .tile{gap:6px}
+body.home-powerups .col-right .tl{font-size:11px;line-height:14px}
+body.home-powerups .col-right .apps{row-gap:14px}
+/* na coluna estreita a linha fechada tem altura de sobra nenhuma: o fill que
+   centra os cartoes na home normal nao tem o que distribuir aqui */
+body.home-powerups .col-right #appsPanel{display:block}
+
+/* ---- A fileira de Shorts vira grade de tres, uma linha ----
+   Na home ela rola; aqui rolagem horizontal dentro de uma faixa estreita e
+   ruim de usar, entao sao tres cartoes visiveis e o "Ver todos os shorts"
+   leva ao resto. O cabecalho, que na home fica oculto, volta: solto na coluna
+   da direita o bloco precisa se apresentar. */
+body.home-powerups .col-right #homeShorts .section-title-row{display:flex;margin:0 0 10px;padding-top:0}
+body.home-powerups .col-right #homeShorts .section-title{font-size:16px}
+body.home-powerups .col-right #homeShorts .see-all{font-size:12px}
+body.home-powerups .col-right #homeShorts .shorts{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+  overflow-x:visible;cursor:default;padding:0 0 20px;margin:0 0 -20px}
+body.home-powerups .col-right #homeShorts .shorts > .reel{width:auto}
+/* o "Criar short" atravessa a linha e os tres cartoes vem abaixo dele; o que
+   passa disso fica de fora, que a coluna e estreita e a lista inteira
+   empurraria os comunicados para longe */
+body.home-powerups .col-right #homeShorts .shorts > .reel-create{
+  grid-column:1 / -1;aspect-ratio:auto;height:auto;padding:12px 14px;border-radius:14px}
+body.home-powerups .col-right #homeShorts .shorts > :nth-child(n+5){display:none}
+body.home-powerups .col-right #homeShorts .st-arrow{display:none}
+body.home-powerups .col-right #homeShorts .reel-create .rc-bg{flex-direction:row;gap:10px}
+body.home-powerups .col-right #homeShorts .reel-create .rc-plus2{width:28px;height:28px;font-size:13px;box-shadow:none}
+body.home-powerups .col-right #homeShorts .reel-create .rc-label{font-size:13px}
+/* cartao de ~98px: o texto acompanha */
+body.home-powerups .col-right #homeShorts .reel-av .avatar{width:20px;height:20px}
+body.home-powerups .col-right #homeShorts .reel-title{font-size:10px;line-height:13px;font-weight:600}
+body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:12px}
+
+/* ---- No celular a coluna e uma so ----
+   Empilhado nao ha faixa lateral, e o painel e os Shorts, que aqui moram na
+   coluna da direita, cairiam depois do feed inteiro. A coluna da direita sobe
+   para a frente (order:-1) e a leitura volta a ser a da home: modulos, Shorts,
+   campo de publicar e feed. Os dois tambem voltam ao tamanho de celular. */
+@media(max-width:640px){
+  body.home-powerups .col-right{order:-1}
+  body.home-powerups .col-right > #appsPanel{margin-left:0;margin-right:0}
+  body.home-powerups .col-right #appsPanel{padding:14px 14px 22px;border-radius:0 0 22px 22px}
+  body.home-powerups .col-right .apps-search{display:flex}
+  body.home-powerups .col-right .tile-ic{width:80px;height:80px}
+  body.home-powerups .col-right .smi{width:42px;height:42px;background-size:42px}
+  body.home-powerups .col-right .tl{font-size:13px;line-height:17px}
+  body.home-powerups .col-right #homeShorts .shorts{display:flex;overflow-x:auto;gap:8px}
+  body.home-powerups .col-right #homeShorts .shorts > .reel{width:120px}
+  body.home-powerups .col-right #homeShorts .shorts > :nth-child(n+5){display:flex}
+}
 </style>
 </head>
 <body>
@@ -7531,7 +7666,7 @@ button.nv-ffield{ width:100%; font:inherit; text-align:left; outline:none; curso
     <nav class="hm-side__nav" data-nav>
       <a href="#" class="hm-navitem is-active" id="navHome" title="Home"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--home" aria-hidden="true"></span><span class="hm-navitem__label">Home</span></a>
       <a href="#" class="hm-navitem" title="Aplicativos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--apps" aria-hidden="true"></span><span class="hm-navitem__label">Aplicativos</span></a>
-      <a href="#" class="hm-navitem" title="Powerups"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--powerups" aria-hidden="true"></span><span class="hm-navitem__label">Powerups</span></a>
+      <a href="#" class="hm-navitem" id="navPowerups" title="Powerups"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--powerups" aria-hidden="true"></span><span class="hm-navitem__label">Powerups</span></a>
       <a href="#" class="hm-navitem" title="Links Externos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--links" aria-hidden="true"></span><span class="hm-navitem__label">Links Externos</span></a>
       <a href="#" class="hm-navitem" title="Comunicados"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--comunicados" aria-hidden="true"></span><span class="hm-navitem__label">Comunicados</span></a>
       <a href="#" class="hm-navitem" id="navEnquetes" title="Enquetes"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--enquetes" aria-hidden="true"></span><span class="hm-navitem__label">Enquetes</span></a>
@@ -8202,6 +8337,13 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           </div>
           <!-- no lugar do streak, a marca em cheio: a do cliente no cenario
                Crunchyroll, a do SULTS no resto -->
+          <!-- os numeros da pessoa na rede social: o 16-custom.js preenche
+               qualquer [data-pc] daqui de dentro com a ficha da pessoa da vez -->
+          <div class="pc-nums">
+            <div class="pc-numitem"><b data-pc="pubs">48</b><span>Publicações</span></div>
+            <div class="pc-numitem"><b data-pc="reacoes">1,2 mil</b><span>Curtidas</span></div>
+            <div class="pc-numitem"><b data-pc="comentarios">120</b><span>Comentários</span></div>
+          </div>
           <div class="pc-marca"><img id="pcMarcaLogo" src="uploads/pacote_logotipos_sults/svg/sults-logo-horizontal-branco.svg" alt="SULTS"></div>
           <!-- gamificado: dias seguidos ativo na rede, como no Duolingo -->
           <div class="pc-streak">
@@ -11829,6 +11971,9 @@ function renderShortsInto(row){
       ((post.img||post.poster) ? '<img class="reel-img" src="' + (post.img||post.poster) + '" alt="' + post.alt + '" loading="lazy">'
                 : '<video class="reel-img" src="' + post.video + '" muted preload="metadata"></video>') +
       '<span class="reel-av"><span class="avatar ' + post.av + '">' + post.initials + '</span></span>' +
+      /* selo de novo, na linha da foto: so quem ainda nao foi visto o tem, e
+         so a variante Powerups o mostra (21-powerups.css) */
+      (isSeen(r.p) ? '' : '<span class="reel-novo">Novo</span>') +
       '<span class="reel-body"><span class="reel-title">' + post.title + '</span>' +
       '<span class="reel-meta">' + post.label + '</span></span>';
     b.addEventListener('click', () => openPlayer(list, i));
@@ -12308,8 +12453,10 @@ function applyFold(){
   /* duas linhas cheias: o nº de colunas vem do próprio grid, então o limite
      acompanha os breakpoints (7 no desktop, 5 e 4 nas telas menores) */
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
-  /* uma linha fechada, na home e em Enquetes: o resto vem no "Ver +N modulos" */
-  const limit = colunas;
+  /* uma linha fechada; na variante Powerups a grade vive na coluna estreita
+     da direita, onde cabem menos por linha, entao ali sao duas */
+  const linhas = document.body.classList.contains('home-powerups') ? 2 : 1;
+  const limit = colunas * linhas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
   /* o numero e o total de modulos, nao o que ficou de fora da linha */
@@ -17540,45 +17687,81 @@ function rvShareCopiar(){
   });
 })();
 
-/* ---- Enquetes: a mesma home, com o cartao de perfil simples ----
-   Uma variante para comparar os dois formatos sem duplicar o markup da home:
-   duplicar significaria manter duas copias de ~400 linhas que divergiriam na
-   primeira mudanca. Aqui o que muda e uma classe no body (o cartao volta ao
-   formato antigo, de foto centrada) e um unico no que troca de lugar de
-   verdade: a fileira de Shorts sai da coluna do meio e vai para baixo do
-   cartao, na coluna da direita. Sair do item desfaz as duas coisas. */
+/* ---- As variantes da home ----
+   Duas telas do menu mostram a mesma home com outro arranjo. E variante, e nao
+   copia do markup: duplicar significaria manter duas copias de ~400 linhas que
+   divergiriam na primeira mudanca. O que muda e uma classe no body — o CSS faz
+   o resto — e os poucos blocos que trocam de coluna de verdade.
+
+   Enquetes: o cartao de perfil volta ao formato simples e a fileira de Shorts
+   desce para baixo dele, na coluna da direita.
+
+   Powerups: o feed vem primeiro. O painel de modulos e a fileira de Shorts
+   saem da coluna do meio e viram cartoes da coluna da direita, entao a coluna
+   central comeca no campo de publicar — a primeira publicacao aparece sem
+   rolagem, que era a queixa. Os dois lados ficam grudados no topo enquanto o
+   feed rola.
+
+   Sair para qualquer outro item do menu devolve tudo ao lugar. */
 (function(){
-  const item = document.getElementById('navEnquetes');
-  const shorts = document.getElementById('homeShorts');
   const colDir = document.querySelector('.col-right');
   const colMain = document.querySelector('.col-main');
   const card = document.getElementById('homeProfileCard');
-  if (!item || !shorts || !colDir || !colMain || !card) return;
-  /* de onde o Shorts saiu, para devolver no mesmo lugar */
-  let vizinho = null;
-  function entrar(){
-    if (document.body.classList.contains('home-enquetes')) return;
-    vizinho = shorts.nextElementSibling;
-    colDir.insertBefore(shorts, card.nextElementSibling);
-    document.body.classList.add('home-enquetes');
+  const shorts = document.getElementById('homeShorts');
+  const painel = document.getElementById('appsPanel');
+  if (!colDir || !colMain || !card || !shorts || !painel) return;
+
+  /* onde cada bloco nasce, para devolver no mesmo lugar */
+  const lugares = [shorts, painel].map(function(el){
+    return { el: el, pai: el.parentElement, depois: el.nextElementSibling };
+  });
+  const CLASSES = ['home-enquetes', 'home-powerups'];
+
+  function restaurar(){
+    lugares.forEach(function(l){
+      if (l.el.parentElement !== l.pai || l.el.nextElementSibling !== l.depois){
+        l.pai.insertBefore(l.el, l.depois);
+      }
+    });
+    CLASSES.forEach(function(c){ document.body.classList.remove(c); });
+  }
+  function assentar(){
     if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
     if (typeof applyFold === 'function') applyFold();
+  }
+  function abrir(nome){
+    if (document.body.classList.contains(nome)) return;
+    restaurar();
+    if (nome === 'home-enquetes'){
+      colDir.insertBefore(shorts, card.nextElementSibling);
+    } else if (nome === 'home-powerups'){
+      colDir.insertBefore(painel, card.nextElementSibling);
+      colDir.insertBefore(shorts, painel.nextElementSibling);
+    }
+    document.body.classList.add(nome);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    assentar();
   }
   function sair(){
-    if (!document.body.classList.contains('home-enquetes')) return;
-    colMain.insertBefore(shorts, vizinho);
-    document.body.classList.remove('home-enquetes');
-    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
-    if (typeof applyFold === 'function') applyFold();
+    if (!CLASSES.some(function(c){ return document.body.classList.contains(c); })) return;
+    restaurar();
+    assentar();
   }
-  item.addEventListener('click', function(e){
-    e.preventDefault();
-    if (typeof setNav === 'function') setNav(item);
-    entrar();
+
+  const itens = { 'home-enquetes': document.getElementById('navEnquetes'),
+                  'home-powerups': document.getElementById('navPowerups') };
+  Object.keys(itens).forEach(function(nome){
+    const item = itens[nome];
+    if (!item) return;
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      if (typeof setNav === 'function') setNav(item);
+      abrir(nome);
+    });
   });
   /* qualquer outro item do menu volta para a home normal */
   document.querySelectorAll('.hm-side .hm-navitem').forEach(function(n){
-    if (n === item) return;
+    if (n === itens['home-enquetes'] || n === itens['home-powerups']) return;
     n.addEventListener('click', sair);
   });
 })();
@@ -18431,11 +18614,16 @@ function customAlternar(){
     return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
   function pcSincronizaAltura(){
-    const card = document.getElementById('homeProfileCard'), painel = document.getElementById('appsPanel');
+    /* o cartao que interessa e o que esta ao lado do painel, na coluna da
+       direita: na home e a copia de vitrine, e o de verdade mora na esquerda */
+    const card = document.querySelector('.col-right .profile-card') || document.getElementById('homeProfileCard'),
+          painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
     card.style.minHeight = ''; card.style.height = '';
-    /* no celular as colunas empilham, e em Enquetes o painel nao esta ao lado */
+    /* em Enquetes e em Powerups o painel nao esta ao lado do cartao (na
+       segunda ele nem esta na mesma coluna), e no celular as colunas empilham */
     if (document.body.classList.contains('home-enquetes') ||
+        document.body.classList.contains('home-powerups') ||
         window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
     if (pcGradeAberta()) return;
     const h = Math.round(card.getBoundingClientRect().height);

@@ -463,3 +463,9 @@ body[data-cliente]:not(.demo-custom) .profile-card .profile-banner svg.profile-l
 body[data-cliente]:not(.demo-custom) .profile-card .profile-banner::after{
   content:"";height:50px;max-height:100%;width:calc(100% - 40px);
   background:var(--marca-logo) center/contain no-repeat;filter:brightness(0) invert(1)}
+
+/* O markup do cartao traz os tres numeros da rede social (publicacoes,
+   curtidas, comentarios), mas eles ficam fora: na home o miolo inteiro esta
+   oculto e na versao personalizavel o lugar deles e da sequencia de dias.
+   Ficam aqui, prontos, para quando houver um cartao que os mostre. */
+.pc-nums{display:none}

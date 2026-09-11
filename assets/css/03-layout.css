@@ -473,9 +473,16 @@
 .nf-close{width:36px;height:36px;border-radius:50%;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center}
 .nf-close:hover{background:#f0f3f6}
 .content{
-  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(280px, calc(50% - 300px), 340px);gap:24px;
   padding:20px 30px;align-items:start;
-  /* Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
+  /* A coluna da direita cede um pouco quando o conteudo aperta, e e isso que
+     mantem as publicacoes no meio: para 552px ficarem centradas, o que esta a
+     direita delas (24 de vao mais a coluna) tem de igualar o que esta a
+     esquerda (a faixa do cartao mais 12 de vao) — dai 50% - 300px. Acima de
+     1280px de conteudo a conta passa dos 340 e ela para de crescer; abaixo de
+     1160 o piso de 280 assume e o centro cede, que mais estreito que isso a
+     coluna dos comunicados ficaria ilegivel.
+     Laterais de 30px, as mesmas do .topbar: o conteudo comeca alinhado com o
      campo de busca la de cima. O maximo trava a largura nas telas grandes —
      dali para cima nada cresce e o bloco so centra, como no LinkedIn. A
      coluna da direita segue com largura fixa. */

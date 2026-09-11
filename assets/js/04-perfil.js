@@ -467,6 +467,9 @@ function renderShortsInto(row){
       ((post.img||post.poster) ? '<img class="reel-img" src="' + (post.img||post.poster) + '" alt="' + post.alt + '" loading="lazy">'
                 : '<video class="reel-img" src="' + post.video + '" muted preload="metadata"></video>') +
       '<span class="reel-av"><span class="avatar ' + post.av + '">' + post.initials + '</span></span>' +
+      /* selo de novo, na linha da foto: so quem ainda nao foi visto o tem, e
+         so a variante Powerups o mostra (21-powerups.css) */
+      (isSeen(r.p) ? '' : '<span class="reel-novo">Novo</span>') +
       '<span class="reel-body"><span class="reel-title">' + post.title + '</span>' +
       '<span class="reel-meta">' + post.label + '</span></span>';
     b.addEventListener('click', () => openPlayer(list, i));

@@ -171,6 +171,27 @@
 .pend-borda{position:absolute;inset:0;z-index:6;pointer-events:none;border:2px solid #f4d98a;border-radius:inherit}
 /* o avatar desce a altura da faixa */
 .reel.is-pend .reel-av{top:32px}
+/* ---- O selo de novo no cartao do short ----
+   Na mesma linha da foto de quem publicou, do outro lado do cartao, e com o
+   mesmo criterio do anel verde em volta dela: so aparece em short que ainda
+   nao foi visto. Quem escreve o selo no markup e o 04-perfil.js, so nesses.
+   Vale na fileira da home — onde quer que ela esteja, que nas variantes do
+   menu ela troca de coluna. Fora dali (a fileira da Rede Social, por exemplo)
+   o selo fica oculto. */
+.reel-novo{display:none}
+/* O selo fica no topo do cartao, na linha em que a foto comeca — os dois a
+   9px da borda, um de cada lado. O verde e o mesmo do anel que marca a foto
+   de quem publicou um short ainda nao visto (#25d366, o do .reel-av): os dois
+   sinais dizem a mesma coisa e falam a mesma lingua. */
+#homeShorts .reel-novo{
+  display:block;position:absolute;top:9px;right:9px;z-index:4;
+  border-radius:999px;background:#25d366;color:#fff;
+  font-size:8px;line-height:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;box-shadow:0 2px 6px rgba(16,32,48,.35);
+  padding:2.5px 6px 2px 6px}
+/* no cartao pendente a faixa de aviso ocupa o topo: a foto desce para 32px e o
+   selo desce junto */
+#homeShorts .reel.is-pend .reel-novo{top:32px}
 .reel-body{position:absolute;left:10px;right:10px;bottom:10px;z-index:3;display:flex;flex-direction:column;gap:3px}
 .reel-title{
   font-size:12px;font-weight:700;line-height:1.3;text-shadow:0 1px 6px rgba(0,0,0,.5);
@@ -738,6 +759,13 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   .col-main > .demo-empty-state{grid-area:4 / 2 / 5 / 3;align-self:start}
   /* uma publicacao para a outra no mesmo vao dos filtros */
   .col-main > .feed{gap:12px}
+  /* Na home a faixa da esquerda esta vazia — os filtros so aparecem nas
+     variantes do menu —, entao tudo na coluna do meio atravessa as duas: o
+     painel de modulos, a fileira de Shorts, o campo de publicar e as
+     publicacoes, todos de ponta a ponta. */
+  body:not(.home-powerups):not(.home-enquetes) .col-main > .nvf-composer,
+  body:not(.home-powerups):not(.home-enquetes) .col-main > .feed,
+  body:not(.home-powerups):not(.home-enquetes) .col-main > .demo-empty-state{grid-column:1 / -1}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
      vazia: sem isso as publicacoes encostavam no painel de modulos. Os mesmos
      24px que o campo daria, e que a fileira de Shorts tem ao lado. */
@@ -750,8 +778,12 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 }
 
 /* ---- A copia dos filtros da Rede Social, na faixa da esquerda ----
-   Mesma coluna da Rede Social: cartoes empilhados com 12px entre eles. */
+   Mesma coluna da Rede Social: cartoes empilhados com 12px entre eles.
+   Na home ela fica oculta: quem a mostra sao as variantes do menu. A faixa
+   em si — a coluna do grid — continua existindo, porque e ela que segura as
+   publicacoes no meio do conteudo. */
 .home-filtros{display:flex;flex-direction:column;gap:12px}
+body:not(.home-powerups):not(.home-enquetes) #homeFiltros{display:none}
 /* o fio entre os grupos do cartao unico: sangra ate as bordas, descontando os
    16px de padding do .nvf-side-card */
 .home-filtros .hf-div{height:1px;background:var(--line);margin:14px -16px}

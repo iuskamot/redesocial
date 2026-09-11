@@ -976,45 +976,81 @@ function rvShareCopiar(){
   });
 })();
 
-/* ---- Enquetes: a mesma home, com o cartao de perfil simples ----
-   Uma variante para comparar os dois formatos sem duplicar o markup da home:
-   duplicar significaria manter duas copias de ~400 linhas que divergiriam na
-   primeira mudanca. Aqui o que muda e uma classe no body (o cartao volta ao
-   formato antigo, de foto centrada) e um unico no que troca de lugar de
-   verdade: a fileira de Shorts sai da coluna do meio e vai para baixo do
-   cartao, na coluna da direita. Sair do item desfaz as duas coisas. */
+/* ---- As variantes da home ----
+   Duas telas do menu mostram a mesma home com outro arranjo. E variante, e nao
+   copia do markup: duplicar significaria manter duas copias de ~400 linhas que
+   divergiriam na primeira mudanca. O que muda e uma classe no body — o CSS faz
+   o resto — e os poucos blocos que trocam de coluna de verdade.
+
+   Enquetes: o cartao de perfil volta ao formato simples e a fileira de Shorts
+   desce para baixo dele, na coluna da direita.
+
+   Powerups: o feed vem primeiro. O painel de modulos e a fileira de Shorts
+   saem da coluna do meio e viram cartoes da coluna da direita, entao a coluna
+   central comeca no campo de publicar — a primeira publicacao aparece sem
+   rolagem, que era a queixa. Os dois lados ficam grudados no topo enquanto o
+   feed rola.
+
+   Sair para qualquer outro item do menu devolve tudo ao lugar. */
 (function(){
-  const item = document.getElementById('navEnquetes');
-  const shorts = document.getElementById('homeShorts');
   const colDir = document.querySelector('.col-right');
   const colMain = document.querySelector('.col-main');
   const card = document.getElementById('homeProfileCard');
-  if (!item || !shorts || !colDir || !colMain || !card) return;
-  /* de onde o Shorts saiu, para devolver no mesmo lugar */
-  let vizinho = null;
-  function entrar(){
-    if (document.body.classList.contains('home-enquetes')) return;
-    vizinho = shorts.nextElementSibling;
-    colDir.insertBefore(shorts, card.nextElementSibling);
-    document.body.classList.add('home-enquetes');
+  const shorts = document.getElementById('homeShorts');
+  const painel = document.getElementById('appsPanel');
+  if (!colDir || !colMain || !card || !shorts || !painel) return;
+
+  /* onde cada bloco nasce, para devolver no mesmo lugar */
+  const lugares = [shorts, painel].map(function(el){
+    return { el: el, pai: el.parentElement, depois: el.nextElementSibling };
+  });
+  const CLASSES = ['home-enquetes', 'home-powerups'];
+
+  function restaurar(){
+    lugares.forEach(function(l){
+      if (l.el.parentElement !== l.pai || l.el.nextElementSibling !== l.depois){
+        l.pai.insertBefore(l.el, l.depois);
+      }
+    });
+    CLASSES.forEach(function(c){ document.body.classList.remove(c); });
+  }
+  function assentar(){
     if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
     if (typeof applyFold === 'function') applyFold();
+  }
+  function abrir(nome){
+    if (document.body.classList.contains(nome)) return;
+    restaurar();
+    if (nome === 'home-enquetes'){
+      colDir.insertBefore(shorts, card.nextElementSibling);
+    } else if (nome === 'home-powerups'){
+      colDir.insertBefore(painel, card.nextElementSibling);
+      colDir.insertBefore(shorts, painel.nextElementSibling);
+    }
+    document.body.classList.add(nome);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    assentar();
   }
   function sair(){
-    if (!document.body.classList.contains('home-enquetes')) return;
-    colMain.insertBefore(shorts, vizinho);
-    document.body.classList.remove('home-enquetes');
-    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
-    if (typeof applyFold === 'function') applyFold();
+    if (!CLASSES.some(function(c){ return document.body.classList.contains(c); })) return;
+    restaurar();
+    assentar();
   }
-  item.addEventListener('click', function(e){
-    e.preventDefault();
-    if (typeof setNav === 'function') setNav(item);
-    entrar();
+
+  const itens = { 'home-enquetes': document.getElementById('navEnquetes'),
+                  'home-powerups': document.getElementById('navPowerups') };
+  Object.keys(itens).forEach(function(nome){
+    const item = itens[nome];
+    if (!item) return;
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      if (typeof setNav === 'function') setNav(item);
+      abrir(nome);
+    });
   });
   /* qualquer outro item do menu volta para a home normal */
   document.querySelectorAll('.hm-side .hm-navitem').forEach(function(n){
-    if (n === item) return;
+    if (n === itens['home-enquetes'] || n === itens['home-powerups']) return;
     n.addEventListener('click', sair);
   });
 })();
