@@ -108,20 +108,21 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
 .links-visao .vg-nps-leg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;font-size:10px;color:var(--muted)}
 .links-visao .vg-nps-leg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:-1px}
 .links-visao .vg-nps-leg span{white-space:nowrap}
-/* o donut de Universidade (tipo donut): o anel a esquerda e a legenda
-   (Concluido x A concluir) em coluna a direita, dentro da area do chart */
-.links-visao .vg-npsrosca{display:flex;align-items:center;gap:14px}
-.links-visao .lv-chart .vg-npsrosca .vg-donut{width:54px;height:54px;flex:none}
-.links-visao .vg-npsrosca .vg-nps-leg{margin-top:0;flex-direction:column;flex-wrap:nowrap;gap:5px}
 /* layout do card: o numero (com a zona embaixo, no NPS) na esquerda e o donut
    na direita, no espaco em branco; a legenda em linha no rodape do card */
-.links-visao .lv-rmid{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
-.links-visao .lv-card-rosca .lv-metric{flex-direction:column;align-items:flex-start;gap:6px;margin:0}
+/* o big number fica no topo (igual aos cards normais); o donut, maior, ocupa a
+   sobra vertical do lado direito */
+.links-visao .lv-rmid{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0}
+.links-visao .lv-card-rosca .lv-metric{flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:6px;margin:0}
 .links-visao .lv-card-rosca .lv-numrow{display:flex;align-items:baseline;gap:6px}
-.links-visao .lv-card-rosca .lv-zona{margin:0;color:var(--teal-dark);background:rgba(0,172,172,.12)}
+/* a zona (NPS) fica na linha do titulo, encostada a direita */
+.links-visao .lv-card-rosca .lv-top .lv-zona{margin-left:auto;color:var(--teal-dark);background:rgba(0,172,172,.12)}
 .links-visao .lv-donut{flex:none}
-.links-visao .lv-donut .vg-donut{width:64px;height:64px;display:block}
-.links-visao .lv-card-rosca .vg-nps-leg{margin-top:0;gap:6px 14px}
+.links-visao .lv-donut .vg-donut{width:84px;height:84px;display:block}
+/* as bolinhas ficam empilhadas sob o numero (uma por linha); como a zona saiu
+   pra linha do titulo, as 3 linhas cabem na altura do donut, entao o card nao
+   passa dos de barra */
+.links-visao .lv-card-rosca .vg-nps-leg{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-top:6px}
 .links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
 .links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:box-shadow .15s,border-color .15s}
 .links-visao .lv-card:hover{border-color:#d5dbe2;box-shadow:0 1px 2px rgba(16,32,48,.06),0 10px 22px -14px rgba(16,32,48,.3)}

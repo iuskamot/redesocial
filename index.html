@@ -3899,6 +3899,9 @@ body.demo-suporte #sbSemPermissao{display:flex}
 /* os comunicados aparecem vazios, como no cenário "Vazio" */
 body.demo-suporte #homeComPanel .demo-filled{display:none !important}
 body.demo-suporte #homeComPanel .com-empty{display:flex !important}
+/* nas visões "sem rede social", o painel de Comunicados também fica vazio */
+body.estado-sem-rs #homeComPanel .demo-filled{display:none !important}
+body.estado-sem-rs #homeComPanel .com-empty{display:flex !important}
 
 /* Cada cenário mostra o seu par de textos no estado vazio do feed. */
 /* O convite "Seja o primeiro a publicar" so faz sentido para quem pode
@@ -7786,20 +7789,21 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
 .links-visao .vg-nps-leg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;font-size:10px;color:var(--muted)}
 .links-visao .vg-nps-leg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:-1px}
 .links-visao .vg-nps-leg span{white-space:nowrap}
-/* o donut de Universidade (tipo donut): o anel a esquerda e a legenda
-   (Concluido x A concluir) em coluna a direita, dentro da area do chart */
-.links-visao .vg-npsrosca{display:flex;align-items:center;gap:14px}
-.links-visao .lv-chart .vg-npsrosca .vg-donut{width:54px;height:54px;flex:none}
-.links-visao .vg-npsrosca .vg-nps-leg{margin-top:0;flex-direction:column;flex-wrap:nowrap;gap:5px}
 /* layout do card: o numero (com a zona embaixo, no NPS) na esquerda e o donut
    na direita, no espaco em branco; a legenda em linha no rodape do card */
-.links-visao .lv-rmid{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
-.links-visao .lv-card-rosca .lv-metric{flex-direction:column;align-items:flex-start;gap:6px;margin:0}
+/* o big number fica no topo (igual aos cards normais); o donut, maior, ocupa a
+   sobra vertical do lado direito */
+.links-visao .lv-rmid{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0}
+.links-visao .lv-card-rosca .lv-metric{flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:6px;margin:0}
 .links-visao .lv-card-rosca .lv-numrow{display:flex;align-items:baseline;gap:6px}
-.links-visao .lv-card-rosca .lv-zona{margin:0;color:var(--teal-dark);background:rgba(0,172,172,.12)}
+/* a zona (NPS) fica na linha do titulo, encostada a direita */
+.links-visao .lv-card-rosca .lv-top .lv-zona{margin-left:auto;color:var(--teal-dark);background:rgba(0,172,172,.12)}
 .links-visao .lv-donut{flex:none}
-.links-visao .lv-donut .vg-donut{width:64px;height:64px;display:block}
-.links-visao .lv-card-rosca .vg-nps-leg{margin-top:0;gap:6px 14px}
+.links-visao .lv-donut .vg-donut{width:84px;height:84px;display:block}
+/* as bolinhas ficam empilhadas sob o numero (uma por linha); como a zona saiu
+   pra linha do titulo, as 3 linhas cabem na altura do donut, entao o card nao
+   passa dos de barra */
+.links-visao .lv-card-rosca .vg-nps-leg{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-top:6px}
 .links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
 .links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:box-shadow .15s,border-color .15s}
 .links-visao .lv-card:hover{border-color:#d5dbe2;box-shadow:0 1px 2px rgba(16,32,48,.06),0 10px 22px -14px rgba(16,32,48,.3)}
@@ -18211,12 +18215,12 @@ function rvShareCopiar(){
   if (!item || !colMain) return;
 
   const CENARIOS = [
-    { id:'cen-1', rotulo:'1 · Com conteúdo',    dica:'Rede Social ativa e com publicações — a experiência atual, intocada.' },
+    { id:'cen-1', rotulo:'1 · Com conteúdo',    dica:'Rede Social ativa e com publicações. A experiência atual, intocada.' },
     { id:'cen-2', rotulo:'2 · Sem publicações', dica:'Tem Rede Social, mas nunca publicou: Shorts, feed e comunicados aparecem vazios.' },
     { id:'cen-3', rotulo:'3 · Sem Rede Social', dica:'A rede não usa o módulo: a home fica com a grade de aplicativos e os comunicados.' },
-    { id:'cen-matriz',      rotulo:'4 · Matriz',      perfil:'matriz',      dica:'Sem Rede Social — painel da franqueadora: visão geral das unidades.' },
-    { id:'cen-franqueado',  rotulo:'5 · Franqueado',  perfil:'franqueado',  dica:'Sem Rede Social — painel do dono da unidade: sua equipe e operação local.' },
-    { id:'cen-colaborador', rotulo:'6 · Colaborador', perfil:'colaborador', dica:'Sem Rede Social — painel de quem não é admin: chamados, cursos, materiais.' }
+    { id:'cen-matriz',      rotulo:'4 · Matriz',      perfil:'matriz',      dica:'Sem Rede Social. Painel da franqueadora: visão geral das unidades.' },
+    { id:'cen-franqueado',  rotulo:'5 · Franqueado',  perfil:'franqueado',  dica:'Sem Rede Social. Painel do dono da unidade: sua equipe e operação local.' },
+    { id:'cen-colaborador', rotulo:'6 · Colaborador', perfil:'colaborador', dica:'Sem Rede Social. Painel de quem não é admin: chamados, cursos, materiais.' }
   ];
   const TODAS = CENARIOS.map(function(c){ return c.id; });
   const SEM_SOCIAL = ['cen-3','cen-matriz','cen-franqueado','cen-colaborador'];
@@ -18258,10 +18262,18 @@ function rvShareCopiar(){
   }
 
   /* ---------- Graficos ---------- */
-  function barras(v, labels, fmt, sfx){
+  function barras(v, labels, fmt, sfx, tot){
     const max = Math.max.apply(null, v), w = 100 / (v.length * 1.6), g = w * 0.6;
     const svg = '<svg class="vg-svg" viewBox="0 0 ' + (v.length*(w+g)-g).toFixed(1) + ' 42" preserveAspectRatio="none" aria-hidden="true">' +
-      v.map(function(n,i){ const h = Math.max(3, Math.round(n/max*40)); return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="var(--c2)" opacity="' + (i===v.length-1?1:0.42) + '" data-tip="' + (labels?labels[i]+': ':'') + (fmt?fmt(n):n) + sufixo(sfx,n) + '"/>'; }).join('') + '</svg>';
+      v.map(function(n,i){
+        const h = Math.max(3, Math.round(n/max*40));
+        /* tot: quando o card tem inativas (Unidades, Pessoas), o tooltip mostra
+           o total = ativas + inativas */
+        const tip = tot
+          ? (labels?labels[i]+': ':'') + n + ' ' + tot.ativas + ' + ' + tot.n + ' ' + tot.inativas + ' = ' + (n + tot.n)
+          : (labels?labels[i]+': ':'') + (fmt?fmt(n):n) + sufixo(sfx,n);
+        return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="var(--c2)" opacity="' + (i===v.length-1?1:0.42) + '" data-tip="' + tip + '"/>';
+      }).join('') + '</svg>';
     return svg;
   }
   function area(v, labels, fmt, sfx){
@@ -18281,24 +18293,12 @@ function rvShareCopiar(){
     }).join('');
     return '<div class="vg-arealayer">' + svg + dots + '</div>';
   }
-  function donut(pct){
-    /* mesma pegada da rosca do NPS: o donut e uma legenda ao lado (concluido x
-       a concluir), para o card nao ficar so com o anel sem indicativo */
-    const p = Math.round(pct);
-    return '<div class="vg-npsrosca">' +
-      '<svg class="vg-svg vg-donut" viewBox="0 0 42 42" aria-hidden="true">' +
-      '<circle cx="21" cy="21" r="15.5" fill="none" stroke="#eef1f4" stroke-width="6"/>' +
-      '<circle cx="21" cy="21" r="15.5" fill="none" stroke="var(--c2)" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="'+p+' 100" transform="rotate(-90 21 21)" data-tip="'+p+'% concluído"/></svg>' +
-      '<div class="vg-nps-leg"><span><i style="background:var(--c2)"></i>'+p+'% Concluído</span>' +
-      '<span><i style="background:#dfe4ea"></i>'+(100-p)+'% A concluir</span></div></div>';
-  }
   /* Rosca (NPS e funil de Expansao) separada em donut + legenda, para o card
      por na direita o donut e embaixo a legenda em linha. Cada fatia na sua cor
      semantica (verde=bom, vermelho=ruim...). */
   function segsDe(tipo, g){
-    /* n = nome cheio (tooltip do donut); ab = abreviacao (legenda, pra caber) */
     return tipo === 'nps'
-      ? [{v:g.prom,c:'#43a047',n:'Promotores',ab:'Promo.'},{v:g.neu,c:'#f0a500',n:'Neutros',ab:'Neu.'},{v:g.det,c:'#e5443b',n:'Detratores',ab:'Detra.'}]
+      ? [{v:g.prom,c:'#43a047',n:'Promotores'},{v:g.neu,c:'#f0a500',n:'Neutros'},{v:g.det,c:'#e5443b',n:'Detratores'}]
       : [{v:g.ganhos,c:'#2ea44f',n:'Ganhos'},{v:g.abertos,c:'#4a9fe0',n:'Abertos'},{v:g.perdidos,c:'#e5443b',n:'Perdidos'}];
   }
   function roscaDonut(segs, unidade){
@@ -18315,13 +18315,12 @@ function rvShareCopiar(){
       '<circle cx="21" cy="21" r="' + R + '" fill="none" stroke="#eef1f4" stroke-width="6"/>' + arcos + '</svg>';
   }
   function roscaLeg(segs, unidade){
-    return segs.map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.v + (unidade || '') + ' ' + (s.ab || s.n) + '</span>'; }).join('');
+    return segs.map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.v + (unidade || '') + ' ' + s.n + '</span>'; }).join('');
   }
-  function grafico(tipo, g, labels, fmt, sfx){
-    if (tipo==='bars') return barras(g, labels, fmt, sfx);
+  function grafico(tipo, g, labels, fmt, sfx, tot){
+    if (tipo==='bars') return barras(g, labels, fmt, sfx, tot);
     if (tipo==='area') return area(g, labels, fmt, sfx);
-    if (tipo==='donut') return donut(g);
-    /* nps e funil (Expansao) tem layout proprio no card, montado em montaCardHTML */
+    /* nps, funil e donut tem layout proprio no card, montado em montaCardHTML */
     return '';
   }
 
@@ -18331,9 +18330,10 @@ function rvShareCopiar(){
   const SFX = {
     'Chamados':['chamado','chamados'], 'Implantação':['unidade','unidades'],
     'Expansão':'no funil', 'Colaboradores':['colaborador ativo','colaboradores ativos'],
+    'Pessoas':['pessoa ativa','pessoas ativas'],
     'Universidade':['conclusão','conclusões'], 'Marketing':['arquivo baixado','arquivos baixados'],
     'Comunicados':['comunicado','comunicados'], 'Checklist':['checklist','checklists'],
-    'Enquetes':['enquete','enquetes'], 'Compras':'em compras',
+    'Enquetes':['enquete','enquetes'], 'Compras':'em pedidos',
     'Projetos':['tarefa','tarefas'], 'Unidades':['unidade','unidades']
   };
   function sufixo(sfx, n){ if (!sfx) return ''; if (typeof sfx === 'string') return ' ' + sfx; return ' ' + (Number(n) === 1 ? sfx[0] : sfx[1]); }
@@ -18376,55 +18376,58 @@ function rvShareCopiar(){
     ],
     franqueado: [
       card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
-        mensal:{n:'6',u:'abertos na unidade',atraso:'1',g:[2,1,2,1]},
-        semanal:{n:'2',u:'abertos na semana',atraso:'0',g:[1,0,1,0,0,0,1]},
-        anual:{n:'71',u:'abertos no ano',atraso:'1',g:[8,7,6,5,7,6,5,6,4,5,6,6]}}),
-      card('#73beff','#0088FF','smi-rede-social','Colaboradores','bars',{
-        mensal:{n:'22',u:'ativos na equipe',inativo:'2',g:[20,21,22,22]},
-        semanal:{n:'22',u:'ativos na equipe',inativo:'2',g:[22,22,21,22,22,22,22]},
-        anual:{n:'24',u:'ativos no pico',inativo:'2',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
+        mensal:{n:'6',u:'abertos',atraso:'1',g:[2,1,2,1]},
+        semanal:{n:'2',u:'abertos',atraso:'0',g:[1,0,1,0,0,0,1]},
+        anual:{n:'71',u:'abertos',atraso:'1',g:[8,7,6,5,7,6,5,6,4,5,6,6]}}),
+      card('#73beff','#0088FF','smi-rede-social','Pessoas','bars',{
+        mensal:{n:'22',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[20,21,22,22]},
+        semanal:{n:'22',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[22,22,21,22,22,22,22]},
+        anual:{n:'24',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
       card('#5ecc7f','#219348','smi-checklist','Checklist','bars',{
-        mensal:{n:'92',u:'aplicados na unidade',atraso:'3',g:[20,24,22,26]},
-        semanal:{n:'24',u:'aplicados na semana',atraso:'1',g:[3,4,3,4,4,3,3]},
-        anual:{n:'1.140',u:'aplicados no ano',atraso:'3',g:[80,88,92,90,95,98,96,102,98,105,100,96]}}),
+        /* volume aplicado como numero; a badge cinza traz a nota (aproveitamento
+           = pontuacao alcancada/maxima) do ULTIMO checklist aplicado. "ultima
+           nota" ja diz que e um score e que e o mais recente, sem ocupar a linha */
+        mensal:{n:'92',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[20,24,22,26]},
+        semanal:{n:'24',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[3,4,3,4,4,3,3]},
+        anual:{n:'1.140',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[80,88,92,90,95,98,96,102,98,105,100,96]}}),
+      card('#43d6cd','#00918a','smi-compras','Compras','area',{
+        mensal:{n:'R$ 62k',u:'valor de pedidos',g:[14,16,15,17]},
+        semanal:{n:'R$ 18k',u:'valor de pedidos',g:[2,3,2,3,3,2,3]},
+        anual:{n:'R$ 720k',u:'valor de pedidos',g:[52,55,58,60,57,62,60,64,58,66,62,64]}}, 'moeda'),
       card('#b18ae6','#6d47b5','smi-universidade','Universidade','bars',{
-        mensal:{n:'34',u:'conclusões da equipe',d:'120 disponíveis',dir:'neutra',g:[6,9,8,11]},
-        semanal:{n:'9',u:'conclusões na semana',d:'120 disponíveis',dir:'neutra',g:[1,2,1,2,1,1,1]},
-        anual:{n:'312',u:'conclusões no ano',d:'120 disponíveis',dir:'neutra',g:[18,22,20,26,24,28,26,30,28,32,30,28]}}),
+        mensal:{n:'34',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[6,9,8,11]},
+        semanal:{n:'9',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[1,2,1,2,1,1,1]},
+        anual:{n:'312',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[18,22,20,26,24,28,26,30,28,32,30,28]}}),
       card('#ff77a9','#d6285f','smi-marketing','Marketing','bars',{
-        mensal:{n:'86',u:'arquivos baixados',d:'62 disponíveis',dir:'neutra',g:[18,22,20,26]},
-        semanal:{n:'22',u:'baixados na semana',d:'62 disponíveis',dir:'neutra',g:[3,4,2,4,3,3,3]},
-        anual:{n:'940',u:'baixados no ano',d:'62 disponíveis',dir:'neutra',g:[60,68,72,70,78,82,80,88,85,92,90,95]}}),
-      card('#6fe08f','#2ea44f','smi-nps','NPS','nps',{
-        mensal:{n:'74',u:'pontos',d:'+4',dir:'boa',g:{prom:78,neu:16,det:6}},
-        semanal:{n:'77',u:'pontos',d:'+3',dir:'boa',g:{prom:80,neu:14,det:6}},
-        anual:{n:'70',u:'pontos',d:'+6',dir:'boa',g:{prom:75,neu:18,det:7}}})
+        mensal:{n:'86',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[18,22,20,26]},
+        semanal:{n:'22',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[3,4,2,4,3,3,3]},
+        anual:{n:'940',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[60,68,72,70,78,82,80,88,85,92,90,95]}})
     ],
     colaborador: [
       card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
-        mensal:{n:'3',u:'meus abertos',atraso:'1',g:[1,0,1,1]},
-        semanal:{n:'1',u:'meu aberto',atraso:'0',g:[0,0,1,0,0,0,0]},
-        anual:{n:'22',u:'no ano',atraso:'0',g:[3,2,1,2,2,1,2,1,3,2,1,2]}}),
+        mensal:{n:'3',u:'abertos',atraso:'1',g:[1,0,1,1]},
+        semanal:{n:'1',u:'abertos',atraso:'0',g:[0,0,1,0,0,0,0]},
+        anual:{n:'22',u:'abertos',atraso:'0',g:[3,2,1,2,2,1,2,1,3,2,1,2]}}),
       card('#b18ae6','#6d47b5','smi-universidade','Universidade','donut',{
-        mensal:{n:'8/12',u:'cursos concluídos',d:'+2',dir:'boa',g:67},
-        semanal:{n:'8/12',u:'cursos concluídos',g:67},
-        anual:{n:'12/12',u:'no ano',d:'completo',dir:'boa',g:100}}),
+        mensal:{n:'8',u:'de 12 concluídos',g:67},
+        semanal:{n:'8',u:'de 12 concluídos',g:67},
+        anual:{n:'12',u:'de 12 concluídos',g:100}}),
       card('#9ba1f4','#575fd1','smi-comunicados','Comunicados','bars',{
-        mensal:{n:'12',u:'recebidos no mês',naolido:'3',g:[2,4,3,3]},
-        semanal:{n:'4',u:'recebidos na semana',naolido:'3',g:[1,0,1,1,0,1,0]},
-        anual:{n:'142',u:'recebidos no ano',naolido:'3',g:[8,7,9,6,8,7,9,8,7,9,8,10]}}),
+        mensal:{n:'12',u:'recebidos',naolido:'3',g:[2,4,3,3]},
+        semanal:{n:'4',u:'recebidos',naolido:'3',g:[1,0,1,1,0,1,0]},
+        anual:{n:'142',u:'recebidos',naolido:'3',g:[8,7,9,6,8,7,9,8,7,9,8,10]}}),
       card('#ff77a9','#d6285f','smi-marketing','Marketing','bars',{
-        mensal:{n:'14',u:'materiais baixados',d:'+3',dir:'boa',g:[2,4,3,5]},
-        semanal:{n:'4',u:'baixados',d:'+1',dir:'boa',g:[1,0,1,1,0,1,0]},
-        anual:{n:'162',u:'no ano',d:'+18%',dir:'boa',g:[10,12,14,11,13,15,12,14,16,13,15,17]}}),
+        mensal:{n:'14',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[2,4,3,5]},
+        semanal:{n:'4',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[1,0,1,1,0,1,0]},
+        anual:{n:'162',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[10,12,14,11,13,15,12,14,16,13,15,17]}}),
       card('#5cc0a0','#2aa17e','smi-projetos','Projetos','bars',{
-        mensal:{n:'5',u:'tarefas em aberto',d:'8 concluídas',dir:'boa',g:[3,4,4,5]},
-        semanal:{n:'2',u:'para esta semana',d:'3 concluídas',dir:'boa',g:[1,1,0,1,1,0,0]},
-        anual:{n:'92%',u:'entregues no prazo',d:'+6%',dir:'boa',g:[7,8,6,9,8,7,9,8,9,8,9,10]}}),
+        mensal:{n:'5',u:'tarefas',atraso:'2',g:[3,4,4,5]},
+        semanal:{n:'2',u:'tarefas',atraso:'1',g:[1,1,0,1,1,0,0]},
+        anual:{n:'98',u:'tarefas',atraso:'3',g:[7,8,6,9,8,7,9,8,9,8,9,10]}}),
       card('#bd90ec','#7c4cc4','smi-enquetes','Enquetes','bars',{
-        mensal:{n:'2',u:'pendentes',d:'5 respondidas',dir:'neutra',g:[1,2,1,2]},
-        semanal:{n:'2',u:'pendentes',d:'1 respondida',dir:'neutra',g:[0,1,0,1,0,0,0]},
-        anual:{n:'94%',u:'respondidas no ano',d:'boa adesão',dir:'boa',g:[3,4,3,5,4,3,4,3,4,5,4,4]}})
+        mensal:{n:'6',u:'recebidas',d:'2 em aberto',dir:'neutra',g:[1,2,1,2]},
+        semanal:{n:'2',u:'recebidas',d:'1 em aberto',dir:'neutra',g:[0,1,0,1,0,0,0]},
+        anual:{n:'46',u:'recebidas',d:'3 em aberto',dir:'neutra',g:[3,4,3,5,4,3,4,3,4,5,4,4]}})
     ]
   };
 
@@ -18489,28 +18492,35 @@ function rvShareCopiar(){
     const v = c.p[periodo] || c.p.mensal;
     const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length) : v.g;
 
-    /* NPS e Expansao tem layout proprio: numero (e a zona embaixo, no NPS) na
-       esquerda, o donut na direita e a legenda em linha no rodape do card. */
-    if (c.tipo === 'nps' || c.tipo === 'funil'){
-      const segs = segsDe(c.tipo, v.g), unidade = c.tipo === 'nps' ? '%' : '';
-      let num, zona = '';
+    /* NPS, Expansao e Universidade (donut) usam o mesmo layout de rosca: o numero
+       (e a zona, no NPS) na esquerda, o donut na direita e a legenda em linha no
+       rodape do card. */
+    if (c.tipo === 'nps' || c.tipo === 'funil' || c.tipo === 'donut'){
+      let segs, unidade = '%', num, zona = '';
       if (c.tipo === 'nps'){
         /* NPS de verdade = % Promotores − % Detratores, calculado dos proprios
            dados da rosca; a zona sai do score, sempre em verdigris. */
+        segs = segsDe('nps', v.g);
         const score = v.g.prom - v.g.det;
         num = score.toFixed(2);
         zona = '<span class="lv-zona">Zona de ' + zonaNPS(score).nome.toLowerCase() + '</span>';
-      } else {
+      } else if (c.tipo === 'funil'){
         /* o numero grande e o total do funil (abertos + ganhos + perdidos) */
+        segs = segsDe('funil', v.g); unidade = '';
         num = String(v.g.abertos + v.g.ganhos + v.g.perdidos);
+      } else {
+        /* donut: concluido x a concluir, a partir do proprio percentual */
+        const p = Math.round(v.g);
+        segs = [{v:p,c:'var(--c2)',n:'Concluído'},{v:100-p,c:'#dfe4ea',n:'A concluir'}];
+        num = v.n;
       }
       return '<a class="lv-card lv-card-rosca" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
         '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
-        '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span></div>' +
+        '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span>' + zona + '</div>' +
         '<div class="lv-rmid"><div class="lv-metric">' +
-          '<span class="lv-numrow"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span></span>' + zona + '</div>' +
-        '<div class="lv-donut">' + roscaDonut(segs, unidade) + '</div></div>' +
-        '<div class="vg-nps-leg">' + roscaLeg(segs, unidade) + '</div></a>';
+          '<span class="lv-numrow"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span></span>' +
+          '<div class="vg-nps-leg">' + roscaLeg(segs, unidade) + '</div></div>' +
+        '<div class="lv-donut">' + roscaDonut(segs, unidade) + '</div></div></a>';
     }
 
     let extra = '', num = v.n;
@@ -18534,11 +18544,15 @@ function rvShareCopiar(){
          "8 concluidas", "boa leitura"...) */
       extra = '<span class="lv-delta ' + v.dir + '">' + v.d + '</span>';
     }
+    /* cards com inativas (Unidades, Pessoas): o tooltip da barra soma o total */
+    const tot = (v.inativo !== undefined && parseInt(v.inativo,10) > 0)
+      ? { n: parseInt(v.inativo,10), ativas: v.u, inativas: v.inativoLbl || 'inativos' }
+      : null;
     return '<a class="lv-card" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
       '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
       '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span></div>' +
       '<div class="lv-metric"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span>' + extra + '</div>' +
-      '<div class="lv-chart">' + grafico(c.tipo, gData, labels, c.fmt==='moeda'?moeda:null, c.sfx) + '</div></a>';
+      '<div class="lv-chart">' + grafico(c.tipo, gData, labels, c.fmt==='moeda'?moeda:null, c.sfx, tot) + '</div></a>';
   }
   function pintaVisao(){
     if (!painelVisao) return;
@@ -18607,15 +18621,15 @@ function rvShareCopiar(){
   const CEN_HOME = [
     { perfil:'matriz',      estado:'conteudo',      grupo:'Matriz',      rotulo:'com conteúdo',   dica:'A home cheia: publicações, shorts e comunicados.' },
     { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ninguém publicou ainda.' },
-    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social — sem feed nem shorts.' },
+    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social, sem feed nem shorts.' },
     { perfil:'franqueado',  estado:'conteudo',      grupo:'Franqueado',  rotulo:'com conteúdo',   dica:'A unidade cheia, com o feed e os shorts da rede.' },
     { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
-    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social — os módulos e a visão geral no lugar.' },
+    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar.' },
     { perfil:'colaborador', estado:'conteudo',      grupo:'Funcionário', rotulo:'com conteúdo',   dica:'Vê e interage com o feed e os shorts da rede.' },
     { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
     { perfil:'colaborador', estado:'sem-permissao', grupo:'Funcionário', rotulo:'sem permissão',  dica:'Vê o feed, mas não pode criar publicação nem short.' },
     { perfil:'colaborador', estado:'vazio-sem-permissao', grupo:'Funcionário', rotulo:'sem permissão e sem conteúdo', dica:'Não pode criar e a rede ainda não publicou nada.' },
-    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social — os módulos e a visão geral no lugar.' }
+    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar.' }
   ];
   let selHome = null, carrHome = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
 

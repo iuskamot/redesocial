@@ -266,6 +266,9 @@ body.demo-suporte #sbSemPermissao{display:flex}
 /* os comunicados aparecem vazios, como no cenário "Vazio" */
 body.demo-suporte #homeComPanel .demo-filled{display:none !important}
 body.demo-suporte #homeComPanel .com-empty{display:flex !important}
+/* nas visões "sem rede social", o painel de Comunicados também fica vazio */
+body.estado-sem-rs #homeComPanel .demo-filled{display:none !important}
+body.estado-sem-rs #homeComPanel .com-empty{display:flex !important}
 
 /* Cada cenário mostra o seu par de textos no estado vazio do feed. */
 /* O convite "Seja o primeiro a publicar" so faz sentido para quem pode
