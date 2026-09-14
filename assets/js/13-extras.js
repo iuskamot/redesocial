@@ -1116,3 +1116,573 @@ function rvShareCopiar(){
     item.classList.add('active');
   });
 })();
+
+
+/* ---- Links Externos: laboratorio do Partner Inicial adaptativo ----
+   Estudo de como a home se compoe quando a rede nao depende da Rede Social.
+   Dropdown no header troca entre os cenarios; a grade fica sempre em uma linha.
+
+   cen-1  com conteudo | cen-2  sem publicacoes | cen-3  sem Rede Social
+   cen-matriz / cen-franqueado / cen-colaborador -> painel de "Visao geral" por
+   perfil, com aba de periodo (Mensal/Semanal/Anual). Os graficos e metricas
+   seguem os dashboards reais dos modulos (checados no demonstracao). */
+(function(){
+  const item = document.getElementById('navLinks');
+  const colMain = document.querySelector('.col-main');
+  if (!item || !colMain) return;
+
+  const CENARIOS = [
+    { id:'cen-1', rotulo:'1 · Com conteúdo',    dica:'Rede Social ativa e com publicações — a experiência atual, intocada.' },
+    { id:'cen-2', rotulo:'2 · Sem publicações', dica:'Tem Rede Social, mas nunca publicou: Shorts, feed e comunicados aparecem vazios.' },
+    { id:'cen-3', rotulo:'3 · Sem Rede Social', dica:'A rede não usa o módulo: a home fica com a grade de aplicativos e os comunicados.' },
+    { id:'cen-matriz',      rotulo:'4 · Matriz',      perfil:'matriz',      dica:'Sem Rede Social — painel da franqueadora: visão geral das unidades.' },
+    { id:'cen-franqueado',  rotulo:'5 · Franqueado',  perfil:'franqueado',  dica:'Sem Rede Social — painel do dono da unidade: sua equipe e operação local.' },
+    { id:'cen-colaborador', rotulo:'6 · Colaborador', perfil:'colaborador', dica:'Sem Rede Social — painel de quem não é admin: chamados, cursos, materiais.' }
+  ];
+  const TODAS = CENARIOS.map(function(c){ return c.id; });
+  const SEM_SOCIAL = ['cen-3','cen-matriz','cen-franqueado','cen-colaborador'];
+  const COM_VISAO  = ['cen-matriz','cen-franqueado','cen-colaborador'];
+
+  const PERIODOS = [ { id:'semanal', rotulo:'Semanal' }, { id:'mensal', rotulo:'Mensal' }, { id:'anual', rotulo:'Anual' } ];
+  const MES_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  function dataBR(d){ return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); }
+  function rotulosTip(periodo){
+    const hoje = new Date();
+    if (periodo === 'mensal'){   /* um ponto por dia do mes corrente (28/30/31) */
+      const arr = [], ano = hoje.getFullYear(), mes = hoje.getMonth();
+      const nDias = new Date(ano, mes + 1, 0).getDate();
+      for (let d = 1; d <= nDias; d++){ arr.push(dataBR(new Date(ano, mes, d))); }
+      return arr;
+    }
+    if (periodo === 'semanal'){   /* os ultimos 7 dias, data completa, terminando hoje */
+      const arr = [];
+      for (let i = 6; i >= 0; i--){ const d = new Date(hoje); d.setDate(hoje.getDate() - i); arr.push(dataBR(d)); }
+      return arr;
+    }
+    const arr = [];   /* anual = os ultimos 12 meses, mes por extenso */
+    for (let i = 11; i >= 0; i--){ const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+      arr.push(MES_FULL[d.getMonth()] + ' de ' + d.getFullYear()); }
+    return arr;
+  }
+  /* O mensal agora e diario: a serie de 4 semanas vira n dias, interpolando os
+     niveis com uma ondulacao deterministica (nao muda a cada render). */
+  function expandeDiario(g, n){
+    if (!Array.isArray(g) || g.length < 2 || n <= g.length) return g;
+    const out = [];
+    for (let d = 0; d < n; d++){
+      const t = d / (n - 1) * (g.length - 1), i = Math.floor(t), f = t - i;
+      const base = (i + 1 < g.length) ? g[i] * (1 - f) + g[i + 1] * f : g[i];
+      const onda = Math.sin(d * 1.7 + g[0]) * 0.12;
+      out.push(Math.max(0, Math.round(base * (1 + onda))));
+    }
+    return out;
+  }
+
+  /* ---------- Graficos ---------- */
+  function barras(v, labels, fmt, sfx){
+    const max = Math.max.apply(null, v), w = 100 / (v.length * 1.6), g = w * 0.6;
+    const svg = '<svg class="vg-svg" viewBox="0 0 ' + (v.length*(w+g)-g).toFixed(1) + ' 42" preserveAspectRatio="none" aria-hidden="true">' +
+      v.map(function(n,i){ const h = Math.max(3, Math.round(n/max*40)); return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="var(--c2)" opacity="' + (i===v.length-1?1:0.42) + '" data-tip="' + (labels?labels[i]+': ':'') + (fmt?fmt(n):n) + sufixo(sfx,n) + '"/>'; }).join('') + '</svg>';
+    return svg;
+  }
+  function area(v, labels, fmt, sfx){
+    const max = Math.max.apply(null, v), min = Math.min.apply(null, v), W = 120, H = 42;
+    const pts = v.map(function(n,i){ return [ (i/(v.length-1))*W, H - ((n-min)/(max-min||1))*(H-8) - 4 ]; });
+    const linha = pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' ');
+    const areaPath = 'M0,'+H+' L'+linha.replace(/ /g,' L')+' L'+W+','+H+' Z';
+    const svg = '<svg class="vg-svg" viewBox="0 0 120 42" preserveAspectRatio="none" aria-hidden="true">' +
+      '<path d="'+areaPath+'" fill="var(--c2)" opacity=".14"/>' +
+      '<polyline points="'+linha+'" fill="none" stroke="var(--c2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    /* as bolinhas sao HTML sobre a linha: como o SVG estica na horizontal, um
+       <circle> viraria elipse. Aqui cada ponto e posicionado em % — o eixo x
+       bate com a fracao do SVG esticado e o y, em %, bate com a altura de 42px. */
+    const dots = pts.map(function(p,i){
+      return '<span class="vg-dot" style="left:'+((p[0]/W)*100).toFixed(2)+'%;top:'+((p[1]/H)*100).toFixed(2)+'%"' +
+        (labels ? ' data-tip="'+labels[i]+': '+(fmt?fmt(v[i]):v[i])+sufixo(sfx,v[i])+'"' : '') + '><i></i></span>';
+    }).join('');
+    return '<div class="vg-arealayer">' + svg + dots + '</div>';
+  }
+  function donut(pct){
+    /* mesma pegada da rosca do NPS: o donut e uma legenda ao lado (concluido x
+       a concluir), para o card nao ficar so com o anel sem indicativo */
+    const p = Math.round(pct);
+    return '<div class="vg-npsrosca">' +
+      '<svg class="vg-svg vg-donut" viewBox="0 0 42 42" aria-hidden="true">' +
+      '<circle cx="21" cy="21" r="15.5" fill="none" stroke="#eef1f4" stroke-width="6"/>' +
+      '<circle cx="21" cy="21" r="15.5" fill="none" stroke="var(--c2)" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="'+p+' 100" transform="rotate(-90 21 21)" data-tip="'+p+'% concluído"/></svg>' +
+      '<div class="vg-nps-leg"><span><i style="background:var(--c2)"></i>'+p+'% Concluído</span>' +
+      '<span><i style="background:#dfe4ea"></i>'+(100-p)+'% A concluir</span></div></div>';
+  }
+  /* Rosca (NPS e funil de Expansao) separada em donut + legenda, para o card
+     por na direita o donut e embaixo a legenda em linha. Cada fatia na sua cor
+     semantica (verde=bom, vermelho=ruim...). */
+  function segsDe(tipo, g){
+    /* n = nome cheio (tooltip do donut); ab = abreviacao (legenda, pra caber) */
+    return tipo === 'nps'
+      ? [{v:g.prom,c:'#43a047',n:'Promotores',ab:'Promo.'},{v:g.neu,c:'#f0a500',n:'Neutros',ab:'Neu.'},{v:g.det,c:'#e5443b',n:'Detratores',ab:'Detra.'}]
+      : [{v:g.ganhos,c:'#2ea44f',n:'Ganhos'},{v:g.abertos,c:'#4a9fe0',n:'Abertos'},{v:g.perdidos,c:'#e5443b',n:'Perdidos'}];
+  }
+  function roscaDonut(segs, unidade){
+    const tot = unidade === '%' ? 100 : (segs.reduce(function(a, s){ return a + s.v; }, 0) || 1);
+    const R = 15.5, C = 2 * Math.PI * R; let off = 0;
+    const arcos = segs.map(function(s){
+      const len = C * (s.v / tot);
+      const el = '<circle cx="21" cy="21" r="' + R + '" fill="none" stroke="' + s.c + '" stroke-width="6" ' +
+        'stroke-dasharray="' + len.toFixed(2) + ' ' + (C - len).toFixed(2) + '" stroke-dashoffset="' + (-off).toFixed(2) + '" ' +
+        'transform="rotate(-90 21 21)" data-tip="' + s.n + ' ' + s.v + (unidade || '') + '"/>';
+      off += len; return el;
+    }).join('');
+    return '<svg class="vg-svg vg-donut" viewBox="0 0 42 42" aria-hidden="true">' +
+      '<circle cx="21" cy="21" r="' + R + '" fill="none" stroke="#eef1f4" stroke-width="6"/>' + arcos + '</svg>';
+  }
+  function roscaLeg(segs, unidade){
+    return segs.map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.v + (unidade || '') + ' ' + (s.ab || s.n) + '</span>'; }).join('');
+  }
+  function grafico(tipo, g, labels, fmt, sfx){
+    if (tipo==='bars') return barras(g, labels, fmt, sfx);
+    if (tipo==='area') return area(g, labels, fmt, sfx);
+    if (tipo==='donut') return donut(g);
+    /* nps e funil (Expansao) tem layout proprio no card, montado em montaCardHTML */
+    return '';
+  }
+
+  function moeda(m){ return m >= 1000 ? 'R$ ' + (m/1000).toFixed(2).replace('.',',') + ' mi' : 'R$ ' + m.toLocaleString('pt-BR') + ' mil'; }
+  /* substantivo do tooltip por modulo: [singular, plural] ou uma string fixa.
+     so aparece nos graficos de barra/area (donut e NPS nao usam). */
+  const SFX = {
+    'Chamados':['chamado','chamados'], 'Implantação':['unidade','unidades'],
+    'Expansão':'no funil', 'Colaboradores':['colaborador ativo','colaboradores ativos'],
+    'Universidade':['conclusão','conclusões'], 'Marketing':['arquivo baixado','arquivos baixados'],
+    'Comunicados':['comunicado','comunicados'], 'Checklist':['checklist','checklists'],
+    'Enquetes':['enquete','enquetes'], 'Compras':'em compras',
+    'Projetos':['tarefa','tarefas'], 'Unidades':['unidade','unidades']
+  };
+  function sufixo(sfx, n){ if (!sfx) return ''; if (typeof sfx === 'string') return ' ' + sfx; return ' ' + (Number(n) === 1 ? sfx[0] : sfx[1]); }
+  /* zona do NPS, igual ao dashboard do SULTS: Critica / Aperfeicoamento / Qualidade / Excelencia */
+  function zonaNPS(score){
+    const s = parseInt(score, 10);
+    if (s >= 75) return { nome:'Excelência',      cor:'#1f8f4e' };
+    if (s >= 50) return { nome:'Qualidade',       cor:'#43a047' };
+    if (s >= 0)  return { nome:'Aperfeiçoamento', cor:'#f0a500' };
+    return { nome:'Zona crítica', cor:'#e5443b' };
+  }
+  function card(c1,c2,smi,nome,tipo,p,fmt){ return {c1:c1,c2:c2,smi:smi,nome:nome,tipo:tipo,p:p,fmt:fmt,sfx:SFX[nome]}; }
+
+  const DADOS = {
+    matriz: [
+      card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
+        mensal:{n:'42',u:'abertos',atraso:'8',g:[9,14,11,8]},
+        semanal:{n:'11',u:'abertos',atraso:'3',g:[1,2,1,2,3,1,1]},
+        anual:{n:'488',u:'abertos',atraso:'8',g:[52,48,60,44,50,42,46,40,38,44,41,33]}}),
+      card('#5ecc7f','#219348','smi-checklist','Checklist','bars',{
+        mensal:{n:'286',u:'aplicados',atraso:'14',g:[64,72,70,80]},
+        semanal:{n:'72',u:'aplicados',atraso:'5',g:[10,12,11,9,10,11,9]},
+        anual:{n:'3.410',u:'aplicados',atraso:'14',g:[260,280,300,290,310,300,320,310,300,290,280,286]}}),
+      card('#43d6cd','#00918a','smi-compras','Compras','area',{
+        mensal:{n:'R$ 1,2M',u:'valor de pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
+        semanal:{n:'R$ 280k',u:'valor de pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
+        anual:{n:'R$ 13,4M',u:'valor de pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
+      card('#ffb060','#ef8b12','smi-unidades','Unidades','bars',{
+        mensal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[86,88,90,92]},
+        semanal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[91,91,92,92,92,92,92]},
+        anual:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[74,76,78,80,82,84,86,88,89,90,91,92]}}),
+      card('#ff8a7a','#e0392c','smi-expancao','Expansão','funil',{
+        mensal:{u:'negócios',g:{abertos:5,ganhos:41,perdidos:10}},
+        semanal:{u:'negócios',g:{abertos:2,ganhos:6,perdidos:2}},
+        anual:{u:'negócios',g:{abertos:5,ganhos:412,perdidos:98}}}),
+      card('#6fe08f','#2ea44f','smi-nps','NPS','nps',{
+        mensal:{u:'pontos',g:{prom:84,neu:10,det:6}},
+        semanal:{u:'pontos',g:{prom:86,neu:9,det:5}},
+        anual:{u:'pontos',g:{prom:82,neu:12,det:6}}})
+    ],
+    franqueado: [
+      card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
+        mensal:{n:'6',u:'abertos na unidade',atraso:'1',g:[2,1,2,1]},
+        semanal:{n:'2',u:'abertos na semana',atraso:'0',g:[1,0,1,0,0,0,1]},
+        anual:{n:'71',u:'abertos no ano',atraso:'1',g:[8,7,6,5,7,6,5,6,4,5,6,6]}}),
+      card('#73beff','#0088FF','smi-rede-social','Colaboradores','bars',{
+        mensal:{n:'22',u:'ativos na equipe',inativo:'2',g:[20,21,22,22]},
+        semanal:{n:'22',u:'ativos na equipe',inativo:'2',g:[22,22,21,22,22,22,22]},
+        anual:{n:'24',u:'ativos no pico',inativo:'2',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
+      card('#5ecc7f','#219348','smi-checklist','Checklist','bars',{
+        mensal:{n:'92',u:'aplicados na unidade',atraso:'3',g:[20,24,22,26]},
+        semanal:{n:'24',u:'aplicados na semana',atraso:'1',g:[3,4,3,4,4,3,3]},
+        anual:{n:'1.140',u:'aplicados no ano',atraso:'3',g:[80,88,92,90,95,98,96,102,98,105,100,96]}}),
+      card('#b18ae6','#6d47b5','smi-universidade','Universidade','bars',{
+        mensal:{n:'34',u:'conclusões da equipe',d:'120 disponíveis',dir:'neutra',g:[6,9,8,11]},
+        semanal:{n:'9',u:'conclusões na semana',d:'120 disponíveis',dir:'neutra',g:[1,2,1,2,1,1,1]},
+        anual:{n:'312',u:'conclusões no ano',d:'120 disponíveis',dir:'neutra',g:[18,22,20,26,24,28,26,30,28,32,30,28]}}),
+      card('#ff77a9','#d6285f','smi-marketing','Marketing','bars',{
+        mensal:{n:'86',u:'arquivos baixados',d:'62 disponíveis',dir:'neutra',g:[18,22,20,26]},
+        semanal:{n:'22',u:'baixados na semana',d:'62 disponíveis',dir:'neutra',g:[3,4,2,4,3,3,3]},
+        anual:{n:'940',u:'baixados no ano',d:'62 disponíveis',dir:'neutra',g:[60,68,72,70,78,82,80,88,85,92,90,95]}}),
+      card('#6fe08f','#2ea44f','smi-nps','NPS','nps',{
+        mensal:{n:'74',u:'pontos',d:'+4',dir:'boa',g:{prom:78,neu:16,det:6}},
+        semanal:{n:'77',u:'pontos',d:'+3',dir:'boa',g:{prom:80,neu:14,det:6}},
+        anual:{n:'70',u:'pontos',d:'+6',dir:'boa',g:{prom:75,neu:18,det:7}}})
+    ],
+    colaborador: [
+      card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
+        mensal:{n:'3',u:'meus abertos',atraso:'1',g:[1,0,1,1]},
+        semanal:{n:'1',u:'meu aberto',atraso:'0',g:[0,0,1,0,0,0,0]},
+        anual:{n:'22',u:'no ano',atraso:'0',g:[3,2,1,2,2,1,2,1,3,2,1,2]}}),
+      card('#b18ae6','#6d47b5','smi-universidade','Universidade','donut',{
+        mensal:{n:'8/12',u:'cursos concluídos',d:'+2',dir:'boa',g:67},
+        semanal:{n:'8/12',u:'cursos concluídos',g:67},
+        anual:{n:'12/12',u:'no ano',d:'completo',dir:'boa',g:100}}),
+      card('#9ba1f4','#575fd1','smi-comunicados','Comunicados','bars',{
+        mensal:{n:'12',u:'recebidos no mês',naolido:'3',g:[2,4,3,3]},
+        semanal:{n:'4',u:'recebidos na semana',naolido:'3',g:[1,0,1,1,0,1,0]},
+        anual:{n:'142',u:'recebidos no ano',naolido:'3',g:[8,7,9,6,8,7,9,8,7,9,8,10]}}),
+      card('#ff77a9','#d6285f','smi-marketing','Marketing','bars',{
+        mensal:{n:'14',u:'materiais baixados',d:'+3',dir:'boa',g:[2,4,3,5]},
+        semanal:{n:'4',u:'baixados',d:'+1',dir:'boa',g:[1,0,1,1,0,1,0]},
+        anual:{n:'162',u:'no ano',d:'+18%',dir:'boa',g:[10,12,14,11,13,15,12,14,16,13,15,17]}}),
+      card('#5cc0a0','#2aa17e','smi-projetos','Projetos','bars',{
+        mensal:{n:'5',u:'tarefas em aberto',d:'8 concluídas',dir:'boa',g:[3,4,4,5]},
+        semanal:{n:'2',u:'para esta semana',d:'3 concluídas',dir:'boa',g:[1,1,0,1,1,0,0]},
+        anual:{n:'92%',u:'entregues no prazo',d:'+6%',dir:'boa',g:[7,8,6,9,8,7,9,8,9,8,9,10]}}),
+      card('#bd90ec','#7c4cc4','smi-enquetes','Enquetes','bars',{
+        mensal:{n:'2',u:'pendentes',d:'5 respondidas',dir:'neutra',g:[1,2,1,2]},
+        semanal:{n:'2',u:'pendentes',d:'1 respondida',dir:'neutra',g:[0,1,0,1,0,0,0]},
+        anual:{n:'94%',u:'respondidas no ano',d:'boa adesão',dir:'boa',g:[3,4,3,5,4,3,4,3,4,5,4,4]}})
+    ]
+  };
+
+  let barra = null, painelVisao = null;
+  let perfilAtual = 'matriz', periodoAtual = 'semanal';
+
+  function montaSeletor(){
+    if (barra) return;
+    const acoes = document.querySelector('.top-actions');
+    if (!acoes) return;
+    const ancora = document.getElementById('newWrap');
+    barra = document.createElement('div');
+    barra.className = 'links-sel';
+    barra.innerHTML =
+      '<button type="button" class="links-sel-btn" aria-haspopup="menu" aria-expanded="false">' +
+      '<span class="ls-label">Cenário 1</span>' +
+      '<i class="fa-solid fa-chevron-down"></i></button>' +
+      '<div class="links-sel-menu" role="menu" hidden>' +
+      CENARIOS.map(function(c){ return '<button type="button" role="menuitem" data-cen="' + c.id + '"><b>' + c.rotulo + '</b><span>' + c.dica + '</span></button>'; }).join('') +
+      '</div>';
+    if (ancora) acoes.insertBefore(barra, ancora); else acoes.insertBefore(barra, acoes.firstChild);
+    const btn = barra.querySelector('.links-sel-btn'), menu = barra.querySelector('.links-sel-menu');
+    btn.addEventListener('click', function(e){ e.stopPropagation(); const abrindo = menu.hidden; menu.hidden = !abrindo; btn.setAttribute('aria-expanded', String(abrindo)); });
+    menu.addEventListener('click', function(e){ const b = e.target.closest('[data-cen]'); if (!b) return; seleciona(b.dataset.cen); menu.hidden = true; btn.setAttribute('aria-expanded','false'); });
+    document.addEventListener('click', fechaMenuFora);
+  }
+  function fechaMenuFora(e){
+    if (!barra || barra.contains(e.target)) return;
+    const menu = barra.querySelector('.links-sel-menu'); if (menu) menu.hidden = true;
+    const btn = barra.querySelector('.links-sel-btn'); if (btn) btn.setAttribute('aria-expanded','false');
+  }
+
+  function montaVisao(mostrar){
+    if (mostrar){
+      if (!painelVisao){
+        painelVisao = document.createElement('section');
+        painelVisao.className = 'links-visao';
+        painelVisao.innerHTML =
+          '<div class="lv-head"><h2>Visão geral</h2>' +
+          '<div class="lv-seg2 lv-periodo" role="tablist">' +
+          PERIODOS.map(function(x){ return '<button type="button" role="tab" data-periodo="' + x.id + '">' + x.rotulo + '</button>'; }).join('') +
+          '</div></div><div class="lv-grid"></div><div class="lv-tip" hidden></div>';
+        painelVisao.querySelector('.lv-periodo').addEventListener('click', function(e){ const b = e.target.closest('[data-periodo]'); if (!b) return; periodoAtual = b.dataset.periodo; pintaVisao(); });
+        const tip = painelVisao.querySelector('.lv-tip');
+        painelVisao.addEventListener('pointermove', function(e){
+          const el = e.target.closest('[data-tip]');
+          if (!el){ tip.hidden = true; return; }
+          tip.textContent = el.getAttribute('data-tip'); tip.hidden = false;
+          const r = painelVisao.getBoundingClientRect();
+          tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px';
+        });
+        painelVisao.addEventListener('pointerleave', function(){ tip.hidden = true; });
+      }
+      const painel = document.getElementById('appsPanel');
+      if (painel && painel.nextElementSibling !== painelVisao) painel.insertAdjacentElement('afterend', painelVisao);
+      pintaVisao();
+    } else if (painelVisao && painelVisao.parentElement){
+      painelVisao.remove();
+    }
+  }
+  function montaCardHTML(c, periodo, labels, prefixo){
+    const v = c.p[periodo] || c.p.mensal;
+    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length) : v.g;
+
+    /* NPS e Expansao tem layout proprio: numero (e a zona embaixo, no NPS) na
+       esquerda, o donut na direita e a legenda em linha no rodape do card. */
+    if (c.tipo === 'nps' || c.tipo === 'funil'){
+      const segs = segsDe(c.tipo, v.g), unidade = c.tipo === 'nps' ? '%' : '';
+      let num, zona = '';
+      if (c.tipo === 'nps'){
+        /* NPS de verdade = % Promotores − % Detratores, calculado dos proprios
+           dados da rosca; a zona sai do score, sempre em verdigris. */
+        const score = v.g.prom - v.g.det;
+        num = score.toFixed(2);
+        zona = '<span class="lv-zona">Zona de ' + zonaNPS(score).nome.toLowerCase() + '</span>';
+      } else {
+        /* o numero grande e o total do funil (abertos + ganhos + perdidos) */
+        num = String(v.g.abertos + v.g.ganhos + v.g.perdidos);
+      }
+      return '<a class="lv-card lv-card-rosca" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
+        '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
+        '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span></div>' +
+        '<div class="lv-rmid"><div class="lv-metric">' +
+          '<span class="lv-numrow"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span></span>' + zona + '</div>' +
+        '<div class="lv-donut">' + roscaDonut(segs, unidade) + '</div></div>' +
+        '<div class="vg-nps-leg">' + roscaLeg(segs, unidade) + '</div></a>';
+    }
+
+    let extra = '', num = v.n;
+    if (v.atraso !== undefined){
+      extra = parseInt(v.atraso,10) > 0
+        ? '<span class="lv-atraso">' + v.atraso + ' em atraso</span>'
+        : '<span class="lv-emdia">em dia</span>';
+    } else if (v.inativo !== undefined){
+      /* rotulo configuravel pra concordar o genero (colaboradores inativos,
+         unidades inativas) */
+      extra = parseInt(v.inativo,10) > 0
+        ? '<span class="lv-inativo">' + v.inativo + ' ' + (v.inativoLbl || 'inativos') + '</span>'
+        : '<span class="lv-emdia">todos ativos</span>';
+    } else if (v.naolido !== undefined){
+      extra = parseInt(v.naolido,10) > 0
+        ? '<span class="lv-inativo">' + v.naolido + ' não lidos</span>'
+        : '<span class="lv-emdia">tudo lido</span>';
+    } else if (v.d && !/^[+\-]\d/.test(v.d)){
+      /* deltas puros "+1 / +3 / +8%" nao dizem nada num prototipo sem base de
+         comparacao: so sobra o que tem significado proprio ("120 disponiveis",
+         "8 concluidas", "boa leitura"...) */
+      extra = '<span class="lv-delta ' + v.dir + '">' + v.d + '</span>';
+    }
+    return '<a class="lv-card" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
+      '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
+      '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span></div>' +
+      '<div class="lv-metric"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span>' + extra + '</div>' +
+      '<div class="lv-chart">' + grafico(c.tipo, gData, labels, c.fmt==='moeda'?moeda:null, c.sfx) + '</div></a>';
+  }
+  function pintaVisao(){
+    if (!painelVisao) return;
+    painelVisao.querySelectorAll('[data-periodo]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.periodo === periodoAtual)); });
+    const cards = DADOS[perfilAtual] || [], labels = rotulosTip(periodoAtual);
+    painelVisao.querySelector('.lv-grid').innerHTML = cards.map(function(c){ return montaCardHTML(c, periodoAtual, labels); }).join('');
+  }
+
+  function seleciona(cen){
+    TODAS.forEach(function(c){ document.body.classList.remove(c); });
+    document.body.classList.add(cen);
+    document.body.classList.toggle('hl-sem-social', SEM_SOCIAL.indexOf(cen) >= 0);
+    document.body.classList.toggle('hl-visao', COM_VISAO.indexOf(cen) >= 0);
+    const info = CENARIOS.find(function(c){ return c.id === cen; });
+    if (info && info.perfil) perfilAtual = info.perfil;
+    if (barra){
+      barra.querySelectorAll('[data-cen]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.cen === cen)); });
+      const lab = barra.querySelector('.ls-label'); if (lab) lab.textContent = info ? 'Cenário ' + info.rotulo.split('·')[0].trim() : 'Cenário';
+    }
+    const grade = document.getElementById('appsGrid'); if (grade) grade.classList.remove('expanded');
+    const t = document.getElementById('appsToggle'); if (t) t.classList.remove('open');
+    if (typeof applyFold === 'function') applyFold();
+    const querEmpty = (cen === 'cen-2');
+    if (document.body.classList.contains('demo-empty') !== querEmpty){
+      document.body.classList.toggle('demo-empty', querEmpty);
+      if (typeof buildStories === 'function') buildStories();
+    }
+    montaVisao(COM_VISAO.indexOf(cen) >= 0);
+    if (typeof window.pcSincronizaAltura === 'function') requestAnimationFrame(window.pcSincronizaAltura);
+  }
+
+  function entrar(){
+    if (document.body.classList.contains('home-links')) return;
+    document.body.classList.add('home-links');
+    montaSeletor();
+    seleciona('cen-1');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function sair(){
+    if (!document.body.classList.contains('home-links')) return;
+    document.body.classList.remove('home-links','hl-sem-social','hl-visao');
+    TODAS.forEach(function(c){ document.body.classList.remove(c); });
+    document.removeEventListener('click', fechaMenuFora);
+    if (barra){ barra.remove(); barra = null; }
+    if (document.body.classList.contains('demo-empty')){
+      document.body.classList.remove('demo-empty');
+      if (typeof buildStories === 'function') buildStories();
+    }
+    montaVisao(false);
+    const grade = document.getElementById('appsGrid'); if (grade) grade.classList.remove('expanded');
+    const t = document.getElementById('appsToggle'); if (t) t.classList.remove('open');
+    if (typeof applyFold === 'function') applyFold();
+    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+  }
+
+  item.addEventListener('click', function(e){ e.preventDefault(); if (typeof setNav === 'function') setNav(item); entrar(); });
+  document.querySelectorAll('.hm-side .hm-navitem').forEach(function(n){ if (n === item) return; n.addEventListener('click', sair); });
+
+  /* ---- Visao geral na HOME normal: os mesmos cards por perfil, numa fileira
+     que rola abaixo do cartao do usuario (coluna da direita); um drop de perfis
+     no topo escolhe Matriz / Franqueado / Colaborador. Sai de cena nas variantes
+     especiais (Links, Enquetes, Powerups), que tem composicao propria. ---- */
+  /* a matriz de cenarios da home: papel (matriz/franqueado/funcionario) x estado
+     (com conteudo / sem conteudo / sem rede social / sem permissao). Cada opcao
+     do drop compoe a home por cima do layout atual. */
+  const CEN_HOME = [
+    { perfil:'matriz',      estado:'conteudo',      grupo:'Matriz',      rotulo:'com conteúdo',   dica:'A home cheia: publicações, shorts e comunicados.' },
+    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ninguém publicou ainda.' },
+    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social — sem feed nem shorts.' },
+    { perfil:'franqueado',  estado:'conteudo',      grupo:'Franqueado',  rotulo:'com conteúdo',   dica:'A unidade cheia, com o feed e os shorts da rede.' },
+    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
+    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social — os módulos e a visão geral no lugar.' },
+    { perfil:'colaborador', estado:'conteudo',      grupo:'Funcionário', rotulo:'com conteúdo',   dica:'Vê e interage com o feed e os shorts da rede.' },
+    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
+    { perfil:'colaborador', estado:'sem-permissao', grupo:'Funcionário', rotulo:'sem permissão',  dica:'Vê o feed, mas não pode criar publicação nem short.' },
+    { perfil:'colaborador', estado:'vazio-sem-permissao', grupo:'Funcionário', rotulo:'sem permissão e sem conteúdo', dica:'Não pode criar e a rede ainda não publicou nada.' },
+    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social — os módulos e a visão geral no lugar.' }
+  ];
+  let selHome = null, carrHome = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+
+  function pintaCarrHome(){
+    if (!carrHome) return;
+    const cards = DADOS[perfilHome] || [], labels = rotulosTip(periodoHome);
+    const html = cards.map(function(c){ return montaCardHTML(c, periodoHome, labels, 'Visão geral de '); }).join('');
+    /* a sequencia entra duplicada: o loop segue sempre em frente e, ao alcancar
+       a copia, salta de volta ao inicio sem animacao (invisivel, cards iguais) */
+    const track = carrHome.querySelector('.hv-track');
+    track.innerHTML = html + html;
+    carrHome._n = cards.length;
+    track.scrollLeft = 0;
+    const tabs = carrHome.querySelector('.hv-periodo');
+    if (tabs) tabs.querySelectorAll('[data-periodo]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.periodo === periodoHome)); });
+  }
+  function montaSelHome(){
+    if (selHome) return;
+    const acoes = document.querySelector('.top-actions');
+    if (!acoes) return;
+    const ancora = document.getElementById('newWrap');
+    selHome = document.createElement('div');
+    selHome.className = 'links-sel home-perfil-sel';
+    let itens = '', grupoAtual = '';
+    CEN_HOME.forEach(function(c, i){
+      if (c.grupo !== grupoAtual){ grupoAtual = c.grupo; itens += '<div class="hps-grupo">' + c.grupo + '</div>'; }
+      const marcado = (c.perfil === perfilHome && c.estado === estadoHome);
+      itens += '<button type="button" role="menuitem" data-i="' + i + '" aria-selected="' + marcado + '"><b>' + c.rotulo + '</b><span>' + c.dica + '</span></button>';
+    });
+    selHome.innerHTML =
+      '<button type="button" class="links-sel-btn" aria-haspopup="menu" aria-expanded="false">' +
+      '<span class="ls-label">Matriz · com conteúdo</span><i class="fa-solid fa-chevron-down"></i></button>' +
+      '<div class="links-sel-menu" role="menu" hidden>' + itens + '</div>';
+    if (ancora) acoes.insertBefore(selHome, ancora); else acoes.insertBefore(selHome, acoes.firstChild);
+    const btn = selHome.querySelector('.links-sel-btn'), menu = selHome.querySelector('.links-sel-menu');
+    btn.addEventListener('click', function(e){ e.stopPropagation(); const ab = menu.hidden; menu.hidden = !ab; btn.setAttribute('aria-expanded', String(ab)); });
+    menu.addEventListener('click', function(e){
+      const b = e.target.closest('[data-i]'); if (!b) return;
+      const c = CEN_HOME[+b.dataset.i];
+      perfilHome = c.perfil; estadoHome = c.estado;
+      selHome.querySelector('.ls-label').textContent = c.grupo + ' · ' + c.rotulo;
+      menu.querySelectorAll('[data-i]').forEach(function(x){ const cc = CEN_HOME[+x.dataset.i]; x.setAttribute('aria-selected', String(cc.perfil === perfilHome && cc.estado === estadoHome)); });
+      menu.hidden = true; btn.setAttribute('aria-expanded', 'false');
+      pintaCarrHome(); atualizaHomeVisao();
+      /* trocar de perfil dentro do "sem conteudo" nao mexe no demo-empty, entao
+         as sugestoes dos Shorts nao se refazem sozinhas — refaz aqui */
+      if (estadoHome.indexOf('vazio') === 0 && typeof buildStories === 'function') buildStories();
+    });
+    document.addEventListener('click', function(e){ if (selHome && !selHome.contains(e.target)){ menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); } });
+  }
+  function montaCarrHome(){
+    if (carrHome) return;
+    const card = document.getElementById('homeProfileCard');
+    if (!card) return;
+    carrHome = document.createElement('section');
+    carrHome.className = 'links-visao home-visao';
+    carrHome.innerHTML =
+      '<div class="hv-head">' +
+        '<div class="lv-seg2 hv-periodo" role="tablist">' +
+          PERIODOS.map(function(x){ return '<button type="button" role="tab" data-periodo="' + x.id + '">' + x.rotulo + '</button>'; }).join('') +
+        '</div>' +
+        '<div class="hv-nav-wrap">' +
+          '<button type="button" class="hv-nav hv-prev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>' +
+          '<button type="button" class="hv-nav hv-next" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="hv-track"></div><div class="lv-tip" hidden></div>';
+    card.insertAdjacentElement('afterend', carrHome);
+    const track = carrHome.querySelector('.hv-track');
+    carrHome.querySelector('.hv-periodo').addEventListener('click', function(e){ const b = e.target.closest('[data-periodo]'); if (!b) return; periodoHome = b.dataset.periodo; pintaCarrHome(); });
+    const tip = carrHome.querySelector('.lv-tip');
+    carrHome.addEventListener('pointermove', function(e){
+      const el = e.target.closest('[data-tip]');
+      if (!el){ tip.hidden = true; return; }
+      tip.textContent = el.getAttribute('data-tip'); tip.hidden = false;
+      const r = carrHome.getBoundingClientRect();
+      tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px';
+    });
+    /* passa sozinho de card em card; as setas navegam no clique e a fileira
+       pausa enquanto o cursor esta sobre ela (para dar tempo de ler/tooltip) */
+    function passo(dir){
+      const step = track.clientWidth + 12;
+      const period = (carrHome._n || 1) * step;
+      /* ao entrar na copia (frente) ou antes do inicio (tras), salta um periodo
+         inteiro sem animacao — como os cards sao iguais, o salto e invisivel */
+      if (dir > 0 && track.scrollLeft >= period - 4) track.scrollLeft -= period;
+      else if (dir < 0 && track.scrollLeft <= 4) track.scrollLeft += period;
+      track.scrollTo({ left: track.scrollLeft + dir * step, behavior: 'smooth' });
+    }
+    carrHome.querySelector('.hv-prev').addEventListener('click', function(){ passo(-1); });
+    carrHome.querySelector('.hv-next').addEventListener('click', function(){ passo(1); });
+    let pausado = false;
+    carrHome.addEventListener('pointerenter', function(){ pausado = true; });
+    carrHome.addEventListener('pointerleave', function(){ pausado = false; tip.hidden = true; });
+    setInterval(function(){ if (pausado || carrHome.hidden || !carrHome.offsetParent) return; passo(1); }, 4500);
+    pintaCarrHome();
+  }
+  function atualizaHomeVisao(){
+    const especial = document.body.classList.contains('home-links') ||
+      document.body.classList.contains('home-enquetes') ||
+      document.body.classList.contains('home-powerups');
+    if (especial){
+      if (selHome) selHome.hidden = true;
+      if (carrHome) carrHome.hidden = true;
+    } else {
+      montaSelHome(); montaCarrHome();
+      if (selHome) selHome.hidden = false;
+      /* "sem rede social": o painel de Visao geral (o mesmo do Links) desce para
+         baixo dos modulos e substitui o carrossel da direita */
+      const semRs = (estadoHome === 'sem-rs');
+      if (carrHome) carrHome.hidden = semRs;
+      if (semRs){ perfilAtual = perfilHome; periodoAtual = periodoHome; montaVisao(true); pintaVisao(); }
+      else { montaVisao(false); }
+    }
+    /* --- papel (matriz / franqueado / funcionario) --- */
+    document.body.classList.toggle('perfil-colab', !especial && perfilHome === 'colaborador');
+    document.body.classList.toggle('perfil-franqueado', !especial && perfilHome === 'franqueado');
+    /* o ID do autor no Feed so aparece na visao da matriz */
+    document.body.classList.toggle('ver-uids', !especial && perfilHome === 'matriz');
+    /* --- estado da rede social --- */
+    document.body.classList.toggle('estado-sem-rs', !especial && estadoHome === 'sem-rs');
+    document.body.classList.toggle('estado-sem-permissao', !especial && (estadoHome === 'sem-permissao' || estadoHome === 'vazio-sem-permissao'));
+    /* "sem conteudo" reusa o demo-empty (shorts, feed e comunicados vazios); so
+       na home normal — no Links quem manda no demo-empty e o proprio controller */
+    if (!especial){
+      const querEmpty = (estadoHome === 'vazio' || estadoHome === 'vazio-sem-permissao');
+      if (document.body.classList.contains('demo-empty') !== querEmpty){
+        document.body.classList.toggle('demo-empty', querEmpty);
+        if (typeof buildStories === 'function') buildStories();
+      }
+    }
+  }
+  atualizaHomeVisao();
+  new MutationObserver(atualizaHomeVisao).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+  /* Os posts do feed inicial sao estaticos no HTML e nao passam pelo render do
+     05-feed.js, entao nao tem o chip de ID. Aqui injetamos nesses (os posts e
+     comentarios criados via JS ja vem com o chip). */
+  function injetaUidsFeed(){
+    if (typeof uidChip !== 'function') return;
+    document.querySelectorAll('.feed .post-name, .feed .comment-name').forEach(function(el){
+      if (el.querySelector(':scope > .post-uid')) return;
+      let nome = '';
+      for (let i = 0; i < el.childNodes.length; i++){ const nd = el.childNodes[i]; if (nd.nodeType === 3 && nd.textContent.trim()){ nome = nd.textContent.trim(); break; } }
+      if (nome) el.insertAdjacentHTML('afterbegin', uidChip(nome));
+    });
+  }
+  injetaUidsFeed();
+})();

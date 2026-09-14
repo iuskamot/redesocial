@@ -774,15 +774,15 @@ input,textarea,select{font-size:14px}
 /* mesma caixa do Organizar, porem sem contorno: fica ao lado dele, a
    esquerda, e so aparece enquanto se organiza */
 .apps-cancel{
-  display:flex;align-items:center;justify-content:center;gap:8px;height:40px;box-sizing:border-box;
-  padding:0 16px;border-radius:999px;font:inherit;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;height:32px;box-sizing:border-box;
+  padding:0 12px;border-radius:999px;font:inherit;font-size:12px;font-weight:700;
   color:#5b6672;border:1px solid #e9edf1;background:#fff;cursor:pointer;transition:.15s;
 }
 .apps-cancel:hover{border-color:#c62828;color:#c62828;background:#fff}
 .apps-cancel[hidden]{display:none}
 .apps-edit{
-  display:flex;align-items:center;justify-content:center;gap:8px;height:40px;box-sizing:border-box;
-  padding:0 16px;border-radius:999px;font-size:14px;font-weight:700;color:#5b6672;
+  display:flex;align-items:center;justify-content:center;gap:8px;height:32px;box-sizing:border-box;
+  padding:0 12px;border-radius:999px;font-size:12px;font-weight:700;color:#5b6672;
   border:1px solid var(--line);background:#fff;transition:.15s;
 }
 .apps-edit:hover{border-color:var(--teal);color:var(--teal)}
@@ -801,6 +801,11 @@ input,textarea,select{font-size:14px}
   display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:28px 16px;justify-items:center;
 }
+/* fechada, a grade mantem os cartoes no tamanho natural e centra a linha na
+   folga vertical do painel (em vez de gruda-la no topo e deixar vazio embaixo);
+   um rotulo de duas linhas nao estica o cartao — a reserva de 34px do .tl ja
+   iguala todos. Aberta, as linhas voltam a fluir do topo. */
+.apps:not(.expanded){align-content:center;grid-auto-rows:max-content}
 /* Os limites sao a largura de conteudo do painel — e ela que o container
    query mede, nao a caixa de borda. Cada um e o ponto em que o vao entre os
    icones cairia abaixo de 24px com aquela contagem: 104*N - 16. */
@@ -1027,25 +1032,25 @@ input,textarea,select{font-size:14px}
    ao lado, senao as duas pilulas ficam desencontradas. */
 .apps-expand{display:flex;justify-content:center;margin:0}
 .apps-expand[hidden]{display:none}
+/* o "Ver X modulos" mora no pe da grade, com um respiro de 8px do ultimo modulo */
+.apps-expand--rodape{margin-top:8px}
 /* o "Ver menos" do pe so existe com a grade aberta; fechada, quem aparece e o
    "Ver N modulos" la no cabecalho */
 .apps-expand--pe{display:none;margin:16px 0 0}
 #appsGrid.expanded ~ .apps-expand--pe{display:flex}
 .apps-expand button{
-  height:40px;padding:0 18px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d;
-  font:inherit;font-size:13px;font-weight:700;letter-spacing:.3px;
+  height:32px;padding:0 14px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d;
+  font:inherit;font-size:12px;font-weight:700;letter-spacing:.3px;
   display:inline-flex;align-items:center;gap:8px;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1);
 }
 .apps-expand button i{font-size:12px}
 .apps-expand button:hover{background:rgba(0,172,172,.2);color:#0a6b6b}
 .apps-expand i{transition:transform .38s cubic-bezier(.22,1,.36,1)}
-/* Aberto, o rotulo vira "Ver menos" e o sinal de mais vira um menos — o mesmo
-   do botao no pe do painel. A troca e no glifo (o ::before do FontAwesome, que
-   aqui e fonte e nao SVG) e nao na classe do <i>: assim vale para qualquer
-   caminho que ligue o .open, inclusive o cenario basico, que abre a grade
-   sozinho sem passar pelo clique. f068 e o fa-minus. */
-.apps-expand button.open i::before{content:"\f068"}
+/* o chevron fica a direita do rotulo e gira 180 ao abrir (vira "Ver menos"):
+   a rotacao vale para qualquer caminho que ligue o .open, inclusive o cenario
+   basico, que abre a grade sozinho sem passar pelo clique. */
+.apps-expand button.open i{transform:rotate(180deg)}
 .apps-expand button:disabled{opacity:.35;pointer-events:none}
 
 /* ============ Títulos de seção ============ */
@@ -3724,13 +3729,12 @@ input,textarea,select{font-size:14px}
 .stories-wrap{position:relative;display:flow-root;--reel-h:213px}
 .shorts{
   display:flex;gap:12px;overflow-x:auto;cursor:grab;-webkit-user-drag:none;
-  /* o overflow-x obriga o eixo vertical a recortar junto. Os 12px de cima
-     cobrem os ~6px que o hover levanta; embaixo sao 32px porque a sombra do
-     hover (0 16px 30px -12px, ainda ampliada pelo scale) chega a ~20px, e com
-     os 20px antigos ela raspava no corte. A margem negativa devolve os 32px
-     inteiros ao layout: a sombra continua com espaco para desenhar, mas quem
-     mede a folga ate o Feed passa a ser o padding do titulo dele. */
-  padding:12px 0 32px;margin:0 0 -32px;
+  /* o overflow-x recorta os dois eixos e cortaria a sombra do hover. O padding
+     abre o espaco pra ela (cima 12, baixo 32, esquerda 16; direita 0 pra cortar
+     no limite) e a margem negativa DEVOLVE tudo ao layout — efeito liquido zero.
+     Assim o respiro e so pra sombra: o espaco externo entre os blocos continua
+     vindo do gap da coluna, nao daqui. */
+  padding:12px 0 32px 16px;margin:-12px 0 -32px -16px;
   scroll-behavior:smooth;scrollbar-width:none;
 }
 .shorts::-webkit-scrollbar{display:none}
@@ -4199,7 +4203,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .rxv-tdate{white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ============ Coluna direita ============ */
-.col-right{display:flex;flex-direction:column;gap:24px}
+.col-right{display:flex;flex-direction:column;gap:16px}
 
 .profile-card{overflow:hidden;text-align:center;padding-bottom:24px}
 .profile-banner{
@@ -4332,10 +4336,8 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
    "Ver todos os shorts". */
 #homeShorts .section-title-row{display:none}
 
-/* A folga da fileira de Shorts ate o painel de modulos: 24px visiveis. A fita
-   ja carrega 12px de padding no topo (o espaco da sombra do card), entao a
-   margem completa os outros 12. */
-.col-main > #homeShorts{margin-top:12px}
+/* O espaco entre os blocos da coluna (modulos, Shorts, publicacoes) vem do
+   row-gap:16px do proprio grid da col-main, nao de margens individuais. */
 
 /* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
    Os 24px de padding no topo faziam sentido quando ele era uma secao solta na
@@ -4376,25 +4378,22 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
      conteudo. */
   .col-main{display:grid;
     grid-template-columns:max(0px, min(calc(50% - 106px), calc(100% - 564px))) 552px;
-    grid-template-rows:auto auto min-content min-content auto;
-    column-gap:12px;align-content:start}
+    grid-template-rows:auto auto min-content auto;
+    column-gap:12px;row-gap:16px;align-content:start}
   .col-main > .apps-panel{grid-area:1 / 1 / 2 / 3}
   /* a fita atravessa as duas faixas, logo abaixo dos modulos */
   .col-main > #homeShorts{grid-area:2 / 1 / 3 / 3}
-  /* align-self:start nos tres: a faixa dos filtros atravessa as duas linhas
-     e costuma ser a mais alta das duas colunas. A altura dela vira altura das
-     linhas, e sem isso o campo de publicar esticava junto — bem visivel no
-     cenario sem publicacao nenhuma, onde ele ia de 131 para 307px. */
-  .col-main > .nvf-composer{grid-area:3 / 2 / 4 / 3;margin-top:24px;align-self:start}
+  /* o campo de publicar agora mora DENTRO do feed (primeiro item), entao o feed
+     ocupa a linha que era do composer. align-self:start: a faixa dos filtros
+     atravessa e costuma ser a mais alta, e sem isso o feed esticava junto. */
   .col-main > .feed,
-  .col-main > .demo-empty-state{grid-area:4 / 2 / 5 / 3;align-self:start}
+  .col-main > .demo-empty-state{grid-area:3 / 2 / 4 / 3;align-self:start}
   /* uma publicacao para a outra no mesmo vao dos filtros */
   .col-main > .feed{gap:12px}
   /* Na home a faixa da esquerda esta vazia — os filtros so aparecem nas
      variantes do menu —, entao tudo na coluna do meio atravessa as duas: o
      painel de modulos, a fileira de Shorts, o campo de publicar e as
      publicacoes, todos de ponta a ponta. */
-  body:not(.home-powerups):not(.home-enquetes) .col-main > .nvf-composer,
   body:not(.home-powerups):not(.home-enquetes) .col-main > .feed,
   body:not(.home-powerups):not(.home-enquetes) .col-main > .demo-empty-state{grid-column:1 / -1}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
@@ -4404,7 +4403,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   /* os filtros ocupam a faixa da esquerda ao lado das duas linhas; align-self
      start para ficarem no topo dela, e nao esticados na altura do feed. Os
      24px sao os mesmos que o campo de publicar desce do lado de la. */
-  .col-main > #homeFiltros{grid-area:3 / 1 / 6 / 2;align-self:start;margin-top:24px}
+  .col-main > #homeFiltros{grid-area:3 / 1 / 5 / 2;align-self:start;margin-top:24px}
 
 }
 
@@ -6363,7 +6362,7 @@ body:not(.demo-custom) .pc-avedit{display:none}
 body:not(.demo-custom) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
 body:not(.demo-custom) .profile-card .profile-name,
 body:not(.demo-custom) .profile-card .profile-role{
-  grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
+  grid-area:auto;margin:0;align-self:center;text-align:center;white-space:normal;overflow:visible}
 /* o nome ganha folga da foto: 8px; o cargo, 2px do nome */
 body:not(.demo-custom) .profile-card .profile-name{margin-top:8px}
 body:not(.demo-custom) .profile-card .profile-role{margin-top:2px}
@@ -6379,9 +6378,21 @@ body.home-enquetes .profile-card{min-height:0 !important}
    do perfil. */
 body:not(.demo-custom) .pc-extra{display:none}
 
-/* O cartao tem a altura do proprio conteudo. Quem acompanha agora e o painel
-   de modulos, do outro lado — o 16-custom.js poe nele o minimo medido daqui. */
-body:not(.demo-custom):not(.home-enquetes) .profile-card{height:auto;min-height:0 !important}
+/* Agora o CARTAO acompanha a altura do painel de modulos (que ficou mais alto
+   com o "Ver X modulos" no pe): o 16-custom.js poe nele, inline e !important, o
+   minimo medido do painel. Aqui o cartao vira coluna flex para que esse espaco
+   extra suba para a faixa da logo — que cresce e centra a marca — em vez de
+   sobrar como vazio embaixo do cargo. A logo ganha 20px de respiro em cima. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card{height:auto;display:flex;flex-direction:column;align-items:center}
+body:not(.demo-custom):not(.home-enquetes) .profile-card .profile-banner{
+  align-self:stretch;width:100%;flex:1 0 auto;height:auto;min-height:110px;
+  display:flex;align-items:center;justify-content:center;padding:16px 20px 55px}
+/* a logo obedece a DOIS limites e para no que bater primeiro: 20px de folga
+   lateral (max-width:100%, ja que os 20px sao padding da faixa) e um teto de
+   altura fixo em px. O teto em px evita que uma marca comprida, ao "encher" a
+   altura, fique tao larga a ponto de inflar a coluna. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card .profile-banner svg.profile-logo{
+  max-width:100%;max-height:56px;width:auto;height:auto;min-width:0}
 /* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
    o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
    ser so o gap de 24px da propria coluna. */
@@ -7664,6 +7675,282 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
   body.home-powerups .col-right #homeShorts .shorts > .reel{width:120px}
   body.home-powerups .col-right #homeShorts .shorts > :nth-child(n+5){display:flex}
 }
+
+/* ============ Links Externos: Partner Inicial adaptativo ============
+   Um laboratorio de composicao da home para redes que nao dependem da Rede
+   Social. O problema: hoje o miolo da home (abaixo da grade de modulos) e
+   preenchido pela Rede Social — a fileira de Shorts e o feed. Quando a rede
+   nao publica, ou nem usa o modulo, esse miolo fica vazio e a home encolhe
+   para uma linha de modulos com um paredao branco embaixo, escondendo que ha
+   dezenas de aplicativos disponiveis.
+
+   A solucao explorada: quando nao ha conteudo social, a GRADE DE MODULOS deixa
+   de ser uma linha dobrada e passa a ser o heroi da tela, aberta e inteira,
+   ocupando o espaco que era do feed. Assim a home nunca fica vazia e da
+   visibilidade ao que a rede realmente tem.
+
+   Quatro cenarios, alternados por um seletor flutuante (o 13-extras.js monta a
+   barra e troca a classe cen-N no body):
+     cen-1  Rede Social com conteudo   -> home atual, intocada (referencia)
+     cen-2  Rede Social sem publicacoes-> grade abre; feed vira convite enxuto
+     cen-3  Sem Rede Social            -> sem feed nenhum; grade e o heroi
+     cen-4  Industria (sem interesse)  -> cen-3 + destaques do segmento
+
+   Tudo escopado em body.home-links: nada aqui vale na home normal nem nas
+   outras variantes do menu. */
+
+/* ---- O seletor de cenarios ----
+   Um dropdown no header, a direita do "+ Acoes Rapidas". So existe nesta tela:
+   o 13-extras.js injeta ao entrar e remove ao sair. Fica sobre o fundo escuro
+   do topbar, entao o botao e translucido claro. */
+.links-sel{position:relative;display:flex;align-items:center}
+.links-sel-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px;
+  border-radius:10px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);
+  color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.links-sel-btn:hover{background:rgba(255,255,255,.16)}
+.links-sel-btn .ls-tag{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.18);padding:2px 6px;border-radius:999px}
+.links-sel-btn .ls-label{white-space:nowrap}
+.links-sel-btn i{font-size:10px;opacity:.85}
+.links-sel-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:288px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;
+  box-shadow:0 2px 8px rgba(16,32,48,.12),0 20px 46px -18px rgba(16,32,48,.5)}
+.links-sel-menu[hidden]{display:none}
+.links-sel-menu button{display:block;width:100%;text-align:left;border:0;background:none;
+  border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit}
+.links-sel-menu button:hover{background:#f3f6f9}
+.links-sel-menu button b{display:block;font-size:13px;font-weight:700;color:var(--ink)}
+.links-sel-menu button span{display:block;font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px}
+.links-sel-menu button[aria-selected=true]{background:rgba(0,172,172,.1)}
+.links-sel-menu button[aria-selected=true] b{color:var(--teal-dark)}
+@media(max-width:640px){ .links-sel-btn .ls-tag,.links-sel-btn .ls-label{display:none} }
+
+/* ================= cen-3 / cen-4: sem Rede Social =================
+   A grade fica em UMA linha em todos os cenarios (com o "Ver N modulos" para
+   abrir). Sem publicacao para centrar, a coluna do meio vira um fluxo simples
+   de blocos: a grade em cima e, no cen-4, o painel de indicadores abaixo. */
+body.home-links.hl-sem-social .col-main{display:block}
+
+/* ---- cen-3 e cen-4: sem Rede Social nenhuma ----
+   Somem a fileira de Shorts, o campo de publicar, o feed e o estado vazio. O
+   que sobra na coluna do meio e so a grade; a coluna da direita (perfil e
+   Comunicados) equilibra o outro lado. */
+body.home-links.hl-sem-social #homeShorts,
+body.home-links.hl-sem-social .col-main > .nvf-composer,
+body.home-links.hl-sem-social .col-main > .feed,
+body.home-links.hl-sem-social .col-main > .demo-empty-state,
+body.home-links.hl-sem-social #homeFeedTitle{display:none !important}
+
+/* ---- cen-2: Rede Social ativa, mas sem nenhuma publicacao ----
+   O corpo e a home normal — modulos em uma linha —, so que vazia. O demo-empty
+   (ligado pelo 13-extras.js) faz o trabalho: enche a fileira de Shorts com os
+   cards de sugestao "Clique para...", poe o feed no convite "Seja o primeiro a
+   publicar" e os comunicados no proprio estado vazio. A fileira de Shorts,
+   como na home, entra sem cabecalho — so os cards de convite. */
+/* a fileira de Shorts fica so com os convites, sem cabecalho — como na home */
+
+/* ---- cen-1: a home real, sem tocar em nada ----
+   Nao ha regra: cen-1 e a home normal com o seletor flutuando por cima. E a
+   referencia do "antes/atual" na comparacao. */
+
+/* ================= cen-4: painel de "Visao geral" (graficos por modulo) =================
+   O heroi do cenario industria. Em vez de uma grade so, o topo mostra o
+   panorama operacional: um cartao por modulo, com o numero que importa e um
+   mini-grafico na cor do proprio modulo. Responde a pergunta do ticket — "que
+   conteudo pode substituir a area de Rede Social?" — com dados, nao com vazio.
+   Abaixo dele a grade fica em duas linhas, como atalho para o resto. */
+.links-visao{display:none;position:relative}
+/* o comunicado em destaque sai em toda a home — a coluna fica so com a lista */
+#homeComPanel .com-featured{display:none}
+/* tooltip dos graficos: bolha escura que segue o cursor */
+.links-visao .lv-tip{position:absolute;z-index:6;transform:translate(-50%,calc(-100% - 8px));
+  background:#101c26;color:#fff;font-size:12px;font-weight:600;line-height:1;
+  padding:6px 9px;border-radius:8px;pointer-events:none;white-space:nowrap;
+  box-shadow:0 6px 16px -6px rgba(16,32,48,.55)}
+.links-visao .lv-tip::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:#101c26}
+body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
+.links-visao .lv-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.links-visao .lv-head h2{font-size:20px;font-weight:700;color:var(--ink);margin:0}
+/* dois controles segmentados: o perfil (quem esta vendo) e o periodo. O
+   periodo empurra para a direita; no estreito os dois quebram para baixo. */
+.links-visao .lv-seg2{display:inline-flex;gap:2px;background:#eef1f4;border-radius:999px;padding:3px}
+.links-visao .lv-periodo{margin-left:auto}
+.links-visao .lv-seg2 button{border:0;background:none;border-radius:999px;padding:8px 16px;
+  font:inherit;font-size:14px;font-weight:600;color:#5b6672;cursor:pointer;white-space:nowrap;transition:.15s}
+.links-visao .lv-seg2 button:not([aria-selected=true]):hover{color:var(--ink);background:rgba(255,255,255,.65)}
+.links-visao .lv-seg2 button[aria-selected=true]{background:#fff;color:var(--teal-dark);box-shadow:0 1px 2px rgba(16,32,48,.12)}
+/* ---- O card de NPS e Expansao (rosca) ---- */
+.links-visao .vg-nps{display:flex;height:9px;border-radius:999px;overflow:hidden;background:#eef1f4}
+.links-visao .vg-nps-seg{display:block;height:100%}
+.links-visao .vg-nps-leg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;font-size:10px;color:var(--muted)}
+.links-visao .vg-nps-leg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.links-visao .vg-nps-leg span{white-space:nowrap}
+/* o donut de Universidade (tipo donut): o anel a esquerda e a legenda
+   (Concluido x A concluir) em coluna a direita, dentro da area do chart */
+.links-visao .vg-npsrosca{display:flex;align-items:center;gap:14px}
+.links-visao .lv-chart .vg-npsrosca .vg-donut{width:54px;height:54px;flex:none}
+.links-visao .vg-npsrosca .vg-nps-leg{margin-top:0;flex-direction:column;flex-wrap:nowrap;gap:5px}
+/* layout do card: o numero (com a zona embaixo, no NPS) na esquerda e o donut
+   na direita, no espaco em branco; a legenda em linha no rodape do card */
+.links-visao .lv-rmid{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.links-visao .lv-card-rosca .lv-metric{flex-direction:column;align-items:flex-start;gap:6px;margin:0}
+.links-visao .lv-card-rosca .lv-numrow{display:flex;align-items:baseline;gap:6px}
+.links-visao .lv-card-rosca .lv-zona{margin:0;color:var(--teal-dark);background:rgba(0,172,172,.12)}
+.links-visao .lv-donut{flex:none}
+.links-visao .lv-donut .vg-donut{width:64px;height:64px;display:block}
+.links-visao .lv-card-rosca .vg-nps-leg{margin-top:0;gap:6px 14px}
+.links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
+.links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:box-shadow .15s,border-color .15s}
+.links-visao .lv-card:hover{border-color:#d5dbe2;box-shadow:0 1px 2px rgba(16,32,48,.06),0 10px 22px -14px rgba(16,32,48,.3)}
+.links-visao .lv-top{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.links-visao .lv-ic{width:34px;height:34px;flex:none;border-radius:10px;
+  background:linear-gradient(165deg,color-mix(in srgb,var(--c1) 45%,var(--c2)),var(--c2));
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.4),0 5px 12px -6px var(--c2);display:flex;align-items:center;justify-content:center}
+.links-visao .lv-ic .smi{width:19px;height:19px;background-size:19px}
+.links-visao .lv-nome{font-size:13px;font-weight:700;color:#5b6672}
+.links-visao .lv-metric{display:flex;align-items:baseline;gap:6px;margin:0 0 12px}
+.links-visao .lv-num{font-size:26px;font-weight:700;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.links-visao .lv-unit{font-size:12px;color:var(--muted)}
+.links-visao .lv-delta{margin-left:auto;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.links-visao .lv-delta.boa{color:#219348;background:rgba(46,164,79,.12)}
+.links-visao .lv-delta.neutra{color:#5b6672;background:#eef1f4}
+.links-visao .lv-atraso,.links-visao .lv-inativo{margin-left:auto;font-size:11px;font-weight:700;white-space:nowrap;
+  color:#e5443b;background:rgba(229,68,59,.1);padding:2px 8px;border-radius:999px}
+.links-visao .lv-emdia{margin-left:auto;font-size:11px;font-weight:700;white-space:nowrap;
+  color:#2ea44f;background:rgba(46,164,79,.1);padding:2px 8px;border-radius:999px}
+.links-visao .lv-zona{margin-left:auto;font-size:11px;font-weight:700;white-space:nowrap;padding:2px 8px;border-radius:999px}
+.links-visao .lv-chart{height:46px;display:flex;align-items:flex-end;justify-content:center}
+.links-visao .lv-chart .vg-svg{width:100%;height:42px;display:block}
+/* camada da area: a linha no SVG esticado e as bolinhas HTML por cima */
+.links-visao .vg-arealayer{position:relative;width:100%;height:42px}
+.links-visao .vg-arealayer .vg-svg{position:absolute;inset:0;height:100%}
+.links-visao .vg-dot{position:absolute;width:16px;height:16px;transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;cursor:default}
+.links-visao .vg-dot i{width:9px;height:9px;border-radius:50%;background:var(--c2);
+  border:2px solid #fff;box-shadow:0 1px 2px rgba(16,32,48,.28)}
+.links-visao .vg-axis{display:flex;margin-top:5px}
+.links-visao .vg-axis span{flex:1;min-width:0;text-align:center;font-size:9px;line-height:1;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.links-visao .lv-chart .vg-donut{width:46px;height:46px}
+.links-visao .lv-chart .vg-gauge{width:84px;height:46px}
+.links-visao .vg-prog{width:100%;height:9px;border-radius:999px;background:#eef1f4;overflow:hidden;align-self:center}
+.links-visao .vg-prog span{display:block;height:100%;border-radius:999px;background:var(--c2)}
+
+
+/* ---- Celular ----
+   O seletor vira uma barra rolavel; a grade e os destaques ja se viram com os
+   container queries e o auto-fill. */
+
+
+/* ============ Visão geral na HOME (carrossel na coluna direita) ============
+   Os mesmos cards de módulo do Links Externos, numa fileira que rola abaixo do
+   cartão do usuário. Visível só na home normal (o JS controla pelo [hidden]). */
+/* a Visao geral mora num bloco branco igual ao dos Comunicados: mesmo fundo,
+   raio, padding e sombra */
+.links-visao.home-visao:not([hidden]){display:block;margin:0;padding:16px;
+  background:#fff;border-radius:14px;box-shadow:0 1px 2px rgba(16,32,48,.06)}
+/* cabecalho: as abas de periodo (hug, a esquerda) e as setas a direita */
+.home-visao .hv-head{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+/* abas de periodo (Semanal/Mensal/Anual) no tamanho do conteudo, mais baixas
+   que as do painel */
+.home-visao .hv-periodo{margin:0}
+.home-visao .hv-periodo button{padding:5px 12px;font-size:12px}
+.home-visao .hv-nav-wrap{margin-left:auto;display:flex;gap:6px}
+/* chevrons: fundo no cinza claro da borda, sem contorno; o hover so escurece
+   um pouco (fundo e icone), sem ganhar borda */
+.home-visao .hv-nav{width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;background:var(--line);color:#44505c;transition:.15s}
+.home-visao .hv-nav:hover{background:#d3d9e0;color:#2b3743}
+.home-visao .hv-nav i{font-size:11px}
+/* a fileira rola de card em card; o padding vertical so cobre a sombra do
+   hover, e nao ha margem lateral — os cards encostam nas bordas da coluna */
+.home-visao .hv-track{
+  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:0;margin:0;scrollbar-width:none;
+}
+.home-visao .hv-track::-webkit-scrollbar{display:none}
+/* cada card ocupa a largura inteira (fill width) e tem a altura de um Short
+   (200px); em coluna flex o grafico estica e ocupa a sobra vertical */
+.home-visao .hv-track .lv-card{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box;
+  height:200px;display:flex;flex-direction:column}
+.home-visao .lv-chart{flex:1;min-height:0;height:auto}
+.home-visao .lv-chart .vg-svg:not(.vg-donut){height:100%}
+.home-visao .vg-arealayer{height:100%}
+.home-visao .lv-chart:has(.vg-donut){align-items:center}
+/* nos cards de rosca (NPS/Expansao) o miolo cresce e joga a legenda pro rodape */
+.home-visao .lv-card-rosca .lv-rmid{flex:1;min-height:0}
+/* icone e titulo acompanham os do Comunicados: 42px raio 8px, e o titulo em
+   14px na cor do titulo dos comunicados */
+.home-visao .lv-ic{width:42px;height:42px;border-radius:8px}
+.home-visao .lv-ic .smi{width:20px;height:20px;background-size:20px}
+.home-visao .lv-nome{font-size:14px;color:#5b6672}
+/* borda dos cards um tom mais definida (dentro do bloco branco eles some) */
+.home-visao .lv-card{border-color:#d5dbe2}
+
+/* ---- Perfil Colaborador (na home): não cria Short nem publicação, e não vê
+   o Short "Aguardando aprovação" (que é fluxo de quem publica). Sem o bloco de
+   criar, as publicações ganham 24px de respiro no topo. ---- */
+/* o Short "Aguardando aprovacao" e fluxo de aprovador: so a matriz ve. Franqueado
+   e colaborador (nao aprovam) nao. */
+body.perfil-colab #homeShorts .reel.is-pend,
+body.perfil-franqueado #homeShorts .reel.is-pend{display:none !important}
+/* estado "sem permissao": ve o feed, mas nao cria publicacao nem short */
+body.estado-sem-permissao .reel-create{display:none !important}
+body.estado-sem-permissao .col-main .nvf-composer{display:none !important}
+/* "sem permissao" + "sem conteudo" (vazio): sem short pra ver e sem publicacao.
+   Esconde a linha de Shorts e mostra so o bloco de baixo com a mensagem
+   "Nenhuma publicacao por aqui". */
+body.estado-sem-permissao.demo-empty #homeShorts{display:none !important}
+body.estado-sem-permissao.demo-empty .de-quando-vazio{display:none}
+body.estado-sem-permissao.demo-empty .de-quando-sem-permissao{display:block}
+/* sem os Shorts, a linha deles fica vazia e sobra o gap dobrado; o feed sobe
+   pra essa linha, ficando so 1 gap entre os modulos e "Nenhuma publicacao" */
+body.estado-sem-permissao.demo-empty .col-main > .feed{grid-row:2 / 3}
+/* estado "sem rede social": sem shorts, feed nem compositor; a coluna central
+   vira fluxo simples e o painel de Visao geral (o mesmo do Links) desce para
+   baixo dos modulos, como herói. */
+body.estado-sem-rs .col-main{display:block}
+body.estado-sem-rs #homeShorts,
+body.estado-sem-rs .col-main > .feed,
+body.estado-sem-rs .col-main > .demo-empty-state,
+body.estado-sem-rs #homeFeedTitle{display:none !important}
+body.estado-sem-rs .links-visao:not(.home-visao){display:block;margin:16px 0 0;
+  background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(16,32,48,.06)}
+/* a borda dos charts fica mais marcada aqui, igual à do carrossel */
+body.estado-sem-rs .links-visao:not(.home-visao) .lv-card{border-color:#d5dbe2}
+/* cabecalhos de grupo (papel) no menu do drop-matriz */
+.home-perfil-sel .hps-grupo{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--muted);padding:9px 12px 3px}
+.home-perfil-sel .hps-grupo:first-child{padding-top:3px}
+/* o drop-matriz tem muitos cenarios; teto de altura com rolagem pra nao
+   estourar a tela */
+.home-perfil-sel .links-sel-menu{max-height:min(60vh,440px);overflow-y:auto}
+
+/* ============ Identificação de usuário no Feed (ID) ============
+   O responsável por uma publicação/comentário carrega um ID à esquerda do nome
+   (#NN · Nome). Some por padrão — usuários externos à rede não veem — e aparece
+   só na visão da matriz (body.ver-uids, ligado pelo 13-extras.js). */
+.post-uid,.post-sep{display:none}
+/* com o ID a mostra, o ID + a bolinha + o nome ficam numa linha flex com 4px
+   entre eles (a bolinha nao usa margem propria — quem espaca e o gap) */
+body.ver-uids .post-name,
+body.ver-uids .comment-name{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
+body.ver-uids .post-uid{display:inline;font-size:12px;font-weight:400;color:#8a96a3}
+body.ver-uids .post-sep{display:inline;color:#c5cdd6}
+
+/* o drop de perfis da HOME (no topbar) 100% arredondado e um tom mais claro */
+.home-perfil-sel .links-sel-btn{border-radius:999px;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32)}
+.home-perfil-sel .links-sel-btn:hover{background:rgba(255,255,255,.26)}
+
+
+/* "Sem conteúdo": o campo de publicar e o convite "Seja o primeiro a publicar"
+   moram JUNTOS no mesmo bloco (o feed), separados pelos 12px de gap dele; os
+   posts saem. Vale para a home e para o cenário sem publicações do Links. */
+body.demo-empty .col-main > .feed.demo-filled{display:flex;flex-direction:column;gap:12px}
+body.demo-empty .col-main > .feed > .post{display:none}
+.feed > .demo-empty-state{display:none;margin:0}
+body.demo-empty .col-main > .feed > .demo-empty-state{display:flex}
 </style>
 </head>
 <body>
@@ -7694,7 +7981,7 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
       <a href="#" class="hm-navitem is-active" id="navHome" title="Home"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--home" aria-hidden="true"></span><span class="hm-navitem__label">Home</span></a>
       <a href="#" class="hm-navitem" title="Aplicativos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--apps" aria-hidden="true"></span><span class="hm-navitem__label">Aplicativos</span></a>
       <a href="#" class="hm-navitem" id="navPowerups" title="Powerups"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--powerups" aria-hidden="true"></span><span class="hm-navitem__label">Powerups</span></a>
-      <a href="#" class="hm-navitem" title="Links Externos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--links" aria-hidden="true"></span><span class="hm-navitem__label">Links Externos</span></a>
+      <a href="#" class="hm-navitem" id="navLinks" title="Links Externos"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--links" aria-hidden="true"></span><span class="hm-navitem__label">Links Externos</span></a>
       <a href="#" class="hm-navitem" title="Comunicados"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--comunicados" aria-hidden="true"></span><span class="hm-navitem__label">Comunicados</span></a>
       <a href="#" class="hm-navitem" id="navEnquetes" title="Enquetes"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--enquetes" aria-hidden="true"></span><span class="hm-navitem__label">Enquetes</span></a>
       <a href="#" class="hm-navitem" title="Eventos Importantes"><span class="hm-navitem__ic hm-navitem__ic--arquivo hm-ic--eventos" aria-hidden="true"></span><span class="hm-navitem__label">Eventos Importantes</span></a>
@@ -7966,9 +8253,6 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
           <div class="apps-head-right">
             <button class="apps-cancel" id="appsCancel" hidden><i class="fa-solid fa-xmark"></i><span>Cancelar</span></button>
             <button class="apps-edit" id="appsEdit" title="Reordenar módulos"><i class="fa-solid fa-arrows-up-down-left-right"></i><span>Organizar</span></button>
-            <div class="apps-expand">
-              <button id="appsToggle" title="Ver mais aplicativos"><i class="fa-solid fa-plus"></i> <span id="appsToggleLbl">Ver mais módulos</span></button>
-            </div>
           </div>
         </div>
         <div class="apps" id="appsGrid">
@@ -8153,11 +8437,11 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
 
         </div>
 
-        <!-- o mesmo fechar do cabecalho, repetido no pe: com a grade aberta a
-             pessoa esta olhando para baixo, e voltar la em cima so para fechar
-             e caminho a toa. Quem responde pelo clique e o botao de cima. -->
-        <div class="apps-expand apps-expand--pe">
-          <button type="button" id="appsToggleFim"><i class="fa-solid fa-minus"></i> <span>Ver menos</span></button>
+        <!-- o "Ver X modulos" mora aqui, no pe da grade: fechado mostra a
+             contagem total, aberto vira "Ver menos". A altura do painel cresce
+             com ele, e o cartao do usuario ao lado acompanha (16-custom.js). -->
+        <div class="apps-expand apps-expand--rodape">
+          <button id="appsToggle" title="Ver mais aplicativos"><span id="appsToggleLbl">Ver mais módulos</span> <i class="fa-solid fa-chevron-down"></i></button>
         </div>
         <div class="apps-empty" id="appsEmpty" hidden>
           <i class="fa-regular fa-face-frown"></i> Nenhum módulo encontrado
@@ -8193,7 +8477,8 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
       <aside class="home-filtros" id="homeFiltros"></aside>
 
       <!-- ========== FEED (estilo LinkedIn) ========== -->
-      <div class="nvf-composer" style="margin-bottom:8px">
+      <section class="feed demo-filled">
+      <div class="nvf-composer">
         <div class="section-title-row" id="homeFeedTitle">
           <h2 class="section-title">Feed</h2>
           <a href="#" class="see-all demo-filled" id="homeSeeAllPubs">Ver todas as publicações <i class="fa-solid fa-arrow-right"></i></a>
@@ -8209,7 +8494,13 @@ body.home-powerups .col-right #homeShorts .reel-meta{font-size:9px;line-height:1
           <button class="nvf-qbtn news" id="homeQArt"><i class="fa-solid fa-newspaper"></i> Artigo</button>
         </div>
       </div>
-      <section class="feed demo-filled">
+      <div class="demo-empty-state">
+        <img class="de-illu" src="uploads/illustra/feed.svg" alt="" width="323" height="200">
+        <div class="de-title de-quando-vazio">Seja o primeiro a publicar</div>
+        <div class="de-sub de-quando-vazio">Ainda não há publicações por aqui. Use o campo acima para criar a primeira publicação da sua rede.</div>
+        <div class="de-title de-quando-sem-permissao">Nenhuma publicação por aqui</div>
+        <div class="de-sub de-quando-sem-permissao">Quando alguém da sua rede publicar, a publicação aparece aqui.</div>
+      </div>
 
         <!-- Post 0: Artigo fixado (Casa do Construtor) -->
         <article class="card post nvf-artcard" id="homeArtCard">
@@ -8341,13 +8632,6 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           </div>
         </article>
       </section>
-      <div class="demo-empty-state" style="margin-top:4px">
-        <img class="de-illu" src="uploads/illustra/feed.svg" alt="" width="323" height="200">
-        <div class="de-title de-quando-vazio">Seja o primeiro a publicar</div>
-        <div class="de-sub de-quando-vazio">Ainda não há publicações por aqui. Use o campo acima para criar a primeira publicação da sua rede.</div>
-        <div class="de-title de-quando-sem-permissao">Nenhuma publicação por aqui</div>
-        <div class="de-sub de-quando-sem-permissao">Quando alguém da sua rede publicar, a publicação aparece aqui.</div>
-      </div>
     </main>
 
     <!-- ========== Coluna direita ========== -->
@@ -11992,6 +12276,15 @@ const SHORT_SUGESTOES = [
      que o space-between do .shorts espalha ate a borda sem rolagem */
   { ic:'fa-lightbulb',    txt:'Clique para mostrar uma novidade' },
 ];
+/* O funcionario nao faz campanha nem lancamento (isso e da marca/gestao): as
+   sugestoes dele sao pessoais/de equipe. Usadas quando o perfil e Funcionario. */
+const SHORT_SUG_FUNC = [
+  { ic:'fa-trophy',    txt:'Clique para compartilhar conquistas' },
+  { ic:'fa-star',      txt:'Clique para compartilhar um momento' },
+  { ic:'fa-lightbulb', txt:'Clique para mostrar uma novidade' },
+  { ic:'fa-handshake', txt:'Clique para reconhecer um colega' },
+  { ic:'fa-comment-dots', txt:'Clique para compartilhar uma dica' },
+];
 function renderShortsInto(row){
   row.innerHTML = '';
   const create = document.createElement('button');
@@ -12003,7 +12296,8 @@ function renderShortsInto(row){
   /* Sem nenhum short publicado, a fileira não fica vazia: sobra o "Criar short"
      e, ao lado, sugestões do que gravar — cada uma abre o mesmo criador. */
   if (document.body.classList.contains('demo-empty')) {
-    SHORT_SUGESTOES.forEach(s => {
+    const sugs = document.body.classList.contains('perfil-colab') ? SHORT_SUG_FUNC : SHORT_SUGESTOES;
+    sugs.forEach(s => {
       const b = document.createElement('button');
       b.className = 'reel reel-sugestao';
       b.innerHTML = '<span class="rs-ic"><i class="fa-solid ' + s.ic + '"></i></span>' +
@@ -12312,7 +12606,7 @@ function buildComment(c, fresh, pending){
     '<span class="avatar ' + c.av + '">' + c.ini + '</span>' +
     '<div class="comment-main">' +
       '<div class="comment-bubble">' +
-        '<div class="comment-top"><span class="comment-name">' + c.name + '</span>' +
+        '<div class="comment-top"><span class="comment-name">' + uidChip(c.name) + c.name + '</span>' +
         '<span class="comment-time">' + cmDT(c) + '</span>' +
         '<div class="comment-menu"><button class="comment-dots" title="Opções"><i class="fa-solid fa-ellipsis"></i></button><div class="comment-drop" hidden><button class="comment-del"><i class="fa-solid fa-trash-can"></i> Excluir</button></div></div></div>' +
         '<div class="comment-role">' + c.role + '</div>' +
@@ -12413,7 +12707,7 @@ function addHomePost(n, append){
   const rcount = n.reactions||0, ccount = n.comments||0;
   const cabecalho =
     '<div class="post-head">'+avatarHtml+
-      '<div class="post-id"><div class="post-name">'+nameHtml+(n.pinned?'<span class="nvf-pinchip"><i class="fa-solid fa-thumbtack"></i> Fixado</span>':'')+'</div>'+
+      '<div class="post-id"><div class="post-name">'+uidChipHTML(n)+nameHtml+(n.pinned?'<span class="nvf-pinchip"><i class="fa-solid fa-thumbtack"></i> Fixado</span>':'')+'</div>'+
       '<div class="post-sub">'+postSub(n)+'</div>'+
       '<div class="post-meta">'+postMetaHTML(n, n.edited)+'</div></div>'+
       '<button class="post-more"><i class="fa-solid fa-ellipsis"></i></button></div>';
@@ -12454,7 +12748,7 @@ function addHomePost(n, append){
   }
   art.innerHTML =
     '<div class="post-head">'+avatarHtml+
-      '<div class="post-id"><div class="post-name">'+nameHtml+'</div>'+
+      '<div class="post-id"><div class="post-name">'+uidChipHTML(n)+nameHtml+'</div>'+
       '<div class="post-sub">'+postSub(n)+'</div>'+
       '<div class="post-meta">'+metaTxt+(n.edited?' · <span class="edited-tag">editado</span>':'')+' · <i class="fa-solid fa-earth-americas"></i>'+postCatMeta(n)+'</div></div>'+
       '<button class="post-more"><i class="fa-solid fa-ellipsis"></i></button></div>'+
@@ -15996,6 +16290,18 @@ function nomeComSelo(n){
   const nome = oficial ? (n.author || 'SULTS') : (n.autorNome || n.author || '');
   return nome + ((oficial || ehAdminPost(n)) ? ' ' + verificadoSVG() : '');
 }
+/* Identificacao do autor por ID: no Feed, o responsavel por uma publicacao ou
+   comentario carrega um ID a esquerda do nome (#NN · Nome). Fica escondido por
+   padrao (usuarios externos a rede nao veem) e so aparece na visao da matriz,
+   ligado pela classe body.ver-uids (13-extras.js). O ID e deterministico por
+   autor — o mesmo usuario tem sempre o mesmo numero. */
+function uidPorNome(nome){
+  nome = (nome || 'SULTS').toString();
+  let h = 0; for (let i = 0; i < nome.length; i++){ h = (h * 31 + nome.charCodeAt(i)) >>> 0; }
+  return String((h % 99) + 1).padStart(2, '0');
+}
+function uidChip(nome){ return '<span class="post-uid">#' + uidPorNome(nome) + '</span><span class="post-sep">·</span>'; }
+function uidChipHTML(n){ return uidChip(n.autorNome || n.author); }
 /* pilula de categoria (icone redondo + nome); devolve so o nome quando a
    categoria nao existe na lista */
 function catPillHTML(nome){
@@ -17890,6 +18196,576 @@ function rvShareCopiar(){
   });
 })();
 
+
+/* ---- Links Externos: laboratorio do Partner Inicial adaptativo ----
+   Estudo de como a home se compoe quando a rede nao depende da Rede Social.
+   Dropdown no header troca entre os cenarios; a grade fica sempre em uma linha.
+
+   cen-1  com conteudo | cen-2  sem publicacoes | cen-3  sem Rede Social
+   cen-matriz / cen-franqueado / cen-colaborador -> painel de "Visao geral" por
+   perfil, com aba de periodo (Mensal/Semanal/Anual). Os graficos e metricas
+   seguem os dashboards reais dos modulos (checados no demonstracao). */
+(function(){
+  const item = document.getElementById('navLinks');
+  const colMain = document.querySelector('.col-main');
+  if (!item || !colMain) return;
+
+  const CENARIOS = [
+    { id:'cen-1', rotulo:'1 · Com conteúdo',    dica:'Rede Social ativa e com publicações — a experiência atual, intocada.' },
+    { id:'cen-2', rotulo:'2 · Sem publicações', dica:'Tem Rede Social, mas nunca publicou: Shorts, feed e comunicados aparecem vazios.' },
+    { id:'cen-3', rotulo:'3 · Sem Rede Social', dica:'A rede não usa o módulo: a home fica com a grade de aplicativos e os comunicados.' },
+    { id:'cen-matriz',      rotulo:'4 · Matriz',      perfil:'matriz',      dica:'Sem Rede Social — painel da franqueadora: visão geral das unidades.' },
+    { id:'cen-franqueado',  rotulo:'5 · Franqueado',  perfil:'franqueado',  dica:'Sem Rede Social — painel do dono da unidade: sua equipe e operação local.' },
+    { id:'cen-colaborador', rotulo:'6 · Colaborador', perfil:'colaborador', dica:'Sem Rede Social — painel de quem não é admin: chamados, cursos, materiais.' }
+  ];
+  const TODAS = CENARIOS.map(function(c){ return c.id; });
+  const SEM_SOCIAL = ['cen-3','cen-matriz','cen-franqueado','cen-colaborador'];
+  const COM_VISAO  = ['cen-matriz','cen-franqueado','cen-colaborador'];
+
+  const PERIODOS = [ { id:'semanal', rotulo:'Semanal' }, { id:'mensal', rotulo:'Mensal' }, { id:'anual', rotulo:'Anual' } ];
+  const MES_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  function dataBR(d){ return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); }
+  function rotulosTip(periodo){
+    const hoje = new Date();
+    if (periodo === 'mensal'){   /* um ponto por dia do mes corrente (28/30/31) */
+      const arr = [], ano = hoje.getFullYear(), mes = hoje.getMonth();
+      const nDias = new Date(ano, mes + 1, 0).getDate();
+      for (let d = 1; d <= nDias; d++){ arr.push(dataBR(new Date(ano, mes, d))); }
+      return arr;
+    }
+    if (periodo === 'semanal'){   /* os ultimos 7 dias, data completa, terminando hoje */
+      const arr = [];
+      for (let i = 6; i >= 0; i--){ const d = new Date(hoje); d.setDate(hoje.getDate() - i); arr.push(dataBR(d)); }
+      return arr;
+    }
+    const arr = [];   /* anual = os ultimos 12 meses, mes por extenso */
+    for (let i = 11; i >= 0; i--){ const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+      arr.push(MES_FULL[d.getMonth()] + ' de ' + d.getFullYear()); }
+    return arr;
+  }
+  /* O mensal agora e diario: a serie de 4 semanas vira n dias, interpolando os
+     niveis com uma ondulacao deterministica (nao muda a cada render). */
+  function expandeDiario(g, n){
+    if (!Array.isArray(g) || g.length < 2 || n <= g.length) return g;
+    const out = [];
+    for (let d = 0; d < n; d++){
+      const t = d / (n - 1) * (g.length - 1), i = Math.floor(t), f = t - i;
+      const base = (i + 1 < g.length) ? g[i] * (1 - f) + g[i + 1] * f : g[i];
+      const onda = Math.sin(d * 1.7 + g[0]) * 0.12;
+      out.push(Math.max(0, Math.round(base * (1 + onda))));
+    }
+    return out;
+  }
+
+  /* ---------- Graficos ---------- */
+  function barras(v, labels, fmt, sfx){
+    const max = Math.max.apply(null, v), w = 100 / (v.length * 1.6), g = w * 0.6;
+    const svg = '<svg class="vg-svg" viewBox="0 0 ' + (v.length*(w+g)-g).toFixed(1) + ' 42" preserveAspectRatio="none" aria-hidden="true">' +
+      v.map(function(n,i){ const h = Math.max(3, Math.round(n/max*40)); return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="var(--c2)" opacity="' + (i===v.length-1?1:0.42) + '" data-tip="' + (labels?labels[i]+': ':'') + (fmt?fmt(n):n) + sufixo(sfx,n) + '"/>'; }).join('') + '</svg>';
+    return svg;
+  }
+  function area(v, labels, fmt, sfx){
+    const max = Math.max.apply(null, v), min = Math.min.apply(null, v), W = 120, H = 42;
+    const pts = v.map(function(n,i){ return [ (i/(v.length-1))*W, H - ((n-min)/(max-min||1))*(H-8) - 4 ]; });
+    const linha = pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' ');
+    const areaPath = 'M0,'+H+' L'+linha.replace(/ /g,' L')+' L'+W+','+H+' Z';
+    const svg = '<svg class="vg-svg" viewBox="0 0 120 42" preserveAspectRatio="none" aria-hidden="true">' +
+      '<path d="'+areaPath+'" fill="var(--c2)" opacity=".14"/>' +
+      '<polyline points="'+linha+'" fill="none" stroke="var(--c2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    /* as bolinhas sao HTML sobre a linha: como o SVG estica na horizontal, um
+       <circle> viraria elipse. Aqui cada ponto e posicionado em % — o eixo x
+       bate com a fracao do SVG esticado e o y, em %, bate com a altura de 42px. */
+    const dots = pts.map(function(p,i){
+      return '<span class="vg-dot" style="left:'+((p[0]/W)*100).toFixed(2)+'%;top:'+((p[1]/H)*100).toFixed(2)+'%"' +
+        (labels ? ' data-tip="'+labels[i]+': '+(fmt?fmt(v[i]):v[i])+sufixo(sfx,v[i])+'"' : '') + '><i></i></span>';
+    }).join('');
+    return '<div class="vg-arealayer">' + svg + dots + '</div>';
+  }
+  function donut(pct){
+    /* mesma pegada da rosca do NPS: o donut e uma legenda ao lado (concluido x
+       a concluir), para o card nao ficar so com o anel sem indicativo */
+    const p = Math.round(pct);
+    return '<div class="vg-npsrosca">' +
+      '<svg class="vg-svg vg-donut" viewBox="0 0 42 42" aria-hidden="true">' +
+      '<circle cx="21" cy="21" r="15.5" fill="none" stroke="#eef1f4" stroke-width="6"/>' +
+      '<circle cx="21" cy="21" r="15.5" fill="none" stroke="var(--c2)" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="'+p+' 100" transform="rotate(-90 21 21)" data-tip="'+p+'% concluído"/></svg>' +
+      '<div class="vg-nps-leg"><span><i style="background:var(--c2)"></i>'+p+'% Concluído</span>' +
+      '<span><i style="background:#dfe4ea"></i>'+(100-p)+'% A concluir</span></div></div>';
+  }
+  /* Rosca (NPS e funil de Expansao) separada em donut + legenda, para o card
+     por na direita o donut e embaixo a legenda em linha. Cada fatia na sua cor
+     semantica (verde=bom, vermelho=ruim...). */
+  function segsDe(tipo, g){
+    /* n = nome cheio (tooltip do donut); ab = abreviacao (legenda, pra caber) */
+    return tipo === 'nps'
+      ? [{v:g.prom,c:'#43a047',n:'Promotores',ab:'Promo.'},{v:g.neu,c:'#f0a500',n:'Neutros',ab:'Neu.'},{v:g.det,c:'#e5443b',n:'Detratores',ab:'Detra.'}]
+      : [{v:g.ganhos,c:'#2ea44f',n:'Ganhos'},{v:g.abertos,c:'#4a9fe0',n:'Abertos'},{v:g.perdidos,c:'#e5443b',n:'Perdidos'}];
+  }
+  function roscaDonut(segs, unidade){
+    const tot = unidade === '%' ? 100 : (segs.reduce(function(a, s){ return a + s.v; }, 0) || 1);
+    const R = 15.5, C = 2 * Math.PI * R; let off = 0;
+    const arcos = segs.map(function(s){
+      const len = C * (s.v / tot);
+      const el = '<circle cx="21" cy="21" r="' + R + '" fill="none" stroke="' + s.c + '" stroke-width="6" ' +
+        'stroke-dasharray="' + len.toFixed(2) + ' ' + (C - len).toFixed(2) + '" stroke-dashoffset="' + (-off).toFixed(2) + '" ' +
+        'transform="rotate(-90 21 21)" data-tip="' + s.n + ' ' + s.v + (unidade || '') + '"/>';
+      off += len; return el;
+    }).join('');
+    return '<svg class="vg-svg vg-donut" viewBox="0 0 42 42" aria-hidden="true">' +
+      '<circle cx="21" cy="21" r="' + R + '" fill="none" stroke="#eef1f4" stroke-width="6"/>' + arcos + '</svg>';
+  }
+  function roscaLeg(segs, unidade){
+    return segs.map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.v + (unidade || '') + ' ' + (s.ab || s.n) + '</span>'; }).join('');
+  }
+  function grafico(tipo, g, labels, fmt, sfx){
+    if (tipo==='bars') return barras(g, labels, fmt, sfx);
+    if (tipo==='area') return area(g, labels, fmt, sfx);
+    if (tipo==='donut') return donut(g);
+    /* nps e funil (Expansao) tem layout proprio no card, montado em montaCardHTML */
+    return '';
+  }
+
+  function moeda(m){ return m >= 1000 ? 'R$ ' + (m/1000).toFixed(2).replace('.',',') + ' mi' : 'R$ ' + m.toLocaleString('pt-BR') + ' mil'; }
+  /* substantivo do tooltip por modulo: [singular, plural] ou uma string fixa.
+     so aparece nos graficos de barra/area (donut e NPS nao usam). */
+  const SFX = {
+    'Chamados':['chamado','chamados'], 'Implantação':['unidade','unidades'],
+    'Expansão':'no funil', 'Colaboradores':['colaborador ativo','colaboradores ativos'],
+    'Universidade':['conclusão','conclusões'], 'Marketing':['arquivo baixado','arquivos baixados'],
+    'Comunicados':['comunicado','comunicados'], 'Checklist':['checklist','checklists'],
+    'Enquetes':['enquete','enquetes'], 'Compras':'em compras',
+    'Projetos':['tarefa','tarefas'], 'Unidades':['unidade','unidades']
+  };
+  function sufixo(sfx, n){ if (!sfx) return ''; if (typeof sfx === 'string') return ' ' + sfx; return ' ' + (Number(n) === 1 ? sfx[0] : sfx[1]); }
+  /* zona do NPS, igual ao dashboard do SULTS: Critica / Aperfeicoamento / Qualidade / Excelencia */
+  function zonaNPS(score){
+    const s = parseInt(score, 10);
+    if (s >= 75) return { nome:'Excelência',      cor:'#1f8f4e' };
+    if (s >= 50) return { nome:'Qualidade',       cor:'#43a047' };
+    if (s >= 0)  return { nome:'Aperfeiçoamento', cor:'#f0a500' };
+    return { nome:'Zona crítica', cor:'#e5443b' };
+  }
+  function card(c1,c2,smi,nome,tipo,p,fmt){ return {c1:c1,c2:c2,smi:smi,nome:nome,tipo:tipo,p:p,fmt:fmt,sfx:SFX[nome]}; }
+
+  const DADOS = {
+    matriz: [
+      card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
+        mensal:{n:'42',u:'abertos',atraso:'8',g:[9,14,11,8]},
+        semanal:{n:'11',u:'abertos',atraso:'3',g:[1,2,1,2,3,1,1]},
+        anual:{n:'488',u:'abertos',atraso:'8',g:[52,48,60,44,50,42,46,40,38,44,41,33]}}),
+      card('#5ecc7f','#219348','smi-checklist','Checklist','bars',{
+        mensal:{n:'286',u:'aplicados',atraso:'14',g:[64,72,70,80]},
+        semanal:{n:'72',u:'aplicados',atraso:'5',g:[10,12,11,9,10,11,9]},
+        anual:{n:'3.410',u:'aplicados',atraso:'14',g:[260,280,300,290,310,300,320,310,300,290,280,286]}}),
+      card('#43d6cd','#00918a','smi-compras','Compras','area',{
+        mensal:{n:'R$ 1,2M',u:'valor de pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
+        semanal:{n:'R$ 280k',u:'valor de pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
+        anual:{n:'R$ 13,4M',u:'valor de pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
+      card('#ffb060','#ef8b12','smi-unidades','Unidades','bars',{
+        mensal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[86,88,90,92]},
+        semanal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[91,91,92,92,92,92,92]},
+        anual:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[74,76,78,80,82,84,86,88,89,90,91,92]}}),
+      card('#ff8a7a','#e0392c','smi-expancao','Expansão','funil',{
+        mensal:{u:'negócios',g:{abertos:5,ganhos:41,perdidos:10}},
+        semanal:{u:'negócios',g:{abertos:2,ganhos:6,perdidos:2}},
+        anual:{u:'negócios',g:{abertos:5,ganhos:412,perdidos:98}}}),
+      card('#6fe08f','#2ea44f','smi-nps','NPS','nps',{
+        mensal:{u:'pontos',g:{prom:84,neu:10,det:6}},
+        semanal:{u:'pontos',g:{prom:86,neu:9,det:5}},
+        anual:{u:'pontos',g:{prom:82,neu:12,det:6}}})
+    ],
+    franqueado: [
+      card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
+        mensal:{n:'6',u:'abertos na unidade',atraso:'1',g:[2,1,2,1]},
+        semanal:{n:'2',u:'abertos na semana',atraso:'0',g:[1,0,1,0,0,0,1]},
+        anual:{n:'71',u:'abertos no ano',atraso:'1',g:[8,7,6,5,7,6,5,6,4,5,6,6]}}),
+      card('#73beff','#0088FF','smi-rede-social','Colaboradores','bars',{
+        mensal:{n:'22',u:'ativos na equipe',inativo:'2',g:[20,21,22,22]},
+        semanal:{n:'22',u:'ativos na equipe',inativo:'2',g:[22,22,21,22,22,22,22]},
+        anual:{n:'24',u:'ativos no pico',inativo:'2',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
+      card('#5ecc7f','#219348','smi-checklist','Checklist','bars',{
+        mensal:{n:'92',u:'aplicados na unidade',atraso:'3',g:[20,24,22,26]},
+        semanal:{n:'24',u:'aplicados na semana',atraso:'1',g:[3,4,3,4,4,3,3]},
+        anual:{n:'1.140',u:'aplicados no ano',atraso:'3',g:[80,88,92,90,95,98,96,102,98,105,100,96]}}),
+      card('#b18ae6','#6d47b5','smi-universidade','Universidade','bars',{
+        mensal:{n:'34',u:'conclusões da equipe',d:'120 disponíveis',dir:'neutra',g:[6,9,8,11]},
+        semanal:{n:'9',u:'conclusões na semana',d:'120 disponíveis',dir:'neutra',g:[1,2,1,2,1,1,1]},
+        anual:{n:'312',u:'conclusões no ano',d:'120 disponíveis',dir:'neutra',g:[18,22,20,26,24,28,26,30,28,32,30,28]}}),
+      card('#ff77a9','#d6285f','smi-marketing','Marketing','bars',{
+        mensal:{n:'86',u:'arquivos baixados',d:'62 disponíveis',dir:'neutra',g:[18,22,20,26]},
+        semanal:{n:'22',u:'baixados na semana',d:'62 disponíveis',dir:'neutra',g:[3,4,2,4,3,3,3]},
+        anual:{n:'940',u:'baixados no ano',d:'62 disponíveis',dir:'neutra',g:[60,68,72,70,78,82,80,88,85,92,90,95]}}),
+      card('#6fe08f','#2ea44f','smi-nps','NPS','nps',{
+        mensal:{n:'74',u:'pontos',d:'+4',dir:'boa',g:{prom:78,neu:16,det:6}},
+        semanal:{n:'77',u:'pontos',d:'+3',dir:'boa',g:{prom:80,neu:14,det:6}},
+        anual:{n:'70',u:'pontos',d:'+6',dir:'boa',g:{prom:75,neu:18,det:7}}})
+    ],
+    colaborador: [
+      card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
+        mensal:{n:'3',u:'meus abertos',atraso:'1',g:[1,0,1,1]},
+        semanal:{n:'1',u:'meu aberto',atraso:'0',g:[0,0,1,0,0,0,0]},
+        anual:{n:'22',u:'no ano',atraso:'0',g:[3,2,1,2,2,1,2,1,3,2,1,2]}}),
+      card('#b18ae6','#6d47b5','smi-universidade','Universidade','donut',{
+        mensal:{n:'8/12',u:'cursos concluídos',d:'+2',dir:'boa',g:67},
+        semanal:{n:'8/12',u:'cursos concluídos',g:67},
+        anual:{n:'12/12',u:'no ano',d:'completo',dir:'boa',g:100}}),
+      card('#9ba1f4','#575fd1','smi-comunicados','Comunicados','bars',{
+        mensal:{n:'12',u:'recebidos no mês',naolido:'3',g:[2,4,3,3]},
+        semanal:{n:'4',u:'recebidos na semana',naolido:'3',g:[1,0,1,1,0,1,0]},
+        anual:{n:'142',u:'recebidos no ano',naolido:'3',g:[8,7,9,6,8,7,9,8,7,9,8,10]}}),
+      card('#ff77a9','#d6285f','smi-marketing','Marketing','bars',{
+        mensal:{n:'14',u:'materiais baixados',d:'+3',dir:'boa',g:[2,4,3,5]},
+        semanal:{n:'4',u:'baixados',d:'+1',dir:'boa',g:[1,0,1,1,0,1,0]},
+        anual:{n:'162',u:'no ano',d:'+18%',dir:'boa',g:[10,12,14,11,13,15,12,14,16,13,15,17]}}),
+      card('#5cc0a0','#2aa17e','smi-projetos','Projetos','bars',{
+        mensal:{n:'5',u:'tarefas em aberto',d:'8 concluídas',dir:'boa',g:[3,4,4,5]},
+        semanal:{n:'2',u:'para esta semana',d:'3 concluídas',dir:'boa',g:[1,1,0,1,1,0,0]},
+        anual:{n:'92%',u:'entregues no prazo',d:'+6%',dir:'boa',g:[7,8,6,9,8,7,9,8,9,8,9,10]}}),
+      card('#bd90ec','#7c4cc4','smi-enquetes','Enquetes','bars',{
+        mensal:{n:'2',u:'pendentes',d:'5 respondidas',dir:'neutra',g:[1,2,1,2]},
+        semanal:{n:'2',u:'pendentes',d:'1 respondida',dir:'neutra',g:[0,1,0,1,0,0,0]},
+        anual:{n:'94%',u:'respondidas no ano',d:'boa adesão',dir:'boa',g:[3,4,3,5,4,3,4,3,4,5,4,4]}})
+    ]
+  };
+
+  let barra = null, painelVisao = null;
+  let perfilAtual = 'matriz', periodoAtual = 'semanal';
+
+  function montaSeletor(){
+    if (barra) return;
+    const acoes = document.querySelector('.top-actions');
+    if (!acoes) return;
+    const ancora = document.getElementById('newWrap');
+    barra = document.createElement('div');
+    barra.className = 'links-sel';
+    barra.innerHTML =
+      '<button type="button" class="links-sel-btn" aria-haspopup="menu" aria-expanded="false">' +
+      '<span class="ls-label">Cenário 1</span>' +
+      '<i class="fa-solid fa-chevron-down"></i></button>' +
+      '<div class="links-sel-menu" role="menu" hidden>' +
+      CENARIOS.map(function(c){ return '<button type="button" role="menuitem" data-cen="' + c.id + '"><b>' + c.rotulo + '</b><span>' + c.dica + '</span></button>'; }).join('') +
+      '</div>';
+    if (ancora) acoes.insertBefore(barra, ancora); else acoes.insertBefore(barra, acoes.firstChild);
+    const btn = barra.querySelector('.links-sel-btn'), menu = barra.querySelector('.links-sel-menu');
+    btn.addEventListener('click', function(e){ e.stopPropagation(); const abrindo = menu.hidden; menu.hidden = !abrindo; btn.setAttribute('aria-expanded', String(abrindo)); });
+    menu.addEventListener('click', function(e){ const b = e.target.closest('[data-cen]'); if (!b) return; seleciona(b.dataset.cen); menu.hidden = true; btn.setAttribute('aria-expanded','false'); });
+    document.addEventListener('click', fechaMenuFora);
+  }
+  function fechaMenuFora(e){
+    if (!barra || barra.contains(e.target)) return;
+    const menu = barra.querySelector('.links-sel-menu'); if (menu) menu.hidden = true;
+    const btn = barra.querySelector('.links-sel-btn'); if (btn) btn.setAttribute('aria-expanded','false');
+  }
+
+  function montaVisao(mostrar){
+    if (mostrar){
+      if (!painelVisao){
+        painelVisao = document.createElement('section');
+        painelVisao.className = 'links-visao';
+        painelVisao.innerHTML =
+          '<div class="lv-head"><h2>Visão geral</h2>' +
+          '<div class="lv-seg2 lv-periodo" role="tablist">' +
+          PERIODOS.map(function(x){ return '<button type="button" role="tab" data-periodo="' + x.id + '">' + x.rotulo + '</button>'; }).join('') +
+          '</div></div><div class="lv-grid"></div><div class="lv-tip" hidden></div>';
+        painelVisao.querySelector('.lv-periodo').addEventListener('click', function(e){ const b = e.target.closest('[data-periodo]'); if (!b) return; periodoAtual = b.dataset.periodo; pintaVisao(); });
+        const tip = painelVisao.querySelector('.lv-tip');
+        painelVisao.addEventListener('pointermove', function(e){
+          const el = e.target.closest('[data-tip]');
+          if (!el){ tip.hidden = true; return; }
+          tip.textContent = el.getAttribute('data-tip'); tip.hidden = false;
+          const r = painelVisao.getBoundingClientRect();
+          tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px';
+        });
+        painelVisao.addEventListener('pointerleave', function(){ tip.hidden = true; });
+      }
+      const painel = document.getElementById('appsPanel');
+      if (painel && painel.nextElementSibling !== painelVisao) painel.insertAdjacentElement('afterend', painelVisao);
+      pintaVisao();
+    } else if (painelVisao && painelVisao.parentElement){
+      painelVisao.remove();
+    }
+  }
+  function montaCardHTML(c, periodo, labels, prefixo){
+    const v = c.p[periodo] || c.p.mensal;
+    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length) : v.g;
+
+    /* NPS e Expansao tem layout proprio: numero (e a zona embaixo, no NPS) na
+       esquerda, o donut na direita e a legenda em linha no rodape do card. */
+    if (c.tipo === 'nps' || c.tipo === 'funil'){
+      const segs = segsDe(c.tipo, v.g), unidade = c.tipo === 'nps' ? '%' : '';
+      let num, zona = '';
+      if (c.tipo === 'nps'){
+        /* NPS de verdade = % Promotores − % Detratores, calculado dos proprios
+           dados da rosca; a zona sai do score, sempre em verdigris. */
+        const score = v.g.prom - v.g.det;
+        num = score.toFixed(2);
+        zona = '<span class="lv-zona">Zona de ' + zonaNPS(score).nome.toLowerCase() + '</span>';
+      } else {
+        /* o numero grande e o total do funil (abertos + ganhos + perdidos) */
+        num = String(v.g.abertos + v.g.ganhos + v.g.perdidos);
+      }
+      return '<a class="lv-card lv-card-rosca" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
+        '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
+        '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span></div>' +
+        '<div class="lv-rmid"><div class="lv-metric">' +
+          '<span class="lv-numrow"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span></span>' + zona + '</div>' +
+        '<div class="lv-donut">' + roscaDonut(segs, unidade) + '</div></div>' +
+        '<div class="vg-nps-leg">' + roscaLeg(segs, unidade) + '</div></a>';
+    }
+
+    let extra = '', num = v.n;
+    if (v.atraso !== undefined){
+      extra = parseInt(v.atraso,10) > 0
+        ? '<span class="lv-atraso">' + v.atraso + ' em atraso</span>'
+        : '<span class="lv-emdia">em dia</span>';
+    } else if (v.inativo !== undefined){
+      /* rotulo configuravel pra concordar o genero (colaboradores inativos,
+         unidades inativas) */
+      extra = parseInt(v.inativo,10) > 0
+        ? '<span class="lv-inativo">' + v.inativo + ' ' + (v.inativoLbl || 'inativos') + '</span>'
+        : '<span class="lv-emdia">todos ativos</span>';
+    } else if (v.naolido !== undefined){
+      extra = parseInt(v.naolido,10) > 0
+        ? '<span class="lv-inativo">' + v.naolido + ' não lidos</span>'
+        : '<span class="lv-emdia">tudo lido</span>';
+    } else if (v.d && !/^[+\-]\d/.test(v.d)){
+      /* deltas puros "+1 / +3 / +8%" nao dizem nada num prototipo sem base de
+         comparacao: so sobra o que tem significado proprio ("120 disponiveis",
+         "8 concluidas", "boa leitura"...) */
+      extra = '<span class="lv-delta ' + v.dir + '">' + v.d + '</span>';
+    }
+    return '<a class="lv-card" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
+      '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
+      '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span></div>' +
+      '<div class="lv-metric"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span>' + extra + '</div>' +
+      '<div class="lv-chart">' + grafico(c.tipo, gData, labels, c.fmt==='moeda'?moeda:null, c.sfx) + '</div></a>';
+  }
+  function pintaVisao(){
+    if (!painelVisao) return;
+    painelVisao.querySelectorAll('[data-periodo]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.periodo === periodoAtual)); });
+    const cards = DADOS[perfilAtual] || [], labels = rotulosTip(periodoAtual);
+    painelVisao.querySelector('.lv-grid').innerHTML = cards.map(function(c){ return montaCardHTML(c, periodoAtual, labels); }).join('');
+  }
+
+  function seleciona(cen){
+    TODAS.forEach(function(c){ document.body.classList.remove(c); });
+    document.body.classList.add(cen);
+    document.body.classList.toggle('hl-sem-social', SEM_SOCIAL.indexOf(cen) >= 0);
+    document.body.classList.toggle('hl-visao', COM_VISAO.indexOf(cen) >= 0);
+    const info = CENARIOS.find(function(c){ return c.id === cen; });
+    if (info && info.perfil) perfilAtual = info.perfil;
+    if (barra){
+      barra.querySelectorAll('[data-cen]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.cen === cen)); });
+      const lab = barra.querySelector('.ls-label'); if (lab) lab.textContent = info ? 'Cenário ' + info.rotulo.split('·')[0].trim() : 'Cenário';
+    }
+    const grade = document.getElementById('appsGrid'); if (grade) grade.classList.remove('expanded');
+    const t = document.getElementById('appsToggle'); if (t) t.classList.remove('open');
+    if (typeof applyFold === 'function') applyFold();
+    const querEmpty = (cen === 'cen-2');
+    if (document.body.classList.contains('demo-empty') !== querEmpty){
+      document.body.classList.toggle('demo-empty', querEmpty);
+      if (typeof buildStories === 'function') buildStories();
+    }
+    montaVisao(COM_VISAO.indexOf(cen) >= 0);
+    if (typeof window.pcSincronizaAltura === 'function') requestAnimationFrame(window.pcSincronizaAltura);
+  }
+
+  function entrar(){
+    if (document.body.classList.contains('home-links')) return;
+    document.body.classList.add('home-links');
+    montaSeletor();
+    seleciona('cen-1');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function sair(){
+    if (!document.body.classList.contains('home-links')) return;
+    document.body.classList.remove('home-links','hl-sem-social','hl-visao');
+    TODAS.forEach(function(c){ document.body.classList.remove(c); });
+    document.removeEventListener('click', fechaMenuFora);
+    if (barra){ barra.remove(); barra = null; }
+    if (document.body.classList.contains('demo-empty')){
+      document.body.classList.remove('demo-empty');
+      if (typeof buildStories === 'function') buildStories();
+    }
+    montaVisao(false);
+    const grade = document.getElementById('appsGrid'); if (grade) grade.classList.remove('expanded');
+    const t = document.getElementById('appsToggle'); if (t) t.classList.remove('open');
+    if (typeof applyFold === 'function') applyFold();
+    if (typeof window.pcSincronizaAltura === 'function') window.pcSincronizaAltura();
+  }
+
+  item.addEventListener('click', function(e){ e.preventDefault(); if (typeof setNav === 'function') setNav(item); entrar(); });
+  document.querySelectorAll('.hm-side .hm-navitem').forEach(function(n){ if (n === item) return; n.addEventListener('click', sair); });
+
+  /* ---- Visao geral na HOME normal: os mesmos cards por perfil, numa fileira
+     que rola abaixo do cartao do usuario (coluna da direita); um drop de perfis
+     no topo escolhe Matriz / Franqueado / Colaborador. Sai de cena nas variantes
+     especiais (Links, Enquetes, Powerups), que tem composicao propria. ---- */
+  /* a matriz de cenarios da home: papel (matriz/franqueado/funcionario) x estado
+     (com conteudo / sem conteudo / sem rede social / sem permissao). Cada opcao
+     do drop compoe a home por cima do layout atual. */
+  const CEN_HOME = [
+    { perfil:'matriz',      estado:'conteudo',      grupo:'Matriz',      rotulo:'com conteúdo',   dica:'A home cheia: publicações, shorts e comunicados.' },
+    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ninguém publicou ainda.' },
+    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social — sem feed nem shorts.' },
+    { perfil:'franqueado',  estado:'conteudo',      grupo:'Franqueado',  rotulo:'com conteúdo',   dica:'A unidade cheia, com o feed e os shorts da rede.' },
+    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
+    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social — os módulos e a visão geral no lugar.' },
+    { perfil:'colaborador', estado:'conteudo',      grupo:'Funcionário', rotulo:'com conteúdo',   dica:'Vê e interage com o feed e os shorts da rede.' },
+    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
+    { perfil:'colaborador', estado:'sem-permissao', grupo:'Funcionário', rotulo:'sem permissão',  dica:'Vê o feed, mas não pode criar publicação nem short.' },
+    { perfil:'colaborador', estado:'vazio-sem-permissao', grupo:'Funcionário', rotulo:'sem permissão e sem conteúdo', dica:'Não pode criar e a rede ainda não publicou nada.' },
+    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social — os módulos e a visão geral no lugar.' }
+  ];
+  let selHome = null, carrHome = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+
+  function pintaCarrHome(){
+    if (!carrHome) return;
+    const cards = DADOS[perfilHome] || [], labels = rotulosTip(periodoHome);
+    const html = cards.map(function(c){ return montaCardHTML(c, periodoHome, labels, 'Visão geral de '); }).join('');
+    /* a sequencia entra duplicada: o loop segue sempre em frente e, ao alcancar
+       a copia, salta de volta ao inicio sem animacao (invisivel, cards iguais) */
+    const track = carrHome.querySelector('.hv-track');
+    track.innerHTML = html + html;
+    carrHome._n = cards.length;
+    track.scrollLeft = 0;
+    const tabs = carrHome.querySelector('.hv-periodo');
+    if (tabs) tabs.querySelectorAll('[data-periodo]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.periodo === periodoHome)); });
+  }
+  function montaSelHome(){
+    if (selHome) return;
+    const acoes = document.querySelector('.top-actions');
+    if (!acoes) return;
+    const ancora = document.getElementById('newWrap');
+    selHome = document.createElement('div');
+    selHome.className = 'links-sel home-perfil-sel';
+    let itens = '', grupoAtual = '';
+    CEN_HOME.forEach(function(c, i){
+      if (c.grupo !== grupoAtual){ grupoAtual = c.grupo; itens += '<div class="hps-grupo">' + c.grupo + '</div>'; }
+      const marcado = (c.perfil === perfilHome && c.estado === estadoHome);
+      itens += '<button type="button" role="menuitem" data-i="' + i + '" aria-selected="' + marcado + '"><b>' + c.rotulo + '</b><span>' + c.dica + '</span></button>';
+    });
+    selHome.innerHTML =
+      '<button type="button" class="links-sel-btn" aria-haspopup="menu" aria-expanded="false">' +
+      '<span class="ls-label">Matriz · com conteúdo</span><i class="fa-solid fa-chevron-down"></i></button>' +
+      '<div class="links-sel-menu" role="menu" hidden>' + itens + '</div>';
+    if (ancora) acoes.insertBefore(selHome, ancora); else acoes.insertBefore(selHome, acoes.firstChild);
+    const btn = selHome.querySelector('.links-sel-btn'), menu = selHome.querySelector('.links-sel-menu');
+    btn.addEventListener('click', function(e){ e.stopPropagation(); const ab = menu.hidden; menu.hidden = !ab; btn.setAttribute('aria-expanded', String(ab)); });
+    menu.addEventListener('click', function(e){
+      const b = e.target.closest('[data-i]'); if (!b) return;
+      const c = CEN_HOME[+b.dataset.i];
+      perfilHome = c.perfil; estadoHome = c.estado;
+      selHome.querySelector('.ls-label').textContent = c.grupo + ' · ' + c.rotulo;
+      menu.querySelectorAll('[data-i]').forEach(function(x){ const cc = CEN_HOME[+x.dataset.i]; x.setAttribute('aria-selected', String(cc.perfil === perfilHome && cc.estado === estadoHome)); });
+      menu.hidden = true; btn.setAttribute('aria-expanded', 'false');
+      pintaCarrHome(); atualizaHomeVisao();
+      /* trocar de perfil dentro do "sem conteudo" nao mexe no demo-empty, entao
+         as sugestoes dos Shorts nao se refazem sozinhas — refaz aqui */
+      if (estadoHome.indexOf('vazio') === 0 && typeof buildStories === 'function') buildStories();
+    });
+    document.addEventListener('click', function(e){ if (selHome && !selHome.contains(e.target)){ menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); } });
+  }
+  function montaCarrHome(){
+    if (carrHome) return;
+    const card = document.getElementById('homeProfileCard');
+    if (!card) return;
+    carrHome = document.createElement('section');
+    carrHome.className = 'links-visao home-visao';
+    carrHome.innerHTML =
+      '<div class="hv-head">' +
+        '<div class="lv-seg2 hv-periodo" role="tablist">' +
+          PERIODOS.map(function(x){ return '<button type="button" role="tab" data-periodo="' + x.id + '">' + x.rotulo + '</button>'; }).join('') +
+        '</div>' +
+        '<div class="hv-nav-wrap">' +
+          '<button type="button" class="hv-nav hv-prev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>' +
+          '<button type="button" class="hv-nav hv-next" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="hv-track"></div><div class="lv-tip" hidden></div>';
+    card.insertAdjacentElement('afterend', carrHome);
+    const track = carrHome.querySelector('.hv-track');
+    carrHome.querySelector('.hv-periodo').addEventListener('click', function(e){ const b = e.target.closest('[data-periodo]'); if (!b) return; periodoHome = b.dataset.periodo; pintaCarrHome(); });
+    const tip = carrHome.querySelector('.lv-tip');
+    carrHome.addEventListener('pointermove', function(e){
+      const el = e.target.closest('[data-tip]');
+      if (!el){ tip.hidden = true; return; }
+      tip.textContent = el.getAttribute('data-tip'); tip.hidden = false;
+      const r = carrHome.getBoundingClientRect();
+      tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px';
+    });
+    /* passa sozinho de card em card; as setas navegam no clique e a fileira
+       pausa enquanto o cursor esta sobre ela (para dar tempo de ler/tooltip) */
+    function passo(dir){
+      const step = track.clientWidth + 12;
+      const period = (carrHome._n || 1) * step;
+      /* ao entrar na copia (frente) ou antes do inicio (tras), salta um periodo
+         inteiro sem animacao — como os cards sao iguais, o salto e invisivel */
+      if (dir > 0 && track.scrollLeft >= period - 4) track.scrollLeft -= period;
+      else if (dir < 0 && track.scrollLeft <= 4) track.scrollLeft += period;
+      track.scrollTo({ left: track.scrollLeft + dir * step, behavior: 'smooth' });
+    }
+    carrHome.querySelector('.hv-prev').addEventListener('click', function(){ passo(-1); });
+    carrHome.querySelector('.hv-next').addEventListener('click', function(){ passo(1); });
+    let pausado = false;
+    carrHome.addEventListener('pointerenter', function(){ pausado = true; });
+    carrHome.addEventListener('pointerleave', function(){ pausado = false; tip.hidden = true; });
+    setInterval(function(){ if (pausado || carrHome.hidden || !carrHome.offsetParent) return; passo(1); }, 4500);
+    pintaCarrHome();
+  }
+  function atualizaHomeVisao(){
+    const especial = document.body.classList.contains('home-links') ||
+      document.body.classList.contains('home-enquetes') ||
+      document.body.classList.contains('home-powerups');
+    if (especial){
+      if (selHome) selHome.hidden = true;
+      if (carrHome) carrHome.hidden = true;
+    } else {
+      montaSelHome(); montaCarrHome();
+      if (selHome) selHome.hidden = false;
+      /* "sem rede social": o painel de Visao geral (o mesmo do Links) desce para
+         baixo dos modulos e substitui o carrossel da direita */
+      const semRs = (estadoHome === 'sem-rs');
+      if (carrHome) carrHome.hidden = semRs;
+      if (semRs){ perfilAtual = perfilHome; periodoAtual = periodoHome; montaVisao(true); pintaVisao(); }
+      else { montaVisao(false); }
+    }
+    /* --- papel (matriz / franqueado / funcionario) --- */
+    document.body.classList.toggle('perfil-colab', !especial && perfilHome === 'colaborador');
+    document.body.classList.toggle('perfil-franqueado', !especial && perfilHome === 'franqueado');
+    /* o ID do autor no Feed so aparece na visao da matriz */
+    document.body.classList.toggle('ver-uids', !especial && perfilHome === 'matriz');
+    /* --- estado da rede social --- */
+    document.body.classList.toggle('estado-sem-rs', !especial && estadoHome === 'sem-rs');
+    document.body.classList.toggle('estado-sem-permissao', !especial && (estadoHome === 'sem-permissao' || estadoHome === 'vazio-sem-permissao'));
+    /* "sem conteudo" reusa o demo-empty (shorts, feed e comunicados vazios); so
+       na home normal — no Links quem manda no demo-empty e o proprio controller */
+    if (!especial){
+      const querEmpty = (estadoHome === 'vazio' || estadoHome === 'vazio-sem-permissao');
+      if (document.body.classList.contains('demo-empty') !== querEmpty){
+        document.body.classList.toggle('demo-empty', querEmpty);
+        if (typeof buildStories === 'function') buildStories();
+      }
+    }
+  }
+  atualizaHomeVisao();
+  new MutationObserver(atualizaHomeVisao).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+  /* Os posts do feed inicial sao estaticos no HTML e nao passam pelo render do
+     05-feed.js, entao nao tem o chip de ID. Aqui injetamos nesses (os posts e
+     comentarios criados via JS ja vem com o chip). */
+  function injetaUidsFeed(){
+    if (typeof uidChip !== 'function') return;
+    document.querySelectorAll('.feed .post-name, .feed .comment-name').forEach(function(el){
+      if (el.querySelector(':scope > .post-uid')) return;
+      let nome = '';
+      for (let i = 0; i < el.childNodes.length; i++){ const nd = el.childNodes[i]; if (nd.nodeType === 3 && nd.textContent.trim()){ nome = nd.textContent.trim(); break; } }
+      if (nome) el.insertAdjacentHTML('afterbegin', uidChip(nome));
+    });
+  }
+  injetaUidsFeed();
+})();
+
 /* ===================== assets/js/14-crunch.js ===================== */
 /* cenario: funcionario Crunchyroll */
 /* ============ Cenário: funcionário da Crunchyroll (só consome) ============
@@ -18676,8 +19552,9 @@ function customAlternar(){
     return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
   function pcSincronizaAltura(){
-    /* o cartao que interessa e o que esta ao lado do painel, na coluna da
-       direita: na home e a copia de vitrine, e o de verdade mora na esquerda */
+    /* Agora e o CARTAO quem acompanha a altura do painel de modulos (com o
+       "Ver X modulos" no pe, o painel e mais alto): o cartao recebe o minimo
+       medido do painel e o espaco extra sobe para a faixa da logo (14-custom.css). */
     const card = document.querySelector('.col-right .profile-card') || document.getElementById('homeProfileCard'),
           painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
@@ -18687,22 +19564,21 @@ function customAlternar(){
     if (document.body.classList.contains('home-enquetes') ||
         document.body.classList.contains('home-powerups') ||
         window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
-    if (pcGradeAberta()) return;
-    const h = Math.round(card.getBoundingClientRect().height);
-    if (h) painel.style.minHeight = h + 'px';
+    if (pcGradeAberta()) return;   /* grade aberta ou em busca: o cartao volta ao natural */
+    painel.style.minHeight = '';
+    const h = Math.round(painel.getBoundingClientRect().height);
+    if (h) card.style.setProperty('min-height', h + 'px', 'important');
   }
   window.pcSincronizaAltura = pcSincronizaAltura;
   /* fora de qualquer cenario o cartao tambem mostra o miolo, entao os campos
      precisam nascer preenchidos com a pessoa da vez */
   pcPreenche();
   window.addEventListener('resize', pcSincronizaAltura);
-  /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
-     a grade fechada, a medida nova vale */
-  /* o cartao muda de altura sozinho (fonte carregada, nome mais longo de um
-     cenario): observar ele, e nao o painel — o painel e quem recebe a medida,
-     e observa-lo realimentaria a propria mudanca. */
-  const _cartao = document.getElementById('homeProfileCard');
-  if (_cartao && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_cartao);
+  /* o painel muda de altura sozinho (fonte carregada, grade redesenhada, o
+     "Ver X modulos" no pe): agora e ELE a fonte da medida, entao observamos o
+     painel — quem recebe o minimo e o cartao, do outro lado, sem realimentar. */
+  const _painel = document.getElementById('appsPanel');
+  if (_painel && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_painel);
   const mostrar = function(sim){
     soDaVersao.forEach(function(s){ document.querySelectorAll(s).forEach(function(el){ el.hidden = !sim; }); });
   };

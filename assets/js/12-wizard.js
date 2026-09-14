@@ -191,6 +191,18 @@ function nomeComSelo(n){
   const nome = oficial ? (n.author || 'SULTS') : (n.autorNome || n.author || '');
   return nome + ((oficial || ehAdminPost(n)) ? ' ' + verificadoSVG() : '');
 }
+/* Identificacao do autor por ID: no Feed, o responsavel por uma publicacao ou
+   comentario carrega um ID a esquerda do nome (#NN · Nome). Fica escondido por
+   padrao (usuarios externos a rede nao veem) e so aparece na visao da matriz,
+   ligado pela classe body.ver-uids (13-extras.js). O ID e deterministico por
+   autor — o mesmo usuario tem sempre o mesmo numero. */
+function uidPorNome(nome){
+  nome = (nome || 'SULTS').toString();
+  let h = 0; for (let i = 0; i < nome.length; i++){ h = (h * 31 + nome.charCodeAt(i)) >>> 0; }
+  return String((h % 99) + 1).padStart(2, '0');
+}
+function uidChip(nome){ return '<span class="post-uid">#' + uidPorNome(nome) + '</span><span class="post-sep">·</span>'; }
+function uidChipHTML(n){ return uidChip(n.autorNome || n.author); }
 /* pilula de categoria (icone redondo + nome); devolve so o nome quando a
    categoria nao existe na lista */
 function catPillHTML(nome){

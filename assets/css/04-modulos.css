@@ -40,15 +40,15 @@
 /* mesma caixa do Organizar, porem sem contorno: fica ao lado dele, a
    esquerda, e so aparece enquanto se organiza */
 .apps-cancel{
-  display:flex;align-items:center;justify-content:center;gap:8px;height:40px;box-sizing:border-box;
-  padding:0 16px;border-radius:999px;font:inherit;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;height:32px;box-sizing:border-box;
+  padding:0 12px;border-radius:999px;font:inherit;font-size:12px;font-weight:700;
   color:#5b6672;border:1px solid #e9edf1;background:#fff;cursor:pointer;transition:.15s;
 }
 .apps-cancel:hover{border-color:#c62828;color:#c62828;background:#fff}
 .apps-cancel[hidden]{display:none}
 .apps-edit{
-  display:flex;align-items:center;justify-content:center;gap:8px;height:40px;box-sizing:border-box;
-  padding:0 16px;border-radius:999px;font-size:14px;font-weight:700;color:#5b6672;
+  display:flex;align-items:center;justify-content:center;gap:8px;height:32px;box-sizing:border-box;
+  padding:0 12px;border-radius:999px;font-size:12px;font-weight:700;color:#5b6672;
   border:1px solid var(--line);background:#fff;transition:.15s;
 }
 .apps-edit:hover{border-color:var(--teal);color:var(--teal)}
@@ -67,6 +67,11 @@
   display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:28px 16px;justify-items:center;
 }
+/* fechada, a grade mantem os cartoes no tamanho natural e centra a linha na
+   folga vertical do painel (em vez de gruda-la no topo e deixar vazio embaixo);
+   um rotulo de duas linhas nao estica o cartao — a reserva de 34px do .tl ja
+   iguala todos. Aberta, as linhas voltam a fluir do topo. */
+.apps:not(.expanded){align-content:center;grid-auto-rows:max-content}
 /* Os limites sao a largura de conteudo do painel — e ela que o container
    query mede, nao a caixa de borda. Cada um e o ponto em que o vao entre os
    icones cairia abaixo de 24px com aquela contagem: 104*N - 16. */
@@ -293,25 +298,25 @@
    ao lado, senao as duas pilulas ficam desencontradas. */
 .apps-expand{display:flex;justify-content:center;margin:0}
 .apps-expand[hidden]{display:none}
+/* o "Ver X modulos" mora no pe da grade, com um respiro de 8px do ultimo modulo */
+.apps-expand--rodape{margin-top:8px}
 /* o "Ver menos" do pe so existe com a grade aberta; fechada, quem aparece e o
    "Ver N modulos" la no cabecalho */
 .apps-expand--pe{display:none;margin:16px 0 0}
 #appsGrid.expanded ~ .apps-expand--pe{display:flex}
 .apps-expand button{
-  height:40px;padding:0 18px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d;
-  font:inherit;font-size:13px;font-weight:700;letter-spacing:.3px;
+  height:32px;padding:0 14px;border-radius:999px;background:rgba(0,172,172,.12);color:#0c7d7d;
+  font:inherit;font-size:12px;font-weight:700;letter-spacing:.3px;
   display:inline-flex;align-items:center;gap:8px;justify-content:center;
   transition:background 120ms cubic-bezier(.4,0,.2,1),color 120ms cubic-bezier(.4,0,.2,1);
 }
 .apps-expand button i{font-size:12px}
 .apps-expand button:hover{background:rgba(0,172,172,.2);color:#0a6b6b}
 .apps-expand i{transition:transform .38s cubic-bezier(.22,1,.36,1)}
-/* Aberto, o rotulo vira "Ver menos" e o sinal de mais vira um menos — o mesmo
-   do botao no pe do painel. A troca e no glifo (o ::before do FontAwesome, que
-   aqui e fonte e nao SVG) e nao na classe do <i>: assim vale para qualquer
-   caminho que ligue o .open, inclusive o cenario basico, que abre a grade
-   sozinho sem passar pelo clique. f068 e o fa-minus. */
-.apps-expand button.open i::before{content:"\f068"}
+/* o chevron fica a direita do rotulo e gira 180 ao abrir (vira "Ver menos"):
+   a rotacao vale para qualquer caminho que ligue o .open, inclusive o cenario
+   basico, que abre a grade sozinho sem passar pelo clique. */
+.apps-expand button.open i{transform:rotate(180deg)}
 .apps-expand button:disabled{opacity:.35;pointer-events:none}
 
 /* ============ Títulos de seção ============ */

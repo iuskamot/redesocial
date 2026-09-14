@@ -400,7 +400,7 @@ body:not(.demo-custom) .pc-avedit{display:none}
 body:not(.demo-custom) .profile-card .avatar.lg{grid-area:auto;margin:-39px auto 10px}
 body:not(.demo-custom) .profile-card .profile-name,
 body:not(.demo-custom) .profile-card .profile-role{
-  grid-area:auto;margin:0;text-align:center;white-space:normal;overflow:visible}
+  grid-area:auto;margin:0;align-self:center;text-align:center;white-space:normal;overflow:visible}
 /* o nome ganha folga da foto: 8px; o cargo, 2px do nome */
 body:not(.demo-custom) .profile-card .profile-name{margin-top:8px}
 body:not(.demo-custom) .profile-card .profile-role{margin-top:2px}
@@ -416,9 +416,21 @@ body.home-enquetes .profile-card{min-height:0 !important}
    do perfil. */
 body:not(.demo-custom) .pc-extra{display:none}
 
-/* O cartao tem a altura do proprio conteudo. Quem acompanha agora e o painel
-   de modulos, do outro lado — o 16-custom.js poe nele o minimo medido daqui. */
-body:not(.demo-custom):not(.home-enquetes) .profile-card{height:auto;min-height:0 !important}
+/* Agora o CARTAO acompanha a altura do painel de modulos (que ficou mais alto
+   com o "Ver X modulos" no pe): o 16-custom.js poe nele, inline e !important, o
+   minimo medido do painel. Aqui o cartao vira coluna flex para que esse espaco
+   extra suba para a faixa da logo — que cresce e centra a marca — em vez de
+   sobrar como vazio embaixo do cargo. A logo ganha 20px de respiro em cima. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card{height:auto;display:flex;flex-direction:column;align-items:center}
+body:not(.demo-custom):not(.home-enquetes) .profile-card .profile-banner{
+  align-self:stretch;width:100%;flex:1 0 auto;height:auto;min-height:110px;
+  display:flex;align-items:center;justify-content:center;padding:16px 20px 55px}
+/* a logo obedece a DOIS limites e para no que bater primeiro: 20px de folga
+   lateral (max-width:100%, ja que os 20px sao padding da faixa) e um teto de
+   altura fixo em px. O teto em px evita que uma marca comprida, ao "encher" a
+   altura, fique tao larga a ponto de inflar a coluna. */
+body:not(.demo-custom):not(.home-enquetes) .profile-card .profile-banner svg.profile-logo{
+  max-width:100%;max-height:56px;width:auto;height:auto;min-width:0}
 /* Na coluna da direita o bloco entra sem cabecalho: saem o titulo "Shorts" e
    o "Ver todos os shorts". Quem da a folga entre o cartao e a fileira passa a
    ser so o gap de 24px da propria coluna. */

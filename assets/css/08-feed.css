@@ -96,13 +96,12 @@
 .stories-wrap{position:relative;display:flow-root;--reel-h:213px}
 .shorts{
   display:flex;gap:12px;overflow-x:auto;cursor:grab;-webkit-user-drag:none;
-  /* o overflow-x obriga o eixo vertical a recortar junto. Os 12px de cima
-     cobrem os ~6px que o hover levanta; embaixo sao 32px porque a sombra do
-     hover (0 16px 30px -12px, ainda ampliada pelo scale) chega a ~20px, e com
-     os 20px antigos ela raspava no corte. A margem negativa devolve os 32px
-     inteiros ao layout: a sombra continua com espaco para desenhar, mas quem
-     mede a folga ate o Feed passa a ser o padding do titulo dele. */
-  padding:12px 0 32px;margin:0 0 -32px;
+  /* o overflow-x recorta os dois eixos e cortaria a sombra do hover. O padding
+     abre o espaco pra ela (cima 12, baixo 32, esquerda 16; direita 0 pra cortar
+     no limite) e a margem negativa DEVOLVE tudo ao layout — efeito liquido zero.
+     Assim o respiro e so pra sombra: o espaco externo entre os blocos continua
+     vindo do gap da coluna, nao daqui. */
+  padding:12px 0 32px 16px;margin:-12px 0 -32px -16px;
   scroll-behavior:smooth;scrollbar-width:none;
 }
 .shorts::-webkit-scrollbar{display:none}
@@ -571,7 +570,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
 .rxv-tdate{white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ============ Coluna direita ============ */
-.col-right{display:flex;flex-direction:column;gap:24px}
+.col-right{display:flex;flex-direction:column;gap:16px}
 
 .profile-card{overflow:hidden;text-align:center;padding-bottom:24px}
 .profile-banner{
@@ -704,10 +703,8 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
    "Ver todos os shorts". */
 #homeShorts .section-title-row{display:none}
 
-/* A folga da fileira de Shorts ate o painel de modulos: 24px visiveis. A fita
-   ja carrega 12px de padding no topo (o espaco da sombra do card), entao a
-   margem completa os outros 12. */
-.col-main > #homeShorts{margin-top:12px}
+/* O espaco entre os blocos da coluna (modulos, Shorts, publicacoes) vem do
+   row-gap:16px do proprio grid da col-main, nao de margens individuais. */
 
 /* O titulo do Feed e o "Ver todas" moram dentro do bloco de criar publicacao.
    Os 24px de padding no topo faziam sentido quando ele era uma secao solta na
@@ -748,25 +745,22 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
      conteudo. */
   .col-main{display:grid;
     grid-template-columns:max(0px, min(calc(50% - 106px), calc(100% - 564px))) 552px;
-    grid-template-rows:auto auto min-content min-content auto;
-    column-gap:12px;align-content:start}
+    grid-template-rows:auto auto min-content auto;
+    column-gap:12px;row-gap:16px;align-content:start}
   .col-main > .apps-panel{grid-area:1 / 1 / 2 / 3}
   /* a fita atravessa as duas faixas, logo abaixo dos modulos */
   .col-main > #homeShorts{grid-area:2 / 1 / 3 / 3}
-  /* align-self:start nos tres: a faixa dos filtros atravessa as duas linhas
-     e costuma ser a mais alta das duas colunas. A altura dela vira altura das
-     linhas, e sem isso o campo de publicar esticava junto — bem visivel no
-     cenario sem publicacao nenhuma, onde ele ia de 131 para 307px. */
-  .col-main > .nvf-composer{grid-area:3 / 2 / 4 / 3;margin-top:24px;align-self:start}
+  /* o campo de publicar agora mora DENTRO do feed (primeiro item), entao o feed
+     ocupa a linha que era do composer. align-self:start: a faixa dos filtros
+     atravessa e costuma ser a mais alta, e sem isso o feed esticava junto. */
   .col-main > .feed,
-  .col-main > .demo-empty-state{grid-area:4 / 2 / 5 / 3;align-self:start}
+  .col-main > .demo-empty-state{grid-area:3 / 2 / 4 / 3;align-self:start}
   /* uma publicacao para a outra no mesmo vao dos filtros */
   .col-main > .feed{gap:12px}
   /* Na home a faixa da esquerda esta vazia — os filtros so aparecem nas
      variantes do menu —, entao tudo na coluna do meio atravessa as duas: o
      painel de modulos, a fileira de Shorts, o campo de publicar e as
      publicacoes, todos de ponta a ponta. */
-  body:not(.home-powerups):not(.home-enquetes) .col-main > .nvf-composer,
   body:not(.home-powerups):not(.home-enquetes) .col-main > .feed,
   body:not(.home-powerups):not(.home-enquetes) .col-main > .demo-empty-state{grid-column:1 / -1}
   /* quem nao pode publicar nao tem o campo de publicar, e a linha dele fica
@@ -776,7 +770,7 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
   /* os filtros ocupam a faixa da esquerda ao lado das duas linhas; align-self
      start para ficarem no topo dela, e nao esticados na altura do feed. Os
      24px sao os mesmos que o campo de publicar desce do lado de la. */
-  .col-main > #homeFiltros{grid-area:3 / 1 / 6 / 2;align-self:start;margin-top:24px}
+  .col-main > #homeFiltros{grid-area:3 / 1 / 5 / 2;align-self:start;margin-top:24px}
 
 }
 

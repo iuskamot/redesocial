@@ -253,8 +253,9 @@ function customAlternar(){
     return !!(b && b.classList.contains('open')) || !!(g && g.classList.contains('searching'));
   }
   function pcSincronizaAltura(){
-    /* o cartao que interessa e o que esta ao lado do painel, na coluna da
-       direita: na home e a copia de vitrine, e o de verdade mora na esquerda */
+    /* Agora e o CARTAO quem acompanha a altura do painel de modulos (com o
+       "Ver X modulos" no pe, o painel e mais alto): o cartao recebe o minimo
+       medido do painel e o espaco extra sobe para a faixa da logo (14-custom.css). */
     const card = document.querySelector('.col-right .profile-card') || document.getElementById('homeProfileCard'),
           painel = document.getElementById('appsPanel');
     if (!card || !painel) return;
@@ -264,22 +265,21 @@ function customAlternar(){
     if (document.body.classList.contains('home-enquetes') ||
         document.body.classList.contains('home-powerups') ||
         window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
-    if (pcGradeAberta()) return;
-    const h = Math.round(card.getBoundingClientRect().height);
-    if (h) painel.style.minHeight = h + 'px';
+    if (pcGradeAberta()) return;   /* grade aberta ou em busca: o cartao volta ao natural */
+    painel.style.minHeight = '';
+    const h = Math.round(painel.getBoundingClientRect().height);
+    if (h) card.style.setProperty('min-height', h + 'px', 'important');
   }
   window.pcSincronizaAltura = pcSincronizaAltura;
   /* fora de qualquer cenario o cartao tambem mostra o miolo, entao os campos
      precisam nascer preenchidos com a pessoa da vez */
   pcPreenche();
   window.addEventListener('resize', pcSincronizaAltura);
-  /* o painel muda de altura sozinho (fonte carregada, grade redesenhada): com
-     a grade fechada, a medida nova vale */
-  /* o cartao muda de altura sozinho (fonte carregada, nome mais longo de um
-     cenario): observar ele, e nao o painel — o painel e quem recebe a medida,
-     e observa-lo realimentaria a propria mudanca. */
-  const _cartao = document.getElementById('homeProfileCard');
-  if (_cartao && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_cartao);
+  /* o painel muda de altura sozinho (fonte carregada, grade redesenhada, o
+     "Ver X modulos" no pe): agora e ELE a fonte da medida, entao observamos o
+     painel — quem recebe o minimo e o cartao, do outro lado, sem realimentar. */
+  const _painel = document.getElementById('appsPanel');
+  if (_painel && window.ResizeObserver) new ResizeObserver(pcSincronizaAltura).observe(_painel);
   const mostrar = function(sim){
     soDaVersao.forEach(function(s){ document.querySelectorAll(s).forEach(function(el){ el.hidden = !sim; }); });
   };

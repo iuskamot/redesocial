@@ -1,0 +1,275 @@
+/* ============ Links Externos: Partner Inicial adaptativo ============
+   Um laboratorio de composicao da home para redes que nao dependem da Rede
+   Social. O problema: hoje o miolo da home (abaixo da grade de modulos) e
+   preenchido pela Rede Social — a fileira de Shorts e o feed. Quando a rede
+   nao publica, ou nem usa o modulo, esse miolo fica vazio e a home encolhe
+   para uma linha de modulos com um paredao branco embaixo, escondendo que ha
+   dezenas de aplicativos disponiveis.
+
+   A solucao explorada: quando nao ha conteudo social, a GRADE DE MODULOS deixa
+   de ser uma linha dobrada e passa a ser o heroi da tela, aberta e inteira,
+   ocupando o espaco que era do feed. Assim a home nunca fica vazia e da
+   visibilidade ao que a rede realmente tem.
+
+   Quatro cenarios, alternados por um seletor flutuante (o 13-extras.js monta a
+   barra e troca a classe cen-N no body):
+     cen-1  Rede Social com conteudo   -> home atual, intocada (referencia)
+     cen-2  Rede Social sem publicacoes-> grade abre; feed vira convite enxuto
+     cen-3  Sem Rede Social            -> sem feed nenhum; grade e o heroi
+     cen-4  Industria (sem interesse)  -> cen-3 + destaques do segmento
+
+   Tudo escopado em body.home-links: nada aqui vale na home normal nem nas
+   outras variantes do menu. */
+
+/* ---- O seletor de cenarios ----
+   Um dropdown no header, a direita do "+ Acoes Rapidas". So existe nesta tela:
+   o 13-extras.js injeta ao entrar e remove ao sair. Fica sobre o fundo escuro
+   do topbar, entao o botao e translucido claro. */
+.links-sel{position:relative;display:flex;align-items:center}
+.links-sel-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px;
+  border-radius:10px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);
+  color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.links-sel-btn:hover{background:rgba(255,255,255,.16)}
+.links-sel-btn .ls-tag{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.18);padding:2px 6px;border-radius:999px}
+.links-sel-btn .ls-label{white-space:nowrap}
+.links-sel-btn i{font-size:10px;opacity:.85}
+.links-sel-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:288px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;
+  box-shadow:0 2px 8px rgba(16,32,48,.12),0 20px 46px -18px rgba(16,32,48,.5)}
+.links-sel-menu[hidden]{display:none}
+.links-sel-menu button{display:block;width:100%;text-align:left;border:0;background:none;
+  border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit}
+.links-sel-menu button:hover{background:#f3f6f9}
+.links-sel-menu button b{display:block;font-size:13px;font-weight:700;color:var(--ink)}
+.links-sel-menu button span{display:block;font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px}
+.links-sel-menu button[aria-selected=true]{background:rgba(0,172,172,.1)}
+.links-sel-menu button[aria-selected=true] b{color:var(--teal-dark)}
+@media(max-width:640px){ .links-sel-btn .ls-tag,.links-sel-btn .ls-label{display:none} }
+
+/* ================= cen-3 / cen-4: sem Rede Social =================
+   A grade fica em UMA linha em todos os cenarios (com o "Ver N modulos" para
+   abrir). Sem publicacao para centrar, a coluna do meio vira um fluxo simples
+   de blocos: a grade em cima e, no cen-4, o painel de indicadores abaixo. */
+body.home-links.hl-sem-social .col-main{display:block}
+
+/* ---- cen-3 e cen-4: sem Rede Social nenhuma ----
+   Somem a fileira de Shorts, o campo de publicar, o feed e o estado vazio. O
+   que sobra na coluna do meio e so a grade; a coluna da direita (perfil e
+   Comunicados) equilibra o outro lado. */
+body.home-links.hl-sem-social #homeShorts,
+body.home-links.hl-sem-social .col-main > .nvf-composer,
+body.home-links.hl-sem-social .col-main > .feed,
+body.home-links.hl-sem-social .col-main > .demo-empty-state,
+body.home-links.hl-sem-social #homeFeedTitle{display:none !important}
+
+/* ---- cen-2: Rede Social ativa, mas sem nenhuma publicacao ----
+   O corpo e a home normal — modulos em uma linha —, so que vazia. O demo-empty
+   (ligado pelo 13-extras.js) faz o trabalho: enche a fileira de Shorts com os
+   cards de sugestao "Clique para...", poe o feed no convite "Seja o primeiro a
+   publicar" e os comunicados no proprio estado vazio. A fileira de Shorts,
+   como na home, entra sem cabecalho — so os cards de convite. */
+/* a fileira de Shorts fica so com os convites, sem cabecalho — como na home */
+
+/* ---- cen-1: a home real, sem tocar em nada ----
+   Nao ha regra: cen-1 e a home normal com o seletor flutuando por cima. E a
+   referencia do "antes/atual" na comparacao. */
+
+/* ================= cen-4: painel de "Visao geral" (graficos por modulo) =================
+   O heroi do cenario industria. Em vez de uma grade so, o topo mostra o
+   panorama operacional: um cartao por modulo, com o numero que importa e um
+   mini-grafico na cor do proprio modulo. Responde a pergunta do ticket — "que
+   conteudo pode substituir a area de Rede Social?" — com dados, nao com vazio.
+   Abaixo dele a grade fica em duas linhas, como atalho para o resto. */
+.links-visao{display:none;position:relative}
+/* o comunicado em destaque sai em toda a home — a coluna fica so com a lista */
+#homeComPanel .com-featured{display:none}
+/* tooltip dos graficos: bolha escura que segue o cursor */
+.links-visao .lv-tip{position:absolute;z-index:6;transform:translate(-50%,calc(-100% - 8px));
+  background:#101c26;color:#fff;font-size:12px;font-weight:600;line-height:1;
+  padding:6px 9px;border-radius:8px;pointer-events:none;white-space:nowrap;
+  box-shadow:0 6px 16px -6px rgba(16,32,48,.55)}
+.links-visao .lv-tip::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:#101c26}
+body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
+.links-visao .lv-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.links-visao .lv-head h2{font-size:20px;font-weight:700;color:var(--ink);margin:0}
+/* dois controles segmentados: o perfil (quem esta vendo) e o periodo. O
+   periodo empurra para a direita; no estreito os dois quebram para baixo. */
+.links-visao .lv-seg2{display:inline-flex;gap:2px;background:#eef1f4;border-radius:999px;padding:3px}
+.links-visao .lv-periodo{margin-left:auto}
+.links-visao .lv-seg2 button{border:0;background:none;border-radius:999px;padding:8px 16px;
+  font:inherit;font-size:14px;font-weight:600;color:#5b6672;cursor:pointer;white-space:nowrap;transition:.15s}
+.links-visao .lv-seg2 button:not([aria-selected=true]):hover{color:var(--ink);background:rgba(255,255,255,.65)}
+.links-visao .lv-seg2 button[aria-selected=true]{background:#fff;color:var(--teal-dark);box-shadow:0 1px 2px rgba(16,32,48,.12)}
+/* ---- O card de NPS e Expansao (rosca) ---- */
+.links-visao .vg-nps{display:flex;height:9px;border-radius:999px;overflow:hidden;background:#eef1f4}
+.links-visao .vg-nps-seg{display:block;height:100%}
+.links-visao .vg-nps-leg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;font-size:10px;color:var(--muted)}
+.links-visao .vg-nps-leg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.links-visao .vg-nps-leg span{white-space:nowrap}
+/* o donut de Universidade (tipo donut): o anel a esquerda e a legenda
+   (Concluido x A concluir) em coluna a direita, dentro da area do chart */
+.links-visao .vg-npsrosca{display:flex;align-items:center;gap:14px}
+.links-visao .lv-chart .vg-npsrosca .vg-donut{width:54px;height:54px;flex:none}
+.links-visao .vg-npsrosca .vg-nps-leg{margin-top:0;flex-direction:column;flex-wrap:nowrap;gap:5px}
+/* layout do card: o numero (com a zona embaixo, no NPS) na esquerda e o donut
+   na direita, no espaco em branco; a legenda em linha no rodape do card */
+.links-visao .lv-rmid{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.links-visao .lv-card-rosca .lv-metric{flex-direction:column;align-items:flex-start;gap:6px;margin:0}
+.links-visao .lv-card-rosca .lv-numrow{display:flex;align-items:baseline;gap:6px}
+.links-visao .lv-card-rosca .lv-zona{margin:0;color:var(--teal-dark);background:rgba(0,172,172,.12)}
+.links-visao .lv-donut{flex:none}
+.links-visao .lv-donut .vg-donut{width:64px;height:64px;display:block}
+.links-visao .lv-card-rosca .vg-nps-leg{margin-top:0;gap:6px 14px}
+.links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
+.links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:box-shadow .15s,border-color .15s}
+.links-visao .lv-card:hover{border-color:#d5dbe2;box-shadow:0 1px 2px rgba(16,32,48,.06),0 10px 22px -14px rgba(16,32,48,.3)}
+.links-visao .lv-top{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.links-visao .lv-ic{width:34px;height:34px;flex:none;border-radius:10px;
+  background:linear-gradient(165deg,color-mix(in srgb,var(--c1) 45%,var(--c2)),var(--c2));
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.4),0 5px 12px -6px var(--c2);display:flex;align-items:center;justify-content:center}
+.links-visao .lv-ic .smi{width:19px;height:19px;background-size:19px}
+.links-visao .lv-nome{font-size:13px;font-weight:700;color:#5b6672}
+.links-visao .lv-metric{display:flex;align-items:baseline;gap:6px;margin:0 0 12px}
+.links-visao .lv-num{font-size:26px;font-weight:700;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.links-visao .lv-unit{font-size:12px;color:var(--muted)}
+.links-visao .lv-delta{margin-left:auto;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.links-visao .lv-delta.boa{color:#219348;background:rgba(46,164,79,.12)}
+.links-visao .lv-delta.neutra{color:#5b6672;background:#eef1f4}
+.links-visao .lv-atraso,.links-visao .lv-inativo{margin-left:auto;font-size:11px;font-weight:700;white-space:nowrap;
+  color:#e5443b;background:rgba(229,68,59,.1);padding:2px 8px;border-radius:999px}
+.links-visao .lv-emdia{margin-left:auto;font-size:11px;font-weight:700;white-space:nowrap;
+  color:#2ea44f;background:rgba(46,164,79,.1);padding:2px 8px;border-radius:999px}
+.links-visao .lv-zona{margin-left:auto;font-size:11px;font-weight:700;white-space:nowrap;padding:2px 8px;border-radius:999px}
+.links-visao .lv-chart{height:46px;display:flex;align-items:flex-end;justify-content:center}
+.links-visao .lv-chart .vg-svg{width:100%;height:42px;display:block}
+/* camada da area: a linha no SVG esticado e as bolinhas HTML por cima */
+.links-visao .vg-arealayer{position:relative;width:100%;height:42px}
+.links-visao .vg-arealayer .vg-svg{position:absolute;inset:0;height:100%}
+.links-visao .vg-dot{position:absolute;width:16px;height:16px;transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;cursor:default}
+.links-visao .vg-dot i{width:9px;height:9px;border-radius:50%;background:var(--c2);
+  border:2px solid #fff;box-shadow:0 1px 2px rgba(16,32,48,.28)}
+.links-visao .vg-axis{display:flex;margin-top:5px}
+.links-visao .vg-axis span{flex:1;min-width:0;text-align:center;font-size:9px;line-height:1;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.links-visao .lv-chart .vg-donut{width:46px;height:46px}
+.links-visao .lv-chart .vg-gauge{width:84px;height:46px}
+.links-visao .vg-prog{width:100%;height:9px;border-radius:999px;background:#eef1f4;overflow:hidden;align-self:center}
+.links-visao .vg-prog span{display:block;height:100%;border-radius:999px;background:var(--c2)}
+
+
+/* ---- Celular ----
+   O seletor vira uma barra rolavel; a grade e os destaques ja se viram com os
+   container queries e o auto-fill. */
+
+
+/* ============ Visão geral na HOME (carrossel na coluna direita) ============
+   Os mesmos cards de módulo do Links Externos, numa fileira que rola abaixo do
+   cartão do usuário. Visível só na home normal (o JS controla pelo [hidden]). */
+/* a Visao geral mora num bloco branco igual ao dos Comunicados: mesmo fundo,
+   raio, padding e sombra */
+.links-visao.home-visao:not([hidden]){display:block;margin:0;padding:16px;
+  background:#fff;border-radius:14px;box-shadow:0 1px 2px rgba(16,32,48,.06)}
+/* cabecalho: as abas de periodo (hug, a esquerda) e as setas a direita */
+.home-visao .hv-head{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+/* abas de periodo (Semanal/Mensal/Anual) no tamanho do conteudo, mais baixas
+   que as do painel */
+.home-visao .hv-periodo{margin:0}
+.home-visao .hv-periodo button{padding:5px 12px;font-size:12px}
+.home-visao .hv-nav-wrap{margin-left:auto;display:flex;gap:6px}
+/* chevrons: fundo no cinza claro da borda, sem contorno; o hover so escurece
+   um pouco (fundo e icone), sem ganhar borda */
+.home-visao .hv-nav{width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;background:var(--line);color:#44505c;transition:.15s}
+.home-visao .hv-nav:hover{background:#d3d9e0;color:#2b3743}
+.home-visao .hv-nav i{font-size:11px}
+/* a fileira rola de card em card; o padding vertical so cobre a sombra do
+   hover, e nao ha margem lateral — os cards encostam nas bordas da coluna */
+.home-visao .hv-track{
+  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:0;margin:0;scrollbar-width:none;
+}
+.home-visao .hv-track::-webkit-scrollbar{display:none}
+/* cada card ocupa a largura inteira (fill width) e tem a altura de um Short
+   (200px); em coluna flex o grafico estica e ocupa a sobra vertical */
+.home-visao .hv-track .lv-card{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box;
+  height:200px;display:flex;flex-direction:column}
+.home-visao .lv-chart{flex:1;min-height:0;height:auto}
+.home-visao .lv-chart .vg-svg:not(.vg-donut){height:100%}
+.home-visao .vg-arealayer{height:100%}
+.home-visao .lv-chart:has(.vg-donut){align-items:center}
+/* nos cards de rosca (NPS/Expansao) o miolo cresce e joga a legenda pro rodape */
+.home-visao .lv-card-rosca .lv-rmid{flex:1;min-height:0}
+/* icone e titulo acompanham os do Comunicados: 42px raio 8px, e o titulo em
+   14px na cor do titulo dos comunicados */
+.home-visao .lv-ic{width:42px;height:42px;border-radius:8px}
+.home-visao .lv-ic .smi{width:20px;height:20px;background-size:20px}
+.home-visao .lv-nome{font-size:14px;color:#5b6672}
+/* borda dos cards um tom mais definida (dentro do bloco branco eles some) */
+.home-visao .lv-card{border-color:#d5dbe2}
+
+/* ---- Perfil Colaborador (na home): não cria Short nem publicação, e não vê
+   o Short "Aguardando aprovação" (que é fluxo de quem publica). Sem o bloco de
+   criar, as publicações ganham 24px de respiro no topo. ---- */
+/* o Short "Aguardando aprovacao" e fluxo de aprovador: so a matriz ve. Franqueado
+   e colaborador (nao aprovam) nao. */
+body.perfil-colab #homeShorts .reel.is-pend,
+body.perfil-franqueado #homeShorts .reel.is-pend{display:none !important}
+/* estado "sem permissao": ve o feed, mas nao cria publicacao nem short */
+body.estado-sem-permissao .reel-create{display:none !important}
+body.estado-sem-permissao .col-main .nvf-composer{display:none !important}
+/* "sem permissao" + "sem conteudo" (vazio): sem short pra ver e sem publicacao.
+   Esconde a linha de Shorts e mostra so o bloco de baixo com a mensagem
+   "Nenhuma publicacao por aqui". */
+body.estado-sem-permissao.demo-empty #homeShorts{display:none !important}
+body.estado-sem-permissao.demo-empty .de-quando-vazio{display:none}
+body.estado-sem-permissao.demo-empty .de-quando-sem-permissao{display:block}
+/* sem os Shorts, a linha deles fica vazia e sobra o gap dobrado; o feed sobe
+   pra essa linha, ficando so 1 gap entre os modulos e "Nenhuma publicacao" */
+body.estado-sem-permissao.demo-empty .col-main > .feed{grid-row:2 / 3}
+/* estado "sem rede social": sem shorts, feed nem compositor; a coluna central
+   vira fluxo simples e o painel de Visao geral (o mesmo do Links) desce para
+   baixo dos modulos, como herói. */
+body.estado-sem-rs .col-main{display:block}
+body.estado-sem-rs #homeShorts,
+body.estado-sem-rs .col-main > .feed,
+body.estado-sem-rs .col-main > .demo-empty-state,
+body.estado-sem-rs #homeFeedTitle{display:none !important}
+body.estado-sem-rs .links-visao:not(.home-visao){display:block;margin:16px 0 0;
+  background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(16,32,48,.06)}
+/* a borda dos charts fica mais marcada aqui, igual à do carrossel */
+body.estado-sem-rs .links-visao:not(.home-visao) .lv-card{border-color:#d5dbe2}
+/* cabecalhos de grupo (papel) no menu do drop-matriz */
+.home-perfil-sel .hps-grupo{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--muted);padding:9px 12px 3px}
+.home-perfil-sel .hps-grupo:first-child{padding-top:3px}
+/* o drop-matriz tem muitos cenarios; teto de altura com rolagem pra nao
+   estourar a tela */
+.home-perfil-sel .links-sel-menu{max-height:min(60vh,440px);overflow-y:auto}
+
+/* ============ Identificação de usuário no Feed (ID) ============
+   O responsável por uma publicação/comentário carrega um ID à esquerda do nome
+   (#NN · Nome). Some por padrão — usuários externos à rede não veem — e aparece
+   só na visão da matriz (body.ver-uids, ligado pelo 13-extras.js). */
+.post-uid,.post-sep{display:none}
+/* com o ID a mostra, o ID + a bolinha + o nome ficam numa linha flex com 4px
+   entre eles (a bolinha nao usa margem propria — quem espaca e o gap) */
+body.ver-uids .post-name,
+body.ver-uids .comment-name{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
+body.ver-uids .post-uid{display:inline;font-size:12px;font-weight:400;color:#8a96a3}
+body.ver-uids .post-sep{display:inline;color:#c5cdd6}
+
+/* o drop de perfis da HOME (no topbar) 100% arredondado e um tom mais claro */
+.home-perfil-sel .links-sel-btn{border-radius:999px;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32)}
+.home-perfil-sel .links-sel-btn:hover{background:rgba(255,255,255,.26)}
+
+
+/* "Sem conteúdo": o campo de publicar e o convite "Seja o primeiro a publicar"
+   moram JUNTOS no mesmo bloco (o feed), separados pelos 12px de gap dele; os
+   posts saem. Vale para a home e para o cenário sem publicações do Links. */
+body.demo-empty .col-main > .feed.demo-filled{display:flex;flex-direction:column;gap:12px}
+body.demo-empty .col-main > .feed > .post{display:none}
+.feed > .demo-empty-state{display:none;margin:0}
+body.demo-empty .col-main > .feed > .demo-empty-state{display:flex}

@@ -431,6 +431,15 @@ const SHORT_SUGESTOES = [
      que o space-between do .shorts espalha ate a borda sem rolagem */
   { ic:'fa-lightbulb',    txt:'Clique para mostrar uma novidade' },
 ];
+/* O funcionario nao faz campanha nem lancamento (isso e da marca/gestao): as
+   sugestoes dele sao pessoais/de equipe. Usadas quando o perfil e Funcionario. */
+const SHORT_SUG_FUNC = [
+  { ic:'fa-trophy',    txt:'Clique para compartilhar conquistas' },
+  { ic:'fa-star',      txt:'Clique para compartilhar um momento' },
+  { ic:'fa-lightbulb', txt:'Clique para mostrar uma novidade' },
+  { ic:'fa-handshake', txt:'Clique para reconhecer um colega' },
+  { ic:'fa-comment-dots', txt:'Clique para compartilhar uma dica' },
+];
 function renderShortsInto(row){
   row.innerHTML = '';
   const create = document.createElement('button');
@@ -442,7 +451,8 @@ function renderShortsInto(row){
   /* Sem nenhum short publicado, a fileira não fica vazia: sobra o "Criar short"
      e, ao lado, sugestões do que gravar — cada uma abre o mesmo criador. */
   if (document.body.classList.contains('demo-empty')) {
-    SHORT_SUGESTOES.forEach(s => {
+    const sugs = document.body.classList.contains('perfil-colab') ? SHORT_SUG_FUNC : SHORT_SUGESTOES;
+    sugs.forEach(s => {
       const b = document.createElement('button');
       b.className = 'reel reel-sugestao';
       b.innerHTML = '<span class="rs-ic"><i class="fa-solid ' + s.ic + '"></i></span>' +

@@ -14,9 +14,6 @@
           <div class="apps-head-right">
             <button class="apps-cancel" id="appsCancel" hidden><i class="fa-solid fa-xmark"></i><span>Cancelar</span></button>
             <button class="apps-edit" id="appsEdit" title="Reordenar módulos"><i class="fa-solid fa-arrows-up-down-left-right"></i><span>Organizar</span></button>
-            <div class="apps-expand">
-              <button id="appsToggle" title="Ver mais aplicativos"><i class="fa-solid fa-plus"></i> <span id="appsToggleLbl">Ver mais módulos</span></button>
-            </div>
           </div>
         </div>
         <div class="apps" id="appsGrid">
@@ -201,11 +198,11 @@
 
         </div>
 
-        <!-- o mesmo fechar do cabecalho, repetido no pe: com a grade aberta a
-             pessoa esta olhando para baixo, e voltar la em cima so para fechar
-             e caminho a toa. Quem responde pelo clique e o botao de cima. -->
-        <div class="apps-expand apps-expand--pe">
-          <button type="button" id="appsToggleFim"><i class="fa-solid fa-minus"></i> <span>Ver menos</span></button>
+        <!-- o "Ver X modulos" mora aqui, no pe da grade: fechado mostra a
+             contagem total, aberto vira "Ver menos". A altura do painel cresce
+             com ele, e o cartao do usuario ao lado acompanha (16-custom.js). -->
+        <div class="apps-expand apps-expand--rodape">
+          <button id="appsToggle" title="Ver mais aplicativos"><span id="appsToggleLbl">Ver mais módulos</span> <i class="fa-solid fa-chevron-down"></i></button>
         </div>
         <div class="apps-empty" id="appsEmpty" hidden>
           <i class="fa-regular fa-face-frown"></i> Nenhum módulo encontrado
@@ -241,7 +238,8 @@
       <aside class="home-filtros" id="homeFiltros"></aside>
 
       <!-- ========== FEED (estilo LinkedIn) ========== -->
-      <div class="nvf-composer" style="margin-bottom:8px">
+      <section class="feed demo-filled">
+      <div class="nvf-composer">
         <div class="section-title-row" id="homeFeedTitle">
           <h2 class="section-title">Feed</h2>
           <a href="#" class="see-all demo-filled" id="homeSeeAllPubs">Ver todas as publicações <i class="fa-solid fa-arrow-right"></i></a>
@@ -257,7 +255,13 @@
           <button class="nvf-qbtn news" id="homeQArt"><i class="fa-solid fa-newspaper"></i> Artigo</button>
         </div>
       </div>
-      <section class="feed demo-filled">
+      <div class="demo-empty-state">
+        <img class="de-illu" src="uploads/illustra/feed.svg" alt="" width="323" height="200">
+        <div class="de-title de-quando-vazio">Seja o primeiro a publicar</div>
+        <div class="de-sub de-quando-vazio">Ainda não há publicações por aqui. Use o campo acima para criar a primeira publicação da sua rede.</div>
+        <div class="de-title de-quando-sem-permissao">Nenhuma publicação por aqui</div>
+        <div class="de-sub de-quando-sem-permissao">Quando alguém da sua rede publicar, a publicação aparece aqui.</div>
+      </div>
 
         <!-- Post 0: Artigo fixado (Casa do Construtor) -->
         <article class="card post nvf-artcard" id="homeArtCard">
@@ -389,13 +393,6 @@ API completa e MCP server para conectar a plataforma a agentes de IA e a qualque
           </div>
         </article>
       </section>
-      <div class="demo-empty-state" style="margin-top:4px">
-        <img class="de-illu" src="uploads/illustra/feed.svg" alt="" width="323" height="200">
-        <div class="de-title de-quando-vazio">Seja o primeiro a publicar</div>
-        <div class="de-sub de-quando-vazio">Ainda não há publicações por aqui. Use o campo acima para criar a primeira publicação da sua rede.</div>
-        <div class="de-title de-quando-sem-permissao">Nenhuma publicação por aqui</div>
-        <div class="de-sub de-quando-sem-permissao">Quando alguém da sua rede publicar, a publicação aparece aqui.</div>
-      </div>
     </main>
 
     <!-- ========== Coluna direita ========== -->
