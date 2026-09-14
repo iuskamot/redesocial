@@ -175,8 +175,14 @@ function renderGerenciarComentariosList(rows){
     return '<tr data-i="' + idx + '">' +
       '<td class="perm-id">#' + row.cid + '</td>' +
       '<td><div class="rl-reel"><span class="apr-cmt">"' + (c.text || '').replace(/</g, '&lt;') + '"</span>' +
-        '<button type="button" class="rl-actbtn" data-cmgview="' + idx + '"><span>Acessar</span>' +
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><title>arrow-right</title><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/></svg></button>' +
+        '<div class="rl-actwrap">' +
+          '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
+          '<div class="rl-actmenu" hidden>' +
+            '<button type="button" data-cact="tab"><i class="fa-solid fa-up-right-from-square"></i> Abrir em nova guia</button>' +
+            '<button type="button" data-cact="ver"><i class="fa-solid fa-eye"></i> Acessar comentário</button>' +
+            '<button type="button" data-cact="del" class="danger"><i class="fa-solid fa-trash"></i> Remover comentário</button>' +
+          '</div>' +
+        '</div>' +
       '</div></td>' +
       '<td><div class="rl-author">' + (c.av ? '<span class="avatar ' + c.av + '"></span>' : '<span class="nv-logo">' + SULTS_LOGO + '</span>') + '<div><b>' + autorNome + '</b><span class="rl-emp">' + autorSub + '</span></div></div></td>' +
       '<td><div class="rl-unitcell"><span class="rxv-logo" style="background:' + unit.color + '">' + unit.ini + '</span><div><b>' + unit.name + '</b><span>' + unit.company + '</span></div></div></td>' +
@@ -192,7 +198,7 @@ function renderGerenciarComentariosList(rows){
     { key: 'time', label: 'Comentado em' },
     { key: 'pub', label: 'Publicação' }
   ];
-  renderGridTable({
+  const wrap = renderGridTable({
     grid, columns, rowsHTML, sort: cmgColSort,
     onSort: function(k){
       if (cmgColSort.key !== k){ cmgColSort.key = k; cmgColSort.dir = 1; }
@@ -205,9 +211,31 @@ function renderGerenciarComentariosList(rows){
       renderGerenciarComentariosList(cmgAllComments().filter(matchCmg));
     },
     onRowClick: function(e){
-      const btn = e.target.closest('[data-cmgview]'); if (!btn) return;
-      const row = rows[+btn.dataset.cmgview]; if (!row) return;
-      if (typeof openNewsInfo === 'function') openNewsInfo(row.n);
+      const tr = e.target.closest('tr'); if (!tr) return;
+      const row = rows[+tr.dataset.i]; if (!row) return;
+      const actBtn = e.target.closest('.rl-actbtn');
+      if (actBtn){
+        e.stopPropagation();
+        const td = actBtn.closest('td');
+        const menu = actBtn.nextElementSibling;
+        const willOpen = menu.hidden;
+        wrap.querySelectorAll('.rl-actmenu').forEach(function(m){ m.hidden = true; });
+        wrap.querySelectorAll('td.rl-actz').forEach(function(c){ c.classList.remove('rl-actz'); });
+        menu.hidden = !willOpen;
+        td.classList.toggle('rl-actz', willOpen);
+        return;
+      }
+      const cact = e.target.closest('[data-cact]');
+      if (cact){
+        e.stopPropagation();
+        cact.closest('.rl-actmenu').hidden = true;
+        cact.closest('td').classList.remove('rl-actz');
+        const a = cact.dataset.cact;
+        if (a === 'ver'){ if (typeof openNewsInfo === 'function') openNewsInfo(row.n); }
+        else if (a === 'tab') window.open(location.href, '_blank');
+        else { const ci = row.n.cmts.indexOf(row.c); if (ci > -1) row.n.cmts.splice(ci, 1); cmgRefresh(); fgToast('Comentário removido'); }
+        return;
+      }
     }
   });
 }
@@ -219,9 +247,13 @@ function cmgRefresh(){
   renderGerenciarComentariosList(cmgAllComments().filter(matchCmg));
 }
 
-/* Fecha os dropdowns do filtro avançado ao clicar fora deles — escopado a #cmgFilters, não
-   interfere no de #pubFilters/#rxFilters. */
+/* Fecha o menu "Ações" da tabela e os dropdowns do filtro avançado ao clicar fora deles —
+   listener próprio, escopado a #cmgGrid/#cmgFilters, não interfere no de #pubGrid/#rxGrid. */
 document.addEventListener('click', function(e){
+  if (!e.target.closest('.rl-actwrap')){
+    $$('#cmgGrid .rl-actmenu').forEach(function(m){ m.hidden = true; });
+    $$('#cmgGrid td.rl-actz').forEach(function(td){ td.classList.remove('rl-actz'); });
+  }
   if (!e.target.closest('.rl-ddwrap')){
     $$('#cmgFilters .rl-ddmenu').forEach(function(m){ m.hidden = true; });
   }

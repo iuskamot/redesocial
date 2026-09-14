@@ -25,7 +25,7 @@
        rxEndInPeriod, rxDDMenu, rxDDWrap, rxDateField (helpers genéricos, não
        exclusivos de Shorts — só carregam antes por causa da ordem alfabética)
      - assets/js/11-rede-social.js: NEWS, NEWS_CATS, newsCatByName, nvFmtDateTime,
-       AUTOR_CARGO, SULTS_LOGO, nvEdit, openInterModal
+       AUTOR_CARGO, SULTS_LOGO, openInterModal
      - assets/js/13-extras.js: openNewsInfo
      - assets/js/07-busca.js: openReactions, nvRxIndex
    ===================================================================== */
@@ -223,8 +223,7 @@ function renderGerenciarPublicacoesList(list){
           '<button type="button" class="rl-actbtn"><span>Ações</span><i class="fa-solid fa-chevron-down"></i></button>' +
           '<div class="rl-actmenu" hidden>' +
             '<button type="button" data-pact="tab"><i class="fa-solid fa-up-right-from-square"></i> Abrir em nova guia</button>' +
-            '<button type="button" data-pact="ver"><i class="fa-solid fa-eye"></i> Ver publicação</button>' +
-            '<button type="button" data-pact="edit"><i class="fa-solid fa-pen"></i> Editar</button>' +
+            '<button type="button" data-pact="ver"><i class="fa-solid fa-eye"></i> Acessar publicação</button>' +
             '<button type="button" data-pact="del" class="danger"><i class="fa-solid fa-trash"></i> Excluir</button>' +
           '</div>' +
         '</div>' +
@@ -298,7 +297,6 @@ function renderGerenciarPublicacoesList(list){
         const a = pact.dataset.pact;
         if (a === 'ver') openNewsInfo(n);
         else if (a === 'tab') window.open(location.href, '_blank');
-        else if (a === 'edit') nvEdit(n.id);
         else { NEWS = NEWS.filter(function(x){ return x.id !== n.id; }); pglRefresh(); fgToast('Publicação excluída'); }
         return;
       }

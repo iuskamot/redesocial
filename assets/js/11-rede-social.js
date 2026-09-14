@@ -858,7 +858,7 @@ function foBuildModFilters(){
   const authorItems=[{value:'',label:'Todos',selected:!cmAuthor}].concat(authors.map(a=>({value:a,label:a,selected:cmAuthor===a})));
   const authorLabel=cmAuthor||'Todos';
   let html='<div class="nv-fsec"><div class="nv-fsec-hd">Comentário <i class="fa-solid fa-chevron-up"></i></div>'+
-    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário ou ID</label><div class="nv-ffield"><input type="text" id="cmFTexto" placeholder="Pesquisar comentário..." value="'+(cmQuery||'')+'" autocomplete="off"></div></div>'+
+    '<div class="nv-ffcol" style="margin-bottom:12px"><label>Comentário</label><div class="nv-ffield"><input type="text" id="cmFTexto" placeholder="Pesquisar comentário..." value="'+(cmQuery||'')+'" autocomplete="off"></div></div>'+
     '<div class="nv-ffcol"><label>Autor</label>'+rxDDWrap('cmFAutor', authorLabel, authorItems, 'fa-earth-americas', 'fa-magnifying-glass')+'</div></div>';
   const periodDefs=[['tudo','Qualquer período'],['24h','Últimas 24 h'],['7d','Últimos 7 dias'],['30d','Últimos 30 dias'],['custom','Período personalizado']];
   const periodItems=periodDefs.map(p=>({value:p[0],label:p[1],selected:cmQueuePeriod===p[0]}));
