@@ -124,10 +124,10 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
    passa dos de barra */
 .links-visao .lv-card-rosca .vg-nps-leg{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-top:6px}
 .links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
-.links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:box-shadow .15s,border-color .15s}
-.links-visao .lv-card:hover{border-color:#d5dbe2;box-shadow:0 1px 2px rgba(16,32,48,.06),0 10px 22px -14px rgba(16,32,48,.3)}
+/* os cards de chart nao reagem ao hover: quem responde e so o tooltip das barras/pontos */
+.links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:10px;text-decoration:none;cursor:default}
 .links-visao .lv-top{display:flex;align-items:center;gap:10px;margin:0 0 12px}
-.links-visao .lv-ic{width:34px;height:34px;flex:none;border-radius:10px;
+.links-visao .lv-ic{width:34px;height:34px;flex:none;border-radius:8px;
   background:linear-gradient(165deg,color-mix(in srgb,var(--c1) 45%,var(--c2)),var(--c2));
   box-shadow:inset 0 1px 1px rgba(255,255,255,.4),0 5px 12px -6px var(--c2);display:flex;align-items:center;justify-content:center}
 .links-visao .lv-ic .smi{width:19px;height:19px;background-size:19px}
@@ -189,27 +189,46 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
 /* a fileira rola de card em card; o padding vertical so cobre a sombra do
    hover, e nao ha margem lateral — os cards encostam nas bordas da coluna */
 .home-visao .hv-track{
-  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  display:flex;align-items:flex-start;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
   padding:0;margin:0;scrollbar-width:none;
 }
 .home-visao .hv-track::-webkit-scrollbar{display:none}
-/* cada card ocupa a largura inteira (fill width) e tem a altura de um Short
-   (200px); em coluna flex o grafico estica e ocupa a sobra vertical */
-.home-visao .hv-track .lv-card{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box;
-  height:200px;display:flex;flex-direction:column}
-.home-visao .lv-chart{flex:1;min-height:0;height:auto}
-.home-visao .lv-chart .vg-svg:not(.vg-donut){height:100%}
-.home-visao .vg-arealayer{height:100%}
-.home-visao .lv-chart:has(.vg-donut){align-items:center}
-/* nos cards de rosca (NPS/Expansao) o miolo cresce e joga a legenda pro rodape */
-.home-visao .lv-card-rosca .lv-rmid{flex:1;min-height:0}
-/* icone e titulo acompanham os do Comunicados: 42px raio 8px, e o titulo em
-   14px na cor do titulo dos comunicados */
-.home-visao .lv-ic{width:42px;height:42px;border-radius:8px}
-.home-visao .lv-ic .smi{width:20px;height:20px;background-size:20px}
-.home-visao .lv-nome{font-size:14px;color:#5b6672}
+/* cada card ocupa a largura inteira (fill width), mas tem exatamente o mesmo
+   tamanho dos cards do "sem rede social": sem altura fixa, sem grafico esticado
+   e com o mesmo icone/titulo — herdam tudo de .links-visao */
+.home-visao .hv-track .lv-card{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box}
 /* borda dos cards um tom mais definida (dentro do bloco branco eles some) */
 .home-visao .lv-card{border-color:#d5dbe2}
+
+/* ---- Video de boas-vindas: no lugar do carrossel da Visao geral, no "sem conteudo" ---- */
+/* a altura acompanha os cards do guia na esquerda (a previa cresce pra preencher) */
+.welcome-video{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(16,32,48,.06);
+  display:flex;flex-direction:column;height:300px}
+.welcome-video[hidden]{display:none}
+/* a previa mantem a proporcao 16:9 (encaixa a imagem inteira, sem cortar os lados) */
+.wv-thumb{position:relative;flex:none;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background-color:#0b6e6e;background-size:cover;background-position:center;background-repeat:no-repeat}
+.wv-thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.34))}
+.wv-play{position:relative;z-index:1;width:54px;height:54px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:19px;
+  box-shadow:0 10px 26px -8px rgba(0,0,0,.45);transition:transform .15s}
+.wv-play i{margin-left:3px}
+.wv-thumb:hover .wv-play{transform:scale(1.08)}
+/* o bloco de baixo (Boas-vindas) preenche a altura que sobra ate os 300px */
+.wv-body{flex:1;padding:16px;display:flex;flex-direction:column;justify-content:center}
+/* titulo do mesmo tamanho do de Comunicados (20px) */
+.wv-title{margin:0;font-size:20px;font-weight:700;color:var(--ink)}
+.wv-sub{margin:5px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}
+/* o video abre em tela cheia num modal de fundo escuro desfocado */
+.wv-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:rgba(8,14,20,.72);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.wv-modal[hidden]{display:none}
+.wv-modal-frame{width:min(1040px,92vw);aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 90px -24px rgba(0,0,0,.75)}
+.wv-modal-frame iframe{width:100%;height:100%;border:0;display:block}
+.wv-modal-close{position:absolute;top:20px;right:24px;width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.wv-modal-close:hover{background:rgba(255,255,255,.26)}
 
 /* ---- Perfil Colaborador (na home): não cria Short nem publicação, e não vê
    o Short "Aguardando aprovação" (que é fluxo de quem publica). Sem o bloco de
@@ -227,9 +246,7 @@ body.estado-sem-permissao .col-main .nvf-composer{display:none !important}
 body.estado-sem-permissao.demo-empty #homeShorts{display:none !important}
 body.estado-sem-permissao.demo-empty .de-quando-vazio{display:none}
 body.estado-sem-permissao.demo-empty .de-quando-sem-permissao{display:block}
-/* sem os Shorts, a linha deles fica vazia e sobra o gap dobrado; o feed sobe
-   pra essa linha, ficando so 1 gap entre os modulos e "Nenhuma publicacao" */
-body.estado-sem-permissao.demo-empty .col-main > .feed{grid-row:2 / 3}
+/* o feed em sem-permissao sobe pra logo abaixo do guia: ver 08-feed.css (grid-row:3) */
 /* estado "sem rede social": sem shorts, feed nem compositor; a coluna central
    vira fluxo simples e o painel de Visao geral (o mesmo do Links) desce para
    baixo dos modulos, como herói. */
@@ -243,9 +260,11 @@ body.estado-sem-rs .links-visao:not(.home-visao){display:block;margin:16px 0 0;
 /* a borda dos charts fica mais marcada aqui, igual à do carrossel */
 body.estado-sem-rs .links-visao:not(.home-visao) .lv-card{border-color:#d5dbe2}
 /* cabecalhos de grupo (papel) no menu do drop-matriz */
-.home-perfil-sel .hps-grupo{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
-  color:var(--muted);padding:9px 12px 3px}
-.home-perfil-sel .hps-grupo:first-child{padding-top:3px}
+/* cabecalho de grupo (papel) em laranja pra nao mesclar com o item selecionado
+   (que e verdigris); maior e grifado */
+.home-perfil-sel .hps-grupo{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:#e8730c;background:rgba(232,115,12,.08);padding:7px 12px;margin:2px 0}
+.home-perfil-sel .hps-grupo:first-child{margin-top:0}
 /* o drop-matriz tem muitos cenarios; teto de altura com rolagem pra nao
    estourar a tela */
 .home-perfil-sel .links-sel-menu{max-height:min(60vh,440px);overflow-y:auto}

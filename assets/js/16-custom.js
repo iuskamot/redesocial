@@ -264,6 +264,9 @@ function customAlternar(){
        segunda ele nem esta na mesma coluna), e no celular as colunas empilham */
     if (document.body.classList.contains('home-enquetes') ||
         document.body.classList.contains('home-powerups') ||
+        /* "sem rede social e sem conteudo" tem 2 linhas de modulos: o cartao
+           NAO deve crescer pra acompanhar, fica na altura de 1 linha */
+        document.body.classList.contains('estado-sr-vazio') ||
         window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
     if (pcGradeAberta()) return;   /* grade aberta ou em busca: o cartao volta ao natural */
     painel.style.minHeight = '';

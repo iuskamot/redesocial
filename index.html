@@ -918,9 +918,10 @@ input,textarea,select{font-size:14px}
     radial-gradient(120% 90% at 50% -10%, rgba(0,172,172,.09), transparent 60%),
     linear-gradient(180deg,#fdfefe,#f6f9fa);
   border:1px solid #e9eef1;
-  color:#0c7d7d;cursor:pointer;transition:border-color .15s;
+  color:#0c7d7d;cursor:pointer;transition:border-color .15s,box-shadow .15s;
 }
-.reel.reel-sugestao:hover{border-color:var(--teal)}
+/* hover: borda 2px verdigris por fora, igual aos cards do guia (1px + anel externo) */
+.reel.reel-sugestao:hover{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
 /* o .reel escurece o topo por dentro para dar contraste à imagem; aqui não há
    imagem, então o degradê só sujava o cartão branco */
 .reel.reel-sugestao::before,.reel.reel-sugestao::after{display:none}
@@ -3915,6 +3916,34 @@ body.demo-suporte .de-quando-sem-permissao,
 body.demo-crunch:not(.crunch-admin) .de-quando-sem-permissao{display:block}
 body.demo-empty .demo-filled{display:none}
 body.demo-empty .demo-empty-state{display:flex}
+
+/* ---- Guia de engajamento: faixa de cards acima dos Shorts, so no "sem conteudo" ---- */
+.guia-eng{display:none}
+/* o guia so aparece no "sem conteudo" e no "sem rede social e sem conteudo"
+   (primeiro acesso); no "sem rede social" com charts, nao */
+body.demo-empty .guia-eng,
+body.estado-sr-vazio .guia-eng{display:block}
+body.estado-sr-vazio .guia-eng{margin-top:16px}
+.guia-eng .ge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.ge-card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;transition:box-shadow .15s,border-color .15s}
+/* hover: borda de 2px verdigris por fora (a de 1px vira teal + um anel externo de 1px) */
+.ge-card:hover{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+.ge-text{padding:16px 16px 10px}
+.ge-cat{margin:0 0 4px;font-size:12px;font-weight:600;color:var(--muted)}
+.ge-title{margin:0;font-size:16px;font-weight:700;line-height:1.3;color:var(--ink)}
+/* a ilustra fica no rodape (flex-end), sobre o quadriculado + o degrade verdigris
+   (mesma familia do "Criar short"). O topo mescla pra branco 100% pra emendar
+   com o corpo branco do card; o card e mais alto pra sobrar essa transicao. */
+.ge-ilustra{margin-top:auto;display:flex;justify-content:center;align-items:flex-end;height:190px;
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 42%),
+    url(uploads/ilustra/bg-ilustras.png),
+    radial-gradient(120% 80% at 50% -10%, rgba(0,172,172,.14), transparent 62%),
+    linear-gradient(180deg, #fff 0%, rgba(0,172,172,.12) 52%, rgba(0,172,172,.24) 78%, rgba(0,172,172,.42) 100%),
+    #fff;}
+.ge-ilustra img{display:block;width:auto;max-width:86%;height:auto}
+.ge-trigger{position:absolute;inset:0;z-index:2;border-radius:inherit}
 /* ilustração no lugar do ícone: largura limitada e o título logo abaixo */
 .demo-empty-state .de-illu{
   position:relative;display:block;width:100%;max-width:260px;height:auto;
@@ -4407,6 +4436,17 @@ svg.verified{width:16px;height:16px;fill:var(--teal);flex:none;display:inline-bl
      start para ficarem no topo dela, e nao esticados na altura do feed. Os
      24px sao os mesmos que o campo de publicar desce do lado de la. */
   .col-main > #homeFiltros{grid-area:3 / 1 / 5 / 2;align-self:start;margin-top:24px}
+  /* no "sem conteudo" (menos o sem-permissao) o guia entra como uma faixa entre
+     os modulos e os Shorts: abre uma linha nova e empurra shorts/feed pra baixo */
+  body.demo-empty .col-main{grid-template-rows:auto auto auto min-content auto}
+  body.demo-empty .col-main > .guia-eng{grid-row:2;grid-column:1 / -1}
+  body.demo-empty .col-main > #homeShorts{grid-row:3}
+  body.demo-empty .col-main > .feed,
+  body.demo-empty .col-main > .demo-empty-state{grid-row:4}
+  body.demo-empty .col-main > #homeFiltros{grid-row:4 / 6}
+  /* sem-permissao: shorts oculto, entao o feed sobe pra logo abaixo do guia */
+  body.estado-sem-permissao.demo-empty .col-main > .feed,
+  body.estado-sem-permissao.demo-empty .col-main > .demo-empty-state{grid-row:3}
 
 }
 
@@ -7805,10 +7845,10 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
    passa dos de barra */
 .links-visao .lv-card-rosca .vg-nps-leg{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-top:6px}
 .links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
-.links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:box-shadow .15s,border-color .15s}
-.links-visao .lv-card:hover{border-color:#d5dbe2;box-shadow:0 1px 2px rgba(16,32,48,.06),0 10px 22px -14px rgba(16,32,48,.3)}
+/* os cards de chart nao reagem ao hover: quem responde e so o tooltip das barras/pontos */
+.links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:10px;text-decoration:none;cursor:default}
 .links-visao .lv-top{display:flex;align-items:center;gap:10px;margin:0 0 12px}
-.links-visao .lv-ic{width:34px;height:34px;flex:none;border-radius:10px;
+.links-visao .lv-ic{width:34px;height:34px;flex:none;border-radius:8px;
   background:linear-gradient(165deg,color-mix(in srgb,var(--c1) 45%,var(--c2)),var(--c2));
   box-shadow:inset 0 1px 1px rgba(255,255,255,.4),0 5px 12px -6px var(--c2);display:flex;align-items:center;justify-content:center}
 .links-visao .lv-ic .smi{width:19px;height:19px;background-size:19px}
@@ -7870,27 +7910,46 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
 /* a fileira rola de card em card; o padding vertical so cobre a sombra do
    hover, e nao ha margem lateral — os cards encostam nas bordas da coluna */
 .home-visao .hv-track{
-  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  display:flex;align-items:flex-start;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
   padding:0;margin:0;scrollbar-width:none;
 }
 .home-visao .hv-track::-webkit-scrollbar{display:none}
-/* cada card ocupa a largura inteira (fill width) e tem a altura de um Short
-   (200px); em coluna flex o grafico estica e ocupa a sobra vertical */
-.home-visao .hv-track .lv-card{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box;
-  height:200px;display:flex;flex-direction:column}
-.home-visao .lv-chart{flex:1;min-height:0;height:auto}
-.home-visao .lv-chart .vg-svg:not(.vg-donut){height:100%}
-.home-visao .vg-arealayer{height:100%}
-.home-visao .lv-chart:has(.vg-donut){align-items:center}
-/* nos cards de rosca (NPS/Expansao) o miolo cresce e joga a legenda pro rodape */
-.home-visao .lv-card-rosca .lv-rmid{flex:1;min-height:0}
-/* icone e titulo acompanham os do Comunicados: 42px raio 8px, e o titulo em
-   14px na cor do titulo dos comunicados */
-.home-visao .lv-ic{width:42px;height:42px;border-radius:8px}
-.home-visao .lv-ic .smi{width:20px;height:20px;background-size:20px}
-.home-visao .lv-nome{font-size:14px;color:#5b6672}
+/* cada card ocupa a largura inteira (fill width), mas tem exatamente o mesmo
+   tamanho dos cards do "sem rede social": sem altura fixa, sem grafico esticado
+   e com o mesmo icone/titulo — herdam tudo de .links-visao */
+.home-visao .hv-track .lv-card{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box}
 /* borda dos cards um tom mais definida (dentro do bloco branco eles some) */
 .home-visao .lv-card{border-color:#d5dbe2}
+
+/* ---- Video de boas-vindas: no lugar do carrossel da Visao geral, no "sem conteudo" ---- */
+/* a altura acompanha os cards do guia na esquerda (a previa cresce pra preencher) */
+.welcome-video{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(16,32,48,.06);
+  display:flex;flex-direction:column;height:300px}
+.welcome-video[hidden]{display:none}
+/* a previa mantem a proporcao 16:9 (encaixa a imagem inteira, sem cortar os lados) */
+.wv-thumb{position:relative;flex:none;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background-color:#0b6e6e;background-size:cover;background-position:center;background-repeat:no-repeat}
+.wv-thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.34))}
+.wv-play{position:relative;z-index:1;width:54px;height:54px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:19px;
+  box-shadow:0 10px 26px -8px rgba(0,0,0,.45);transition:transform .15s}
+.wv-play i{margin-left:3px}
+.wv-thumb:hover .wv-play{transform:scale(1.08)}
+/* o bloco de baixo (Boas-vindas) preenche a altura que sobra ate os 300px */
+.wv-body{flex:1;padding:16px;display:flex;flex-direction:column;justify-content:center}
+/* titulo do mesmo tamanho do de Comunicados (20px) */
+.wv-title{margin:0;font-size:20px;font-weight:700;color:var(--ink)}
+.wv-sub{margin:5px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}
+/* o video abre em tela cheia num modal de fundo escuro desfocado */
+.wv-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:rgba(8,14,20,.72);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.wv-modal[hidden]{display:none}
+.wv-modal-frame{width:min(1040px,92vw);aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 90px -24px rgba(0,0,0,.75)}
+.wv-modal-frame iframe{width:100%;height:100%;border:0;display:block}
+.wv-modal-close{position:absolute;top:20px;right:24px;width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.wv-modal-close:hover{background:rgba(255,255,255,.26)}
 
 /* ---- Perfil Colaborador (na home): não cria Short nem publicação, e não vê
    o Short "Aguardando aprovação" (que é fluxo de quem publica). Sem o bloco de
@@ -7908,9 +7967,7 @@ body.estado-sem-permissao .col-main .nvf-composer{display:none !important}
 body.estado-sem-permissao.demo-empty #homeShorts{display:none !important}
 body.estado-sem-permissao.demo-empty .de-quando-vazio{display:none}
 body.estado-sem-permissao.demo-empty .de-quando-sem-permissao{display:block}
-/* sem os Shorts, a linha deles fica vazia e sobra o gap dobrado; o feed sobe
-   pra essa linha, ficando so 1 gap entre os modulos e "Nenhuma publicacao" */
-body.estado-sem-permissao.demo-empty .col-main > .feed{grid-row:2 / 3}
+/* o feed em sem-permissao sobe pra logo abaixo do guia: ver 08-feed.css (grid-row:3) */
 /* estado "sem rede social": sem shorts, feed nem compositor; a coluna central
    vira fluxo simples e o painel de Visao geral (o mesmo do Links) desce para
    baixo dos modulos, como herói. */
@@ -7924,9 +7981,11 @@ body.estado-sem-rs .links-visao:not(.home-visao){display:block;margin:16px 0 0;
 /* a borda dos charts fica mais marcada aqui, igual à do carrossel */
 body.estado-sem-rs .links-visao:not(.home-visao) .lv-card{border-color:#d5dbe2}
 /* cabecalhos de grupo (papel) no menu do drop-matriz */
-.home-perfil-sel .hps-grupo{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
-  color:var(--muted);padding:9px 12px 3px}
-.home-perfil-sel .hps-grupo:first-child{padding-top:3px}
+/* cabecalho de grupo (papel) em laranja pra nao mesclar com o item selecionado
+   (que e verdigris); maior e grifado */
+.home-perfil-sel .hps-grupo{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:#e8730c;background:rgba(232,115,12,.08);padding:7px 12px;margin:2px 0}
+.home-perfil-sel .hps-grupo:first-child{margin-top:0}
 /* o drop-matriz tem muitos cenarios; teto de altura com rolagem pra nao
    estourar a tela */
 .home-perfil-sel .links-sel-menu{max-height:min(60vh,440px);overflow-y:auto}
@@ -8461,6 +8520,16 @@ body.demo-empty .col-main > .feed > .demo-empty-state{display:flex}
         </span>
         <span class="pw-go"><i class="fa-solid fa-chevron-right"></i></span>
       </a>
+
+      <!-- ========== GUIA DE ENGAJAMENTO (so no cenario "sem conteudo") ==========
+           Faixa de cards acima dos Shorts guiando o uso dos modulos. A ilustra e o
+           chamados.svg (mesma pra todos por enquanto), sobre o degrade verdigris e
+           o quadriculado bg-ilustras.png. -->
+      <!-- os 3 cards do guia sao montados por 13-extras.js (pintaGuia), variando
+           por perfil (matriz / franqueado / funcionario) -->
+      <section class="guia-eng" aria-label="Guia de engajamento">
+        <div class="ge-grid"></div>
+      </section>
 
       <!-- ========== EM DESTAQUE: Shorts ========== -->
       <section class="stories-section" id="homeShorts">
@@ -12815,7 +12884,8 @@ function applyFold(){
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
   /* uma linha fechada; na variante Powerups a grade vive na coluna estreita
      da direita, onde cabem menos por linha, entao ali sao duas */
-  const linhas = document.body.classList.contains('home-powerups') ? 2 : 1;
+  const linhas = (document.body.classList.contains('home-powerups') ||
+                  document.body.classList.contains('estado-sr-vazio')) ? 2 : 1;
   const limit = colunas * linhas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');
@@ -18249,13 +18319,16 @@ function rvShareCopiar(){
   }
   /* O mensal agora e diario: a serie de 4 semanas vira n dias, interpolando os
      niveis com uma ondulacao deterministica (nao muda a cada render). */
-  function expandeDiario(g, n){
+  function expandeDiario(g, n, suave){
     if (!Array.isArray(g) || g.length < 2 || n <= g.length) return g;
+    /* estoque (unidades, pessoas) muda devagar: quase sem ruído. Fluxo tem um
+       pouco mais de textura. Antes era 12% pra tudo, volátil demais pra estoque. */
+    const amp = suave ? 0.02 : 0.06;
     const out = [];
     for (let d = 0; d < n; d++){
       const t = d / (n - 1) * (g.length - 1), i = Math.floor(t), f = t - i;
       const base = (i + 1 < g.length) ? g[i] * (1 - f) + g[i + 1] * f : g[i];
-      const onda = Math.sin(d * 1.7 + g[0]) * 0.12;
+      const onda = Math.sin(d * 1.7 + g[0]) * amp;
       out.push(Math.max(0, Math.round(base * (1 + onda))));
     }
     return out;
@@ -18264,21 +18337,31 @@ function rvShareCopiar(){
   /* ---------- Graficos ---------- */
   function barras(v, labels, fmt, sfx, tot){
     const max = Math.max.apply(null, v), w = 100 / (v.length * 1.6), g = w * 0.6;
-    const svg = '<svg class="vg-svg" viewBox="0 0 ' + (v.length*(w+g)-g).toFixed(1) + ' 42" preserveAspectRatio="none" aria-hidden="true">' +
+    const largura = (v.length*(w+g)-g).toFixed(1);
+    /* linha de base (eixo) atras das barras: mostra que o grafico esta ali mesmo
+       quando o valor e zero, pra nao parecer vazio/dado faltando */
+    const eixo = '<rect x="0" y="41" width="' + largura + '" height="1" fill="#e2e7ec"/>';
+    const svg = '<svg class="vg-svg" viewBox="0 0 ' + largura + ' 42" preserveAspectRatio="none" aria-hidden="true">' + eixo +
       v.map(function(n,i){
-        const h = Math.max(3, Math.round(n/max*40));
-        /* tot: quando o card tem inativas (Unidades, Pessoas), o tooltip mostra
-           o total = ativas + inativas */
-        const tip = tot
+        /* zero fica vazio (nao vira um toco de 3px), pra nao parecer atividade que nao houve */
+        const h = n <= 0 ? 0 : Math.max(3, Math.round(n/max*40));
+        const ultima = i === v.length - 1;
+        /* o total (ativas + inativas) so aparece na barra atual — a ultima; as
+           inativas sao um retrato de hoje, nao daquela data passada */
+        const tip = (tot && ultima)
           ? (labels?labels[i]+': ':'') + n + ' ' + tot.ativas + ' + ' + tot.n + ' ' + tot.inativas + ' = ' + (n + tot.n)
           : (labels?labels[i]+': ':'') + (fmt?fmt(n):n) + sufixo(sfx,n);
-        return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="var(--c2)" opacity="' + (i===v.length-1?1:0.42) + '" data-tip="' + tip + '"/>';
+        /* barra opaca (nao usa opacity, senao a linha de base atras vaza por ela):
+           a atual na cor cheia, as outras num tom claro da propria cor */
+        const cor = ultima ? 'var(--c2)' : 'color-mix(in srgb,var(--c2) 42%,#fff)';
+        return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="' + cor + '" data-tip="' + tip + '"/>';
       }).join('') + '</svg>';
     return svg;
   }
   function area(v, labels, fmt, sfx){
-    const max = Math.max.apply(null, v), min = Math.min.apply(null, v), W = 120, H = 42;
-    const pts = v.map(function(n,i){ return [ (i/(v.length-1))*W, H - ((n-min)/(max-min||1))*(H-8) - 4 ]; });
+    const max = Math.max.apply(null, v), W = 120, H = 42;
+    /* eixo com base no zero (nao no minimo) pra nao exagerar a variacao */
+    const pts = v.map(function(n,i){ return [ (i/(v.length-1))*W, H - 4 - (n/(max||1))*(H-8) ]; });
     const linha = pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' ');
     const areaPath = 'M0,'+H+' L'+linha.replace(/ /g,' L')+' L'+W+','+H+' Z';
     const svg = '<svg class="vg-svg" viewBox="0 0 120 42" preserveAspectRatio="none" aria-hidden="true">' +
@@ -18324,7 +18407,11 @@ function rvShareCopiar(){
     return '';
   }
 
-  function moeda(m){ return m >= 1000 ? 'R$ ' + (m/1000).toFixed(2).replace('.',',') + ' mi' : 'R$ ' + m.toLocaleString('pt-BR') + ' mil'; }
+  function moeda(m){
+    if (m < 1000) return 'R$ ' + m.toLocaleString('pt-BR') + ' mil';
+    /* mi com no maximo 2 casas, sem zero a toa: 1,20 -> 1,2 ; 14,00 -> 14 */
+    return 'R$ ' + (m/1000).toFixed(2).replace(/\.?0+$/, '').replace('.', ',') + ' mi';
+  }
   /* substantivo do tooltip por modulo: [singular, plural] ou uma string fixa.
      so aparece nos graficos de barra/area (donut e NPS nao usam). */
   const SFX = {
@@ -18358,9 +18445,9 @@ function rvShareCopiar(){
         semanal:{n:'72',u:'aplicados',atraso:'5',g:[10,12,11,9,10,11,9]},
         anual:{n:'3.410',u:'aplicados',atraso:'14',g:[260,280,300,290,310,300,320,310,300,290,280,286]}}),
       card('#43d6cd','#00918a','smi-compras','Compras','area',{
-        mensal:{n:'R$ 1,2M',u:'valor de pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
-        semanal:{n:'R$ 280k',u:'valor de pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
-        anual:{n:'R$ 13,4M',u:'valor de pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
+        mensal:{n:'R$ 1,2 mi',u:'em pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
+        semanal:{n:'R$ 280 mil',u:'em pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
+        anual:{n:'R$ 14 mi',u:'em pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
       card('#ffb060','#ef8b12','smi-unidades','Unidades','bars',{
         mensal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[86,88,90,92]},
         semanal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[91,91,92,92,92,92,92]},
@@ -18391,9 +18478,9 @@ function rvShareCopiar(){
         semanal:{n:'24',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[3,4,3,4,4,3,3]},
         anual:{n:'1.140',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[80,88,92,90,95,98,96,102,98,105,100,96]}}),
       card('#43d6cd','#00918a','smi-compras','Compras','area',{
-        mensal:{n:'R$ 62k',u:'valor de pedidos',g:[14,16,15,17]},
-        semanal:{n:'R$ 18k',u:'valor de pedidos',g:[2,3,2,3,3,2,3]},
-        anual:{n:'R$ 720k',u:'valor de pedidos',g:[52,55,58,60,57,62,60,64,58,66,62,64]}}, 'moeda'),
+        mensal:{n:'R$ 62 mil',u:'em pedidos',g:[14,16,15,17]},
+        semanal:{n:'R$ 18 mil',u:'em pedidos',g:[2,3,2,3,3,2,3]},
+        anual:{n:'R$ 718 mil',u:'em pedidos',g:[52,55,58,60,57,62,60,64,58,66,62,64]}}, 'moeda'),
       card('#b18ae6','#6d47b5','smi-universidade','Universidade','bars',{
         mensal:{n:'34',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[6,9,8,11]},
         semanal:{n:'9',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[1,2,1,2,1,1,1]},
@@ -18490,7 +18577,8 @@ function rvShareCopiar(){
   }
   function montaCardHTML(c, periodo, labels, prefixo){
     const v = c.p[periodo] || c.p.mensal;
-    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length) : v.g;
+    /* estoque = card com "inativas" (Unidades, Pessoas): interpola quase reto */
+    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length, v.inativo !== undefined) : v.g;
 
     /* NPS, Expansao e Universidade (donut) usam o mesmo layout de rosca: o numero
        (e a zona, no NPS) na esquerda, o donut na direita e a legenda em linha no
@@ -18524,6 +18612,11 @@ function rvShareCopiar(){
     }
 
     let extra = '', num = v.n;
+    /* número de fluxo (barra sem "inativas") = soma real dos dados do período,
+       pra fechar com o gráfico; estoque mantém o nível atual (v.n) */
+    if (c.tipo === 'bars' && v.inativo === undefined){
+      num = v.g.reduce(function(a, b){ return a + b; }, 0).toLocaleString('pt-BR');
+    }
     if (v.atraso !== undefined){
       extra = parseInt(v.atraso,10) > 0
         ? '<span class="lv-atraso">' + v.atraso + ' em atraso</span>'
@@ -18620,18 +18713,101 @@ function rvShareCopiar(){
      do drop compoe a home por cima do layout atual. */
   const CEN_HOME = [
     { perfil:'matriz',      estado:'conteudo',      grupo:'Matriz',      rotulo:'com conteúdo',   dica:'A home cheia: publicações, shorts e comunicados.' },
-    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ninguém publicou ainda.' },
-    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social, sem feed nem shorts.' },
+    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ainda sem publicação, podendo ser o primeiro acesso.' },
+    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social, sem feed nem shorts. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
+    { perfil:'matriz',      estado:'sem-rs-vazio',  grupo:'Matriz',      rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' },
     { perfil:'franqueado',  estado:'conteudo',      grupo:'Franqueado',  rotulo:'com conteúdo',   dica:'A unidade cheia, com o feed e os shorts da rede.' },
-    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
-    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar.' },
+    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'Tem o módulo, mas ainda sem publicação, podendo ser o primeiro acesso.' },
+    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
+    { perfil:'franqueado',  estado:'sem-rs-vazio',  grupo:'Franqueado',  rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' },
     { perfil:'colaborador', estado:'conteudo',      grupo:'Funcionário', rotulo:'com conteúdo',   dica:'Vê e interage com o feed e os shorts da rede.' },
-    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
+    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'Tem o módulo, mas ainda sem publicação, podendo ser o primeiro acesso.' },
     { perfil:'colaborador', estado:'sem-permissao', grupo:'Funcionário', rotulo:'sem permissão',  dica:'Vê o feed, mas não pode criar publicação nem short.' },
     { perfil:'colaborador', estado:'vazio-sem-permissao', grupo:'Funcionário', rotulo:'sem permissão e sem conteúdo', dica:'Não pode criar e a rede ainda não publicou nada.' },
-    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar.' }
+    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
+    { perfil:'colaborador', estado:'sem-rs-vazio',  grupo:'Funcionário', rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' }
   ];
-  let selHome = null, carrHome = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+  let selHome = null, carrHome = null, videoBV = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+
+  /* No "sem conteudo" (primeiro acesso), no lugar do carrossel da Visao geral
+     entra um video de boas-vindas. E so o cartao: previa + play + titulo. */
+  function montaVideoBemVindo(){
+    if (videoBV) return;
+    const card = document.getElementById('homeProfileCard');
+    if (!card) return;
+    videoBV = document.createElement('section');
+    videoBV.className = 'welcome-video';
+    videoBV.hidden = true;
+    videoBV.innerHTML =
+      '<a class="wv-thumb" href="#" ' +
+         'style="background-image:url(https://i.ytimg.com/vi/SlhESAKF1Tk/hq720.jpg)" ' +
+         'aria-label="Assistir ao vídeo de boas-vindas">' +
+        '<span class="wv-play"><i class="fa-solid fa-play"></i></span>' +
+      '</a>' +
+      '<div class="wv-body">' +
+        '<h3 class="wv-title">Boas-vindas ao SULTS</h3>' +
+        '<p class="wv-sub">Um tour rápido pra você conhecer.</p>' +
+      '</div>';
+    card.insertAdjacentElement('afterend', videoBV);
+    videoBV.querySelector('.wv-thumb').addEventListener('click', function(e){ e.preventDefault(); abreVideoBV(); });
+  }
+
+  /* abre o video de boas-vindas em tela cheia, num modal de fundo escuro desfocado */
+  let vbModal = null;
+  function abreVideoBV(){
+    if (!vbModal){
+      vbModal = document.createElement('div');
+      vbModal.className = 'wv-modal';
+      vbModal.hidden = true;
+      vbModal.innerHTML =
+        '<button class="wv-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>' +
+        '<div class="wv-modal-frame"><iframe title="Vídeo de boas-vindas" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe></div>';
+      document.body.appendChild(vbModal);
+      const fecha = function(){ vbModal.hidden = true; vbModal.querySelector('iframe').src = ''; };
+      vbModal.addEventListener('click', function(e){ if (e.target === vbModal || e.target.closest('.wv-modal-close')) fecha(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && vbModal && !vbModal.hidden) fecha(); });
+    }
+    vbModal.querySelector('iframe').src = 'https://www.youtube.com/embed/SlhESAKF1Tk?autoplay=1&rel=0';
+    vbModal.hidden = false;
+  }
+
+  /* Guia "Comece por aqui": 3 cards que variam por perfil. O texto e por modulo;
+     a ilustra e o chamados.svg pra todos por enquanto (trocar por modulo depois). */
+  const GUIA_TXT = {
+    Chamados:     'Abra e acompanhe seus chamados',
+    Checklist:    'Aplique seu primeiro checklist',
+    Comunicados:  'Publique um comunicado para a rede',
+    Marketing:    'Baixe os materiais de marketing',
+    Compras:      'Faça seu primeiro pedido de compra',
+    Universidade: 'Comece um curso na Universidade'
+  };
+  const GUIA_ILU = { Chamados:'chamados.svg' };  /* os demais caem no chamados.svg */
+  const GUIA = {
+    matriz:      ['Chamados', 'Checklist', 'Comunicados'],
+    franqueado:  ['Chamados', 'Marketing', 'Compras'],
+    colaborador: ['Chamados', 'Marketing', 'Universidade']
+  };
+  function pintaGuia(){
+    const grid = document.querySelector('.guia-eng .ge-grid');
+    if (!grid) return;
+    const mods = GUIA[perfilHome] || GUIA.matriz;
+    grid.innerHTML = mods.map(function(m){
+      const ilu = 'uploads/ilustra/' + (GUIA_ILU[m] || 'chamados.svg');
+      return '<div class="ge-card" data-test-component="card">' +
+        '<div class="ge-text"><p class="ge-cat">' + m + '</p>' +
+        '<h3 class="ge-title">' + (GUIA_TXT[m] || m) + '</h3></div>' +
+        '<div class="ge-ilustra"><img src="' + ilu + '" alt="' + m + '" width="300" height="168"></div>' +
+        '<a href="#" class="ge-trigger" aria-label="Saiba mais sobre ' + m + '"></a></div>';
+    }).join('');
+  }
+  /* o card do video de boas-vindas acompanha a altura de um card do guia (que
+     varia conforme o texto quebra em 2 ou 3 linhas / a largura da tela) */
+  function sincronizaAlturaVideo(){
+    if (!videoBV || videoBV.hidden) return;
+    const card = document.querySelector('.guia-eng .ge-card');
+    videoBV.style.height = (card && card.offsetHeight) ? card.offsetHeight + 'px' : '';
+  }
+  window.addEventListener('resize', sincronizaAlturaVideo);
 
   function pintaCarrHome(){
     if (!carrHome) return;
@@ -18734,14 +18910,24 @@ function rvShareCopiar(){
     if (especial){
       if (selHome) selHome.hidden = true;
       if (carrHome) carrHome.hidden = true;
+      if (videoBV) videoBV.hidden = true;
     } else {
-      montaSelHome(); montaCarrHome();
+      montaSelHome(); montaCarrHome(); montaVideoBemVindo();
+      pintaGuia();
       if (selHome) selHome.hidden = false;
-      /* "sem rede social": o painel de Visao geral (o mesmo do Links) desce para
-         baixo dos modulos e substitui o carrossel da direita */
-      const semRs = (estadoHome === 'sem-rs');
-      if (carrHome) carrHome.hidden = semRs;
-      if (semRs){ perfilAtual = perfilHome; periodoAtual = periodoHome; montaVisao(true); pintaVisao(); }
+      /* "sem rede social e sem conteudo" = primeiro acesso sem rede social:
+         so o guia + o video, sem a Visao geral (que estaria zerada) */
+      const srVazio = (estadoHome === 'sem-rs-vazio');
+      /* "sem rede social": a Visao geral (mesma do Links) desce pra baixo dos
+         modulos e substitui o carrossel da direita */
+      const semRs = (estadoHome === 'sem-rs' || srVazio);
+      /* "sem conteudo" (primeiro acesso): o video de boas-vindas no lugar dos
+         charts. Vale no vazio normal e no "sem rede social e sem conteudo". */
+      const vazio = (estadoHome.indexOf('vazio') === 0);
+      if (videoBV) videoBV.hidden = !(vazio || srVazio);
+      if (carrHome) carrHome.hidden = semRs || vazio;
+      /* os charts so aparecem no sem-rs COM dados; no primeiro acesso, nao */
+      if (semRs && !srVazio){ perfilAtual = perfilHome; periodoAtual = periodoHome; montaVisao(true); pintaVisao(); }
       else { montaVisao(false); }
     }
     /* --- papel (matriz / franqueado / funcionario) --- */
@@ -18750,7 +18936,8 @@ function rvShareCopiar(){
     /* o ID do autor no Feed so aparece na visao da matriz */
     document.body.classList.toggle('ver-uids', !especial && perfilHome === 'matriz');
     /* --- estado da rede social --- */
-    document.body.classList.toggle('estado-sem-rs', !especial && estadoHome === 'sem-rs');
+    document.body.classList.toggle('estado-sem-rs', !especial && (estadoHome === 'sem-rs' || estadoHome === 'sem-rs-vazio'));
+    document.body.classList.toggle('estado-sr-vazio', !especial && estadoHome === 'sem-rs-vazio');
     document.body.classList.toggle('estado-sem-permissao', !especial && (estadoHome === 'sem-permissao' || estadoHome === 'vazio-sem-permissao'));
     /* "sem conteudo" reusa o demo-empty (shorts, feed e comunicados vazios); so
        na home normal — no Links quem manda no demo-empty e o proprio controller */
@@ -18761,6 +18948,10 @@ function rvShareCopiar(){
         if (typeof buildStories === 'function') buildStories();
       }
     }
+    /* a dobra dos modulos depende do estado (2 linhas no "sem rede social e sem
+       conteudo"), entao re-aplica ao trocar de cenario */
+    if (typeof applyFold === 'function') applyFold();
+    requestAnimationFrame(sincronizaAlturaVideo);
   }
   atualizaHomeVisao();
   new MutationObserver(atualizaHomeVisao).observe(document.body, { attributes: true, attributeFilter: ['class'] });
@@ -19577,6 +19768,9 @@ function customAlternar(){
        segunda ele nem esta na mesma coluna), e no celular as colunas empilham */
     if (document.body.classList.contains('home-enquetes') ||
         document.body.classList.contains('home-powerups') ||
+        /* "sem rede social e sem conteudo" tem 2 linhas de modulos: o cartao
+           NAO deve crescer pra acompanhar, fica na altura de 1 linha */
+        document.body.classList.contains('estado-sr-vazio') ||
         window.matchMedia('(max-width: 640px)').matches){ painel.style.minHeight = ''; return; }
     if (pcGradeAberta()) return;   /* grade aberta ou em busca: o cartao volta ao natural */
     painel.style.minHeight = '';

@@ -1166,13 +1166,16 @@ function rvShareCopiar(){
   }
   /* O mensal agora e diario: a serie de 4 semanas vira n dias, interpolando os
      niveis com uma ondulacao deterministica (nao muda a cada render). */
-  function expandeDiario(g, n){
+  function expandeDiario(g, n, suave){
     if (!Array.isArray(g) || g.length < 2 || n <= g.length) return g;
+    /* estoque (unidades, pessoas) muda devagar: quase sem ruído. Fluxo tem um
+       pouco mais de textura. Antes era 12% pra tudo, volátil demais pra estoque. */
+    const amp = suave ? 0.02 : 0.06;
     const out = [];
     for (let d = 0; d < n; d++){
       const t = d / (n - 1) * (g.length - 1), i = Math.floor(t), f = t - i;
       const base = (i + 1 < g.length) ? g[i] * (1 - f) + g[i + 1] * f : g[i];
-      const onda = Math.sin(d * 1.7 + g[0]) * 0.12;
+      const onda = Math.sin(d * 1.7 + g[0]) * amp;
       out.push(Math.max(0, Math.round(base * (1 + onda))));
     }
     return out;
@@ -1181,21 +1184,31 @@ function rvShareCopiar(){
   /* ---------- Graficos ---------- */
   function barras(v, labels, fmt, sfx, tot){
     const max = Math.max.apply(null, v), w = 100 / (v.length * 1.6), g = w * 0.6;
-    const svg = '<svg class="vg-svg" viewBox="0 0 ' + (v.length*(w+g)-g).toFixed(1) + ' 42" preserveAspectRatio="none" aria-hidden="true">' +
+    const largura = (v.length*(w+g)-g).toFixed(1);
+    /* linha de base (eixo) atras das barras: mostra que o grafico esta ali mesmo
+       quando o valor e zero, pra nao parecer vazio/dado faltando */
+    const eixo = '<rect x="0" y="41" width="' + largura + '" height="1" fill="#e2e7ec"/>';
+    const svg = '<svg class="vg-svg" viewBox="0 0 ' + largura + ' 42" preserveAspectRatio="none" aria-hidden="true">' + eixo +
       v.map(function(n,i){
-        const h = Math.max(3, Math.round(n/max*40));
-        /* tot: quando o card tem inativas (Unidades, Pessoas), o tooltip mostra
-           o total = ativas + inativas */
-        const tip = tot
+        /* zero fica vazio (nao vira um toco de 3px), pra nao parecer atividade que nao houve */
+        const h = n <= 0 ? 0 : Math.max(3, Math.round(n/max*40));
+        const ultima = i === v.length - 1;
+        /* o total (ativas + inativas) so aparece na barra atual — a ultima; as
+           inativas sao um retrato de hoje, nao daquela data passada */
+        const tip = (tot && ultima)
           ? (labels?labels[i]+': ':'') + n + ' ' + tot.ativas + ' + ' + tot.n + ' ' + tot.inativas + ' = ' + (n + tot.n)
           : (labels?labels[i]+': ':'') + (fmt?fmt(n):n) + sufixo(sfx,n);
-        return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="var(--c2)" opacity="' + (i===v.length-1?1:0.42) + '" data-tip="' + tip + '"/>';
+        /* barra opaca (nao usa opacity, senao a linha de base atras vaza por ela):
+           a atual na cor cheia, as outras num tom claro da propria cor */
+        const cor = ultima ? 'var(--c2)' : 'color-mix(in srgb,var(--c2) 42%,#fff)';
+        return '<rect x="' + (i*(w+g)).toFixed(1) + '" y="' + (42-h) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="1.5" fill="' + cor + '" data-tip="' + tip + '"/>';
       }).join('') + '</svg>';
     return svg;
   }
   function area(v, labels, fmt, sfx){
-    const max = Math.max.apply(null, v), min = Math.min.apply(null, v), W = 120, H = 42;
-    const pts = v.map(function(n,i){ return [ (i/(v.length-1))*W, H - ((n-min)/(max-min||1))*(H-8) - 4 ]; });
+    const max = Math.max.apply(null, v), W = 120, H = 42;
+    /* eixo com base no zero (nao no minimo) pra nao exagerar a variacao */
+    const pts = v.map(function(n,i){ return [ (i/(v.length-1))*W, H - 4 - (n/(max||1))*(H-8) ]; });
     const linha = pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' ');
     const areaPath = 'M0,'+H+' L'+linha.replace(/ /g,' L')+' L'+W+','+H+' Z';
     const svg = '<svg class="vg-svg" viewBox="0 0 120 42" preserveAspectRatio="none" aria-hidden="true">' +
@@ -1241,7 +1254,11 @@ function rvShareCopiar(){
     return '';
   }
 
-  function moeda(m){ return m >= 1000 ? 'R$ ' + (m/1000).toFixed(2).replace('.',',') + ' mi' : 'R$ ' + m.toLocaleString('pt-BR') + ' mil'; }
+  function moeda(m){
+    if (m < 1000) return 'R$ ' + m.toLocaleString('pt-BR') + ' mil';
+    /* mi com no maximo 2 casas, sem zero a toa: 1,20 -> 1,2 ; 14,00 -> 14 */
+    return 'R$ ' + (m/1000).toFixed(2).replace(/\.?0+$/, '').replace('.', ',') + ' mi';
+  }
   /* substantivo do tooltip por modulo: [singular, plural] ou uma string fixa.
      so aparece nos graficos de barra/area (donut e NPS nao usam). */
   const SFX = {
@@ -1275,9 +1292,9 @@ function rvShareCopiar(){
         semanal:{n:'72',u:'aplicados',atraso:'5',g:[10,12,11,9,10,11,9]},
         anual:{n:'3.410',u:'aplicados',atraso:'14',g:[260,280,300,290,310,300,320,310,300,290,280,286]}}),
       card('#43d6cd','#00918a','smi-compras','Compras','area',{
-        mensal:{n:'R$ 1,2M',u:'valor de pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
-        semanal:{n:'R$ 280k',u:'valor de pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
-        anual:{n:'R$ 13,4M',u:'valor de pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
+        mensal:{n:'R$ 1,2 mi',u:'em pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
+        semanal:{n:'R$ 280 mil',u:'em pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
+        anual:{n:'R$ 14 mi',u:'em pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
       card('#ffb060','#ef8b12','smi-unidades','Unidades','bars',{
         mensal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[86,88,90,92]},
         semanal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[91,91,92,92,92,92,92]},
@@ -1308,9 +1325,9 @@ function rvShareCopiar(){
         semanal:{n:'24',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[3,4,3,4,4,3,3]},
         anual:{n:'1.140',u:'aplicados',d:'última nota: 70,18%',dir:'neutra',g:[80,88,92,90,95,98,96,102,98,105,100,96]}}),
       card('#43d6cd','#00918a','smi-compras','Compras','area',{
-        mensal:{n:'R$ 62k',u:'valor de pedidos',g:[14,16,15,17]},
-        semanal:{n:'R$ 18k',u:'valor de pedidos',g:[2,3,2,3,3,2,3]},
-        anual:{n:'R$ 720k',u:'valor de pedidos',g:[52,55,58,60,57,62,60,64,58,66,62,64]}}, 'moeda'),
+        mensal:{n:'R$ 62 mil',u:'em pedidos',g:[14,16,15,17]},
+        semanal:{n:'R$ 18 mil',u:'em pedidos',g:[2,3,2,3,3,2,3]},
+        anual:{n:'R$ 718 mil',u:'em pedidos',g:[52,55,58,60,57,62,60,64,58,66,62,64]}}, 'moeda'),
       card('#b18ae6','#6d47b5','smi-universidade','Universidade','bars',{
         mensal:{n:'34',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[6,9,8,11]},
         semanal:{n:'9',u:'conclusões',d:'120 disponíveis',dir:'neutra',g:[1,2,1,2,1,1,1]},
@@ -1407,7 +1424,8 @@ function rvShareCopiar(){
   }
   function montaCardHTML(c, periodo, labels, prefixo){
     const v = c.p[periodo] || c.p.mensal;
-    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length) : v.g;
+    /* estoque = card com "inativas" (Unidades, Pessoas): interpola quase reto */
+    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length, v.inativo !== undefined) : v.g;
 
     /* NPS, Expansao e Universidade (donut) usam o mesmo layout de rosca: o numero
        (e a zona, no NPS) na esquerda, o donut na direita e a legenda em linha no
@@ -1441,6 +1459,11 @@ function rvShareCopiar(){
     }
 
     let extra = '', num = v.n;
+    /* número de fluxo (barra sem "inativas") = soma real dos dados do período,
+       pra fechar com o gráfico; estoque mantém o nível atual (v.n) */
+    if (c.tipo === 'bars' && v.inativo === undefined){
+      num = v.g.reduce(function(a, b){ return a + b; }, 0).toLocaleString('pt-BR');
+    }
     if (v.atraso !== undefined){
       extra = parseInt(v.atraso,10) > 0
         ? '<span class="lv-atraso">' + v.atraso + ' em atraso</span>'
@@ -1537,18 +1560,101 @@ function rvShareCopiar(){
      do drop compoe a home por cima do layout atual. */
   const CEN_HOME = [
     { perfil:'matriz',      estado:'conteudo',      grupo:'Matriz',      rotulo:'com conteúdo',   dica:'A home cheia: publicações, shorts e comunicados.' },
-    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ninguém publicou ainda.' },
-    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social, sem feed nem shorts.' },
+    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ainda sem publicação, podendo ser o primeiro acesso.' },
+    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social, sem feed nem shorts. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
+    { perfil:'matriz',      estado:'sem-rs-vazio',  grupo:'Matriz',      rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' },
     { perfil:'franqueado',  estado:'conteudo',      grupo:'Franqueado',  rotulo:'com conteúdo',   dica:'A unidade cheia, com o feed e os shorts da rede.' },
-    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
-    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar.' },
+    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'Tem o módulo, mas ainda sem publicação, podendo ser o primeiro acesso.' },
+    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
+    { perfil:'franqueado',  estado:'sem-rs-vazio',  grupo:'Franqueado',  rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' },
     { perfil:'colaborador', estado:'conteudo',      grupo:'Funcionário', rotulo:'com conteúdo',   dica:'Vê e interage com o feed e os shorts da rede.' },
-    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'A rede tem o módulo, mas ainda sem publicações.' },
+    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'Tem o módulo, mas ainda sem publicação, podendo ser o primeiro acesso.' },
     { perfil:'colaborador', estado:'sem-permissao', grupo:'Funcionário', rotulo:'sem permissão',  dica:'Vê o feed, mas não pode criar publicação nem short.' },
     { perfil:'colaborador', estado:'vazio-sem-permissao', grupo:'Funcionário', rotulo:'sem permissão e sem conteúdo', dica:'Não pode criar e a rede ainda não publicou nada.' },
-    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar.' }
+    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
+    { perfil:'colaborador', estado:'sem-rs-vazio',  grupo:'Funcionário', rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' }
   ];
-  let selHome = null, carrHome = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+  let selHome = null, carrHome = null, videoBV = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+
+  /* No "sem conteudo" (primeiro acesso), no lugar do carrossel da Visao geral
+     entra um video de boas-vindas. E so o cartao: previa + play + titulo. */
+  function montaVideoBemVindo(){
+    if (videoBV) return;
+    const card = document.getElementById('homeProfileCard');
+    if (!card) return;
+    videoBV = document.createElement('section');
+    videoBV.className = 'welcome-video';
+    videoBV.hidden = true;
+    videoBV.innerHTML =
+      '<a class="wv-thumb" href="#" ' +
+         'style="background-image:url(https://i.ytimg.com/vi/SlhESAKF1Tk/hq720.jpg)" ' +
+         'aria-label="Assistir ao vídeo de boas-vindas">' +
+        '<span class="wv-play"><i class="fa-solid fa-play"></i></span>' +
+      '</a>' +
+      '<div class="wv-body">' +
+        '<h3 class="wv-title">Boas-vindas ao SULTS</h3>' +
+        '<p class="wv-sub">Um tour rápido pra você conhecer.</p>' +
+      '</div>';
+    card.insertAdjacentElement('afterend', videoBV);
+    videoBV.querySelector('.wv-thumb').addEventListener('click', function(e){ e.preventDefault(); abreVideoBV(); });
+  }
+
+  /* abre o video de boas-vindas em tela cheia, num modal de fundo escuro desfocado */
+  let vbModal = null;
+  function abreVideoBV(){
+    if (!vbModal){
+      vbModal = document.createElement('div');
+      vbModal.className = 'wv-modal';
+      vbModal.hidden = true;
+      vbModal.innerHTML =
+        '<button class="wv-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>' +
+        '<div class="wv-modal-frame"><iframe title="Vídeo de boas-vindas" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe></div>';
+      document.body.appendChild(vbModal);
+      const fecha = function(){ vbModal.hidden = true; vbModal.querySelector('iframe').src = ''; };
+      vbModal.addEventListener('click', function(e){ if (e.target === vbModal || e.target.closest('.wv-modal-close')) fecha(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && vbModal && !vbModal.hidden) fecha(); });
+    }
+    vbModal.querySelector('iframe').src = 'https://www.youtube.com/embed/SlhESAKF1Tk?autoplay=1&rel=0';
+    vbModal.hidden = false;
+  }
+
+  /* Guia "Comece por aqui": 3 cards que variam por perfil. O texto e por modulo;
+     a ilustra e o chamados.svg pra todos por enquanto (trocar por modulo depois). */
+  const GUIA_TXT = {
+    Chamados:     'Abra e acompanhe seus chamados',
+    Checklist:    'Aplique seu primeiro checklist',
+    Comunicados:  'Publique um comunicado para a rede',
+    Marketing:    'Baixe os materiais de marketing',
+    Compras:      'Faça seu primeiro pedido de compra',
+    Universidade: 'Comece um curso na Universidade'
+  };
+  const GUIA_ILU = { Chamados:'chamados.svg' };  /* os demais caem no chamados.svg */
+  const GUIA = {
+    matriz:      ['Chamados', 'Checklist', 'Comunicados'],
+    franqueado:  ['Chamados', 'Marketing', 'Compras'],
+    colaborador: ['Chamados', 'Marketing', 'Universidade']
+  };
+  function pintaGuia(){
+    const grid = document.querySelector('.guia-eng .ge-grid');
+    if (!grid) return;
+    const mods = GUIA[perfilHome] || GUIA.matriz;
+    grid.innerHTML = mods.map(function(m){
+      const ilu = 'uploads/ilustra/' + (GUIA_ILU[m] || 'chamados.svg');
+      return '<div class="ge-card" data-test-component="card">' +
+        '<div class="ge-text"><p class="ge-cat">' + m + '</p>' +
+        '<h3 class="ge-title">' + (GUIA_TXT[m] || m) + '</h3></div>' +
+        '<div class="ge-ilustra"><img src="' + ilu + '" alt="' + m + '" width="300" height="168"></div>' +
+        '<a href="#" class="ge-trigger" aria-label="Saiba mais sobre ' + m + '"></a></div>';
+    }).join('');
+  }
+  /* o card do video de boas-vindas acompanha a altura de um card do guia (que
+     varia conforme o texto quebra em 2 ou 3 linhas / a largura da tela) */
+  function sincronizaAlturaVideo(){
+    if (!videoBV || videoBV.hidden) return;
+    const card = document.querySelector('.guia-eng .ge-card');
+    videoBV.style.height = (card && card.offsetHeight) ? card.offsetHeight + 'px' : '';
+  }
+  window.addEventListener('resize', sincronizaAlturaVideo);
 
   function pintaCarrHome(){
     if (!carrHome) return;
@@ -1651,14 +1757,24 @@ function rvShareCopiar(){
     if (especial){
       if (selHome) selHome.hidden = true;
       if (carrHome) carrHome.hidden = true;
+      if (videoBV) videoBV.hidden = true;
     } else {
-      montaSelHome(); montaCarrHome();
+      montaSelHome(); montaCarrHome(); montaVideoBemVindo();
+      pintaGuia();
       if (selHome) selHome.hidden = false;
-      /* "sem rede social": o painel de Visao geral (o mesmo do Links) desce para
-         baixo dos modulos e substitui o carrossel da direita */
-      const semRs = (estadoHome === 'sem-rs');
-      if (carrHome) carrHome.hidden = semRs;
-      if (semRs){ perfilAtual = perfilHome; periodoAtual = periodoHome; montaVisao(true); pintaVisao(); }
+      /* "sem rede social e sem conteudo" = primeiro acesso sem rede social:
+         so o guia + o video, sem a Visao geral (que estaria zerada) */
+      const srVazio = (estadoHome === 'sem-rs-vazio');
+      /* "sem rede social": a Visao geral (mesma do Links) desce pra baixo dos
+         modulos e substitui o carrossel da direita */
+      const semRs = (estadoHome === 'sem-rs' || srVazio);
+      /* "sem conteudo" (primeiro acesso): o video de boas-vindas no lugar dos
+         charts. Vale no vazio normal e no "sem rede social e sem conteudo". */
+      const vazio = (estadoHome.indexOf('vazio') === 0);
+      if (videoBV) videoBV.hidden = !(vazio || srVazio);
+      if (carrHome) carrHome.hidden = semRs || vazio;
+      /* os charts so aparecem no sem-rs COM dados; no primeiro acesso, nao */
+      if (semRs && !srVazio){ perfilAtual = perfilHome; periodoAtual = periodoHome; montaVisao(true); pintaVisao(); }
       else { montaVisao(false); }
     }
     /* --- papel (matriz / franqueado / funcionario) --- */
@@ -1667,7 +1783,8 @@ function rvShareCopiar(){
     /* o ID do autor no Feed so aparece na visao da matriz */
     document.body.classList.toggle('ver-uids', !especial && perfilHome === 'matriz');
     /* --- estado da rede social --- */
-    document.body.classList.toggle('estado-sem-rs', !especial && estadoHome === 'sem-rs');
+    document.body.classList.toggle('estado-sem-rs', !especial && (estadoHome === 'sem-rs' || estadoHome === 'sem-rs-vazio'));
+    document.body.classList.toggle('estado-sr-vazio', !especial && estadoHome === 'sem-rs-vazio');
     document.body.classList.toggle('estado-sem-permissao', !especial && (estadoHome === 'sem-permissao' || estadoHome === 'vazio-sem-permissao'));
     /* "sem conteudo" reusa o demo-empty (shorts, feed e comunicados vazios); so
        na home normal — no Links quem manda no demo-empty e o proprio controller */
@@ -1678,6 +1795,10 @@ function rvShareCopiar(){
         if (typeof buildStories === 'function') buildStories();
       }
     }
+    /* a dobra dos modulos depende do estado (2 linhas no "sem rede social e sem
+       conteudo"), entao re-aplica ao trocar de cenario */
+    if (typeof applyFold === 'function') applyFold();
+    requestAnimationFrame(sincronizaAlturaVideo);
   }
   atualizaHomeVisao();
   new MutationObserver(atualizaHomeVisao).observe(document.body, { attributes: true, attributeFilter: ['class'] });

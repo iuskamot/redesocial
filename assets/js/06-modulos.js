@@ -46,7 +46,8 @@ function applyFold(){
   const colunas = getComputedStyle(appsGrid).gridTemplateColumns.split(' ').filter(Boolean).length || 7;
   /* uma linha fechada; na variante Powerups a grade vive na coluna estreita
      da direita, onde cabem menos por linha, entao ali sao duas */
-  const linhas = document.body.classList.contains('home-powerups') ? 2 : 1;
+  const linhas = (document.body.classList.contains('home-powerups') ||
+                  document.body.classList.contains('estado-sr-vazio')) ? 2 : 1;
   const limit = colunas * linhas;
   const elig = atuais.filter(t => t.style.display !== 'none');
   const _l=document.getElementById('appsToggleLbl');

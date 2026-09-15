@@ -184,9 +184,10 @@
     radial-gradient(120% 90% at 50% -10%, rgba(0,172,172,.09), transparent 60%),
     linear-gradient(180deg,#fdfefe,#f6f9fa);
   border:1px solid #e9eef1;
-  color:#0c7d7d;cursor:pointer;transition:border-color .15s;
+  color:#0c7d7d;cursor:pointer;transition:border-color .15s,box-shadow .15s;
 }
-.reel.reel-sugestao:hover{border-color:var(--teal)}
+/* hover: borda 2px verdigris por fora, igual aos cards do guia (1px + anel externo) */
+.reel.reel-sugestao:hover{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
 /* o .reel escurece o topo por dentro para dar contraste à imagem; aqui não há
    imagem, então o degradê só sujava o cartão branco */
 .reel.reel-sugestao::before,.reel.reel-sugestao::after{display:none}
