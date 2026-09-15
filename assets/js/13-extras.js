@@ -1614,7 +1614,10 @@ function rvShareCopiar(){
       vbModal.addEventListener('click', function(e){ if (e.target === vbModal || e.target.closest('.wv-modal-close')) fecha(); });
       document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && vbModal && !vbModal.hidden) fecha(); });
     }
-    vbModal.querySelector('iframe').src = 'https://www.youtube.com/embed/SlhESAKF1Tk?autoplay=1&rel=0';
+    /* player enxuto: mantem a barra de tempo/progresso (pra avancar), mas sem o
+       resto da interface do YouTube — relacionados, branding, anotacoes, tela
+       cheia e legenda desligados */
+    vbModal.querySelector('iframe').src = 'https://www.youtube.com/embed/SlhESAKF1Tk?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&fs=0&cc_load_policy=0';
     vbModal.hidden = false;
   }
 
