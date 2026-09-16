@@ -1262,13 +1262,13 @@ function rvShareCopiar(){
   /* substantivo do tooltip por modulo: [singular, plural] ou uma string fixa.
      so aparece nos graficos de barra/area (donut e NPS nao usam). */
   const SFX = {
-    'Chamados':['chamado','chamados'], 'Implantação':['unidade','unidades'],
+    'Chamados':['chamado aberto','chamados abertos'], 'Implantação':['implantação','implantações'],
     'Expansão':'no funil', 'Colaboradores':['colaborador ativo','colaboradores ativos'],
     'Pessoas':['pessoa ativa','pessoas ativas'],
-    'Universidade':['conclusão','conclusões'], 'Marketing':['arquivo baixado','arquivos baixados'],
+    'Universidade':['conclusão','conclusões'], 'Marketing':['material baixado','materiais baixados'],
     'Comunicados':['comunicado','comunicados'], 'Checklist':['checklist','checklists'],
     'Enquetes':['enquete','enquetes'], 'Compras':'em pedidos',
-    'Projetos':['tarefa','tarefas'], 'Unidades':['unidade','unidades']
+    'Projetos':['tarefa','tarefas'], 'Unidades':['unidade ativa','unidades ativas']
   };
   function sufixo(sfx, n){ if (!sfx) return ''; if (typeof sfx === 'string') return ' ' + sfx; return ' ' + (Number(n) === 1 ? sfx[0] : sfx[1]); }
   /* zona do NPS, igual ao dashboard do SULTS: Critica / Aperfeicoamento / Qualidade / Excelencia */
@@ -1295,7 +1295,7 @@ function rvShareCopiar(){
         mensal:{n:'R$ 1,2 mi',u:'em pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
         semanal:{n:'R$ 280 mil',u:'em pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
         anual:{n:'R$ 14 mi',u:'em pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
-      card('#ffb060','#ef8b12','smi-unidades','Unidades','bars',{
+      card('#43d6cd','#00918a','smi-unidades','Unidades','bars',{
         mensal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[86,88,90,92]},
         semanal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[91,91,92,92,92,92,92]},
         anual:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[74,76,78,80,82,84,86,88,89,90,91,92]}}),
@@ -1313,7 +1313,7 @@ function rvShareCopiar(){
         mensal:{n:'6',u:'abertos',atraso:'1',g:[2,1,2,1]},
         semanal:{n:'2',u:'abertos',atraso:'0',g:[1,0,1,0,0,0,1]},
         anual:{n:'71',u:'abertos',atraso:'1',g:[8,7,6,5,7,6,5,6,4,5,6,6]}}),
-      card('#73beff','#0088FF','smi-rede-social','Pessoas','bars',{
+      card('#43d6cd','#00918a','smi-unidades','Pessoas','bars',{
         mensal:{n:'22',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[20,21,22,22]},
         semanal:{n:'22',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[22,22,21,22,22,22,22]},
         anual:{n:'24',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
@@ -1354,7 +1354,7 @@ function rvShareCopiar(){
         mensal:{n:'14',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[2,4,3,5]},
         semanal:{n:'4',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[1,0,1,1,0,1,0]},
         anual:{n:'162',u:'downloads',d:'62 disponíveis',dir:'neutra',g:[10,12,14,11,13,15,12,14,16,13,15,17]}}),
-      card('#5cc0a0','#2aa17e','smi-projetos','Projetos','bars',{
+      card('#ff8a7a','#e0392c','smi-projetos','Projetos','bars',{
         mensal:{n:'5',u:'tarefas',atraso:'2',g:[3,4,4,5]},
         semanal:{n:'2',u:'tarefas',atraso:'1',g:[1,1,0,1,1,0,0]},
         anual:{n:'98',u:'tarefas',atraso:'3',g:[7,8,6,9,8,7,9,8,9,8,9,10]}}),
@@ -1403,8 +1403,11 @@ function rvShareCopiar(){
           '<div class="lv-head"><h2>Visão geral</h2>' +
           '<div class="lv-seg2 lv-periodo" role="tablist">' +
           PERIODOS.map(function(x){ return '<button type="button" role="tab" data-periodo="' + x.id + '">' + x.rotulo + '</button>'; }).join('') +
-          '</div></div><div class="lv-grid"></div><div class="lv-tip" hidden></div>';
+          '</div>' +
+          '<button type="button" class="lv-personalizar"><i class="fa-solid fa-sliders"></i><span>Personalizar</span></button>' +
+          '</div><div class="lv-grid"></div><div class="lv-tip" hidden></div>';
         painelVisao.querySelector('.lv-periodo').addEventListener('click', function(e){ const b = e.target.closest('[data-periodo]'); if (!b) return; periodoAtual = b.dataset.periodo; pintaVisao(); });
+        painelVisao.querySelector('.lv-personalizar').addEventListener('click', abrePersonalizar);
         const tip = painelVisao.querySelector('.lv-tip');
         painelVisao.addEventListener('pointermove', function(e){
           const el = e.target.closest('[data-tip]');
@@ -1494,11 +1497,209 @@ function rvShareCopiar(){
       '<div class="lv-metric"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span>' + extra + '</div>' +
       '<div class="lv-chart">' + grafico(c.tipo, gData, labels, c.fmt==='moeda'?moeda:null, c.sfx, tot) + '</div></a>';
   }
+  /* ---- Personalizar relatorios da Visao geral (visoes sem rede social) ----
+     Cada perfil ativa os relatorios do seu valor: a matriz ve o uso das pessoas
+     na rede, o franqueado o que a rede oferece e o funcionario o proprio uso. Os
+     modulos com dado real usam DADOS; os extras entram como amostra. */
+  /* barras de amostra que somam exatamente o total (o numero do card = soma) */
+  function barrasSoma(total, n){
+    const a = []; let acc = 0;
+    for (let i = 0; i < n - 1; i++){ const v = Math.max(0, Math.round((total / n) * (1 + 0.28 * Math.sin(i * 1.4 + total)))); a.push(v); acc += v; }
+    a.push(Math.max(0, total - acc));
+    return a;
+  }
+  const REL_EXTRA = {
+    matriz: [
+      /* Comunicados: big number = enviados, badge = leituras (enviados x pessoas,
+         ~85 leitores de 92, porque nem todos leem cada comunicado) */
+      {nome:'Comunicados',   smi:'smi-comunicados', c1:'#9ba1f4', c2:'#575fd1', sfx:'enviados', p:{
+        semanal:{u:'enviados', d:'44.200 leituras',    dir:'neutra', g:barrasSoma(520,7)},
+        mensal: {u:'enviados', d:'181.900 leituras',   dir:'neutra', g:barrasSoma(2140,4)},
+        anual:  {u:'enviados', d:'2.201.500 leituras', dir:'neutra', g:barrasSoma(25900,12)}}},
+      {nome:'Marketing',     smi:'smi-marketing',    c1:'#ff77a9', c2:'#d6285f', u:'downloads', d:'62 materiais', dir:'neutra', sem:96,  mes:410, ano:4900},
+      {nome:'Universidade',  smi:'smi-universidade', c1:'#b18ae6', c2:'#6d47b5', u:'conclusões',        sem:75,  mes:320, ano:3800},
+      {nome:'Projetos',      smi:'smi-projetos',     c1:'#ff8a7a', c2:'#e0392c', u:'tarefas',           sem:83,  mes:340, ano:4100},
+      /* Enquetes: big number = enviadas, badge = respostas recebidas */
+      {nome:'Enquetes',      smi:'smi-enquetes',     c1:'#bd90ec', c2:'#7c4cc4', sfx:['enquete enviada','enquetes enviadas'], p:{
+        semanal:{u:'enviadas', d:'180 respostas',   dir:'neutra', g:barrasSoma(4,7)},
+        mensal: {u:'enviadas', d:'760 respostas',   dir:'neutra', g:barrasSoma(9,4)},
+        anual:  {u:'enviadas', d:'4.100 respostas', dir:'neutra', g:barrasSoma(48,12)}}},
+      {nome:'Disco Virtual', smi:'smi-disco-virtual',c1:'#6fb2ff', c2:'#2b74dd', u:'downloads', sfx:['material baixado','materiais baixados'], d:'340 materiais', dir:'neutra', sem:88, mes:370, ano:4400},
+      {nome:'PowerUps',      smi:'smi-powerups',     c1:'#5aa2f2', c2:'#1460c4', u:'acessos', d:'18 powerups', dir:'neutra', sem:120, mes:510, ano:6100},
+      /* Implantação: total de implantacoes no periodo */
+      {nome:'Implantação',   smi:'smi-implantacao-de-unidades', c1:'#5cc0a0', c2:'#2aa17e', sfx:['implantação','implantações'], p:{
+        semanal:{u:'implantações', g:barrasSoma(3,7)},
+        mensal: {u:'implantações', g:barrasSoma(6,4)},
+        anual:  {u:'implantações', g:barrasSoma(24,12)}}},
+      {nome:'Jornada',       smi:'smi-jornada',      c1:'#7986cb', c2:'#283593', u:'etapas concluídas', sem:42,  mes:180, ano:2100},
+      {nome:'Helpdesk',      smi:'smi-helpdesk',     c1:'#5fd0f0', c2:'#0288b8', u:'abertos', d:'9 na fila', dir:'ruim', sem:31,  mes:130, ano:1560}
+    ],
+    franqueado: [
+      /* Comunicados: big number = recebidos, badge = leituras da equipe da unidade */
+      {nome:'Comunicados', smi:'smi-comunicados', c1:'#9ba1f4', c2:'#575fd1', sfx:'recebidos', p:{
+        semanal:{u:'recebidos', d:'22 leituras',  dir:'neutra', g:barrasSoma(6,7)},
+        mensal: {u:'recebidos', d:'52 leituras',  dir:'neutra', g:barrasSoma(14,4)},
+        anual:  {u:'recebidos', d:'540 leituras', dir:'neutra', g:barrasSoma(142,12)}}},
+      {nome:'Projetos',    smi:'smi-projetos',    c1:'#ff8a7a', c2:'#e0392c', u:'tarefas',   sem:6,  mes:18, ano:98},
+      /* Enquetes: big number = recebidas, badge = respostas da equipe */
+      {nome:'Enquetes',    smi:'smi-enquetes',    c1:'#bd90ec', c2:'#7c4cc4', sfx:['enquete recebida','enquetes recebidas'], p:{
+        semanal:{u:'recebidas', d:'11 respostas',  dir:'neutra', g:barrasSoma(3,7)},
+        mensal: {u:'recebidas', d:'34 respostas',  dir:'neutra', g:barrasSoma(8,4)},
+        anual:  {u:'recebidas', d:'180 respostas', dir:'neutra', g:barrasSoma(42,12)}}},
+      {nome:'Helpdesk',    smi:'smi-helpdesk',    c1:'#5fd0f0', c2:'#0288b8', u:'abertos', d:'2 na fila', dir:'ruim', sem:3,  mes:11, ano:132}
+    ],
+    colaborador: []
+  };
+  /* por enquanto todo perfil mostra todos os modulos: os que faltam vem da
+     lista da matriz. Cada perfil mantem os seus proprios (Comunicados
+     recebidos no franqueado etc.); depois e so esconder o que nao servir.
+     REL_EXCLUI: modulos que nao fazem sentido pro perfil (franqueado nao
+     tem Implantacao de unidades, por exemplo). */
+  const REL_EXCLUI = { franqueado: ['Implantação'], colaborador: ['Checklist', 'Plano de ação', 'Implantação'] };
+  ['franqueado', 'colaborador'].forEach(function(pf){
+    const tem = new Set((DADOS[pf] || []).map(function(c){ return c.nome; })
+      .concat((REL_EXTRA[pf] || []).map(function(x){ return x.nome; })));
+    const exclui = REL_EXCLUI[pf] || [];
+    REL_EXTRA[pf] = (REL_EXTRA[pf] || []).concat(
+      REL_EXTRA.matriz.filter(function(x){ return !tem.has(x.nome) && exclui.indexOf(x.nome) < 0; }));
+  });
+  function relAmostra(x){
+    function per(total, len){ return { u:x.u, d:x.d, dir:x.dir, g:barrasSoma(total, len) }; }
+    /* tooltip claro: sfx explicito, senao o do SFX, senao a propria unidade
+       (assim PowerUps, Rede Social, Helpdesk... ja saem descritivos no hover) */
+    return { c1:x.c1, c2:x.c2, smi:x.smi, nome:x.nome, tipo:'bars', sfx:x.sfx || SFX[x.nome] || x.u,
+      p:{ semanal:per(x.sem, 7), mensal:per(x.mes, 4), anual:per(x.ano, 12) } };
+  }
+  function relTodos(perfil){
+    const base = (DADOS[perfil] || []).slice(), nomes = base.map(function(c){ return c.nome; });
+    (REL_EXTRA[perfil] || []).forEach(function(x){
+      if (nomes.indexOf(x.nome) < 0) base.push(x.p ? { c1:x.c1, c2:x.c2, smi:x.smi, nome:x.nome, tipo:'bars', sfx:x.sfx || SFX[x.nome] || x.u, p:x.p } : relAmostra(x));
+    });
+    return base;
+  }
+  const relAtivos = {};   /* perfil -> Set de nomes ativos; comeca com os do DADOS */
+  function relAtivosDe(perfil){
+    /* por padrao so os 6 relatorios originais (os do DADOS) ficam ativos; os
+       extras o usuario liga no Personalizar */
+    if (!relAtivos[perfil]) relAtivos[perfil] = new Set((DADOS[perfil] || []).map(function(c){ return c.nome; }));
+    return relAtivos[perfil];
+  }
+  /* ordem dos relatorios por perfil (o usuario reposiciona no Personalizar) */
+  const relOrdem = {};
+  function relOrdemDe(perfil){
+    if (!relOrdem[perfil]) relOrdem[perfil] = relTodos(perfil).map(function(c){ return c.nome; });
+    return relOrdem[perfil];
+  }
+  /* relTodos na ordem escolhida (nomes novos, fora da ordem salva, vao pro fim) */
+  function relTodosOrd(perfil, ord){
+    const cards = relTodos(perfil), porNome = {};
+    ord = ord || relOrdemDe(perfil);
+    cards.forEach(function(c){ porNome[c.nome] = c; });
+    const out = [];
+    ord.forEach(function(n){ if (porNome[n]){ out.push(porNome[n]); delete porNome[n]; } });
+    cards.forEach(function(c){ if (porNome[c.nome]) out.push(c); });
+    return out;
+  }
+  /* FLIP: guarda a posicao de cada item, redesenha, e anima do lugar antigo pro
+     novo, pra reposicionar deslizando em vez de pular */
+  function flipCaptura(){
+    const m = {};
+    if (relModal) relModal.querySelectorAll('.rel-item').forEach(function(el){ m[el.dataset.nome] = el.getBoundingClientRect().top; });
+    return m;
+  }
+  function flipAnima(antes){
+    if (!relModal) return;
+    relModal.querySelectorAll('.rel-item').forEach(function(el){
+      const t0 = antes[el.dataset.nome]; if (t0 == null) return;
+      const dy = t0 - el.getBoundingClientRect().top; if (!dy) return;
+      el.style.transform = 'translateY(' + dy + 'px)'; el.style.transition = 'none';
+      requestAnimationFrame(function(){
+        el.style.transition = 'transform .22s cubic-bezier(.22,1,.36,1)';
+        el.style.transform = '';
+      });
+    });
+  }
+  /* mexe so no rascunho (relDraftOrdem); a home so muda ao Salvar */
+  function moveMod(nome, dir){
+    if (!relDraftOrdem) return;
+    const i = relDraftOrdem.indexOf(nome), j = i + dir;
+    if (i < 0 || j < 0 || j >= relDraftOrdem.length) return;
+    const antes = flipCaptura();
+    relDraftOrdem[i] = relDraftOrdem[j]; relDraftOrdem[j] = nome;
+    pintaListaRel(); flipAnima(antes);
+  }
   function pintaVisao(){
     if (!painelVisao) return;
     painelVisao.querySelectorAll('[data-periodo]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.periodo === periodoAtual)); });
-    const cards = DADOS[perfilAtual] || [], labels = rotulosTip(periodoAtual);
+    const ativos = relAtivosDe(perfilAtual), labels = rotulosTip(periodoAtual);
+    const cards = relTodosOrd(perfilAtual).filter(function(c){ return ativos.has(c.nome); });
     painelVisao.querySelector('.lv-grid').innerHTML = cards.map(function(c){ return montaCardHTML(c, periodoAtual, labels); }).join('');
+  }
+  /* o modal de "Personalizar": lista todos os relatorios do perfil com um toggle
+     pra ligar/desligar cada um na Visao geral */
+  /* rascunho do modal: enquanto aberto, tudo vive aqui; a home so recebe no Salvar */
+  let relModal = null, relDraftAtivos = null, relDraftOrdem = null;
+  /* redesenha a lista do modal (usada ao abrir e a cada reposicionamento) */
+  function pintaListaRel(){
+    if (!relModal || !relDraftAtivos) return;
+    const lista = relTodosOrd(perfilAtual, relDraftOrdem), ult = lista.length - 1;
+    relModal.querySelector('.rel-list').innerHTML = lista.map(function(c, i){
+      const on = relDraftAtivos.has(c.nome);
+      return '<div class="rel-item' + (on ? ' on' : '') + '" role="button" tabindex="0" data-nome="' + c.nome + '" aria-pressed="' + on + '" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
+        '<span class="rel-move">' +
+          '<button type="button" class="rel-up" aria-label="Subir"' + (i === 0 ? ' disabled' : '') + '><i class="fa-solid fa-chevron-up"></i></button>' +
+          '<button type="button" class="rel-down" aria-label="Descer"' + (i === ult ? ' disabled' : '') + '><i class="fa-solid fa-chevron-down"></i></button>' +
+        '</span>' +
+        '<span class="rel-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
+        '<span class="rel-nome">' + c.nome + '</span>' +
+        '<span class="rel-sw"><span class="rel-knob"></span></span></div>';
+    }).join('');
+  }
+  function abrePersonalizar(){
+    if (!relModal){
+      relModal = document.createElement('div');
+      relModal.className = 'rel-modal'; relModal.hidden = true;
+      relModal.innerHTML =
+        '<div class="rel-box">' +
+          '<div class="rel-head"><h3>Personalizar relatórios</h3>' +
+            '<button type="button" class="rel-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></div>' +
+          '<p class="rel-sub"></p><div class="rel-list"></div>' +
+          '<div class="rel-foot"><button type="button" class="rel-salvar"><i class="fa-solid fa-floppy-disk"></i><span>Salvar</span></button></div>' +
+        '</div>';
+      document.body.appendChild(relModal);
+      /* Salvar aplica o rascunho na home; fechar/cancelar so descarta (a home
+         nunca foi tocada enquanto o modal estava aberto) */
+      const fecha = function(salvar){
+        if (salvar){
+          relAtivos[perfilAtual] = new Set(relDraftAtivos);
+          relOrdem[perfilAtual] = relDraftOrdem.slice();
+          pintaVisao();
+        }
+        relDraftAtivos = null; relDraftOrdem = null; relModal.hidden = true;
+      };
+      relModal.addEventListener('click', function(e){ if (e.target === relModal || e.target.closest('.rel-close')) fecha(false); });
+      relModal.querySelector('.rel-salvar').addEventListener('click', function(){ fecha(true); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && relModal && !relModal.hidden) fecha(false); });
+      relModal.querySelector('.rel-list').addEventListener('click', function(e){
+        const it = e.target.closest('.rel-item'); if (!it || !relDraftAtivos) return;
+        const nome = it.dataset.nome;
+        if (e.target.closest('.rel-up')){ moveMod(nome, -1); return; }
+        if (e.target.closest('.rel-down')){ moveMod(nome, 1); return; }
+        if (relDraftAtivos.has(nome)) relDraftAtivos.delete(nome); else relDraftAtivos.add(nome);
+        it.classList.toggle('on', relDraftAtivos.has(nome)); it.setAttribute('aria-pressed', String(relDraftAtivos.has(nome)));
+      });
+    }
+    /* rascunho a partir do estado atual da home */
+    relDraftAtivos = new Set(relAtivosDe(perfilAtual));
+    relDraftOrdem = relOrdemDe(perfilAtual).slice();
+    const subs = {
+      matriz:'Veja quanto a rede usa cada módulo e o valor que as pessoas geram.',
+      franqueado:'Acompanhe o que a rede te oferece em cada módulo.',
+      colaborador:'Acompanhe o seu uso e o que você já fez em cada módulo.'
+    };
+    relModal.querySelector('.rel-sub').textContent = subs[perfilAtual] || subs.matriz;
+    pintaListaRel();
+    relModal.hidden = false;
   }
 
   function seleciona(cen){
