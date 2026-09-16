@@ -1625,13 +1625,13 @@ function rvShareCopiar(){
      a ilustra e o chamados.svg pra todos por enquanto (trocar por modulo depois). */
   const GUIA_TXT = {
     Chamados:     'Abra e acompanhe seus chamados',
-    Checklist:    'Aplique seu primeiro checklist',
+    Checklist:    'Aplique checklist em toda a rede',
     Comunicados:  'Publique um comunicado para a rede',
     Marketing:    'Baixe os materiais de marketing',
-    Compras:      'Faça seu primeiro pedido de compra',
+    Compras:      'Faça seus pedidos de compra',
     Universidade: 'Comece um curso na Universidade'
   };
-  const GUIA_ILU = { Chamados:'chamados.svg', Checklist:'image-checklist.svg', Comunicados:'image-comunicate.svg' };  /* os demais caem no chamados.svg */
+  const GUIA_ILU = { Chamados:'image-chamados.svg', Checklist:'image-checklist.svg', Comunicados:'image-comunicados.svg' };  /* os demais caem no de chamados */
   const GUIA = {
     matriz:      ['Chamados', 'Checklist', 'Comunicados'],
     franqueado:  ['Chamados', 'Marketing', 'Compras'],
@@ -1642,7 +1642,7 @@ function rvShareCopiar(){
     if (!grid) return;
     const mods = GUIA[perfilHome] || GUIA.matriz;
     grid.innerHTML = mods.map(function(m){
-      const ilu = 'uploads/ilustra/' + (GUIA_ILU[m] || 'chamados.svg');
+      const ilu = 'uploads/ilustra/' + (GUIA_ILU[m] || 'image-chamados.svg');
       return '<div class="ge-card" data-test-component="card">' +
         '<div class="ge-text"><p class="ge-cat">' + m + '</p>' +
         '<h3 class="ge-title">' + (GUIA_TXT[m] || m) + '</h3></div>' +
