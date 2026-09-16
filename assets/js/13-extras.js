@@ -1692,12 +1692,7 @@ function rvShareCopiar(){
     /* rascunho a partir do estado atual da home */
     relDraftAtivos = new Set(relAtivosDe(perfilAtual));
     relDraftOrdem = relOrdemDe(perfilAtual).slice();
-    const subs = {
-      matriz:'Veja quanto a rede usa cada módulo e o valor que as pessoas geram.',
-      franqueado:'Acompanhe o que a rede te oferece em cada módulo.',
-      colaborador:'Acompanhe o seu uso e o que você já fez em cada módulo.'
-    };
-    relModal.querySelector('.rel-sub').textContent = subs[perfilAtual] || subs.matriz;
+    relModal.querySelector('.rel-sub').textContent = 'Escolha quais relatórios aparecem na home e em que ordem.';
     pintaListaRel();
     relModal.hidden = false;
   }
@@ -1862,8 +1857,10 @@ function rvShareCopiar(){
 
   function pintaCarrHome(){
     if (!carrHome) return;
-    const cards = DADOS[perfilHome] || [], labels = rotulosTip(periodoHome);
-    const html = cards.map(function(c){ return montaCardHTML(c, periodoHome, labels, 'Visão geral de '); }).join('');
+    /* o carrossel nao e personalizavel, entao mostra todos os modulos do perfil;
+       sem o prefixo "Visao geral de", os cards ficam iguais aos do corpo */
+    const cards = relTodos(perfilHome), labels = rotulosTip(periodoHome);
+    const html = cards.map(function(c){ return montaCardHTML(c, periodoHome, labels); }).join('');
     /* a sequencia entra duplicada: o loop segue sempre em frente e, ao alcancar
        a copia, salta de volta ao inicio sem animacao (invisivel, cards iguais) */
     const track = carrHome.querySelector('.hv-track');
