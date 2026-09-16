@@ -1400,7 +1400,7 @@ function rvShareCopiar(){
         painelVisao = document.createElement('section');
         painelVisao.className = 'links-visao';
         painelVisao.innerHTML =
-          '<div class="lv-head"><h2>Visão geral</h2>' +
+          '<div class="lv-head"><h2>Relatórios</h2>' +
           '<div class="lv-seg2 lv-periodo" role="tablist">' +
           PERIODOS.map(function(x){ return '<button type="button" role="tab" data-periodo="' + x.id + '">' + x.rotulo + '</button>'; }).join('') +
           '</div>' +
