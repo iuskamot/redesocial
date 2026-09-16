@@ -47,8 +47,8 @@
 .apps-cancel:hover{border-color:#c62828;color:#c62828;background:#fff}
 .apps-cancel[hidden]{display:none}
 .apps-edit{
-  display:flex;align-items:center;justify-content:center;gap:8px;height:32px;box-sizing:border-box;
-  padding:0 12px;border-radius:999px;font-size:12px;font-weight:700;color:#5b6672;
+  display:flex;align-items:center;justify-content:center;gap:8px;height:36px;box-sizing:border-box;
+  padding:0 14px;border-radius:999px;font-size:14px;font-weight:700;color:#5b6672;
   border:1px solid var(--line);background:#fff;transition:.15s;
 }
 .apps-edit:hover{border-color:var(--teal);color:var(--teal)}
