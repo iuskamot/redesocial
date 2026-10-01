@@ -1244,6 +1244,19 @@ function rvShareCopiar(){
     return '<svg class="vg-svg vg-donut" viewBox="0 0 42 42" aria-hidden="true">' +
       '<circle cx="21" cy="21" r="' + R + '" fill="none" stroke="#eef1f4" stroke-width="6"/>' + arcos + '</svg>';
   }
+  /* meia lua do NPS: o arco de cima, do ruim (esquerda) ao bom (direita), cada
+     faixa no tamanho do seu %. pathLength=100 deixa o dasharray em % direto. */
+  function roscaMeiaLua(segs){
+    const d = 'M6 42 A36 36 0 0 1 78 42';
+    let off = 0;
+    const faixas = segs.slice().reverse().map(function(s){
+      const el = '<path d="' + d + '" pathLength="100" fill="none" stroke="' + s.c + '" stroke-width="12" ' +
+        'stroke-dasharray="' + s.v + ' 100" stroke-dashoffset="' + (-off) + '" data-tip="' + s.n + ' ' + s.v + '%"/>';
+      off += s.v; return el;
+    }).join('');
+    return '<svg class="vg-svg vg-meialua" viewBox="0 0 84 44" aria-hidden="true">' +
+      '<path d="' + d + '" fill="none" stroke="#eef1f4" stroke-width="12"/>' + faixas + '</svg>';
+  }
   function roscaLeg(segs, unidade){
     return segs.map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.v + (unidade || '') + ' ' + s.n + '</span>'; }).join('');
   }
@@ -1268,7 +1281,9 @@ function rvShareCopiar(){
     'Universidade':['conclusão','conclusões'], 'Marketing':['material baixado','materiais baixados'],
     'Comunicados':['comunicado','comunicados'], 'Checklist':['checklist','checklists'],
     'Enquetes':['enquete','enquetes'], 'Compras':'em pedidos',
-    'Projetos':['tarefa','tarefas'], 'Unidades':['unidade ativa','unidades ativas']
+    'Projetos':['tarefa','tarefas'], 'Unidades':['unidade inaugurada','unidades inauguradas'],
+    'Tarefas':['tarefa aberta','tarefas abertas'],
+    'Vendas':'em vendas', 'Resultado financeiro':'de lucro'
   };
   function sufixo(sfx, n){ if (!sfx) return ''; if (typeof sfx === 'string') return ' ' + sfx; return ' ' + (Number(n) === 1 ? sfx[0] : sfx[1]); }
   /* zona do NPS, igual ao dashboard do SULTS: Critica / Aperfeicoamento / Qualidade / Excelencia */
@@ -1278,6 +1293,14 @@ function rvShareCopiar(){
     if (s >= 50) return { nome:'Qualidade',       cor:'#43a047' };
     if (s >= 0)  return { nome:'Aperfeiçoamento', cor:'#f0a500' };
     return { nome:'Zona crítica', cor:'#e5443b' };
+  }
+  /* humor do NES pelo score, na escala do dashboard do SULTS (Nervoso a Encantado) */
+  function humorNES(score){
+    if (score >= 80) return 'Encantado';
+    if (score >= 60) return 'Feliz';
+    if (score >= 40) return 'Normal';
+    if (score >= 20) return 'Triste';
+    return 'Nervoso';
   }
   function card(c1,c2,smi,nome,tipo,p,fmt){ return {c1:c1,c2:c2,smi:smi,nome:nome,tipo:tipo,p:p,fmt:fmt,sfx:SFX[nome]}; }
 
@@ -1295,28 +1318,65 @@ function rvShareCopiar(){
         mensal:{n:'R$ 1,2 mi',u:'em pedidos',d:'+12%',dir:'boa',g:[280,320,290,310]},
         semanal:{n:'R$ 280 mil',u:'em pedidos',d:'+8%',dir:'boa',g:[38,45,40,44,48,35,30]},
         anual:{n:'R$ 14 mi',u:'em pedidos',d:'+15%',dir:'boa',g:[1050,1100,1080,1150,1100,1200,1150,1250,1100,1300,1200,1300]}}, 'moeda'),
+      /* ciclo da rede como no Analytics do SULTS: inauguradas + as que estao em
+         implantacao (badge neutro: nao e problema, e o que vem chegando) */
       card('#43d6cd','#00918a','smi-unidades','Unidades','bars',{
-        mensal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[86,88,90,92]},
-        semanal:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[91,91,92,92,92,92,92]},
-        anual:{n:'92',u:'ativas',inativo:'3',inativoLbl:'inativas',g:[74,76,78,80,82,84,86,88,89,90,91,92]}}),
+        mensal:{n:'92',u:'inauguradas',inativo:'3',inativoLbl:'em implantação',inativoTom:'neutra',g:[86,88,90,92]},
+        semanal:{n:'92',u:'inauguradas',inativo:'3',inativoLbl:'em implantação',inativoTom:'neutra',g:[91,91,92,92,92,92,92]},
+        anual:{n:'92',u:'inauguradas',inativo:'3',inativoLbl:'em implantação',inativoTom:'neutra',g:[74,76,78,80,82,84,86,88,89,90,91,92]}}),
+      /* parados = negocios sem atualizacao ha mais de 15 dias, o alerta do kanban */
       card('#ff8a7a','#e0392c','smi-expancao','Expansão','funil',{
-        mensal:{u:'negócios',g:{abertos:5,ganhos:41,perdidos:10}},
-        semanal:{u:'negócios',g:{abertos:2,ganhos:6,perdidos:2}},
-        anual:{u:'negócios',g:{abertos:5,ganhos:412,perdidos:98}}}),
+        mensal:{u:'negócios',parados:'5',g:{abertos:5,ganhos:41,perdidos:10}},
+        semanal:{u:'negócios',parados:'2',g:{abertos:2,ganhos:6,perdidos:2}},
+        anual:{u:'negócios',parados:'5',g:{abertos:5,ganhos:412,perdidos:98}}}),
       card('#6fe08f','#2ea44f','smi-nps','NPS','nps',{
         mensal:{u:'pontos',g:{prom:84,neu:10,det:6}},
         semanal:{u:'pontos',g:{prom:86,neu:9,det:5}},
-        anual:{u:'pontos',g:{prom:82,neu:12,det:6}}})
+        anual:{u:'pontos',g:{prom:82,neu:12,det:6}}}),
+      /* NES (Net Emotional Score): % de unidades em cada humor. O NPS mede o
+         cliente; o NES mede o franqueado. Score = media ponderada dos humores. */
+      card('#4fd6bf','#00a08a','smi-nes','NES','nes',{
+        mensal:{u:'',g:{enc:31,fel:38,nor:23,tri:6,ner:2}},
+        semanal:{u:'',g:{enc:32,fel:38,nor:22,tri:6,ner:2}},
+        anual:{u:'',g:{enc:28,fel:37,nor:25,tri:7,ner:3}}}),
+      /* Vendas: faturamento da rede no periodo (area em R$, como Compras) */
+      card('#ff8a65','#f4511e','smi-vendas','Vendas','area',{
+        mensal:{n:'R$ 3,4 mi',u:'em vendas',g:[780,850,840,930]},
+        semanal:{n:'R$ 820 mil',u:'em vendas',g:[110,118,124,115,130,121,102]},
+        anual:{n:'R$ 39 mi',u:'em vendas',g:[2900,3000,3100,3150,3200,3300,3250,3400,3300,3500,3450,3400]}}, 'moeda'),
+      /* Resultado financeiro: o resultado (DRE) da rede + a margem */
+      card('#7fe0b0','#17976a','smi-resultado-financeiro','Resultado financeiro','area',{
+        mensal:{n:'R$ 612 mil',u:'de lucro',d:'margem 18%',dir:'boa',g:[140,150,155,167]},
+        semanal:{n:'R$ 148 mil',u:'de lucro',d:'margem 18%',dir:'boa',g:[18,22,21,24,23,20,20]},
+        anual:{n:'R$ 7,1 mi',u:'de lucro',d:'margem 17%',dir:'boa',g:[520,540,560,580,590,600,610,620,600,630,620,612]}}, 'moeda')
     ],
     franqueado: [
+      /* do lado da unidade: os chamados dela em aberto hoje (estoque) e quantos
+         foram concluidos no periodo. Prazo/atraso e fila sao visao de quem atende */
       card('#62a9ff','#1d6ede','smi-chamados','Chamados','bars',{
-        mensal:{n:'6',u:'abertos',atraso:'1',g:[2,1,2,1]},
-        semanal:{n:'2',u:'abertos',atraso:'0',g:[1,0,1,0,0,0,1]},
-        anual:{n:'71',u:'abertos',atraso:'1',g:[8,7,6,5,7,6,5,6,4,5,6,6]}}),
-      card('#43d6cd','#00918a','smi-unidades','Pessoas','bars',{
-        mensal:{n:'22',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[20,21,22,22]},
-        semanal:{n:'22',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[22,22,21,22,22,22,22]},
-        anual:{n:'24',u:'ativas',inativo:'2',inativoLbl:'inativas',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
+        mensal:{n:'2',u:'em aberto',d:'9 concluídos',dir:'neutra',estoque:true,g:[3,3,2,2]},
+        semanal:{n:'2',u:'em aberto',d:'4 concluídos',dir:'neutra',estoque:true,g:[3,2,2,3,2,2,2]},
+        anual:{n:'2',u:'em aberto',d:'69 concluídos',dir:'neutra',estoque:true,g:[4,3,3,2,3,2,2,3,2,2,3,2]}}),
+      /* no SULTS a equipe da unidade fica em Unidades > Colaboradores */
+      card('#43d6cd','#00918a','smi-unidades','Colaboradores','bars',{
+        mensal:{n:'22',u:'ativos',inativo:'2',inativoLbl:'inativos',g:[20,21,22,22]},
+        semanal:{n:'22',u:'ativos',inativo:'2',inativoLbl:'inativos',g:[22,22,21,22,22,22,22]},
+        anual:{n:'24',u:'ativos',inativo:'2',inativoLbl:'inativos',g:[18,19,20,21,22,22,23,24,23,24,23,24]}}),
+      /* Tarefas ("Meu dia"): junta checklist, projetos e implantacao. Estoque:
+         o numero e o que esta aberto hoje, e a barra o nivel de cada dia */
+      card('#6f93b8','#34597a','smi-tarefas','Tarefas','bars',{
+        mensal:{n:'14',u:'abertas',atraso:'3',estoque:true,g:[16,15,13,14]},
+        semanal:{n:'14',u:'abertas',atraso:'3',estoque:true,g:[12,13,15,14,13,14,14]},
+        anual:{n:'14',u:'abertas',atraso:'3',estoque:true,g:[20,18,17,19,16,15,17,16,15,14,15,14]}}),
+      /* Vendas e Resultado financeiro da propria loja */
+      card('#ff8a65','#f4511e','smi-vendas','Vendas','area',{
+        mensal:{n:'R$ 176 mil',u:'em vendas',g:[40,44,43,49]},
+        semanal:{n:'R$ 42 mil',u:'em vendas',g:[5,6,7,6,7,6,5]},
+        anual:{n:'R$ 2,1 mi',u:'em vendas',g:[150,160,165,170,172,180,175,182,178,185,180,176]}}, 'moeda'),
+      card('#7fe0b0','#17976a','smi-resultado-financeiro','Resultado financeiro','area',{
+        mensal:{n:'R$ 25 mil',u:'de lucro',d:'margem 14%',dir:'boa',g:[5,6,6,8]},
+        semanal:{n:'R$ 6 mil',u:'de lucro',d:'margem 14%',dir:'boa',g:[0.8,0.9,1,0.9,1,0.8,0.6]},
+        anual:{n:'R$ 300 mil',u:'de lucro',d:'margem 13%',dir:'boa',g:[22,23,24,25,24,26,25,27,26,26,25,25]}}, 'moeda'),
       card('#5ecc7f','#219348','smi-checklist','Checklist','bars',{
         /* volume aplicado como numero; a badge cinza traz a nota (aproveitamento
            = pontuacao alcancada/maxima) do ULTIMO checklist aplicado. "ultima
@@ -1427,14 +1487,16 @@ function rvShareCopiar(){
   }
   function montaCardHTML(c, periodo, labels, prefixo){
     const v = c.p[periodo] || c.p.mensal;
-    /* estoque = card com "inativas" (Unidades, Pessoas): interpola quase reto */
-    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length, v.inativo !== undefined) : v.g;
+    /* estoque = card com "inativas" (Unidades, Colaboradores) ou marcado como
+       estoque (Tarefas, Implantação): interpola quase reto */
+    const estoque = v.inativo !== undefined || !!v.estoque;
+    const gData = (periodo === 'mensal' && labels) ? expandeDiario(v.g, labels.length, estoque) : v.g;
 
-    /* NPS, Expansao e Universidade (donut) usam o mesmo layout de rosca: o numero
-       (e a zona, no NPS) na esquerda, o donut na direita e a legenda em linha no
-       rodape do card. */
-    if (c.tipo === 'nps' || c.tipo === 'funil' || c.tipo === 'donut'){
-      let segs, unidade = '%', num, zona = '';
+    /* NPS, NES, Expansao e Universidade (donut) usam o mesmo layout de rosca: o
+       numero (e a zona, no NPS) na esquerda, o donut na direita e a legenda em
+       linha no rodape do card. */
+    if (c.tipo === 'nps' || c.tipo === 'nes' || c.tipo === 'funil' || c.tipo === 'donut'){
+      let segs, legSegs = null, unidade = '%', num, zona = '';
       if (c.tipo === 'nps'){
         /* NPS de verdade = % Promotores − % Detratores, calculado dos proprios
            dados da rosca; a zona sai do score, sempre em verdigris. */
@@ -1442,29 +1504,45 @@ function rvShareCopiar(){
         const score = v.g.prom - v.g.det;
         num = score.toFixed(2);
         zona = '<span class="lv-zona">Zona de ' + zonaNPS(score).nome.toLowerCase() + '</span>';
+      } else if (c.tipo === 'nes'){
+        /* NES: o donut mostra os 5 humores (cada fatia com o nome no hover); a
+           legenda agrupa em 3 linhas, igual ao NPS, pra caber na mesma altura */
+        const h = v.g;
+        segs = [{v:h.ner,c:'#e5443b',n:'Nervoso'},{v:h.tri,c:'#f08a3e',n:'Triste'},{v:h.nor,c:'#f0b400',n:'Normal'},
+                {v:h.fel,c:'#7cc04f',n:'Feliz'},{v:h.enc,c:'#1fb59c',n:'Encantado'}];
+        legSegs = [{v:h.enc + h.fel,c:'#7cc04f',n:'felizes'},{v:h.nor,c:'#f0b400',n:'normais'},{v:h.tri + h.ner,c:'#f08a3e',n:'tristes'}];
+        const score = (h.enc * 100 + h.fel * 75 + h.nor * 50 + h.tri * 25) / 100;
+        num = score.toFixed(2) + '%';
+        zona = '<span class="lv-zona">Satisfação: ' + humorNES(score) + '</span>';
       } else if (c.tipo === 'funil'){
         /* o numero grande e o total do funil (abertos + ganhos + perdidos) */
         segs = segsDe('funil', v.g); unidade = '';
         num = String(v.g.abertos + v.g.ganhos + v.g.perdidos);
+        if (parseInt(v.parados, 10) > 0)
+          zona = '<span class="lv-zona ruim" data-tip="Negócios sem atualização há mais de 15 dias">' + v.parados + ' parados</span>';
       } else {
         /* donut: concluido x a concluir, a partir do proprio percentual */
         const p = Math.round(v.g);
         segs = [{v:p,c:'var(--c2)',n:'Concluído'},{v:100-p,c:'#dfe4ea',n:'A concluir'}];
         num = v.n;
       }
+      /* NPS na meia lua (o velocimetro do dashboard de NPS); os demais no donut */
+      const grafRosca = c.tipo === 'nps'
+        ? '<div class="lv-donut lv-donut--meia">' + roscaMeiaLua(segs) + '</div>'
+        : '<div class="lv-donut">' + roscaDonut(segs, unidade) + '</div>';
       return '<a class="lv-card lv-card-rosca" href="#" style="--c1:' + c.c1 + ';--c2:' + c.c2 + '">' +
         '<div class="lv-top"><span class="lv-ic"><span class="smi ' + c.smi + '" aria-hidden="true"></span></span>' +
         '<span class="lv-nome">' + (prefixo || '') + c.nome + '</span>' + zona + '</div>' +
         '<div class="lv-rmid"><div class="lv-metric">' +
           '<span class="lv-numrow"><b class="lv-num">' + num + '</b><span class="lv-unit">' + v.u + '</span></span>' +
-          '<div class="vg-nps-leg">' + roscaLeg(segs, unidade) + '</div></div>' +
-        '<div class="lv-donut">' + roscaDonut(segs, unidade) + '</div></div></a>';
+          '<div class="vg-nps-leg">' + roscaLeg(legSegs || segs, unidade) + '</div></div>' +
+        grafRosca + '</div></a>';
     }
 
     let extra = '', num = v.n;
     /* número de fluxo (barra sem "inativas") = soma real dos dados do período,
        pra fechar com o gráfico; estoque mantém o nível atual (v.n) */
-    if (c.tipo === 'bars' && v.inativo === undefined){
+    if (c.tipo === 'bars' && !estoque){
       num = v.g.reduce(function(a, b){ return a + b; }, 0).toLocaleString('pt-BR');
     }
     if (v.atraso !== undefined){
@@ -1474,8 +1552,12 @@ function rvShareCopiar(){
     } else if (v.inativo !== undefined){
       /* rotulo configuravel pra concordar o genero (colaboradores inativos,
          unidades inativas) */
+      /* inativoTom troca o vermelho por um tom de lv-delta quando o que soma
+         nao e problema (unidades "em implantação") */
       extra = parseInt(v.inativo,10) > 0
-        ? '<span class="lv-inativo">' + v.inativo + ' ' + (v.inativoLbl || 'inativos') + '</span>'
+        ? (v.inativoTom
+            ? '<span class="lv-delta ' + v.inativoTom + '">' + v.inativo + ' ' + (v.inativoLbl || 'inativos') + '</span>'
+            : '<span class="lv-inativo">' + v.inativo + ' ' + (v.inativoLbl || 'inativos') + '</span>')
         : '<span class="lv-emdia">todos ativos</span>';
     } else if (v.naolido !== undefined){
       extra = parseInt(v.naolido,10) > 0
@@ -1510,29 +1592,106 @@ function rvShareCopiar(){
   }
   const REL_EXTRA = {
     matriz: [
-      /* Comunicados: big number = enviados, badge = leituras (enviados x pessoas,
-         ~85 leitores de 92, porque nem todos leem cada comunicado) */
+      /* Comunicados: big number = enviados, badge = % de leitura (o "Visto por"
+         de cada comunicado no SULTS) */
       {nome:'Comunicados',   smi:'smi-comunicados', c1:'#9ba1f4', c2:'#575fd1', sfx:'enviados', p:{
-        semanal:{u:'enviados', d:'44.200 leituras',    dir:'neutra', g:barrasSoma(520,7)},
-        mensal: {u:'enviados', d:'181.900 leituras',   dir:'neutra', g:barrasSoma(2140,4)},
-        anual:  {u:'enviados', d:'2.201.500 leituras', dir:'neutra', g:barrasSoma(25900,12)}}},
-      {nome:'Marketing',     smi:'smi-marketing',    c1:'#ff77a9', c2:'#d6285f', u:'downloads', d:'62 materiais', dir:'neutra', sem:96,  mes:410, ano:4900},
-      {nome:'Universidade',  smi:'smi-universidade', c1:'#b18ae6', c2:'#6d47b5', u:'conclusões',        sem:75,  mes:320, ano:3800},
-      {nome:'Projetos',      smi:'smi-projetos',     c1:'#ff8a7a', c2:'#e0392c', u:'tarefas',           sem:83,  mes:340, ano:4100},
-      /* Enquetes: big number = enviadas, badge = respostas recebidas */
+        semanal:{u:'enviados', d:'85% de leitura', dir:'neutra', g:barrasSoma(520,7)},
+        mensal: {u:'enviados', d:'84% de leitura', dir:'neutra', g:barrasSoma(2140,4)},
+        anual:  {u:'enviados', d:'82% de leitura', dir:'neutra', g:barrasSoma(25900,12)}}},
+      /* Marketing: badge = solicitacoes das unidades esperando o time (a fila do
+         menu Solicitacoes, em vermelho como no sistema) */
+      {nome:'Marketing',     smi:'smi-marketing',    c1:'#ff77a9', c2:'#d6285f', u:'downloads', d:'26 solicitações', dir:'ruim', sem:96,  mes:410, ano:4900},
+      {nome:'Universidade',  smi:'smi-universidade', c1:'#b18ae6', c2:'#6d47b5', u:'conclusões', d:'120 cursos', dir:'neutra', sem:75,  mes:320, ano:3800},
+      {nome:'Projetos',      smi:'smi-projetos',     c1:'#ff8a7a', c2:'#e0392c', p:{
+        semanal:{u:'tarefas', atraso:'4', g:barrasSoma(83,7)},
+        mensal: {u:'tarefas', atraso:'7', g:barrasSoma(340,4)},
+        anual:  {u:'tarefas', atraso:'7', g:barrasSoma(4100,12)}}},
+      /* Enquetes: big number = enviadas, badge = % de resposta (respostas x
+         pessoas que receberam, o "Progresso" da lista de enquetes) */
       {nome:'Enquetes',      smi:'smi-enquetes',     c1:'#bd90ec', c2:'#7c4cc4', sfx:['enquete enviada','enquetes enviadas'], p:{
-        semanal:{u:'enviadas', d:'180 respostas',   dir:'neutra', g:barrasSoma(4,7)},
-        mensal: {u:'enviadas', d:'760 respostas',   dir:'neutra', g:barrasSoma(9,4)},
-        anual:  {u:'enviadas', d:'4.100 respostas', dir:'neutra', g:barrasSoma(48,12)}}},
+        semanal:{u:'enviadas', d:'64% de resposta', dir:'neutra', g:barrasSoma(4,7)},
+        mensal: {u:'enviadas', d:'61% de resposta', dir:'neutra', g:barrasSoma(9,4)},
+        anual:  {u:'enviadas', d:'58% de resposta', dir:'neutra', g:barrasSoma(48,12)}}},
       {nome:'Disco Virtual', smi:'smi-disco-virtual',c1:'#6fb2ff', c2:'#2b74dd', u:'downloads', sfx:['material baixado','materiais baixados'], d:'340 materiais', dir:'neutra', sem:88, mes:370, ano:4400},
       {nome:'PowerUps',      smi:'smi-powerups',     c1:'#5aa2f2', c2:'#1460c4', u:'acessos', d:'18 powerups', dir:'neutra', sem:120, mes:510, ano:6100},
-      /* Implantação: total de implantacoes no periodo */
+      /* Implantação: estoque de implantacoes em andamento (o numero e o de hoje,
+         a barra o nivel de cada data) + as que estao atrasadas no cronograma */
       {nome:'Implantação',   smi:'smi-implantacao-de-unidades', c1:'#5cc0a0', c2:'#2aa17e', sfx:['implantação','implantações'], p:{
-        semanal:{u:'implantações', g:barrasSoma(3,7)},
-        mensal: {u:'implantações', g:barrasSoma(6,4)},
-        anual:  {u:'implantações', g:barrasSoma(24,12)}}},
+        semanal:{n:'3', u:'em andamento', atraso:'1', estoque:true, g:[2,3,3,3,3,3,3]},
+        mensal: {n:'3', u:'em andamento', atraso:'1', estoque:true, g:[2,2,3,3]},
+        anual:  {n:'3', u:'em andamento', atraso:'1', estoque:true, g:[1,2,2,3,2,2,3,3,4,3,3,3]}}},
+      /* Plano de ação: onde o checklist vira acao. Big number = planos criados,
+         badge = os que esperam validacao do supervisor */
+      {nome:'Plano de ação', smi:'smi-plano-de-acao', c1:'#ffb45c', c2:'#e07b00', sfx:['plano criado','planos criados'], p:{
+        semanal:{u:'criados', d:'60 em validação', dir:'ruim', g:barrasSoma(9,7)},
+        mensal: {u:'criados', d:'60 em validação', dir:'ruim', g:barrasSoma(35,4)},
+        anual:  {u:'criados', d:'60 em validação', dir:'ruim', g:barrasSoma(420,12)}}},
       {nome:'Jornada',       smi:'smi-jornada',      c1:'#7986cb', c2:'#283593', u:'etapas concluídas', sem:42,  mes:180, ano:2100},
-      {nome:'Helpdesk',      smi:'smi-helpdesk',     c1:'#5fd0f0', c2:'#0288b8', u:'abertos', d:'9 na fila', dir:'ruim', sem:31,  mes:130, ano:1560}
+      {nome:'Helpdesk',      smi:'smi-helpdesk',     c1:'#5fd0f0', c2:'#0288b8', u:'abertos', d:'9 na fila', dir:'ruim', sem:31,  mes:130, ano:1560},
+      /* Tarefas ("Meu dia") do proprio usuario da matriz: estoque de abertas */
+      {nome:'Tarefas',       smi:'smi-tarefas',      c1:'#6f93b8', c2:'#34597a', p:{
+        semanal:{n:'38', u:'abertas', atraso:'9', estoque:true, g:[34,36,39,37,38,36,38]},
+        mensal: {n:'38', u:'abertas', atraso:'9', estoque:true, g:[42,40,37,38]},
+        anual:  {n:'38', u:'abertas', atraso:'9', estoque:true, g:[45,43,41,44,40,39,42,40,39,37,39,38]}}},
+      /* Agenda: eventos no periodo (reunioes, visitas, treinamentos) + os de hoje */
+      {nome:'Agenda',        smi:'smi-agenda',       c1:'#d16565', c2:'#9c2b2b', sfx:['evento','eventos'], p:{
+        semanal:{u:'eventos', d:'2 hoje', dir:'neutra', g:barrasSoma(9,7)},
+        mensal: {u:'eventos', d:'2 hoje', dir:'neutra', g:barrasSoma(34,4)},
+        anual:  {u:'eventos', d:'2 hoje', dir:'neutra', g:barrasSoma(410,12)}}},
+      /* Rede Social: publicacoes da rede + reacoes */
+      {nome:'Rede Social',   smi:'smi-rede-social',  c1:'#73beff', c2:'#0088FF', sfx:['publicação','publicações'], p:{
+        semanal:{u:'publicações', d:'1.240 reações',  dir:'neutra', g:barrasSoma(38,7)},
+        mensal: {u:'publicações', d:'5.180 reações',  dir:'neutra', g:barrasSoma(152,4)},
+        anual:  {u:'publicações', d:'61.300 reações', dir:'neutra', g:barrasSoma(1820,12)}}},
+      /* Analytics: uso dos paineis de indicadores */
+      {nome:'Analytics',     smi:'smi-analitycs',    c1:'#ffc95e', c2:'#e08e00', u:'visualizações', d:'8 painéis', dir:'neutra', sem:64, mes:270, ano:3200},
+      /* Asgard: o backoffice da matriz */
+      {nome:'Asgard',        smi:'smi-empresa',      c1:'#77b6f7', c2:'#2e7ed4', u:'acessos', d:'48 usuários', dir:'neutra', sem:210, mes:880, ano:10400},
+      /* Certificações: realizadas + a fila de Aprovacao (botao "Liberar") */
+      {nome:'Certificações', smi:'smi-certificacoes', c1:'#ffcf4d', c2:'#d99e00', sfx:['certificação realizada','certificações realizadas'], p:{
+        semanal:{u:'realizadas', d:'1 para liberar', dir:'ruim', g:barrasSoma(12,7)},
+        mensal: {u:'realizadas', d:'1 para liberar', dir:'ruim', g:barrasSoma(46,4)},
+        anual:  {u:'realizadas', d:'1 para liberar', dir:'ruim', g:barrasSoma(540,12)}}},
+      /* Termos LGPD: aceites no periodo + quem ainda nao aceitou a versao atual */
+      {nome:'Termos LGPD',   smi:'smi-termos-lgpd',  c1:'#a1887f', c2:'#5d4037', sfx:['aceite','aceites'], p:{
+        semanal:{u:'aceites', d:'14 pendentes', dir:'ruim', g:barrasSoma(36,7)},
+        mensal: {u:'aceites', d:'14 pendentes', dir:'ruim', g:barrasSoma(150,4)},
+        anual:  {u:'aceites', d:'14 pendentes', dir:'ruim', g:barrasSoma(1800,12)}}},
+      /* Segurança: logins ativos (estoque) + contas sem acesso ha 30 dias */
+      {nome:'Segurança',     smi:'smi-seguranca',    c1:'#5aa2f2', c2:'#1565c0', sfx:['login ativo','logins ativos'], p:{
+        semanal:{n:'412', u:'logins ativos', d:'18 sem acesso', dir:'ruim', estoque:true, g:[405,407,408,410,411,411,412]},
+        mensal: {n:'412', u:'logins ativos', d:'18 sem acesso', dir:'ruim', estoque:true, g:[398,402,407,412]},
+        anual:  {n:'412', u:'logins ativos', d:'18 sem acesso', dir:'ruim', estoque:true, g:[340,350,358,365,372,380,386,392,398,402,407,412]}}},
+      /* Integração Expansão: negocios ganhos integrados (viram implantacao) + pendentes */
+      {nome:'Integração Expansão', smi:'smi-integracao-expansao', c1:'#ff8a7a', c2:'#e0392c', sfx:['negócio integrado','negócios integrados'], p:{
+        semanal:{u:'integrados', d:'1 pendente',  dir:'ruim', g:barrasSoma(5,7)},
+        mensal: {u:'integrados', d:'3 pendentes', dir:'ruim', g:barrasSoma(38,4)},
+        anual:  {u:'integrados', d:'3 pendentes', dir:'ruim', g:barrasSoma(409,12)}}},
+      /* Processos (workflow/aprovacoes): iniciados + os que esperam aprovacao */
+      {nome:'Processos',     smi:'smi-processo',     c1:'#bd90ec', c2:'#7c4cc4', sfx:['processo iniciado','processos iniciados'], p:{
+        semanal:{u:'iniciados', d:'7 para aprovar', dir:'ruim', g:barrasSoma(24,7)},
+        mensal: {u:'iniciados', d:'7 para aprovar', dir:'ruim', g:barrasSoma(96,4)},
+        anual:  {u:'iniciados', d:'7 para aprovar', dir:'ruim', g:barrasSoma(1150,12)}}},
+      /* PDI: planos de desenvolvimento ativos (estoque) + avaliacoes pendentes */
+      {nome:'PDI',           smi:'smi-pdi',          c1:'#98a4b0', c2:'#66727d', sfx:['PDI ativo','PDIs ativos'], p:{
+        semanal:{n:'186', u:'PDIs ativos', d:'12 a avaliar', dir:'ruim', estoque:true, g:[180,181,183,184,185,186,186]},
+        mensal: {n:'186', u:'PDIs ativos', d:'12 a avaliar', dir:'ruim', estoque:true, g:[172,176,181,186]},
+        anual:  {n:'186', u:'PDIs ativos', d:'12 a avaliar', dir:'ruim', estoque:true, g:[120,128,135,142,150,156,162,168,172,176,181,186]}}},
+      /* Transferência de produtos entre unidades + as que ainda nao foram recebidas */
+      {nome:'Transferência de produtos', smi:'smi-transferencia-de-produtos', c1:'#43d6cd', c2:'#00918a', sfx:['transferência','transferências'], p:{
+        semanal:{u:'enviadas', d:'6 a receber', dir:'ruim', g:barrasSoma(28,7)},
+        mensal: {u:'enviadas', d:'6 a receber', dir:'ruim', g:barrasSoma(112,4)},
+        anual:  {u:'enviadas', d:'6 a receber', dir:'ruim', g:barrasSoma(1340,12)}}},
+      /* Integração de vendas (PDV/ERP): vendas que entraram + as que falharam */
+      {nome:'Integração de vendas', smi:'smi-integracao-de-vendas', c1:'#ff8a65', c2:'#f4511e', sfx:['venda integrada','vendas integradas'], p:{
+        semanal:{u:'integradas', d:'3 com falha', dir:'ruim', g:barrasSoma(2140,7)},
+        mensal: {u:'integradas', d:'3 com falha', dir:'ruim', g:barrasSoma(9300,4)},
+        anual:  {u:'integradas', d:'3 com falha', dir:'ruim', g:barrasSoma(108000,12)}}},
+      /* Cofre de Senhas: credenciais guardadas (estoque) + as que estao vencendo */
+      {nome:'Cofre de Senhas', smi:'smi-cofre-de-senhas', c1:'#9db0d6', c2:'#6a82b0', sfx:['senha guardada','senhas guardadas'], p:{
+        semanal:{n:'86', u:'senhas', d:'5 expirando', dir:'ruim', estoque:true, g:[82,83,84,84,85,86,86]},
+        mensal: {n:'86', u:'senhas', d:'5 expirando', dir:'ruim', estoque:true, g:[78,80,83,86]},
+        anual:  {n:'86', u:'senhas', d:'5 expirando', dir:'ruim', estoque:true, g:[40,45,50,54,58,62,66,70,74,78,82,86]}}}
     ],
     franqueado: [
       /* Comunicados: big number = recebidos, badge = leituras da equipe da unidade */
@@ -1540,13 +1699,58 @@ function rvShareCopiar(){
         semanal:{u:'recebidos', d:'22 leituras',  dir:'neutra', g:barrasSoma(6,7)},
         mensal: {u:'recebidos', d:'52 leituras',  dir:'neutra', g:barrasSoma(14,4)},
         anual:  {u:'recebidos', d:'540 leituras', dir:'neutra', g:barrasSoma(142,12)}}},
-      {nome:'Projetos',    smi:'smi-projetos',    c1:'#ff8a7a', c2:'#e0392c', u:'tarefas',   sem:6,  mes:18, ano:98},
+      {nome:'Projetos',    smi:'smi-projetos',    c1:'#ff8a7a', c2:'#e0392c', p:{
+        semanal:{u:'tarefas', atraso:'1', g:barrasSoma(6,7)},
+        mensal: {u:'tarefas', atraso:'1', g:barrasSoma(18,4)},
+        anual:  {u:'tarefas', atraso:'2', g:barrasSoma(98,12)}}},
+      /* Plano de ação do lado da unidade: os que recebeu das auditorias e os que
+         ainda estao em aberto pra ela resolver */
+      {nome:'Plano de ação', smi:'smi-plano-de-acao', c1:'#ffb45c', c2:'#e07b00', sfx:['plano recebido','planos recebidos'], p:{
+        semanal:{u:'recebidos', d:'2 em aberto', dir:'ruim', g:barrasSoma(3,7)},
+        mensal: {u:'recebidos', d:'2 em aberto', dir:'ruim', g:barrasSoma(8,4)},
+        anual:  {u:'recebidos', d:'2 em aberto', dir:'ruim', g:barrasSoma(64,12)}}},
       /* Enquetes: big number = recebidas, badge = respostas da equipe */
       {nome:'Enquetes',    smi:'smi-enquetes',    c1:'#bd90ec', c2:'#7c4cc4', sfx:['enquete recebida','enquetes recebidas'], p:{
         semanal:{u:'recebidas', d:'11 respostas',  dir:'neutra', g:barrasSoma(3,7)},
         mensal: {u:'recebidas', d:'34 respostas',  dir:'neutra', g:barrasSoma(8,4)},
         anual:  {u:'recebidas', d:'180 respostas', dir:'neutra', g:barrasSoma(42,12)}}},
-      {nome:'Helpdesk',    smi:'smi-helpdesk',    c1:'#5fd0f0', c2:'#0288b8', u:'abertos', d:'2 na fila', dir:'ruim', sem:3,  mes:11, ano:132}
+      /* Helpdesk da unidade: ela nao ve a fila, so os atendimentos dela em aberto
+         e quantos foram concluidos no periodo */
+      {nome:'Helpdesk',    smi:'smi-helpdesk',    c1:'#5fd0f0', c2:'#0288b8', sfx:['atendimento em aberto','atendimentos em aberto'], p:{
+        semanal:{n:'2', u:'em aberto', d:'3 concluídos',   dir:'neutra', estoque:true, g:[1,2,2,3,2,2,2]},
+        mensal: {n:'2', u:'em aberto', d:'11 concluídos',  dir:'neutra', estoque:true, g:[3,2,2,2]},
+        anual:  {n:'2', u:'em aberto', d:'130 concluídos', dir:'neutra', estoque:true, g:[2,3,1,2,3,2,1,2,3,2,2,2]}}},
+      /* Agenda da unidade: eventos no periodo + os de hoje */
+      {nome:'Agenda',      smi:'smi-agenda',      c1:'#d16565', c2:'#9c2b2b', sfx:['evento','eventos'], p:{
+        semanal:{u:'eventos', d:'1 hoje', dir:'neutra', g:barrasSoma(4,7)},
+        mensal: {u:'eventos', d:'1 hoje', dir:'neutra', g:barrasSoma(15,4)},
+        anual:  {u:'eventos', d:'1 hoje', dir:'neutra', g:barrasSoma(180,12)}}},
+      /* Rede Social do lado da unidade: o que a rede publicou + o que ela ainda nao viu */
+      {nome:'Rede Social', smi:'smi-rede-social', c1:'#73beff', c2:'#0088FF', sfx:['publicação','publicações'], p:{
+        semanal:{u:'publicações', d:'5 não vistas', dir:'ruim', g:barrasSoma(38,7)},
+        mensal: {u:'publicações', d:'5 não vistas', dir:'ruim', g:barrasSoma(152,4)},
+        anual:  {u:'publicações', d:'5 não vistas', dir:'ruim', g:barrasSoma(1820,12)}}},
+      {nome:'Certificações', smi:'smi-certificacoes', c1:'#ffcf4d', c2:'#d99e00', sfx:['certificação realizada','certificações realizadas'],
+        u:'realizadas', d:'6 disponíveis', dir:'neutra', sem:3, mes:11, ano:130},
+      {nome:'Termos LGPD', smi:'smi-termos-lgpd', c1:'#a1887f', c2:'#5d4037', sfx:['aceite','aceites'],
+        u:'aceites', d:'3 vigentes', dir:'neutra', sem:4, mes:12, ano:140},
+      {nome:'Processos',   smi:'smi-processo',    c1:'#bd90ec', c2:'#7c4cc4', sfx:['processo iniciado','processos iniciados'],
+        u:'iniciados', d:'2 em andamento', dir:'neutra', sem:5, mes:18, ano:210},
+      {nome:'PDI',         smi:'smi-pdi',         c1:'#98a4b0', c2:'#66727d', sfx:['PDI ativo','PDIs ativos'], p:{
+        semanal:{n:'14', u:'PDIs ativos', d:'4 metas concluídas',   dir:'neutra', estoque:true, g:[13,13,14,14,14,14,14]},
+        mensal: {n:'14', u:'PDIs ativos', d:'12 metas concluídas',  dir:'neutra', estoque:true, g:[12,13,13,14]},
+        anual:  {n:'14', u:'PDIs ativos', d:'140 metas concluídas', dir:'neutra', estoque:true, g:[8,9,9,10,11,11,12,12,13,13,14,14]}}},
+      /* Jornada da propria unidade: etapas que ela ja concluiu + as que faltam */
+      {nome:'Jornada',     smi:'smi-jornada',     c1:'#7986cb', c2:'#283593', sfx:['etapa concluída','etapas concluídas'],
+        u:'etapas concluídas', d:'4 restantes', dir:'neutra', sem:2, mes:3, ano:6},
+      {nome:'Transferência de produtos', smi:'smi-transferencia-de-produtos', c1:'#43d6cd', c2:'#00918a', sfx:['transferência','transferências'],
+        u:'enviadas', d:'1 a receber', dir:'ruim', sem:3, mes:11, ano:128},
+      {nome:'Integração de vendas', smi:'smi-integracao-de-vendas', c1:'#ff8a65', c2:'#f4511e', sfx:['venda integrada','vendas integradas'],
+        u:'integradas', d:'sem falhas', dir:'boa', sem:118, mes:486, ano:5900},
+      {nome:'Cofre de Senhas', smi:'smi-cofre-de-senhas', c1:'#9db0d6', c2:'#6a82b0', sfx:['senha guardada','senhas guardadas'], p:{
+        semanal:{n:'12', u:'senhas', d:'1 expirando', dir:'ruim', estoque:true, g:[11,11,12,12,12,12,12]},
+        mensal: {n:'12', u:'senhas', d:'1 expirando', dir:'ruim', estoque:true, g:[10,11,11,12]},
+        anual:  {n:'12', u:'senhas', d:'1 expirando', dir:'ruim', estoque:true, g:[5,6,6,7,8,8,9,10,10,11,11,12]}}}
     ],
     colaborador: []
   };
@@ -1555,7 +1759,8 @@ function rvShareCopiar(){
      recebidos no franqueado etc.); depois e so esconder o que nao servir.
      REL_EXCLUI: modulos que nao fazem sentido pro perfil (franqueado nao
      tem Implantacao de unidades, por exemplo). */
-  const REL_EXCLUI = { franqueado: ['Implantação'], colaborador: ['Checklist', 'Plano de ação', 'Implantação'] };
+  const REL_EXCLUI = { franqueado: ['Implantação', 'Analytics', 'Asgard', 'Segurança', 'Integração Expansão'],
+    colaborador: ['Checklist', 'Plano de ação', 'Implantação'] };
   ['franqueado', 'colaborador'].forEach(function(pf){
     const tem = new Set((DADOS[pf] || []).map(function(c){ return c.nome; })
       .concat((REL_EXTRA[pf] || []).map(function(x){ return x.nome; })));
@@ -1570,24 +1775,39 @@ function rvShareCopiar(){
     return { c1:x.c1, c2:x.c2, smi:x.smi, nome:x.nome, tipo:'bars', sfx:x.sfx || SFX[x.nome] || x.u,
       p:{ semanal:per(x.sem, 7), mensal:per(x.mes, 4), anual:per(x.ano, 12) } };
   }
+  /* relatorios que vao pro fim da lista (Personalizar e carrossel) */
+  const REL_FIM = ['Vendas', 'Resultado financeiro'];
   function relTodos(perfil){
     const base = (DADOS[perfil] || []).slice(), nomes = base.map(function(c){ return c.nome; });
     (REL_EXTRA[perfil] || []).forEach(function(x){
       if (nomes.indexOf(x.nome) < 0) base.push(x.p ? { c1:x.c1, c2:x.c2, smi:x.smi, nome:x.nome, tipo:'bars', sfx:x.sfx || SFX[x.nome] || x.u, p:x.p } : relAmostra(x));
     });
-    return base;
+    const noFim = function(c){ return REL_FIM.indexOf(c.nome) >= 0; };
+    return base.filter(function(c){ return !noFim(c); }).concat(base.filter(noFim));
   }
-  const relAtivos = {};   /* perfil -> Set de nomes ativos; comeca com os do DADOS */
+  /* os 6 que ja vem ligados em cada cenario, nesta ordem. Na matriz os 3 de
+     barra ficam na 1a linha e os 3 de rosca na 2a, pra linha nao desalinhar.
+     O resto fica disponivel no Personalizar. */
+  const REL_PADRAO = {
+    matriz:     ['Chamados', 'Checklist', 'Compras', 'Expansão', 'NPS', 'NES'],
+    franqueado: ['Chamados', 'Checklist', 'Tarefas', 'Compras', 'Universidade', 'Comunicados']
+  };
+  const relAtivos = {};   /* perfil -> Set de nomes ativos; comeca com os do REL_PADRAO */
   function relAtivosDe(perfil){
-    /* por padrao so os 6 relatorios originais (os do DADOS) ficam ativos; os
-       extras o usuario liga no Personalizar */
-    if (!relAtivos[perfil]) relAtivos[perfil] = new Set((DADOS[perfil] || []).map(function(c){ return c.nome; }));
+    /* por padrao so os 6 do cenario ficam ativos; os extras o usuario liga no
+       Personalizar (perfil sem lista propria usa os do DADOS) */
+    if (!relAtivos[perfil]) relAtivos[perfil] = new Set(REL_PADRAO[perfil] || (DADOS[perfil] || []).map(function(c){ return c.nome; }));
     return relAtivos[perfil];
   }
-  /* ordem dos relatorios por perfil (o usuario reposiciona no Personalizar) */
+  /* ordem dos relatorios por perfil (o usuario reposiciona no Personalizar):
+     os padroes na frente, na ordem do REL_PADRAO, e os demais depois */
   const relOrdem = {};
   function relOrdemDe(perfil){
-    if (!relOrdem[perfil]) relOrdem[perfil] = relTodos(perfil).map(function(c){ return c.nome; });
+    if (!relOrdem[perfil]){
+      const todos = relTodos(perfil).map(function(c){ return c.nome; });
+      const pad = (REL_PADRAO[perfil] || []).filter(function(n){ return todos.indexOf(n) >= 0; });
+      relOrdem[perfil] = pad.concat(todos.filter(function(n){ return pad.indexOf(n) < 0; }));
+    }
     return relOrdem[perfil];
   }
   /* relTodos na ordem escolhida (nomes novos, fora da ordem salva, vao pro fim) */
@@ -1754,23 +1974,18 @@ function rvShareCopiar(){
   /* a matriz de cenarios da home: papel (matriz/franqueado/funcionario) x estado
      (com conteudo / sem conteudo / sem rede social / sem permissao). Cada opcao
      do drop compoe a home por cima do layout atual. */
+  /* a home agora e o painel de Relatorios. O drop escolhe o perfil (Matriz ou
+     Unidades, que mescla franqueado+funcionario) e o estado dos dados: com dados
+     (relatorios preenchidos) ou primeiro acesso (sem dados: guia + boas-vindas). */
   const CEN_HOME = [
-    { perfil:'matriz',      estado:'conteudo',      grupo:'Matriz',      rotulo:'com conteúdo',   dica:'A home cheia: publicações, shorts e comunicados.' },
-    { perfil:'matriz',      estado:'vazio',         grupo:'Matriz',      rotulo:'sem conteúdo',   dica:'Tem Rede Social, mas ainda sem publicação, podendo ser o primeiro acesso.' },
-    { perfil:'matriz',      estado:'sem-rs',        grupo:'Matriz',      rotulo:'sem rede social',dica:'A rede não usa a Rede Social, sem feed nem shorts. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
-    { perfil:'matriz',      estado:'sem-rs-vazio',  grupo:'Matriz',      rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' },
-    { perfil:'franqueado',  estado:'conteudo',      grupo:'Franqueado',  rotulo:'com conteúdo',   dica:'A unidade cheia, com o feed e os shorts da rede.' },
-    { perfil:'franqueado',  estado:'vazio',         grupo:'Franqueado',  rotulo:'sem conteúdo',   dica:'Tem o módulo, mas ainda sem publicação, podendo ser o primeiro acesso.' },
-    { perfil:'franqueado',  estado:'sem-rs',        grupo:'Franqueado',  rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
-    { perfil:'franqueado',  estado:'sem-rs-vazio',  grupo:'Franqueado',  rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' },
-    { perfil:'colaborador', estado:'conteudo',      grupo:'Funcionário', rotulo:'com conteúdo',   dica:'Vê e interage com o feed e os shorts da rede.' },
-    { perfil:'colaborador', estado:'vazio',         grupo:'Funcionário', rotulo:'sem conteúdo',   dica:'Tem o módulo, mas ainda sem publicação, podendo ser o primeiro acesso.' },
-    { perfil:'colaborador', estado:'sem-permissao', grupo:'Funcionário', rotulo:'sem permissão',  dica:'Vê o feed, mas não pode criar publicação nem short.' },
-    { perfil:'colaborador', estado:'vazio-sem-permissao', grupo:'Funcionário', rotulo:'sem permissão e sem conteúdo', dica:'Não pode criar e a rede ainda não publicou nada.' },
-    { perfil:'colaborador', estado:'sem-rs',        grupo:'Funcionário', rotulo:'sem rede social',dica:'Sem Rede Social, os módulos e a visão geral no lugar. (Só aparece dessa forma quando tiver 3+ charts com dados preenchidos.)' },
-    { perfil:'colaborador', estado:'sem-rs-vazio',  grupo:'Funcionário', rotulo:'sem rede social e sem conteúdo', dica:'Sem Rede Social e ainda sem nenhuma informação pra gerar dados, podendo ser também um primeiro acesso.' }
+    { perfil:'matriz',     estado:'sem-rs',       grupo:'Matriz',   rotulo:'com dados',       dica:'Relatórios da rede já com dados preenchidos.' },
+    { perfil:'matriz',     estado:'sem-rs-vazio', grupo:'Matriz',   rotulo:'primeiro acesso', dica:'Ainda sem dados: o guia "comece por aqui" e as boas-vindas.' },
+    { perfil:'franqueado', estado:'sem-rs',       grupo:'Unidades', rotulo:'com dados',       dica:'Relatórios da unidade já com dados preenchidos.' },
+    { perfil:'franqueado', estado:'sem-rs-vazio', grupo:'Unidades', rotulo:'primeiro acesso', dica:'Ainda sem dados: o guia "comece por aqui" e as boas-vindas.' }
   ];
-  let selHome = null, carrHome = null, videoBV = null, perfilHome = 'matriz', estadoHome = 'conteudo', periodoHome = 'semanal';
+  /* a home agora e sempre o painel de Relatorios (estado 'sem-rs'); o seletor do
+     topo troca so o perfil. Os estados de feed vivem na Rede Social (Part 4). */
+  let selHome = null, carrHome = null, videoBV = null, perfilHome = 'matriz', estadoHome = 'sem-rs', periodoHome = 'semanal';
 
   /* No "sem conteudo" (primeiro acesso), no lugar do carrossel da Visao geral
      entra um video de boas-vindas. E so o cartao: previa + play + titulo. */
@@ -1870,6 +2085,7 @@ function rvShareCopiar(){
     const tabs = carrHome.querySelector('.hv-periodo');
     if (tabs) tabs.querySelectorAll('[data-periodo]').forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.periodo === periodoHome)); });
   }
+  function rotuloCen(perfil, estado){ const c = CEN_HOME.find(function(x){ return x.perfil === perfil && x.estado === estado; }) || CEN_HOME[0]; return c.grupo + ' · ' + c.rotulo; }
   function montaSelHome(){
     if (selHome) return;
     const acoes = document.querySelector('.top-actions');
@@ -1885,7 +2101,7 @@ function rvShareCopiar(){
     });
     selHome.innerHTML =
       '<button type="button" class="links-sel-btn" aria-haspopup="menu" aria-expanded="false">' +
-      '<span class="ls-label">Matriz · com conteúdo</span><i class="fa-solid fa-chevron-down"></i></button>' +
+      '<span class="ls-label">' + rotuloCen(perfilHome, estadoHome) + '</span><i class="fa-solid fa-chevron-down"></i></button>' +
       '<div class="links-sel-menu" role="menu" hidden>' + itens + '</div>';
     if (ancora) acoes.insertBefore(selHome, ancora); else acoes.insertBefore(selHome, acoes.firstChild);
     const btn = selHome.querySelector('.links-sel-btn'), menu = selHome.querySelector('.links-sel-menu');
@@ -1897,10 +2113,7 @@ function rvShareCopiar(){
       selHome.querySelector('.ls-label').textContent = c.grupo + ' · ' + c.rotulo;
       menu.querySelectorAll('[data-i]').forEach(function(x){ const cc = CEN_HOME[+x.dataset.i]; x.setAttribute('aria-selected', String(cc.perfil === perfilHome && cc.estado === estadoHome)); });
       menu.hidden = true; btn.setAttribute('aria-expanded', 'false');
-      pintaCarrHome(); atualizaHomeVisao();
-      /* trocar de perfil dentro do "sem conteudo" nao mexe no demo-empty, entao
-         as sugestoes dos Shorts nao se refazem sozinhas — refaz aqui */
-      if (estadoHome.indexOf('vazio') === 0 && typeof buildStories === 'function') buildStories();
+      atualizaHomeVisao();
     });
     document.addEventListener('click', function(e){ if (selHome && !selHome.contains(e.target)){ menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); } });
   }
@@ -2006,15 +2219,199 @@ function rvShareCopiar(){
 
   /* Os posts do feed inicial sao estaticos no HTML e nao passam pelo render do
      05-feed.js, entao nao tem o chip de ID. Aqui injetamos nesses (os posts e
-     comentarios criados via JS ja vem com o chip). */
+     comentarios criados via JS ja vem com o chip). O chip vai na linha do
+     cargo/unidade (.post-sub / .comment-role), abaixo do nome. */
   function injetaUidsFeed(){
     if (typeof uidChip !== 'function') return;
     document.querySelectorAll('.feed .post-name, .feed .comment-name').forEach(function(el){
-      if (el.querySelector(':scope > .post-uid')) return;
+      const ehPost = el.classList.contains('post-name');
+      const top = ehPost ? el.parentElement : el.closest('.comment-top');
+      const sub = top ? top.parentElement.querySelector(ehPost ? '.post-sub' : '.comment-role') : null;
+      if (!sub || sub.querySelector(':scope > .post-uid')) return;
       let nome = '';
       for (let i = 0; i < el.childNodes.length; i++){ const nd = el.childNodes[i]; if (nd.nodeType === 3 && nd.textContent.trim()){ nome = nd.textContent.trim(); break; } }
-      if (nome) el.insertAdjacentHTML('afterbegin', uidChip(nome));
+      if (nome) sub.insertAdjacentHTML('afterbegin', uidChip(nome));
     });
   }
   injetaUidsFeed();
+
+  /* ---- Aviso de novas publicacoes na home e na Rede Social, com CTA que leva o
+     usuario a reagir. "Novo" = publicado depois que o usuario ficou em dia
+     (baseline); tudo que ja existia na carga conta como visto. Reagir (CTA) ou
+     dispensar (X) avanca a baseline e o aviso some ate chegar algo novo. ---- */
+  let nudgeEl = null, nudgeItens = [], nudgeIdx = 0, nudgeSuppresso = false;
+  const nudgeBase = { news: new Set(), shorts: new Set() };
+  function capturaBaseNudge(){
+    nudgeBase.news = new Set(); nudgeBase.shorts = new Set();
+    try { NEWS.forEach(function(n){ if (n.status === 'pub') nudgeBase.news.add(n.id); }); } catch(e){}
+    try { REELS_DATA.forEach(function(r){ nudgeBase.shorts.add(r.p); }); } catch(e){}
+  }
+  function contaNovos(){
+    let posts = 0, shorts = 0;
+    try { posts = NEWS.filter(function(n){ return n.status === 'pub' && !nudgeBase.news.has(n.id); }).length; } catch(e){}
+    try { shorts = REELS_DATA.filter(function(r){ return !nudgeBase.shorts.has(r.p); }).length; } catch(e){}
+    return { posts: posts, shorts: shorts, total: posts + shorts };
+  }
+  function fraseNudge(n){
+    const partes = [];
+    if (n.posts) partes.push(n.posts + (n.posts === 1 ? ' nova publicação' : ' novas publicações'));
+    if (n.shorts) partes.push(n.shorts + (n.shorts === 1 ? ' novo short' : ' novos shorts'));
+    return partes.join(' e ') + ' na rede';
+  }
+  function vaiReagir(){
+    /* so trata o item que esta na tela; os outros da fila ficam ate serem
+       vistos/fechados um a um */
+    const it = nudgeItens[nudgeIdx];
+    if (it && it.tipo === 'short'){
+      /* short: abre o Shorts e ja abre o player dando play nele */
+      if (typeof openShortsUser === 'function') openShortsUser();
+      else if (typeof abrirModuloSocial === 'function') abrirModuloSocial('shorts');
+      setTimeout(function(){
+        try {
+          let list = (typeof sbList === 'function') ? sbList() : REELS_DATA;
+          let idx = it.reel ? list.indexOf(it.reel) : -1;
+          if (idx < 0 && it.reel){ list = REELS_DATA; idx = REELS_DATA.indexOf(it.reel); }
+          if (idx >= 0 && typeof openPlayer === 'function') openPlayer(list, idx);
+        } catch(e){}
+      }, 90);
+      marcaVistoAtual();
+      return;
+    }
+    /* post: abre o feed, rola suave ate a publicacao e da uma piscada marcando */
+    const alvoId = (it && it.tipo === 'post' && it.id != null) ? it.id : null;
+    if (typeof openNewsUser === 'function') openNewsUser();
+    else if (typeof abrirModuloSocial === 'function') abrirModuloSocial('feed');
+    setTimeout(function(){
+      const f = document.getElementById('nvFeed');
+      const alvo = (f && alvoId != null) ? f.querySelector('[data-id="' + alvoId + '"]') : null;
+      if (alvo){
+        alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        /* reinicia a animacao antes de piscar */
+        alvo.classList.remove('pn-flash'); void alvo.offsetWidth;
+        alvo.classList.add('pn-flash');
+        setTimeout(function(){ alvo.classList.remove('pn-flash'); }, 1800);
+      } else {
+        const sc = document.querySelector('#nvFeedScreen .nvf-body') || f;
+        if (sc){ if (sc.scrollTo) sc.scrollTo({ top: 0, behavior: 'smooth' }); else sc.scrollTop = 0; }
+      }
+    }, 90);
+    marcaVistoAtual();
+  }
+  /* marca so o item atual como visto (some da fila), preservando os demais */
+  function marcaVistoAtual(){
+    const it = nudgeItens[nudgeIdx]; if (!it) return;
+    if (it.tipo === 'short'){ if (it.reel) nudgeBase.shorts.add(it.reel.p); }
+    else if (it.id != null){ nudgeBase.news.add(it.id); }
+    atualizaPubNudge();
+  }
+  /* cada nova publicacao/short vira um item: quem publicou (foto + iniciais), a
+     unidade (a bolinha na foto), o que publicou (titulo). O toast mostra UM por
+     vez e as setas passeiam pela fila — igual ao ComunicadoAlert. */
+  function iniciais(nome){ return (nome || '').trim().split(/\s+/).map(function(w){ return w[0] || ''; }).slice(0, 2).join('').toUpperCase(); }
+  function unidadeDe(sub){ sub = sub || ''; return sub.indexOf('·') >= 0 ? sub.split('·').pop().trim() : ''; }
+  function novosItens(){
+    const out = [];
+    try { NEWS.forEach(function(n){ if (n.status === 'pub' && !nudgeBase.news.has(n.id)){
+      if (n.porUsuario){
+        /* publicado por mim: foto e nome do usuario atual, a empresa em cima */
+        const u = (typeof usuarioAtual === 'function') ? usuarioAtual() : { nome: 'Rodrigo Caetano', ini: 'RC', av: 'av-rc', cargo: 'CEO · SULTS' };
+        out.push({ tipo: 'post', id: n.id, nome: u.nome, av: u.av || 'av-rc', ini: u.ini || iniciais(u.nome), unidade: unidadeDe(u.cargo) || 'SULTS', quando: n.datetime || n.date || 'agora', texto: (n.text || n.title || '') });
+      } else {
+        out.push({ tipo: 'post', id: n.id, nome: n.author || 'SULTS', av: n.av || 'av-brand', ini: n.ini || iniciais(n.author), unidade: unidadeDe(n.sub), quando: n.date || 'agora', texto: (n.text || n.title || '') });
+      }
+    } }); } catch(e){}
+    try { REELS_DATA.forEach(function(r){ if (!nudgeBase.shorts.has(r.p)){
+      const p = (typeof POSTS !== 'undefined' && POSTS[r.p]) || {};
+      out.push({ tipo: 'short', reel: r, nome: p.name || 'SULTS', av: p.av || 'av-brand', ini: iniciais(p.name), unidade: '', quando: p.time || 'agora', texto: (r.cap || p.title || '') });
+    } }); } catch(e){}
+    return out;
+  }
+  function pintaNudge(){
+    if (!nudgeEl) return;
+    const it = nudgeItens[nudgeIdx]; if (!it) return;
+    const av = nudgeEl.querySelector('.pn-av');
+    av.className = 'avatar ' + (it.av || 'av-brand') + ' pn-av';
+    av.textContent = (it.av && it.av !== 'av-brand') ? (it.ini || '') : '';
+    nudgeEl.querySelector('.pn-uni').setAttribute('title', it.unidade || 'Unidade');
+    /* em cima: unidade + data/hora */
+    const uni = it.unidade || 'Rede Social';
+    nudgeEl.querySelector('.pn-de').textContent = uni + (it.quando ? ' · ' + it.quando : '');
+    /* em baixo, estilo LinkedIn: "<Primeiro nome> publicou: <texto>" */
+    nudgeEl.querySelector('.pn-nome').textContent = (it.nome || '').trim().split(/\s+/)[0] || it.nome;
+    const verbo = it.tipo === 'short' ? 'publicou um short' : 'publicou';
+    nudgeEl.querySelector('.pn-sub').textContent = it.texto ? (verbo + ': ' + it.texto) : verbo;
+    const pager = nudgeEl.querySelector('.pn-pager');
+    if (nudgeItens.length > 1){
+      pager.hidden = false;
+      nudgeEl.querySelector('.pn-pos').textContent = (nudgeIdx + 1) + ' de ' + nudgeItens.length;
+      nudgeEl.querySelector('.pn-prev').disabled = nudgeIdx <= 0;
+      nudgeEl.querySelector('.pn-next').disabled = nudgeIdx >= nudgeItens.length - 1;
+    } else { pager.hidden = true; }
+  }
+  function criaNudge(){
+    const el = document.createElement('div');
+    el.className = 'pub-nudge'; el.hidden = true;
+    el.innerHTML =
+      '<div class="pn-card" role="status">' +
+        '<div class="pn-head"><span class="smi smi-rede-social pn-hic" aria-hidden="true"></span>' +
+          '<span class="pn-eyebrow">Nova publicação</span>' +
+          '<button type="button" class="pn-x" aria-label="Dispensar"><i class="fa-solid fa-xmark"></i></button></div>' +
+        '<div class="pn-body">' +
+          '<span class="pn-foto"><span class="avatar pn-av"></span>' +
+            '<span class="pn-uni" title=""><i class="fa-solid fa-store" aria-hidden="true"></i></span></span>' +
+          '<div class="pn-content">' +
+            '<p class="pn-de"></p>' +
+            '<p class="pn-title"><b class="pn-nome"></b> <span class="pn-sub"></span></p></div></div>' +
+        '<div class="pn-foot">' +
+          '<span class="pn-pager" hidden>' +
+            '<button type="button" class="pn-nav pn-prev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>' +
+            '<span class="pn-pos"></span>' +
+            '<button type="button" class="pn-nav pn-next" aria-label="Próxima"><i class="fa-solid fa-chevron-right"></i></button></span>' +
+          '<button type="button" class="pn-cta"><span class="pn-ctalbl">Ver e reagir</span>' +
+            '<i class="fa-solid fa-arrow-right"></i></button></div>' +
+      '</div>';
+    document.body.appendChild(el);
+    el.querySelector('.pn-cta').addEventListener('click', function(e){ e.preventDefault(); vaiReagir(); });
+    el.querySelector('.pn-x').addEventListener('click', function(e){ e.preventDefault(); marcaVistoAtual(); });
+    el.querySelector('.pn-prev').addEventListener('click', function(e){ e.preventDefault(); if (nudgeIdx > 0){ nudgeIdx--; pintaNudge(); } });
+    el.querySelector('.pn-next').addEventListener('click', function(e){ e.preventDefault(); if (nudgeIdx < nudgeItens.length - 1){ nudgeIdx++; pintaNudge(); } });
+    return el;
+  }
+  /* contador no menu lateral quando houver algo novo: em Rede Social para posts,
+     em Shorts para shorts. Segue a mesma fila do aviso: zera quando o ultimo
+     item daquele tipo for visto/fechado. */
+  function pintaDotsNav(){
+    let nNews = 0, nShorts = 0;
+    for (let i = 0; i < nudgeItens.length; i++){ if (nudgeItens[i].tipo === 'short') nShorts++; else nNews++; }
+    const bN = document.getElementById('navNewsCount');
+    const bS = document.getElementById('navShortsCount');
+    if (bN){ bN.textContent = nNews > 99 ? '99+' : nNews; bN.hidden = nNews === 0; }
+    if (bS){ bS.textContent = nShorts > 99 ? '99+' : nShorts; bS.hidden = nShorts === 0; }
+  }
+  function atualizaPubNudge(){
+    nudgeItens = novosItens();
+    const mostra = nudgeItens.length > 0;
+    if (!nudgeEl) nudgeEl = criaNudge();
+    /* some o aviso enquanto o player de shorts esta aberto (tela cheia), mas
+       nao apaga a fila: quando fechar, as notificacoes voltam a aparecer */
+    nudgeEl.hidden = nudgeSuppresso || !mostra;
+    if (mostra){ nudgeIdx = Math.max(0, Math.min(nudgeIdx, nudgeItens.length - 1)); pintaNudge(); }
+    pintaDotsNav();
+  }
+  /* observa o player de shorts: aberto esconde o aviso, fechado traz de volta */
+  function ligaSuprNudgePlayer(){
+    const pl = document.getElementById('reelsPlayer'); if (!pl) return;
+    const sync = function(){
+      const aberto = pl.classList.contains('open');
+      if (aberto !== nudgeSuppresso){ nudgeSuppresso = aberto; atualizaPubNudge(); }
+    };
+    try { new MutationObserver(sync).observe(pl, { attributes: true, attributeFilter: ['class'] }); } catch(e){}
+    sync();
+  }
+  function resetPubNudge(){ nudgeIdx = 0; atualizaPubNudge(); }
+  window.atualizaPubNudge = atualizaPubNudge;
+  window.resetPubNudge = resetPubNudge;
+  capturaBaseNudge();
+  atualizaPubNudge();
+  ligaSuprNudgePlayer();
 })();

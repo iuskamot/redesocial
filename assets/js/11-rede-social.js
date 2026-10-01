@@ -191,6 +191,7 @@ $('#nmodEnvSwitch') && $('#nmodEnvSwitch').addEventListener('click', ()=>{
 $('#nmtStories') && $('#nmtStories').addEventListener('click', ()=>newsShow('shorts'));
 $('#nmtShortsB') && $('#nmtShortsB').addEventListener('click', ()=>newsShow('shortsb'));
 $('#sbNew') && $('#sbNew').addEventListener('click', ()=>{ if(typeof crOpen==='function') crOpen(); });
+$('#sbGrid') && $('#sbGrid').addEventListener('click', (e)=>{ if(e.target.closest('.sb-createcard') && typeof crOpen==='function') crOpen(); });
 [3,9].forEach(function(i){ const r=REELS_DATA[i]; if(r&&POSTS[r.p]){ POSTS[r.p].name='Rodrigo Caetano'; POSTS[r.p].av='av-rc'; } });
 [1,5].forEach(function(i){ if(REELS_DATA[i]) REELS_DATA[i].proc=true; });
 [7,12].forEach(function(i){ if(REELS_DATA[i]) REELS_DATA[i].removido=true; });
@@ -362,7 +363,8 @@ function renderShortsB(){
   const all=sbList();
   const list=all.slice(0, sbShown);
   const em=$('#sbEmpty'); if(em) em.hidden = all.length>0;
-  el.innerHTML = list.map(function(r){
+  const criarCard = all.length ? '<button type="button" class="sb-createcard"><span class="sb-cc-plus"><i class="fa-solid fa-plus"></i></span><span class="sb-cc-lbl">Criar short</span></button>' : '';
+  el.innerHTML = criarCard + list.map(function(r){
     const post=POSTS[r.p]||{}, cat=(typeof catById==='function')?catById(r.cat):null;
     return '<article class="sb-card'+(r.pendAppr?' is-pend':'')+'" data-sb="'+REELS_DATA.indexOf(r)+'">'+
       '<div class="sb-media">'+
@@ -1822,8 +1824,15 @@ function qpOpenEdit(n){ qpOpen(); qpEditId=n.id; $('#qpText').value=(n.text||'')
 function openNewsModule(){ closeStories(); closeForum(); newsView.classList.remove('user-mode'); newsView.classList.add('open','mod-mode'); nmodSide.classList.remove('open'); document.body.style.overflow='hidden'; setNav(null); newsQuery=''; const s=$('#nvSearch'); if(s)s.value=''; newsShow('list'); }
 function closeNewsModule(){ if(typeof nvArtAdvClose==='function') nvArtAdvClose(); nmodSide.classList.remove('open'); newsView.classList.remove('open','user-mode','mod-mode'); reelsView.classList.remove('in-social','in-cfg','in-module'); closeStories(); if(!reelsPlayer.classList.contains('open')) document.body.style.overflow=''; }
 function openNewsUser(){ closeStories(); closeForum(); nmodSide.classList.remove('open'); newsView.classList.remove('mod-mode'); newsView.classList.add('open','user-mode'); document.body.style.overflow='hidden'; setNav($('#navNews')); newsShow('feed'); }
+/* Shorts pela barra lateral: mesmo user-mode da Rede Social, mas abrindo a
+   tela de Shorts (o que estava dentro do modulo, agora acessivel de fora). */
+function openShortsUser(){ closeStories(); closeForum(); nmodSide.classList.remove('open'); newsView.classList.remove('mod-mode'); newsView.classList.add('open','user-mode'); document.body.style.overflow='hidden'; setNav($('#navShorts')); newsShow('shorts'); }
 $('#navNews') && $('#navNews').addEventListener('click', e => { e.preventDefault(); openNewsUser(); });
-$('#tileNews').addEventListener('click', e => { e.preventDefault(); openNewsModule(); newsShow('feed'); });
+$('#navShorts') && $('#navShorts').addEventListener('click', e => { e.preventDefault(); openShortsUser(); });
+/* o tile de Rede Social (nos Aplicativos) cai direto no Gerenciar; o feed fica
+   na barra lateral (Rede Social / #navNews, user-mode). openNewsModule ja abre
+   em 'list' (Gerenciar). */
+$('#tileNews').addEventListener('click', e => { e.preventDefault(); openNewsModule(); });
 $('#homeSeeAllPubs') && $('#homeSeeAllPubs').addEventListener('click', e => { e.preventDefault(); if(typeof abrirModuloSocial==='function'){ abrirModuloSocial('feed'); } else { openNewsModule(); newsShow('feed'); } });
 $('#nvManageBtn') && $('#nvManageBtn').addEventListener('click', openNewsModule);
 $('#homePublish') && $('#homePublish').addEventListener('click', e => { e.preventDefault(); qpOpen(); });
@@ -2079,8 +2088,8 @@ $('#qpAdv').addEventListener('click', ()=>{ const p=$('#qpAdvPanel'); const show
 $('#qpAdvBack') && $('#qpAdvBack').addEventListener('click', ()=>{ fgToast('Nota DEV: esse botão de avançado aparece apenas para Unidade principal / Matriz. Nunca aparece para unidades'); $('#qpAdv').click(); });
 $('#qpDefStartSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b)return; $$('#qpDefStartSeg button').forEach(x=>x.classList.toggle('on',x===b)); const s=b.dataset.s==='sched'; $('#qpDefStartRow').style.display=s?'flex':'none'; if(!s)$('#qpDefStart').value=''; });
 $('#qpDefEndSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b)return; $$('#qpDefEndSeg button').forEach(x=>x.classList.toggle('on',x===b)); const d=b.dataset.s==='date'; $('#qpDefEndRow').style.display=d?'flex':'none'; if(!d)$('#qpDefEnd').value=''; });
-$('#qpPub').addEventListener('click', ()=>{ const v=$('#qpText').value.trim(); if(!v && !qpImgs.length && !qpVideo) return; const item={ id:Date.now(), text:v, video:qpVideo||null, image:qpImgs[0]||null, images:qpImgs.length?qpImgs.slice():null, colorBg:(qpImgs.length||qpVideo)?null:qpColor, colorSub:((!qpImgs.length&&!qpVideo&&qpColor)?$('#qpSub').value.trim():''), colorEmoji:((!qpImgs.length&&!qpVideo&&qpColor)?qpBig:null), author:'SULTS', av:null, sub:qpCatSel||'Comunicados oficiais', date:'agora', datetime:nvNowStr(), reach:'rede', reactions:0, comments:0, status:'pub', pinned:($('#qpDefPin')&&(($('#qpDefPin')||{}).checked))||false }; if(pmPostNeedsApproval()){ item.status='draft'; item.pendingApproval=true; item.author='Rodrigo Caetano'; item.av='av-rc'; item.ini='RC'; pubApprAdd(item); qpClose(); fgToast('Publicação enviada para aprovação'); }
- else { NEWS.unshift(item); addHomePost(item); renderNewsFeed(); qpClose(); fgToast('Publicação criada'); } });
+$('#qpPub').addEventListener('click', ()=>{ const v=$('#qpText').value.trim(); if(!v && !qpImgs.length && !qpVideo) return; const item={ id:Date.now(), text:v, video:qpVideo||null, image:qpImgs[0]||null, images:qpImgs.length?qpImgs.slice():null, colorBg:(qpImgs.length||qpVideo)?null:qpColor, colorSub:((!qpImgs.length&&!qpVideo&&qpColor)?$('#qpSub').value.trim():''), colorEmoji:((!qpImgs.length&&!qpVideo&&qpColor)?qpBig:null), author:'SULTS', av:null, sub:qpCatSel||'Comunicados oficiais', date:'agora', datetime:nvNowStr(), porUsuario:true, reach:'rede', reactions:0, comments:0, status:'pub', pinned:($('#qpDefPin')&&(($('#qpDefPin')||{}).checked))||false }; if(pmPostNeedsApproval()){ item.status='draft'; item.pendingApproval=true; item.author='Rodrigo Caetano'; item.av='av-rc'; item.ini='RC'; pubApprAdd(item); qpClose(); fgToast('Publicação enviada para aprovação'); }
+ else { NEWS.unshift(item); addHomePost(item); renderNewsFeed(); qpClose(); fgToast('Publicação criada'); if(window.resetPubNudge) window.resetPubNudge(); } });
 function pmPostNeedsApproval(){ return false; }
 $('#nvFeed').addEventListener('click', e => {
   const art = e.target.closest('.post[data-id]'); if(!art) return; const id=+art.dataset.id; const n=NEWS.find(x=>x.id===id); if(!n) return;

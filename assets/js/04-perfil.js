@@ -504,6 +504,7 @@ function updateShortsNavBadge(){
   const unseen = REELS_DATA.filter(r=>!isSeen(r.p)).length;
   b.textContent = unseen>99?'99+':unseen;
   b.style.display = unseen>0 ? '' : 'none';
+  if(window.atualizaPubNudge) window.atualizaPubNudge();
 }
 buildStories();
 

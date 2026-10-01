@@ -137,6 +137,55 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
   display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
 .rel-salvar i{font-size:14px}
 .rel-salvar:hover{background:#2278ca}
+/* aviso de nova publicacao: toast estilo MSN (barra de titulo + foto + mensagem
+   + link), fixo no alto a direita, logo abaixo do header (60px) */
+.pub-nudge{position:fixed;top:68px;right:20px;z-index:180;width:360px;max-width:calc(100vw - 40px)}
+.pub-nudge[hidden]{display:none}
+.pub-nudge .pn-card{position:relative;box-sizing:border-box;width:100%;overflow:hidden;background:#fff;border-radius:10px;
+  box-shadow:0 0 0 1px var(--line),0 4px 16px rgba(16,32,48,.08),0 16px 32px rgba(16,32,48,.16);
+  animation:pn-entra 200ms cubic-bezier(.2,.8,.2,1)}
+@keyframes pn-entra{from{transform:translateY(-12px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.pub-nudge .pn-card{animation:none}}
+.pub-nudge .pn-head{display:flex;align-items:center;gap:6px;height:36px;padding:0 8px 0 12px;background:#006868;color:#fff}
+.pub-nudge .pn-hic{display:inline-block;width:16px;height:16px;flex:none;background-size:16px 16px;background-repeat:no-repeat;background-position:center}
+.pub-nudge .pn-eyebrow{flex:none;font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase}
+.pub-nudge .pn-x{margin-left:auto;flex:none;border:0;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center;
+  width:22px;height:22px;padding:0;border-radius:999px;line-height:0;transition:background-color .12s}
+.pub-nudge .pn-x:hover{background:rgba(255,255,255,.16)}
+.pub-nudge .pn-body{display:flex;align-items:center;gap:12px;padding:12px}
+.pub-nudge .pn-foto{position:relative;flex:none;line-height:0}
+.pub-nudge .pn-av{width:44px;height:44px;border-radius:8px;font-size:15px;flex:none}
+/* a bolinha da unidade no canto da foto, igual ao selo de categoria do MSN */
+.pub-nudge .pn-uni{position:absolute;right:-5px;bottom:-5px;width:19px;height:19px;border-radius:999px;display:grid;place-items:center;
+  background:var(--teal);color:#fff;font-size:9px;box-shadow:0 0 0 2px #fff}
+.pub-nudge .pn-content{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
+.pub-nudge .pn-de{margin:0;font-size:12px;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pub-nudge .pn-autor{font-weight:600;color:var(--ink)}
+.pub-nudge .pn-cargo{color:var(--muted)}
+.pub-nudge .pn-title{margin:2px 0 0;font-size:15px;line-height:20px;font-weight:400;color:var(--ink);
+  min-height:40px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pub-nudge .pn-nome{font-weight:700}
+.pub-nudge .pn-foot{box-sizing:border-box;height:44px;display:flex;align-items:center;gap:4px;padding:0 12px;border-top:1px solid var(--line)}
+.pub-nudge .pn-pager{display:inline-flex;align-items:center;gap:2px}
+.pub-nudge .pn-pos{font-size:12px;color:var(--muted);white-space:nowrap;padding:0 2px}
+.pub-nudge .pn-nav{width:20px;height:20px;padding:0;display:grid;place-items:center;flex:none;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:4px;transition:.12s;font-size:10px}
+.pub-nudge .pn-nav i{font-size:10px}
+.pub-nudge .pn-nav:hover:not(:disabled){background:#eef1f4;color:var(--ink)}
+.pub-nudge .pn-nav:disabled{opacity:.4;cursor:default}
+.pub-nudge .pn-cta{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;padding:0;cursor:pointer;
+  font:inherit;font-size:14px;font-weight:700;color:var(--teal)}
+.pub-nudge .pn-cta i{transition:transform .15s}
+.pub-nudge .pn-cta:hover i{transform:translateX(3px)}
+@media(max-width:640px){.pub-nudge{left:8px;right:8px;width:auto;max-width:none}}
+/* piscada que marca a publicacao ao vir do "Ver e reagir" do aviso: um anel
+   azul que pulsa duas vezes sem mexer no layout do card */
+.post.pn-flash{outline:3px solid rgba(47,142,229,0);outline-offset:3px;border-radius:12px;animation:pn-flash 1.8s ease-out 1}
+@keyframes pn-flash{
+  0%,100%{outline-color:rgba(47,142,229,0)}
+  12%,52%{outline-color:rgba(47,142,229,.75)}
+  32%,72%{outline-color:rgba(47,142,229,0)}
+}
+@media (prefers-reduced-motion:reduce){.post.pn-flash{animation:none;outline-color:rgba(47,142,229,.6)}}
 /* dois controles segmentados: o perfil (quem esta vendo) e o periodo. O
    periodo empurra para a direita; no estreito os dois quebram para baixo. */
 .links-visao .lv-seg2{display:inline-flex;gap:2px;background:#eef1f4;border-radius:999px;padding:3px}
@@ -160,13 +209,26 @@ body.home-links.hl-visao .links-visao{display:block;margin:24px 0 0}
 .links-visao .lv-card-rosca .lv-numrow{display:flex;align-items:baseline;gap:6px}
 /* a zona (NPS) fica na linha do titulo, encostada a direita */
 .links-visao .lv-card-rosca .lv-top .lv-zona{margin-left:auto;color:var(--teal-dark);background:rgba(0,172,172,.12)}
+/* zona de alerta (Expansao: negocios parados) no vermelho de atraso */
+.links-visao .lv-card-rosca .lv-zona.ruim{color:#e5443b;background:rgba(229,68,59,.1)}
 .links-visao .lv-donut{flex:none}
 .links-visao .lv-donut .vg-donut{width:84px;height:84px;display:block}
 /* as bolinhas ficam empilhadas sob o numero (uma por linha); como a zona saiu
    pra linha do titulo, as 3 linhas cabem na altura do donut, entao o card nao
    passa dos de barra */
 .links-visao .lv-card-rosca .vg-nps-leg{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-top:6px}
-.links-visao .lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
+/* meia lua do NPS no lugar do donut, centrada na altura do numero + legenda */
+.links-visao .lv-donut--meia{align-self:center}
+.links-visao .lv-donut .vg-meialua{width:84px;height:44px;display:block}
+/* no maximo 3 por linha e a ultima linha (incompleta) sempre estica pra
+   preencher a largura: 1 card sozinho ocupa tudo, 2 dividem meio a meio, 3
+   ficam em tercos. a base de 1/3 garante 3 por linha; o flex-grow faz a ultima
+   linha crescer; o min-width faz cair pra 2 ou 1 em telas estreitas. */
+.links-visao .lv-grid{display:flex;flex-wrap:wrap;gap:12px}
+.links-visao .lv-grid > .lv-card{flex:1 1 calc((100% - 26px)/3);min-width:170px}
+/* o rosca (numero + legenda na esquerda, grafico na direita) so cabe a partir
+   de ~240px: em tela menor ele fica 2 por linha em vez de apertar o design */
+.links-visao .lv-grid > .lv-card-rosca{min-width:240px}
 /* os cards de chart nao reagem ao hover: quem responde e so o tooltip das barras/pontos */
 .links-visao .lv-card{display:block;padding:16px;background:#fff;border:1px solid var(--line);border-radius:10px;text-decoration:none;cursor:default}
 .links-visao .lv-top{display:flex;align-items:center;gap:10px;margin:0 0 12px}
@@ -323,7 +385,7 @@ body.estado-sem-rs .links-visao:not(.home-visao) .lv-card{border-color:#d5dbe2}
 body.ver-uids .post-name,
 body.ver-uids .comment-name{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
 body.ver-uids .post-uid{display:inline;font-size:12px;font-weight:400;color:#8a96a3}
-body.ver-uids .post-sep{display:inline;color:#c5cdd6}
+body.ver-uids .post-sep{display:inline;color:#c5cdd6;margin:0 3px}
 
 /* o drop de perfis da HOME (no topbar) 100% arredondado e um tom mais claro */
 .home-perfil-sel .links-sel-btn{border-radius:999px;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32)}

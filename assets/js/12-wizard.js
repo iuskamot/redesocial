@@ -417,7 +417,7 @@ function nvDoPublish(){
   if (!txt && !postImg){ nvGoStep('content'); $('#nvpText').focus(); fgToast('Escreva algo na publicação'); return; }
   const catSub = (($('#nvDefCat')||{}).value) || 'Comunicados oficiais';
   if (newsEditId){ const n = NEWS.find(y=>y.id===newsEditId); if(n){ n.text=x; n.image=postColor?null:(postImg||null); n.colorBg=postColor||null; n.colorSub=(postColor?$('#nvpSub').value.trim():''); n.pinned=pin; n.status='pub'; n.edited=true; } fgToast('Publicação atualizada'); }
-  else { const item = { id:Date.now(), text:x, image:postColor?null:(postImg||null), colorBg:postColor||null, colorSub:(postColor?$('#nvpSub').value.trim():''), author:'SULTS', av:null, sub:catSub, date:'agora', datetime:nvNowStr(), reach:(nvDest||'rede'), reactions:0, comments:0, status:'pub', pinned:pin }; NEWS.unshift(item); addHomePost(item); fgToast('Publicação criada'); }
+  else { const item = { id:Date.now(), text:x, image:postColor?null:(postImg||null), colorBg:postColor||null, colorSub:(postColor?$('#nvpSub').value.trim():''), author:'SULTS', av:null, sub:catSub, date:'agora', datetime:nvNowStr(), porUsuario:true, reach:(nvDest||'rede'), reactions:0, comments:0, status:'pub', pinned:pin }; NEWS.unshift(item); addHomePost(item); fgToast('Publicação criada'); if(window.resetPubNudge) window.resetPubNudge(); }
   nvResetCompose(); newsShow(nvFrom);
 }
 $('#nvRevDraft') && $('#nvRevDraft').addEventListener('click', ()=>fgToast('Rascunho salvo'));
@@ -963,6 +963,7 @@ $('#crShare').addEventListener('click', () => {
     crHideLoading();
     crClose(); buildStories();
     if (reelsView.classList.contains('open')){ foBuildReelFilters(); renderGrid(); }
+    if(window.resetPubNudge) window.resetPubNudge();
     fgToast('Short publicado');
   }, 3400);
 });

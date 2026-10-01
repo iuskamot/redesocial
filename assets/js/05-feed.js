@@ -174,10 +174,10 @@ function buildComment(c, fresh, pending){
     '<span class="avatar ' + c.av + '">' + c.ini + '</span>' +
     '<div class="comment-main">' +
       '<div class="comment-bubble">' +
-        '<div class="comment-top"><span class="comment-name">' + uidChip(c.name) + c.name + '</span>' +
+        '<div class="comment-top"><span class="comment-name">' + c.name + '</span>' +
         '<span class="comment-time">' + cmDT(c) + '</span>' +
         '<div class="comment-menu"><button class="comment-dots" title="Opções"><i class="fa-solid fa-ellipsis"></i></button><div class="comment-drop" hidden><button class="comment-del"><i class="fa-solid fa-trash-can"></i> Excluir</button></div></div></div>' +
-        '<div class="comment-role">' + c.role + '</div>' +
+        '<div class="comment-role">' + uidChip(c.name) + c.role + '</div>' +
         '<div class="comment-text"></div>' +
         (pending ? '<div class="comment-modbar">' +
           '<span class="comment-pend"><i class="fa-solid fa-clock"></i> Aguardando aprovação</span>' +
@@ -275,8 +275,8 @@ function addHomePost(n, append){
   const rcount = n.reactions||0, ccount = n.comments||0;
   const cabecalho =
     '<div class="post-head">'+avatarHtml+
-      '<div class="post-id"><div class="post-name">'+uidChipHTML(n)+nameHtml+(n.pinned?'<span class="nvf-pinchip"><i class="fa-solid fa-thumbtack"></i> Fixado</span>':'')+'</div>'+
-      '<div class="post-sub">'+postSub(n)+'</div>'+
+      '<div class="post-id"><div class="post-name">'+nameHtml+(n.pinned?'<span class="nvf-pinchip"><i class="fa-solid fa-thumbtack"></i> Fixado</span>':'')+'</div>'+
+      '<div class="post-sub">'+uidChipHTML(n)+postSub(n)+'</div>'+
       '<div class="post-meta">'+postMetaHTML(n, n.edited)+'</div></div>'+
       '<button class="post-more"><i class="fa-solid fa-ellipsis"></i></button></div>';
   const rodape =
@@ -316,8 +316,8 @@ function addHomePost(n, append){
   }
   art.innerHTML =
     '<div class="post-head">'+avatarHtml+
-      '<div class="post-id"><div class="post-name">'+uidChipHTML(n)+nameHtml+'</div>'+
-      '<div class="post-sub">'+postSub(n)+'</div>'+
+      '<div class="post-id"><div class="post-name">'+nameHtml+'</div>'+
+      '<div class="post-sub">'+uidChipHTML(n)+postSub(n)+'</div>'+
       '<div class="post-meta">'+metaTxt+(n.edited?' · <span class="edited-tag">editado</span>':'')+' · <i class="fa-solid fa-earth-americas"></i>'+postCatMeta(n)+'</div></div>'+
       '<button class="post-more"><i class="fa-solid fa-ellipsis"></i></button></div>'+
     title + (bodyTxt?'<p class="post-text">'+bodyTxt+'</p>':'') + media +

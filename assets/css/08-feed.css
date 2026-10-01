@@ -93,7 +93,7 @@
 
 /* ============ Em destaque (posts estilo shorts) ============ */
 /* --reel-h so serve para centrar as setas: e a altura que 9:16 da a largura do card */
-.stories-wrap{position:relative;display:flow-root;--reel-h:213px}
+.stories-wrap{position:relative;display:flow-root;--reel-h:200px}
 .shorts{
   display:flex;gap:12px;overflow-x:auto;cursor:grab;-webkit-user-drag:none;
   /* o overflow-x recorta os dois eixos e cortaria a sombra do hover. O padding
@@ -198,9 +198,9 @@
 }
 .reel-meta{font-size:12px;font-weight:600;opacity:.9;text-shadow:0 1px 5px rgba(0,0,0,.5)}
 .st-arrow{
-  /* centro do card: 12px do topo da .stories-wrap ate o card (24 de padding
-     menos os 12 da margem negativa), mais meia altura, menos meia seta */
-  position:absolute;top:calc(12px + var(--reel-h) / 2 - 20px);width:40px;height:40px;border-radius:50%;
+  /* centra a seta no card: os reels comecam no topo da .stories-wrap (o padding
+     de 12 e anulado pela margem negativa), entao e so meia altura menos meia seta */
+  position:absolute;top:calc(var(--reel-h) / 2 - 20px);width:40px;height:40px;border-radius:50%;
   background:#fff;box-shadow:var(--shadow);color:#44505c;border:0;padding:0;cursor:pointer;
   /* acima de qualquer card da fileira, inclusive do que passa por baixo dela */
   z-index:6;
@@ -266,9 +266,8 @@ body.demo-suporte #sbSemPermissao{display:flex}
 /* os comunicados aparecem vazios, como no cenário "Vazio" */
 body.demo-suporte #homeComPanel .demo-filled{display:none !important}
 body.demo-suporte #homeComPanel .com-empty{display:flex !important}
-/* nas visões "sem rede social", o painel de Comunicados também fica vazio */
-body.estado-sem-rs #homeComPanel .demo-filled{display:none !important}
-body.estado-sem-rs #homeComPanel .com-empty{display:flex !important}
+/* a home virou um painel permanente de Relatorios, entao o card de Comunicados
+   segue populado (nao esvazia mais junto com o feed) */
 
 /* Cada cenário mostra o seu par de textos no estado vazio do feed. */
 /* O convite "Seja o primeiro a publicar" so faz sentido para quem pode
