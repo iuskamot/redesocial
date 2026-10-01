@@ -1750,11 +1750,6 @@ input,textarea,select{font-size:14px}
    que continua visivel, e alinha o topo do conteudo com o da home (60px do
    header + 20px de respiro = 80px, igual a home) */
 .news-view.user-mode{left:250px;top:60px}
-/* Shorts pela barra lateral e imersivo: tira o header fixo da home de cima e
-   ocupa a tela inteira (do topo a base). So vale com .open para o header
-   voltar assim que o Shorts e fechado. */
-.news-view.open.user-mode.reelsmode{top:0}
-body:has(.news-view.open.user-mode.reelsmode) .topbar{display:none}
 /* Gerenciar/Configuracoes: tela cheia com o header proprio do modulo, entao
    cobre o header da home (fica acima dele). So o user-mode (browse) mantem o
    header da home visivel. */
@@ -3224,7 +3219,9 @@ body:has(.news-view.open.user-mode.reelsmode) .topbar{display:none}
   color:var(--muted);font-size:14px;padding:60px}
 
 /* Player imersivo */
-.reels-player{cursor:pointer;position:fixed;inset:0;z-index:130;background:#0a0a0a;display:none;flex-direction:column}
+/* o short aberto fica por cima de tudo: header (160), Gerenciar (170) e aviso
+   (180); so os modais que abrem de dentro dele (200) ficam acima */
+.reels-player{cursor:pointer;position:fixed;inset:0;z-index:190;background:#0a0a0a;display:none;flex-direction:column}
 .reels-player.open{display:flex}
 .rp-close{position:absolute;top:18px;right:24px;z-index:8;width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;
   background:rgba(255,255,255,.14);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;transition:background .15s}
